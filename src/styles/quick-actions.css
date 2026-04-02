@@ -1,0 +1,78 @@
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .quick-actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.qa-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.qa-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-color: #cbd5e1;
+}
+
+.qa-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.qa-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #f8fafc;
+}
+
+.qa-btn.danger:hover:not(:disabled) {
+  background: linear-gradient(to bottom right, #fee2e2, #fff);
+  border-color: #fca5a5;
+  color: #ef4444;
+}
+
+.qa-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+.qa-btn:hover .qa-icon {
+  transform: scale(1.1);
+}
+
+.qa-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+  text-align: center;
+}
+
+.qa-btn.danger .qa-text {
+  color: #dc2626;
+}
+
+/* Specific colors for icons on hover */
+.qa-btn:hover .icon-blue { color: #3b82f6; }
+.qa-btn:hover .icon-green { color: #22c55e; }
+.qa-btn:hover .icon-purple { color: #8b5cf6; }
+.qa-btn:hover .icon-amber { color: #f59e0b; }
+.qa-btn:hover .icon-indigo { color: #6366f1; }

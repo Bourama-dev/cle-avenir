@@ -1,0 +1,77 @@
+.faq-categories-container {
+  padding: 2rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.faq-categories-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.5rem;
+  justify-content: flex-start;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.faq-categories-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .faq-categories-scroll {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.faq-category-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-width: 100px;
+  padding: 1rem;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.faq-category-btn:hover {
+  border-color: #cbd5e1;
+  background-color: #f8fafc;
+}
+
+.faq-category-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(118, 75, 162, 0.3);
+}
+
+.faq-category-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  transition: all 0.3s ease;
+}
+
+.faq-category-btn:hover .faq-category-icon {
+  background-color: #e2e8f0;
+  color: #475569;
+}
+
+.faq-category-icon.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}

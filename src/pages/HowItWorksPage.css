@@ -1,0 +1,9 @@
+/* 
+  Custom styles for HowItWorks page.
+  Most styling is handled via Tailwind classes in the components.
+  This file remains for specific complex animations or overrides if needed.
+*/
+
+html {
+  scroll-behavior: smooth;
+}

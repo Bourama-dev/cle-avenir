@@ -1,0 +1,25 @@
+/**
+ * Header specific styles for CléAvenir branding
+ */
+.cleavenir-gradient {
+  background: linear-gradient(90deg, #E91E8C 0%, #00A9CE 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent; /* Fallback */
+  display: inline-block;
+  transition: opacity 0.3s ease;
+}
+
+.cleavenir-gradient:hover {
+  opacity: 0.9;
+}
+
+/* Ensure cross-browser support for background-clip: text */
+@supports not (background-clip: text) {
+  .cleavenir-gradient {
+    background: none;
+    -webkit-text-fill-color: initial;
+    color: #E91E8C; /* Fallback to primary brand color */
+  }
+}

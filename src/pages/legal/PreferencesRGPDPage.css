@@ -1,0 +1,56 @@
+.rgpd-auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
+}
+
+.rgpd-warning-box {
+  background-color: #fef2f2;
+  border: 1px solid #fee2e2;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.rgpd-warning-title {
+  color: #991b1b;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rgpd-warning-text {
+  color: #b91c1c;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-delete-account {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  font-weight: 600;
+}
+
+.btn-delete-account:hover {
+  background-color: #dc2626;
+}
+
+.btn-download-data {
+  background-color: white;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+}
+
+.btn-download-data:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+}

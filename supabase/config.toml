@@ -1,0 +1,18 @@
+# Supabase Configuration
+
+[project]
+name = "cleavenir"
+
+[api]
+enabled = true
+max_body_size = "10 MB"
+
+[functions]
+verify_jwt = true
+
+[auth]
+enable_signup = true
+enable_email_confirmations = false
+
+[database]
+max_connections = 20

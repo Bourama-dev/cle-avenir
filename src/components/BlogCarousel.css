@@ -1,0 +1,227 @@
+.blog-carousel-section {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-carousel-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.blog-carousel-card {
+  background: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 500px; /* Fixed height for consistency */
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-carousel-card:hover {
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+@media (min-width: 768px) {
+  .blog-carousel-card {
+    flex-direction: row;
+    height: 400px;
+  }
+}
+
+.carousel-image-wrapper {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+}
+
+@media (min-width: 768px) {
+  .carousel-image-wrapper {
+    flex: 0 0 45%;
+    height: 100%;
+  }
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.blog-carousel-card:hover .carousel-image {
+  transform: scale(1.05);
+}
+
+.carousel-content {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: white;
+  position: relative;
+}
+
+.carousel-category {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  width: fit-content;
+  background: #f0f9ff;
+  color: #0369a1;
+}
+
+.carousel-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.carousel-excerpt {
+  color: #64748b;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 1rem;
+}
+
+.carousel-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.carousel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  color: white;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: fit-content;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.carousel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+}
+
+/* Navigation Controls */
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #64748b;
+}
+
+.carousel-nav-btn:hover {
+  background: #f8fafc;
+  color: #6366f1;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-nav-prev {
+  left: -24px;
+}
+
+.carousel-nav-next {
+  right: -24px;
+}
+
+@media (max-width: 1280px) {
+  .carousel-nav-prev { left: 10px; }
+  .carousel-nav-next { right: 10px; }
+}
+
+/* Indicators */
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  padding: 0;
+}
+
+.carousel-dot.active {
+  width: 32px;
+  background: linear-gradient(90deg, #8b5cf6, #6366f1);
+}
+
+.carousel-dot:hover:not(.active) {
+  background: #94a3b8;
+}
+
+/* Animations */
+.slide-enter {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+.slide-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.slide-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.slide-exit-active {
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 500ms ease, transform 500ms ease;
+}

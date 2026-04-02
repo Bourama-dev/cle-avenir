@@ -1,0 +1,69 @@
+.signup-page-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1rem;
+}
+
+.signup-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px;
+  padding: 2.5rem;
+  animation: slideUp 0.5s ease-out;
+}
+
+.signup-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.signup-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.signup-subtitle {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.login-link-container {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #64748b;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.login-link {
+  color: #764ba2;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 0.25rem;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+/* Ensure EnhancedSignupForm fits nicely without double padding */
+.signup-card .signup-flow-container {
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  .signup-card {
+    padding: 1.5rem;
+  }
+}

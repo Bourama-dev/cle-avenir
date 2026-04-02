@@ -1,0 +1,43 @@
+import { Palette, HardHat, FlaskConical, ShoppingBag, Scale, Cpu, Leaf, CircleDollarSign, Landmark, Briefcase, UtensilsCrossed, Home, Wrench, Monitor, Truck, Shirt, Megaphone, Droplets, TreePine, Scissors, ScissorsSquare, Sprout, Shovel as Pickaxe, Video, Music, Glasses, FileText, Component, Activity, Users, HeartPulse, ShieldAlert, HeartHandshake, Map, Clock, Wine, Beaker } from 'lucide-react';
+
+export const SECTORS = [
+  { id: 'arts', name: 'Arts & Design', icon: Palette, color: 'text-pink-500', bg: 'bg-pink-50', category: 'Création & Communication', description: 'Création artistique, design graphique et industriel' },
+  { id: 'btp', name: 'Bâtiment & Travaux Publics', icon: HardHat, color: 'text-amber-600', bg: 'bg-amber-50', category: 'Industrie & Construction', description: 'Construction, rénovation, génie civil' },
+  { id: 'chimie', name: 'Chimie & Pharmacie', icon: FlaskConical, color: 'text-emerald-500', bg: 'bg-emerald-50', category: 'Sciences & Santé', description: 'Laboratoires, production pharmaceutique' },
+  { id: 'commerce', name: 'Commerce & Vente', icon: ShoppingBag, color: 'text-blue-500', bg: 'bg-blue-50', category: 'Tertiaire', description: 'Distribution, vente de détail, e-commerce' },
+  { id: 'droit', name: 'Droit & Notariat', icon: Scale, color: 'text-slate-700', bg: 'bg-slate-100', category: 'Tertiaire', description: 'Justice, conseil juridique, notariat' },
+  { id: 'elec', name: 'Électricité & Électronique', icon: Cpu, color: 'text-yellow-500', bg: 'bg-yellow-50', category: 'Industrie & Construction', description: 'Réseaux électriques, composants' },
+  { id: 'enviro', name: 'Environnement & Développement Durable', icon: Leaf, color: 'text-green-600', bg: 'bg-green-50', category: 'Nature & Environnement', description: 'Écologie, recyclage, énergies renouvelables' },
+  { id: 'finance', name: 'Finance & Comptabilité', icon: CircleDollarSign, color: 'text-emerald-600', bg: 'bg-emerald-50', category: 'Tertiaire', description: 'Banque, assurance, gestion comptable' },
+  { id: 'publique', name: 'Fonction Publique', icon: Landmark, color: 'text-blue-700', bg: 'bg-blue-50', category: 'Service Public', description: 'Administration d\'État, territoriale, hospitalière' },
+  { id: 'gestion', name: 'Gestion & Management', icon: Briefcase, color: 'text-indigo-600', bg: 'bg-indigo-50', category: 'Tertiaire', description: 'Direction d\'entreprise, stratégie' },
+  { id: 'hotellerie', name: 'Hôtellerie & Restauration', icon: UtensilsCrossed, color: 'text-orange-500', bg: 'bg-orange-50', category: 'Services', description: 'Hébergement, restauration, tourisme' },
+  { id: 'immo', name: 'Immobilier', icon: Home, color: 'text-cyan-600', bg: 'bg-cyan-50', category: 'Tertiaire', description: 'Transaction, gestion locative, promotion' },
+  { id: 'industrie', name: 'Industrie & Mécanique', icon: Wrench, color: 'text-slate-500', bg: 'bg-slate-100', category: 'Industrie & Construction', description: 'Production industrielle, maintenance' },
+  { id: 'info', name: 'Informatique & Numérique', icon: Monitor, color: 'text-blue-400', bg: 'bg-blue-50', category: 'Technologie', description: 'Développement, réseaux, cybersécurité' },
+  { id: 'logistique', name: 'Logistique & Transport', icon: Truck, color: 'text-stone-500', bg: 'bg-stone-100', category: 'Services', description: 'Supply chain, transport de marchandises et voyageurs' },
+  { id: 'luxe', name: 'Luxe & Mode', icon: Shirt, color: 'text-purple-600', bg: 'bg-purple-50', category: 'Création & Communication', description: 'Haute couture, maroquinerie, cosmétiques' },
+  { id: 'marketing', name: 'Marketing & Communication', icon: Megaphone, color: 'text-rose-500', bg: 'bg-rose-50', category: 'Création & Communication', description: 'Publicité, relations publiques, digital' },
+  { id: 'eau', name: 'Métiers de l\'Eau', icon: Droplets, color: 'text-cyan-500', bg: 'bg-cyan-50', category: 'Nature & Environnement', description: 'Traitement, distribution, assainissement' },
+  { id: 'bois', name: 'Métiers du Bois', icon: TreePine, color: 'text-amber-800', bg: 'bg-amber-100', category: 'Industrie & Construction', description: 'Menuiserie, charpente, sylviculture' },
+  { id: 'cuir', name: 'Métiers du Cuir', icon: Scissors, color: 'text-orange-800', bg: 'bg-orange-100', category: 'Artisanat', description: 'Maroquinerie, sellerie, tannerie' },
+  { id: 'textile', name: 'Métiers du Textile', icon: ScissorsSquare, color: 'text-pink-600', bg: 'bg-pink-50', category: 'Artisanat', description: 'Tissage, confection, retouche' },
+  { id: 'verts', name: 'Métiers Verts', icon: Sprout, color: 'text-lime-500', bg: 'bg-lime-50', category: 'Nature & Environnement', description: 'Agriculture, paysage, horticulture' },
+  { id: 'mines', name: 'Mines & Carrières', icon: Pickaxe, color: 'text-stone-700', bg: 'bg-stone-200', category: 'Industrie & Construction', description: 'Extraction, géologie, matériaux' },
+  { id: 'media', name: 'Multimédia & Audiovisuel', icon: Video, color: 'text-indigo-500', bg: 'bg-indigo-50', category: 'Création & Communication', description: 'Production vidéo, son, journalisme' },
+  { id: 'musique', name: 'Musique & Spectacle', icon: Music, color: 'text-violet-500', bg: 'bg-violet-50', category: 'Création & Communication', description: 'Arts de la scène, production musicale' },
+  { id: 'optique', name: 'Optique & Lunetterie', icon: Glasses, color: 'text-teal-500', bg: 'bg-teal-50', category: 'Sciences & Santé', description: 'Montage de verres, conseil client' },
+  { id: 'papier', name: 'Papier & Carton', icon: FileText, color: 'text-slate-400', bg: 'bg-slate-50', category: 'Industrie & Construction', description: 'Fabrication, impression, emballage' },
+  { id: 'plasturgie', name: 'Plasturgie', icon: Component, color: 'text-blue-600', bg: 'bg-blue-50', category: 'Industrie & Construction', description: 'Transformation des plastiques et composites' },
+  { id: 'prothese', name: 'Prothèse Dentaire', icon: Activity, color: 'text-rose-400', bg: 'bg-rose-50', category: 'Sciences & Santé', description: 'Fabrication d\'appareillages dentaires' },
+  { id: 'rh', name: 'Ressources Humaines', icon: Users, color: 'text-orange-400', bg: 'bg-orange-50', category: 'Tertiaire', description: 'Recrutement, formation, paie' },
+  { id: 'sante', name: 'Santé & Social', icon: HeartPulse, color: 'text-red-500', bg: 'bg-red-50', category: 'Sciences & Santé', description: 'Soins, accompagnement, petite enfance' },
+  { id: 'securite', name: 'Sécurité & Prévention', icon: ShieldAlert, color: 'text-slate-800', bg: 'bg-slate-200', category: 'Services', description: 'Gardiennage, sécurité incendie, police' },
+  { id: 'sap', name: 'Services à la Personne', icon: HeartHandshake, color: 'text-pink-400', bg: 'bg-pink-50', category: 'Services', description: 'Aide à domicile, maintien de l\'autonomie' },
+  { id: 'tourisme', name: 'Tourisme & Loisirs', icon: Map, color: 'text-sky-500', bg: 'bg-sky-50', category: 'Services', description: 'Voyages, animation, parcs de loisirs' },
+  { id: 'interim', name: 'Travail Temporaire', icon: Clock, color: 'text-zinc-500', bg: 'bg-zinc-100', category: 'Services', description: 'Agences d\'intérim, placement' },
+  { id: 'verre', name: 'Verre & Cristal', icon: Beaker, color: 'text-cyan-400', bg: 'bg-cyan-50', category: 'Artisanat', description: 'Verrerie, vitrail, cristallerie' },
+  { id: 'vin', name: 'Viticulture & Œnologie', icon: Wine, color: 'text-rose-800', bg: 'bg-rose-100', category: 'Nature & Environnement', description: 'Culture de la vigne, production de vin' }
+];
+
+export const SECTOR_CATEGORIES = [...new Set(SECTORS.map(s => s.category))].sort();
