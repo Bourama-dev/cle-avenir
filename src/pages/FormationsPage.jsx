@@ -334,8 +334,21 @@ const FormationsPage = ({ setAllFormations }) => {
   return (
     <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
       <Helmet>
-        <title>Formations Détaillées - CléAvenir</title>
-        <meta name="description" content="Catalogue complet des formations." />
+        <title>Formations - Trouver sa formation en France | CléAvenir</title>
+        <meta name="description" content="Explorez des milliers de formations en France : BTS, licence, master, CAP, bachelor et plus. Trouvez la formation qui correspond à votre projet professionnel." />
+        <link rel="canonical" href="https://cleavenir.com/formations" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Catalogue des formations - CléAvenir",
+          "description": "Explorez des milliers de formations en France.",
+          "url": "https://cleavenir.com/formations",
+          "publisher": {
+            "@type": "Organization",
+            "name": "CléAvenir",
+            "url": "https://cleavenir.com"
+          }
+        })}</script>
       </Helmet>
 
       <UpgradeModal

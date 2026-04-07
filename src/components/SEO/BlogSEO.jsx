@@ -1,10 +1,13 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 
-const BlogSEO = ({ title, description, image, url, type = 'article', publishedTime, author, tags }) => {
-  const siteUrl = 'https://cleavenir.com';
-  const fullUrl = url ? `${siteUrl}${url}` : siteUrl;
-  const defaultImage = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3'; // Fallback image
+const BASE_URL = 'https://cleavenir.com';
+
+const BlogSEO = ({ title, description, image, url, type = 'article', publishedTime, modifiedTime, author, tags }) => {
+  const location = useLocation();
+  const fullUrl = url ? `${BASE_URL}${url}` : `${BASE_URL}${location.pathname}`;
+  const defaultImage = 'https://cleavenir.com/og-image.jpg';
   const fullImage = image || defaultImage;
 
   return (
@@ -51,8 +54,14 @@ const BlogSEO = ({ title, description, image, url, type = 'article', publishedTi
               "url": `${siteUrl}/logo.png`
             }
           },
+          "url": fullUrl,
           "datePublished": publishedTime,
-          "description": description
+          "dateModified": modifiedTime || publishedTime,
+          "description": description,
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": fullUrl
+          }
         })}
       </script>
     </Helmet>
