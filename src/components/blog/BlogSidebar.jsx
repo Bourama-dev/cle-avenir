@@ -29,8 +29,8 @@ const BlogSidebar = ({ recentPosts, categories, tags }) => {
         <h3 className="blog-sidebar__title">Catégories</h3>
         <div className="blog-sidebar__cats">
           {categories.map((cat, i) => (
-            <Link key={i} to={`/blog?category=${cat.name || cat}`} className="blog-sidebar__cat">
-              {cat.name || cat}
+            <Link key={i} to={`/blog?category=${typeof cat === 'string' ? cat : cat.name}`} className="blog-sidebar__cat">
+              {typeof cat === 'string' ? cat : cat.name}
               <ArrowUpRight size={12} />
             </Link>
           ))}

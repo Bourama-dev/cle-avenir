@@ -148,13 +148,13 @@ const BlogPage = () => {
             {/* Barre filtre/recherche */}
             <div className="blog-toolbar">
               <div className="blog-cats">
-                {[{ id: 'all', name: 'Tous' }, ...blogCategories].map((cat) => (
+                {['Tous', ...blogCategories].map((cat) => (
                   <button
-                    key={cat.id || cat.name}
-                    onClick={() => handleCategoryChange(cat.name === 'Tous' ? 'all' : cat.name)}
-                    className={`blog-cat-btn ${categoryFilter === (cat.name === 'Tous' ? 'all' : cat.name) ? 'blog-cat-btn--active' : ''}`}
+                    key={cat}
+                    onClick={() => handleCategoryChange(cat === 'Tous' ? 'all' : cat)}
+                    className={`blog-cat-btn ${categoryFilter === (cat === 'Tous' ? 'all' : cat) ? 'blog-cat-btn--active' : ''}`}
                   >
-                    {cat.name}
+                    {cat}
                   </button>
                 ))}
               </div>
