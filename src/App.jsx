@@ -136,7 +136,7 @@ const EstablishmentLoginPage = lazy(() => import('@/pages/EstablishmentLoginPage
 const EstablishmentForgotPasswordPage = lazy(() => import('@/pages/EstablishmentForgotPasswordPage'));
 const EstablishmentDashboard = lazy(() => import('@/pages/EstablishmentDashboard'));
 const InstitutionStaffLogin = lazy(() => import('@/pages/InstitutionStaffLogin'));
-const InstitutionDashboard = lazy(() => import('@/pages/InstitutionDashboard'));
+const InstitutionDashboard = lazy(() => import('@/components/InstitutionDashboard'));
 const UserManagement = lazy(() => import('@/components/establishment/UserManagement'));
 
 // Admin Pages
