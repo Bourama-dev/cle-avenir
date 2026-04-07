@@ -1,58 +1,61 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Tag } from 'lucide-react';
+import { ArrowUpRight, Hash } from 'lucide-react';
 
 const BlogSidebar = ({ recentPosts, categories, tags }) => {
   return (
-    <div className="space-y-8">
-      {/* Recent Posts */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
-        <h3 className="font-bold text-lg mb-4 text-slate-900 border-b pb-2">Articles Récents</h3>
-        <div className="space-y-4">
-          {recentPosts.map((post) => (
-            <Link key={post.id} to={`/blog/${post.slug}`} className="group block">
-              <h4 className="text-sm font-medium text-slate-800 group-hover:text-primary transition-colors line-clamp-2 mb-1">
-                {post.title}
-              </h4>
-              <p className="text-xs text-slate-500">
-                {new Date(post.published_at).toLocaleDateString()}
-              </p>
+    <div className="blog-sidebar">
+      {/* Articles récents */}
+      <div className="blog-sidebar__block">
+        <h3 className="blog-sidebar__title">Articles récents</h3>
+        <div className="blog-sidebar__recent">
+          {recentPosts.map((post, i) => (
+            <Link key={post.id} to={`/blog/${post.slug}`} className="blog-sidebar__recent-item">
+              <span className="blog-sidebar__recent-num">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <p className="blog-sidebar__recent-label">{post.title}</p>
+                <p className="blog-sidebar__recent-date">
+                  {new Date(post.published_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                </p>
+              </div>
+              <ArrowUpRight size={14} className="blog-sidebar__recent-arrow" />
             </Link>
           ))}
         </div>
       </div>
 
-      {/* Categories */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
-        <h3 className="font-bold text-lg mb-4 text-slate-900 border-b pb-2">Catégories</h3>
-        <ul className="space-y-2">
-          {categories.map((cat, idx) => (
-            <li key={idx}>
-               <Link 
-                 to={`/blog?category=${cat.name || cat}`} 
-                 className="flex items-center justify-between text-sm text-slate-600 hover:text-primary transition-colors py-1"
-               >
-                  <span>{cat.name || cat}</span>
-                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100" />
-               </Link>
-            </li>
+      {/* Catégories */}
+      <div className="blog-sidebar__block">
+        <h3 className="blog-sidebar__title">Catégories</h3>
+        <div className="blog-sidebar__cats">
+          {categories.map((cat, i) => (
+            <Link key={i} to={`/blog?category=${cat.name || cat}`} className="blog-sidebar__cat">
+              {cat.name || cat}
+              <ArrowUpRight size={12} />
+            </Link>
           ))}
-        </ul>
+        </div>
       </div>
 
       {/* Tags */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
-        <h3 className="font-bold text-lg mb-4 text-slate-900 border-b pb-2 flex items-center gap-2">
-           <Tag className="w-4 h-4" /> Tags Populaires
-        </h3>
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag, idx) => (
-            <Badge key={idx} variant="secondary" className="cursor-pointer hover:bg-primary hover:text-white transition-colors">
-               {tag}
-            </Badge>
+      <div className="blog-sidebar__block">
+        <h3 className="blog-sidebar__title">Tags populaires</h3>
+        <div className="blog-sidebar__tags">
+          {tags.map((tag, i) => (
+            <span key={i} className="blog-sidebar__tag">
+              <Hash size={11} />{tag}
+            </span>
           ))}
         </div>
+      </div>
+
+      {/* CTA newsletter */}
+      <div className="blog-sidebar__newsletter">
+        <p className="blog-sidebar__newsletter-label">Newsletter</p>
+        <p className="blog-sidebar__newsletter-sub">Reçois les meilleurs articles chaque semaine.</p>
+        <Link to="/signup" className="blog-sidebar__newsletter-btn">
+          S'inscrire gratuitement
+        </Link>
       </div>
     </div>
   );

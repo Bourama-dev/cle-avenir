@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/customSupabaseClient';
 import { faqBlogArticles } from '@/data/faqBlogArticles';
 import BlogCard from '@/components/blog/BlogCard';
 import BlogSidebar from '@/components/blog/BlogSidebar';
-import BlogSearch from '@/components/blog/BlogSearch';
 import BlogSEO from '@/components/SEO/BlogSEO';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { ChevronLeft, ChevronRight, Search, X, Rss } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { blogCategories, popularTags } from '@/data/blogPosts'; // Keeping categories/tags local for consistent UI
+import { blogCategories, popularTags } from '@/data/blogPosts';
+import './BlogPage.css';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -29,183 +30,219 @@ const BlogPage = () => {
           .select('*')
           .eq('published', true)
           .order('published_at', { ascending: false });
-
         if (error) throw error;
-        
-        if (data && data.length > 0) {
-          setPosts(data);
-        } else {
-          // Fallback to local data
-          setPosts(faqBlogArticles);
-        }
-      } catch (err) {
-        console.error("Error fetching blog posts:", err);
-        setPosts(faqBlogArticles); // Fallback
+        setPosts(data && data.length > 0 ? data : faqBlogArticles);
+      } catch {
+        setPosts(faqBlogArticles);
       } finally {
         setLoading(false);
       }
     };
-
     fetchPosts();
   }, []);
 
-  // Filter Logic
   const filteredPosts = posts.filter(post => {
     const term = searchTerm.toLowerCase();
-    const matchesSearch = post.title.toLowerCase().includes(term) || 
-                          (post.excerpt && post.excerpt.toLowerCase().includes(term)) ||
-                          (post.tags && post.tags.some(tag => tag.toLowerCase().includes(term)));
-    
+    const matchesSearch = post.title.toLowerCase().includes(term) ||
+      (post.excerpt && post.excerpt.toLowerCase().includes(term)) ||
+      (post.tags && post.tags.some(tag => tag.toLowerCase().includes(term)));
     const matchesCategory = categoryFilter === 'all' || post.category === categoryFilter;
-    
     return matchesSearch && matchesCategory;
   });
 
-  // Pagination Logic
   const totalPages = Math.ceil(filteredPosts.length / ITEMS_PER_PAGE);
   const currentPosts = filteredPosts.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
+  const featuredPost = posts[0];
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSearchChange = (val) => {
-    setSearchTerm(val);
-    setCurrentPage(1);
-  };
-
-  const handleCategoryChange = (val) => {
-    setCategoryFilter(val);
+  const handleCategoryChange = (cat) => {
+    setCategoryFilter(cat);
     setCurrentPage(1);
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
-      <BlogSEO 
-        title="Le Blog CléAvenir - Conseils Carrière & Orientation"
-        description="Retrouvez nos derniers articles pour booster votre carrière : reconversion, emploi, formation, et bien-être au travail."
+    <div className="blog-page">
+      <BlogSEO
+        title="Blog CléAvenir — Conseils carrière & orientation"
+        description="L'actualité de l'emploi, des conseils d'experts et de l'inspiration pour construire votre avenir professionnel."
         url="/blog"
         type="website"
       />
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-indigo-900 via-slate-800 to-slate-900 text-white py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
-        
-        <div className="container mx-auto max-w-6xl relative z-10 text-center">
+      {/* ── Hero éditorial ── */}
+      <header className="blog-hero">
+        <div className="blog-hero__noise" />
+        <div className="blog-hero__content">
           <motion.div
-             initial={{ opacity: 0, y: 20 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-             <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">
-               Le Blog <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">CléAvenir</span>
-             </h1>
-             <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
-               L'actualité de l'emploi, des conseils d'experts et de l'inspiration pour construire votre avenir professionnel.
-             </p>
+            <div className="blog-hero__label">
+              <Rss size={13} />
+              <span>Le blog CléAvenir</span>
+            </div>
+            <h1 className="blog-hero__title">
+              Construis ton<br />
+              <em>avenir professionnel</em>
+            </h1>
+            <p className="blog-hero__sub">
+              Conseils d'experts, tendances du marché et témoignages pour guider chaque étape de ta carrière.
+            </p>
           </motion.div>
         </div>
-      </section>
-
-      {/* Breadcrumbs */}
-      <div className="bg-white border-b border-slate-200 sticky top-16 z-10 shadow-sm">
-        <div className="container mx-auto px-4 py-3 text-sm text-slate-500 flex items-center gap-2">
-          <Link to="/" className="hover:text-indigo-600 transition-colors">Accueil</Link>
-          <ChevronRight className="w-4 h-4" />
-          <span className="text-slate-900 font-bold">Blog</span>
+        <div className="blog-hero__scroll-hint">
+          <span />
         </div>
-      </div>
+      </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-12 max-w-7xl">
-        <div className="flex flex-col lg:flex-row gap-12">
-          
-          {/* Main Column */}
-          <div className="flex-1">
-            <BlogSearch 
-              searchTerm={searchTerm} 
-              onSearchChange={handleSearchChange}
-              categoryFilter={categoryFilter}
-              onCategoryChange={handleCategoryChange}
-              categories={blogCategories}
-            />
+      {/* ── Article en vedette ── */}
+      {!loading && featuredPost && (
+        <section className="blog-featured">
+          <div className="blog-container">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              <Link to={`/blog/${featuredPost.slug}`} className="blog-featured__card">
+                <div className="blog-featured__image">
+                  <img
+                    src={featuredPost.featured_image || `https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80`}
+                    alt={featuredPost.title}
+                  />
+                  <div className="blog-featured__overlay" />
+                </div>
+                <div className="blog-featured__body">
+                  {featuredPost.category && (
+                    <span className="blog-cat-badge">{featuredPost.category}</span>
+                  )}
+                  <h2 className="blog-featured__title">{featuredPost.title}</h2>
+                  <p className="blog-featured__excerpt">{featuredPost.excerpt}</p>
+                  <div className="blog-featured__meta">
+                    <span className="blog-featured__author">{featuredPost.author || 'Équipe CléAvenir'}</span>
+                    <span className="blog-featured__dot">·</span>
+                    <span>{featuredPost.reading_time ? `${featuredPost.reading_time} min` : '5 min'}</span>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
-            {loading ? (
-               <div className="flex justify-center py-20">
-                  <Loader2 className="w-10 h-10 text-indigo-600 animate-spin" />
-               </div>
-            ) : filteredPosts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                {currentPosts.map((post) => (
-                  <BlogCard key={post.id} post={post} />
+      {/* ── Corps principal ── */}
+      <main className="blog-main">
+        <div className="blog-container blog-layout">
+
+          {/* Colonne articles */}
+          <div className="blog-articles-col">
+
+            {/* Barre filtre/recherche */}
+            <div className="blog-toolbar">
+              <div className="blog-cats">
+                {[{ id: 'all', name: 'Tous' }, ...blogCategories].map((cat) => (
+                  <button
+                    key={cat.id || cat.name}
+                    onClick={() => handleCategoryChange(cat.name === 'Tous' ? 'all' : cat.name)}
+                    className={`blog-cat-btn ${categoryFilter === (cat.name === 'Tous' ? 'all' : cat.name) ? 'blog-cat-btn--active' : ''}`}
+                  >
+                    {cat.name}
+                  </button>
                 ))}
               </div>
-            ) : (
-              <div className="text-center py-20 bg-white rounded-xl border border-dashed border-slate-300">
-                <p className="text-slate-500 text-lg mb-2">Aucun article ne correspond à votre recherche.</p>
-                <Button 
-                  variant="link" 
-                  onClick={() => { setSearchTerm(''); setCategoryFilter('all'); }}
-                  className="text-indigo-600 font-bold"
+              <div className="blog-search-wrap">
+                <Search className="blog-search-icon" size={16} />
+                <input
+                  type="text"
+                  placeholder="Rechercher…"
+                  value={searchTerm}
+                  onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+                  className="blog-search-input"
+                />
+                {searchTerm && (
+                  <button onClick={() => setSearchTerm('')} className="blog-search-clear">
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Grille articles */}
+            {loading ? (
+              <div className="blog-grid">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="blog-skeleton" />
+                ))}
+              </div>
+            ) : filteredPosts.length > 0 ? (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`${categoryFilter}-${currentPage}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="blog-grid"
                 >
-                  Réinitialiser les filtres
-                </Button>
+                  {currentPosts.map((post, i) => (
+                    <BlogCard key={post.id} post={post} index={i} />
+                  ))}
+                </motion.div>
+              </AnimatePresence>
+            ) : (
+              <div className="blog-empty">
+                <p>Aucun article ne correspond à votre recherche.</p>
+                <button onClick={() => { setSearchTerm(''); setCategoryFilter('all'); }}>
+                  Réinitialiser
+                </button>
               </div>
             )}
 
             {/* Pagination */}
             {!loading && totalPages > 1 && (
-              <div className="flex justify-center gap-2 mt-8">
-                <Button 
-                  variant="outline" 
+              <div className="blog-pagination">
+                <button
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className="w-10 h-10 p-0 rounded-full hover:bg-indigo-50 hover:text-indigo-600 border-slate-300"
+                  className="blog-page-btn"
                 >
-                  <ChevronLeft className="w-5 h-5" />
-                </Button>
-                
+                  <ChevronLeft size={18} />
+                </button>
                 {[...Array(totalPages)].map((_, idx) => (
-                  <Button
+                  <button
                     key={idx}
-                    variant={currentPage === idx + 1 ? "default" : "outline"}
                     onClick={() => handlePageChange(idx + 1)}
-                    className={`w-10 h-10 p-0 rounded-full font-bold ${
-                      currentPage === idx + 1 
-                        ? 'bg-indigo-600 text-white border-indigo-600 hover:bg-indigo-700' 
-                        : 'border-slate-300 hover:bg-indigo-50 hover:text-indigo-600 text-slate-600'
-                    }`}
+                    className={`blog-page-btn ${currentPage === idx + 1 ? 'blog-page-btn--active' : ''}`}
                   >
                     {idx + 1}
-                  </Button>
+                  </button>
                 ))}
-
-                <Button 
-                  variant="outline" 
+                <button
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className="w-10 h-10 p-0 rounded-full hover:bg-indigo-50 hover:text-indigo-600 border-slate-300"
+                  className="blog-page-btn"
                 >
-                  <ChevronRight className="w-5 h-5" />
-                </Button>
+                  <ChevronRight size={18} />
+                </button>
               </div>
             )}
           </div>
 
           {/* Sidebar */}
-          <aside className="w-full lg:w-80 shrink-0">
-             <BlogSidebar 
-                recentPosts={posts.slice(0, 5)} 
-                categories={blogCategories}
-                tags={popularTags}
-             />
+          <aside className="blog-sidebar-col">
+            <BlogSidebar
+              recentPosts={posts.slice(0, 5)}
+              categories={blogCategories}
+              tags={popularTags}
+            />
           </aside>
         </div>
       </main>
