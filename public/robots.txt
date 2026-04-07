@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# Exclure les espaces privés
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /account
+Disallow: /settings
+Disallow: /my-documents
+Disallow: /cv-builder
+Disallow: /cover-letter-builder
+Disallow: /interview
+Disallow: /cleo
+Disallow: /upgrade
+Disallow: /manage-subscription
+Disallow: /notifications
+Disallow: /recommendations
+Disallow: /offers-formations
+Disallow: /personalized-plan
+Disallow: /action-plan
+Disallow: /results
+Disallow: /test-history
+Disallow: /user/
+Disallow: /establishment/
+Disallow: /institution/
+Disallow: /maintenance
+Disallow: /auth
+
+# Sitemap
+Sitemap: https://cleavenir.com/sitemap.xml
