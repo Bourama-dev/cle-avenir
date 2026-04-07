@@ -46,7 +46,7 @@ import LoadingFallback from '@/components/LoadingFallback';
 import ProgressBar from '@/components/ui/ProgressBar';
 
 // Immediate Load
-import HomePage from '@/pages/HomePage';
+import HomePage from '@/components/HomePage';
 import MaintenancePage from '@/components/MaintenancePage';
 
 // --- Lazy Load Pages ---
@@ -101,7 +101,7 @@ const UpgradePlan = lazy(() => import('@/pages/UpgradePlan'));
 const PlansPage = lazy(() => import('@/pages/PlansPage'));
 const HowItWorksPage = lazy(() => import('@/pages/HowItWorksPage'));
 const FAQPage = lazy(() => import('@/pages/FAQPage'));
-const AboutPage = lazy(() => import('@/pages/AboutPage'));
+const AboutPage = lazy(() => import('@/components/AboutPage'));
 const ContactPage = lazy(() => import('@/pages/ContactPage'));
 const BlogPage = lazy(() => import('@/pages/BlogPage'));
 const BlogArticlePage = lazy(() => import('@/pages/BlogArticlePage'));
