@@ -6,7 +6,7 @@ import {
   ChevronRight, CheckCircle, Mail, Phone, MapPin,
   Settings, Save
 } from 'lucide-react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 // UI Components
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';

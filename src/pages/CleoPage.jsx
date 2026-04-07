@@ -1,5 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
 import { FEATURES } from '@/constants/subscriptionTiers';
 import CleoSidebar from '@/components/cleo/CleoSidebar';

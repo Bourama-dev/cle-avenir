@@ -10,7 +10,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/lib/customSupabaseClient';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useDebounce } from '@/hooks/useDebounce';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Badge } from '@/components/ui/badge';
 
 const MetierCard = ({ metier, onSelect, index }) => (

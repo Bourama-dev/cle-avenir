@@ -7,7 +7,7 @@ import AdminFormationManager from '@/components/admin/AdminFormationManager';
 import AdminMetierManager from '@/components/admin/AdminMetierManager';
 import AdminOffreManager from '@/components/admin/AdminOffreManager';
 import { BookOpen, GraduationCap, Briefcase, FileText, Loader2 } from 'lucide-react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 export default function AdminPage() {
   const { user, isAdmin, loading } = useAuth();

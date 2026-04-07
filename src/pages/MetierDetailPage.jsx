@@ -252,6 +252,18 @@ const MetierDetailPage = () => {
       <SEOHead 
         title={`${metier.libelle} - Fiche Métier`}
         description={`Découvrez le métier de ${metier.libelle} : missions, compétences requises et opportunités d'emploi.`}
+        keywords={`${metier.libelle}, fiche métier, orientation, emploi, compétences`}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Occupation",
+          "name": metier.libelle,
+          "description": `Découvrez le métier de ${metier.libelle} : missions, compétences requises et opportunités d'emploi.`,
+          "occupationLocation": {
+            "@type": "Country",
+            "name": "France"
+          },
+          "url": `https://cleavenir.com/metier/${metier.code_rome || metier.id}`
+        }}
       />
       
       <main className="container mx-auto px-4 py-8 max-w-7xl">

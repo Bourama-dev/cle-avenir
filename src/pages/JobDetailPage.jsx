@@ -228,7 +228,30 @@ const JobDetailPage = () => {
     <div className="min-h-screen bg-slate-50">
       <SEOHead 
         title={`${job.title} - ${job.company}`} 
-        description={`Postulez au poste de ${job.title} chez ${job.company} à ${job.location}.`} 
+        description={`Postulez au poste de ${job.title} chez ${job.company} à ${job.location}.`}
+        keywords={`${job.title}, ${job.company}, offre emploi, ${job.location}`}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "JobPosting",
+          "title": job.title,
+          "description": job.description || `Postulez au poste de ${job.title} chez ${job.company} à ${job.location}.`,
+          "datePosted": job.date_posted || job.datePosted || new Date().toISOString().split('T')[0],
+          "hiringOrganization": {
+            "@type": "Organization",
+            "name": job.company,
+            "sameAs": job.company_url || undefined
+          },
+          "jobLocation": {
+            "@type": "Place",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": job.location,
+              "addressCountry": "FR"
+            }
+          },
+          "employmentType": job.contract_type || job.type || "FULL_TIME",
+          "url": `https://cleavenir.com/job/${job.id}`
+        }}
       />
 
       {/* 1. Hero Section */}

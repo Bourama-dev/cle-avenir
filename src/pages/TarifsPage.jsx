@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import SubscriptionTierComparison from '@/components/SubscriptionTierComparison';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 

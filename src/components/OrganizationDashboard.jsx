@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { 
     PlusCircle, BarChart2, MessageSquare, Edit, Trash2, CheckCircle2, XCircle
 } from 'lucide-react';

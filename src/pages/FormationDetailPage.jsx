@@ -184,6 +184,18 @@ const FormationDetailPage = () => {
       <SEOHead 
         title={`${formation.title || formation.nom} - CléAvenir`} 
         description={`Découvrez la formation ${formation.title || formation.nom} proposée par ${formation.provider_name || formation.provider}.`}
+        keywords={`${formation.title || formation.nom}, formation, ${formation.provider_name || formation.provider}, diplôme`}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Course",
+          "name": formation.title || formation.nom,
+          "description": `Découvrez la formation ${formation.title || formation.nom} proposée par ${formation.provider_name || formation.provider}.`,
+          "provider": {
+            "@type": "Organization",
+            "name": formation.provider_name || formation.provider || "CléAvenir"
+          },
+          "url": `https://cleavenir.com/formation/${formation.id}`
+        }}
       />
       
       {/* Hero Section */}
