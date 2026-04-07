@@ -6,12 +6,12 @@ const MentionsLegalesPage = () => {
     <LegalLayout
       title="Mentions Légales"
       subtitle="Informations légales et réglementaires concernant l'éditeur du site CléAvenir."
-      lastUpdated="15 janvier 2024"
+      lastUpdated="8 avril 2026"
     >
       <div className="legal-section">
         <h2>1. Identification de l'éditeur</h2>
         <p>
-          Le site <strong>CléAvenir</strong> est édité par la société <strong>Horizons</strong>, 
+          Le site <strong>CléAvenir</strong> est édité par la société <strong>CléAvenir</strong>,
           Société par Actions Simplifiée (SAS) au capital de 10 000 €.
         </p>
         <ul>
@@ -27,69 +27,52 @@ const MentionsLegalesPage = () => {
         <h2>2. Hébergement</h2>
         <p>
           Le site est hébergé par :<br/>
-          <strong>Hostinger International Ltd.</strong><br/>
-          61 Lordou Vironos Street, 6023 Larnaca, Chypre<br/>
-          Site web : <a href="https://www.hostinger.fr" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">https://www.hostinger.fr</a>
+          <strong>Vercel Inc.</strong><br/>
+          440 N Barranca Ave #4133, Covina, CA 91723, États-Unis<br/>
+          Site web : <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">https://vercel.com</a>
         </p>
       </div>
 
       <div className="legal-section">
-        <h2>3. Responsable du site</h2>
+        <h2>3. Directeur de la publication</h2>
         <p>
-          <strong>Directeur de la publication :</strong> Direction Horizons<br/>
-          Pour toute demande concernant le contenu éditorial, veuillez nous contacter à l'adresse email mentionnée ci-dessus.
+          Le directeur de la publication est le représentant légal de la société CléAvenir.<br/>
+          Pour toute demande concernant le contenu éditorial, veuillez nous contacter à :&nbsp;
+          <a href="mailto:contact@cleavenir.com" className="text-blue-600 hover:underline">contact@cleavenir.com</a>
         </p>
       </div>
 
       <div className="legal-section">
         <h2>4. Propriété intellectuelle</h2>
         <p>
-          L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle.
-          Tous les droits de reproduction sont réservés, y compris pour les documents téléchargeables et les représentations iconographiques et photographiques.
+          L'ensemble du contenu de ce site (textes, images, logos, graphismes, logiciels, bases de données, structure) est la propriété exclusive de CléAvenir ou de ses partenaires et est protégé par le droit de la propriété intellectuelle français et international.
         </p>
         <p>
-          La reproduction de tout ou partie de ce site sur un support électronique quel qu'il soit est formellement interdite sauf autorisation expresse du directeur de la publication.
+          Toute reproduction, représentation, modification, publication ou diffusion, totale ou partielle, sans l'autorisation écrite préalable de CléAvenir est strictement interdite.
         </p>
       </div>
 
       <div className="legal-section">
         <h2>5. Limitation de responsabilité</h2>
         <p>
-          Horizons s'efforce d'assurer l'exactitude et la mise à jour des informations diffusées sur ce site.
-          Toutefois, nous ne pouvons garantir l'exactitude, la précision ou l'exhaustivité des informations mises à la disposition sur ce site.
+          CléAvenir s'efforce d'assurer l'exactitude et la mise à jour des informations diffusées sur ce site. Toutefois, CléAvenir ne peut garantir l'exhaustivité ou l'absence d'erreur des informations publiées et décline toute responsabilité pour toute imprécision ou omission.
         </p>
         <p>
-          En conséquence, Horizons décline toute responsabilité pour toute imprécision, inexactitude ou omission portant sur des informations disponibles sur le site.
-        </p>
-      </div>
-
-      <div className="legal-section">
-        <h2>6. Liens externes</h2>
-        <p>
-          Le site CléAvenir peut contenir des liens hypertextes vers d'autres sites présents sur le réseau Internet. 
-          Les liens vers ces autres ressources vous font quitter le site CléAvenir.
-        </p>
-        <p>
-          Il est possible de créer un lien vers la page de présentation de ce site sans autorisation expresse d'Horizons. 
-          Aucune autorisation ou demande d'information préalable ne peut être exigée par l'éditeur à l'égard d'un site qui souhaite établir un lien vers le site de l'éditeur. 
-          Il convient toutefois d'afficher ce site dans une nouvelle fenêtre du navigateur.
+          Les informations fournies sur la plateforme, notamment les suggestions d'orientation professionnelle, sont à titre indicatif et ne constituent pas un conseil professionnel certifié.
         </p>
       </div>
 
       <div className="legal-section">
-        <h2>7. Modification des conditions</h2>
+        <h2>6. Liens hypertextes</h2>
         <p>
-          Horizons se réserve le droit de modifier les présentes mentions légales à tout moment. 
-          L'utilisateur s'engage donc à les consulter régulièrement.
+          Le site CléAvenir peut contenir des liens vers des sites tiers. CléAvenir n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu. La création de liens vers le site CléAvenir est autorisée sous réserve d'affichage dans une nouvelle fenêtre.
         </p>
       </div>
 
       <div className="legal-section">
-        <h2>8. Droit applicable</h2>
+        <h2>7. Droit applicable</h2>
         <p>
-          Tant le présent site que les modalités et conditions de son utilisation sont régis par le droit français, 
-          quel que soit le lieu d'utilisation. En cas de contestation éventuelle, et après l'échec de toute tentative 
-          de recherche d'une solution amiable, les tribunaux français seront seuls compétents pour connaître de ce litige.
+          Les présentes mentions légales sont régies par le droit français. En cas de litige non résolu à l'amiable, les tribunaux français seront seuls compétents.
         </p>
       </div>
     </LegalLayout>

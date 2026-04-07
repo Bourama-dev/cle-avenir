@@ -6,107 +6,114 @@ const ConditionsGeneralesPage = () => {
     <LegalLayout
       title="Conditions Générales d'Utilisation"
       subtitle="Règles et conditions régissant l'utilisation de la plateforme CléAvenir."
-      lastUpdated="15 janvier 2024"
+      lastUpdated="8 avril 2026"
     >
       <div className="legal-section">
         <h2>1. Objet</h2>
         <p>
-          Les présentes Conditions Générales d'Utilisation (CGU) ont pour objet de définir les modalités de mise à disposition des services du site 
-          <strong>CléAvenir</strong> et les conditions d'utilisation du Service par l'Utilisateur.
+          Les présentes Conditions Générales d'Utilisation (CGU) définissent les modalités d'accès et d'utilisation de la plateforme <strong>CléAvenir</strong>, éditée par la société CléAvenir SAS.
         </p>
         <p>
-          Tout accès et/ou utilisation du site suppose l'acceptation et le respect de l'ensemble des termes des présentes Conditions et leur acceptation inconditionnelle.
+          Tout accès ou utilisation du site implique l'acceptation pleine et entière des présentes CGU. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser la plateforme.
         </p>
       </div>
 
       <div className="legal-section">
-        <h2>2. Accès au site</h2>
+        <h2>2. Accès au service</h2>
         <p>
-          Le site CléAvenir est accessible gratuitement à tout Utilisateur disposant d'un accès à Internet. 
-          Tous les coûts afférents à l'accès au Service, que ce soit les frais matériels, logiciels ou d'accès à Internet sont exclusivement à la charge de l'utilisateur. 
-          Il est seul responsable du bon fonctionnement de son équipement informatique ainsi que de son accès à Internet.
+          La plateforme CléAvenir est accessible gratuitement à tout utilisateur disposant d'un accès à Internet. Certaines fonctionnalités avancées sont réservées aux utilisateurs disposant d'un abonnement payant.
+        </p>
+        <p>
+          CléAvenir se réserve le droit de modifier, suspendre ou interrompre l'accès au service à tout moment, notamment pour des raisons de maintenance, sans obligation de préavis.
         </p>
       </div>
 
       <div className="legal-section">
         <h2>3. Inscription et compte utilisateur</h2>
         <p>
-          Certaines fonctionnalités du site nécessitent la création d'un compte utilisateur. Lors de l'inscription, l'Utilisateur s'engage à fournir des informations exactes, complètes et à jour.
+          La création d'un compte est nécessaire pour accéder aux fonctionnalités personnalisées. Lors de l'inscription, l'utilisateur s'engage à fournir des informations exactes, complètes et à les maintenir à jour.
         </p>
         <p>
-          L'Utilisateur est responsable de la confidentialité de ses identifiants de connexion et de toute activité effectuée sous son compte. 
-          En cas d'utilisation non autorisée de son compte, l'Utilisateur doit en informer immédiatement CléAvenir.
+          L'utilisateur est seul responsable de la confidentialité de ses identifiants. En cas d'utilisation non autorisée de son compte, il doit en informer immédiatement CléAvenir à l'adresse <a href="mailto:contact@cleavenir.com" className="text-blue-600 hover:underline">contact@cleavenir.com</a>.
         </p>
       </div>
 
       <div className="legal-section">
-        <h2>4. Services offerts</h2>
-        <p>CléAvenir propose une plateforme d'orientation professionnelle et académique incluant :</p>
+        <h2>4. Services proposés</h2>
+        <p>CléAvenir propose notamment :</p>
         <ul>
-          <li>Des tests d'orientation adaptatifs et personnalisés.</li>
-          <li>Des analyses détaillées de profils et suggestions de métiers.</li>
-          <li>Des conseils carrière et parcours de formation.</li>
-          <li>Un suivi de progression et des objectifs.</li>
-          <li>L'accès à une base de données de ressources éducatives et professionnelles.</li>
+          <li>Des tests d'orientation professionnelle et scolaire basés sur l'intelligence artificielle.</li>
+          <li>Des fiches métiers détaillées avec débouchés, salaires et compétences requises.</li>
+          <li>Un moteur de recherche de formations et d'offres d'emploi/alternance.</li>
+          <li>Un assistant IA (Cléo) pour accompagner les utilisateurs dans leur parcours.</li>
+          <li>Des outils de création de CV et lettres de motivation.</li>
+          <li>Un blog et des ressources sur l'orientation et la carrière.</li>
         </ul>
+        <p>
+          Les résultats des tests d'orientation sont fournis à titre indicatif et ne constituent pas un bilan de compétences certifié au sens légal du terme.
+        </p>
       </div>
 
       <div className="legal-section">
         <h2>5. Utilisation acceptable</h2>
-        <p>L'Utilisateur s'engage à ne pas utiliser le site pour :</p>
+        <p>L'utilisateur s'engage à utiliser la plateforme dans le respect des lois en vigueur et à ne pas :</p>
         <ul>
-          <li>Diffuser des contenus illégaux, nuisibles, menaçants, injurieux, harcelants, diffamatoires, vulgaires, obscènes.</li>
-          <li>Porter atteinte à la vie privée d'autrui.</li>
-          <li>Usurper l'identité d'une personne physique ou morale.</li>
-          <li>Transmettre des virus informatiques ou tout autre code malveillant.</li>
-          <li>Tenter d'accéder sans autorisation aux systèmes informatiques de CléAvenir.</li>
+          <li>Diffuser des contenus illégaux, offensants, diffamatoires ou portant atteinte à la vie privée d'autrui.</li>
+          <li>Usurper l'identité d'une personne ou d'une organisation.</li>
+          <li>Tenter de contourner les mesures de sécurité de la plateforme.</li>
+          <li>Utiliser des robots ou outils automatisés pour accéder au service sans autorisation.</li>
+          <li>Revendre ou exploiter commercialement les données ou résultats fournis par la plateforme.</li>
         </ul>
       </div>
 
       <div className="legal-section">
         <h2>6. Propriété intellectuelle</h2>
         <p>
-          Tous les éléments du site (textes, images, logos, logiciels, bases de données) sont la propriété exclusive de Horizons ou de ses partenaires 
-          et sont protégés par le droit de la propriété intellectuelle.
+          L'ensemble des éléments de la plateforme (algorithmes, interfaces, contenus éditoriaux, marques, logos) est la propriété exclusive de CléAvenir SAS et est protégé par le droit de la propriété intellectuelle.
         </p>
         <p>
-          Toute reproduction, représentation, modification, publication, transmission ou dénaturation, totale ou partielle du site ou de son contenu, 
-          par quelque procédé que ce soit, et sur quelque support que ce soit, est interdite.
+          Toute reproduction, représentation ou utilisation non autorisée est strictement interdite et susceptible de poursuites.
         </p>
       </div>
 
       <div className="legal-section">
-        <h2>7. Limitation de responsabilité</h2>
+        <h2>7. Responsabilité</h2>
         <p>
-          CléAvenir met en œuvre tous les moyens raisonnables à sa disposition pour assurer un accès de qualité au Service, mais n'est tenu à aucune obligation d'y parvenir.
+          CléAvenir met en œuvre tous les moyens raisonnables pour assurer la disponibilité et la fiabilité du service. Toutefois, CléAvenir ne saurait être tenu responsable de toute interruption de service, perte de données ou dommage indirect résultant de l'utilisation de la plateforme.
         </p>
         <p>
-          CléAvenir ne peut, en outre, être tenue responsable de tout dysfonctionnement du réseau ou des serveurs ou de tout autre événement échappant au contrôle raisonnable, 
-          qui empêcherait ou dégraderait l'accès au Service.
-        </p>
-      </div>
-
-      <div className="legal-section">
-        <h2>8. Résiliation</h2>
-        <p>
-          Tout Utilisateur peut demander la suppression de son compte à tout moment. 
-          CléAvenir se réserve également le droit de suspendre ou de supprimer le compte d'un Utilisateur qui ne respecterait pas les présentes CGU, 
-          sans préavis ni indemnité.
+          Les informations d'orientation fournies sont générées par des algorithmes d'intelligence artificielle. Bien que nous nous efforcions d'assurer leur pertinence, elles ne remplacent pas l'avis d'un conseiller d'orientation certifié.
         </p>
       </div>
 
       <div className="legal-section">
-        <h2>9. Modification des conditions</h2>
+        <h2>8. Abonnements et paiements</h2>
         <p>
-          CléAvenir se réserve la possibilité de modifier, à tout moment et sans préavis, les présentes conditions d'utilisation afin de les adapter aux évolutions du site et/ou de son exploitation.
+          Les offres payantes de CléAvenir sont disponibles à la page <a href="/plans" className="text-blue-600 hover:underline">/plans</a>. Les paiements sont sécurisés via Stripe. L'utilisateur bénéficie d'un droit de rétractation de 14 jours pour tout abonnement souscrit en ligne, sauf si les services ont été intégralement consommés dans ce délai.
         </p>
       </div>
 
       <div className="legal-section">
-        <h2>10. Droit applicable</h2>
+        <h2>9. Résiliation</h2>
         <p>
-          Les présentes Conditions Générales d'Utilisation sont soumises au droit français. En cas de litige non résolu à l'amiable, 
-          les tribunaux français seront seuls compétents.
+          L'utilisateur peut supprimer son compte à tout moment depuis ses paramètres ou en contactant <a href="mailto:contact@cleavenir.com" className="text-blue-600 hover:underline">contact@cleavenir.com</a>. CléAvenir se réserve le droit de suspendre ou supprimer un compte en cas de violation des présentes CGU.
+        </p>
+      </div>
+
+      <div className="legal-section">
+        <h2>10. Modifications des CGU</h2>
+        <p>
+          CléAvenir se réserve le droit de modifier les présentes CGU à tout moment. Les utilisateurs seront informés par email et/ou notification sur la plateforme. La poursuite de l'utilisation du service après notification vaut acceptation des nouvelles conditions.
+        </p>
+      </div>
+
+      <div className="legal-section">
+        <h2>11. Droit applicable et litiges</h2>
+        <p>
+          Les présentes CGU sont soumises au droit français. En cas de litige non résolu à l'amiable, les tribunaux compétents du ressort du siège social de CléAvenir seront seuls compétents.
+        </p>
+        <p>
+          Conformément à l'article L. 612-1 du Code de la consommation, l'utilisateur peut recourir gratuitement à un médiateur de la consommation en cas de litige.
         </p>
       </div>
     </LegalLayout>
