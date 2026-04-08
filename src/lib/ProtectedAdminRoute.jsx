@@ -1,10 +1,10 @@
-import React from 'react';
+﻿import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Loader2 } from 'lucide-react';
 
 const ProtectedAdminRoute = ({ children }) => {
-  const { user, userRole, loading } = useAuth();
+  const { user, isAdmin, loading } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -19,10 +19,10 @@ const ProtectedAdminRoute = ({ children }) => {
   }
 
   if (!user) {
-    return <Navigate to="/auth/connexion" state={{ from: location }} replace />;
+    return <Navigate to="/auth?tab=login" state={{ from: location }} replace />;
   }
 
-  if (userRole !== 'admin') {
+  if (!isAdmin) {
     return <Navigate to="/dashboard" replace />;
   }
 
