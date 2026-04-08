@@ -250,7 +250,11 @@ const FormationsPage = ({ setAllFormations }) => {
     }
 
     if (remoteFilter) {
-      data = data.filter(f => (f.libelle_formation || '').toLowerCase().includes('distance') || Math.random() > 0.85);
+      data = data.filter(f => {
+        const title = (f.libelle_formation || '').toLowerCase();
+        const tags = (f.tags || []).join(' ').toLowerCase();
+        return title.includes('distance') || title.includes('e-learning') || title.includes('distanciel') || tags.includes('distance') || tags.includes('distanciel');
+      });
     }
 
     return data;
