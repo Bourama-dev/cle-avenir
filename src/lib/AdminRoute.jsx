@@ -33,7 +33,7 @@ const AdminRoute = ({ children }) => {
 
   // 1. Not Logged In -> Login
   if (!user) {
-    return <Navigate to="/auth?tab=login" state={{ from: location.pathname }} replace />;
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
   // 2. Logged In BUT Access Denied (Not Admin)
