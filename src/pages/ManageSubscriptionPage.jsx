@@ -4,21 +4,25 @@ import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { paymentHistoryService } from '@/services/paymentHistoryService';
 import { useUserSubscription } from '@/hooks/useUserSubscription';
 import SubscriptionErrorBoundary from '@/components/SubscriptionErrorBoundary';
+import { stripePortalService } from '@/services/stripePortalService';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { useToast } from '@/components/ui/use-toast';
 import { ArrowLeft, CreditCard, Download, Loader2, Check, AlertCircle, RefreshCw } from 'lucide-react';
 
 const ManageSubscriptionContent = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  
+  const { toast } = useToast();
+
   // Use our new safe hook with .maybeSingle() built-in
   const { subscription, loading: subLoading, error: subError, refetch } = useUserSubscription();
-  
+
   const [payments, setPayments] = useState([]);
   const [paymentsLoading, setPaymentsLoading] = useState(true);
+  const [portalLoading, setPortalLoading] = useState(false);
 
   useEffect(() => {
     const fetchPayments = async () => {
@@ -34,6 +38,21 @@ const ManageSubscriptionContent = () => {
     };
     fetchPayments();
   }, [user]);
+
+  const handleManagePortal = async () => {
+    setPortalLoading(true);
+    try {
+      await stripePortalService.createPortalSession();
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: error.message || "Impossible d'ouvrir le portail de gestion.",
+      });
+    } finally {
+      setPortalLoading(false);
+    }
+  };
 
   const loading = subLoading || paymentsLoading;
 
@@ -134,7 +153,13 @@ const ManageSubscriptionContent = () => {
                     Mettre à jour mon plan
                  </Button>
                  {subscription?.plan_type !== 'Free' && (
-                    <Button variant="outline" className="w-full border-red-200 text-red-600 hover:bg-red-50">
+                    <Button
+                       variant="outline"
+                       className="w-full border-red-200 text-red-600 hover:bg-red-50"
+                       onClick={handleManagePortal}
+                       disabled={portalLoading}
+                    >
+                       {portalLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                        Annuler l'abonnement
                     </Button>
                  )}
@@ -167,7 +192,11 @@ const ManageSubscriptionContent = () => {
                             <TableCell>{payment.amount}€</TableCell>
                             <TableCell><Badge variant="outline" className="text-green-600 border-green-200 bg-green-50">Payé</Badge></TableCell>
                             <TableCell className="text-right">
-                               <Button variant="ghost" size="sm" onClick={() => window.open(paymentHistoryService.generateInvoiceUrl(payment.id), '_blank')}>
+                               <Button variant="ghost" size="sm" onClick={async () => {
+                                  const url = await paymentHistoryService.generateInvoiceUrl(payment.id);
+                                  if (url) window.open(url, '_blank');
+                                  else toast({ variant: 'destructive', title: 'Facture indisponible', description: 'Impossible de générer la facture pour ce paiement.' });
+                               }}>
                                   <Download className="h-4 w-4" />
                                </Button>
                             </TableCell>

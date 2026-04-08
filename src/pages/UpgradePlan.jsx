@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/customSupabaseClient';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
@@ -6,6 +7,8 @@ import { Check, Star, Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
+import { stripeService } from '@/services/stripeService';
+import { STRIPE_PRICES, STRIPE_MODES } from '@/constants/subscriptionTiers';
 
 // Mock plans data if database is empty initially
 const DEFAULT_PLANS = [
@@ -35,9 +38,18 @@ const DEFAULT_PLANS = [
   }
 ];
 
+// Map plan names/ids to Stripe price IDs
+const PLAN_PRICE_MAP = {
+  pro: STRIPE_PRICES.PREMIUM,
+  premium: STRIPE_PRICES.PREMIUM,
+  expert: STRIPE_PRICES.PREMIUM_PLUS,
+  premium_plus: STRIPE_PRICES.PREMIUM_PLUS,
+};
+
 const UpgradePlan = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState(null);
@@ -61,27 +73,38 @@ const UpgradePlan = () => {
   }, []);
 
   const handleSubscribe = async (plan) => {
-    if (!user) return;
+    if (!user) {
+      navigate('/login', { state: { from: '/upgrade' } });
+      return;
+    }
+
+    if (plan.price === 0) return; // Plan gratuit, pas de checkout
+
+    const planKey = (plan.id || plan.name || '').toLowerCase();
+    const priceId = PLAN_PRICE_MAP[planKey];
+
+    if (!priceId) {
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Plan non reconnu. Contactez le support.",
+      });
+      return;
+    }
+
     setProcessingId(plan.id);
-    
-    // Simulate Stripe Checkout call
     try {
-      // In production: const { url } = await stripeService.createCheckoutSession(plan.id);
-      // window.location.href = url;
-      
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulating API
-      
       toast({
         title: "Redirection...",
         description: "Vous allez être redirigé vers la page de paiement sécurisé.",
       });
-      
-      // For demo, just show success
+      const mode = STRIPE_MODES[planKey] || 'subscription';
+      await stripeService.createCheckoutSession(priceId, mode);
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Erreur",
-        description: "Impossible d'initier le paiement.",
+        title: "Erreur de paiement",
+        description: error.message || "Impossible d'initier le paiement. Réessayez.",
       });
     } finally {
       setProcessingId(null);

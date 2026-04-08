@@ -1,30 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/lib/customSupabaseClient';
 import { useToast } from '@/components/ui/use-toast';
-import { Loader2, Lock, CheckCircle } from 'lucide-react';
+import { Loader2, Lock, CheckCircle, XCircle } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [verifying, setVerifying] = useState(true);
+  const [sessionReady, setSessionReady] = useState(false);
   const [success, setSuccess] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  // Check if we have a session (hash fragment from email link)
+  // Exchange PKCE code for session (Supabase redirects with ?code= param)
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) {
-        // If no session, user might have clicked link incorrectly or it expired
-        // But let's verify if we are in the flow
+    const exchangeCode = async () => {
+      try {
+        const code = searchParams.get('code');
+        if (code) {
+          const { error } = await supabase.auth.exchangeCodeForSession(code);
+          if (error) throw error;
+          setSessionReady(true);
+          return;
+        }
+        // No code — check if session already exists (implicit flow)
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          setSessionReady(true);
+        } else {
+          throw new Error('Lien invalide ou expiré.');
+        }
+      } catch (err) {
+        toast({
+          variant: 'destructive',
+          title: 'Lien invalide',
+          description: err.message || 'Ce lien de réinitialisation est invalide ou a expiré.',
+        });
+        setTimeout(() => navigate('/forgot-password'), 3000);
+      } finally {
+        setVerifying(false);
       }
-    });
+    };
+    exchangeCode();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -74,6 +99,30 @@ const ResetPasswordPage = () => {
       setLoading(false);
     }
   };
+
+  if (verifying) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
+        <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
+        <p className="text-slate-500">Vérification du lien...</p>
+      </div>
+    );
+  }
+
+  if (!sessionReady) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-4">
+        <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center">
+          <div className="mx-auto w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4">
+            <XCircle className="h-6 w-6 text-red-600" />
+          </div>
+          <h2 className="text-xl font-bold text-slate-900 mb-2">Lien invalide ou expiré</h2>
+          <p className="text-slate-600 mb-6">Redirection vers la page de réinitialisation...</p>
+          <Button onClick={() => navigate('/forgot-password')}>Demander un nouveau lien</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">

@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { supabase } from '@/lib/customSupabaseClient';
 
 const TestPage = () => {
   const navigate = useNavigate();
@@ -75,10 +76,39 @@ const TestPage = () => {
 
   const handleViewResults = async () => {
     if (!user) {
-      navigate('/login');
-    } else {
-      // Logic to check if profile is complete would normally go here
-      // For now, redirect to profile to ensure they fill it out
+      navigate('/login', { state: { from: '/test' } });
+      return;
+    }
+
+    // Check if profile is already complete
+    try {
+      const { data } = await supabase
+        .from('user_profiles')
+        .select('first_name, education_level, current_status')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      const profileComplete = data?.first_name && data?.education_level && data?.current_status;
+
+      if (profileComplete) {
+        // Profile already filled — save test scores directly then go to results
+        const tempAnswers = localStorage.getItem('temp_test_answers');
+        const tempScores = localStorage.getItem('temp_test_scores');
+        if (tempAnswers && tempScores) {
+          await supabase.from('test_results').insert({
+            user_id: user.id,
+            test_answers: JSON.parse(tempAnswers),
+            scores: JSON.parse(tempScores)
+          });
+          localStorage.removeItem('temp_test_answers');
+          localStorage.removeItem('temp_test_scores');
+        }
+        navigate('/results');
+      } else {
+        // Profile incomplete — redirect to profile form, it will navigate to /results after save
+        navigate('/profile');
+      }
+    } catch {
       navigate('/profile');
     }
   };

@@ -40,9 +40,17 @@ export const paymentHistoryService = {
     return data;
   },
 
-  generateInvoiceUrl(paymentId) {
-    // In a real app, this would call a backend endpoint to generate a PDF invoice
-    // For now, we simulate this
-    return `https://cleavenir.com/invoices/${paymentId}.pdf`;
+  async generateInvoiceUrl(paymentId) {
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-invoice', {
+        body: { payment_id: paymentId }
+      });
+      if (error) throw error;
+      if (data?.url) return data.url;
+      throw new Error('URL manquante');
+    } catch (err) {
+      console.error('Erreur génération facture:', err);
+      return null;
+    }
   }
 };
