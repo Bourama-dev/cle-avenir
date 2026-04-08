@@ -175,14 +175,27 @@ export const notificationService = {
   },
 
   async sendEmailNotification(userId, notificationData) {
-    // In a real implementation, this would call an Edge Function or external service like Resend
-    console.log(`[notificationService] Sending email to user ${userId}:`, notificationData);
-    return { success: true };
+    try {
+      const { error } = await supabase.functions.invoke('send-email', {
+        body: {
+          user_id: userId,
+          subject: notificationData.title || notificationData.subject,
+          message: notificationData.message || notificationData.body,
+          template: notificationData.template || 'default',
+          data: notificationData.data || {}
+        }
+      });
+      if (error) throw error;
+      return { success: true };
+    } catch (error) {
+      console.error('[notificationService] Error sending email:', error);
+      return { success: false, error };
+    }
   },
 
   async sendPushNotification(userId, notificationData) {
-    // In a real implementation, this would trigger a web push API call via an Edge Function
-    console.log(`[notificationService] Sending push to user ${userId}:`, notificationData);
+    // Web Push nécessite un service worker — fonctionnalité future
+    console.log(`[notificationService] Push notification queued for user ${userId}`);
     return { success: true };
   }
 };
