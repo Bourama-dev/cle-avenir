@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '@/lib/customSupabaseClient';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
@@ -57,7 +57,7 @@ const UpgradePlan = () => {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const { data, error } = await supabase.from('plans').select('*').order('price');
+        const { data } = await supabase.from('plans').select('*').order('price');
         if (data && data.length > 0) {
           setPlans(data);
         } else {
@@ -178,7 +178,9 @@ const UpgradePlan = () => {
         <div className="bg-white rounded-xl p-8 border border-slate-200 text-center">
             <h3 className="font-semibold text-lg mb-2">Besoin d'aide pour choisir ?</h3>
             <p className="text-slate-600 mb-4">Contactez notre équipe support pour des conseils personnalisés.</p>
-            <Button variant="outline">Contacter le support</Button>
+            <Button variant="outline" asChild>
+              <Link to="/contact">Contacter le support</Link>
+            </Button>
         </div>
       </div>
     </div>
