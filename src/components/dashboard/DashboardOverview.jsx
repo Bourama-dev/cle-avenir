@@ -1,29 +1,34 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Target, Compass, BookOpen, ChevronRight, BarChart2 } from 'lucide-react';
+import { Target, Compass, BookOpen, ChevronRight, BarChart2, AlertCircle } from 'lucide-react';
 import TestHistoryWidget from './TestHistoryWidget';
 import { testService } from '@/services/testService';
+
 const DashboardOverview = ({
   userProfile,
   onNavigate
 }) => {
   const [testStats, setTestStats] = useState({
     count: 0,
-    loading: true
+    loading: true,
+    error: null
   });
+
   useEffect(() => {
     const fetchStats = async () => {
-      if (userProfile?.id) {
+      if (!userProfile?.id) return;
+      try {
         const res = await testService.getTestCount(userProfile.id);
-        setTestStats({
-          count: res.count,
-          loading: false
-        });
+        setTestStats({ count: res.count, loading: false, error: null });
+      } catch (err) {
+        console.error('[DashboardOverview] Error fetching test stats:', err);
+        setTestStats({ count: 0, loading: false, error: err.message });
       }
     };
     fetchStats();
   }, [userProfile]);
+
   return <div className="space-y-6">
       
       {/* Top Stats Row */}
@@ -34,9 +39,11 @@ const DashboardOverview = ({
                  <BarChart2 className="w-5 h-5" />
               </div>
               <div className="text-2xl font-bold text-slate-900">
-                {testStats.loading ? '...' : testStats.count}
+                {testStats.loading ? '...' : testStats.error ? (
+                  <AlertCircle className="w-5 h-5 text-red-400 mx-auto" />
+                ) : testStats.count}
               </div>
-              <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold mt-1">Tests passés</div>
+              <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold mt-1">Tests passes</div>
            </CardContent>
         </Card>
         
@@ -46,7 +53,7 @@ const DashboardOverview = ({
                  <Compass className="w-5 h-5" />
               </div>
               <div className="text-sm font-bold text-slate-900 mt-2">Explorer</div>
-              <div className="text-xs text-slate-500 mt-1">Métiers</div>
+              <div className="text-xs text-slate-500 mt-1">Metiers</div>
            </CardContent>
         </Card>
 
@@ -79,7 +86,7 @@ const DashboardOverview = ({
           </div>
           <CardContent className="p-8 relative z-10">
             <h3 className="text-2xl font-bold mb-2">Nouveau Test Dispo !</h3>
-            <p className="text-indigo-100 mb-6">Découvrez notre test en 27 questions pour affiner votre profil RIASEC.</p>
+            <p className="text-indigo-100 mb-6">Decouvrez notre test en 27 questions pour affiner votre profil RIASEC.</p>
             <Button onClick={() => onNavigate('/test-orientation')} className="bg-white text-indigo-600 hover:bg-slate-50">
                Passer le test <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
@@ -91,4 +98,5 @@ const DashboardOverview = ({
       </div>
     </div>;
 };
+
 export default DashboardOverview;

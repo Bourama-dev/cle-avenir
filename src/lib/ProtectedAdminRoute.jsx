@@ -12,7 +12,7 @@ const ProtectedAdminRoute = ({ children }) => {
       <div className="flex items-center justify-center min-h-screen bg-slate-50">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          <p className="text-sm text-muted-foreground">Vérification des droits...</p>
+          <p className="text-sm text-muted-foreground">Verification des droits...</p>
         </div>
       </div>
     );
