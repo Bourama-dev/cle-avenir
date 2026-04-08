@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+﻿import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { useLocation, useNavigate, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
@@ -32,7 +32,6 @@ import ProtectedEstablishmentRoute from '@/lib/ProtectedEstablishmentRoute';
 import CleoWidget from '@/components/CleoWidget';
 import PageTransition from '@/components/PageTransition';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
-import CookieConsent from '@/components/CookieConsent';
 import RGPDNotice from '@/components/RGPDNotice';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import BugReportButton from '@/components/BugReportButton';
@@ -119,11 +118,7 @@ const TermsPage = lazy(() => import('@/pages/TermsPage'));
 const LegalPage = lazy(() => import('@/pages/LegalPage'));
 
 // Legal Extra Pages
-const PrivacyPolicyPage = lazy(() => import('@/pages/legal/PrivacyPolicyPage'));
-const TermsOfServicePage = lazy(() => import('@/pages/legal/TermsOfServicePage'));
-const LegalNoticesPage = lazy(() => import('@/pages/legal/LegalNoticesPage'));
 const CookiePolicyPage = lazy(() => import('@/pages/legal/CookiePolicyPage'));
-const MentionsLegalesPage = lazy(() => import('@/pages/legal/MentionsLegalesPage'));
 const GestionCookiesPage = lazy(() => import('@/pages/legal/GestionCookiesPage'));
 const PreferencesRGPDPage = lazy(() => import('@/pages/legal/PreferencesRGPDPage'));
 
@@ -427,8 +422,6 @@ const PageContent = () => {
       {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isCleoPage && !isTestPage && !isCVBuilder && !isMaintenancePage && <CleoWidget />} 
       {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isMaintenancePage && <BugReportButton />}
       
-      <CookieConsent />
-      
       {showFooter && <Footer onNavigate={handleNavigate} />}
     </div>
   );
@@ -444,3 +437,4 @@ export default function App() {
     </SystemSettingsProvider>
   );
 }
+
