@@ -74,7 +74,7 @@ const AlternanceFinder = ({ onNavigate }) => {
 
   const handleSaveAlternance = async (alternance) => {
     if (!user) {
-      onNavigate('/auth');
+      onNavigate('/login');
       toast({ title: "Connectez-vous", description: "Vous devez être connecté pour sauvegarder une alternance." });
       return;
     }

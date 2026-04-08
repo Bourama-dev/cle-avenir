@@ -21,7 +21,7 @@ const CleoWidget = () => {
   const handleOpen = () => {
     if (!user) {
       // Redirect to login or show auth prompt
-      navigate('/auth');
+      navigate('/login');
       return;
     }
     setIsOpen(true);

@@ -41,7 +41,7 @@ const MetierRatingComponent = ({ jobCode }) => {
         description: "Veuillez vous connecter pour noter ce métier.",
         variant: "default",
       });
-      navigate('/auth');
+      navigate('/login');
       return;
     }
     setSelectedRating(rating);

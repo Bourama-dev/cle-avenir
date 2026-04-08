@@ -63,7 +63,7 @@ const SpontaneousApplicationFinder = ({ onNavigate }) => {
   const fetchCompanies = async (e) => {
     e.preventDefault();
     if (!user) {
-      onNavigate('/auth');
+      onNavigate('/login');
       toast({title: "Action requise", description: "Veuillez vous connecter pour utiliser cette fonctionnalité."});
       return;
     }

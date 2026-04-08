@@ -28,7 +28,7 @@ const UpgradeButton = ({ className, children, variant = "default", priceId = STR
     // 2. Auth Check
     if (!user) {
       console.log("UpgradeButton: User not authenticated, redirecting to login");
-      navigate('/auth', { 
+      navigate('/login', { 
         state: { 
           returnTo: window.location.pathname,
           message: "Connectez-vous pour souscrire à un abonnement." 

@@ -202,7 +202,7 @@ const MetierDetailPage = () => {
   };
 
   const toggleSave = async () => {
-      if (!user) { navigate('/auth'); return; }
+      if (!user) { navigate('/login'); return; }
       setSaving(true);
       try {
         if (isSaved) {

@@ -38,7 +38,7 @@ const PlansPage = () => {
         title: "Connexion requise",
         description: "Veuillez vous connecter ou créer un compte pour souscrire à une offre.",
       });
-      navigate('/auth', { state: { returnTo: '/forfaits' } });
+      navigate('/login', { state: { returnTo: '/forfaits' } });
       return;
     }
 

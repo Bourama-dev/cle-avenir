@@ -94,7 +94,7 @@ const FormationDetailPage = () => {
   useEffect(() => {
     if (authLoading) return;
     if (!user) {
-      navigate('/auth', { 
+      navigate('/login', { 
         state: { 
           from: location.pathname,
           message: "Connectez-vous pour voir les détails de cette formation." 

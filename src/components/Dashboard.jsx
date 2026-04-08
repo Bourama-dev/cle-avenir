@@ -99,7 +99,7 @@ const Dashboard = ({ onNavigate }) => {
   }
 
   if (!user) {
-    return <Navigate to="/auth" state={{ returnTo: '/dashboard', message: "Veuillez vous connecter pour accéder à votre tableau de bord." }} replace />;
+    return <Navigate to='/login' state={{ returnTo: '/dashboard', message: "Veuillez vous connecter pour accéder à votre tableau de bord." }} replace />;
   }
 
   if (isInstitutionManager) {

@@ -17,7 +17,7 @@ const CreatePlanModal = ({ isOpen, onClose, metierCode, metierName }) => {
 
   const handleCreate = async () => {
     if (!user) {
-      navigate('/auth');
+      navigate('/login');
       return;
     }
 

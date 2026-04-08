@@ -371,11 +371,11 @@ const Header = ({ onNavigate }) => {
                       <span>Établissement</span>
                    </Button>
                    <Link to="/signup" className="text-[var(--text-primary)] font-semibold px-3 transition-colors min-h-[40px] flex items-center" style={{ ':hover': { color: primaryColor } }}>Inscription</Link>
-                   <Button variant="ghost" onClick={() => safeNavigate('/auth')} className="text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] font-medium h-10" style={{ ':hover': { color: primaryColor } }}>Se connecter</Button>
+                   <Button variant="ghost" onClick={() => safeNavigate('/login')} className="text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] font-medium h-10" style={{ ':hover': { color: primaryColor } }}>Se connecter</Button>
                    <Button onClick={() => safeNavigate('/test-orientation')} className="shadow-lg transition-all text-white font-semibold h-10" style={{ backgroundColor: primaryColor, boxShadow: `0 10px 15px -3px ${primaryColor}33` }}>Faire le test</Button>
                 </div>
                 
-                <Button variant="ghost" size="icon" className="lg:hidden text-[var(--text-secondary)] w-10 h-10 shrink-0" onClick={() => safeNavigate('/auth')} aria-label="Se connecter">
+                <Button variant="ghost" size="icon" className="lg:hidden text-[var(--text-secondary)] w-10 h-10 shrink-0" onClick={() => safeNavigate('/login')} aria-label="Se connecter">
                   <LogIn className="h-5 w-5" />
                 </Button>
              </div>
@@ -433,7 +433,7 @@ const Header = ({ onNavigate }) => {
 
                     {!user && (
                        <div className="mt-8 px-4 space-y-3 pb-8">
-                          <Button onClick={() => { safeNavigate('/auth'); setIsMobileMenuOpen(false); }} className="w-full h-12 text-base shadow-lg text-white font-semibold" style={{ backgroundColor: primaryColor }}>
+                          <Button onClick={() => { safeNavigate('/login'); setIsMobileMenuOpen(false); }} className="w-full h-12 text-base shadow-lg text-white font-semibold" style={{ backgroundColor: primaryColor }}>
                              Se connecter
                           </Button>
                           <Button variant="outline" onClick={() => { safeNavigate('/signup'); setIsMobileMenuOpen(false); }} className="w-full h-12 text-base font-medium">
