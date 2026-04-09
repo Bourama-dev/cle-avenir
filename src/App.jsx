@@ -47,6 +47,7 @@ import ProgressBar from '@/components/ui/ProgressBar';
 // Immediate Load
 import HomePage from '@/components/HomePage';
 import MaintenancePage from '@/components/MaintenancePage';
+import DynamicBackground from '@/components/DynamicBackground';
 
 // --- Lazy Load Pages ---
 // Auth & New Flow Pages
@@ -264,7 +265,8 @@ const PageContent = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen transition-colors duration-300 bg-[var(--bg-secondary)]">
+    <DynamicBackground>
+    <div className="flex flex-col min-h-screen transition-colors duration-300 bg-transparent">
       <ScrollToTop />
       <ProgressBar />
       
@@ -430,6 +432,7 @@ const PageContent = () => {
       
       {showFooter && <Footer onNavigate={handleNavigate} />}
     </div>
+    </DynamicBackground>
   );
 };
 
