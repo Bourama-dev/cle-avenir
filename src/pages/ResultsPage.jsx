@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Loader2, GraduationCap, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { StatsGrid } from '@/components/cleo/charts/CleoChartLibrary';
 
 const ResultsPage = () => {
   const navigate = useNavigate();
@@ -118,14 +119,14 @@ const ResultsPage = () => {
         
         {/* Header */}
         <div className="relative text-center space-y-4">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             onClick={handleLogout}
             className="absolute right-0 top-0 text-slate-500 hover:text-slate-900"
           >
             Déconnexion
           </Button>
-          
+
           <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 pt-8 md:pt-0">
             Bonjour {profile?.first_name} !
           </h1>
@@ -133,6 +134,36 @@ const ResultsPage = () => {
             Basé sur votre profil ({profile?.education_level}, {profile?.wants_long_studies === 'Oui' ? 'Études longues' : 'Études courtes'}), voici les métiers faits pour vous.
           </p>
         </div>
+
+        {/* Profile Summary Stats */}
+        <StatsGrid
+          stats={[
+            {
+              label: 'Recommandations',
+              value: recommendedJobs.length,
+              trend: recommendedJobs.length > 3 ? 'up' : 'neutral',
+              subtitle: 'métiers à fort potentiel'
+            },
+            {
+              label: 'Match moyen',
+              value: `${Math.round(recommendedJobs.reduce((sum, j) => sum + j.matchScore, 0) / (recommendedJobs.length || 1))}%`,
+              trend: 'up',
+              subtitle: 'avec votre profil'
+            },
+            {
+              label: 'Niveau d\'études',
+              value: profile?.education_level || 'Non défini',
+              trend: 'neutral',
+              subtitle: profile?.wants_long_studies === 'Oui' ? 'Études longues' : 'Études courtes'
+            },
+            {
+              label: 'À explorer',
+              value: otherJobs.length,
+              trend: otherJobs.length > 0 ? 'neutral' : 'up',
+              subtitle: 'opportunités complémentaires'
+            }
+          ]}
+        />
 
         {/* Recommended Jobs */}
         <div>
