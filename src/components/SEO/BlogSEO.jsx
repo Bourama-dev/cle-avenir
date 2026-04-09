@@ -51,7 +51,7 @@ const BlogSEO = ({ title, description, image, url, type = 'article', publishedTi
             "name": "CléAvenir",
             "logo": {
               "@type": "ImageObject",
-              "url": `${siteUrl}/logo.png`
+              "url": `${BASE_URL}/logo.png`
             }
           },
           "url": fullUrl,
