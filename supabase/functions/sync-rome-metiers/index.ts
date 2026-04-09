@@ -125,6 +125,19 @@ async function insertMetiersToSupabase(supabase: any, metiers: MetierFromAPI[]) 
 }
 
 Deno.serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Max-Age': '86400',
+      }
+    });
+  }
+
   try {
     // Only allow POST requests
     if (req.method !== 'POST') {

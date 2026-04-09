@@ -100,23 +100,40 @@ const ProfilePage = () => {
       else if (formData.wants_long_studies === 'Non') wantsLongStudiesBool = false;
 
       // 1. Save Profile
+      const ageRange = formData.age
+  ? `${formData.age}-${formData.age}`
+  : null;
+
       const { error: profileError } = await supabase
-        .from('user_profiles')
+        .from('profiles')
         .upsert({
-          user_id: user.id,
+          id: user.id, // ⚠️ IMPORTANT (pas user_id)
+          
           first_name: formData.first_name,
           last_name: formData.last_name,
-          age: formData.age ? parseInt(formData.age, 10) : null,
+          
           region: formData.region,
           city: formData.city,
+
           education_level: formData.education_level,
-          education_specialty: formData.education_specialty,
-          current_status: formData.current_status,
-          wants_long_studies: wantsLongStudiesBool,
+          specialization: formData.education_specialty, // mapping
+
+          user_status: formData.current_status,
+
+          wants_long_studies: wantsLongStudiesBool, // ⚠️ colonne inexistante → voir plus bas
+          
+          age_range: ageRange,
+
           interests: formData.interests,
-          constraints: formData.constraints,
+
+          constraints: {
+            selected: formData.constraints
+          },
+
+          profile_completed: true,
           updated_at: new Date().toISOString()
-        }, { onConflict: 'user_id' });
+          
+        }, { onConflict: 'id' });
 
       if (profileError) throw new Error(profileError.message);
 
