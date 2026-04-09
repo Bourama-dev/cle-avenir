@@ -178,19 +178,17 @@ const ProfilePage = () => {
               scores: JSON.parse(tempScores)
             }
           });
-        
-        if (testError) throw new Error(testError.message);
-        
-        // Clear temp data
-        localStorage.removeItem('temp_test_answers');
-        localStorage.removeItem('temp_test_scores');
+
+        if (testError) {
+          console.error("Test error:", testError);
+          // ❗ NE PAS BLOQUER LA NAVIGATION
+        }
       }
 
       toast({ title: "Profil enregistré avec succès !" });
       // ✅ navigation sécurisée
-      setTimeout(() => {
-        navigate('/results');
-      }, 500);
+      console.log("NAVIGATING...");
+      navigate('/results', { replace: true });
 
     } catch (err) {
       console.error("Profile save error:", err);
