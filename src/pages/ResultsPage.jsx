@@ -31,9 +31,9 @@ const ResultsPage = () => {
         
         // 2. Fetch Profile Data
         const { data: profileData } = await supabase
-          .from('user_profiles')
+          .from('profiles')
           .select('*')
-          .eq('user_id', session.user.id)
+          .eq('id', session.user.id)
           .single();
           
         if (!profileData) {
