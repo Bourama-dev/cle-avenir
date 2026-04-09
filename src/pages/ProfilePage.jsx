@@ -146,8 +146,10 @@ const ProfilePage = () => {
           .from('test_results')
           .insert({
             user_id: user.id,
-            test_answers: JSON.parse(tempAnswers),
-            scores: JSON.parse(tempScores)
+            answers: {
+              test_answers: JSON.parse(tempAnswers),
+              scores: JSON.parse(tempScores)
+            }
           });
         
         if (testError) throw new Error(testError.message);
