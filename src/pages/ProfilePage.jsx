@@ -127,21 +127,19 @@ const ProfilePage = () => {
       const { error: profileError } = await supabase
         .from('profiles')
         .upsert({
-          id: user.id, // ⚠️ IMPORTANT (pas user_id)
-          
+          id: user.id,
+
           first_name: formData.first_name,
           last_name: formData.last_name,
-          
+
           region: formData.region,
           city: formData.city,
 
           education_level: formData.education_level,
-          specialization: formData.education_specialty, // mapping
+          specialization: formData.education_specialty,
 
           user_status: formData.current_status,
 
-          wants_long_studies: wantsLongStudiesBool, // ⚠️ colonne inexistante → voir plus bas
-          
           age_range: ageRange,
 
           interests: formData.interests,
@@ -150,9 +148,14 @@ const ProfilePage = () => {
             selected: formData.constraints
           },
 
+          // ✅ FIX ICI
+          answers: {
+            wants_long_studies: wantsLongStudiesBool
+          },
+
           profile_completed: true,
           updated_at: new Date().toISOString()
-          
+
         }, { onConflict: 'id' });
 
       if (profileError) throw new Error(profileError.message);
