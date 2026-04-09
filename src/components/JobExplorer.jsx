@@ -32,47 +32,19 @@ const JobExplorer = ({ onNavigate }) => {
 
   const debouncedSearch = useDebounce(searchQuery, 500);
 
-  // Initial fetch and fetch on filter/page change
+  // Fetch on filter/page/search changes with scroll to top
   useEffect(() => {
     fetchJobs();
-    
-    // Scroll to top on page change or filter update
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [filters.location, filters.contractTypes, filters.experiences, filters.teletravauxOnly, filters.page, filters.radius, filters.limit]);
-
-  // Search effect
-  useEffect(() => {
-    if (debouncedSearch !== undefined) {
-         // handleFilterChange logic already resets page to 1
-         // but if search query is updated via setSearchQuery which calls handleFilterChange, we need to trigger fetch
-         // The hook dependency above [filters...] will catch it if filters.search changes? 
-         // wait, filters.search is not in the dependency array above. 
-         // Let's add fetchJobs call here explicitly for search changes if not caught.
-         // Actually, if we add filters.search to the dependency array above, it works automatically.
-         // But debouncing is external to the hook's state update usually.
-         // Here `setSearchQuery` updates the hook state.
-         // So if `debouncedSearch` changes, we essentially just want to ensure we fetched.
-         // BUT `useJobFilters` updates `filters.search` immediately on input? No, typically we debounce the set or debounce the effect.
-         // The hook provided updates filters.search immediately.
-         // Let's rely on the effect below to trigger fetch when search *actually* changes in filters if we passed debounced value to filters?
-         // Current implementation: `setSearchQuery` updates state immediately.
-         // We should probably debounce the `setSearchQuery` call or debounce the effect.
-         
-         // Since `setSearchQuery` updates `filters.search`, and `filters` is a dep of `fetchJobs` effect if we add it...
-         // Ideally: Input updates local state -> debounce -> update filters.search -> triggers fetch.
-         // Here: Input updates filters.search -> triggers fetch immediately? No, we want debounce.
-         
-         // Fix: `setSearchQuery` in hook updates filter immediately.
-         // We should use a local state for input in this component, then update hook on debounce.
-         // BUT `searchQuery` comes from hook.
-         // Let's just manually call fetchJobs here and ensure filters.search matches debouncedSearch
-         // OR update the hook to support debounced triggering.
-         
-         // For now, let's assume `fetchJobs` is called when filters change.
-         // We need to ensure we don't double fetch.
-         fetchJobs();
-    }
-  }, [debouncedSearch]);
+  }, [
+    filters.location,
+    filters.contractTypes,
+    filters.experiences,
+    filters.teletravauxOnly,
+    filters.page,
+    filters.radius,
+    debouncedSearch
+  ]);
 
   const handlePageChange = (newPage) => {
       setPage(newPage);

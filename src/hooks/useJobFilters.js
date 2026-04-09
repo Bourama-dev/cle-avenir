@@ -131,17 +131,19 @@ const useJobFilters = () => {
       }
 
       // Prepare payload for edge function
+      // Note: API only accepts single contract/experience, so we send first selected
+      // Client-side will apply additional filtering if needed
       const payload = {
         search: filters.search?.trim() || undefined,
         commune: communeParam,
         latitude: latParam,
         longitude: lonParam,
-        distance: undefined, // Explicitly undefined to get broader results for client-side filtering logic
+        distance: undefined,
         contract: filters.contractTypes.length > 0 ? filters.contractTypes[0] : undefined,
         experience: filters.experiences.length > 0 ? filters.experiences[0] : undefined,
         teletravauxOnly: filters.teletravauxOnly,
         page: filters.page,
-        limit: filters.limit, // Use strict limit
+        limit: filters.limit,
         sort: 1
       };
 
@@ -182,7 +184,7 @@ const useJobFilters = () => {
           description: job.description,
           published_at: job.dateCreation,
           url: job.origineOffre?.urlOrigine,
-          is_remote: job.teletravail,
+          is_remote: job.teletravail || false,
           sector: job.romeCode,
           skills: job.competences?.map(c => c.libelle) || [],
           contract_duration: job.dureeTravailLibelleConverti || job.dureeTravailLibelle,
@@ -212,12 +214,11 @@ const useJobFilters = () => {
 
       const totalResults = data?.meta?.total || jobsWithDistance.length;
       setTotalCount(totalResults);
-      setTotalPages(Math.ceil(totalResults / filters.limit));
 
       // Apply Radius Filter Client-Side
       const userRadius = filters.radius ? Number(filters.radius) : null;
       let filtered = jobsWithDistance;
-      
+
       if (userRadius !== null && userLat !== null && userLon !== null) {
           filtered = jobsWithDistance.filter(job => {
               if (job.distanceToUser !== null) {
@@ -234,8 +235,10 @@ const useJobFilters = () => {
           setJobs(jobsWithDistance);
           setFilteredJobs(filtered);
       }
-      
+
       setFilteredCount(filtered.length);
+      // Calculate total pages based on FILTERED results for accurate pagination
+      setTotalPages(Math.ceil(filtered.length / filters.limit));
 
     } catch (err) {
       console.error('Error fetching jobs:', err);
