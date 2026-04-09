@@ -6,6 +6,7 @@ import PageHelmet from '@/components/SEO/PageHelmet';
 
 // Lazy load non-critical components
 const BlogCarousel = lazy(() => import('@/components/BlogCarousel'));
+const HeroScene3D = lazy(() => import('@/components/three/HeroScene3D'));
 
 const HomePage = ({
   onNavigate
@@ -80,52 +81,65 @@ const HomePage = ({
             </div>
           </motion.div>
 
-          <motion.div initial={{
-            opacity: 0,
-            scale: 0.9
-          }} animate={{
-            opacity: 1,
-            scale: 1
-          }} transition={{
-            duration: 0.8
-          }} className="relative lg:h-[600px] hidden lg:flex items-center justify-center">
-             <div className="relative w-full max-w-lg aspect-square">
-                {/* Abstract Visual Representation of Career Path */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-rose-100 to-cyan-100 rounded-full blur-3xl opacity-60 animate-pulse"></div>
-                <img alt="Jeune professionnel confiant utilisant une application sur tablette" className="relative z-10 w-full h-full object-cover rounded-3xl shadow-2xl shadow-rose-900/10 rotate-3 hover:rotate-0 transition-transform duration-500" src="https://storage.googleapis.com/hostinger-horizons-assets-prod/2a3aa4e1-f89b-4701-ac95-2a5df475caa5/b332e387-2771-4da0-b054-67325add24f3-ouwvH.png" />
-                
-                {/* Floating Cards */}
-                <motion.div animate={{
-                  y: [0, -10, 0]
-                }} transition={{
-                  repeat: Infinity,
-                  duration: 4
-                }} className="absolute -left-8 top-1/4 bg-white p-4 rounded-2xl shadow-xl border border-rose-100 z-20 max-w-[200px]">
-                   <div className="flex items-center gap-3 mb-2">
-                      <div className="p-2 bg-rose-100 rounded-lg text-rose-600"><Target size={20} /></div>
-                      <span className="font-bold text-slate-800">Précision IA</span>
-                   </div>
-                   <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-rose-500 w-[95%]"></div>
-                   </div>
-                </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="relative lg:h-[600px] hidden lg:flex items-center justify-center"
+          >
+            {/* Halo de fond */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-rose-100/40 to-cyan-100/40 rounded-full blur-3xl opacity-50 pointer-events-none" />
 
-                <motion.div animate={{
-                  y: [0, 10, 0]
-                }} transition={{
-                  repeat: Infinity,
-                  duration: 5,
-                  delay: 1
-                }} className="absolute -right-4 bottom-1/4 bg-white p-4 rounded-2xl shadow-xl border border-cyan-100 z-20">
-                   <div className="flex items-center gap-3">
-                      <div className="p-2 bg-cyan-100 rounded-lg text-cyan-600"><Zap size={20} /></div>
-                      <div>
-                         <div className="font-bold text-slate-800">Match Métier</div>
-                         <div className="text-xs text-slate-500">Développeur Fullstack</div>
-                      </div>
-                   </div>
-                </motion.div>
-             </div>
+            {/* Scène 3D interactive */}
+            <div className="relative w-full h-full" style={{ minHeight: '520px' }}>
+              <Suspense fallback={
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-rose-500 to-violet-600 animate-pulse blur-sm" />
+                </div>
+              }>
+                <HeroScene3D />
+              </Suspense>
+
+              {/* Labels UI flottants par-dessus le canvas */}
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ repeat: Infinity, duration: 4 }}
+                className="absolute left-0 top-1/4 bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-xl border border-rose-100 z-20 max-w-[180px] pointer-events-none"
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="p-1.5 bg-rose-100 rounded-lg text-rose-600"><Target size={16} /></div>
+                  <span className="font-bold text-slate-800 text-sm">Précision IA</span>
+                </div>
+                <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-rose-500 to-violet-500 w-[95%]" />
+                </div>
+              </motion.div>
+
+              <motion.div
+                animate={{ y: [0, 8, 0] }}
+                transition={{ repeat: Infinity, duration: 5, delay: 1 }}
+                className="absolute right-0 bottom-1/4 bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-xl border border-cyan-100 z-20 pointer-events-none"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 bg-cyan-100 rounded-lg text-cyan-600"><Zap size={16} /></div>
+                  <div>
+                    <div className="font-bold text-slate-800 text-sm">Match Métier</div>
+                    <div className="text-xs text-slate-500">Développeur Fullstack</div>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ repeat: Infinity, duration: 3.5, delay: 0.5 }}
+                className="absolute right-8 top-1/4 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-xl shadow-lg border border-violet-100 z-20 pointer-events-none"
+              >
+                <div className="flex items-center gap-1.5">
+                  <Sparkles size={14} className="text-violet-500" />
+                  <span className="text-xs font-semibold text-slate-700">RIASEC analysé</span>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </section>

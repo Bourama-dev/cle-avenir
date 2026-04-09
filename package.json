@@ -47,6 +47,8 @@
     "@radix-ui/react-toggle": "^1.1.10",
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
     "@sentry/react": "^7.100.0",
     "@stripe/react-stripe-js": "^2.3.1",
     "@stripe/stripe-js": "^2.4.0",
@@ -77,6 +79,7 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "terser": "^5.37.0",
+    "three": "^0.183.2",
     "uuid": "^9.0.0",
     "vaul": "^1.1.2",
     "web-vitals": "^4.2.4"
