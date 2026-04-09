@@ -156,7 +156,7 @@ const MetierDetailPage = () => {
   const fetchJobs = async (romeCode) => {
     setLoadingJobs(true);
     try {
-      const { data, error } = await supabase.functions.invoke('get-rome-job-offers', { body: { code: romeCode, limit: 5 } });
+      const { data, error } = await supabase.functions.invoke('get-rome-job-offers', { body: { code: romeCode, limit: 10 } });
 
       if (error) {
         console.error('Edge Function Error (get-rome-job-offers):', error);
@@ -202,7 +202,7 @@ const MetierDetailPage = () => {
       }
 
       if (data?.data && Array.isArray(data.data)) {
-        setFormations(data.data.slice(0, 4).map(f => ({
+        setFormations(data.data.slice(0, 10).map(f => ({
             id: f.id || Math.random().toString(),
             intitule: f.title,
             organisme: { nom: f.company?.name },
@@ -377,8 +377,8 @@ const MetierDetailPage = () => {
               <TabsList className="w-full justify-start h-auto bg-white border border-slate-200/60 p-1.5 rounded-2xl shadow-sm overflow-x-auto flex-nowrap scrollbar-hide">
                   <TabsTrigger value="overview" className="px-5 py-2.5 rounded-xl">Aperçu</TabsTrigger>
                   <TabsTrigger value="feedback" className="px-5 py-2.5 rounded-xl">Avis & Retours</TabsTrigger>
-                  <TabsTrigger value="jobs" className="px-5 py-2.5 rounded-xl">Emplois</TabsTrigger>
-                  <TabsTrigger value="plan" className="px-5 py-2.5 rounded-xl">Formations & Plan</TabsTrigger>
+                  <TabsTrigger value="pathway" className="px-5 py-2.5 rounded-xl">Parcours Professionnel</TabsTrigger>
+                  <TabsTrigger value="plan" className="px-5 py-2.5 rounded-xl">Mon Plan d'Action</TabsTrigger>
               </TabsList>
             </div>
 
@@ -462,57 +462,153 @@ const MetierDetailPage = () => {
                </div>
             </TabsContent>
 
-            {/* TAB: Emplois */}
-            <TabsContent value="jobs" className="space-y-8 animate-in fade-in">
-              <div className="flex items-center justify-between">
-                  <h3 className="text-2xl font-bold text-slate-900">Offres récentes</h3>
-                  <Button variant="outline" onClick={() => navigate('/offres-emploi', { state: { keyword: metier.libelle } })}>
-                     Voir tout
-                  </Button>
+            {/* TAB: Parcours Professionnel - Integrated Jobs & Formations */}
+            <TabsContent value="pathway" className="space-y-8 animate-in fade-in">
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-900 mb-2">Votre parcours vers ce métier</h2>
+                  <p className="text-slate-600">Découvrez les formations pour accéder à ce métier et les offres d'emploi disponibles</p>
+                </div>
+
+                {/* Step 1: Formations */}
+                <Card className="border-slate-200 shadow-sm rounded-2xl overflow-hidden">
+                  <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-50/30 border-b border-slate-100">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold text-lg">1</div>
+                      <div>
+                        <CardTitle className="flex items-center gap-2">
+                          <GraduationCap className="w-5 h-5 text-blue-600" /> Formations recommandées
+                        </CardTitle>
+                        <p className="text-sm text-slate-600 mt-1">Acquérir les compétences nécessaires</p>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-6">
+                    {loadingFormations ? (
+                        <div className="flex justify-center p-8"><MetierLoadingSpinner /></div>
+                    ) : formations.length > 0 ? (
+                        <div className="grid md:grid-cols-2 gap-4">
+                          {formations.map((f, idx) => (
+                            <FormationCard key={idx} formation={f} />
+                          ))}
+                        </div>
+                    ) : (
+                        <div className="bg-slate-50 p-8 rounded-xl text-center border border-dashed border-slate-200">
+                          <GraduationCap className="w-8 h-8 text-slate-400 mx-auto mb-3" />
+                          <p className="text-slate-600">Aucune formation trouvée pour ce métier.</p>
+                        </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Connection Arrow */}
+                <div className="flex justify-center py-2">
+                  <div className="text-slate-400 text-sm font-medium flex items-center gap-2">
+                    <div className="hidden md:block w-16 h-0.5 bg-gradient-to-r from-slate-300 to-transparent"></div>
+                    <ArrowRight className="w-5 h-5 text-indigo-500" />
+                    <div className="hidden md:block w-16 h-0.5 bg-gradient-to-l from-slate-300 to-transparent"></div>
+                  </div>
+                </div>
+
+                {/* Step 2: Job Offers */}
+                <Card className="border-slate-200 shadow-sm rounded-2xl overflow-hidden">
+                  <CardHeader className="bg-gradient-to-r from-emerald-50 to-emerald-50/30 border-b border-slate-100">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 font-bold text-lg">2</div>
+                      <div>
+                        <CardTitle className="flex items-center gap-2">
+                          <Briefcase className="w-5 h-5 text-emerald-600" /> Offres d'emploi
+                        </CardTitle>
+                        <p className="text-sm text-slate-600 mt-1">Trouver des opportunités professionnelles</p>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-6">
+                    {loadingJobs ? (
+                        <div className="flex justify-center p-8"><MetierLoadingSpinner /></div>
+                    ) : jobs.length > 0 ? (
+                        <div className="space-y-4">
+                          <div className="grid md:grid-cols-2 gap-4">
+                            {jobs.map(job => (
+                                <JobCard key={job.id} job={job} onClick={() => navigate(`/job/${job.id}`)} />
+                            ))}
+                          </div>
+                          <Button
+                            variant="outline"
+                            className="w-full mt-4"
+                            onClick={() => navigate('/offres-emploi', { state: { keyword: metier.libelle } })}
+                          >
+                            Voir toutes les offres d'emploi
+                          </Button>
+                        </div>
+                    ) : (
+                        <div className="bg-slate-50 p-8 rounded-xl text-center border border-dashed border-slate-200">
+                          <Briefcase className="w-8 h-8 text-slate-400 mx-auto mb-3" />
+                          <p className="text-slate-600">Aucune offre disponible actuellement.</p>
+                          <Button
+                            variant="outline"
+                            className="mt-4"
+                            onClick={() => navigate('/offres-emploi', { state: { keyword: metier.libelle } })}
+                          >
+                            Explorer les offres
+                          </Button>
+                        </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Info Box */}
+                <Card className="bg-indigo-50/50 border-indigo-200 rounded-2xl">
+                  <CardContent className="pt-6">
+                    <div className="flex gap-3">
+                      <AlertCircle className="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm text-indigo-900 font-medium mb-1">Construisez votre parcours</p>
+                        <p className="text-sm text-indigo-800">Utilisez les formations comme tremplin vers les offres d'emploi. Créez un plan d'action personnalisé pour structurer votre carrière.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
-              
-              {loadingJobs ? (
-                  <div className="flex justify-center p-8"><MetierLoadingSpinner /></div>
-              ) : jobs.length > 0 ? (
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {jobs.map(job => (
-                        <JobCard key={job.id} job={job} onClick={() => navigate(`/job/${job.id}`)} />
-                    ))}
-                  </div>
-              ) : (
-                  <div className="bg-slate-50 p-8 rounded-2xl text-center border border-dashed border-slate-200">
-                    <Briefcase className="w-8 h-8 text-slate-400 mx-auto mb-3" />
-                    <p className="text-slate-600">Aucune offre disponible actuellement.</p>
-                  </div>
-              )}
             </TabsContent>
 
-            {/* TAB: Plan & Formations */}
+            {/* TAB: Plan d'Action */}
             <TabsContent value="plan" className="space-y-8 animate-in fade-in">
-               <div className="grid md:grid-cols-2 gap-8">
-                  <div className="space-y-6">
-                    <h3 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                       <Target className="w-6 h-6 text-indigo-600" /> Mon projet professionnel
-                    </h3>
-                    <p className="text-slate-600">
-                      Créez un plan d'action personnalisé pour structurer votre démarche vers ce métier. Nous vous guiderons étape par étape.
-                    </p>
-                    <Button onClick={() => setIsPlanModalOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 h-12 px-6">
-                       Structurer mon projet
-                    </Button>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-bold text-slate-900">Formations recommandées</h3>
-                    {loadingFormations ? (
-                        <div className="flex justify-center p-4"><MetierLoadingSpinner /></div>
-                    ) : formations.length > 0 ? (
-                        formations.map((f, idx) => <FormationCard key={idx} formation={f} />)
-                    ) : (
-                        <p className="text-slate-500">Aucune formation trouvée pour ce métier.</p>
-                    )}
-                  </div>
-               </div>
+               <Card className="border-slate-200 shadow-sm rounded-2xl">
+                  <CardHeader className="bg-slate-50/50 border-b border-slate-100">
+                    <CardTitle className="flex items-center gap-2">
+                       <Target className="w-5 h-5 text-indigo-600" /> Structurez votre projet professionnel
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-8 space-y-6">
+                    <div>
+                      <h4 className="font-semibold text-slate-900 mb-2">Créez un plan d'action personnalisé</h4>
+                      <p className="text-slate-600 mb-6">
+                        Nous vous aiderons à structurer votre démarche vers ce métier en définissant vos objectifs, les étapes clés, et un calendrier réaliste.
+                      </p>
+                      <Button onClick={() => setIsPlanModalOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 h-12 px-8">
+                         Démarrer mon plan
+                      </Button>
+                    </div>
+
+                    <div className="pt-6 border-t border-slate-100">
+                      <h4 className="font-semibold text-slate-900 mb-4">Ce que vous allez pouvoir faire :</h4>
+                      <ul className="space-y-3">
+                        {[
+                          "Définir vos objectifs à court, moyen et long terme",
+                          "Identifier les formations clés pour ce métier",
+                          "Créer une feuille de route avec des jalons",
+                          "Suivre votre progression pas à pas"
+                        ].map((item, idx) => (
+                          <li key={idx} className="flex gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                            <span className="text-slate-700">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </CardContent>
+               </Card>
             </TabsContent>
         </Tabs>
 
