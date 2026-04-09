@@ -187,7 +187,7 @@ export const activityService = {
     if (updateError) throw updateError;
 
     // Award XP
-    const { data: stats } = await this.getUserStats(userId);
+    const stats = await this.getUserStats(userId);
     const newXP = (stats.total_xp || 0) + (activity.xp_reward || 0);
     
     const today = new Date().toISOString().split('T')[0];

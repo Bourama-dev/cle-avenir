@@ -113,6 +113,9 @@ const NotificationsPage = lazy(() => import('@/pages/NotificationsPage'));
 // New Personalized Plan Page
 const PersonalizedPlanPage = lazy(() => import('@/pages/PersonalizedPlanPage'));
 
+// Learning Path Page
+const LearningPathPage = lazy(() => import('@/pages/LearningPathPage'));
+
 // Legal Pages - Standard RGPD
 const PrivacyPage = lazy(() => import('@/pages/PrivacyPage'));
 const TermsPage = lazy(() => import('@/pages/TermsPage'));
@@ -241,7 +244,7 @@ const PageContent = () => {
   const isAuthPage = ['/auth', '/login', '/signup', '/forgot-password', '/reset-password', '/email-confirmation-pending', '/auth/callback', '/institution/staff/login'].some(p => location.pathname.startsWith(p));
   const isCVBuilder = location.pathname.startsWith('/cv-builder') || location.pathname.startsWith('/cover-letter-builder');
   const isAdminPage = location.pathname.startsWith('/admin');
-  const isDashboard = ['/dashboard', '/settings', '/profil', '/profile', '/account', '/recommendations', '/offers-formations', '/my-documents', '/user/rgpd', '/user/cookies-preferences', '/personalized-plan', '/notifications', '/results', '/action-plan'].some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
+  const isDashboard = ['/dashboard', '/settings', '/profil', '/profile', '/account', '/recommendations', '/offers-formations', '/my-documents', '/user/rgpd', '/user/cookies-preferences', '/personalized-plan', '/notifications', '/results', '/action-plan', '/apprentissage'].some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
   const isEstablishmentPortal = location.pathname.startsWith('/establishment') || location.pathname.startsWith('/institution/');
   const isTestPage = ['/test', '/test-orientation', '/interview', '/test-gate'].some(p => location.pathname.startsWith(p));
   const isErrorPage = location.pathname === '/404';
@@ -365,6 +368,7 @@ const PageContent = () => {
                   <Route path="/test-history" element={<ProtectedRoute><PageTransition><TestHistoryPage /></PageTransition></ProtectedRoute>} />
                   <Route path="/personalized-plan" element={<ProtectedRoute><PageTransition><PersonalizedPlanPage /></PageTransition></ProtectedRoute>} />
                   <Route path="/plan-personnalise" element={<Navigate to="/personalized-plan" replace />} />
+                  <Route path="/apprentissage" element={<ProtectedRoute><LearningPathPage /></ProtectedRoute>} />
                   <Route path="/interview" element={<ProtectedRoute><InterviewPage /></ProtectedRoute>} />
                   <Route path="/cleo" element={<ProtectedRoute><CleoPage /></ProtectedRoute>} />
                   <Route path="/cv-builder" element={<ProtectedRoute><CVBuilderPage /></ProtectedRoute>} />

@@ -13,7 +13,8 @@ import {
   ShieldCheck,
   Home,
   ArrowLeft,
-  CreditCard
+  CreditCard,
+  Brain
 } from 'lucide-react';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
 import { useNavigation } from '@/hooks/useNavigation';
@@ -121,6 +122,7 @@ const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
               )
             }
           />
+          <NavItem to="/apprentissage" icon={Brain} label="Parcours d'apprentissage" />
           <NavItem to="/cv-builder" icon={FileText} label="Créateur de CV" />
           <NavItem to="/cover-letter-builder" icon={FileText} label="Créateur de Lettre" />
         </nav>
