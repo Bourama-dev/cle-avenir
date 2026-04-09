@@ -171,15 +171,10 @@ const AdminMetiers = () => {
   };
 
   const handleSync = async () => {
-    if (!syncClientId || !syncSecret) {
-      setSyncError("Veuillez entrer le Client ID et le Secret.");
-      return;
-    }
-
     try {
       setIsSyncing(true);
       setSyncError('');
-      const result = await metierSyncService.syncAllMetiers(syncClientId, syncSecret);
+      const result = await metierSyncService.syncAllMetiers();
 
       toast({
         title: "Succès",
@@ -427,30 +422,16 @@ const AdminMetiers = () => {
 
           <div className="space-y-4 py-4">
             <p className="text-sm text-slate-600">
-              Cela téléchargera TOUS les métiers du catalogue ROME depuis l'API France Travail et les stockera dans la base de données.
+              Cela téléchargera <strong>tous les métiers</strong> du catalogue ROME depuis l'API France Travail et les stockera dans la base de données.
             </p>
-
-            <div>
-              <label className="text-sm font-medium">Client ID <span className="text-red-500">*</span></label>
-              <Input
-                type="password"
-                value={syncClientId}
-                onChange={(e) => setSyncClientId(e.target.value)}
-                placeholder="PAR_cleavenir_..."
-                disabled={isSyncing}
-              />
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-700">
+              🔐 Les credentials France Travail sont configurés côté serveur. Aucune saisie requise.
             </div>
-
-            <div>
-              <label className="text-sm font-medium">Secret <span className="text-red-500">*</span></label>
-              <Input
-                type="password"
-                value={syncSecret}
-                onChange={(e) => setSyncSecret(e.target.value)}
-                placeholder="Entrez votre secret"
-                disabled={isSyncing}
-              />
-            </div>
+            {metiersCount > 0 && (
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-700">
+                ⚠️ La base contient déjà <strong>{metiersCount.toLocaleString()} métiers</strong>. La sync mettra à jour les existants et ajoutera les nouveaux.
+              </div>
+            )}
           </div>
 
           <DialogFooter>
