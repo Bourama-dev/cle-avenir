@@ -14,11 +14,6 @@ const customSupabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
     detectSessionInUrl: true,
     storage: window.localStorage,
     flowType: 'pkce'
-  },
-  global: {
-    headers: {
-      'x-application-name': 'cleavenir-frontend'
-    }
   }
 });
 

@@ -156,8 +156,15 @@ const MetierDetailPage = () => {
   const fetchJobs = async (romeCode) => {
     setLoadingJobs(true);
     try {
-      const { data } = await supabase.functions.invoke('get-rome-job-offers', { body: { code: romeCode, limit: 5 } });
-      if (data?.data) {
+      const { data, error } = await supabase.functions.invoke('get-rome-job-offers', { body: { code: romeCode, limit: 5 } });
+
+      if (error) {
+        console.error('Edge Function Error (get-rome-job-offers):', error);
+        setJobs([]);
+        return;
+      }
+
+      if (data?.data && Array.isArray(data.data)) {
          setJobs(data.data.map(job => ({
             id: job.id,
             title: job.intitule,
@@ -171,15 +178,30 @@ const MetierDetailPage = () => {
             requirements: job.competences?.map(c => c.libelle) || [],
             experience: job.experienceLibelle
          })));
+      } else {
+        console.warn('Unexpected data format from get-rome-job-offers:', data);
+        setJobs([]);
       }
-    } catch (err) { console.warn("Job fetch error", err); } finally { setLoadingJobs(false); }
+    } catch (err) {
+      console.error("Job fetch error:", err);
+      setJobs([]);
+    } finally {
+      setLoadingJobs(false);
+    }
   };
 
   const fetchFormations = async (romeCode) => {
     setLoadingFormations(true);
     try {
-      const { data } = await supabase.functions.invoke('get-rome-training-courses', { body: { code: romeCode } });
-      if (data?.data) {
+      const { data, error } = await supabase.functions.invoke('get-rome-training-courses', { body: { code: romeCode } });
+
+      if (error) {
+        console.error('Edge Function Error (get-rome-training-courses):', error);
+        setFormations([]);
+        return;
+      }
+
+      if (data?.data && Array.isArray(data.data)) {
         setFormations(data.data.slice(0, 4).map(f => ({
             id: f.id || Math.random().toString(),
             intitule: f.title,
@@ -187,8 +209,16 @@ const MetierDetailPage = () => {
             adresse: { libelleCommune: f.place?.city },
             url: f.url
         })));
+      } else {
+        console.warn('Unexpected data format from get-rome-training-courses:', data);
+        setFormations([]);
       }
-    } catch (err) { console.warn("Formation fetch error", err); } finally { setLoadingFormations(false); }
+    } catch (err) {
+      console.error("Formation fetch error:", err);
+      setFormations([]);
+    } finally {
+      setLoadingFormations(false);
+    }
   };
 
   useEffect(() => {

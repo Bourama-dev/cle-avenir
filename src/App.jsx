@@ -107,6 +107,7 @@ const BlogArticlePage = lazy(() => import('@/pages/BlogArticlePage'));
 const DocumentationPage = lazy(() => import('@/pages/DocumentationPage'));
 const StatusPage = lazy(() => import('@/pages/StatusPage'));
 const RoadmapPage = lazy(() => import('@/pages/RoadmapPage'));
+const EdgeFunctionDiagnostics = lazy(() => import('@/pages/EdgeFunctionDiagnostics'));
 const NotificationsPage = lazy(() => import('@/pages/NotificationsPage'));
 
 // New Personalized Plan Page
@@ -299,7 +300,8 @@ const PageContent = () => {
                   <Route path="/documentation" element={<PageTransition><DocumentationPage /></PageTransition>} />
                   <Route path="/status" element={<PageTransition><StatusPage /></PageTransition>} />
                   <Route path="/roadmap" element={<PageTransition><RoadmapPage /></PageTransition>} />
-                  
+                  <Route path="/edge-function-diagnostics" element={<PageTransition><EdgeFunctionDiagnostics /></PageTransition>} />
+
                   {/* New Orientation Flow */}
                   <Route path="/test" element={<PageTransition><TestPage /></PageTransition>} />
                   <Route path="/test-orientation" element={<Navigate to="/test" replace />} />

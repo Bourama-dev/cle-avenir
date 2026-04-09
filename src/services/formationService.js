@@ -106,9 +106,9 @@ export const formationService = {
   getCareerJobOffers: async (careerCodes) => {
     try {
       if (!careerCodes || careerCodes.length === 0) return [];
-      
+
       const allOffers = [];
-      
+
       // Limit to max 2 codes to avoid rate limiting
       const codesToProcess = careerCodes.slice(0, 2);
 
@@ -119,7 +119,12 @@ export const formationService = {
           });
         });
 
-        if (!error && data?.data) {
+        if (error) {
+          console.error(`Error fetching job offers for code ${code}:`, error);
+          continue;
+        }
+
+        if (data?.data && Array.isArray(data.data)) {
           const formattedOffers = data.data.map(job => ({
             id: job.id,
             title: job.intitule,
@@ -130,6 +135,8 @@ export const formationService = {
             salary_range: job.salaire?.libelle || "Non précisé"
           }));
           allOffers.push(...formattedOffers);
+        } else {
+          console.warn(`Unexpected data format for code ${code}:`, data);
         }
       }
 
