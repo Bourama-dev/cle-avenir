@@ -53,15 +53,35 @@ const ProfilePage = () => {
           setFormData({
             first_name: data.first_name || '',
             last_name: data.last_name || '',
-            age: data.age?.toString() || '',
+
+            // 🔁 age_range → age
+            age: data.age_range 
+              ? data.age_range.split('-')[0] 
+              : '',
+
             region: data.region || '',
             city: data.city || '',
+
+            // 🔁 user_status → current_status
+            current_status: data.user_status || '',
+
             education_level: data.education_level || '',
-            education_specialty: data.education_specialty || '',
-            current_status: data.current_status || '',
-            wants_long_studies: data.wants_long_studies === true ? 'Oui' : (data.wants_long_studies === false ? 'Non' : 'Indécis'),
+
+            // 🔁 specialization → education_specialty
+            education_specialty: data.specialization || '',
+
+            // 🔁 JSONB → string UI
+            wants_long_studies: data.answers?.wants_long_studies === true
+              ? 'Oui'
+              : data.answers?.wants_long_studies === false
+              ? 'Non'
+              : 'Indécis',
+
+            // ✅ OK direct
             interests: data.interests || [],
-            constraints: data.constraints || []
+
+            // 🔁 JSONB → array
+            constraints: data.constraints?.selected || []
           });
         }
       } catch (err) {
