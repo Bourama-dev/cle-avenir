@@ -1,7 +1,10 @@
 -- Migration: 0005_rome_metiers_table
 -- Description: Creates rome_metiers table with all necessary fields for ROME data synchronization
 
-CREATE TABLE IF NOT EXISTS public.rome_metiers (
+-- Drop existing table if it exists (to ensure clean migration)
+DROP TABLE IF EXISTS public.rome_metiers CASCADE;
+
+CREATE TABLE public.rome_metiers (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     code TEXT NOT NULL UNIQUE,
     libelle TEXT NOT NULL,
@@ -29,13 +32,13 @@ CREATE TABLE IF NOT EXISTS public.rome_metiers (
 );
 
 -- Create indexes for better query performance
-CREATE INDEX IF NOT EXISTS idx_rome_metiers_code ON public.rome_metiers(code);
-CREATE INDEX IF NOT EXISTS idx_rome_metiers_libelle ON public.rome_metiers(libelle);
-CREATE INDEX IF NOT EXISTS idx_rome_metiers_is_active ON public.rome_metiers(is_active);
-CREATE INDEX IF NOT EXISTS idx_rome_metiers_domain ON public.rome_metiers(domain);
-CREATE INDEX IF NOT EXISTS idx_rome_metiers_riasec ON public.rome_metiers USING gin (riasec_profile);
-CREATE INDEX IF NOT EXISTS idx_rome_metiers_skills ON public.rome_metiers USING gin (required_skills);
-CREATE INDEX IF NOT EXISTS idx_rome_metiers_values ON public.rome_metiers USING gin (values);
+CREATE INDEX idx_rome_metiers_code ON public.rome_metiers(code);
+CREATE INDEX idx_rome_metiers_libelle ON public.rome_metiers(libelle);
+CREATE INDEX idx_rome_metiers_is_active ON public.rome_metiers(is_active);
+CREATE INDEX idx_rome_metiers_domain ON public.rome_metiers(domain);
+CREATE INDEX idx_rome_metiers_riasec ON public.rome_metiers USING gin (riasec_profile);
+CREATE INDEX idx_rome_metiers_skills ON public.rome_metiers USING gin (required_skills);
+CREATE INDEX idx_rome_metiers_values ON public.rome_metiers USING gin (values);
 
 -- Add comments
 COMMENT ON TABLE public.rome_metiers IS 'ROME occupations data synchronized from France Travail API - contains all French job occupations with RIASEC matching data';

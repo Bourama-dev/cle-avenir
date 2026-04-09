@@ -43,12 +43,34 @@ const AdminAnalyticsDashboard = () => {
         <p className="text-slate-500">Vue d'ensemble des retours utilisateurs et de la performance des recommandations.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard title="Total Feedback" value="1,248" subtitle="ce mois-ci" trend="+12.5%" icon={MessageSquare} />
-        <StatCard title="Note Moyenne" value="4.2/5" subtitle="tous métiers" trend="+0.1" icon={Star} />
-        <StatCard title="Profils Analysés" value="8,432" subtitle="actifs" trend="+5.2%" icon={Users} />
-        <StatCard title="Taux d'Acceptation" value="78%" subtitle="recommandations" trend="+2.4%" icon={TrendingUp} />
-      </div>
+      <StatsGrid
+        stats={[
+          {
+            label: 'Total Feedback',
+            value: '1,248',
+            trend: 'up',
+            subtitle: 'ce mois-ci'
+          },
+          {
+            label: 'Note Moyenne',
+            value: '4.2/5',
+            trend: 'up',
+            subtitle: 'tous métiers'
+          },
+          {
+            label: 'Profils Analysés',
+            value: '8,432',
+            trend: 'up',
+            subtitle: 'actifs'
+          },
+          {
+            label: 'Taux d\'Acceptation',
+            value: '78%',
+            trend: 'up',
+            subtitle: 'recommandations'
+          }
+        ]}
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card className="col-span-1">

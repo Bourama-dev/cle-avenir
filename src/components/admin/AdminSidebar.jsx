@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { 
-  LayoutDashboard, 
-  Users, 
-  FileText, 
-  Settings, 
-  BookOpen, 
+import {
+  LayoutDashboard,
+  Users,
+  FileText,
+  Settings,
+  BookOpen,
   LogOut,
   CreditCard,
   Building2,
@@ -19,7 +19,8 @@ import {
   Rocket,
   Shield,
   Menu,
-  X
+  X,
+  Briefcase
 } from 'lucide-react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Button } from '@/components/ui/button';
@@ -53,7 +54,8 @@ const AdminSidebar = ({ currentPath }) => {
     { icon: <Scale size={20} />, label: 'Légal & Versions', path: '/admin/legal-versions' },
     { icon: <Lock size={20} />, label: 'Sécurité & Audit', path: '/admin/security' },
     
-    // Content 
+    // Content
+    { icon: <Briefcase size={20} />, label: 'Gestion des Métiers', path: '/admin/metiers' },
     { icon: <FileText size={20} />, label: 'Tests & Résultats', path: '/admin/tests' },
     { icon: <BookOpen size={20} />, label: 'Contenu', path: '/admin/content' },
     
