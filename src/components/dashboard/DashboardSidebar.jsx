@@ -1,18 +1,19 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  Target, 
-  BookOpen, 
-  Briefcase, 
-  FileText, 
-  Settings, 
+import {
+  LayoutDashboard,
+  Target,
+  BookOpen,
+  Briefcase,
+  FileText,
+  Settings,
   Sparkles,
   Award,
   Lock,
   ShieldCheck,
   Home,
-  ArrowLeft
+  ArrowLeft,
+  CreditCard
 } from 'lucide-react';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
 import { useNavigation } from '@/hooks/useNavigation';
@@ -131,14 +132,15 @@ const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
         </h2>
         <nav className="space-y-1">
           <NavItem to="/account" icon={Settings} label="Mon Compte" />
-          
+          <NavItem to="/manage-subscription" icon={CreditCard} label="Gérer l'abonnement" />
+
           {isAdmin && (
             <>
               <div className="h-px bg-slate-100 my-2" />
-              <NavItem 
-                to="/admin/dashboard" 
-                icon={ShieldCheck} 
-                label="Portail Admin" 
+              <NavItem
+                to="/admin/dashboard"
+                icon={ShieldCheck}
+                label="Portail Admin"
                 className="text-rose-600 hover:text-rose-700 hover:bg-rose-50"
               />
             </>

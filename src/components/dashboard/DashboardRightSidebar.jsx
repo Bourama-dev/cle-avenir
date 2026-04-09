@@ -113,7 +113,7 @@ const DashboardRightSidebar = ({ userProfile, onOpenProfile }) => {
             </Button>
           ) : (
              <div className="flex gap-2">
-                <Button variant="secondary" size="sm" className="w-full bg-white/20 hover:bg-white/30 text-white border-none" onClick={() => navigate('/account')}>
+                <Button variant="secondary" size="sm" className="w-full bg-white/20 hover:bg-white/30 text-white border-none" onClick={() => navigate('/manage-subscription')}>
                    Gérer
                 </Button>
              </div>
