@@ -48,7 +48,11 @@ const ProfilePage = () => {
     const loadExistingProfile = async () => {
       if (!user) return;
       try {
-        const { data } = await AuthService.getProfile(user.id);
+        const { data, error } = await AuthService.getProfile(user.id);
+
+        console.log("USER ID:", user.id);
+        console.log("PROFILE DATA:", data);
+        console.log("PROFILE ERROR:", error);
         if (data) {
           setFormData({
             first_name: data.first_name || '',

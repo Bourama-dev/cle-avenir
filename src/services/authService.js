@@ -25,22 +25,38 @@ export const AuthService = {
 
       // 2. Save profile to user_profiles table
       const { error: profileError } = await supabase
-        .from('user_profiles')
+        .from('profiles')
         .upsert({
-          user_id: authData.user.id,
+          id: authData.user.id,
+
           first_name: profileData.first_name,
           last_name: profileData.last_name,
-          age: profileData.age ? parseInt(profileData.age, 10) : null,
+
           region: profileData.region,
           city: profileData.city,
+
           education_level: profileData.education_level,
-          education_specialty: profileData.education_specialty,
-          current_status: profileData.current_status,
-          wants_long_studies: wantsLongStudiesBool,
+          specialization: profileData.education_specialty,
+
+          user_status: profileData.current_status,
+
+          age_range: profileData.age
+            ? `${profileData.age}-${profileData.age}`
+            : null,
+
           interests: profileData.interests || [],
-          constraints: profileData.constraints || [],
+
+          constraints: {
+            selected: profileData.constraints || []
+          },
+
+          answers: {
+            wants_long_studies: wantsLongStudiesBool
+          },
+
           updated_at: new Date().toISOString()
-        }, { onConflict: 'user_id' });
+
+        }, { onConflict: 'id' });
 
       if (profileError) {
         console.error("Profile creation error:", profileError);
@@ -67,10 +83,10 @@ export const AuthService = {
       // Fetch profile
       let profileData = null;
       if (authData.user) {
-        const { data: profile } = await supabase
-          .from('user_profiles')
+        const { data: profile } = await supabases
+          .from('profiles')
           .select('*')
-          .eq('user_id', authData.user.id)
+          .eq('id', authData.user.id)
           .single();
         profileData = profile;
       }
@@ -85,12 +101,13 @@ export const AuthService = {
   async getProfile(userId) {
     try {
       const { data, error } = await supabase
-        .from('user_profiles')
-        .select('first_name, last_name, age, region, city, education_level, education_specialty, current_status, wants_long_studies, interests, constraints')
-        .eq('user_id', userId)
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
         .single();
 
       if (error) throw error;
+
       return { data, error: null };
     } catch (error) {
       console.error("Get profile error:", error.message);
@@ -117,9 +134,9 @@ export const AuthService = {
       }
 
       const { data, error } = await supabase
-        .from('user_profiles')
+        .from('profiles')
         .update(updatePayload)
-        .eq('user_id', userId)
+        .eq('id', userId)
         .select();
 
       if (error) throw error;
