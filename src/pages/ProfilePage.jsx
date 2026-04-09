@@ -160,7 +160,10 @@ const ProfilePage = () => {
       }
 
       toast({ title: "Profil enregistré avec succès !" });
-      navigate('/results');
+      // ✅ navigation sécurisée
+      setTimeout(() => {
+        navigate('/results');
+      }, 500);
 
     } catch (err) {
       console.error("Profile save error:", err);
