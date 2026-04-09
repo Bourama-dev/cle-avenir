@@ -10,6 +10,7 @@ import { useNavigation } from '@/hooks/useNavigation';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { metierRecommendationService } from '@/services/metierRecommendationService';
 import { Skeleton } from '@/components/ui/skeleton';
+import { StatsGrid } from '@/components/cleo/charts/CleoChartLibrary';
 
 const RecommendationsPage = () => {
   const { user } = useAuth();
@@ -75,6 +76,37 @@ const RecommendationsPage = () => {
            <p className="text-slate-500 mt-1">Métiers sélectionnés selon votre profil et vos résultats.</p>
         </div>
       </div>
+
+      {!loading && !error && careers.length > 0 && (
+        <StatsGrid
+          stats={[
+            {
+              label: 'Recommandations',
+              value: careers.length,
+              trend: careers.length > 5 ? 'up' : 'neutral',
+              subtitle: `basées sur votre profil`
+            },
+            {
+              label: 'Match moyen',
+              value: `${Math.round(careers.reduce((sum, c) => sum + (c.matchScore || c.match_score || 0), 0) / careers.length)}%`,
+              trend: 'neutral',
+              subtitle: 'avec vos compétences'
+            },
+            {
+              label: 'Meilleur match',
+              value: `${Math.max(...careers.map(c => c.matchScore || c.match_score || 0))}%`,
+              trend: 'up',
+              subtitle: careers[0]?.libelle?.split(' ').slice(0, 2).join(' ') || 'Top recommandation'
+            },
+            {
+              label: 'Forte demande',
+              value: careers.filter(c => c.debouches === 'forte' || c.debouches === 'Forte').length,
+              trend: 'up',
+              subtitle: `métiers en croissance`
+            }
+          ]}
+        />
+      )}
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
