@@ -6,12 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import CityAutocomplete from '@/components/ui/CityAutocomplete';
 import {
   Search, MapPin, Building, ChevronLeft, ChevronRight, AlertCircle,
-  GraduationCap, Layers, Clock, BookOpen, Award, Star, Globe,
-  CheckCircle2, FileText, MonitorPlay, Briefcase, Map as MapIcon, Laptop, Lock
+  Clock, BookOpen, Award, Star, Globe,
+  CheckCircle2, FileText, MonitorPlay, Lock
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
@@ -20,6 +19,7 @@ import { fetchFormations } from '@/services/parcoursup';
 import UpgradeModal from '@/components/UpgradeModal';
 import FormationDetailsPanel from '@/components/FormationDetailsPanel';
 import { calculateDistance } from '@/services/LocationFilterService';
+import EnhancedFormationFilters from '@/components/formation-explorer/EnhancedFormationFilters';
 
 // Constants
 const API_BATCH_SIZE = 100;
@@ -358,19 +358,26 @@ const FormationsPage = ({ setAllFormations }) => {
     setSelectedFormation(null);
   };
 
-  const availableLevels = ['BAC+2', 'BAC+3', 'BAC+5', 'AUTRE'];
-  const availableTypes = ['Initial', 'Alternance'];
-  const availableSectors = [
-    { value: 'commerce', label: 'Commerce & Vente' },
-    { value: 'informatique', label: 'Informatique & Numérique' },
-    { value: 'sante', label: 'Santé & Social' },
-  ];
-  const availableDistances = [
-    { value: '10', label: '10 km' },
-    { value: '30', label: '30 km' },
-    { value: '50', label: '50 km' },
-    { value: '100', label: '100 km' },
-  ];
+  const handleResetFilters = () => {
+    setSearchTerm('');
+    setCityInputValue('');
+    setSelectedCityData(null);
+    setSectorFilter('all');
+    setLevelFilter('all');
+    setFormationTypeFilter('all');
+    setDistanceFilter('100');
+    setRemoteFilter(false);
+    setCurrentPage(1);
+    offsetRef.current = 0;
+    setSelectedFormation(null);
+    setActiveSearchParams({
+      q: '',
+      ville: '',
+      latitude: null,
+      longitude: null,
+      radius: '100'
+    });
+  };
 
   // SEO Configuration
   const formationsSEO = categoryPageSEO({
@@ -391,94 +398,56 @@ const FormationsPage = ({ setAllFormations }) => {
         defaultTier="premium"
       />
 
-      <main className="container mx-auto px-4 py-12 max-w-7xl flex-grow">
-        <div className="mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Catalogue des Formations</h1>
-          <p className="text-lg text-slate-600 max-w-3xl">
-            Explorez nos programmes éducatifs détaillés.
-          </p>
-        </div>
-
-        {/* --- Search & Filters Bar --- */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-8">
-          <div className="flex flex-col lg:flex-row gap-4 mb-4">
-            <div className="flex-[2] relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+      {/* Header & Search */}
+      <div className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm transition-all duration-200">
+        <div className="container mx-auto px-4 py-4 md:py-6 max-w-7xl">
+          <div className="flex flex-col md:flex-row gap-4 items-center">
+            <div className="relative flex-1 w-full group">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-violet-500 transition-colors" />
               <Input
-                placeholder="Métier, compétences..."
-                className="pl-10 h-12 text-base bg-white border-slate-200 focus:ring-violet-500 rounded-lg shadow-sm"
+                placeholder="Rechercher un métier, une formation..."
+                className="pl-10 h-12 text-lg bg-slate-50 border-slate-200 focus:bg-white focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all shadow-sm"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearchSubmit()}
               />
             </div>
-
-            <div className="flex-1 lg:min-w-[300px]">
-              <CityAutocomplete
-                value={cityInputValue}
-                onCitySelect={handleCityChange}
-                placeholder="Ville..."
-                className="w-full"
-              />
-            </div>
-
             <Button
-              className="h-12 px-8 bg-[#E5007D] hover:bg-[#C4006B] text-white font-semibold rounded-lg shrink-0 transition-colors shadow-sm lg:w-auto w-full"
+              size="lg"
+              className="h-12 w-full md:w-auto px-8 bg-violet-600 hover:bg-violet-700 text-white font-bold shadow-md shadow-violet-200 hover:shadow-lg transition-all"
               onClick={handleSearchSubmit}
             >
               Rechercher
             </Button>
           </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <Select value={sectorFilter} onValueChange={setSectorFilter}>
-              <SelectTrigger className="h-10 w-auto min-w-[160px] bg-slate-50 border-slate-200 rounded-lg shadow-sm">
-                <Briefcase className="h-4 w-4 mr-2 text-slate-500" />
-                <SelectValue placeholder="Tous secteurs" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous secteurs</SelectItem>
-                {availableSectors.map(s => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
-              </SelectContent>
-            </Select>
-
-            <Select value={levelFilter} onValueChange={setLevelFilter}>
-              <SelectTrigger className="h-10 w-auto min-w-[160px] bg-slate-50 border-slate-200 rounded-lg shadow-sm">
-                <GraduationCap className="h-4 w-4 mr-2 text-slate-500" />
-                <SelectValue placeholder="Tous niveaux" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous niveaux</SelectItem>
-                {availableLevels.map(l => <SelectItem key={l} value={l}>{l}</SelectItem>)}
-              </SelectContent>
-            </Select>
-
-            <Select value={formationTypeFilter} onValueChange={setFormationTypeFilter}>
-              <SelectTrigger className="h-10 w-auto min-w-[160px] bg-slate-50 border-slate-200 rounded-lg shadow-sm">
-                <Layers className="h-4 w-4 mr-2 text-slate-500" />
-                <SelectValue placeholder="Tous formats" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous formats</SelectItem>
-                {availableTypes.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}
-              </SelectContent>
-            </Select>
-
-            <Select value={distanceFilter} onValueChange={setDistanceFilter}>
-              <SelectTrigger className="h-10 w-auto min-w-[120px] bg-slate-50 border-slate-200 rounded-lg shadow-sm">
-                <MapIcon className="h-4 w-4 mr-2 text-slate-500" />
-                <SelectValue placeholder="Distance" />
-              </SelectTrigger>
-              <SelectContent>
-                {availableDistances.map(d => <SelectItem key={d.value} value={d.value}>{d.label}</SelectItem>)}
-              </SelectContent>
-            </Select>
-
-            <div className="ml-auto text-sm text-slate-500 font-medium hidden xl:block">
-              {serverTotalCount > 0 ? `${serverTotalCount} formations` : 'Aucun résultat'}
-            </div>
-          </div>
         </div>
+      </div>
+
+      <main className="container mx-auto px-4 py-8 max-w-7xl flex-grow">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Filters Sidebar */}
+          <EnhancedFormationFilters
+            searchTerm={searchTerm}
+            cityInputValue={cityInputValue}
+            selectedCityData={selectedCityData}
+            sectorFilter={sectorFilter}
+            levelFilter={levelFilter}
+            formationTypeFilter={formationTypeFilter}
+            distanceFilter={distanceFilter}
+            remoteFilter={remoteFilter}
+            onSearchTermChange={setSearchTerm}
+            onCityChange={handleCityChange}
+            onSectorChange={setSectorFilter}
+            onLevelChange={setLevelFilter}
+            onFormationTypeChange={setFormationTypeFilter}
+            onDistanceChange={setDistanceFilter}
+            onRemoteChange={setRemoteFilter}
+            onSearch={handleSearchSubmit}
+            onReset={handleResetFilters}
+          />
+
+          {/* Results Area */}
+          <div className="flex-1 min-w-0">
 
         {/* --- Details Panel (Conditionally Rendered) --- */}
         {selectedFormation && (
@@ -653,6 +622,9 @@ const FormationsPage = ({ setAllFormations }) => {
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
+        </div>
+
+          </div>
         </div>
       </main>
 
