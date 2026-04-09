@@ -8,6 +8,8 @@ import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { supabase } from '@/lib/customSupabaseClient';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { testPageSEO } from '@/components/SEO/seoPresets';
 
 const TestPage = () => {
   const navigate = useNavigate();
@@ -148,8 +150,10 @@ const TestPage = () => {
   if (!currentQuestion) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex flex-col items-center py-12 px-4">
-      <div className="w-full max-w-3xl space-y-6">
+    <>
+      <PageHelmet {...testPageSEO()} />
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex flex-col items-center py-12 px-4">
+        <div className="w-full max-w-3xl space-y-6">
         <div className="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
           <div className="flex items-center gap-3">
             <div className="bg-indigo-100 p-2 rounded-lg text-indigo-600">

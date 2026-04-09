@@ -1,5 +1,6 @@
 import React, { useEffect, Suspense, lazy } from 'react';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { categoryPageSEO } from '@/components/SEO/seoPresets';
 import LoadingFallback from '@/components/LoadingFallback';
 import HeroSection from '@/components/howitworks/HeroSection';
 import WhyChooseSection from '@/components/howitworks/WhyChooseSection';
@@ -16,12 +17,17 @@ const HowItWorksPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const howItWorksSEO = categoryPageSEO({
+    title: "Comment ça marche ? - CléAvenir",
+    description: "Découvrez notre méthode unique d'orientation en 5 étapes. Test adaptatif, IA et données marché pour trouver votre voie.",
+    keywords: "orientation, test carrière, IA, méthode, étapes, parcours",
+    category: "À propos",
+    categoryPath: "/how-it-works"
+  });
+
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-rose-100 selection:text-rose-900">
-      <SEOHead 
-        title="Comment ça marche ? - CléAvenir" 
-        description="Découvrez notre méthode unique d'orientation en 5 étapes. Test adaptatif, IA et données marché pour trouver votre voie." 
-      />
+      <PageHelmet {...howItWorksSEO} />
 
       <main className="overflow-x-hidden">
         {/* 1. Hero (Critical Render) */}

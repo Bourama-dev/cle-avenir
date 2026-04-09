@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Shield, FileText, Lock, Cookie, Settings, Scale } from 'lucide-react';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { categoryPageSEO } from '@/components/SEO/seoPresets';
 
 const navItems = [
   { path: '/mentions-legales',          icon: Scale,    label: 'Mentions légales' },
@@ -12,9 +13,17 @@ const navItems = [
 ];
 
 const LegalLayout = ({ children, title, subtitle, lastUpdated }) => {
+  const legalSEO = categoryPageSEO({
+    title: `${title} - CléAvenir`,
+    description: subtitle || 'Documents légaux et politiques de CléAvenir',
+    keywords: "légal, confidentialité, conditions, RGPD",
+    category: "Légal",
+    categoryPath: "/legal"
+  });
+
   return (
     <div className="min-h-screen bg-slate-50">
-      <SEOHead title={`${title} - CléAvenir`} description={subtitle} />
+      <PageHelmet {...legalSEO} />
 
       {/* Hero — même style que AboutPage */}
       <section className="bg-slate-900 text-white py-16 md:py-20 relative overflow-hidden">

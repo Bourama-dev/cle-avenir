@@ -7,7 +7,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { supabase } from '@/lib/customSupabaseClient';
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2, ArrowLeft, Mail } from 'lucide-react';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { categoryPageSEO } from '@/components/SEO/seoPresets';
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
@@ -42,9 +43,17 @@ const ForgotPasswordPage = () => {
     }
   };
 
+  const forgotPasswordSEO = categoryPageSEO({
+    title: "Mot de passe oublié - CléAvenir",
+    description: "Réinitialisez votre mot de passe CléAvenir en quelques étapes simples.",
+    keywords: "mot de passe oublié, réinitialisation, compte",
+    category: "Sécurité",
+    categoryPath: "/forgot-password"
+  });
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
-      <SEOHead title="Mot de passe oublié - CléAvenir" description="Réinitialisez votre mot de passe CléAvenir." />
+      <PageHelmet {...forgotPasswordSEO} />
       
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-1">

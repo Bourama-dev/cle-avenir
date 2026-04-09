@@ -2,14 +2,23 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { Search, Home, ArrowLeft, HelpCircle } from 'lucide-react';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { categoryPageSEO } from '@/components/SEO/seoPresets';
 
 const NotFoundPage = () => {
   const navigate = useNavigate();
 
+  const notFoundSEO = categoryPageSEO({
+    title: "Page non trouvée - CléAvenir",
+    description: "La page que vous recherchez n'existe pas ou a été supprimée.",
+    keywords: "404, erreur, page non trouvée",
+    category: "Erreur",
+    categoryPath: "/404"
+  });
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 bg-gradient-to-br from-slate-50 via-white to-purple-50/30">
-      <SEOHead title="Page non trouvée - CléAvenir" description="La page que vous recherchez n'existe pas." />
+      <PageHelmet {...notFoundSEO} />
       
       {/* Hero Section with Glassmorphism */}
       <div className="relative p-12 rounded-3xl backdrop-blur-md bg-white/40 border border-white/60 shadow-xl shadow-purple-100 max-w-2xl w-full">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { Helmet } from 'react-helmet-async';
 import Footer from '@/components/Footer';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { categoryPageSEO } from '@/components/SEO/seoPresets';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -335,25 +336,18 @@ const FormationsPage = ({ setAllFormations }) => {
     { value: '100', label: '100 km' },
   ];
 
+  // SEO Configuration
+  const formationsSEO = categoryPageSEO({
+    title: "Formations en France - BTS, Licences, Masters | CléAvenir",
+    description: "Explorez des milliers de formations en France : BTS, licence, master, CAP, bachelor et plus. Trouvez la formation qui correspond à votre projet professionnel.",
+    keywords: "formations, BTS, licence, master, CAP, bachelor, alternance, école, université, parcours professionnel",
+    category: "Formations",
+    categoryPath: "/formations"
+  });
+
   return (
     <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
-      <Helmet>
-        <title>Formations - Trouver sa formation en France | CléAvenir</title>
-        <meta name="description" content="Explorez des milliers de formations en France : BTS, licence, master, CAP, bachelor et plus. Trouvez la formation qui correspond à votre projet professionnel." />
-        <link rel="canonical" href="https://cleavenir.com/formations" />
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "CollectionPage",
-          "name": "Catalogue des formations - CléAvenir",
-          "description": "Explorez des milliers de formations en France.",
-          "url": "https://cleavenir.com/formations",
-          "publisher": {
-            "@type": "Organization",
-            "name": "CléAvenir",
-            "url": "https://cleavenir.com"
-          }
-        })}</script>
-      </Helmet>
+      <PageHelmet {...formationsSEO} />
 
       <UpgradeModal
         isOpen={showUpgradeModal}

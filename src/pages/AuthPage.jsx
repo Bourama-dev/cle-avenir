@@ -5,7 +5,8 @@ import AuthTabs from '@/components/auth/AuthTabs';
 import LoginForm from '@/components/auth/LoginForm';
 import EnhancedSignupForm from '@/components/signup/EnhancedSignupForm';
 import AuthLayout from '@/components/auth/AuthLayout';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { categoryPageSEO } from '@/components/SEO/seoPresets';
 import { Loader2 } from 'lucide-react';
 
 const AuthPage = () => {
@@ -45,12 +46,17 @@ const AuthPage = () => {
     );
   }
 
+  const authSEO = categoryPageSEO({
+    title: activeTab === 'login' ? 'Connexion - CléAvenir' : 'Inscription - CléAvenir',
+    description: "Connectez-vous ou créez un compte pour accéder à votre espace personnel CléAvenir.",
+    keywords: "connexion, inscription, authentification, compte, accès",
+    category: activeTab === 'login' ? 'Connexion' : 'Inscription',
+    categoryPath: `/auth?tab=${activeTab}`
+  });
+
   return (
     <>
-      <SEOHead 
-        title={activeTab === 'login' ? 'Connexion - CléAvenir' : 'Inscription - CléAvenir'} 
-        description="Connectez-vous ou créez un compte pour accéder à votre espace personnel CléAvenir."
-      />
+      <PageHelmet {...authSEO} />
       <AuthLayout 
         title={activeTab === 'login' ? 'Bon retour parmi nous !' : 'Créer un compte'}
         subtitle={activeTab === 'login' ? 'Connectez-vous pour accéder à votre espace.' : 'Rejoignez-nous pour construire votre avenir.'}

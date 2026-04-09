@@ -8,7 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { formationDetailSEO } from '@/components/SEO/seoPresets';
 import { 
   ArrowLeft, School, MapPin, Loader2, Share2, Bookmark, 
   Euro, Briefcase, ChevronRight, AlertCircle, RefreshCw
@@ -179,24 +180,23 @@ const FormationDetailPage = () => {
     );
   }
 
+  // Adapt formation data structure for SEO preset
+  const adaptedFormationData = {
+    name: formation.title || formation.nom,
+    description: `Découvrez la formation ${formation.title || formation.nom} proposée par ${formation.provider_name || formation.provider}.`,
+    domain: formation.domain || formation.type || 'Professionnelle',
+    level: formation.level || formation.required_education_level || 'Formation qualifiante',
+    provider: formation.provider_name || formation.provider || 'CléAvenir',
+    image: formation.provider_logo_url || 'https://cleavenir.com/og-image.jpg',
+    id: formation.id,
+    rating: formation.rating,
+    reviewCount: formation.reviewCount
+  };
+  const formationSEOProps = formationDetailSEO(adaptedFormationData);
+
   return (
     <div className="min-h-screen bg-slate-50/50 pb-20">
-      <SEOHead 
-        title={`${formation.title || formation.nom} - CléAvenir`} 
-        description={`Découvrez la formation ${formation.title || formation.nom} proposée par ${formation.provider_name || formation.provider}.`}
-        keywords={`${formation.title || formation.nom}, formation, ${formation.provider_name || formation.provider}, diplôme`}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "Course",
-          "name": formation.title || formation.nom,
-          "description": `Découvrez la formation ${formation.title || formation.nom} proposée par ${formation.provider_name || formation.provider}.`,
-          "provider": {
-            "@type": "Organization",
-            "name": formation.provider_name || formation.provider || "CléAvenir"
-          },
-          "url": `https://cleavenir.com/formation/${formation.id}`
-        }}
-      />
+      <PageHelmet {...formationSEOProps} />
       
       {/* Hero Section */}
       <div className="relative bg-white border-b border-slate-200 overflow-hidden">

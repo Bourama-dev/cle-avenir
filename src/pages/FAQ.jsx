@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { ChevronDown, Send, HelpCircle, Search, BookOpen, User, CreditCard, Briefcase, Settings } from 'lucide-react';
 import { EmailService } from '@/services/emailService';
 import { useToast } from '@/components/ui/use-toast';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { categoryPageSEO } from '@/components/SEO/seoPresets';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -19,6 +20,14 @@ export default function FAQ() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+
+  const faqSEO = categoryPageSEO({
+    title: "FAQ - Questions Fréquemment Posées | CléAvenir",
+    description: "Trouvez les réponses à vos questions sur CléAvenir, les tests d'orientation, les formations et l'emploi.",
+    keywords: "FAQ, questions, orientation, formations, emploi, CléAvenir",
+    category: "FAQ",
+    categoryPath: "/faq"
+  });
 
   const faqCategories = {
     general: {
@@ -155,10 +164,7 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
-      <SEOHead 
-        title="Foire Aux Questions - CléAvenir" 
-        description="Trouvez toutes les réponses à vos questions sur l'orientation, les tests, l'emploi et le fonctionnement de CléAvenir." 
-      />
+      <PageHelmet {...faqSEO} />
       
       {/* Hero Section */}
       <div className="bg-slate-900 text-white py-16 md:py-24 relative overflow-hidden">

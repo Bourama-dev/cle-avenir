@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Users, Target, Heart, Rocket, ShieldCheck, Globe, CheckCircle, TrendingUp, Award, BookOpen, Zap, MessageSquare } from 'lucide-react';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { categoryPageSEO } from '@/components/SEO/seoPresets';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/customSupabaseClient';
 
@@ -46,9 +47,17 @@ const AboutPage = ({ onNavigate }) => {
 
   const formatStat = (val) => val === null ? '…' : val > 1000 ? `${Math.floor(val / 100) * 100}+` : `${val}+`;
 
+  const aboutSEO = categoryPageSEO({
+    title: "À propos de nous - CléAvenir",
+    description: "Découvrez l'équipe et la mission derrière CléAvenir, la plateforme d'orientation nouvelle génération qui démocratise l'accès au conseil de carrière.",
+    keywords: "à propos, mission, équipe, orientation, CléAvenir",
+    category: "À propos",
+    categoryPath: "/about"
+  });
+
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
-      <SEOHead title="À propos de nous - CléAvenir" description="Découvrez l'équipe et la mission derrière CléAvenir, la plateforme d'orientation nouvelle génération." />
+      <PageHelmet {...aboutSEO} />
 
       {/* Hero */}
       <section className="bg-slate-900 text-white py-24 relative overflow-hidden">

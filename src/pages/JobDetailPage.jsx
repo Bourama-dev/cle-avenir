@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { jobDetailSEO } from '@/components/SEO/seoPresets';
 import JobCard from '@/components/job-explorer/JobCard';
 import { AlertCircle, ArrowLeft } from 'lucide-react';
 import { isValidUUID } from '@/lib/utils';
@@ -207,7 +208,11 @@ const JobDetailPage = () => {
   if (error || !job) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
-        <SEOHead title="Offre introuvable - CléAvenir" />
+        <PageHelmet
+          title="Offre introuvable - CléAvenir"
+          description="La page que vous recherchez n'existe pas ou n'est plus disponible."
+          keywords="offre emploi, erreur, introuvable"
+        />
         <Card className="max-w-md w-full text-center p-8 shadow-lg border-red-100 bg-white rounded-2xl">
            <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <AlertCircle className="h-10 w-10 text-red-500" />
@@ -224,35 +229,23 @@ const JobDetailPage = () => {
     );
   }
 
+  // Adapt job data structure for SEO preset
+  const adaptedJobData = {
+    title: job.title,
+    description: job.description,
+    company: job.company,
+    city: job.location,
+    type: job.contract_type || 'FULL_TIME',
+    salary: job.salary_range,
+    image: job.company_logo || 'https://cleavenir.com/og-image.jpg',
+    id: job.id,
+    expiresAt: job.published_at
+  };
+  const jobSEOProps = jobDetailSEO(adaptedJobData);
+
   return (
     <div className="min-h-screen bg-slate-50">
-      <SEOHead 
-        title={`${job.title} - ${job.company}`} 
-        description={`Postulez au poste de ${job.title} chez ${job.company} à ${job.location}.`}
-        keywords={`${job.title}, ${job.company}, offre emploi, ${job.location}`}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "JobPosting",
-          "title": job.title,
-          "description": job.description || `Postulez au poste de ${job.title} chez ${job.company} à ${job.location}.`,
-          "datePosted": job.date_posted || job.datePosted || new Date().toISOString().split('T')[0],
-          "hiringOrganization": {
-            "@type": "Organization",
-            "name": job.company,
-            "sameAs": job.company_url || undefined
-          },
-          "jobLocation": {
-            "@type": "Place",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": job.location,
-              "addressCountry": "FR"
-            }
-          },
-          "employmentType": job.contract_type || job.type || "FULL_TIME",
-          "url": `https://cleavenir.com/job/${job.id}`
-        }}
-      />
+      <PageHelmet {...jobSEOProps} />
 
       {/* 1. Hero Section */}
       <JobDetailHero 

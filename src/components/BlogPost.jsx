@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import SEOHead from "@/components/SEOHead";
+import PageHelmet from "@/components/SEO/PageHelmet";
+import { categoryPageSEO } from "@/components/SEO/seoPresets";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { blogPosts } from "@/data/blogPosts";
 import { Button } from "@/components/ui/button";
@@ -179,36 +180,17 @@ const BlogPost = ({ onNavigate }) => {
   const currentUrl = typeof window !== "undefined" ? window.location.href : "";
   const shareUrls = buildShareUrls(post.title, currentUrl);
 
-  // JSON-LD for Article (enrichi)
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    image: post.image ? [post.image] : undefined,
-    datePublished: post.date,
-    dateModified: post.updatedAt || post.date,
-    author: { "@type": "Person", name: post.author },
-    publisher: {
-      "@type": "Organization",
-      name: "CléAvenir",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://storage.googleapis.com/hostinger-horizons-assets-prod/2a3aa4e1-f89b-4701-ac95-2a5df475caa5/d8ca901e80d017ffe3233aaf1581909b.png",
-      },
-    },
+  const blogPostSEO = categoryPageSEO({
+    title: post.title,
     description: post.excerpt,
-    mainEntityOfPage: currentUrl || `https://www.cleavenir.com/blog/${post.slug}`,
-  };
+    image: post.image,
+    category: post.category,
+    categoryPath: `/blog/${post.slug}`
+  });
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <SEOHead
-        title={post.title}
-        description={post.excerpt}
-        image={post.image}
-        type="article"
-        schema={articleSchema}
-      />
+      <PageHelmet {...blogPostSEO} schemaType="article" publishedTime={post.date} modifiedTime={post.updatedAt || post.date} author={post.author} />
 
       {/* Progress bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-transparent z-50">

@@ -2,7 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, User, Clock, ArrowRight } from 'lucide-react';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { categoryPageSEO } from '@/components/SEO/seoPresets';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -11,13 +12,17 @@ import { blogPosts } from '@/data/blogPosts'; // Import centralized data
 const Blog = ({ onNavigate }) => {
   const navigate = useNavigate();
 
+  const blogSEO = categoryPageSEO({
+    title: "Le Blog de l'Orientation et de l'Emploi - CléAvenir",
+    description: "Conseils carrière, guides de reconversion, tendances du marché de l'emploi et analyses métiers. Tout pour réussir votre vie professionnelle.",
+    keywords: "blog emploi, conseils carrière, reconversion, orientation, formation",
+    category: "Blog",
+    categoryPath: "/blog"
+  });
+
   return (
     <div className="min-h-screen bg-slate-50">
-      <SEOHead 
-        title="Le Blog de l'Orientation et de l'Emploi"
-        description="Conseils carrière, guides de reconversion, tendances du marché de l'emploi et analyses métiers. Tout pour réussir votre vie professionnelle."
-        keywords="blog emploi, conseils carrière, reconversion, orientation, formation"
-      />
+      <PageHelmet {...blogSEO} />
       {/* Header removed */}
 
       <main className="container mx-auto px-4 py-8 max-w-7xl">

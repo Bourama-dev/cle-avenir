@@ -33,7 +33,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { categoryPageSEO } from '@/components/SEO/seoPresets';
 import { CV_TEMPLATES_CONFIG } from '@/data/cvTemplateConfig';
 import { CL_TEMPLATES_CONFIG } from '@/data/coverLetterTemplateConfig';
 
@@ -269,12 +270,17 @@ const MyDocumentsPage = () => {
     );
   }
 
+  const myDocumentsSEO = categoryPageSEO({
+    title: "Mes Documents - CV & Lettres de Motivation",
+    description: "Gérez vos CV et lettres de motivation sauvegardés en un seul endroit. Créez, modifiez et exportez vos documents.",
+    keywords: "CV, lettre de motivation, documents, modèles",
+    category: "Compte",
+    categoryPath: "/my-documents"
+  });
+
   return (
     <div className="min-h-screen bg-slate-50 py-8">
-      <SEOHead 
-        title="Mes Documents - CV & Lettres de Motivation"
-        description="Gérez vos CV et lettres de motivation sauvegardés"
-      />
+      <PageHelmet {...myDocumentsSEO} />
 
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="mb-8">

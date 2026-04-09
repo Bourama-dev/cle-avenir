@@ -17,7 +17,8 @@ import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { metierService } from '@/services/metierService';
 import JobCard from '@/components/job-explorer/JobCard';
 import FormationCard from '@/components/formation-finder/FormationCard';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { metierDetailSEO } from '@/components/SEO/seoPresets';
 import { cn } from '@/lib/utils';
 import MatchingContextPanel from '@/components/metiers/MatchingContextPanel';
 import { Progress } from "@/components/ui/progress";
@@ -247,24 +248,19 @@ const MetierDetailPage = () => {
 
   const riasecData = getRiasecData(metier);
 
+  const adaptedMetierData = {
+    name: metier.libelle,
+    description: metier.description || metier.definition || "Description non disponible.",
+    category: metier.domaine || (metier.themes && metier.themes[0]?.libelle) || 'Métier',
+    experience: metier.experience_level || 'Variable',
+    salary: metier.salaire || metier.salary_range || 'Non précisé',
+    id: metier.code || metier.code_rome,
+  };
+  const metierSEOProps = metierDetailSEO(adaptedMetierData);
+
   return (
     <div className="min-h-screen bg-slate-50/50 pb-20 animate-in fade-in duration-500">
-      <SEOHead 
-        title={`${metier.libelle} - Fiche Métier`}
-        description={`Découvrez le métier de ${metier.libelle} : missions, compétences requises et opportunités d'emploi.`}
-        keywords={`${metier.libelle}, fiche métier, orientation, emploi, compétences`}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "Occupation",
-          "name": metier.libelle,
-          "description": `Découvrez le métier de ${metier.libelle} : missions, compétences requises et opportunités d'emploi.`,
-          "occupationLocation": {
-            "@type": "Country",
-            "name": "France"
-          },
-          "url": `https://cleavenir.com/metier/${metier.code_rome || metier.id}`
-        }}
-      />
+      <PageHelmet {...metierSEOProps} />
       
       <main className="container mx-auto px-4 py-8 max-w-7xl">
         

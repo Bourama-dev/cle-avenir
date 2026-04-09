@@ -2,36 +2,24 @@ import React, { Suspense, lazy } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2, Sparkles, Target, Zap, Search, GraduationCap } from 'lucide-react';
 import { motion } from 'framer-motion';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
 
 // Lazy load non-critical components
 const BlogCarousel = lazy(() => import('@/components/BlogCarousel'));
-
-const HOME_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "CléAvenir",
-  "url": "https://cleavenir.com",
-  "description": "Plateforme d'orientation professionnelle assistée par IA.",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": "https://cleavenir.com/metiers?q={search_term_string}"
-    },
-    "query-input": "required name=search_term_string"
-  }
-};
 
 const HomePage = ({
   onNavigate
 }) => {
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <SEOHead
+      <PageHelmet
         title="CléAvenir - Test de Carrière Intelligent & Orientation IA"
         description="Découvrez votre avenir professionnel avec CléAvenir. Test d'orientation gratuit, analyse IA des compétences, fiches métiers, formations et offres d'emploi."
-        structuredData={HOME_SCHEMA}
+        keywords="orientation professionnelle, test carrière, métiers, formations, emploi, IA, Parcoursup"
+        image="https://cleavenir.com/og-image.jpg"
+        breadcrumbs={[
+          { name: 'Accueil', url: '/' }
+        ]}
       />
       {/* Hero Section */}
       <section className="relative px-6 pt-16 pb-24 md:pt-32 md:pb-32 overflow-hidden">

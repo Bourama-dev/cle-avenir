@@ -7,7 +7,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { supabase } from '@/lib/customSupabaseClient';
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2, Lock, CheckCircle, XCircle } from 'lucide-react';
-import SEOHead from '@/components/SEOHead';
+import PageHelmet from '@/components/SEO/PageHelmet';
+import { categoryPageSEO } from '@/components/SEO/seoPresets';
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState('');
@@ -124,9 +125,17 @@ const ResetPasswordPage = () => {
     );
   }
 
+  const resetPasswordSEO = categoryPageSEO({
+    title: "Réinitialisation du mot de passe - CléAvenir",
+    description: "Réinitialisez votre mot de passe de manière sécurisée pour accéder à votre compte CléAvenir.",
+    keywords: "réinitialisation mot de passe, sécurité, compte",
+    category: "Sécurité",
+    categoryPath: "/reset-password"
+  });
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
-      <SEOHead title="Réinitialisation du mot de passe - CléAvenir" />
+      <PageHelmet {...resetPasswordSEO} />
       
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-1">
