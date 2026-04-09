@@ -75,7 +75,8 @@ const MetiersExplorer = ({ onNavigate }) => {
       const { data, error } = await supabase
         .from('rome_metiers')
         .select('*')
-        .order('libelle');
+        .order('libelle')
+        .limit(2000);
 
       if (error) throw error;
 
