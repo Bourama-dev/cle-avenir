@@ -56,7 +56,6 @@ const FormationsPage = ({ setAllFormations }) => {
   const [activeSearchParams, setActiveSearchParams] = useState({
     q: '',
     ville: '',
-    codePostal: '',
     latitude: null,
     longitude: null,
     radius: '100'
@@ -163,7 +162,6 @@ const FormationsPage = ({ setAllFormations }) => {
         offset: offset,
         q: activeSearchParams.q || undefined,
         ville: activeSearchParams.ville || undefined,
-        codePostal: activeSearchParams.codePostal || undefined,
         latitude: activeSearchParams.latitude || undefined,
         longitude: activeSearchParams.longitude || undefined,
         radius: activeSearchParams.radius || undefined,
@@ -277,14 +275,12 @@ const FormationsPage = ({ setAllFormations }) => {
   };
 
   const handleSearchSubmit = () => {
-    const zip = selectedCityData ? String(selectedCityData['Code Postal']) : '';
     const lat = selectedCityData ? selectedCityData.latitude : null;
     const lon = selectedCityData ? selectedCityData.longitude : null;
 
     setActiveSearchParams({
       q: searchTerm,
       ville: cityInputValue,
-      codePostal: zip,
       latitude: lat,
       longitude: lon,
       radius: distanceFilter
