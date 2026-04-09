@@ -1,9 +1,10 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
-import { TrendingUp, Users, Star, MessageSquare } from 'lucide-react';
+import { Users, Star, MessageSquare } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import AdminRoute from '@/lib/AdminRoute';
+import { StatsGrid } from '@/components/cleo/charts/CleoChartLibrary';
 
 const mockFeedbackTrend = [
   { name: 'Lun', feedback: 12, rating: 4.2 },
@@ -23,28 +24,6 @@ const mockTopMetiers = [
   { name: 'Designer UX', rating: 4.3, count: 112 },
 ];
 
-const StatCard = ({ title, value, subtitle, icon: Icon, trend }) => (
-  <Card>
-    <CardContent className="p-6">
-      <div className="flex justify-between items-start">
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-slate-500">{title}</p>
-          <p className="text-3xl font-bold text-slate-900">{value}</p>
-        </div>
-        <div className="p-3 bg-indigo-50 rounded-xl">
-          <Icon className="h-5 w-5 text-indigo-600" />
-        </div>
-      </div>
-      {subtitle && (
-        <div className="mt-4 flex items-center gap-2 text-sm">
-          <TrendingUp className="h-4 w-4 text-emerald-500" />
-          <span className="text-emerald-600 font-medium">{trend}</span>
-          <span className="text-slate-500">{subtitle}</span>
-        </div>
-      )}
-    </CardContent>
-  </Card>
-);
 
 const AdminAnalyticsDashboard = () => {
   const { toast } = useToast();

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { metierService } from '@/services/metierService';
+import { metierSyncService } from '@/services/metierSyncService';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -11,14 +12,14 @@ import {
   TableHeader, 
   TableRow 
 } from '@/components/ui/table';
-import { 
+import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { Loader2, Plus, Edit, Trash2, Search, AlertCircle } from 'lucide-react';
+import { Loader2, Plus, Edit, Trash2, Search, AlertCircle, RefreshCcw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
@@ -52,11 +53,25 @@ const AdminMetiers = () => {
   const [editingId, setEditingId] = useState(null);
   const [formError, setFormError] = useState('');
 
+  // Sync state
+  const [isSyncDialogOpen, setIsSyncDialogOpen] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncClientId, setSyncClientId] = useState('');
+  const [syncSecret, setSyncSecret] = useState('');
+  const [syncError, setSyncError] = useState('');
+  const [metiersCount, setMetiersCount] = useState(0);
+
   const { toast } = useToast();
 
   useEffect(() => {
     fetchMetiers();
+    loadMetiersCount();
   }, []);
+
+  const loadMetiersCount = async () => {
+    const count = await metierSyncService.getMetiersCount();
+    setMetiersCount(count);
+  };
 
   const fetchMetiers = async () => {
     try {
@@ -155,6 +170,40 @@ const AdminMetiers = () => {
     }
   };
 
+  const handleSync = async () => {
+    if (!syncClientId || !syncSecret) {
+      setSyncError("Veuillez entrer le Client ID et le Secret.");
+      return;
+    }
+
+    try {
+      setIsSyncing(true);
+      setSyncError('');
+      const result = await metierSyncService.syncAllMetiers(syncClientId, syncSecret);
+
+      toast({
+        title: "Succès",
+        description: `${result.count} métiers synchronisés depuis France Travail API`
+      });
+
+      // Refresh the data
+      await loadMetiersCount();
+      await fetchMetiers();
+      setIsSyncDialogOpen(false);
+      setSyncClientId('');
+      setSyncSecret('');
+    } catch (error) {
+      setSyncError(error.message);
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: error.message
+      });
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   const filteredMetiers = metiers.filter(m => 
     (m.name?.toLowerCase() || '').includes(searchTerm.toLowerCase()) || 
     (m.code?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
@@ -164,10 +213,18 @@ const AdminMetiers = () => {
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-slate-900">Gestion des Métiers (Base de données)</h1>
-        <Button onClick={() => handleOpenDialog()} className="bg-indigo-600 hover:bg-indigo-700">
-          <Plus className="w-4 h-4 mr-2" /> Ajouter un métier
-        </Button>
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900">Gestion des Métiers (Base de données)</h1>
+          <p className="text-sm text-slate-600 mt-2">{metiersCount.toLocaleString()} métiers dans la base de données</p>
+        </div>
+        <div className="flex gap-3">
+          <Button onClick={() => setIsSyncDialogOpen(true)} className="bg-green-600 hover:bg-green-700">
+            <RefreshCcw className="w-4 h-4 mr-2" /> Synchroniser depuis France Travail
+          </Button>
+          <Button onClick={() => handleOpenDialog()} className="bg-indigo-600 hover:bg-indigo-700">
+            <Plus className="w-4 h-4 mr-2" /> Ajouter un métier
+          </Button>
+        </div>
       </div>
 
       <div className="flex items-center gap-4 bg-white p-4 rounded-lg shadow-sm border border-slate-200">
@@ -350,6 +407,62 @@ const AdminMetiers = () => {
             <Button variant="outline" onClick={handleCloseDialog} disabled={isSaving}>Annuler</Button>
             <Button onClick={handleSave} disabled={isSaving} className="bg-indigo-600 text-white min-w-[120px]">
               {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Enregistrer"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isSyncDialogOpen} onOpenChange={setIsSyncDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Synchroniser avec France Travail</DialogTitle>
+          </DialogHeader>
+
+          {syncError && (
+            <Alert variant="destructive" className="my-2">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{syncError}</AlertDescription>
+            </Alert>
+          )}
+
+          <div className="space-y-4 py-4">
+            <p className="text-sm text-slate-600">
+              Cela téléchargera TOUS les métiers du catalogue ROME depuis l'API France Travail et les stockera dans la base de données.
+            </p>
+
+            <div>
+              <label className="text-sm font-medium">Client ID <span className="text-red-500">*</span></label>
+              <Input
+                type="password"
+                value={syncClientId}
+                onChange={(e) => setSyncClientId(e.target.value)}
+                placeholder="PAR_cleavenir_..."
+                disabled={isSyncing}
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium">Secret <span className="text-red-500">*</span></label>
+              <Input
+                type="password"
+                value={syncSecret}
+                onChange={(e) => setSyncSecret(e.target.value)}
+                placeholder="Entrez votre secret"
+                disabled={isSyncing}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsSyncDialogOpen(false)} disabled={isSyncing}>
+              Annuler
+            </Button>
+            <Button
+              onClick={handleSync}
+              disabled={isSyncing}
+              className="bg-green-600 text-white min-w-[120px]"
+            >
+              {isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : "Synchroniser"}
             </Button>
           </DialogFooter>
         </DialogContent>
