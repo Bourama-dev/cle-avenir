@@ -30,6 +30,7 @@ import CreatePlanModal from '@/components/plans/CreatePlanModal';
 import MetierLoadingSpinner from '@/components/MetierLoadingSpinner';
 import MetierErrorState from '@/components/MetierErrorState';
 import { useMetierDataFetcher } from '@/utils/metierDataFetcher';
+import { JobMarketTrends, SalaryComparisonChart, SkillsRadarChart } from '@/components/cleo/charts/CleoChartLibrary';
 
 const FormattedText = ({ text, className = "" }) => {
   if (!text) return null;
@@ -431,25 +432,15 @@ const MetierDetailPage = () => {
 
                 {/* Sidebar within Overview */}
                 <div className="space-y-6">
-                  {/* RIASEC Profile */}
-                  <Card className="border-slate-200 shadow-sm rounded-2xl">
-                      <CardHeader className="bg-slate-50/50 border-b border-slate-100">
-                        <CardTitle className="flex items-center gap-2 text-lg">
-                            <BarChart className="w-5 h-5 text-indigo-600" /> Profil RIASEC
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-6 space-y-4">
-                        {riasecData.map((item) => (
-                            <div key={item.letter}>
-                              <div className="flex justify-between text-sm mb-1">
-                                <span className="font-semibold text-slate-700">{item.name}</span>
-                                <span className="text-slate-500">{item.score}%</span>
-                              </div>
-                              <Progress value={item.score} className="h-2" indicatorClassName={item.color} />
-                            </div>
-                        ))}
-                      </CardContent>
-                  </Card>
+                  {/* RIASEC Profile with Radar Chart */}
+                  <SkillsRadarChart
+                    data={riasecData.map(item => ({
+                      name: item.name,
+                      required: item.score,
+                      current: Math.max(40, item.score - 10)
+                    }))}
+                    title="Profil RIASEC"
+                  />
                 </div>
               </div>
             </TabsContent>
@@ -556,6 +547,32 @@ const MetierDetailPage = () => {
                     )}
                   </CardContent>
                 </Card>
+
+                {/* Market Insights Section */}
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-6">Tendances du marché et rémunération</h3>
+                  <div className="grid lg:grid-cols-2 gap-6">
+                    <JobMarketTrends
+                      data={[
+                        { month: 'Jan', offers: 45 },
+                        { month: 'Fév', offers: 52 },
+                        { month: 'Mar', offers: 48 },
+                        { month: 'Avr', offers: 61 },
+                        { month: 'Mai', offers: 58 },
+                        { month: 'Juin', offers: 70 },
+                      ]}
+                      title="Offres d'emploi par mois"
+                    />
+                    <SalaryComparisonChart
+                      data={[
+                        { name: 'Débutant', min: 24, avg: 28, max: 32 },
+                        { name: 'Confirmé', min: 32, avg: 38, max: 45 },
+                        { name: 'Expert', min: 45, avg: 55, max: 65 },
+                      ]}
+                      title="Fourchettes de salaire annuel"
+                    />
+                  </div>
+                </div>
 
                 {/* Info Box */}
                 <Card className="bg-indigo-50/50 border-indigo-200 rounded-2xl">
