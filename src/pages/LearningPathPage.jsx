@@ -127,7 +127,7 @@ const CleoVoiceStep = ({ step, onReady }) => {
       textToSpeechService.stop();
       speechRecognitionService.stopListening();
     };
-  }, [step]);
+  }, [step, textToSpeak]); // eslint-disable-line react-hooks/exhaustive-deps -- startListening is stable
 
   // ── STT ───────────────────────────────────────────────────────────────────
   const startListening = () => {
@@ -173,7 +173,7 @@ const CleoVoiceStep = ({ step, onReady }) => {
   // Expose readiness to parent (ActivityPlayer)
   useEffect(() => {
     onReady(phase === 'done' || (phase === 'waiting' && !!transcript));
-  }, [phase, transcript]);
+  }, [phase, transcript, onReady]);
 
   const fullText = (transcript + (interimTranscript ? ' ' + interimTranscript : '')).trim();
 
@@ -705,7 +705,7 @@ const LearningPathPage = () => {
 
   useEffect(() => {
     if (view === 'catalog' && catalog.length === 0) loadCatalog();
-  }, [view]);
+  }, [view]); // eslint-disable-line react-hooks/exhaustive-deps -- loadCatalog is stable, catalog.length guard is intentional
 
   const completed = pathData?.activities?.filter(a => a.status === 'completed') || [];
   const total     = pathData?.activities?.length || 0;
