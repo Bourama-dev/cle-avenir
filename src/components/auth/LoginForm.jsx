@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import FormInput from './FormInput';
 import PasswordInput from './PasswordInput';
@@ -9,6 +9,7 @@ import { Loader2 } from 'lucide-react';
 const LoginForm = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
@@ -43,10 +44,12 @@ const LoginForm = () => {
       const { data, error } = await signIn(formData.email, formData.password);
       
       if (error) {
-        // Error is already handled by toast in context, but we can show local error too
+        // Error toast already shown by AuthContext, add local inline feedback too
         setError("Identifiants incorrects. Veuillez réessayer.");
       } else if (data?.user) {
-        // Success - redirection is handled by AuthPage or App.jsx via user state change
+        // Explicit redirect — don't rely solely on AuthPage's useEffect
+        const from = location.state?.from || '/dashboard';
+        navigate(from, { replace: true });
       }
     } catch (err) {
       console.error("Login error:", err);

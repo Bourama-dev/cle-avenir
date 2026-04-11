@@ -153,6 +153,7 @@ const LegalVersionsPage = lazy(() => import('@/pages/admin/LegalVersionsPage'));
 const SecurityAuditPage = lazy(() => import('@/pages/admin/SecurityAuditPage'));
 const AdminMetiers = lazy(() => import('@/pages/AdminMetiers'));
 const AdminSettingsPage = lazy(() => import('@/pages/AdminSettingsPage'));
+const ContentManagementPage = lazy(() => import('@/pages/admin/ContentManagementPage'));
 
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
@@ -398,6 +399,7 @@ const PageContent = () => {
                   <Route path="/admin/legal-versions" element={<AdminRoute><LegalVersionsPage /></AdminRoute>} />
                   <Route path="/admin/security-audit" element={<AdminRoute><SecurityAuditPage /></AdminRoute>} />
                   <Route path="/admin/settings" element={<AdminRoute><AdminSettingsPage /></AdminRoute>} />
+                  <Route path="/admin/content" element={<AdminRoute><ContentManagementPage /></AdminRoute>} />
                   <Route path="/admin/*" element={<AdminRoute><AdminDashboardPage onNavigate={handleNavigate} /></AdminRoute>} />
                   
                   {/* Establishment Routes */}

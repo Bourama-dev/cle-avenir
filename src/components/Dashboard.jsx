@@ -228,8 +228,8 @@ const Dashboard = ({ onNavigate }) => {
                          Dashboard Analytics <ArrowRight className="ml-2 h-4 w-4" />
                        </Button>
                        
-                       <Link to="/admin">
-                         <Button 
+                       <Link to="/admin/content">
+                         <Button
                            variant="default"
                            className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm font-medium transition-all duration-200 flex items-center gap-2"
                          >
