@@ -1,16 +1,15 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 
+// Redirect to the dedicated content management page
 const AdminContent = () => {
+  const navigate = useNavigate();
+  useEffect(() => { navigate('/admin/content', { replace: true }); }, [navigate]);
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Gestion de Contenu</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p>Gestion de contenu en construction.</p>
-      </CardContent>
-    </Card>
+    <div className="flex justify-center items-center h-40">
+      <Loader2 className="animate-spin text-slate-400 w-6 h-6" />
+    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Exclure les espaces privés
+# Espaces privés utilisateur
 Disallow: /admin/
 Disallow: /dashboard
 Disallow: /account
@@ -20,11 +20,22 @@ Disallow: /personalized-plan
 Disallow: /action-plan
 Disallow: /results
 Disallow: /test-history
+Disallow: /apprentissage
+Disallow: /profile
+Disallow: /profil
 Disallow: /user/
 Disallow: /establishment/
 Disallow: /institution/
 Disallow: /maintenance
 Disallow: /auth
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /email-confirmation-pending
+
+# Crawl-delay pour éviter la surcharge
+Crawl-delay: 1
 
 # Sitemap
 Sitemap: https://cleavenir.com/sitemap.xml
