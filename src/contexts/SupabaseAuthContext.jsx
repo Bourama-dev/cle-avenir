@@ -194,11 +194,16 @@ export const AuthProvider = ({ children }) => {
           : result.error.message,
       });
     } else {
-      console.log('[AuthContext] Sign in success. Updating session state manually to ensure consistency.');
+      console.log('[AuthContext] Sign in success.');
+      // Fire handleSession but do NOT await — onAuthStateChange will handle it.
+      // Awaiting here can cause errors (profile/subscription fetch) to bubble up
+      // as a login failure even though auth succeeded.
       if (result.data?.session) {
-        await handleSession(result.data.session);
+        handleSession(result.data.session).catch(err =>
+          console.warn('[AuthContext] handleSession post-login error (non-blocking):', err)
+        );
       }
-      
+
       toast({
         title: "Connexion réussie",
         description: "Ravi de vous revoir !",

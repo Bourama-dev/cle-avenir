@@ -72,30 +72,33 @@ export const AuthService = {
   },
 
   async login(email, password) {
+    // Step 1: Authenticate — only this can be a real login failure
+    let authData;
     try {
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
+      const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password });
       if (authError) throw authError;
+      authData = data;
+    } catch (error) {
+      console.error("Login auth error:", error.message);
+      return { data: null, error };
+    }
 
-      // Fetch profile
-      let profileData = null;
-      if (authData.user) {
+    // Step 2: Fetch profile — failure here must NOT block the login
+    let profileData = null;
+    if (authData.user) {
+      try {
         const { data: profile } = await supabase
           .from('profiles')
           .select('*')
           .eq('id', authData.user.id)
           .single();
         profileData = profile;
+      } catch (profileError) {
+        console.warn("Profile fetch failed after login (non-blocking):", profileError?.message);
       }
-
-      return { data: { session: authData.session, user: authData.user, profile: profileData }, error: null };
-    } catch (error) {
-      console.error("Login error:", error.message);
-      return { data: null, error };
     }
+
+    return { data: { session: authData.session, user: authData.user, profile: profileData }, error: null };
   },
 
   async getProfile(userId) {
