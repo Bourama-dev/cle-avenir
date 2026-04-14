@@ -797,8 +797,8 @@ const ContentManagementPage = () => {
       {/* Header */}
       <div className="bg-white border-b border-slate-200 sticky top-0 z-20 shadow-sm">
         <div className="container mx-auto px-4 py-4 max-w-7xl flex items-center gap-3">
-          <Button variant="ghost" size="sm" onClick={() => navigate('/admin')} className="text-slate-500">
-            <ArrowLeft size={16} className="mr-1" /> Admin
+          <Button variant="ghost" size="sm" onClick={() => navigate('/dashboard')} className="text-slate-500">
+            <ArrowLeft size={16} className="mr-1" /> Dashboard
           </Button>
           <div className="h-5 w-px bg-slate-200" />
           <h1 className="font-bold text-slate-900 flex items-center gap-2 text-lg">
