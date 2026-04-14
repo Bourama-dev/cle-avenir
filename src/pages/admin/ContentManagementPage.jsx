@@ -5,9 +5,14 @@ import {
   BookOpen, FileText, Shield, Cookie, Scale, Globe,
   PenLine, Eye, Save, CheckCircle2, Loader2, Plus,
   Trash2, ArrowLeft, ExternalLink, Clock, Tag,
-  ToggleLeft, ToggleRight, Search, Filter,
+  ToggleLeft, ToggleRight, Search, Image as ImageIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { adminService } from '@/services/adminService';
+import { getPublicBlogImageUrl } from '@/utils/blogImages';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
@@ -213,54 +218,308 @@ Vous pouvez adresser une réclamation à la CNIL : www.cnil.fr`,
 };
 
 // ─── Blog Section ────────────────────────────────────────────────────────────
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+const BLOG_CATEGORIES = ['Alternance', 'Conseils', 'Tendances', 'Métiers', 'Actualités', 'Orientation'];
+
+const EMPTY_FORM = {
+  title: '', category: 'Conseils', excerpt: '', content: '',
+  featured_image: '', author: '', published: false,
+};
+
 const BlogSection = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [view, setView] = useState('list'); // 'list' | 'edit'
+  const [editingPost, setEditingPost] = useState(null); // null = new
+  const [formData, setFormData] = useState(EMPTY_FORM);
+  const [saving, setSaving] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const { toast } = useToast();
-  const navigate = useNavigate();
 
   const load = useCallback(async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from('blog_articles')
-      .select('id, title, slug, published, created_at, category, author')
-      .order('created_at', { ascending: false });
-    if (!error) setPosts(data || []);
-    setLoading(false);
-  }, []);
+    try {
+      const data = await adminService.getBlogsList();
+      setPosts(data || []);
+    } catch (err) {
+      toast({ variant: 'destructive', title: 'Erreur', description: err.message });
+    } finally {
+      setLoading(false);
+    }
+  }, [toast]);
 
   useEffect(() => { load(); }, [load]);
 
-  const togglePublish = async (post) => {
-    const { error } = await supabase
-      .from('blog_articles')
-      .update({ published: !post.published })
-      .eq('id', post.id);
-    if (error) {
-      toast({ variant: 'destructive', title: 'Erreur', description: error.message });
-    } else {
-      toast({ title: post.published ? 'Article dépublié' : 'Article publié !' });
-      load();
+  const openNew = () => {
+    setEditingPost(null);
+    setFormData(EMPTY_FORM);
+    setImageFile(null);
+    setImagePreview(null);
+    setView('edit');
+  };
+
+  const openEdit = (post) => {
+    setEditingPost(post);
+    setFormData({
+      title: post.title || '',
+      category: post.category || 'Conseils',
+      excerpt: post.excerpt || '',
+      content: post.content || '',
+      featured_image: post.featured_image || '',
+      author: post.author || '',
+      published: post.published || false,
+    });
+    setImageFile(null);
+    setImagePreview(post.featured_image ? getPublicBlogImageUrl(post.featured_image) : null);
+    setView('edit');
+  };
+
+  const backToList = () => {
+    setView('list');
+    setEditingPost(null);
+    setImageFile(null);
+    setImagePreview(null);
+  };
+
+  const handleField = (name, value) => setFormData(prev => ({ ...prev, [name]: value }));
+
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      toast({ variant: 'destructive', title: 'Format invalide', description: 'JPEG, PNG, WEBP ou GIF uniquement.' });
+      e.target.value = '';
+      return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      toast({ variant: 'destructive', title: 'Fichier trop lourd', description: 'Max 5 MB.' });
+      e.target.value = '';
+      return;
+    }
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    if (!formData.title.trim()) return toast({ variant: 'destructive', title: 'Le titre est obligatoire.' });
+    if (!formData.author.trim()) return toast({ variant: 'destructive', title: 'L\'auteur est obligatoire.' });
+    setSaving(true);
+    try {
+      let imagePath = formData.featured_image;
+      if (imageFile) {
+        const ext = imageFile.name.split('.').pop();
+        const fileName = `${Math.random().toString(36).slice(2)}_${Date.now()}.${ext}`;
+        const filePath = `blog-covers/${fileName}`;
+        const { error: upErr } = await supabase.storage.from('blog-images').upload(filePath, imageFile);
+        if (upErr) throw new Error(`Upload échoué : ${upErr.message}`);
+        imagePath = filePath;
+      }
+      const payload = {
+        ...formData,
+        featured_image: imagePath,
+        published_at: formData.published ? new Date().toISOString() : null,
+      };
+      if (editingPost) {
+        await adminService.updateBlog(editingPost.id, payload);
+        toast({ title: 'Article mis à jour !' });
+      } else {
+        await adminService.createBlog(payload);
+        toast({ title: 'Article créé !' });
+      }
+      await load();
+      backToList();
+    } catch (err) {
+      toast({ variant: 'destructive', title: 'Erreur', description: err.message });
+    } finally {
+      setSaving(false);
     }
   };
 
-  const deletePost = async (id) => {
+  const togglePublish = async (post, e) => {
+    e.stopPropagation();
+    try {
+      await adminService.updateBlog(post.id, { published: !post.published, published_at: !post.published ? new Date().toISOString() : null });
+      toast({ title: post.published ? 'Article dépublié' : 'Article publié !' });
+      load();
+    } catch (err) {
+      toast({ variant: 'destructive', title: 'Erreur', description: err.message });
+    }
+  };
+
+  const deletePost = async (id, e) => {
+    e.stopPropagation();
     if (!window.confirm('Supprimer cet article définitivement ?')) return;
-    const { error } = await supabase.from('blog_articles').delete().eq('id', id);
-    if (error) {
-      toast({ variant: 'destructive', title: 'Erreur', description: error.message });
-    } else {
+    try {
+      await adminService.deleteBlog(id);
       toast({ title: 'Article supprimé' });
       load();
+    } catch (err) {
+      toast({ variant: 'destructive', title: 'Erreur', description: err.message });
     }
   };
 
   const filtered = posts.filter(p =>
     p.title?.toLowerCase().includes(search.toLowerCase()) ||
-    p.category?.toLowerCase().includes(search.toLowerCase())
+    p.category?.toLowerCase().includes(search.toLowerCase()) ||
+    p.author?.toLowerCase().includes(search.toLowerCase())
   );
 
+  // ── Editor view ──────────────────────────────────────────────────────────
+  if (view === 'edit') {
+    return (
+      <div className="space-y-5">
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="sm" onClick={backToList} className="text-slate-500 gap-1.5">
+            <ArrowLeft size={15} /> Retour à la liste
+          </Button>
+          <span className="text-slate-300">|</span>
+          <h3 className="font-semibold text-slate-800">
+            {editingPost ? 'Modifier l\'article' : 'Nouvel article'}
+          </h3>
+        </div>
+
+        <form onSubmit={handleSave} className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5">
+          {/* Title */}
+          <div>
+            <Label className="text-sm font-semibold text-slate-700 mb-1.5 block">Titre <span className="text-red-500">*</span></Label>
+            <Input
+              value={formData.title}
+              onChange={e => handleField('title', e.target.value)}
+              placeholder="Titre de l'article…"
+              className="text-slate-900 bg-white border-slate-200 text-base font-medium"
+              required
+            />
+          </div>
+
+          {/* Category + Author + Status */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <Label className="text-sm font-semibold text-slate-700 mb-1.5 block">Catégorie</Label>
+              <Select value={formData.category} onValueChange={v => handleField('category', v)}>
+                <SelectTrigger className="bg-white border-slate-200 text-slate-900">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {BLOG_CATEGORIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label className="text-sm font-semibold text-slate-700 mb-1.5 block">Auteur <span className="text-red-500">*</span></Label>
+              <Input
+                value={formData.author}
+                onChange={e => handleField('author', e.target.value)}
+                placeholder="Nom de l'auteur"
+                className="bg-white border-slate-200 text-slate-900"
+                required
+              />
+            </div>
+            <div>
+              <Label className="text-sm font-semibold text-slate-700 mb-1.5 block">Statut</Label>
+              <Select value={formData.published ? 'published' : 'draft'} onValueChange={v => handleField('published', v === 'published')}>
+                <SelectTrigger className="bg-white border-slate-200 text-slate-900">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="draft">Brouillon</SelectItem>
+                  <SelectItem value="published">Publié</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Excerpt */}
+          <div>
+            <Label className="text-sm font-semibold text-slate-700 mb-1.5 block">Description courte <span className="text-red-500">*</span></Label>
+            <Textarea
+              value={formData.excerpt}
+              onChange={e => handleField('excerpt', e.target.value)}
+              rows={2}
+              placeholder="Résumé affiché dans les listes d'articles…"
+              className="bg-white border-slate-200 text-slate-900 resize-none"
+              required
+            />
+          </div>
+
+          {/* Content */}
+          <div>
+            <Label className="text-sm font-semibold text-slate-700 mb-1.5 block">Contenu complet <span className="text-red-500">*</span></Label>
+            <Textarea
+              value={formData.content}
+              onChange={e => handleField('content', e.target.value)}
+              rows={14}
+              placeholder="Contenu de l'article (Markdown supporté)…"
+              className="bg-white border-slate-200 text-slate-900 font-mono text-sm resize-y"
+              required
+            />
+            <p className="text-xs text-slate-400 mt-1.5">Markdown supporté : # Titre, **gras**, *italique*, - liste, [lien](url)</p>
+          </div>
+
+          {/* Cover image */}
+          <div className="border border-slate-200 rounded-xl p-4 bg-slate-50/50 space-y-3">
+            <Label className="text-sm font-semibold text-slate-700 flex items-center gap-1.5">
+              <ImageIcon size={14} /> Image de couverture <span className="text-slate-400 font-normal">(optionnel)</span>
+            </Label>
+            <Input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+              onChange={handleImageChange}
+              className="bg-white text-slate-900 border-slate-200"
+            />
+            <p className="text-xs text-slate-400">JPEG, PNG, WEBP, GIF · Max 5 MB</p>
+            {imagePreview && (
+              <div className="flex items-start gap-3">
+                <img src={imagePreview} alt="Aperçu" className="w-40 h-24 object-cover rounded-lg border border-slate-200 shadow-sm" />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="text-red-400 hover:text-red-600 hover:bg-red-50 text-xs mt-1"
+                  onClick={() => { setImageFile(null); setImagePreview(null); handleField('featured_image', ''); }}
+                >
+                  <Trash2 size={13} className="mr-1" /> Supprimer
+                </Button>
+              </div>
+            )}
+          </div>
+
+          {/* Actions */}
+          <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+            <Button type="button" variant="outline" onClick={backToList} disabled={saving}>
+              Annuler
+            </Button>
+            <div className="flex gap-2">
+              {!formData.published && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={saving}
+                  onClick={() => { handleField('published', true); setTimeout(() => document.getElementById('blog-submit-btn')?.click(), 50); }}
+                  className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                >
+                  <ToggleRight size={15} className="mr-1.5" /> Sauvegarder et publier
+                </Button>
+              )}
+              <Button
+                id="blog-submit-btn"
+                type="submit"
+                disabled={saving}
+                className="bg-violet-600 hover:bg-violet-700 text-white gap-1.5"
+              >
+                {saving ? <><Loader2 size={14} className="animate-spin" /> Sauvegarde…</> : <><Save size={14} /> Sauvegarder</>}
+              </Button>
+            </div>
+          </div>
+        </form>
+      </div>
+    );
+  }
+
+  // ── List view ─────────────────────────────────────────────────────────────
   return (
     <div className="space-y-5">
       {/* Toolbar */}
@@ -270,20 +529,15 @@ const BlogSection = () => {
           <Input
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="Rechercher un article…"
+            placeholder="Rechercher par titre, catégorie, auteur…"
             className="pl-9 h-9 text-sm"
           />
         </div>
-        <Button
-          size="sm"
-          className="bg-violet-600 hover:bg-violet-700 text-white gap-1.5"
-          onClick={() => navigate('/admin/blog/new')}
-        >
+        <Button size="sm" className="bg-violet-600 hover:bg-violet-700 text-white gap-1.5" onClick={openNew}>
           <Plus size={15} /> Nouvel article
         </Button>
       </div>
 
-      {/* List */}
       {loading ? (
         <div className="flex justify-center py-12">
           <Loader2 className="animate-spin text-violet-500 w-6 h-6" />
@@ -291,15 +545,9 @@ const BlogSection = () => {
       ) : filtered.length === 0 ? (
         <div className="text-center py-16 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
           <BookOpen className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <p className="text-slate-500">
-            {search ? 'Aucun article trouvé.' : 'Aucun article pour l\'instant.'}
-          </p>
+          <p className="text-slate-500">{search ? 'Aucun article trouvé.' : 'Aucun article pour l\'instant.'}</p>
           {!search && (
-            <Button
-              size="sm"
-              className="mt-4 bg-violet-600 hover:bg-violet-700 text-white"
-              onClick={() => navigate('/admin/blog/new')}
-            >
+            <Button size="sm" className="mt-4 bg-violet-600 hover:bg-violet-700 text-white" onClick={openNew}>
               <Plus size={14} className="mr-1" /> Créer le premier article
             </Button>
           )}
@@ -311,6 +559,7 @@ const BlogSection = () => {
               <tr>
                 <th className="px-5 py-3 text-left font-semibold">Titre</th>
                 <th className="px-5 py-3 text-left font-semibold hidden sm:table-cell">Catégorie</th>
+                <th className="px-5 py-3 text-left font-semibold hidden md:table-cell">Auteur</th>
                 <th className="px-5 py-3 text-left font-semibold hidden md:table-cell">Date</th>
                 <th className="px-5 py-3 text-left font-semibold">Statut</th>
                 <th className="px-5 py-3 text-right font-semibold">Actions</th>
@@ -318,9 +567,26 @@ const BlogSection = () => {
             </thead>
             <tbody className="divide-y divide-slate-100">
               {filtered.map(post => (
-                <tr key={post.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-5 py-3 font-medium text-slate-900 max-w-[250px] truncate">
-                    {post.title}
+                <tr
+                  key={post.id}
+                  className="hover:bg-slate-50 transition-colors cursor-pointer"
+                  onClick={() => openEdit(post)}
+                >
+                  <td className="px-5 py-3">
+                    <div className="flex items-center gap-3">
+                      {post.featured_image ? (
+                        <img
+                          src={getPublicBlogImageUrl(post.featured_image)}
+                          alt=""
+                          className="w-10 h-10 rounded-lg object-cover border border-slate-100 shrink-0"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
+                          <BookOpen size={14} className="text-slate-300" />
+                        </div>
+                      )}
+                      <span className="font-medium text-slate-900 truncate max-w-[200px]">{post.title}</span>
+                    </div>
                   </td>
                   <td className="px-5 py-3 hidden sm:table-cell">
                     {post.category && (
@@ -329,6 +595,7 @@ const BlogSection = () => {
                       </Badge>
                     )}
                   </td>
+                  <td className="px-5 py-3 text-slate-500 text-xs hidden md:table-cell">{post.author || '—'}</td>
                   <td className="px-5 py-3 text-slate-400 text-xs hidden md:table-cell">
                     <span className="flex items-center gap-1">
                       <Clock size={11} />
@@ -336,7 +603,11 @@ const BlogSection = () => {
                     </span>
                   </td>
                   <td className="px-5 py-3">
-                    <button onClick={() => togglePublish(post)} title="Changer le statut">
+                    <button
+                      onClick={e => togglePublish(post, e)}
+                      title="Changer le statut"
+                      className="hover:opacity-80 transition-opacity"
+                    >
                       {post.published ? (
                         <span className="flex items-center gap-1 text-emerald-600 text-xs font-semibold">
                           <ToggleRight size={18} /> Publié
@@ -349,12 +620,13 @@ const BlogSection = () => {
                     </button>
                   </td>
                   <td className="px-5 py-3">
-                    <div className="flex items-center justify-end gap-2">
+                    <div className="flex items-center justify-end gap-1">
                       {post.slug && (
                         <a
                           href={`/blog/${post.slug}`}
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
                           className="p-1.5 text-slate-400 hover:text-violet-600 hover:bg-violet-50 rounded-lg transition-colors"
                           title="Voir l'article"
                         >
@@ -362,14 +634,14 @@ const BlogSection = () => {
                         </a>
                       )}
                       <button
-                        onClick={() => navigate(`/admin/blog/${post.id}`)}
+                        onClick={e => { e.stopPropagation(); openEdit(post); }}
                         className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                         title="Modifier"
                       >
                         <PenLine size={14} />
                       </button>
                       <button
-                        onClick={() => deletePost(post.id)}
+                        onClick={e => deletePost(post.id, e)}
                         className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                         title="Supprimer"
                       >
@@ -381,6 +653,9 @@ const BlogSection = () => {
               ))}
             </tbody>
           </table>
+          <div className="px-5 py-3 bg-slate-50 border-t border-slate-100 text-xs text-slate-400">
+            {filtered.length} article{filtered.length > 1 ? 's' : ''} · {posts.filter(p => p.published).length} publié{posts.filter(p => p.published).length > 1 ? 's' : ''}
+          </div>
         </div>
       )}
     </div>
