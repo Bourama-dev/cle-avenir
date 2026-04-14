@@ -223,8 +223,8 @@ const BlogSection = () => {
   const load = useCallback(async () => {
     setLoading(true);
     const { data, error } = await supabase
-      .from('blog_posts')
-      .select('id, title, slug, published, created_at, category, author_name')
+      .from('blog_articles')
+      .select('id, title, slug, published, created_at, category, author')
       .order('created_at', { ascending: false });
     if (!error) setPosts(data || []);
     setLoading(false);
@@ -234,7 +234,7 @@ const BlogSection = () => {
 
   const togglePublish = async (post) => {
     const { error } = await supabase
-      .from('blog_posts')
+      .from('blog_articles')
       .update({ published: !post.published })
       .eq('id', post.id);
     if (error) {
@@ -247,7 +247,7 @@ const BlogSection = () => {
 
   const deletePost = async (id) => {
     if (!window.confirm('Supprimer cet article définitivement ?')) return;
-    const { error } = await supabase.from('blog_posts').delete().eq('id', id);
+    const { error } = await supabase.from('blog_articles').delete().eq('id', id);
     if (error) {
       toast({ variant: 'destructive', title: 'Erreur', description: error.message });
     } else {
@@ -429,25 +429,6 @@ const LegalEditor = ({ section }) => {
     }
   };
 
-  // Simple markdown renderer (headings, bold, paragraphs)
-  const renderMarkdown = (text) =>
-    text
-      .split('\n')
-      .map((line, i) => {
-        if (line.startsWith('## ')) return <h2 key={i} className="text-lg font-bold text-slate-900 mt-5 mb-2">{line.slice(3)}</h2>;
-        if (line.startsWith('# '))  return <h1 key={i} className="text-2xl font-extrabold text-slate-900 mb-4">{line.slice(2)}</h1>;
-        if (line.startsWith('### ')) return <h3 key={i} className="text-base font-bold text-slate-800 mt-4 mb-1">{line.slice(4)}</h3>;
-        if (line.startsWith('- '))  return <li key={i} className="ml-5 text-slate-700 list-disc">{line.slice(2)}</li>;
-        if (line === '')             return <br key={i} />;
-        // Bold
-        const parts = line.split(/\*\*(.*?)\*\*/g);
-        return (
-          <p key={i} className="text-slate-700 leading-relaxed">
-            {parts.map((p, j) => j % 2 === 1 ? <strong key={j}>{p}</strong> : p)}
-          </p>
-        );
-      });
-
   if (loading) {
     return (
       <div className="flex justify-center py-16">
@@ -518,9 +499,11 @@ const LegalEditor = ({ section }) => {
           </motion.div>
         ) : (
           <motion.div key="preview" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="w-full min-h-[480px] bg-white border border-slate-200 rounded-xl p-6 prose prose-slate max-w-none">
-              {renderMarkdown(content)}
-            </div>
+            <iframe
+              src={section.route}
+              className="w-full h-[480px] rounded-xl border border-slate-200"
+              title={`Aperçu — ${section.label}`}
+            />
           </motion.div>
         )}
       </AnimatePresence>

@@ -83,7 +83,7 @@ export const AuthService = {
       // Fetch profile
       let profileData = null;
       if (authData.user) {
-        const { data: profile } = await supabases
+        const { data: profile } = await supabase
           .from('profiles')
           .select('*')
           .eq('id', authData.user.id)
