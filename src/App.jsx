@@ -315,7 +315,7 @@ const PageContent = () => {
                   <Route path="/signup" element={<PageTransition><SignupPage /></PageTransition>} />
                   
                   {/* Protected Flow Pages */}
-                  <Route path="/profile" element={<ProtectedRoute><PageTransition><ProfilePage /></PageTransition></ProtectedRoute>} />
+                  <Route path="/profile" element={<ProtectedRoute><PageTransition><ProfileResultsPage /></PageTransition></ProtectedRoute>} />
                   <Route path="/results" element={<PageTransition><ResultsPage /></PageTransition>} />
                   <Route path="/action-plan" element={<ProtectedRoute><PageTransition><ActionPlanPage /></PageTransition></ProtectedRoute>} />
                   
@@ -363,7 +363,7 @@ const PageContent = () => {
                   {/* Protected Dashboard/App Routes */}
                   <Route path="/dashboard" element={<ProtectedRoute><PageTransition><DashboardPage onNavigate={handleNavigate} /></PageTransition></ProtectedRoute>} />
                   <Route path="/notifications" element={<ProtectedRoute><PageTransition><NotificationsPage /></PageTransition></ProtectedRoute>} />
-                  <Route path="/profile/edit" element={<ProtectedRoute><PageTransition><ProfileResultsPage /></PageTransition></ProtectedRoute>} />
+                  <Route path="/profile/edit" element={<ProtectedRoute><PageTransition><ProfilePage /></PageTransition></ProtectedRoute>} />
                   <Route path="/recommendations" element={<ProtectedRoute><PageTransition><RecommendationsPage /></PageTransition></ProtectedRoute>} />
                   <Route path="/offers-formations" element={<ProtectedRoute><PageTransition><OffersFormationsPage /></PageTransition></ProtectedRoute>} />
                   <Route path="/account" element={<ProtectedRoute><PageTransition><AccountPage /></PageTransition></ProtectedRoute>} />
