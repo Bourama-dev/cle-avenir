@@ -6,7 +6,7 @@ import { supabase } from '@/lib/customSupabaseClient';
 import { getTestDataFromSource } from '@/utils/testDataExtractor';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { Target } from 'lucide-react';
+import { Target, LayoutDashboard } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 import RiasecProfileSection from '@/components/personalized-plan/RiasecProfileSection';
@@ -268,23 +268,42 @@ const PersonalizedPlanPage = () => {
             <div className="lg:col-span-8 space-y-2">
                <ProgressionSection planData={planData} hasTestData={hasTestData} />
                <RiasecProfileSection riasecProfile={profileData} />
-               
+
                {metiersLoading ? (
                  <div className="mb-10"><MetierLoadingSpinner /></div>
                ) : (
-                 <RecommendedMetiersSection 
-                   metiers={enrichedMetiers} 
-                   onAddMetier={handleAddMetier} 
+                 <RecommendedMetiersSection
+                   metiers={enrichedMetiers}
+                   onAddMetier={handleAddMetier}
                    isLoading={false}
                  />
                )}
 
-               <FormationPathSection 
-                 formations={formations} 
-                 isLoading={formationsLoading} 
+               <FormationPathSection
+                 formations={formations}
+                 isLoading={formationsLoading}
                />
+
+               {/* Dashboard navigation — always visible at the bottom of the plan */}
+               <div className="mt-10 pt-8 border-t border-slate-200">
+                 <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl border border-indigo-100 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                   <div>
+                     <h3 className="font-bold text-slate-900 text-lg">Votre plan est prêt !</h3>
+                     <p className="text-slate-500 text-sm mt-1">
+                       Retrouvez vos résultats, votre historique et vos métiers sauvegardés dans votre tableau de bord.
+                     </p>
+                   </div>
+                   <button
+                     onClick={() => navigate('/dashboard')}
+                     className="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors whitespace-nowrap shadow-sm"
+                   >
+                     <LayoutDashboard className="w-5 h-5" />
+                     Aller au tableau de bord
+                   </button>
+                 </div>
+               </div>
             </div>
-            
+
             <div className="lg:col-span-4">
                <div className="sticky top-24 space-y-6">
                   <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 animate-fade-in">
@@ -293,6 +312,15 @@ const PersonalizedPlanPage = () => {
                     </h3>
                     <RecommendedActionsSection />
                   </div>
+
+                  {/* Dashboard shortcut in sidebar too */}
+                  <button
+                    onClick={() => navigate('/dashboard')}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors shadow-sm"
+                  >
+                    <LayoutDashboard className="w-4 h-4" />
+                    Mon tableau de bord
+                  </button>
                </div>
             </div>
          </div>
