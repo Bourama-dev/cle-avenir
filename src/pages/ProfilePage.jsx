@@ -164,30 +164,32 @@ const ProfilePage = () => {
 
       if (profileError) throw new Error(profileError.message);
 
-      // 2. Save Test Results if they exist in localStorage
+      // 2. Save Test Results if they exist in localStorage (colonnes correctes)
       const tempAnswers = localStorage.getItem('temp_test_answers');
       const tempScores = localStorage.getItem('temp_test_scores');
 
       if (tempAnswers && tempScores) {
-        const { error: testError } = await supabase
-          .from('test_results')
-          .insert({
+        try {
+          const parsedScores = JSON.parse(tempScores);
+          const testScore = Math.round(
+            Object.values(parsedScores).reduce((a, b) => a + b, 0) /
+            Math.max(Object.keys(parsedScores).length, 1)
+          );
+          await supabase.from('test_results').insert({
             user_id: user.id,
-            answers: {
-              test_answers: JSON.parse(tempAnswers),
-              scores: JSON.parse(tempScores)
-            }
+            riasec_profile: parsedScores,         // bonne colonne
+            answers: JSON.parse(tempAnswers),      // bonne colonne
+            test_score: testScore,
           });
-
-        if (testError) {
-          console.error("Test error:", testError);
-          // ❗ NE PAS BLOQUER LA NAVIGATION
+          localStorage.removeItem('temp_test_answers');
+          localStorage.removeItem('temp_test_scores');
+        } catch (testErr) {
+          console.warn('Sauvegarde test non critique :', testErr?.message);
+          // Non-bloquant — on continue vers /results
         }
       }
 
       toast({ title: "Profil enregistré avec succès !" });
-      // ✅ navigation sécurisée
-      console.log("NAVIGATING...");
       navigate('/results', { replace: true });
 
     } catch (err) {

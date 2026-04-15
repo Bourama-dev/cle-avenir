@@ -58,7 +58,7 @@ const TestPage = () => {
     setIsSubmitting(true);
 
     const rawScores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
-    const maxPossible = { R: 500, I: 500, A: 400, S: 500, E: 400, C: 400 }; 
+    const maxPossible = { R: 500, I: 500, A: 400, S: 500, E: 400, C: 400 };
 
     Object.values(answers).forEach(ans => {
       rawScores[ans.category] += ans.value;
@@ -69,9 +69,12 @@ const TestPage = () => {
       normalizedProfile[cat] = Math.round((rawScores[cat] / maxPossible[cat]) * 100);
     });
 
+    // test_riasec_profile → clé lue par TestResultsPage (/results)
+    // temp_test_scores + temp_test_answers → clés lues par ProfilePage et handleViewResults
+    localStorage.setItem('test_riasec_profile', JSON.stringify(normalizedProfile));
     localStorage.setItem('temp_test_answers', JSON.stringify(answers));
     localStorage.setItem('temp_test_scores', JSON.stringify(normalizedProfile));
-    
+
     setTestCompleted(true);
     setIsSubmitting(false);
   };
@@ -82,36 +85,47 @@ const TestPage = () => {
       return;
     }
 
-    // Check if profile is already complete
     try {
+      // Vérifier si le profil est déjà complet (table: profiles, colonne: id)
       const { data } = await supabase
-        .from('user_profiles')
-        .select('first_name, education_level, current_status')
-        .eq('user_id', user.id)
+        .from('profiles')
+        .select('first_name, education_level, user_status')
+        .eq('id', user.id)
         .maybeSingle();
 
-      const profileComplete = data?.first_name && data?.education_level && data?.current_status;
+      const profileComplete = !!(data?.first_name && data?.education_level && data?.user_status);
+
+      const tempAnswers = JSON.parse(localStorage.getItem('temp_test_answers') || '{}');
+      const tempScores = JSON.parse(localStorage.getItem('temp_test_scores') || '{}');
 
       if (profileComplete) {
-        // Profile already filled — save test scores directly then go to results
-        const tempAnswers = localStorage.getItem('temp_test_answers');
-        const tempScores = localStorage.getItem('temp_test_scores');
-        if (tempAnswers && tempScores) {
+        // Profil complet → sauvegarder en base avec les bonnes colonnes puis afficher résultats
+        const testScore = Math.round(
+          Object.values(tempScores).reduce((a, b) => a + b, 0) /
+          Math.max(Object.keys(tempScores).length, 1)
+        );
+        try {
           await supabase.from('test_results').insert({
             user_id: user.id,
-            test_answers: JSON.parse(tempAnswers),
-            scores: JSON.parse(tempScores)
+            riasec_profile: tempScores,  // colonne réelle dans test_results
+            answers: tempAnswers,        // colonne réelle dans test_results
+            test_score: testScore,
           });
-          localStorage.removeItem('temp_test_answers');
-          localStorage.removeItem('temp_test_scores');
+        } catch (saveErr) {
+          // Non-bloquant : on affiche quand même les résultats
+          console.warn('Sauvegarde test non critique :', saveErr?.message);
         }
+        localStorage.removeItem('temp_test_answers');
+        localStorage.removeItem('temp_test_scores');
         navigate('/results');
       } else {
-        // Profile incomplete — redirect to profile form, it will navigate to /results after save
-        navigate('/profile');
+        // Profil incomplet → rediriger vers le formulaire d'édition du profil
+        // (test_riasec_profile reste en localStorage, ProfilePage le sauvegarde)
+        navigate('/profile/edit');
       }
     } catch {
-      navigate('/profile');
+      // En cas d'erreur réseau on navigue quand même (test_riasec_profile est déjà en localStorage)
+      navigate('/results');
     }
   };
 
