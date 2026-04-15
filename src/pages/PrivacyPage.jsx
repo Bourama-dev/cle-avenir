@@ -1,6 +1,8 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, Lock, Eye, Database, UserCheck, Trash2, Mail, ChevronRight, ArrowLeft, CheckCircle } from 'lucide-react';
+import { useLegalDocument } from '@/hooks/useLegalDocument';
+import DynamicLegalContent from '@/components/legal/DynamicLegalContent';
 
 const sections = [
   { id: 'collecte', icon: Database, label: 'Donnees collectees' },
@@ -15,6 +17,7 @@ const PrivacyPage = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('collecte');
   const [scrolled, setScrolled] = useState(false);
+  const { content: dbContent, loading: dbLoading } = useLegalDocument('confidentialite');
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -28,6 +31,7 @@ const PrivacyPage = () => {
   };
 
   return (
+    <DynamicLegalContent dbContent={dbContent} loading={dbLoading}>
     <div className="min-h-screen bg-[#0a0a0f] text-white">
       {/* Hero */}
       <div className="relative overflow-hidden bg-gradient-to-b from-violet-950/50 to-[#0a0a0f] pt-24 pb-20 px-6">
@@ -217,6 +221,7 @@ const PrivacyPage = () => {
         <p className="text-slate-600 text-sm">Politique de confidentialite CleAvenir — v2.0 — Avril 2026 — RGPD (UE) 2016/679</p>
       </div>
     </div>
+    </DynamicLegalContent>
   );
 };
 

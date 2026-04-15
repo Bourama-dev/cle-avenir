@@ -1,10 +1,14 @@
 ﻿import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Building2, Globe, Server, Phone, Shield, ArrowLeft, ExternalLink } from 'lucide-react';
+import { useLegalDocument } from '@/hooks/useLegalDocument';
+import DynamicLegalContent from '@/components/legal/DynamicLegalContent';
 
 const LegalPage = () => {
   const navigate = useNavigate();
+  const { content: dbContent, loading: dbLoading } = useLegalDocument('mentions');
   return (
+    <DynamicLegalContent dbContent={dbContent} loading={dbLoading}>
     <div className="min-h-screen bg-[#080812] text-white">
       <div className="relative overflow-hidden pt-24 pb-16 px-6">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-slate-800/30 via-transparent to-transparent" />
@@ -104,6 +108,7 @@ const LegalPage = () => {
         </div>
       </div>
     </div>
+    </DynamicLegalContent>
   );
 };
 

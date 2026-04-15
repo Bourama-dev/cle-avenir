@@ -3,11 +3,15 @@ import LegalLayout from '@/components/legal/LegalLayout';
 import { Button } from '@/components/ui/button';
 import { Settings } from 'lucide-react';
 import CookiePreferences from '@/components/legal/CookiePreferences';
+import { useLegalDocument } from '@/hooks/useLegalDocument';
+import DynamicLegalContent from '@/components/legal/DynamicLegalContent';
 
 const CookiePolicyPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { content: dbContent, loading: dbLoading } = useLegalDocument('cookies');
 
   return (
+    <DynamicLegalContent dbContent={dbContent} loading={dbLoading}>
     <LegalLayout
       title="Politique des Cookies"
       subtitle="Comment et pourquoi nous utilisons des cookies sur CléAvenir, et comment gérer vos préférences."
@@ -98,6 +102,7 @@ const CookiePolicyPage = () => {
 
       <CookiePreferences isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </LegalLayout>
+    </DynamicLegalContent>
   );
 };
 
