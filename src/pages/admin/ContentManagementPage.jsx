@@ -245,11 +245,13 @@ const BlogSection = () => {
       const data = await adminService.getBlogsList();
       setPosts(data || []);
     } catch (err) {
+      // toast ref intentionally excluded from deps to prevent infinite re-render loop
       toast({ variant: 'destructive', title: 'Erreur', description: err.message });
     } finally {
       setLoading(false);
     }
-  }, [toast]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => { load(); }, [load]);
 
