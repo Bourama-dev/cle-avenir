@@ -386,7 +386,7 @@ const PageContent = () => {
                   <Route path="/user/cookies-preferences" element={<ProtectedRoute><PageTransition><CookiesPreferencesPage /></PageTransition></ProtectedRoute>} />
                   
                   {/* Admin Routes */}
-                  <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
+                  <Route path="/admin" element={<Navigate to="/admin/content" replace />} />
                   <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboardPage onNavigate={handleNavigate} /></AdminRoute>} />
                   <Route path="/admin/metiers" element={<AdminRoute><AdminMetiers /></AdminRoute>} />
                   <Route path="/admin/institutions" element={<AdminRoute><AdminInstitutionsPage /></AdminRoute>} />

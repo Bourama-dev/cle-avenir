@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { MessageCircle, Zap, Briefcase, CheckCircle2, Loader2, Edit } from 'lucide-react';
+import { MessageCircle, Zap, Briefcase, Loader2, Edit, BarChart2 } from 'lucide-react';
+import { supabase } from '@/lib/customSupabaseClient';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
 import { TIERS } from '@/constants/subscriptionTiers';
@@ -11,21 +11,33 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
-import { supabase } from '@/lib/customSupabaseClient';
 import { EmailService } from '@/services/emailService';
 
-const DashboardRightSidebar = ({ userProfile, onOpenProfile }) => {
+const DashboardRightSidebar = ({ userProfile, user, onOpenProfile }) => {
   const { currentTier } = useSubscriptionAccess();
   const isFree = currentTier === TIERS.FREE;
   const navigate = useNavigate();
-  
+
+  // Real test count
+  const [testCount, setTestCount] = useState(null);
+  const fetchTestCount = useCallback(async () => {
+    if (!user?.id) return;
+    try {
+      const { count } = await supabase
+        .from('test_results')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+      setTestCount(count ?? 0);
+    } catch {
+      setTestCount(0);
+    }
+  }, [user?.id]);
+  useEffect(() => { fetchTestCount(); }, [fetchTestCount]);
+
   // Support Form State
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    subject: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState({ subject: '', message: '' });
   const { toast } = useToast();
 
   const handleSupportSubmit = async (e) => {
@@ -109,7 +121,7 @@ const DashboardRightSidebar = ({ userProfile, onOpenProfile }) => {
         <CardContent className="relative z-10">
           {isFree ? (
             <Button asChild className="w-full bg-cyan-400 hover:bg-cyan-500 text-cyan-950 font-semibold border-none shadow-md transition-all">
-              <Link to="/tarifs">Mettre à jour ↗</Link>
+              <Link to="/plans">Mettre à jour ↗</Link>
             </Button>
           ) : (
              <div className="flex gap-2">
@@ -136,26 +148,36 @@ const DashboardRightSidebar = ({ userProfile, onOpenProfile }) => {
          </div>
       </div>
 
-      {/* Quick Stats */}
-      {!isFree && (
-        <div>
-          <h3 className="text-sm font-semibold text-slate-900 mb-3">Activité Rapide</h3>
-          <div className="grid grid-cols-2 gap-3">
-            <Card className="bg-white hover:border-slate-300 transition-colors cursor-default">
-              <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-                <span className="text-2xl font-bold text-slate-900">0</span>
-                <span className="text-xs text-slate-500 mt-1">Tests</span>
-              </CardContent>
-            </Card>
-            <Card className="bg-white hover:border-slate-300 transition-colors cursor-default">
-              <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-                <span className="text-2xl font-bold text-slate-900">0</span>
-                <span className="text-xs text-slate-500 mt-1">Offres</span>
-              </CardContent>
-            </Card>
-          </div>
+      {/* Quick Stats — real test count */}
+      <div>
+        <h3 className="text-sm font-semibold text-slate-900 mb-3">Activité</h3>
+        <div className="grid grid-cols-2 gap-3">
+          <Card
+            className="bg-white hover:border-indigo-200 hover:shadow-sm transition-all cursor-pointer"
+            onClick={() => navigate('/profile')}
+          >
+            <CardContent className="p-4 flex flex-col items-center justify-center text-center">
+              <BarChart2 className="w-5 h-5 text-indigo-400 mb-1" />
+              <span className="text-2xl font-bold text-slate-900">
+                {testCount === null ? <Loader2 className="w-4 h-4 animate-spin text-slate-400 mx-auto" /> : testCount}
+              </span>
+              <span className="text-xs text-slate-500 mt-1">Tests</span>
+            </CardContent>
+          </Card>
+          <Card
+            className="bg-white hover:border-emerald-200 hover:shadow-sm transition-all cursor-pointer"
+            onClick={() => navigate('/offres-emploi')}
+          >
+            <CardContent className="p-4 flex flex-col items-center justify-center text-center">
+              <Briefcase className="w-5 h-5 text-emerald-400 mb-1" />
+              <span className="text-2xl font-bold text-slate-900">
+                <span className="text-slate-300 text-base font-normal">Voir</span>
+              </span>
+              <span className="text-xs text-slate-500 mt-1">Offres</span>
+            </CardContent>
+          </Card>
         </div>
-      )}
+      </div>
 
       {/* Support Section */}
       <div>

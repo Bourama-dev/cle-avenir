@@ -194,12 +194,55 @@ export const metierService = {
         .from(TABLE_NAME)
         .select('*')
         .or(`libelle.ilike.%${query}%,code.ilike.%${query}%`);
-      
+
       if (error) throw error;
       return data;
     } catch (err) {
       console.error(`Error searching metiers with query ${query}:`, err);
       throw err;
     }
-  }
+  },
+
+  createMetier: async (metierData) => {
+    try {
+      const { data, error } = await supabase
+        .from(TABLE_NAME)
+        .insert([metierData])
+        .select();
+      if (error) throw error;
+      return data[0];
+    } catch (err) {
+      console.error('Error creating metier:', err);
+      throw err;
+    }
+  },
+
+  updateMetier: async (id, metierData) => {
+    try {
+      const { data, error } = await supabase
+        .from(TABLE_NAME)
+        .update(metierData)
+        .eq('id', id)
+        .select();
+      if (error) throw error;
+      return data[0];
+    } catch (err) {
+      console.error(`Error updating metier ${id}:`, err);
+      throw err;
+    }
+  },
+
+  deactivateMetier: async (id) => {
+    try {
+      const { error } = await supabase
+        .from(TABLE_NAME)
+        .update({ is_active: false })
+        .eq('id', id);
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.error(`Error deactivating metier ${id}:`, err);
+      throw err;
+    }
+  },
 };
