@@ -49,14 +49,17 @@ const RIASEC_COLORS = {
 };
 
 // ── Inline history widget ───────────────────────────────────────────────────
-const TestHistoryInline = ({ history }) => {
+const TestHistoryInline = ({ history, onNavigate }) => {
   if (!history.length) return null;
   return (
     <Card className="border-slate-200 shadow-sm">
-      <CardHeader className="pb-2 border-b border-slate-100 bg-slate-50/50">
+      <CardHeader className="pb-2 border-b border-slate-100 bg-slate-50/50 flex flex-row items-center justify-between">
         <CardTitle className="text-sm font-semibold text-slate-800 flex items-center gap-2">
           <History className="w-4 h-4 text-indigo-500" /> Historique des tests
         </CardTitle>
+        <button onClick={() => onNavigate('/profile')} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium flex items-center gap-0.5">
+          Tout voir <ArrowRight className="w-3 h-3" />
+        </button>
       </CardHeader>
       <CardContent className="p-0">
         <div className="divide-y divide-slate-100">
@@ -64,22 +67,38 @@ const TestHistoryInline = ({ history }) => {
             const entries = test.riasec_profile
               ? Object.entries(test.riasec_profile).sort(([, a], [, b]) => b - a)
               : [];
-            const topDim = entries[0]?.[0] ?? '?';
+            const top3 = entries.slice(0, 3);
+            const topDim = top3[0]?.[0] ?? '?';
+            const profileCode = top3.map(([k]) => k).join('') || '?';
             return (
-              <div key={test.id || idx} className="px-4 py-3 flex items-center gap-3 hover:bg-slate-50 transition-colors">
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 ${RIASEC_COLORS[topDim] ?? 'bg-slate-100 text-slate-600'}`}>
+              <div key={test.id || idx} className="px-4 py-3 flex items-start gap-3 hover:bg-slate-50 transition-colors">
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 mt-0.5 ${RIASEC_COLORS[topDim] ?? 'bg-slate-100 text-slate-600'}`}>
                   {topDim}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-slate-800">Test d'orientation</p>
-                  <p className="text-xs text-slate-400 flex items-center gap-1">
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-semibold text-slate-800">Profil {profileCode}</p>
+                    {idx === 0 && <span className="text-[10px] bg-indigo-100 text-indigo-600 px-1.5 py-0.5 rounded-full font-semibold">Dernier</span>}
+                  </div>
+                  <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
                     <Clock className="w-3 h-3" />
                     {new Date(test.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </p>
+                  {top3.length > 0 && (
+                    <div className="flex items-center gap-1 mt-1.5 flex-wrap">
+                      {top3.map(([dim, score]) => (
+                        <span key={dim} className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${RIASEC_COLORS[dim] ?? 'bg-slate-100 text-slate-500'}`}>
+                          {RIASEC_LABELS[dim] ?? dim} {score}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-sm font-bold text-slate-700">{test.test_score ?? 0} pts</p>
-                  <p className="text-xs text-emerald-500 flex items-center gap-1 justify-end">
+                  {test.test_score != null && test.test_score > 0 && (
+                    <p className="text-sm font-bold text-slate-700">{test.test_score} pts</p>
+                  )}
+                  <p className="text-xs text-emerald-500 flex items-center gap-1 justify-end mt-0.5">
                     <Activity className="w-3 h-3" /> Terminé
                   </p>
                 </div>
@@ -192,7 +211,7 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
               <TrendingUp className="w-4 h-4 text-indigo-500" /> Dernier résultat RIASEC
             </CardTitle>
             <Button size="sm" variant="ghost" className="text-indigo-600 text-xs gap-1" onClick={() => onNavigate('/profile')}>
-              Voir détails <ArrowRight className="w-3 h-3" />
+              Voir analyse <ArrowRight className="w-3 h-3" />
             </Button>
           </CardHeader>
           <CardContent className="pt-0">
@@ -248,7 +267,7 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
 
         {history.length > 0 ? (
           <WidgetErrorBoundary fallbackMessage="L'historique n'a pas pu se charger.">
-            <TestHistoryInline history={history} />
+            <TestHistoryInline history={history} onNavigate={onNavigate} />
           </WidgetErrorBoundary>
         ) : (
           <Card className="border-slate-200 shadow-sm">

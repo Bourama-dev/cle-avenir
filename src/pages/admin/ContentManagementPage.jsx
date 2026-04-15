@@ -303,10 +303,13 @@ const BlogSection = () => {
     setImagePreview(URL.createObjectURL(file));
   };
 
-  const handleSave = async (e) => {
-    e.preventDefault();
-    if (!formData.title.trim()) return toast({ variant: 'destructive', title: 'Le titre est obligatoire.' });
-    if (!formData.author.trim()) return toast({ variant: 'destructive', title: 'L\'auteur est obligatoire.' });
+  // forcePublish: contourne le problème d'état async React lors de "Sauvegarder et publier"
+  const saveArticle = async (forcePublish = null) => {
+    if (!formData.title.trim()) { toast({ variant: 'destructive', title: 'Le titre est obligatoire.' }); return; }
+    if (!formData.author.trim()) { toast({ variant: 'destructive', title: "L'auteur est obligatoire." }); return; }
+    if (!formData.excerpt.trim()) { toast({ variant: 'destructive', title: 'La description courte est obligatoire.' }); return; }
+    if (!formData.content.trim()) { toast({ variant: 'destructive', title: 'Le contenu est obligatoire.' }); return; }
+    const publishedValue = forcePublish !== null ? forcePublish : formData.published;
     setSaving(true);
     try {
       let imagePath = formData.featured_image;
@@ -320,15 +323,16 @@ const BlogSection = () => {
       }
       const payload = {
         ...formData,
+        published: publishedValue,
         featured_image: imagePath,
-        published_at: formData.published ? new Date().toISOString() : null,
+        published_at: publishedValue ? new Date().toISOString() : null,
       };
       if (editingPost) {
         await adminService.updateBlog(editingPost.id, payload);
-        toast({ title: 'Article mis à jour !' });
+        toast({ title: publishedValue ? 'Article mis à jour et publié !' : 'Article mis à jour !' });
       } else {
         await adminService.createBlog(payload);
-        toast({ title: 'Article créé !' });
+        toast({ title: publishedValue ? 'Article créé et publié !' : 'Article créé en brouillon !' });
       }
       await load();
       backToList();
@@ -337,6 +341,11 @@ const BlogSection = () => {
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    saveArticle();
   };
 
   const togglePublish = async (post, e) => {
@@ -498,14 +507,13 @@ const BlogSection = () => {
                   type="button"
                   variant="outline"
                   disabled={saving}
-                  onClick={() => { handleField('published', true); setTimeout(() => document.getElementById('blog-submit-btn')?.click(), 50); }}
+                  onClick={() => saveArticle(true)}
                   className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
                 >
                   <ToggleRight size={15} className="mr-1.5" /> Sauvegarder et publier
                 </Button>
               )}
               <Button
-                id="blog-submit-btn"
                 type="submit"
                 disabled={saving}
                 className="bg-violet-600 hover:bg-violet-700 text-white gap-1.5"
