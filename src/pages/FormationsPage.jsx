@@ -10,7 +10,7 @@ import CityAutocomplete from '@/components/ui/CityAutocomplete';
 import {
   Search, MapPin, Building, ChevronLeft, ChevronRight, AlertCircle,
   Clock, BookOpen, Award, Star, Globe,
-  CheckCircle2, FileText, MonitorPlay, Lock
+  CheckCircle2, FileText, MonitorPlay, Lock, Briefcase, ArrowRight
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
@@ -41,7 +41,7 @@ const FormationsPage = ({ setAllFormations }) => {
   const [selectedFormation, setSelectedFormation] = useState(null);
 
   // --- State: Filters ---
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(() => new URLSearchParams(window.location.search).get('q') || '');
 
   // City Filter States
   const [cityInputValue, setCityInputValue] = useState('');
@@ -53,14 +53,14 @@ const FormationsPage = ({ setAllFormations }) => {
   const [distanceFilter, setDistanceFilter] = useState('100');
   const [remoteFilter, setRemoteFilter] = useState(false);
 
-  // Active search params (snapshot used for actual fetching)
-  const [activeSearchParams, setActiveSearchParams] = useState({
-    q: '',
+  // Active search params (snapshot used for actual fetching) — pre-fill from ?q= URL param
+  const [activeSearchParams, setActiveSearchParams] = useState(() => ({
+    q: new URLSearchParams(window.location.search).get('q') || '',
     ville: '',
     latitude: null,
     longitude: null,
-    radius: '100'
-  });
+    radius: '100',
+  }));
 
   // --- Refs ---
   const offsetRef = useRef(0);
@@ -580,7 +580,7 @@ const FormationsPage = ({ setAllFormations }) => {
                         </div>
                       </div>
 
-                      <div className="space-y-3 mt-auto">
+                      <div className="space-y-2 mt-auto">
                         <Button
                           className={`w-full ${hasPremiumAccess ? 'bg-violet-600 hover:bg-violet-700' : 'bg-slate-800 hover:bg-slate-700'} text-white shadow-sm`}
                           onClick={() => handleFormationClick(formation)}
@@ -591,6 +591,31 @@ const FormationsPage = ({ setAllFormations }) => {
                             </>
                           )}
                         </Button>
+                        {/* Cross-links row */}
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-1 text-xs border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+                            onClick={() => {
+                              const kw = (formation.libelle_formation || '').split(' ').slice(0, 3).join(' ');
+                              navigate(`/metiers?q=${encodeURIComponent(kw)}`);
+                            }}
+                          >
+                            <Briefcase className="w-3 h-3 mr-1" /> Métiers
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-1 text-xs border-rose-200 text-rose-700 hover:bg-rose-50"
+                            onClick={() => {
+                              const kw = (formation.libelle_formation || '').split(' ').slice(0, 3).join(' ');
+                              navigate(`/offres-emploi?q=${encodeURIComponent(kw)}`);
+                            }}
+                          >
+                            <ArrowRight className="w-3 h-3 mr-1" /> Offres
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>

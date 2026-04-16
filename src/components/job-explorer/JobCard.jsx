@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Building, Clock, Ruler, ChevronDown, ChevronUp, ExternalLink, Briefcase, Calendar } from 'lucide-react';
+import { MapPin, Building, Clock, Ruler, ChevronDown, ChevronUp, ExternalLink, Briefcase, Calendar, GraduationCap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -12,6 +13,7 @@ import { isValidUUID } from '@/lib/utils';
 const JobCard = ({ job, isSaved, onToggleSave, onClick, onViewOffer }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const navigate = useNavigate();
 
   // Fallback for logo
   const logoLetter = job.company ? job.company.charAt(0).toUpperCase() : 'E';
@@ -134,16 +136,40 @@ const JobCard = ({ job, isSaved, onToggleSave, onClick, onViewOffer }) => {
         </CardContent>
 
         {/* Footer Action Row */}
-        <div className="px-5 py-3 bg-slate-50/50 border-t border-slate-100 flex items-center justify-between mt-auto">
-          <div className="flex items-center text-xs text-slate-400 font-medium">
-            <Clock className="w-3.5 h-3.5 mr-1.5" />
-            {timeAgo}
+        <div className="px-5 py-3 bg-slate-50/50 border-t border-slate-100 flex items-center justify-between mt-auto flex-wrap gap-2">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center text-xs text-slate-400 font-medium">
+              <Clock className="w-3.5 h-3.5 mr-1.5" />
+              {timeAgo}
+            </div>
+            {/* Métier associé quick link */}
+            <button
+              className="flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/metiers?q=${encodeURIComponent((job.title || '').split(' ').slice(0, 3).join(' '))}`);
+              }}
+            >
+              <Briefcase className="w-3 h-3" />
+              Métier
+            </button>
+            {/* Formation associée quick link */}
+            <button
+              className="flex items-center gap-1 text-xs text-pink-600 hover:text-pink-800 font-medium transition-colors"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/formations?q=${encodeURIComponent((job.title || '').split(' ').slice(0, 3).join(' '))}`);
+              }}
+            >
+              <GraduationCap className="w-3 h-3" />
+              Formation
+            </button>
           </div>
 
           <div className="flex items-center gap-2">
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               className="h-8 text-xs font-medium text-slate-600 hover:text-slate-900"
               onClick={handleToggleExpand}
             >
@@ -153,9 +179,9 @@ const JobCard = ({ job, isSaved, onToggleSave, onClick, onViewOffer }) => {
                 <>Détails <ChevronDown className="w-3 h-3 ml-1" /></>
               )}
             </Button>
-            
-            <Button 
-              size="sm" 
+
+            <Button
+              size="sm"
               className="h-8 text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-sm shadow-rose-200 gap-1.5"
               onClick={handleViewClick}
             >

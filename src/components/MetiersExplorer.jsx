@@ -12,6 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useDebounce } from '@/hooks/useDebounce';
 import { Helmet } from 'react-helmet-async';
 import { Badge } from '@/components/ui/badge';
+import { useSearchParams } from 'react-router-dom';
 
 const MetierCard = ({ metier, onSelect, index }) => (
   <motion.div
@@ -53,7 +54,8 @@ const MetierCard = ({ metier, onSelect, index }) => (
 );
 
 const MetiersExplorer = ({ onNavigate }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchParams] = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(() => searchParams.get('q') || '');
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   const [allMetiers, setAllMetiers] = useState([]);

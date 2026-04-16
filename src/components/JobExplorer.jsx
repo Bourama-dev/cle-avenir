@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Search, Loader2, MapPin, AlertCircle, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,8 +14,9 @@ import { useDebounce } from '@/hooks/useDebounce';
 
 const JobExplorer = ({ onNavigate }) => {
   const { toast } = useToast();
-  const { 
-    filters, 
+  const [searchParams] = useSearchParams();
+  const {
+    filters,
     searchQuery,
     setSearchQuery,
     updateFilter,
@@ -31,6 +33,13 @@ const JobExplorer = ({ onNavigate }) => {
   } = useJobFilters();
 
   const debouncedSearch = useDebounce(searchQuery, 500);
+
+  // Pre-fill search from ?q= URL param on mount
+  useEffect(() => {
+    const q = searchParams.get('q');
+    if (q) setSearchQuery(q);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Fetch on filter/page/search changes with scroll to top
   useEffect(() => {
