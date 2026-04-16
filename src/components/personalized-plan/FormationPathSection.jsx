@@ -169,7 +169,11 @@ const FormationPathSection = ({ formations, isLoading, userProfile }) => {
                   <div className="mt-auto self-start">
                     <Button
                       variant="outline"
-                      onClick={() => navigate(form.id ? `/formation/${form.id}` : '/formations')}
+                      onClick={() => {
+                        // Navigate to /formations with the title pre-filled as search
+                        const q = encodeURIComponent(form.title || '');
+                        navigate(`/formations${q ? `?q=${q}` : ''}`);
+                      }}
                       className="text-sm border-pink-200 bg-pink-50/50 hover:bg-pink-100 text-pink-800 shadow-sm"
                     >
                       Voir la formation <ArrowRight className="w-4 h-4 ml-2" />

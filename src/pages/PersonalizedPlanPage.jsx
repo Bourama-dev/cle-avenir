@@ -6,6 +6,7 @@ import { supabase } from '@/lib/customSupabaseClient';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { getTestDataFromSource } from '@/utils/testDataExtractor';
 import { getUserEducationLevel, EDUCATION_ORDER } from '@/utils/educationUtils';
+import { fetchFormations } from '@/services/parcoursup';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { LayoutDashboard, Target } from 'lucide-react';
@@ -160,41 +161,56 @@ const PersonalizedPlanPage = () => {
     }
   };
 
-  /* ── Fetch formations — filtered by profile ────────────────────────────── */
+  /* ── Fetch formations — from Parcoursup API (same source as /formations) ── */
   const fetchFormationsForMetiers = async (metiers, profile) => {
     setFormationsLoading(true);
     try {
-      const codes = metiers.map(m => m.code || m.metierCode).filter(Boolean);
-      if (codes.length === 0) {
-        setFormations([]);
+      // Build a search keyword from the first recommended metier's label
+      const keyword = metiers[0]?.libelle || metiers[0]?.name || '';
+
+      const response = await fetchFormations({ q: keyword, limit: 20 });
+
+      if (!response.success || !response.results?.length) {
+        if (isMounted.current) setFormations([]);
         return;
       }
 
-      // Start query
-      let query = supabase.from('formations_enriched').select('*');
+      // Normalise Parcoursup shape → FormationPathSection shape
+      const normalised = response.results.map(f => {
+        const primaryEtab = f.etablissements?.[0] || {};
 
-      // 1. Filter by ROME codes when possible
-      try {
-        const { data: byRome, error: romeErr } = await query
-          .in('rome_code', codes)
-          .limit(8);
+        // Derive required_education_level from formation title (same logic as FormationsPage)
+        const title = (f.libelle_formation || '').toUpperCase();
+        let reqLevel = 'bac'; // default
+        if (title.includes('CAP') || title.includes('BEP')) reqLevel = 'cap_bep';
+        else if (title.includes('BTS') || title.includes('BUT') && !title.includes('BUT3'))
+          reqLevel = 'bac+2';
+        else if (title.includes('BUT') || title.includes('LICENCE') || title.includes('BACHELOR'))
+          reqLevel = 'bac+3';
+        else if (title.includes('MASTER') || title.includes('INGÉNIEUR') || title.includes('INGENIEUR'))
+          reqLevel = 'bac+5';
+        else if (title.includes('DOCTORAT')) reqLevel = 'doctorat';
 
-        if (!romeErr && byRome && byRome.length > 0) {
-          const filtered = filterAndSortFormations(byRome, profile);
-          if (isMounted.current) setFormations(filtered);
-          return;
-        }
-      } catch (_) { /* rome_code column may not exist */ }
+        // Duration label
+        const durationMap = { 'cap_bep': '2 ans', 'bac': '3 ans', 'bac+2': '2 ans', 'bac+3': '3 ans', 'bac+5': '2 ans', 'doctorat': '3 ans' };
 
-      // 2. Fallback — fetch most relevant formations without ROME filter
-      const { data: fallback, error: fallbackErr } = await supabase
-        .from('formations_enriched')
-        .select('*')
-        .limit(12); // fetch more so we can filter client-side
+        return {
+          // FormationPathSection keys
+          id:                      f.id_formation || f.g_ea_lib_vx,
+          title:                   f.libelle_formation || 'Formation',
+          provider:                primaryEtab.nom || f.etablissement || 'Établissement',
+          provider_name:           primaryEtab.nom || f.etablissement || 'Établissement',
+          required_education_level: reqLevel,
+          duration:                durationMap[reqLevel] || 'Variable',
+          location_city:           primaryEtab.ville || f.ville || '',
+          region:                  primaryEtab.region || f.region || '',
+          description:             f.description || null,
+          // Keep original data for detail navigation
+          _raw: f,
+        };
+      });
 
-      if (fallbackErr) throw fallbackErr;
-
-      const filtered = filterAndSortFormations(fallback || [], profile);
+      const filtered = filterAndSortFormations(normalised, profile);
       if (isMounted.current) setFormations(filtered);
     } catch (err) {
       console.error('Error fetching formations:', err);
