@@ -143,7 +143,7 @@ const JobExplorer = ({ onNavigate }) => {
                      La connexion à leur API nécessite des identifiants à configurer côté serveur.
                    </p>
                    <p className="text-sm text-slate-400 mb-6">
-                     Variables requises : <code className="bg-slate-100 px-1 rounded">POLE_EMPLOI_CLIENT_ID</code> et <code className="bg-slate-100 px-1 rounded">POLE_EMPLOI_CLIENT_SECRET</code>
+                     Variables requises : <code className="bg-slate-100 px-1 rounded">FRANCE_TRAVAIL_CLIENT_ID</code> et <code className="bg-slate-100 px-1 rounded">FRANCE_TRAVAIL_SECRET</code>
                    </p>
                    <a
                      href="https://francetravail.io/data/api"
