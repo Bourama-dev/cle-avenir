@@ -14,16 +14,16 @@ import { supabase } from '@/lib/customSupabaseClient';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { useTestResults } from '@/hooks/useTestResults';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { RIASEC_META as RIASEC_META_SOURCE } from '@/data/optimizedQuestions';
 
-// ── RIASEC helpers ───────────────────────────────────────────────────────────
-const RIASEC_META = {
-  R: { label: 'Réaliste',      color: 'bg-orange-500', light: 'bg-orange-100 text-orange-700', desc: 'Travail manuel, technique' },
-  I: { label: 'Investigateur', color: 'bg-blue-500',   light: 'bg-blue-100 text-blue-700',     desc: 'Recherche, analyse' },
-  A: { label: 'Artiste',       color: 'bg-pink-500',   light: 'bg-pink-100 text-pink-700',      desc: 'Créativité, expression' },
-  S: { label: 'Social',        color: 'bg-green-500',  light: 'bg-green-100 text-green-700',    desc: 'Aide, enseignement' },
-  E: { label: 'Entrepreneur',  color: 'bg-yellow-500', light: 'bg-yellow-100 text-yellow-700',  desc: 'Leadership, vente' },
-  C: { label: 'Conventionnel', color: 'bg-slate-500',  light: 'bg-slate-100 text-slate-700',    desc: 'Organisation, méthode' },
-};
+// Adapt to the shape used in this file (adds `light` and `desc` shorthands)
+const RIASEC_META = Object.fromEntries(
+  Object.entries(RIASEC_META_SOURCE).map(([k, v]) => [k, {
+    ...v,
+    light: `${v.bgLight} ${v.textColor}`,
+    desc: v.traits?.[0] || v.label,
+  }])
+);
 
 // ── Profile completion ────────────────────────────────────────────────────────
 const PROFILE_FIELDS = [

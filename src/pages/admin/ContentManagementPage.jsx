@@ -687,7 +687,8 @@ const LegalEditor = ({ section }) => {
       const { data } = await supabase
         .from('legal_documents')
         .select('content')
-        .eq('doc_key', section.legalKey)
+        .eq('slug', section.legalKey)   // colonne réelle : slug (pas doc_key)
+        .eq('is_active', true)
         .maybeSingle();
       setContent(data?.content ?? LEGAL_DEFAULTS[section.legalKey] ?? '');
       setLoading(false);
@@ -697,13 +698,20 @@ const LegalEditor = ({ section }) => {
 
   const save = async () => {
     setSaving(true);
+    // Désactiver les versions précédentes
+    await supabase
+      .from('legal_documents')
+      .update({ is_active: false })
+      .eq('slug', section.legalKey);
+    // Upsert la version active
     const { error } = await supabase
       .from('legal_documents')
       .upsert({
-        doc_key: section.legalKey,
+        slug: section.legalKey,         // colonne réelle : slug
         content,
-        updated_at: new Date().toISOString(),
-      }, { onConflict: 'doc_key' });
+        is_active: true,
+        created_at: new Date().toISOString(),
+      }, { onConflict: 'slug' });
     setSaving(false);
     if (error) {
       toast({ variant: 'destructive', title: 'Erreur', description: error.message });

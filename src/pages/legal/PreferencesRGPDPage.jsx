@@ -5,11 +5,15 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Lock, Download, Trash2, Mail, AlertTriangle } from 'lucide-react';
 import RGPDPreferences from '@/components/legal/RGPDPreferences';
+import { useLegalDocument } from '@/hooks/useLegalDocument';
+import DynamicLegalContent from '@/components/legal/DynamicLegalContent';
 
 const PreferencesRGPDPage = () => {
   const { user } = useAuth();
+  const { content: dbContent, loading: dbLoading } = useLegalDocument('rgpd');
 
   return (
+    <DynamicLegalContent dbContent={dbContent} loading={dbLoading}>
     <LegalLayout
       title="Préférences RGPD"
       subtitle="Gérez vos données personnelles et exercez vos droits conformément au RGPD."
@@ -103,6 +107,7 @@ const PreferencesRGPDPage = () => {
         </div>
       )}
     </LegalLayout>
+    </DynamicLegalContent>
   );
 };
 

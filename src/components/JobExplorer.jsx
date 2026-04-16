@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Search, Loader2, MapPin, AlertCircle, Plus } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { Search, Loader2, MapPin, AlertCircle, Plus, Key } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
@@ -13,8 +14,9 @@ import { useDebounce } from '@/hooks/useDebounce';
 
 const JobExplorer = ({ onNavigate }) => {
   const { toast } = useToast();
-  const { 
-    filters, 
+  const [searchParams] = useSearchParams();
+  const {
+    filters,
     searchQuery,
     setSearchQuery,
     updateFilter,
@@ -31,6 +33,13 @@ const JobExplorer = ({ onNavigate }) => {
   } = useJobFilters();
 
   const debouncedSearch = useDebounce(searchQuery, 500);
+
+  // Pre-fill search from ?q= URL param on mount
+  useEffect(() => {
+    const q = searchParams.get('q');
+    if (q) setSearchQuery(q);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Fetch on filter/page/search changes with scroll to top
   useEffect(() => {
@@ -123,10 +132,32 @@ const JobExplorer = ({ onNavigate }) => {
                 <div className="grid grid-cols-1 gap-4">
                    {[1, 2, 3, 4].map(i => <JobCardSkeleton key={i} />)}
                 </div>
+             ) : error === 'credentials_missing' ? (
+                <div className="text-center py-20 bg-white rounded-2xl border border-amber-100 p-8 shadow-sm">
+                   <div className="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                     <Key className="h-8 w-8 text-amber-500" />
+                   </div>
+                   <h3 className="text-lg font-bold text-slate-900 mb-2">Service en cours de configuration</h3>
+                   <p className="text-slate-600 mb-2 max-w-md mx-auto">
+                     Les offres d'emploi sont fournies par <strong>France Travail</strong>.
+                     La connexion à leur API nécessite des identifiants à configurer côté serveur.
+                   </p>
+                   <p className="text-sm text-slate-400 mb-6">
+                     Variables requises : <code className="bg-slate-100 px-1 rounded">POLE_EMPLOI_CLIENT_ID</code> et <code className="bg-slate-100 px-1 rounded">POLE_EMPLOI_CLIENT_SECRET</code>
+                   </p>
+                   <a
+                     href="https://francetravail.io/data/api"
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-sm font-medium transition-colors"
+                   >
+                     Obtenir les identifiants France Travail
+                   </a>
+                </div>
              ) : error ? (
                 <div className="text-center py-20 bg-white rounded-2xl border border-red-100 p-8 shadow-sm">
                    <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <AlertCircle className="h-8 w-8 text-red-400" /> 
+                        <AlertCircle className="h-8 w-8 text-red-400" />
                    </div>
                    <p className="text-red-600 mb-6 font-medium">{error}</p>
                    <Button onClick={() => fetchJobs()} variant="outline" className="border-red-200 hover:bg-red-50 text-red-700">

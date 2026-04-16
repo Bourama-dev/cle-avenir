@@ -3,14 +3,21 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/customSupabaseClient';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { getJobDetails, searchJobs } from '@/services/franceTravail';
+import { metierService } from '@/services/metierService';
+import { fetchFormations } from '@/services/parcoursup';
+import { extractFormationKeywords } from '@/utils/formationKeywords';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
 import PageHelmet from '@/components/SEO/PageHelmet';
 import { jobDetailSEO } from '@/components/SEO/seoPresets';
 import JobCard from '@/components/job-explorer/JobCard';
-import { AlertCircle, ArrowLeft } from 'lucide-react';
+import {
+  AlertCircle, ArrowLeft, Briefcase, GraduationCap,
+  ArrowRight, Clock, Building, MapPin, ChevronRight
+} from 'lucide-react';
 import { isValidUUID } from '@/lib/utils';
 
 // New Components
@@ -28,6 +35,10 @@ const JobDetailPage = () => {
   
   const [job, setJob] = useState(null);
   const [relatedJobs, setRelatedJobs] = useState([]);
+  const [relatedMetier, setRelatedMetier] = useState(null);
+  const [relatedFormations, setRelatedFormations] = useState([]);
+  const [loadingMetier, setLoadingMetier] = useState(false);
+  const [loadingFormations, setLoadingFormations] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
@@ -81,17 +92,22 @@ const JobDetailPage = () => {
 
         if (!jobData) throw new Error("Données de l'offre vides");
         setJob(jobData);
-        
-        // Fetch Related Jobs
-        if (jobData.title) {
-          const related = await searchJobs({ 
-            query: jobData.title.split(' ').slice(0, 2).join(' '),
-            limit: 3 
-          });
-          if (related.success) {
-            setRelatedJobs(related.results.filter(j => j.id !== id));
-          }
+
+        // Fetch Related Jobs, Métier, and Formations in parallel
+        const titleKeyword = jobData.title || '';
+
+        const relatedRes = await searchJobs({
+          query: titleKeyword.split(' ').slice(0, 3).join(' '),
+          limit: 3,
+        });
+        if (relatedRes.success) {
+          setRelatedJobs(relatedRes.results.filter(j => j.id !== id));
         }
+
+        // Métier associé — try romeCode from raw data first, then text search
+        fetchRelatedMetier(jobData);
+        // Pass full job title so extractFormationKeywords can analyse it
+        fetchRelatedFormations(titleKeyword);
 
         // Check if saved
         if (user) {
@@ -115,6 +131,69 @@ const JobDetailPage = () => {
     fetchJobData();
     window.scrollTo(0, 0);
   }, [id, user]);
+
+  /* ── Find the closest matching ROME métier for this job ──────────────── */
+  const fetchRelatedMetier = async (jobData) => {
+    setLoadingMetier(true);
+    try {
+      // 1. Direct ROME code (France Travail jobs expose codeRome or romeCode)
+      const romeCode = jobData.codeRome || jobData.romeCode || jobData.rome_code;
+      if (romeCode) {
+        const { data } = await supabase
+          .from('rome_metiers')
+          .select('code, libelle, description, salaire, debouches, niveau_etudes')
+          .eq('code', romeCode)
+          .maybeSingle();
+        if (data) { setRelatedMetier(data); return; }
+      }
+
+      // 2. Text search: derive a meaningful keyword from the full job title
+      const { metierKeyword } = extractFormationKeywords(jobData.title || '');
+      const searchKw = metierKeyword || jobData.title || '';
+      if (searchKw) {
+        const results = await metierService.searchMetiers(searchKw);
+        if (results?.length > 0) setRelatedMetier(results[0]);
+      }
+    } catch (err) {
+      console.error('fetchRelatedMetier error:', err);
+    } finally {
+      setLoadingMetier(false);
+    }
+  };
+
+  /* ── Fetch 3 Parcoursup formations matching the job title ─────────────── */
+  const fetchRelatedFormations = async (jobTitle) => {
+    if (!jobTitle) return;
+    setLoadingFormations(true);
+    try {
+      // Use the same smart extraction we use for formations→métiers
+      // but applied in reverse: job title → formation search keyword
+      const { offresKeyword } = extractFormationKeywords(jobTitle);
+      const keyword = offresKeyword || jobTitle;
+      const response = await fetchFormations({ q: keyword, limit: 6 });
+      if (response.success && response.results?.length) {
+        // Normalise to a simple display shape
+        const normalised = response.results.slice(0, 3).map(f => ({
+          id:       f.id_formation || f.g_ea_lib_vx,
+          title:    f.libelle_formation || 'Formation',
+          provider: f.etablissements?.[0]?.nom || 'Établissement',
+          city:     f.etablissements?.[0]?.ville || f.ville || '',
+          duration: (() => {
+            const t = (f.libelle_formation || '').toUpperCase();
+            if (t.includes('BTS') || t.includes('BUT')) return '2-3 ans';
+            if (t.includes('MASTER') || t.includes('INGÉN')) return '2 ans (bac+3 req.)';
+            if (t.includes('CAP')) return '2 ans';
+            return 'Variable';
+          })(),
+        }));
+        setRelatedFormations(normalised);
+      }
+    } catch (err) {
+      console.error('fetchRelatedFormations error:', err);
+    } finally {
+      setLoadingFormations(false);
+    }
+  };
 
   const handleToggleSave = async () => {
     if (!user) {
@@ -270,6 +349,116 @@ const JobDetailPage = () => {
           <div className="lg:col-span-4 space-y-6 sticky top-24">
             <JobDetailApplication job={job} onApply={handleApply} />
             <JobDetailCompanyInfo job={job} />
+
+            {/* ── Métier associé ──────────────────────────────────────── */}
+            <Card className="border-indigo-100 shadow-sm">
+              <CardHeader className="pb-3 bg-indigo-50/60 rounded-t-xl border-b border-indigo-100">
+                <CardTitle className="text-base flex items-center gap-2 text-indigo-900">
+                  <Briefcase className="w-4 h-4 text-indigo-600" />
+                  Métier associé
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-4">
+                {loadingMetier ? (
+                  <div className="space-y-2">
+                    <Skeleton className="h-5 w-3/4" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-8 w-full mt-2" />
+                  </div>
+                ) : relatedMetier ? (
+                  <div>
+                    <p className="font-semibold text-slate-900 mb-1">{relatedMetier.libelle}</p>
+                    {relatedMetier.salaire && (
+                      <p className="text-xs text-slate-500 mb-1">💶 {relatedMetier.salaire}</p>
+                    )}
+                    {relatedMetier.debouches && (
+                      <p className="text-xs text-slate-500 mb-3 line-clamp-2">{relatedMetier.debouches}</p>
+                    )}
+                    <Button
+                      size="sm"
+                      className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs"
+                      onClick={() => navigate(`/metier/${relatedMetier.code}`)}
+                    >
+                      Voir le métier <ChevronRight className="w-3 h-3 ml-1" />
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="text-center py-3">
+                    <p className="text-sm text-slate-500 mb-3">Explorez les métiers liés à ce poste</p>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full text-xs border-indigo-200 text-indigo-700"
+                      onClick={() => navigate(`/metiers?q=${encodeURIComponent(job.title || '')}`)}
+                    >
+                      Rechercher le métier <ChevronRight className="w-3 h-3 ml-1" />
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* ── Formations rapides ──────────────────────────────────── */}
+            <Card className="border-pink-100 shadow-sm">
+              <CardHeader className="pb-3 bg-pink-50/60 rounded-t-xl border-b border-pink-100">
+                <CardTitle className="text-base flex items-center gap-2 text-pink-900">
+                  <GraduationCap className="w-4 h-4 text-pink-600" />
+                  Se former pour ce poste
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-4 space-y-3">
+                {loadingFormations ? (
+                  <>
+                    <Skeleton className="h-14 w-full rounded-lg" />
+                    <Skeleton className="h-14 w-full rounded-lg" />
+                  </>
+                ) : relatedFormations.length > 0 ? (
+                  <>
+                    {relatedFormations.map((f, idx) => (
+                      <div
+                        key={idx}
+                        className="p-3 rounded-lg bg-slate-50 border border-slate-100 hover:border-pink-200 hover:bg-pink-50/30 transition-colors cursor-pointer"
+                        onClick={() => navigate(`/formations?q=${encodeURIComponent(f.title)}`)}
+                      >
+                        <p className="text-xs font-semibold text-slate-800 line-clamp-2 mb-1">{f.title}</p>
+                        <div className="flex items-center gap-2 text-xs text-slate-500">
+                          <Building className="w-3 h-3 flex-shrink-0" />
+                          <span className="truncate">{f.provider}</span>
+                        </div>
+                        {f.city && (
+                          <div className="flex items-center gap-2 text-xs text-slate-400 mt-0.5">
+                            <MapPin className="w-3 h-3 flex-shrink-0" />
+                            <span>{f.city}</span>
+                            <Clock className="w-3 h-3 flex-shrink-0 ml-1" />
+                            <span>{f.duration}</span>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full text-xs border-pink-200 text-pink-700 hover:bg-pink-50"
+                      onClick={() => navigate(`/formations?q=${encodeURIComponent(job.title || '')}`)}
+                    >
+                      Voir toutes les formations <ArrowRight className="w-3 h-3 ml-1" />
+                    </Button>
+                  </>
+                ) : (
+                  <div className="text-center py-3">
+                    <p className="text-sm text-slate-500 mb-3">Trouvez une formation pour ce poste</p>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full text-xs border-pink-200 text-pink-700"
+                      onClick={() => navigate(`/formations?q=${encodeURIComponent(job.title || '')}`)}
+                    >
+                      Chercher une formation <ArrowRight className="w-3 h-3 ml-1" />
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

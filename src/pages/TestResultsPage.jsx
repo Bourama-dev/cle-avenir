@@ -18,14 +18,11 @@ import PlanAccessMessage from '@/components/test-results/PlanAccessMessage';
 import MetierLoadingSpinner from '@/components/MetierLoadingSpinner';
 import MetierErrorState from '@/components/MetierErrorState';
 
-const DIMENSION_LABELS = {
-  R: { name: 'Réaliste', color: 'bg-red-500' },
-  I: { name: 'Investigateur', color: 'bg-blue-500' },
-  A: { name: 'Artistique', color: 'bg-purple-500' },
-  S: { name: 'Social', color: 'bg-green-500' },
-  E: { name: 'Entreprenant', color: 'bg-orange-500' },
-  C: { name: 'Conventionnel', color: 'bg-yellow-500' },
-};
+import { RIASEC_META } from '@/data/optimizedQuestions';
+
+const DIMENSION_LABELS = Object.fromEntries(
+  Object.entries(RIASEC_META).map(([k, v]) => [k, { name: v.label, color: v.color }])
+);
 
 const TestResultsPage = () => {
   const navigate = useNavigate();
@@ -49,6 +46,16 @@ const TestResultsPage = () => {
       }
 
       const loadedProfile = JSON.parse(storedProfileStr);
+      // Recompute profile code if not stored (backward compat)
+      const storedCode = localStorage.getItem('test_riasec_profile_code');
+      if (!storedCode) {
+        const code = Object.entries(loadedProfile)
+          .sort(([, a], [, b]) => b - a)
+          .slice(0, 3)
+          .map(([l]) => l)
+          .join('');
+        localStorage.setItem('test_riasec_profile_code', code);
+      }
       setProfile(loadedProfile);
 
       const dbMetiers = await metierService.getAllMetiersForMatching();
@@ -120,6 +127,8 @@ const TestResultsPage = () => {
 
   const profileEntries = Object.entries(profile).sort(([, a], [, b]) => b - a);
   const topType = profileEntries[0]?.[0];
+  const profileCode = localStorage.getItem('test_riasec_profile_code') ||
+    profileEntries.slice(0, 3).map(([l]) => l).join('');
   const visibleCount = getVisibleMetierCount();
 
   const containerVariants = {
@@ -147,9 +156,19 @@ const TestResultsPage = () => {
             <h1 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
               Vos Résultats d'Orientation
             </h1>
-            <p className="text-slate-300 max-w-2xl mx-auto text-lg">
+            <p className="text-slate-300 max-w-2xl mx-auto text-lg mb-6">
               Découvrez les métiers qui correspondent parfaitement à votre ADN professionnel.
             </p>
+            {/* Profile code badge */}
+            <div className="inline-flex flex-col items-center bg-white/10 border border-white/20 backdrop-blur rounded-2xl px-8 py-4">
+              <span className="text-slate-300 text-xs font-semibold uppercase tracking-widest mb-1">
+                Code RIASEC
+              </span>
+              <span className="text-4xl font-black tracking-widest text-white">{profileCode}</span>
+              <span className="text-slate-400 text-xs mt-1">
+                Profil dominant : {DIMENSION_LABELS[topType]?.name}
+              </span>
+            </div>
          </div>
       </div>
 

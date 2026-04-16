@@ -1,6 +1,8 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileText, Users, CreditCard, AlertTriangle, Scale, RefreshCw, ArrowLeft, ChevronDown, CheckCircle } from 'lucide-react';
+import { useLegalDocument } from '@/hooks/useLegalDocument';
+import DynamicLegalContent from '@/components/legal/DynamicLegalContent';
 
 const sections = [
   { id: 'objet', icon: FileText, label: 'Objet' },
@@ -16,6 +18,7 @@ const TermsPage = () => {
   const [activeSection, setActiveSection] = useState('objet');
   const [openFaq, setOpenFaq] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const { content: dbContent, loading: dbLoading } = useLegalDocument('cgu');
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -24,6 +27,7 @@ const TermsPage = () => {
   }, []);
 
   return (
+    <DynamicLegalContent dbContent={dbContent} loading={dbLoading}>
     <div className="min-h-screen bg-[#070710] text-white">
       <div className="relative overflow-hidden bg-gradient-to-b from-rose-950/30 to-[#070710] pt-24 pb-20 px-6">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-rose-900/20 via-transparent to-transparent" />
@@ -199,6 +203,7 @@ const TermsPage = () => {
         <p className="text-slate-600 text-sm">CGU CleAvenir v3.1 — Avril 2026 — Tous droits reserves</p>
       </div>
     </div>
+    </DynamicLegalContent>
   );
 };
 

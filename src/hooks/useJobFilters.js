@@ -166,6 +166,20 @@ const useJobFilters = () => {
 
       data = apiData;
 
+      // Detect credential / config warnings returned as 200
+      if (data?.warning) {
+        console.warn('[useJobFilters] get-jobs warning:', data.warning);
+        if (data.warning === 'credentials_missing') {
+          setError('credentials_missing');
+          setJobs([]);
+          setFilteredJobs([]);
+          setTotalCount(0);
+          setFilteredCount(0);
+          setTotalPages(0);
+          return;
+        }
+      }
+
       const mappedJobs = (data?.data?.resultats || []).map(job => {
         let jobLat = job.lieuTravail?.latitude ? Number(job.lieuTravail.latitude) : null;
         let jobLon = job.lieuTravail?.longitude ? Number(job.lieuTravail.longitude) : null;
