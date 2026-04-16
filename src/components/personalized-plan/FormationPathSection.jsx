@@ -6,6 +6,7 @@ import { GraduationCap, ArrowRight, Clock, Award, Info, MapPin, Building, CheckC
 import { useNavigate } from 'react-router-dom';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getStatusContext, isFormationAccessible, EDUCATION_LABELS } from '@/utils/educationUtils';
+import { extractFormationKeywords } from '@/utils/formationKeywords';
 
 const FormationPathSection = ({ formations, isLoading, userProfile }) => {
   const navigate = useNavigate();
@@ -166,18 +167,43 @@ const FormationPathSection = ({ formations, isLoading, userProfile }) => {
                     </p>
                   )}
 
-                  <div className="mt-auto self-start">
+                  <div className="mt-auto space-y-2">
                     <Button
                       variant="outline"
                       onClick={() => {
-                        // Navigate to /formations with the title pre-filled as search
                         const q = encodeURIComponent(form.title || '');
                         navigate(`/formations${q ? `?q=${q}` : ''}`);
                       }}
-                      className="text-sm border-pink-200 bg-pink-50/50 hover:bg-pink-100 text-pink-800 shadow-sm"
+                      className="w-full text-sm border-pink-200 bg-pink-50/50 hover:bg-pink-100 text-pink-800 shadow-sm"
                     >
                       Voir la formation <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
+                    {/* Cross-links */}
+                    {(() => {
+                      const { metierKeyword, offresKeyword } = extractFormationKeywords(form.title || '');
+                      return (
+                        <div className="flex gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="flex-1 text-xs text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 px-2"
+                            onClick={() => navigate(`/metiers?q=${encodeURIComponent(metierKeyword)}`)}
+                            title={metierKeyword}
+                          >
+                            Métiers associés →
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="flex-1 text-xs text-rose-600 hover:text-rose-800 hover:bg-rose-50 px-2"
+                            onClick={() => navigate(`/offres-emploi?q=${encodeURIComponent(offresKeyword)}`)}
+                            title={offresKeyword}
+                          >
+                            Offres d'emploi →
+                          </Button>
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
               </CardContent>

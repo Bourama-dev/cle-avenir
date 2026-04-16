@@ -13,6 +13,7 @@ import {
   CheckCircle2, FileText, MonitorPlay, Lock, Briefcase, ArrowRight
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { extractFormationKeywords } from '@/utils/formationKeywords';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
 import { FEATURES } from '@/constants/subscriptionTiers';
 import { fetchFormations } from '@/services/parcoursup';
@@ -591,31 +592,32 @@ const FormationsPage = ({ setAllFormations }) => {
                             </>
                           )}
                         </Button>
-                        {/* Cross-links row */}
-                        <div className="flex gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="flex-1 text-xs border-indigo-200 text-indigo-700 hover:bg-indigo-50"
-                            onClick={() => {
-                              const kw = (formation.libelle_formation || '').split(' ').slice(0, 3).join(' ');
-                              navigate(`/metiers?q=${encodeURIComponent(kw)}`);
-                            }}
-                          >
-                            <Briefcase className="w-3 h-3 mr-1" /> Métiers
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="flex-1 text-xs border-rose-200 text-rose-700 hover:bg-rose-50"
-                            onClick={() => {
-                              const kw = (formation.libelle_formation || '').split(' ').slice(0, 3).join(' ');
-                              navigate(`/offres-emploi?q=${encodeURIComponent(kw)}`);
-                            }}
-                          >
-                            <ArrowRight className="w-3 h-3 mr-1" /> Offres
-                          </Button>
-                        </div>
+                        {/* Cross-links row — keywords derived from full title */}
+                        {(() => {
+                          const { metierKeyword, offresKeyword } = extractFormationKeywords(formation.libelle_formation || '');
+                          return (
+                            <div className="flex gap-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="flex-1 text-xs border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+                                onClick={() => navigate(`/metiers?q=${encodeURIComponent(metierKeyword)}`)}
+                                title={`Rechercher : ${metierKeyword}`}
+                              >
+                                <Briefcase className="w-3 h-3 mr-1" /> Métiers
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="flex-1 text-xs border-rose-200 text-rose-700 hover:bg-rose-50"
+                                onClick={() => navigate(`/offres-emploi?q=${encodeURIComponent(offresKeyword)}`)}
+                                title={`Rechercher : ${offresKeyword}`}
+                              >
+                                <ArrowRight className="w-3 h-3 mr-1" /> Offres
+                              </Button>
+                            </div>
+                          );
+                        })()}
                       </div>
                     </div>
                   </div>

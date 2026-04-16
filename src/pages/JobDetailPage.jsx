@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { getJobDetails, searchJobs } from '@/services/franceTravail';
 import { metierService } from '@/services/metierService';
 import { fetchFormations } from '@/services/parcoursup';
+import { extractFormationKeywords } from '@/utils/formationKeywords';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -94,17 +95,18 @@ const JobDetailPage = () => {
 
         // Fetch Related Jobs, Métier, and Formations in parallel
         const titleKeyword = jobData.title || '';
-        const keyword2 = titleKeyword.split(' ').slice(0, 2).join(' ');
 
-        const [relatedRes] = await Promise.all([
-          searchJobs({ query: keyword2, limit: 3 }),
-        ]);
+        const relatedRes = await searchJobs({
+          query: titleKeyword.split(' ').slice(0, 3).join(' '),
+          limit: 3,
+        });
         if (relatedRes.success) {
           setRelatedJobs(relatedRes.results.filter(j => j.id !== id));
         }
 
         // Métier associé — try romeCode from raw data first, then text search
         fetchRelatedMetier(jobData);
+        // Pass full job title so extractFormationKeywords can analyse it
         fetchRelatedFormations(titleKeyword);
 
         // Check if saved
@@ -145,10 +147,11 @@ const JobDetailPage = () => {
         if (data) { setRelatedMetier(data); return; }
       }
 
-      // 2. Text search on libelle
-      const keyword = (jobData.title || '').split(' ').slice(0, 3).join(' ');
-      if (keyword) {
-        const results = await metierService.searchMetiers(keyword);
+      // 2. Text search: derive a meaningful keyword from the full job title
+      const { metierKeyword } = extractFormationKeywords(jobData.title || '');
+      const searchKw = metierKeyword || jobData.title || '';
+      if (searchKw) {
+        const results = await metierService.searchMetiers(searchKw);
         if (results?.length > 0) setRelatedMetier(results[0]);
       }
     } catch (err) {
@@ -159,10 +162,14 @@ const JobDetailPage = () => {
   };
 
   /* ── Fetch 3 Parcoursup formations matching the job title ─────────────── */
-  const fetchRelatedFormations = async (keyword) => {
-    if (!keyword) return;
+  const fetchRelatedFormations = async (jobTitle) => {
+    if (!jobTitle) return;
     setLoadingFormations(true);
     try {
+      // Use the same smart extraction we use for formations→métiers
+      // but applied in reverse: job title → formation search keyword
+      const { offresKeyword } = extractFormationKeywords(jobTitle);
+      const keyword = offresKeyword || jobTitle;
       const response = await fetchFormations({ q: keyword, limit: 6 });
       if (response.success && response.results?.length) {
         // Normalise to a simple display shape
