@@ -123,8 +123,8 @@ export const metierRecommendationService = {
           const { data: metiers } = await withRetry(() =>
             supabase
               .from('rome_metiers')
-              .select('code, libelle, description, salaire, debouches, niveau_etudes, riasecMajeur, riasecMineur')
-              .in('riasecMajeur', topLetters)
+              .select('code, libelle, description, salaire, debouches, niveau_etudes, riasecmajeur, riasecmineur')
+              .in('riasecmajeur', topLetters)
               .limit(15)
           );
 
@@ -132,12 +132,15 @@ export const metierRecommendationService = {
             return metiers
               .map(m => {
                 let score = 50;
-                const majorIdx = topLetters.indexOf(m.riasecMajeur);
+                // PostgREST returns lowercase column names
+                const major = m.riasecmajeur || m.riasecMajeur;
+                const minor = m.riasecmineur || m.riasecMineur;
+                const majorIdx = topLetters.indexOf(major);
                 if (majorIdx === 0) score += 40;
                 else if (majorIdx === 1) score += 28;
                 else if (majorIdx === 2) score += 18;
-                if (m.riasecMineur && topLetters.includes(m.riasecMineur)) score += 8;
-                return { ...m, matchScore: Math.min(98, score) };
+                if (minor && topLetters.includes(minor)) score += 8;
+                return { ...m, riasecMajeur: major, riasecMineur: minor, matchScore: Math.min(98, score) };
               })
               .sort((a, b) => b.matchScore - a.matchScore);
           }
