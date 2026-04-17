@@ -166,18 +166,33 @@ const useJobFilters = () => {
 
       data = apiData;
 
-      // Detect credential / config warnings returned as 200
+      // === DIAGNOSTIC — visible dans DevTools > Console ===
+      console.group('[get-jobs] Réponse brute');
+      console.log('warning:', data?.warning);
+      console.log('total:', data?.meta?.total);
+      console.log('resultats count:', data?.data?.resultats?.length ?? 0);
+      console.log('full response:', JSON.stringify(data).slice(0, 500));
+      console.groupEnd();
+
+      // Detect warnings returned as HTTP 200
       if (data?.warning) {
         console.warn('[useJobFilters] get-jobs warning:', data.warning);
-        if (data.warning === 'credentials_missing') {
+        const w = data.warning;
+        setJobs([]);
+        setFilteredJobs([]);
+        setTotalCount(0);
+        setFilteredCount(0);
+        setTotalPages(0);
+        if (w === 'credentials_missing') {
           setError('credentials_missing');
-          setJobs([]);
-          setFilteredJobs([]);
-          setTotalCount(0);
-          setFilteredCount(0);
-          setTotalPages(0);
-          return;
+        } else if (w === 'auth_failed') {
+          setError('auth_failed');
+        } else if (w && w.startsWith('api_error_')) {
+          setError(w); // e.g. 'api_error_401', 'api_error_403'
+        } else {
+          setError('api_unavailable');
         }
+        return;
       }
 
       const mappedJobs = (data?.data?.resultats || []).map(job => {

@@ -143,15 +143,44 @@ const JobExplorer = ({ onNavigate }) => {
                      La connexion à leur API nécessite des identifiants à configurer côté serveur.
                    </p>
                    <p className="text-sm text-slate-400 mb-6">
-                     Variables requises : <code className="bg-slate-100 px-1 rounded">POLE_EMPLOI_CLIENT_ID</code> et <code className="bg-slate-100 px-1 rounded">POLE_EMPLOI_CLIENT_SECRET</code>
+                     Variables requises : <code className="bg-slate-100 px-1 rounded">FRANCE_TRAVAIL_CLIENT_ID</code> et <code className="bg-slate-100 px-1 rounded">FRANCE_TRAVAIL_SECRET</code>
                    </p>
-                   <a
-                     href="https://francetravail.io/data/api"
-                     target="_blank"
-                     rel="noopener noreferrer"
-                     className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-sm font-medium transition-colors"
-                   >
+                   <a href="https://francetravail.io/data/api" target="_blank" rel="noopener noreferrer"
+                     className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-sm font-medium transition-colors">
                      Obtenir les identifiants France Travail
+                   </a>
+                </div>
+             ) : error === 'auth_failed' ? (
+                <div className="text-center py-20 bg-white rounded-2xl border border-amber-100 p-8 shadow-sm">
+                   <div className="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                     <Key className="h-8 w-8 text-amber-500" />
+                   </div>
+                   <h3 className="text-lg font-bold text-slate-900 mb-2">Identifiants France Travail invalides</h3>
+                   <p className="text-slate-600 mb-2 max-w-md mx-auto">
+                     Les identifiants configurés (<code className="bg-slate-100 px-1 rounded text-xs">FRANCE_TRAVAIL_CLIENT_ID</code> / <code className="bg-slate-100 px-1 rounded text-xs">FRANCE_TRAVAIL_SECRET</code>) ne sont pas reconnus par France Travail.
+                   </p>
+                   <p className="text-sm text-slate-500 mb-6 max-w-md mx-auto">
+                     Vérifiez les secrets dans Supabase → Edge Functions → Secrets, puis réessayez.
+                   </p>
+                   <Button onClick={() => fetchJobs()} variant="outline" className="border-amber-200 hover:bg-amber-50 text-amber-700">
+                     Réessayer
+                   </Button>
+                </div>
+             ) : error === 'api_error_401' || error === 'api_error_403' ? (
+                <div className="text-center py-20 bg-white rounded-2xl border border-amber-100 p-8 shadow-sm">
+                   <div className="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                     <Key className="h-8 w-8 text-amber-500" />
+                   </div>
+                   <h3 className="text-lg font-bold text-slate-900 mb-2">Accès à l'API refusé</h3>
+                   <p className="text-slate-600 mb-4 max-w-md mx-auto">
+                     Votre application France Travail n'est pas abonnée à l'<strong>API Offres d'emploi v2</strong>.
+                   </p>
+                   <p className="text-sm text-slate-500 mb-6 max-w-md mx-auto">
+                     Connectez-vous sur <strong>francetravail.io</strong> → Mon espace → votre application → Abonnements, puis activez l'API <code className="bg-slate-100 px-1 rounded">Offres d'emploi v2</code>.
+                   </p>
+                   <a href="https://francetravail.io/data/api/offresdemploiv2" target="_blank" rel="noopener noreferrer"
+                     className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-sm font-medium transition-colors">
+                     Activer l'API Offres d'emploi
                    </a>
                 </div>
              ) : error ? (

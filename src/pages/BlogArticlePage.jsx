@@ -199,9 +199,21 @@ const BlogArticlePage = () => {
           {/* Main Article Content */}
           <div className="flex-1 min-w-0">
             <div className="bg-white rounded-xl">
-               <div 
-                 className="prose prose-lg prose-slate max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-indigo-600 hover:prose-a:text-indigo-700 prose-img:rounded-xl prose-blockquote:border-l-indigo-500 prose-blockquote:bg-slate-50 prose-blockquote:py-2 prose-blockquote:px-4 prose-li:marker:text-indigo-600"
-                 dangerouslySetInnerHTML={{ __html: post.content }}
+               <div
+                 className="prose prose-lg prose-slate max-w-none
+                   prose-headings:font-bold prose-headings:text-slate-900
+                   prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:border-b prose-h2:border-slate-100 prose-h2:pb-3
+                   prose-h3:text-xl prose-h3:mt-7 prose-h3:mb-3
+                   prose-p:leading-relaxed prose-p:text-slate-600
+                   prose-a:text-indigo-600 hover:prose-a:text-indigo-800 prose-a:font-medium prose-a:no-underline hover:prose-a:underline
+                   prose-strong:text-slate-900 prose-strong:font-semibold
+                   prose-ul:space-y-2 prose-ol:space-y-2
+                   prose-li:text-slate-600 prose-li:marker:text-indigo-400
+                   prose-img:rounded-2xl prose-img:shadow-lg
+                   prose-blockquote:border-l-4 prose-blockquote:border-indigo-400 prose-blockquote:bg-indigo-50/50 prose-blockquote:rounded-r-xl prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:not-italic prose-blockquote:text-slate-700
+                   prose-table:border-collapse prose-th:bg-slate-50 prose-th:text-slate-700 prose-td:text-slate-600
+                   prose-code:bg-slate-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-rose-600 prose-code:before:content-none prose-code:after:content-none"
+                 dangerouslySetInnerHTML={{ __html: post.content?.trim().startsWith('<') ? post.content : `<p>${(post.content || '').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br/>')}</p>` }}
                />
             </div>
 
