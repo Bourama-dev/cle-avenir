@@ -166,6 +166,14 @@ const useJobFilters = () => {
 
       data = apiData;
 
+      // === DIAGNOSTIC — visible dans DevTools > Console ===
+      console.group('[get-jobs] Réponse brute');
+      console.log('warning:', data?.warning);
+      console.log('total:', data?.meta?.total);
+      console.log('resultats count:', data?.data?.resultats?.length ?? 0);
+      console.log('full response:', JSON.stringify(data).slice(0, 500));
+      console.groupEnd();
+
       // Detect warnings returned as HTTP 200
       if (data?.warning) {
         console.warn('[useJobFilters] get-jobs warning:', data.warning);
