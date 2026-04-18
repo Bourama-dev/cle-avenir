@@ -13,32 +13,33 @@ function json(body: unknown, status = 200) {
   });
 }
 
-// ── Anthropic client (no SDK needed — just REST) ───────────────────────────
-async function callAnthropic(
+// ── OpenAI client (no SDK needed — just REST) ─────────────────────────────
+async function callOpenAI(
   apiKey: string,
   systemPrompt: string,
   messages: { role: string; content: string }[],
 ): Promise<string> {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'content-type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'claude-3-haiku-20240307',
+      model: 'gpt-4o-mini',
       max_tokens: 1024,
-      system: systemPrompt,
-      messages: messages.map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
+      messages: [
+        { role: 'system', content: systemPrompt },
+        ...messages.map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
+      ],
     }),
   });
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(`Anthropic ${res.status}: ${err}`);
+    throw new Error(`OpenAI ${res.status}: ${err}`);
   }
   const data = await res.json();
-  return data.content?.[0]?.text ?? '';
+  return data.choices?.[0]?.message?.content ?? '';
 }
 
 // ── Build rich Cléo system prompt ─────────────────────────────────────────
@@ -131,7 +132,7 @@ Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
 
   try {
-    const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
+    const anthropicKey = Deno.env.get('OPENAI_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 
@@ -202,10 +203,10 @@ Deno.serve(async (req) => {
 
     if (!anthropicKey) {
       // Graceful fallback when key not configured
-      console.warn('[chat-advisor] ANTHROPIC_API_KEY not set — returning fallback');
-      reply = `Bonjour ! Je suis Cléo, votre coach de carrière. Je suis là pour vous aider dans votre orientation professionnelle. Pour activer mes capacités complètes, l'administrateur doit configurer la clé API Anthropic dans les variables d'environnement Supabase. En attendant, explorez le catalogue de métiers et passez votre test d'orientation ! 🚀`;
+      console.warn('[chat-advisor] OPENAI_API_KEY not set — returning fallback');
+      reply = `Bonjour ! Je suis Cléo, votre coach de carrière. Je suis là pour vous aider dans votre orientation professionnelle. Pour activer mes capacités complètes, l'administrateur doit configurer la clé OPENAI_API_KEY dans les variables d'environnement Supabase. En attendant, explorez le catalogue de métiers et passez votre test d'orientation ! 🚀`;
     } else {
-      reply = await callAnthropic(anthropicKey, systemPrompt, allMessages);
+      reply = await callOpenAI(anthropicKey, systemPrompt, allMessages);
     }
 
     // ── Extract profile updates from reply (simple pattern matching) ─────────

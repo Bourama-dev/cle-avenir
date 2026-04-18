@@ -11,17 +11,34 @@ let _elevenLabsAvailable = null; // null = not yet tested
 
 async function tryElevenLabs(text, onEnd) {
   try {
-    const { data, error } = await supabase.functions.invoke('tts-elevenlabs', {
-      body: { text },
+    // Use fetch directly to get raw binary audio (supabase.functions.invoke parses JSON by default)
+    const { data: { session } } = await supabase.auth.getSession();
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || supabase.supabaseUrl;
+    const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || supabase.supabaseKey;
+
+    const res = await fetch(`${supabaseUrl}/functions/v1/tts-elevenlabs`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': anonKey,
+        ...(session?.access_token ? { 'Authorization': `Bearer ${session.access_token}` } : {}),
+      },
+      body: JSON.stringify({ text }),
     });
 
-    if (error || !data) {
+    if (!res.ok) {
+      _elevenLabsAvailable = false;
+      return false;
+    }
+
+    const arrayBuffer = await res.arrayBuffer();
+    if (!arrayBuffer || arrayBuffer.byteLength === 0) {
       _elevenLabsAvailable = false;
       return false;
     }
 
     // data is an ArrayBuffer from the edge function
-    const audioBlob = new Blob([data], { type: 'audio/mpeg' });
+    const audioBlob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
     const audioUrl = URL.createObjectURL(audioBlob);
     const audio = new Audio(audioUrl);
 
