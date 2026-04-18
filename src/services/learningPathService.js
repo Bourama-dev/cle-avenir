@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/customSupabaseClient';
+import { LOCAL_ACTIVITY_CATALOG } from '@/data/activityCatalog';
 
 // Map RIASEC letters to skill domains to prioritize
 const RIASEC_SKILL_MAP = {
@@ -48,6 +49,17 @@ export const learningPathService = {
 
       const available = allActivities.filter(a => !completedIds.has(a.id));
 
+      // ── Supplement with local catalog if DB has < 10 activities ────────────────
+      let workingSet = available;
+      if (available.length < 10) {
+        console.log('[learningPathService] DB has fewer than 10 activities — supplementing with local catalog');
+        const localNotCompleted = LOCAL_ACTIVITY_CATALOG.filter(a => !completedIds.has(a.id));
+        // Merge, DB activities take priority (same id would be from DB)
+        const dbIds = new Set(available.map(a => a.id));
+        const localOnly = localNotCompleted.filter(a => !dbIds.has(a.id));
+        workingSet = [...available, ...localOnly];
+      }
+
       // 3. Get user skills to detect gaps
       const { data: userSkills } = await supabase
         .from('user_skills')
@@ -70,7 +82,7 @@ export const learningPathService = {
       }
 
       // 5. Score and sort activities
-      const scored = available.map(activity => {
+      const scored = workingSet.map(activity => {
         let score = 0;
 
         const skillTags = activity.skills_rewarded || [];
