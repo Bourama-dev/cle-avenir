@@ -184,7 +184,7 @@ const MetiersExplorer = ({ onNavigate }) => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             {totalMetiersCount > 0
               ? `${totalMetiersCount.toLocaleString('fr-FR')} métiers du répertoire officiel ROME`
-              : 'Accédez à l'intégralité des fiches métiers officielles.'}
+              : "Accédez à l’intégralité des fiches métiers officielles."}
           </p>
         </div>
 
