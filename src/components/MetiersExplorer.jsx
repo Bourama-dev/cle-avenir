@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { useSearchParams } from 'react-router-dom';
 import { getMetierSalary } from '@/utils/salaryUtils';
 import { normalizedIncludes } from '@/utils/stringUtils';
+import { metierToSlug } from '@/utils/slugUtils';
 
 const MetierCard = ({ metier, onSelect, index }) => {
   const salary = getMetierSalary(metier);
@@ -246,7 +247,7 @@ const MetiersExplorer = ({ onNavigate }) => {
                   <MetierCard
                     key={metier.code}
                     metier={metier}
-                    onSelect={() => onNavigate(`/metier/${metier.code}`)}
+                    onSelect={() => onNavigate(`/metier/${metierToSlug(metier)}`)}
                     index={index}
                   />
                 ))}

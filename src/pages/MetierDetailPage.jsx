@@ -32,6 +32,7 @@ import MetierErrorState from '@/components/MetierErrorState';
 import { useMetierDataFetcher } from '@/utils/metierDataFetcher';
 import { JobMarketTrends, SalaryComparisonChart, SkillsRadarChart } from '@/components/cleo/charts/CleoChartLibrary';
 import { formatSalary, getMetierSalary } from '@/utils/salaryUtils';
+import { slugToMetierCode } from '@/utils/slugUtils';
 
 const FormattedText = ({ text, className = "" }) => {
   if (!text) return null;
@@ -123,7 +124,8 @@ const getRiasecData = (metier) => {
 };
 
 const MetierDetailPage = () => {
-  const { code } = useParams();
+  const { slug } = useParams();
+  const code = slugToMetierCode(slug ?? '');
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
