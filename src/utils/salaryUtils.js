@@ -6,17 +6,33 @@
  *  - anything else    → converted to string via String()
  */
 export const formatSalary = (v) => {
-  if (!v) return null;
-  if (typeof v === 'string') return v;
+  if (v == null) return null;
+
+  if (typeof v === 'string') {
+    const s = v.trim();
+    // Treat empty, "0", "0 EUR", "0 - 0" etc. as missing
+    if (!s || /^0\s*[-–]?\s*0?\s*(EUR|€)?$/i.test(s)) return null;
+    return s;
+  }
+
   if (typeof v === 'object') {
     const { min, max, currency = '€' } = v;
-    const fmt = (n) => (n != null ? Number(n).toLocaleString('fr-FR') : null);
-    if (min != null && max != null) return `${fmt(min)} – ${fmt(max)} ${currency}`;
-    if (min != null) return `À partir de ${fmt(min)} ${currency}`;
-    if (max != null) return `Jusqu'à ${fmt(max)} ${currency}`;
+    // Treat 0, null, undefined as "no data"
+    const hasMin = min != null && Number(min) > 0;
+    const hasMax = max != null && Number(max) > 0;
+    const fmt = (n) => Number(n).toLocaleString('fr-FR');
+    if (hasMin && hasMax) return `${fmt(min)} – ${fmt(max)} ${currency}`;
+    if (hasMin) return `À partir de ${fmt(min)} ${currency}`;
+    if (hasMax) return `Jusqu'à ${fmt(max)} ${currency}`;
     return null;
   }
-  return String(v);
+
+  // number
+  if (typeof v === 'number') {
+    return v > 0 ? `${v.toLocaleString('fr-FR')} €` : null;
+  }
+
+  return null;
 };
 
 /* ─────────────────────────────────────────────────────────────────────────────
