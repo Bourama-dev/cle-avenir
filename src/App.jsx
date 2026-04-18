@@ -40,6 +40,9 @@ import BugReportButton from '@/components/BugReportButton';
 import MetaTags from '@/components/SEO/MetaTags';
 import StructuredData from '@/components/SEO/StructuredData';
 
+// Analytics
+import { SpeedInsights } from '@vercel/speed-insights/react';
+
 // Performance Components
 import LoadingFallback from '@/components/LoadingFallback';
 import ProgressBar from '@/components/ui/ProgressBar';
@@ -433,6 +436,7 @@ const PageContent = () => {
       {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isMaintenancePage && <BugReportButton />}
       
       {showFooter && <Footer onNavigate={handleNavigate} />}
+      <SpeedInsights />
     </div>
     </DynamicBackground>
   );
