@@ -85,7 +85,7 @@ const fetchAllMetiers = async () => {
   while (true) {
     const { data, error } = await supabase
       .from('rome_metiers')
-      .select('code, libelle, description, salaire, salary_range, niveau_etudes, riasecMajeur')
+      .select('code, libelle, description, salaire, salary_range, niveau_etudes')
       .order('libelle')
       .range(from, from + BATCH - 1);
 
