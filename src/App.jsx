@@ -42,6 +42,7 @@ import StructuredData from '@/components/SEO/StructuredData';
 
 // Analytics
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { slugToMetierCode } from '@/utils/slugUtils';
 
 // Performance Components
 import LoadingFallback from '@/components/LoadingFallback';
@@ -340,11 +341,11 @@ const PageContent = () => {
 
                   {/* Explorers & Detail Pages */}
                   <Route path="/metiers" element={<PageTransition><ExploreMetiersPage /></PageTransition>} />
-                  <Route path="/metier/:code" element={<PageTransition><MetierDetailPage /></PageTransition>} />
-                  <Route path="/metiers/:code" element={<RedirectWithParam to="/metier" paramName="code" />} />
+                  <Route path="/metier/:slug" element={<PageTransition><MetierDetailPage /></PageTransition>} />
+                  <Route path="/metiers/:slug" element={<RedirectWithParam to="/metier" paramName="slug" />} />
                   <Route path="/formations" element={<PageTransition><FormationsPage /></PageTransition>} />
-                  <Route path="/formation/:id" element={<PageTransition><FormationDetailPage /></PageTransition>} />
-                  <Route path="/formations/:id" element={<RedirectWithParam to="/formation" paramName="id" />} />
+                  <Route path="/formation/:slug" element={<PageTransition><FormationDetailPage /></PageTransition>} />
+                  <Route path="/formations/:slug" element={<RedirectWithParam to="/formation" paramName="slug" />} />
                   <Route path="/offres-emploi" element={<PageTransition><JobExplorer onNavigate={handleNavigate} /></PageTransition>} />
                   <Route path="/job/:id" element={<PageTransition><JobDetailPage /></PageTransition>} />
                   <Route path="/offre/:id" element={<RedirectWithParam to="/job" paramName="id" />} />
