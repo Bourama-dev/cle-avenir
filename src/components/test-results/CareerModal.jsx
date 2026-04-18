@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { formatSalary } from '@/utils/salaryUtils';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -176,7 +177,7 @@ const CareerModal = ({ career, isOpen, onClose, onLike, onChoose, isLiked, isCho
               {career.salaire && (
                 <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                   <h3 className="text-lg font-bold text-slate-800 mb-2">Salaire indicatif</h3>
-                  <p className="text-slate-600">{career.salaire}</p>
+                  <p className="text-slate-600">{formatSalary(career.salaire) || '—'}</p>
                 </section>
               )}
             </div>

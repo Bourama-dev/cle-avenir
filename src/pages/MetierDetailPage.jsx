@@ -31,6 +31,7 @@ import MetierLoadingSpinner from '@/components/MetierLoadingSpinner';
 import MetierErrorState from '@/components/MetierErrorState';
 import { useMetierDataFetcher } from '@/utils/metierDataFetcher';
 import { JobMarketTrends, SalaryComparisonChart, SkillsRadarChart } from '@/components/cleo/charts/CleoChartLibrary';
+import { formatSalary } from '@/utils/salaryUtils';
 
 const FormattedText = ({ text, className = "" }) => {
   if (!text) return null;
@@ -85,20 +86,6 @@ const ExpandableList = ({ items, limit = 5, renderItem, emptyMessage = "Aucune d
 
 /* ── Safety helpers ── */
 const toSafeArray = (v) => (Array.isArray(v) ? v : []);
-
-/** Normalize salary: handles strings, {min,max,currency} objects, and anything else */
-const formatSalary = (v) => {
-  if (!v) return null;
-  if (typeof v === 'string') return v;
-  if (typeof v === 'object') {
-    const { min, max, currency = '€' } = v;
-    const fmt = (n) => n != null ? Number(n).toLocaleString('fr-FR') : null;
-    if (min != null && max != null) return `${fmt(min)} – ${fmt(max)} ${currency}`;
-    if (min != null) return `À partir de ${fmt(min)} ${currency}`;
-    if (max != null) return `Jusqu'à ${fmt(max)} ${currency}`;
-  }
-  return String(v);
-};
 
 const getRiasecData = (metier) => {
   const scores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
