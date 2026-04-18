@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { getMetierSalary } from '@/utils/salaryUtils';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -58,7 +59,7 @@ const MetierMatchCard = ({ metier, isLocked, onClick }) => {
         {metier.salaire && (
           <div className="bg-slate-50 p-2 rounded text-xs">
             <span className="block text-slate-500 mb-1">Salaire</span>
-            <strong className="text-slate-700">{metier.salaire}</strong>
+            <strong className="text-slate-700">{getMetierSalary(metier)}</strong>
           </div>
         )}
         {metier.niveau_etudes && (

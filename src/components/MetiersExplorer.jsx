@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   Search, Briefcase, ChevronLeft, ChevronRight,
-  Loader2, X, RefreshCcw
+  Loader2, X, RefreshCcw, Euro, GraduationCap
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/lib/customSupabaseClient';
@@ -13,45 +13,93 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { Helmet } from 'react-helmet-async';
 import { Badge } from '@/components/ui/badge';
 import { useSearchParams } from 'react-router-dom';
+import { getMetierSalary } from '@/utils/salaryUtils';
 
-const MetierCard = ({ metier, onSelect, index }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3, delay: index * 0.05 }}
-    onClick={() => onSelect(metier)}
-    className="bg-card rounded-2xl p-6 card-hover flex flex-col justify-between shadow-md border border-border/20 cursor-pointer h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group relative overflow-hidden"
-  >
-    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-      <Briefcase className="w-24 h-24 rotate-12" />
-    </div>
+const MetierCard = ({ metier, onSelect, index }) => {
+  const salary = getMetierSalary(metier);
 
-    <div className="relative z-10">
-      <div className="flex items-start mb-4 gap-3">
-        <div className="p-2.5 bg-primary/10 rounded-xl shrink-0 group-hover:bg-primary/20 transition-colors shadow-sm">
-          <Briefcase className="h-6 w-6 text-primary" />
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.4) }}
+      onClick={() => onSelect(metier)}
+      className="bg-card rounded-2xl p-6 card-hover flex flex-col justify-between shadow-md border border-border/20 cursor-pointer h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group relative overflow-hidden"
+    >
+      <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+        <Briefcase className="w-24 h-24 rotate-12" />
+      </div>
+
+      <div className="relative z-10 flex flex-col h-full">
+        {/* Header */}
+        <div className="flex items-start mb-3 gap-3">
+          <div className="p-2.5 bg-primary/10 rounded-xl shrink-0 group-hover:bg-primary/20 transition-colors shadow-sm">
+            <Briefcase className="h-5 w-5 text-primary" />
+          </div>
+          <div className="min-w-0">
+            <Badge variant="outline" className="mb-1.5 text-[10px] tracking-wider font-mono text-muted-foreground bg-muted/50 border-border/50">
+              ROME {metier.code}
+            </Badge>
+            <h3 className="text-base font-bold text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-2">
+              {metier.libelle}
+            </h3>
+          </div>
         </div>
-        <div>
-          <Badge variant="outline" className="mb-2 text-[10px] tracking-wider font-mono text-muted-foreground bg-muted/50 border-border/50">
-            ROME {metier.code}
-          </Badge>
-          <h3 className="text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-2">
-            {metier.libelle}
-          </h3>
+
+        {/* Description */}
+        <p className="text-sm text-muted-foreground line-clamp-2 mb-3 flex-1">
+          {metier.description || "Découvrez les compétences, les conditions de travail et les opportunités liées à ce métier."}
+        </p>
+
+        {/* Salary + level chips */}
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-full">
+            <Euro className="w-3 h-3" />
+            {salary}
+          </span>
+          {metier.niveau_etudes && (
+            <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600 bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-full">
+              <GraduationCap className="w-3 h-3" />
+              {metier.niveau_etudes}
+            </span>
+          )}
+        </div>
+
+        {/* Footer CTA */}
+        <div className="pt-3 border-t border-border/10 flex justify-between items-center">
+          <span className="text-xs font-semibold text-primary flex items-center gap-1 group-hover:underline group-hover:underline-offset-4 decoration-primary/30 transition-all">
+            Voir la fiche <ChevronRight className="h-3 w-3" />
+          </span>
         </div>
       </div>
-      <p className="text-sm text-muted-foreground line-clamp-3 mt-2 min-h-[3rem]">
-        {metier.description || "Découvrez les compétences, les conditions de travail et les opportunités liées à ce métier."}
-      </p>
-    </div>
+    </motion.div>
+  );
+};
 
-    <div className="mt-5 pt-4 border-t border-border/10 flex justify-between items-center relative z-10">
-      <span className="text-xs font-semibold text-primary flex items-center gap-1 group-hover:underline group-hover:underline-offset-4 decoration-primary/30 transition-all">
-        Voir la fiche <ChevronRight className="h-3 w-3" />
-      </span>
-    </div>
-  </motion.div>
-);
+/* ─── Fetch ALL metiers using paginated .range() to bypass Supabase 1000-row cap ─── */
+const fetchAllMetiers = async () => {
+  const BATCH = 1000;
+  let from = 0;
+  let accumulated = [];
+
+  while (true) {
+    const { data, error } = await supabase
+      .from('rome_metiers')
+      .select('code, libelle, description, salaire, salary_range, niveau_etudes')
+      .order('libelle')
+      .range(from, from + BATCH - 1);
+
+    if (error) throw error;
+    if (!data || data.length === 0) break;
+
+    accumulated = accumulated.concat(data);
+
+    if (data.length < BATCH) break; // last page
+    from += BATCH;
+  }
+
+  return accumulated;
+};
 
 const MetiersExplorer = ({ onNavigate }) => {
   const [searchParams] = useSearchParams();
@@ -70,21 +118,14 @@ const MetiersExplorer = ({ onNavigate }) => {
   const resultsRef = useRef(null);
   const { toast } = useToast();
 
-  const fetchMetiersFromDB = async () => {
+  const loadMetiers = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const { data, error } = await supabase
-        .from('rome_metiers')
-        .select('*')
-        .order('libelle')
-        .limit(2000);
-
-      if (error) throw error;
-
-      setAllMetiers(data || []);
-      setDisplayedMetiers(data || []);
-      setTotalMetiersCount(data?.length || 0);
+      const data = await fetchAllMetiers();
+      setAllMetiers(data);
+      setDisplayedMetiers(data);
+      setTotalMetiersCount(data.length);
     } catch (err) {
       console.error("Error fetching metiers:", err);
       setError("Impossible de charger la liste des métiers. Veuillez réessayer.");
@@ -98,9 +139,7 @@ const MetiersExplorer = ({ onNavigate }) => {
     }
   };
 
-  useEffect(() => {
-    fetchMetiersFromDB();
-  }, []);
+  useEffect(() => { loadMetiers(); }, []);
 
   useEffect(() => {
     if (allMetiers.length === 0) return;
@@ -143,7 +182,9 @@ const MetiersExplorer = ({ onNavigate }) => {
             Explorez le <span className="gradient-text">Catalogue Métiers</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Accédez à l'intégralité des fiches métiers officielles.
+            {totalMetiersCount > 0
+              ? `${totalMetiersCount.toLocaleString('fr-FR')} métiers du répertoire officiel ROME`
+              : "Accédez à l’intégralité des fiches métiers officielles."}
           </p>
         </div>
 
@@ -167,11 +208,11 @@ const MetiersExplorer = ({ onNavigate }) => {
         <div className="max-w-6xl mx-auto mb-6 px-2 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="text-sm text-muted-foreground font-medium">
             {!isLoading && (
-              <>{displayedMetiers.length} métier(s) trouvé(s)</>
+              <>{displayedMetiers.length.toLocaleString('fr-FR')} métier(s) trouvé(s) sur {totalMetiersCount.toLocaleString('fr-FR')}</>
             )}
           </div>
           {!isLoading && (
-            <Button variant="ghost" size="sm" onClick={fetchMetiersFromDB} className="text-muted-foreground hover:text-primary gap-2">
+            <Button variant="ghost" size="sm" onClick={loadMetiers} className="text-muted-foreground hover:text-primary gap-2">
               <RefreshCcw className="h-3.5 w-3.5" /> Actualiser la liste
             </Button>
           )}
@@ -181,7 +222,7 @@ const MetiersExplorer = ({ onNavigate }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {[...Array(8)].map((_, i) => (
               <div key={i} className="flex flex-col space-y-3">
-                <Skeleton className="h-[200px] w-full rounded-2xl" />
+                <Skeleton className="h-[220px] w-full rounded-2xl" />
               </div>
             ))}
           </div>
@@ -189,7 +230,7 @@ const MetiersExplorer = ({ onNavigate }) => {
           <div className="text-center py-20 bg-destructive/5 rounded-2xl border border-destructive/20 max-w-2xl mx-auto">
             <h3 className="text-xl font-bold text-foreground mb-2">Erreur de chargement</h3>
             <p className="text-muted-foreground mb-6">{error}</p>
-            <Button onClick={fetchMetiersFromDB}>Réessayer</Button>
+            <Button onClick={loadMetiers}>Réessayer</Button>
           </div>
         ) : displayedMetiers.length === 0 ? (
           <div className="text-center py-20 bg-card rounded-2xl max-w-2xl mx-auto">
@@ -212,12 +253,16 @@ const MetiersExplorer = ({ onNavigate }) => {
             </div>
             {totalPages > 1 && (
               <div className="flex justify-center items-center gap-2 mt-12 pb-12">
-                <Button variant="outline" size="icon" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}><ChevronLeft className="h-4 w-4" /></Button>
+                <Button variant="outline" size="icon" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
                 <div className="flex items-center gap-1 mx-2">
                   <span className="font-medium text-sm text-foreground">Page {currentPage}</span>
                   <span className="text-muted-foreground text-sm">/ {totalPages}</span>
                 </div>
-                <Button variant="outline" size="icon" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><ChevronRight className="h-4 w-4" /></Button>
+                <Button variant="outline" size="icon" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
               </div>
             )}
           </>
