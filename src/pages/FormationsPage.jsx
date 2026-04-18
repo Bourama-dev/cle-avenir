@@ -21,6 +21,7 @@ import UpgradeModal from '@/components/UpgradeModal';
 import FormationDetailsPanel from '@/components/FormationDetailsPanel';
 import { calculateDistance } from '@/services/LocationFilterService';
 import EnhancedFormationFilters from '@/components/formation-explorer/EnhancedFormationFilters';
+import { normalizeStr } from '@/utils/stringUtils';
 
 // Constants
 const API_BATCH_SIZE = 100;
@@ -221,10 +222,10 @@ const FormationsPage = ({ setAllFormations }) => {
 
     if (sectorFilter && sectorFilter !== 'all') {
       data = data.filter(f => {
-        // Mock filter logic based on title matching
-        if (sectorFilter === 'sante') return f.libelle_formation.toLowerCase().includes('infirmier') || f.libelle_formation.toLowerCase().includes('santé');
-        if (sectorFilter === 'commerce') return f.libelle_formation.toLowerCase().includes('commerce') || f.libelle_formation.toLowerCase().includes('vente');
-        if (sectorFilter === 'informatique') return f.libelle_formation.toLowerCase().includes('informatique') || f.libelle_formation.toLowerCase().includes('numérique') || f.libelle_formation.toLowerCase().includes('web');
+        const title = normalizeStr(f.libelle_formation);
+        if (sectorFilter === 'sante') return title.includes('infirmier') || title.includes('sante');
+        if (sectorFilter === 'commerce') return title.includes('commerce') || title.includes('vente');
+        if (sectorFilter === 'informatique') return title.includes('informatique') || title.includes('numerique') || title.includes('web');
         return true;
       });
     }
@@ -235,8 +236,8 @@ const FormationsPage = ({ setAllFormations }) => {
 
     if (formationTypeFilter && formationTypeFilter !== 'all') {
       data = data.filter(f => {
-        const title = (f.libelle_formation || '').toLowerCase();
-        const tags = (f.tags || []).join(' ').toLowerCase();
+        const title = normalizeStr(f.libelle_formation);
+        const tags = normalizeStr((f.tags || []).join(' '));
         if (formationTypeFilter === 'Alternance') {
           return title.includes('apprentissage') || title.includes('alternance') || tags.includes('apprentissage');
         }
@@ -249,8 +250,8 @@ const FormationsPage = ({ setAllFormations }) => {
 
     if (remoteFilter) {
       data = data.filter(f => {
-        const title = (f.libelle_formation || '').toLowerCase();
-        const tags = (f.tags || []).join(' ').toLowerCase();
+        const title = normalizeStr(f.libelle_formation);
+        const tags = normalizeStr((f.tags || []).join(' '));
         return title.includes('distance') || title.includes('e-learning') || title.includes('distanciel') || tags.includes('distance') || tags.includes('distanciel');
       });
     }

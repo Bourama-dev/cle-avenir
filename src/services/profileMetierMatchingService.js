@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/customSupabaseClient';
 import { validateMatchingInputs, validateMatchingOutputs } from '@/utils/metierMatchingValidator';
+import { normalizeStr } from '@/utils/stringUtils';
 
 // Mappings for offline/fallback scoring
 export const PROFILE_MAPPINGS = {
@@ -70,8 +71,8 @@ export const matchProfileToMetiers = async (profileType, preferredSectors = [], 
 
       if (antiSectors.length > 0) {
         finalMatches = rpcMatches.filter(m => {
-          const text = `${m.libelle} ${m.description}`.toLowerCase();
-          return !antiSectors.some(anti => text.includes(anti.toLowerCase()));
+          const text = normalizeStr(`${m.libelle} ${m.description}`);
+          return !antiSectors.some(anti => text.includes(normalizeStr(anti)));
         });
       }
 
@@ -100,20 +101,22 @@ export const matchProfileToMetiers = async (profileType, preferredSectors = [], 
   const scoredMetiers = allMetiers.map(m => {
     let score = 40; // Base score
     // Case-sensitive exact keys for fallback
-    const textData = `${m.libelle} ${m.description} ${JSON.stringify(m.themes)} ${JSON.stringify(m.divisionsNaf)} ${JSON.stringify(m.competencesMobilisees)} ${JSON.stringify(m.competencesMobiliseesPrincipales)}`.toLowerCase();
+    const textData = normalizeStr(
+      `${m.libelle} ${m.description} ${JSON.stringify(m.themes)} ${JSON.stringify(m.divisionsNaf)} ${JSON.stringify(m.competencesMobilisees)} ${JSON.stringify(m.competencesMobiliseesPrincipales)}`
+    );
 
     // Check anti-sectors
-    const hasAntiSector = antiSectors.some(anti => textData.includes(anti.toLowerCase()));
+    const hasAntiSector = antiSectors.some(anti => textData.includes(normalizeStr(anti)));
     if (hasAntiSector) return { ...m, match_score: 0 };
 
     // Score sectors
     mappedSectors.forEach(s => {
-      if (textData.includes(s.toLowerCase())) score += 15;
+      if (textData.includes(normalizeStr(s))) score += 15;
     });
 
     // Score competencies
     mappedCompetencies.forEach(c => {
-      if (textData.includes(c.toLowerCase())) score += 10;
+      if (textData.includes(normalizeStr(c))) score += 10;
     });
 
     return { ...m, match_score: Math.min(100, score) };

@@ -11,6 +11,7 @@ import { ChevronLeft, ChevronRight, Search, X, Rss } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { blogCategories, popularTags } from '@/data/blogPosts';
 import './BlogPage.css';
+import { normalizedIncludes } from '@/utils/stringUtils';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -42,10 +43,10 @@ const BlogPage = () => {
   }, []);
 
   const filteredPosts = posts.filter(post => {
-    const term = searchTerm.toLowerCase();
-    const matchesSearch = post.title.toLowerCase().includes(term) ||
-      (post.excerpt && post.excerpt.toLowerCase().includes(term)) ||
-      (post.tags && post.tags.some(tag => tag.toLowerCase().includes(term)));
+    const matchesSearch = !searchTerm.trim() ||
+      normalizedIncludes(post.title, searchTerm) ||
+      normalizedIncludes(post.excerpt, searchTerm) ||
+      (post.tags && post.tags.some(tag => normalizedIncludes(tag, searchTerm)));
     const matchesCategory = categoryFilter === 'all' || post.category === categoryFilter;
     return matchesSearch && matchesCategory;
   });

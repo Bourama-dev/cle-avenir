@@ -22,6 +22,7 @@ import {
 import { Loader2, Plus, Edit, Trash2, Search, AlertCircle, RefreshCcw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { normalizedIncludes } from '@/utils/stringUtils';
 
 const initialFormState = {
   code: '',
@@ -199,10 +200,10 @@ const AdminMetiers = () => {
     }
   };
 
-  const filteredMetiers = metiers.filter(m => 
-    (m.name?.toLowerCase() || '').includes(searchTerm.toLowerCase()) || 
-    (m.code?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-    (m.sector?.toLowerCase() || '').includes(searchTerm.toLowerCase())
+  const filteredMetiers = metiers.filter(m =>
+    normalizedIncludes(m.name, searchTerm) ||
+    normalizedIncludes(m.code, searchTerm) ||
+    normalizedIncludes(m.sector, searchTerm)
   );
 
   return (
