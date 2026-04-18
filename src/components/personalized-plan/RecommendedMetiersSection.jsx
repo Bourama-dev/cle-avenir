@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getUserEducationLevel, EDUCATION_ORDER, EDUCATION_LABELS } from '@/utils/educationUtils';
-import { formatSalary } from '@/utils/salaryUtils';
+import { getMetierSalary } from '@/utils/salaryUtils';
 
 /**
  * Compute an "education gap" label for a metier.
@@ -146,7 +146,7 @@ const RecommendedMetiersSection = ({ metiers, onAddMetier, isLoading, userProfil
                 <div className="space-y-2 mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
                   <div className="flex items-center text-sm text-slate-700 font-medium">
                     <Euro className="w-4 h-4 mr-2 text-emerald-600" />
-                    <span className="truncate">{formatSalary(metier.salaire || metier.salaryRange) || 'Selon expérience'}</span>
+                    <span className="truncate">{getMetierSalary(metier)}</span>
                   </div>
                   <div className="flex items-center text-sm text-slate-700 font-medium">
                     <TrendingUp className="w-4 h-4 mr-2 text-blue-600" />

@@ -31,7 +31,7 @@ import MetierLoadingSpinner from '@/components/MetierLoadingSpinner';
 import MetierErrorState from '@/components/MetierErrorState';
 import { useMetierDataFetcher } from '@/utils/metierDataFetcher';
 import { JobMarketTrends, SalaryComparisonChart, SkillsRadarChart } from '@/components/cleo/charts/CleoChartLibrary';
-import { formatSalary } from '@/utils/salaryUtils';
+import { formatSalary, getMetierSalary } from '@/utils/salaryUtils';
 
 const FormattedText = ({ text, className = "" }) => {
   if (!text) return null;
@@ -291,7 +291,7 @@ const MetierDetailPage = () => {
     description: metier.description || metier.definition || "Description non disponible.",
     category: metier.domaine || (metier.themes && metier.themes[0]?.libelle) || 'Métier',
     experience: metier.experience_level || 'Variable',
-    salary: formatSalary(metier.salaire || metier.salary_range) || 'Non précisé',
+    salary: getMetierSalary(metier),
     id: metier.code || metier.code_rome,
   };
   const metierSEOProps = metierDetailSEO(adaptedMetierData);
@@ -351,7 +351,7 @@ const MetierDetailPage = () => {
                         </div>
                         <div className="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm">
                             <div className="text-xs text-slate-400 font-medium mb-2 uppercase flex items-center gap-1"><Euro className="w-3.5 h-3.5" /> Salaire</div>
-                            <div className="font-bold text-slate-800 text-sm">{formatSalary(metier.salaire || metier.salary_range) || "Non précisé"}</div>
+                            <div className="font-bold text-slate-800 text-sm">{getMetierSalary(metier)}</div>
                         </div>
                     </div>
                  </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { formatSalary } from '@/utils/salaryUtils';
+import { getMetierSalary } from '@/utils/salaryUtils';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -171,7 +171,7 @@ const RecommendationsPage = () => {
                  <div className="grid grid-cols-2 gap-4 text-sm bg-slate-50 p-3 rounded-lg">
                     <div className="space-y-1">
                        <span className="text-slate-400 flex items-center gap-1 text-xs"><DollarSign className="w-3 h-3" /> Salaire</span>
-                       <span className="font-medium text-slate-700 line-clamp-1">{formatSalary(career.salaire) || "Variable"}</span>
+                       <span className="font-medium text-slate-700 line-clamp-1">{getMetierSalary(career)}</span>
                     </div>
                     <div className="space-y-1">
                        <span className="text-slate-400 flex items-center gap-1 text-xs"><TrendingUp className="w-3 h-3" /> Demande</span>
