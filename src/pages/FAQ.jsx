@@ -7,6 +7,7 @@ import { categoryPageSEO } from '@/components/SEO/seoPresets';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { normalizedIncludes } from '@/utils/stringUtils';
 
 export default function FAQ() {
   const { toast } = useToast();
@@ -155,10 +156,10 @@ export default function FAQ() {
   // Flatten FAQs for search
   const allFaqs = Object.values(faqCategories).flatMap(cat => cat.items);
   
-  const filteredFaqs = searchTerm 
-    ? allFaqs.filter(item => 
-        item.question.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        item.answer.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredFaqs = searchTerm
+    ? allFaqs.filter(item =>
+        normalizedIncludes(item.question, searchTerm) ||
+        normalizedIncludes(item.answer, searchTerm)
       )
     : [];
 

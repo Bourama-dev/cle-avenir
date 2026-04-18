@@ -1,4 +1,5 @@
 import { questions } from '@/data/questions';
+import { normalizeStr } from '@/utils/stringUtils';
 
 const TRAIT_KEYWORD_MAPPING = {
   'tech': ['tech', 'informatique', 'digital', 'web', 'code', 'logiciel', 'données', 'data', 'numérique'],
@@ -89,23 +90,23 @@ export const matchProfessions = (professions, profile) => {
     let matchScore = 0;
     let maxPossibleScore = 0;
 
-    const extractStrings = (arr) => Array.isArray(arr) ? arr.map(i => i.libelle || i).join(' ').toLowerCase() : '';
+    const extractStrings = (arr) => Array.isArray(arr) ? arr.map(i => i.libelle || i).join(' ') : '';
 
-    const pKeywords = [
+    const pKeywords = normalizeStr([
       p.code || '',
       p.libelle || '',
       p.description || '',
       p.debouches || '',
       extractStrings(p.competencesMobilisees),
       extractStrings(p.themes),
-      extractStrings(p.divisionsNaf) // Verify casing
-    ].join(' ');
+      extractStrings(p.divisionsNaf),
+    ].join(' '));
 
     Object.entries(userTraits).forEach(([trait, userTraitScore]) => {
       const weight = userTraitScore / 100;
       const keywords = TRAIT_KEYWORD_MAPPING[trait] || [trait];
-      
-      const hasMatch = keywords.some(kw => pKeywords.includes(kw.toLowerCase()));
+
+      const hasMatch = keywords.some(kw => pKeywords.includes(normalizeStr(kw)));
 
       const traitImportance = weight > 0.8 ? 2 : (weight > 0.5 ? 1 : 0.5);
       

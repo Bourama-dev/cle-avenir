@@ -14,6 +14,7 @@ import { Helmet } from 'react-helmet-async';
 import { Badge } from '@/components/ui/badge';
 import { useSearchParams } from 'react-router-dom';
 import { getMetierSalary } from '@/utils/salaryUtils';
+import { normalizedIncludes } from '@/utils/stringUtils';
 
 const MetierCard = ({ metier, onSelect, index }) => {
   const salary = getMetierSalary(metier);
@@ -146,11 +147,11 @@ const MetiersExplorer = ({ onNavigate }) => {
     let results = allMetiers;
 
     if (debouncedSearchTerm.trim()) {
-      const lowerTerm = debouncedSearchTerm.toLowerCase();
+      const term = debouncedSearchTerm;
       results = results.filter(m =>
-        (m.libelle && m.libelle.toLowerCase().includes(lowerTerm)) ||
-        (m.code && m.code.toLowerCase().includes(lowerTerm)) ||
-        (m.description && m.description.toLowerCase().includes(lowerTerm))
+        normalizedIncludes(m.libelle, term) ||
+        normalizedIncludes(m.code, term) ||
+        normalizedIncludes(m.description, term)
       );
     }
 

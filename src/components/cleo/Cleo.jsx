@@ -3,7 +3,8 @@ import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { cleoService } from '@/services/cleoService';
 import { gamificationService } from '@/services/gamificationService';
 import { cleoResponseService } from '@/services/cleoResponseService';
-import { MessageSquare, X, Send, User, Trash2, Bot, Sparkles, Trophy, Star, Loader2 } from 'lucide-react';
+import { MessageSquare, X, Send, User, Trash2, Bot, Sparkles, Trophy, Star, Loader2, Volume2, VolumeX } from 'lucide-react';
+import { textToSpeechService } from '@/services/textToSpeechService';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -49,6 +50,10 @@ const Cleo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [userStats, setUserStats] = useState({ level: 1, xp: 0, streak: 0 });
   const [showLevelUp, setShowLevelUp] = useState(false);
+  const [ttsEnabled, setTtsEnabled] = useState(() => {
+    try { return localStorage.getItem('cleo_tts') !== 'false'; } catch { return true; }
+  });
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const messagesEndRef = useRef(null);
 
   // Initialize data
@@ -150,12 +155,20 @@ const Cleo = () => {
       const response = await cleoResponseService.generateResponse(intent, text, context);
       
       // Add bot response
-      setMessages(prev => [...prev, { 
-        id: Date.now() + 1, 
-        role: 'assistant', 
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        role: 'assistant',
         content: response.text,
         components: response.components
       }]);
+
+      // Auto-speak Cleo's response if TTS enabled
+      if (ttsEnabled && textToSpeechService.isAvailable() && response.text) {
+        setIsSpeaking(true);
+        textToSpeechService.speak(response.text, {
+          onEnd: () => setIsSpeaking(false),
+        }).catch(() => setIsSpeaking(false));
+      }
 
       // Gamification: Award XP
       if (user && response.xpReward > 0) {
@@ -260,18 +273,33 @@ const Cleo = () => {
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                 <Button 
-                  variant="ghost" 
-                  size="icon" 
+                 <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={handleClearChat}
                   className="text-white hover:bg-white/20 h-8 w-8 rounded-full"
                   title="Effacer la conversation"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <button
+                  onClick={() => {
+                    const next = !ttsEnabled;
+                    setTtsEnabled(next);
+                    try { localStorage.setItem('cleo_tts', next ? 'true' : 'false'); } catch {}
+                    if (!next) { textToSpeechService.stop(); setIsSpeaking(false); }
+                  }}
+                  className="p-2 rounded-lg hover:bg-white/10 transition-colors text-slate-300 hover:text-white"
+                  title={ttsEnabled ? 'Désactiver la voix' : 'Activer la voix'}
+                >
+                  {ttsEnabled
+                    ? <Volume2 size={16} className={isSpeaking ? 'text-violet-300 animate-pulse' : ''} />
+                    : <VolumeX size={16} />
+                  }
+                </button>
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => setIsOpen(false)}
                   className="text-white hover:bg-white/20 h-8 w-8 rounded-full"
                 >

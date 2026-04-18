@@ -18,6 +18,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/lib/customSupabaseClient';
 import { cn } from '@/lib/utils';
+import { normalizedIncludes } from '@/utils/stringUtils';
 
 // ─── Section IDs ────────────────────────────────────────────────────────────
 const SECTIONS = [
@@ -374,9 +375,9 @@ const BlogSection = () => {
   };
 
   const filtered = posts.filter(p =>
-    p.title?.toLowerCase().includes(search.toLowerCase()) ||
-    p.category?.toLowerCase().includes(search.toLowerCase()) ||
-    p.author?.toLowerCase().includes(search.toLowerCase())
+    normalizedIncludes(p.title, search) ||
+    normalizedIncludes(p.category, search) ||
+    normalizedIncludes(p.author, search)
   );
 
   // ── Editor view ──────────────────────────────────────────────────────────

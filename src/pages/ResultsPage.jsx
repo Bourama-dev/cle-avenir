@@ -9,6 +9,7 @@ import { Progress } from '@/components/ui/progress';
 import { Loader2, GraduationCap, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { StatsGrid } from '@/components/cleo/charts/CleoChartLibrary';
+import { normalizedIncludes } from '@/utils/stringUtils';
 
 const ResultsPage = () => {
   const navigate = useNavigate();
@@ -63,9 +64,9 @@ const ResultsPage = () => {
 
           // Domain matching (basic keyword check)
           if (profileData.interests && profileData.interests.length > 0) {
-            const hasMatch = profileData.interests.some(interest => 
-              job.description?.toLowerCase().includes(interest.toLowerCase()) || 
-              job.libelle?.toLowerCase().includes(interest.toLowerCase())
+            const hasMatch = profileData.interests.some(interest =>
+              normalizedIncludes(job.description, interest) ||
+              normalizedIncludes(job.libelle, interest)
             );
             if (hasMatch) baseScore += 15;
           }

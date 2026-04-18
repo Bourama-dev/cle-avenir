@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/customSupabaseClient';
 import { withRetry, parseSupabaseError } from '@/utils/supabaseErrorHandler';
+import { normalizeStr } from '@/utils/stringUtils';
 
 export const metierRecommendationService = {
   /**
@@ -29,14 +30,16 @@ export const metierRecommendationService = {
     if (!metier) return 0;
     let score = 50; // Base score
     
-    const metierText = `${metier.libelle} ${metier.description} ${JSON.stringify(metier.themes)} ${JSON.stringify(metier.divisionsNaf)}`.toLowerCase();
+    const metierText = normalizeStr(
+      `${metier.libelle} ${metier.description} ${JSON.stringify(metier.themes)} ${JSON.stringify(metier.divisionsNaf)}`
+    );
 
     userTraits.forEach(trait => {
-      if (metierText.includes(trait.toLowerCase())) score += 10;
+      if (metierText.includes(normalizeStr(trait))) score += 10;
     });
 
     userSectors.forEach(sector => {
-      if (metierText.includes(sector.toLowerCase())) score += 15;
+      if (metierText.includes(normalizeStr(sector))) score += 15;
     });
 
     return Math.min(100, score);
