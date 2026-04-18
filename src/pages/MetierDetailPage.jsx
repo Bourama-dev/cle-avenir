@@ -83,8 +83,22 @@ const ExpandableList = ({ items, limit = 5, renderItem, emptyMessage = "Aucune d
   );
 };
 
-/* ── Safety helper – always returns a real array, never crashes on string/null ── */
+/* ── Safety helpers ── */
 const toSafeArray = (v) => (Array.isArray(v) ? v : []);
+
+/** Normalize salary: handles strings, {min,max,currency} objects, and anything else */
+const formatSalary = (v) => {
+  if (!v) return null;
+  if (typeof v === 'string') return v;
+  if (typeof v === 'object') {
+    const { min, max, currency = '€' } = v;
+    const fmt = (n) => n != null ? Number(n).toLocaleString('fr-FR') : null;
+    if (min != null && max != null) return `${fmt(min)} – ${fmt(max)} ${currency}`;
+    if (min != null) return `À partir de ${fmt(min)} ${currency}`;
+    if (max != null) return `Jusqu'à ${fmt(max)} ${currency}`;
+  }
+  return String(v);
+};
 
 const getRiasecData = (metier) => {
   const scores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
@@ -290,7 +304,7 @@ const MetierDetailPage = () => {
     description: metier.description || metier.definition || "Description non disponible.",
     category: metier.domaine || (metier.themes && metier.themes[0]?.libelle) || 'Métier',
     experience: metier.experience_level || 'Variable',
-    salary: metier.salaire || metier.salary_range || 'Non précisé',
+    salary: formatSalary(metier.salaire || metier.salary_range) || 'Non précisé',
     id: metier.code || metier.code_rome,
   };
   const metierSEOProps = metierDetailSEO(adaptedMetierData);
@@ -350,7 +364,7 @@ const MetierDetailPage = () => {
                         </div>
                         <div className="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm">
                             <div className="text-xs text-slate-400 font-medium mb-2 uppercase flex items-center gap-1"><Euro className="w-3.5 h-3.5" /> Salaire</div>
-                            <div className="font-bold text-slate-800 text-sm">{metier.salaire || metier.salary_range || "Non précisé"}</div>
+                            <div className="font-bold text-slate-800 text-sm">{formatSalary(metier.salaire || metier.salary_range) || "Non précisé"}</div>
                         </div>
                     </div>
                  </div>

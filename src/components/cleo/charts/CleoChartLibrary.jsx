@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   BarChart, Bar, LineChart, Line, AreaChart, Area,
-  RadarChart, Radar, PolarAngleAxis, PolarGrid, PieChart, Pie, Cell, XAxis, YAxis,
+  RadarChart, Radar, PolarAngleAxis, PolarRadiusAxis, PolarGrid, PieChart, Pie, Cell, XAxis, YAxis,
   CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
