@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/customSupabaseClient';
 import { faqBlogArticles } from '@/data/faqBlogArticles';
@@ -7,10 +7,27 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Calendar, Clock, Linkedin, Twitter, Facebook, Link as LinkIcon, Send } from 'lucide-react';
+import { Calendar, Clock, Linkedin, Twitter, Facebook, Link as LinkIcon, Send, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useToast } from "@/components/ui/use-toast";
 import { getPublicBlogImageUrl } from '@/utils/blogImages';
+import './BlogPage.css';
+
+/* ── Reading-progress hook ── */
+const useReadingProgress = () => {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const update = () => {
+      const el = document.documentElement;
+      const scrolled = el.scrollTop || document.body.scrollTop;
+      const total = el.scrollHeight - el.clientHeight;
+      setProgress(total > 0 ? Math.min(100, (scrolled / total) * 100) : 0);
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, []);
+  return progress;
+};
 
 const BlogArticlePage = () => {
   const { slug } = useParams();
@@ -20,6 +37,7 @@ const BlogArticlePage = () => {
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const readingProgress = useReadingProgress();
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -76,6 +94,16 @@ const BlogArticlePage = () => {
     }
   }, [slug]);
 
+  /* ── Extract h2 headings from HTML content for inline TOC ── */
+  const extractHeadings = (html) => {
+    if (!html) return [];
+    const matches = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
+    return matches.map((m, i) => ({
+      id: `section-${i}`,
+      text: m[1].replace(/<[^>]+>/g, '').trim(),
+    }));
+  };
+
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href);
     toast({
@@ -114,9 +142,23 @@ const BlogArticlePage = () => {
 
   const heroImageUrl = getPublicBlogImageUrl(post.featured_image || post.cover_image);
 
+  /* Inject id anchors into h2 tags for TOC navigation */
+  const rawContent = post.content?.trim().startsWith('<')
+    ? post.content
+    : `<p>${(post.content || '').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br/>')}</p>`;
+  let sectionIndex = 0;
+  const annotatedContent = rawContent.replace(/<h2([^>]*)>/gi, () => {
+    const id = `section-${sectionIndex++}`;
+    return `<h2 id="${id}">`;
+  });
+  const tocHeadings = extractHeadings(rawContent);
+
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900">
-      <BlogSEO 
+      {/* Reading progress */}
+      <div className="blog-reading-progress" style={{ width: `${readingProgress}%` }} />
+
+      <BlogSEO
         title={post.title}
         description={post.excerpt}
         image={heroImageUrl}
@@ -200,20 +242,54 @@ const BlogArticlePage = () => {
           <div className="flex-1 min-w-0">
             <div className="bg-white rounded-xl">
                <div
-                 className="prose prose-lg prose-slate max-w-none
-                   prose-headings:font-bold prose-headings:text-slate-900
-                   prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:border-b prose-h2:border-slate-100 prose-h2:pb-3
-                   prose-h3:text-xl prose-h3:mt-7 prose-h3:mb-3
-                   prose-p:leading-relaxed prose-p:text-slate-600
-                   prose-a:text-indigo-600 hover:prose-a:text-indigo-800 prose-a:font-medium prose-a:no-underline hover:prose-a:underline
-                   prose-strong:text-slate-900 prose-strong:font-semibold
-                   prose-ul:space-y-2 prose-ol:space-y-2
-                   prose-li:text-slate-600 prose-li:marker:text-indigo-400
-                   prose-img:rounded-2xl prose-img:shadow-lg
-                   prose-blockquote:border-l-4 prose-blockquote:border-indigo-400 prose-blockquote:bg-indigo-50/50 prose-blockquote:rounded-r-xl prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:not-italic prose-blockquote:text-slate-700
-                   prose-table:border-collapse prose-th:bg-slate-50 prose-th:text-slate-700 prose-td:text-slate-600
-                   prose-code:bg-slate-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-rose-600 prose-code:before:content-none prose-code:after:content-none"
-                 dangerouslySetInnerHTML={{ __html: post.content?.trim().startsWith('<') ? post.content : `<p>${(post.content || '').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br/>')}</p>` }}
+                 className="
+                   prose prose-lg prose-slate max-w-none
+
+                   /* Headings */
+                   prose-headings:font-extrabold prose-headings:tracking-tight prose-headings:text-slate-900
+                   prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-5 prose-h2:pb-3 prose-h2:border-b prose-h2:border-slate-100
+                   prose-h3:text-xl prose-h3:mt-9 prose-h3:mb-3 prose-h3:text-slate-800
+                   prose-h4:text-base prose-h4:mt-6 prose-h4:mb-2 prose-h4:font-bold prose-h4:text-slate-700 prose-h4:uppercase prose-h4:tracking-wide
+
+                   /* Body text */
+                   prose-p:leading-[1.8] prose-p:text-slate-600 prose-p:my-4
+
+                   /* Links */
+                   prose-a:text-indigo-600 hover:prose-a:text-indigo-800 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline
+
+                   /* Bold */
+                   prose-strong:text-slate-900 prose-strong:font-bold
+
+                   /* Lists */
+                   prose-ul:my-4 prose-ol:my-4
+                   prose-li:text-slate-600 prose-li:my-1.5 prose-li:leading-relaxed
+                   prose-ul:list-disc prose-ul:pl-6 prose-li:marker:text-indigo-400
+                   prose-ol:list-decimal prose-ol:pl-6
+
+                   /* Blockquote */
+                   prose-blockquote:border-l-4 prose-blockquote:border-indigo-400
+                   prose-blockquote:bg-indigo-50/60 prose-blockquote:rounded-r-2xl
+                   prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:my-6
+                   prose-blockquote:not-italic prose-blockquote:text-slate-700
+                   prose-blockquote:shadow-sm
+
+                   /* Images */
+                   prose-img:rounded-2xl prose-img:shadow-lg prose-img:my-8
+
+                   /* Tables */
+                   prose-table:border prose-table:border-slate-200 prose-table:rounded-xl prose-table:overflow-hidden
+                   prose-thead:bg-indigo-50
+                   prose-th:text-indigo-800 prose-th:font-bold prose-th:text-sm prose-th:py-3 prose-th:px-4 prose-th:border prose-th:border-indigo-100
+                   prose-td:text-slate-600 prose-td:py-3 prose-td:px-4 prose-td:border prose-td:border-slate-100
+                   prose-tr:even:bg-slate-50/50
+
+                   /* Code */
+                   prose-code:bg-slate-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-rose-600 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+
+                   /* HR */
+                   prose-hr:border-slate-100 prose-hr:my-10
+                 "
+                 dangerouslySetInnerHTML={{ __html: annotatedContent }}
                />
             </div>
 
@@ -270,6 +346,27 @@ const BlogArticlePage = () => {
           {/* Sticky Sidebar */}
           <aside className="w-full lg:w-80 shrink-0 space-y-8">
              <div className="sticky top-32 space-y-8">
+
+                {/* Table of Contents */}
+                {tocHeadings.length > 2 && (
+                  <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+                    <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2 text-sm uppercase tracking-wide">
+                      <BookOpen className="w-4 h-4 text-indigo-500" /> Sommaire
+                    </h3>
+                    <nav className="space-y-2">
+                      {tocHeadings.map((h) => (
+                        <a
+                          key={h.id}
+                          href={`#${h.id}`}
+                          className="block text-sm text-slate-600 hover:text-indigo-600 py-1 pl-3 border-l-2 border-slate-100 hover:border-indigo-400 transition-all leading-snug"
+                        >
+                          {h.text}
+                        </a>
+                      ))}
+                    </nav>
+                  </div>
+                )}
+
                 {/* Newsletter Box */}
                 <div className="bg-gradient-to-br from-indigo-600 to-violet-700 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden">
                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />

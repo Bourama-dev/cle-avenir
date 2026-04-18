@@ -83,12 +83,18 @@ const ExpandableList = ({ items, limit = 5, renderItem, emptyMessage = "Aucune d
   );
 };
 
+/* ── Safety helper – always returns a real array, never crashes on string/null ── */
+const toSafeArray = (v) => (Array.isArray(v) ? v : []);
+
 const getRiasecData = (metier) => {
   const scores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
-  
+
   if (metier.riasec_vector) {
-     const vector = typeof metier.riasec_vector === 'string' ? JSON.parse(metier.riasec_vector) : metier.riasec_vector;
-     Object.keys(vector).forEach(k => {
+     let vector = metier.riasec_vector;
+     if (typeof vector === 'string') {
+       try { vector = JSON.parse(vector); } catch { vector = {}; }
+     }
+     Object.keys(vector || {}).forEach(k => {
         if (scores[k] !== undefined) scores[k] = Math.min(100, Math.round(vector[k] * 100));
      });
   } else if (metier.riasecMajeur) {
@@ -395,8 +401,8 @@ const MetierDetailPage = () => {
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="pt-6">
-                        <ExpandableList 
-                            items={metier.competencesMobilisees || metier.competencesMobiliseesPrincipales}
+                        <ExpandableList
+                            items={toSafeArray(metier.competencesMobilisees || metier.competencesMobiliseesPrincipales)}
                             limit={8}
                             renderItem={(skill, idx) => {
                               const label = typeof skill === 'string' ? skill : skill.libelle;
@@ -420,7 +426,7 @@ const MetierDetailPage = () => {
                       </CardHeader>
                       <CardContent className="pt-6">
                         <div className="flex flex-wrap gap-2">
-                          {metier.contextesTravail?.slice(0, 10).map((ctx, idx) => (
+                          {toSafeArray(metier.contextesTravail).slice(0, 10).map((ctx, idx) => (
                             <Badge key={idx} variant="outline" className="text-slate-700 py-1.5 px-3">
                                 {typeof ctx === 'string' ? ctx : ctx.libelle}
                             </Badge>

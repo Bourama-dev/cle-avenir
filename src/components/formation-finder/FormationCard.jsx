@@ -6,7 +6,7 @@ import { MapPin, Clock, GraduationCap, Building, ArrowRight, Award } from 'lucid
 import { cn, isValidUUID } from '@/lib/utils';
 import { getSectorById, getSectorIcon, getSectorColor } from '@/utils/sectorUtils';
 
-const FormationCard = ({ formation, source, onViewDetails }) => {
+const FormationCard = ({ formation, source, onViewDetails = null }) => {
   // Determine display values based on source structure
   const title = source === 'parcoursup' ? formation.libelle_formation || formation.intitule : formation.intitule;
   const provider = source === 'parcoursup' ? (formation.etablissement_nom || formation.etablissements?.[0]?.nom) : formation.organisme?.nom;
@@ -23,7 +23,7 @@ const FormationCard = ({ formation, source, onViewDetails }) => {
     if (source !== 'parcoursup' && formation.id && !isValidUUID(formation.id)) {
       console.warn(`Invalid UUID for formation: ${formation.id}`);
     }
-    onViewDetails();
+    if (typeof onViewDetails === 'function') onViewDetails();
   };
 
   return (
@@ -90,19 +90,21 @@ const FormationCard = ({ formation, source, onViewDetails }) => {
         </div>
       </CardContent>
 
-      <CardFooter className="pt-3 pb-4 px-4 border-t bg-slate-50/30 mt-auto">
-        <Button 
-          className={cn("w-full gap-2 shadow-sm group-hover:shadow-md transition-all", 
-            source === 'parcoursup' 
-              ? "bg-violet-600 hover:bg-violet-700 text-white" 
-              : "bg-blue-600 hover:bg-blue-700 text-white"
-          )}
-          onClick={handleViewDetails}
-        >
-          Voir les détails 
-          <ArrowRight className="w-4 h-4 opacity-90 group-hover:translate-x-1 transition-transform" />
-        </Button>
-      </CardFooter>
+      {onViewDetails !== null && (
+        <CardFooter className="pt-3 pb-4 px-4 border-t bg-slate-50/30 mt-auto">
+          <Button
+            className={cn("w-full gap-2 shadow-sm group-hover:shadow-md transition-all",
+              source === 'parcoursup'
+                ? "bg-violet-600 hover:bg-violet-700 text-white"
+                : "bg-blue-600 hover:bg-blue-700 text-white"
+            )}
+            onClick={handleViewDetails}
+          >
+            Voir les détails
+            <ArrowRight className="w-4 h-4 opacity-90 group-hover:translate-x-1 transition-transform" />
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 };
