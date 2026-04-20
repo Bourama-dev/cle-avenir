@@ -46,9 +46,9 @@ const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
       }}
       className={cn(
         "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group relative",
-        isActive(to) 
-          ? "bg-indigo-50 text-indigo-600" 
-          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+        isActive(to)
+          ? "bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600"
+          : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white",
         disabled && "opacity-70 cursor-not-allowed hover:bg-transparent",
         itemClassName
       )}
@@ -69,15 +69,15 @@ const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
   );
 
   return (
-    <div className={cn("bg-white h-full flex flex-col", className)}>
+    <div className={cn("bg-white dark:bg-slate-900 h-full flex flex-col", className)}>
       {/* Navigation Header */}
-      <div className="p-4 border-b border-slate-100 mb-2">
+      <div className="p-4 border-b border-slate-100 dark:border-slate-700/50 mb-2">
          <div className="flex gap-2 justify-between">
             <Button 
                variant="ghost" 
                size="sm" 
                onClick={goHome} 
-               className="flex-1 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 border border-transparent hover:border-indigo-100"
+               className="flex-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 border border-transparent hover:border-indigo-100"
             >
                <Home className="w-4 h-4 mr-2" /> Accueil
             </Button>
@@ -85,7 +85,7 @@ const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
                variant="ghost" 
                size="sm" 
                onClick={goBack} 
-               className="flex-1 text-slate-600 hover:text-violet-600 hover:bg-violet-50 border border-transparent hover:border-violet-100"
+               className="flex-1 text-slate-600 dark:text-slate-400 hover:text-violet-600 hover:bg-violet-50 dark:hover:bg-violet-950/30 border border-transparent hover:border-violet-100"
             >
                <ArrowLeft className="w-4 h-4 mr-2" /> Retour
             </Button>
@@ -93,7 +93,7 @@ const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
       </div>
 
       <div className="p-6 pt-2">
-        <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">
+        <h2 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">
           Mon Espace
         </h2>
         <nav className="space-y-1">
@@ -105,7 +105,7 @@ const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
       </div>
 
       <div className="px-6 py-2">
-        <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">
+        <h2 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">
           Outils
         </h2>
         <nav className="space-y-1">
@@ -129,7 +129,7 @@ const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
       </div>
 
       <div className="px-6 py-2 mt-auto mb-6">
-        <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">
+        <h2 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">
           Paramètres
         </h2>
         <nav className="space-y-1">
@@ -138,7 +138,7 @@ const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
 
           {isAdmin && (
             <>
-              <div className="h-px bg-slate-100 my-2" />
+              <div className="h-px bg-slate-100 dark:bg-slate-700/50 my-2" />
               <NavItem
                 to="/admin/content"
                 icon={ShieldCheck}

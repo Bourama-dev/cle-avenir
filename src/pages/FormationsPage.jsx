@@ -391,7 +391,7 @@ const FormationsPage = ({ setAllFormations }) => {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans flex flex-col">
       <PageHelmet {...formationsSEO} />
 
       <UpgradeModal
@@ -401,14 +401,14 @@ const FormationsPage = ({ setAllFormations }) => {
       />
 
       {/* Header & Search */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm transition-all duration-200">
+      <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30 shadow-sm transition-all duration-200">
         <div className="container mx-auto px-4 py-4 md:py-6 max-w-7xl">
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <div className="relative flex-1 w-full group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-violet-500 transition-colors" />
               <Input
                 placeholder="Rechercher un métier, une formation..."
-                className="pl-10 h-12 text-lg bg-slate-50 border-slate-200 focus:bg-white focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all shadow-sm"
+                className="pl-10 h-12 text-lg bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all shadow-sm dark:text-white dark:placeholder:text-slate-400"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearchSubmit()}
@@ -465,21 +465,21 @@ const FormationsPage = ({ setAllFormations }) => {
           {initialLoading ? (
             Array(3).fill(0).map((_, i) => (
               <Card key={i} className="animate-pulse">
-                <CardHeader className="h-24 bg-slate-100 rounded-t-xl" />
-                <CardContent className="h-40 bg-slate-50" />
+                <CardHeader className="h-24 bg-slate-100 dark:bg-slate-800 rounded-t-xl" />
+                <CardContent className="h-40 bg-slate-50 dark:bg-slate-800/50" />
               </Card>
             ))
           ) : error ? (
-            <div className="text-center py-12 bg-red-50 rounded-xl border border-red-100">
+            <div className="text-center py-12 bg-red-50 dark:bg-red-950/30 rounded-xl border border-red-100">
               <AlertCircle className="h-10 w-10 text-red-500 mx-auto mb-3" />
               <p className="text-red-700 font-medium">{error}</p>
               <Button onClick={() => fetchBatch(0, true)} variant="outline" className="mt-4 border-red-200 text-red-700">Réessayer</Button>
             </div>
           ) : displayedFormations.length === 0 ? (
-            <div className="text-center py-16 bg-white rounded-xl border border-dashed border-slate-300">
+            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-xl border border-dashed border-slate-300 dark:border-slate-700">
               <Search className="h-12 w-12 text-slate-300 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-slate-900">Aucune formation trouvée</h3>
-              <p className="text-slate-500">Essayez de modifier vos critères de recherche.</p>
+              <h3 className="text-lg font-medium text-slate-900 dark:text-white">Aucune formation trouvée</h3>
+              <p className="text-slate-500 dark:text-slate-400">Essayez de modifier vos critères de recherche.</p>
             </div>
           ) : (
             displayedFormations.map((formation, idx) => {
@@ -490,7 +490,7 @@ const FormationsPage = ({ setAllFormations }) => {
               return (
                 <Card
                   key={`${formation.id_formation}-${idx}`}
-                  className={`group overflow-hidden hover:shadow-lg transition-all border-slate-200 hover:border-violet-200 ${isSelected ? 'ring-2 ring-violet-500 border-violet-500' : ''}`}
+                  className={`group overflow-hidden hover:shadow-lg transition-all border-slate-200 dark:border-slate-700 hover:border-violet-200 dark:bg-slate-900 ${isSelected ? 'ring-2 ring-violet-500 border-violet-500' : ''}`}
                 >
                   <div className="flex flex-col md:flex-row">
                     <div className="flex-1 p-6 flex flex-col justify-between">
@@ -511,11 +511,11 @@ const FormationsPage = ({ setAllFormations }) => {
                           )}
                         </div>
 
-                        <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-2 group-hover:text-violet-700 transition-colors leading-tight">
+                        <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-violet-700 transition-colors leading-tight">
                           {formation.libelle_formation}
                         </h2>
 
-                        <div className="flex items-center gap-2 text-slate-600 mb-4 text-sm font-medium">
+                        <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 mb-4 text-sm font-medium">
                           <Building className="h-4 w-4 text-slate-400" />
                           <span>{ui_details.instructor}</span>
                           <span className="text-slate-300">•</span>
@@ -523,34 +523,34 @@ const FormationsPage = ({ setAllFormations }) => {
                           <span>{primaryEtab.ville || formation.ville}</span>
                         </div>
 
-                        <p className="text-slate-600 text-sm mb-6 line-clamp-2">
+                        <p className="text-slate-600 dark:text-slate-400 text-sm mb-6 line-clamp-2">
                           {formation.description || "Formation complète pour acquérir les compétences clés."}
                         </p>
 
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-slate-700 bg-slate-50 p-4 rounded-lg border border-slate-100">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg border border-slate-100 dark:border-slate-700/50">
                           <div className="flex flex-col">
-                            <span className="text-xs text-slate-500 font-medium uppercase mb-1">Durée</span>
+                            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase mb-1">Durée</span>
                             <div className="flex items-center gap-1.5 font-semibold">
                               <Clock className="h-4 w-4 text-violet-500" />
                               {ui_details.duration}
                             </div>
                           </div>
                           <div className="flex flex-col">
-                            <span className="text-xs text-slate-500 font-medium uppercase mb-1">Modules</span>
+                            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase mb-1">Modules</span>
                             <div className="flex items-center gap-1.5 font-semibold">
                               <BookOpen className="h-4 w-4 text-blue-500" />
                               {ui_details.modules_count} leçons
                             </div>
                           </div>
                           <div className="flex flex-col">
-                            <span className="text-xs text-slate-500 font-medium uppercase mb-1">Langue</span>
+                            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase mb-1">Langue</span>
                             <div className="flex items-center gap-1.5 font-semibold">
                               <Globe className="h-4 w-4 text-emerald-500" />
                               {ui_details.language}
                             </div>
                           </div>
                           <div className="flex flex-col">
-                            <span className="text-xs text-slate-500 font-medium uppercase mb-1">Difficulté</span>
+                            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase mb-1">Difficulté</span>
                             <div className="flex items-center gap-1.5 font-semibold">
                               <MonitorPlay className="h-4 w-4 text-orange-500" />
                               {ui_details.difficulty}
@@ -560,21 +560,21 @@ const FormationsPage = ({ setAllFormations }) => {
                       </div>
                     </div>
 
-                    <div className="w-full md:w-80 bg-slate-50/50 p-6 border-t md:border-t-0 md:border-l border-slate-100 flex flex-col justify-between">
+                    <div className="w-full md:w-80 bg-slate-50/50 dark:bg-slate-800/50 p-6 border-t md:border-t-0 md:border-l border-slate-100 dark:border-slate-700/50 flex flex-col justify-between">
                       <div className="space-y-4 mb-6">
                         <div className="space-y-3">
-                          <h4 className="font-semibold text-slate-900 text-sm flex items-center gap-2">
+                          <h4 className="font-semibold text-slate-900 dark:text-white text-sm flex items-center gap-2">
                             <Award className="h-4 w-4 text-violet-600" />
                             Certification
                           </h4>
-                          <p className="text-sm text-slate-600 pl-6">{ui_details.certificate}</p>
+                          <p className="text-sm text-slate-600 dark:text-slate-400 pl-6">{ui_details.certificate}</p>
                         </div>
                         <div className="space-y-3">
-                          <h4 className="font-semibold text-slate-900 text-sm flex items-center gap-2">
+                          <h4 className="font-semibold text-slate-900 dark:text-white text-sm flex items-center gap-2">
                             <CheckCircle2 className="h-4 w-4 text-violet-600" />
                             Compétences clés
                           </h4>
-                          <ul className="text-sm text-slate-600 pl-6 list-disc space-y-1">
+                          <ul className="text-sm text-slate-600 dark:text-slate-400 pl-6 list-disc space-y-1">
                             {ui_details.outcomes.slice(0, 2).map((outcome, i) => (
                               <li key={i}>{outcome}</li>
                             ))}
@@ -638,7 +638,7 @@ const FormationsPage = ({ setAllFormations }) => {
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          <span className="text-sm font-medium text-slate-600">
+          <span className="text-sm font-medium text-slate-600 dark:text-slate-400">
             Page {currentPage} sur {Math.max(totalPagesInFetched, 1)}
           </span>
           <Button

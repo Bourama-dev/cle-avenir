@@ -161,19 +161,19 @@ const CleoPage = () => {
   const canAccessCleo = hasAccess(FEATURES.AI_COACH);
 
   if (subLoading || !userProfile) {
-    return <div className="h-screen flex items-center justify-center bg-slate-50"><Loader2 className="animate-spin" /></div>;
+    return <div className="h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900"><Loader2 className="animate-spin" /></div>;
   }
 
   if (!canAccessCleo) {
     return (
-      <div className="h-screen bg-slate-50 flex items-center justify-center p-4">
+      <div className="h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-4">
         <CleoUpgradePrompt />
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden font-sans">
+    <div className="flex h-screen bg-slate-50 dark:bg-slate-900 overflow-hidden font-sans">
       <Helmet><title>Cléo - Intelligence Carrière - CléAvenir</title></Helmet>
 
       {!isSimulating && (
@@ -186,7 +186,7 @@ const CleoPage = () => {
 
       <main className="flex-1 flex flex-col h-full relative min-w-0">
         {!isSimulating && (
-           <div className="bg-white border-b border-slate-200 px-4 pt-2">
+           <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 px-4 pt-2">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                  <TabsList className="bg-transparent p-0 gap-6">
                     <TabsTrigger value="chat" className="data-[state=active]:border-b-2 data-[state=active]:border-violet-600 rounded-none px-2 pb-3">Discussion & Analyse</TabsTrigger>
@@ -197,7 +197,7 @@ const CleoPage = () => {
         )}
 
         <div className="flex-1 flex overflow-hidden relative">
-          <div className={`flex-1 flex flex-col min-w-0 bg-white ${isSimulating ? 'm-0' : 'bg-slate-50'} overflow-hidden transition-all duration-300`}>
+          <div className={`flex-1 flex flex-col min-w-0 bg-white dark:bg-slate-900 ${isSimulating ? 'm-0' : 'bg-slate-50 dark:bg-slate-950'} overflow-hidden transition-all duration-300`}>
             
             <Suspense fallback={<LoadingFallback />}>
               {showProfileBuilder ? (
@@ -207,7 +207,7 @@ const CleoPage = () => {
               ) : activeTab === 'activities' ? (
                 <CleoActivitySystem onStartActivity={handleStartActivity} />
               ) : (
-                <div className="flex-1 flex flex-col h-full m-2 mt-0 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="flex-1 flex flex-col h-full m-2 mt-0 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
                   <ChatInterface 
                     messages={messages}
                     isLoading={isLoading}
@@ -226,7 +226,7 @@ const CleoPage = () => {
           </div>
 
           {contextPanelOpen && !isSimulating && activeTab === 'chat' && (
-            <div className="w-80 hidden 2xl:block border-l border-slate-200 bg-white z-10">
+            <div className="w-80 hidden 2xl:block border-l border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 z-10">
               <ContextPanel userProfile={userProfile} isOpen={contextPanelOpen} />
             </div>
           )}
