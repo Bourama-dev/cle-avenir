@@ -135,14 +135,14 @@ const DashboardRightSidebar = ({ userProfile, user, onOpenProfile }) => {
 
       {/* Quick Profile Actions */}
       <div>
-         <h3 className="text-sm font-semibold text-slate-900 mb-3">Actions Rapides</h3>
+         <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Actions Rapides</h3>
          <div className="space-y-2">
-            <Button variant="outline" className="w-full justify-start gap-2 bg-white" onClick={onOpenProfile}>
-               <Edit className="h-4 w-4 text-slate-500" />
+            <Button variant="outline" className="w-full justify-start gap-2 bg-white dark:bg-slate-800" onClick={onOpenProfile}>
+               <Edit className="h-4 w-4 text-slate-500 dark:text-slate-400" />
                Mettre à jour profil
             </Button>
-            <Button variant="outline" className="w-full justify-start gap-2 bg-white" onClick={() => navigate('/formations')}>
-               <Briefcase className="h-4 w-4 text-slate-500" />
+            <Button variant="outline" className="w-full justify-start gap-2 bg-white dark:bg-slate-800" onClick={() => navigate('/formations')}>
+               <Briefcase className="h-4 w-4 text-slate-500 dark:text-slate-400" />
                Voir formations
             </Button>
          </div>
@@ -150,30 +150,30 @@ const DashboardRightSidebar = ({ userProfile, user, onOpenProfile }) => {
 
       {/* Quick Stats — real test count */}
       <div>
-        <h3 className="text-sm font-semibold text-slate-900 mb-3">Activité</h3>
+        <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Activité</h3>
         <div className="grid grid-cols-2 gap-3">
           <Card
-            className="bg-white hover:border-indigo-200 hover:shadow-sm transition-all cursor-pointer"
+            className="bg-white dark:bg-slate-800 hover:border-indigo-200 hover:shadow-sm transition-all cursor-pointer"
             onClick={() => navigate('/profile')}
           >
             <CardContent className="p-4 flex flex-col items-center justify-center text-center">
               <BarChart2 className="w-5 h-5 text-indigo-400 mb-1" />
-              <span className="text-2xl font-bold text-slate-900">
+              <span className="text-2xl font-bold text-slate-900 dark:text-white">
                 {testCount === null ? <Loader2 className="w-4 h-4 animate-spin text-slate-400 mx-auto" /> : testCount}
               </span>
-              <span className="text-xs text-slate-500 mt-1">Tests</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 mt-1">Tests</span>
             </CardContent>
           </Card>
           <Card
-            className="bg-white hover:border-emerald-200 hover:shadow-sm transition-all cursor-pointer"
+            className="bg-white dark:bg-slate-800 hover:border-emerald-200 hover:shadow-sm transition-all cursor-pointer"
             onClick={() => navigate('/offres-emploi')}
           >
             <CardContent className="p-4 flex flex-col items-center justify-center text-center">
               <Briefcase className="w-5 h-5 text-emerald-400 mb-1" />
-              <span className="text-2xl font-bold text-slate-900">
-                <span className="text-slate-300 text-base font-normal">Voir</span>
+              <span className="text-2xl font-bold text-slate-900 dark:text-white">
+                <span className="text-slate-300 dark:text-slate-500 text-base font-normal">Voir</span>
               </span>
-              <span className="text-xs text-slate-500 mt-1">Offres</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 mt-1">Offres</span>
             </CardContent>
           </Card>
         </div>
@@ -181,11 +181,11 @@ const DashboardRightSidebar = ({ userProfile, user, onOpenProfile }) => {
 
       {/* Support Section */}
       <div>
-        <h3 className="text-sm font-semibold text-slate-900 mb-3">Besoin d'aide ?</h3>
+        <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Besoin d'aide ?</h3>
         
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline" className="w-full justify-center gap-2 bg-white hover:bg-slate-50 h-12">
+            <Button variant="outline" className="w-full justify-center gap-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 h-12">
               <MessageCircle className="h-4 w-4" />
               Support Client
             </Button>
@@ -200,20 +200,20 @@ const DashboardRightSidebar = ({ userProfile, user, onOpenProfile }) => {
             <form onSubmit={handleSupportSubmit} className="space-y-4 py-4">
               <div className="grid gap-2">
                 <Label htmlFor="name">Nom</Label>
-                <Input 
-                  id="name" 
-                  value={userProfile ? `${userProfile.first_name || ''} ${userProfile.last_name || ''}` : ''} 
-                  disabled 
-                  className="bg-slate-50"
+                <Input
+                  id="name"
+                  value={userProfile ? `${userProfile.first_name || ''} ${userProfile.last_name || ''}` : ''}
+                  disabled
+                  className="bg-slate-50 dark:bg-slate-800"
                 />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
-                <Input 
-                  id="email" 
-                  value={userProfile?.email || ''} 
-                  disabled 
-                  className="bg-slate-50"
+                <Input
+                  id="email"
+                  value={userProfile?.email || ''}
+                  disabled
+                  className="bg-slate-50 dark:bg-slate-800"
                 />
               </div>
               <div className="grid gap-2">

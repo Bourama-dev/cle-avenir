@@ -87,7 +87,7 @@
     gap: 0.75rem;
     align-items: stretch;
   }
-  
+
   .dashboard-header-right {
     justify-content: flex-end;
   }
@@ -95,4 +95,29 @@
   .dashboard-content-wrapper {
     padding: 1rem;
   }
+}
+
+/* ─── Dark mode overrides ─── */
+.dark .dashboard-page-container {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+.dark .dashboard-header {
+  background: #1e293b;
+  border-bottom-color: #334155;
+}
+.dark .dashboard-header-left h1 {
+  color: #f1f5f9;
+}
+.dark .dashboard-card {
+  background: #1e293b;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.dark .card-header {
+  border-bottom-color: #334155;
+}
+.dark .card-title {
+  color: #e2e8f0;
+}
+.dark .card-content {
+  color: #94a3b8;
 }

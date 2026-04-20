@@ -53,8 +53,8 @@ const TestHistoryInline = ({ history, onNavigate }) => {
   if (!history.length) return null;
   return (
     <Card className="border-slate-200 shadow-sm">
-      <CardHeader className="pb-2 border-b border-slate-100 bg-slate-50/50 flex flex-row items-center justify-between">
-        <CardTitle className="text-sm font-semibold text-slate-800 flex items-center gap-2">
+      <CardHeader className="pb-2 border-b border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/50 flex flex-row items-center justify-between">
+        <CardTitle className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
           <History className="w-4 h-4 text-indigo-500" /> Historique des tests
         </CardTitle>
         <button onClick={() => onNavigate('/profile')} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium flex items-center gap-0.5">
@@ -62,7 +62,7 @@ const TestHistoryInline = ({ history, onNavigate }) => {
         </button>
       </CardHeader>
       <CardContent className="p-0">
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-slate-100 dark:divide-slate-700/50">
           {history.slice(0, 4).map((test, idx) => {
             const entries = test.riasec_profile
               ? Object.entries(test.riasec_profile).sort(([, a], [, b]) => b - a)
@@ -71,13 +71,13 @@ const TestHistoryInline = ({ history, onNavigate }) => {
             const topDim = top3[0]?.[0] ?? '?';
             const profileCode = top3.map(([k]) => k).join('') || '?';
             return (
-              <div key={test.id || idx} className="px-4 py-3 flex items-start gap-3 hover:bg-slate-50 transition-colors">
+              <div key={test.id || idx} className="px-4 py-3 flex items-start gap-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                 <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 mt-0.5 ${RIASEC_COLORS[topDim] ?? 'bg-slate-100 text-slate-600'}`}>
                   {topDim}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <p className="text-sm font-semibold text-slate-800">Profil {profileCode}</p>
+                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">Profil {profileCode}</p>
                     {idx === 0 && <span className="text-[10px] bg-indigo-100 text-indigo-600 px-1.5 py-0.5 rounded-full font-semibold">Dernier</span>}
                   </div>
                   <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
@@ -96,7 +96,7 @@ const TestHistoryInline = ({ history, onNavigate }) => {
                 </div>
                 <div className="text-right shrink-0">
                   {test.test_score != null && test.test_score > 0 && (
-                    <p className="text-sm font-bold text-slate-700">{test.test_score} pts</p>
+                    <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{test.test_score} pts</p>
                   )}
                   <p className="text-xs text-emerald-500 flex items-center gap-1 justify-end mt-0.5">
                     <Activity className="w-3 h-3" /> Terminé
@@ -170,15 +170,15 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
 
       {/* Stats row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="bg-white border-slate-200 shadow-sm">
+        <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center">
             <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mb-2">
               <BarChart2 className="w-5 h-5" />
             </div>
-            <div className="text-2xl font-bold text-slate-900 min-h-[2rem] flex items-center justify-center">
+            <div className="text-2xl font-bold text-slate-900 dark:text-white min-h-[2rem] flex items-center justify-center">
               {testStats.loading ? <Loader2 className="w-5 h-5 animate-spin text-slate-400" /> : testStats.count}
             </div>
-            <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold mt-1">Tests passés</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold mt-1">Tests passés</div>
           </CardContent>
         </Card>
 
@@ -189,15 +189,15 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
         ].map(({ icon: Icon, label, sub, path, color, border }) => (
           <Card
             key={path}
-            className={`bg-white border-slate-200 shadow-sm cursor-pointer ${border} hover:shadow-md transition-all group`}
+            className={`bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer ${border} hover:shadow-md transition-all group`}
             onClick={() => onNavigate(path)}
           >
             <CardContent className="p-4 flex flex-col items-center justify-center text-center">
               <div className={`w-10 h-10 rounded-full ${color} flex items-center justify-center mb-2 group-hover:scale-110 transition-transform`}>
                 <Icon className="w-5 h-5" />
               </div>
-              <div className="text-sm font-bold text-slate-900 mt-2">{label}</div>
-              <div className="text-xs text-slate-500 mt-1">{sub}</div>
+              <div className="text-sm font-bold text-slate-900 dark:text-white mt-2">{label}</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">{sub}</div>
             </CardContent>
           </Card>
         ))}
@@ -205,9 +205,9 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
 
       {/* Latest RIASEC result */}
       {!testStats.loading && testStats.latest && (
-        <Card className="bg-white border-slate-200 shadow-sm">
+        <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm">
           <CardHeader className="pb-3 flex flex-row items-center justify-between">
-            <CardTitle className="text-sm font-semibold text-slate-800 flex items-center gap-2">
+            <CardTitle className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-indigo-500" /> Dernier résultat RIASEC
             </CardTitle>
             <Button size="sm" variant="ghost" className="text-indigo-600 text-xs gap-1" onClick={() => onNavigate('/profile')}>
@@ -228,7 +228,7 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
                           {dim}
                         </div>
                         <div>
-                          <p className="text-xs font-semibold text-slate-700">{RIASEC_LABELS[dim]}</p>
+                          <p className="text-xs font-semibold text-slate-700 dark:text-slate-200">{RIASEC_LABELS[dim]}</p>
                           <p className="text-xs text-slate-400">{score} pts</p>
                         </div>
                       </div>
@@ -270,19 +270,19 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
             <TestHistoryInline history={history} onNavigate={onNavigate} />
           </WidgetErrorBoundary>
         ) : (
-          <Card className="border-slate-200 shadow-sm">
+          <Card className="border-slate-200 dark:border-slate-700 shadow-sm dark:bg-slate-800">
             <CardContent className="p-5 flex flex-col gap-2">
-              <h3 className="text-sm font-semibold text-slate-800 mb-1">Outils disponibles</h3>
+              <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100 mb-1">Outils disponibles</h3>
               {[
                 { icon: Brain,     label: "Parcours d'apprentissage", path: '/apprentissage', color: 'bg-violet-100 text-violet-600' },
                 { icon: FileText,  label: 'Créer mon CV',             path: '/cv-builder',    color: 'bg-blue-100 text-blue-600' },
                 { icon: Briefcase, label: "Offres d'emploi",          path: '/offres-emploi', color: 'bg-emerald-100 text-emerald-600' },
               ].map(({ icon: Icon, label, path, color }) => (
-                <button key={path} onClick={() => onNavigate(path)} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors text-left w-full group">
+                <button key={path} onClick={() => onNavigate(path)} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors text-left w-full group">
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${color}`}>
                     <Icon className="w-4 h-4" />
                   </div>
-                  <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">{label}</span>
+                  <span className="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-white">{label}</span>
                   <ArrowRight className="w-3.5 h-3.5 text-slate-300 ml-auto group-hover:text-slate-500 transition-colors" />
                 </button>
               ))}
@@ -292,10 +292,10 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
       </div>
 
       {/* Profile summary */}
-      <Card className="bg-white border-slate-200 shadow-sm">
+      <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm">
         <CardHeader className="pb-3 flex flex-row items-center justify-between">
-          <CardTitle className="text-sm font-semibold text-slate-800 flex items-center gap-2">
-            <User className="w-4 h-4 text-slate-500" /> Mon Profil
+          <CardTitle className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+            <User className="w-4 h-4 text-slate-500 dark:text-slate-400" /> Mon Profil
           </CardTitle>
           <Button size="sm" variant="ghost" className="text-slate-500 text-xs hover:text-indigo-600 gap-1" onClick={onOpenProfile}>
             <Settings className="w-3.5 h-3.5" /> Modifier

@@ -1,5 +1,5 @@
 // Must be rendered inside SafeToastProvider
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useEffect } from 'react';
 import {
   Toast,
   ToastClose,
@@ -91,27 +91,21 @@ export function Toaster() {
 }
 
 export function SafeToastProvider({ children }) {
-  const [mounted, setMounted] = useState(false);
-
+  // Pure client-side SPA (Vite) — no SSR, no need for a mounted guard.
+  // Rendering <Toaster /> immediately ensures the Radix ToastProvider context
+  // is fully in place before any Toast primitive mounts, preventing the
+  // "undefined is not an object" crash caused by the previous race condition.
   useEffect(() => {
-    try {
-      isProviderInitialized = true;
-      setMounted(true);
-      console.log('✅ [SafeToastProvider] Initialized successfully');
-    } catch (err) {
-      console.error('🚨 [SafeToastProvider] Initialization failed:', err);
-    }
-    return () => {
-      isProviderInitialized = false;
-    };
+    isProviderInitialized = true;
+    return () => { isProviderInitialized = false; };
   }, []);
 
   return (
     <ToastErrorBoundary>
       <ToastProvider>
         {children}
-        {mounted && <Toaster />}
-        {mounted && <ToastDebugPanel />}
+        <Toaster />
+        <ToastDebugPanel />
       </ToastProvider>
     </ToastErrorBoundary>
   );

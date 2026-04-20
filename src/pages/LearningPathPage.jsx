@@ -181,7 +181,7 @@ const CleoVoiceStep = ({ step, onReady }) => {
     <div className="flex flex-col items-center gap-5 py-2">
       {/* Context banner */}
       {context && (
-        <div className="w-full bg-amber-50 border border-amber-200 rounded-xl px-4 py-2 text-xs text-amber-800">
+        <div className="w-full bg-amber-50 dark:bg-amber-950/30 border border-amber-200 rounded-xl px-4 py-2 text-xs text-amber-800">
           <strong>Contexte :</strong> {context}
         </div>
       )}
@@ -208,10 +208,10 @@ const CleoVoiceStep = ({ step, onReady }) => {
       </p>
 
       {/* Cleo's text */}
-      <div className="w-full bg-slate-50 rounded-2xl p-4 border border-slate-200">
+      <div className="w-full bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-4 border border-slate-200 dark:border-slate-700">
         <div className="flex items-start gap-3">
           <div className="w-7 h-7 rounded-full bg-violet-100 flex items-center justify-center shrink-0 mt-0.5 text-sm">✨</div>
-          <p className="text-slate-800 leading-relaxed text-sm">{textToSpeak}</p>
+          <p className="text-slate-800 dark:text-slate-100 leading-relaxed text-sm">{textToSpeak}</p>
         </div>
         {ttsError && (
           <p className="text-xs text-amber-600 mt-2 ml-10">
@@ -222,7 +222,7 @@ const CleoVoiceStep = ({ step, onReady }) => {
 
       {/* Hint */}
       {hint && (
-        <div className="w-full flex items-start gap-2 bg-blue-50 border border-blue-100 rounded-xl px-4 py-2 text-xs text-blue-700">
+        <div className="w-full flex items-start gap-2 bg-blue-50 dark:bg-blue-950/30 border border-blue-100 rounded-xl px-4 py-2 text-xs text-blue-700">
           <MessageSquare size={13} className="shrink-0 mt-0.5" />
           <span><strong>Conseil :</strong> {hint}</span>
         </div>
@@ -306,7 +306,7 @@ const CleoVoiceStep = ({ step, onReady }) => {
         {/* Text fallback input */}
         {sttUnsupported && phase !== 'speaking' && !transcript && (
           <textarea
-            className="w-full border border-slate-200 rounded-xl p-3 text-sm resize-none focus:ring-2 focus:ring-violet-300 outline-none"
+            className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded-xl p-3 text-sm resize-none focus:ring-2 focus:ring-violet-300 outline-none"
             rows={3}
             placeholder="Tapez votre réponse ici…"
             onBlur={(e) => {
@@ -388,7 +388,7 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden"
+        className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden"
       >
         {/* Header */}
         <div className="bg-gradient-to-r from-violet-600 to-indigo-600 p-6 text-white">
@@ -427,16 +427,16 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
           {currentStep?.type === 'text' && (
             <div className="flex-1">
               {currentStep.title && (
-                <h3 className="text-lg font-bold text-slate-900 mb-3">{currentStep.title}</h3>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">{currentStep.title}</h3>
               )}
-              <p className="text-slate-600 leading-relaxed text-base">{currentStep.content}</p>
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-base">{currentStep.content}</p>
             </div>
           )}
 
           {/* ── QUIZ step ───────────────────────────────────────────────── */}
           {currentStep?.type === 'quiz' && (
             <div className="flex-1">
-              <p className="font-semibold text-slate-900 text-lg mb-5">{currentStep.question}</p>
+              <p className="font-semibold text-slate-900 dark:text-white text-lg mb-5">{currentStep.question}</p>
               <div className="space-y-3">
                 {currentStep.choices.map((choice, idx) => (
                   <button
@@ -445,10 +445,10 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
                     disabled={answered}
                     className={cn(
                       'w-full text-left p-4 rounded-xl border-2 transition-all font-medium text-sm',
-                      !answered && 'border-slate-200 hover:border-violet-300 hover:bg-violet-50',
-                      answered && idx === currentStep.correct && 'border-green-500 bg-green-50 text-green-800',
-                      answered && idx === selected && idx !== currentStep.correct && 'border-red-400 bg-red-50 text-red-800',
-                      answered && idx !== selected && idx !== currentStep.correct && 'border-slate-100 bg-slate-50 text-slate-400',
+                      !answered && 'border-slate-200 dark:border-slate-700 hover:border-violet-300 hover:bg-violet-50 dark:hover:bg-violet-950/30',
+                      answered && idx === currentStep.correct && 'border-green-500 bg-green-50 dark:bg-green-950/30 text-green-800 dark:text-green-200',
+                      answered && idx === selected && idx !== currentStep.correct && 'border-red-400 bg-red-50 dark:bg-red-950/30 text-red-800',
+                      answered && idx !== selected && idx !== currentStep.correct && 'border-slate-100 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-800/50 text-slate-400',
                     )}
                   >
                     <span className="inline-flex items-center gap-3">
@@ -456,7 +456,7 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
                         'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0',
                         answered && idx === currentStep.correct ? 'bg-green-500 text-white' :
                         answered && idx === selected && idx !== currentStep.correct ? 'bg-red-400 text-white' :
-                        'bg-slate-100 text-slate-500',
+                        'bg-slate-100 dark:bg-slate-800 text-slate-500',
                       )}>
                         {String.fromCharCode(65 + idx)}
                       </span>
@@ -469,7 +469,7 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl"
+                  className="mt-4 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 rounded-xl"
                 >
                   <p className="text-blue-800 text-sm">
                     <strong>Explication :</strong> {currentStep.explanation}
@@ -490,7 +490,7 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="px-6 pb-6 flex justify-between items-center border-t border-slate-100 pt-4">
+        <div className="px-6 pb-6 flex justify-between items-center border-t border-slate-100 dark:border-slate-700/50 pt-4">
           <button
             onClick={() => {
               textToSpeechService.stop();
@@ -548,10 +548,10 @@ const ActivityCard = ({ activity, index, onStart, isLocked }) => {
       transition={{ delay: index * 0.06 }}
       className={cn(
         'relative bg-white rounded-2xl border-2 p-5 transition-all group',
-        isCompleted ? 'border-green-200 bg-green-50/30' :
+        isCompleted ? 'border-green-200 bg-green-50/30 dark:bg-green-950/20 dark:border-green-800' :
         isStarted   ? 'border-violet-300' :
-        isLocked    ? 'border-slate-100 opacity-60' :
-        'border-slate-200 hover:border-violet-300 hover:shadow-lg',
+        isLocked    ? 'border-slate-100 dark:border-slate-700 opacity-60' :
+        'border-slate-200 dark:border-slate-700 hover:border-violet-300 hover:shadow-lg',
       )}
     >
       <div className={cn(
