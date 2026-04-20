@@ -187,6 +187,16 @@ const OffersFormationsPage = () => {
 
       // 2. Fetch real jobs from France Travail API (via edge function)
       const allJobs = [];
+
+      // Helper: extract an array from any edge-function response shape
+      const extractArray = (payload) => {
+        if (Array.isArray(payload)) return payload;
+        if (payload && Array.isArray(payload.data)) return payload.data;
+        if (payload && Array.isArray(payload.resultats)) return payload.resultats;
+        if (payload && Array.isArray(payload.offres)) return payload.offres;
+        return [];
+      };
+
       if (romeCodes.length > 0) {
         const jobFetches = await Promise.allSettled(
           romeCodes.map(code =>
@@ -194,18 +204,22 @@ const OffersFormationsPage = () => {
           )
         );
         jobFetches.forEach(result => {
-          if (result.status === 'fulfilled' && result.value.data?.data) {
-            allJobs.push(...result.value.data.data);
+          if (result.status === 'fulfilled' && !result.value.error) {
+            const items = extractArray(result.value.data);
+            allJobs.push(...items);
           }
         });
       }
 
       // Fallback: fetch generic jobs if no ROME codes
       if (allJobs.length === 0) {
-        const { data: genericJobs } = await supabase.functions.invoke('get-jobs', {
+        const { data: genericJobs, error: genericErr } = await supabase.functions.invoke('get-jobs', {
           body: { limit: 20 }
         });
-        if (genericJobs?.data) allJobs.push(...genericJobs.data);
+        if (!genericErr) {
+          const items = extractArray(genericJobs);
+          allJobs.push(...items);
+        }
       }
 
       setJobs(allJobs);
@@ -254,7 +268,7 @@ const OffersFormationsPage = () => {
           .from('saved_formations')
           .select('*')
           .eq('user_id', user.id);
-        if (savedF && savedF.length > 0) allFormations = savedF;
+        if (Array.isArray(savedF) && savedF.length > 0) allFormations = savedF;
       }
 
       setFormations(allFormations);
@@ -285,7 +299,7 @@ const OffersFormationsPage = () => {
       setSavedJobIds(prev => { const s = new Set(prev); s.delete(jobId); return s; });
     } else {
       await supabase.from('saved_jobs').upsert({ user_id: user.id, job_id: jobId, job_data: job });
-      setSavedJobIds(prev => new Set([...prev, jobId]));
+      setSavedJobIds(prev => new Set([...(prev instanceof Set ? prev : []), jobId]));
     }
   };
 
@@ -297,7 +311,7 @@ const OffersFormationsPage = () => {
       setSavedFormationIds(prev => { const s = new Set(prev); s.delete(fId); return s; });
     } else {
       await supabase.from('saved_formations').upsert({ user_id: user.id, formation_id: fId, formation_data: formation });
-      setSavedFormationIds(prev => new Set([...prev, fId]));
+      setSavedFormationIds(prev => new Set([...(prev instanceof Set ? prev : []), fId]));
     }
   };
 
