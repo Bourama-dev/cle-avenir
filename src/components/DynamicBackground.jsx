@@ -53,7 +53,7 @@ export default function DynamicBackground({ children }) {
   useEffect(() => {
     const onScroll = () => {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      const progress = maxScroll > 0 ? Math.max(0, Math.min(1, window.scrollY / maxScroll)) : 0;
       setScrollProgress(progress);
       const idx = Math.min(
         Math.floor(progress * SCROLL_PALETTES.length),
