@@ -16,7 +16,7 @@
  * - Skip sectors user has rejected (1+ "Pas du tout" for fast filtering)
  */
 
-import { adaptiveQuestionPool, getAdaptiveMaxPossible } from '@/data/adaptiveQuestions';
+import { adaptiveQuestionPool } from '@/data/adaptiveQuestions';
 
 const CATEGORIES = ['R', 'I', 'A', 'S', 'E', 'C'];
 const TARGET_QUESTIONS = 27;
@@ -220,17 +220,23 @@ export const adaptiveTestEngine = {
    * Calculate normalized RIASEC scores
    */
   _updateScores(state) {
-    const maxPossible = getAdaptiveMaxPossible();
     const rawScores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
 
     Object.values(state.answers).forEach(({ category, value }) => {
       rawScores[category] = (rawScores[category] || 0) + value;
     });
 
+    // Count actual questions asked per category (not pool size)
+    const questionsPerCategory = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
+    Object.values(state.answers).forEach(({ category }) => {
+      questionsPerCategory[category]++;
+    });
+
     state.scores = {};
     CATEGORIES.forEach(cat => {
-      const max = maxPossible[cat] || 100;
-      state.scores[cat] = Math.round((rawScores[cat] / max) * 100);
+      const count = questionsPerCategory[cat] || 1;
+      const max = count * 100; // Normalize by actual questions asked
+      state.scores[cat] = count > 0 ? Math.round((rawScores[cat] / max) * 100) : 0;
     });
 
     this._updateConfidences(state);
