@@ -508,6 +508,195 @@ export const adaptiveQuestionPool = [
     text: "Aimeriez-vous gérer une installation sportive, un club ou une structure de fitness ?",
     options: OPTIONS,
   },
+
+  // ─────────────────────────────────────────────────────────────
+  // ENSEIGNEMENT & FORMATION
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 's-education-1', category: 'S', emoji: '🎓', difficulty: 'intermediate',
+    sector: 'Enseignement & Éducation',
+    text: "Aimeriez-vous être professeur, formateur ou éducateur ?",
+    options: OPTIONS,
+  },
+  {
+    id: 's-education-2', category: 'S', emoji: '📖', difficulty: 'intermediate',
+    sector: 'Enseignement Professionnel',
+    text: "Aimeriez-vous former des apprentis ou des professionnels dans un métier ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'i-education-1', category: 'I', emoji: '🧑‍🎓', difficulty: 'advanced',
+    sector: 'Recherche Pédagogique',
+    text: "Intéressez-vous à la recherche en éducation et aux innovations pédagogiques ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // MÉDIAS, PRESSE & TÉLÉCOMMUNICATIONS
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'a-media-1', category: 'A', emoji: '📰', difficulty: 'intermediate',
+    sector: 'Journalisme & Presse',
+    text: "Aimeriez-vous être journaliste, reporter ou rédacteur ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'a-media-2', category: 'A', emoji: '📺', difficulty: 'intermediate',
+    sector: 'Audiovisuel & Télévision',
+    text: "Aimeriez-vous travailler dans la télévision, radio ou production audiovisuelle ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'i-telecom-1', category: 'I', emoji: '📡', difficulty: 'intermediate',
+    sector: 'Télécommunications',
+    text: "Intéressez-vous aux technologies de télécommunication et aux réseaux ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'e-media-1', category: 'E', emoji: '🎙️', difficulty: 'advanced',
+    sector: 'Production & Direction Médias',
+    text: "Aimeriez-vous diriger une rédaction, une chaîne ou un projet médias ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // ÉVÉNEMENTIEL & ANIMATION
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'e-event-1', category: 'E', emoji: '🎉', difficulty: 'intermediate',
+    sector: 'Événementiel & Promotion',
+    text: "Aimeriez-vous organiser et coordonner des événements, conférences ou festivals ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'a-event-1', category: 'A', emoji: '🎪', difficulty: 'intermediate',
+    sector: 'Animation & Divertissement',
+    text: "Aimeriez-vous animer, créer du divertissement ou des spectacles événementiels ?",
+    options: OPTIONS,
+  },
+  {
+    id: 's-event-1', category: 'S', emoji: '🎊', difficulty: 'intermediate',
+    sector: 'Animation Sociale',
+    text: "Aimeriez-vous créer des animations et dynamiser la vie d'un groupe ou d'une communauté ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // DÉFENSE, SÉCURITÉ & MILITAIRE
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'r-defense-1', category: 'R', emoji: '⚔️', difficulty: 'intermediate',
+    sector: 'Défense & Militaire',
+    text: "Aimeriez-vous servir dans l'armée ou les forces de défense ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'e-defense-1', category: 'E', emoji: '🎖️', difficulty: 'advanced',
+    sector: 'Commandement & Leadership Militaire',
+    text: "Aimeriez-vous suivre une carrière d'officier avec responsabilités de commandement ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'c-defense-1', category: 'C', emoji: '🔐', difficulty: 'intermediate',
+    sector: 'Administration Militaire',
+    text: "Aimeriez-vous travailler dans l'administration ou la logistique militaire ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // SERVICES À LA PERSONNE
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 's-services-1', category: 'S', emoji: '🧹', difficulty: 'intermediate',
+    sector: 'Services à la Personne',
+    text: "Aimeriez-vous aider dans les tâches quotidiennes (aide à domicile, nettoyage) ?",
+    options: OPTIONS,
+  },
+  {
+    id: 's-services-2', category: 'S', emoji: '🛁', difficulty: 'intermediate',
+    sector: 'Services de Bien-être',
+    text: "Aimeriez-vous travailler dans le bien-être (massage, spa, coiffure) ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // CULTURE, PATRIMOINE & MUSÉES
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'a-culture-1', category: 'A', emoji: '🏛️', difficulty: 'intermediate',
+    sector: 'Patrimoine & Musées',
+    text: "Aimeriez-vous préserver, restaurer ou exposer le patrimoine et les œuvres d'art ?",
+    options: OPTIONS,
+  },
+  {
+    id: 's-culture-1', category: 'S', emoji: '🎭', difficulty: 'intermediate',
+    sector: 'Animation Culturelle',
+    text: "Aimeriez-vous animer, médiatiser ou partager la culture avec le public ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'i-culture-1', category: 'I', emoji: '📚', difficulty: 'advanced',
+    sector: 'Recherche Historique',
+    text: "Intéressez-vous à la recherche historique, archéologique ou d'archives ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // LUXE & SERVICES HAUT DE GAMME
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 's-luxury-1', category: 'S', emoji: '👔', difficulty: 'advanced',
+    sector: 'Conciergerie & Luxe',
+    text: "Aimeriez-vous offrir un service haut de gamme et personnalisé à une clientèle de prestige ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'e-luxury-1', category: 'E', emoji: '🏰', difficulty: 'advanced',
+    sector: 'Management du Luxe',
+    text: "Aimeriez-vous diriger un établissement de luxe (palace hôtel, restaurant, boutique) ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // ENVIRONNEMENT & TRANSITION ÉCOLOGIQUE
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'r-green-1', category: 'R', emoji: '♻️', difficulty: 'intermediate',
+    sector: 'Métiers Verts Avancés',
+    text: "Aimeriez-vous œuvrer pour l'énergie renouvelable ou l'économie circulaire ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'e-green-1', category: 'E', emoji: '🌱', difficulty: 'advanced',
+    sector: 'Direction RSE & Développement Durable',
+    text: "Aimeriez-vous diriger une stratégie de développement durable ou de responsabilité sociale ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // SECTEUR PUBLIC & FONCTION PUBLIQUE AVANCÉE
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'e-public-1', category: 'E', emoji: '🏛️', difficulty: 'advanced',
+    sector: 'Fonction Publique Cadre',
+    text: "Aimeriez-vous être haut fonctionnaire ou avoir des responsabilités politiques/administratives ?",
+    options: OPTIONS,
+  },
+  {
+    id: 's-public-1', category: 'S', emoji: '👨‍⚖️', difficulty: 'intermediate',
+    sector: 'Justice & Services Publics Sociaux',
+    text: "Aimeriez-vous travailler dans la justice, l'administration sociale ou les services publics ?",
+    options: OPTIONS,
+  },
 ];
 
 /**
