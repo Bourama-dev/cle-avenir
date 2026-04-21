@@ -36,25 +36,28 @@ const AdaptiveTestInterface = ({ onComplete }) => {
     await new Promise(resolve => setTimeout(resolve, 400));
 
     try {
+      const updatedState = { ...state };
       const result = adaptiveTestEngine.recordAnswerAndGetNext(
-        state,
+        updatedState,
         currentQuestion.id,
         answerValue
       );
 
       // Update skipped categories from engine state
-      setSkippedCategories(new Set(state.skippedCategories));
+      setSkippedCategories(new Set(updatedState.skippedCategories));
 
       if (result.testComplete) {
-        const finalResult = adaptiveTestEngine.finalizeTest(state);
+        const finalResult = adaptiveTestEngine.finalizeTest(updatedState);
         setFinalProfile(finalResult);
         setShowResults(true);
       } else {
         setCurrentQuestion(result.nextQuestion);
-        setState({ ...state });
+        setState(updatedState);
       }
     } catch (error) {
       console.error('Test error:', error);
+      // Show error to user if test fails
+      alert('Erreur lors du test: ' + error.message);
     } finally {
       setIsLoading(false);
       setSelectedAnswer(null);

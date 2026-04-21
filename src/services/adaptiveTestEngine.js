@@ -416,11 +416,20 @@ export const adaptiveTestEngine = {
    * Finalize test and return profile
    */
   finalizeTest(state) {
+    if (!state || !state.scores || !state.asked) {
+      throw new Error('État du test invalide: scores ou questions manquantes');
+    }
+
     const profileCode = Object.entries(state.scores)
+      .filter(([, score]) => typeof score === 'number' && !isNaN(score))
       .sort(([, a], [, b]) => b - a)
       .slice(0, 3)
       .map(([letter]) => letter)
       .join('');
+
+    if (!profileCode || profileCode.length === 0) {
+      throw new Error('Impossible de créer le profil: scores invalides');
+    }
 
     return {
       profile: state.scores,
