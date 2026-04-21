@@ -15,8 +15,7 @@ const AdaptiveTestInterface = ({ onComplete }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [finalProfile, setFinalProfile] = useState(null);
-  const [skippedSectors, setSkippedSectors] = useState(new Set());
-  const [sectorResponses, setSectorResponses] = useState({});
+  const [skippedCategories, setSkippedCategories] = useState(new Set());
 
   // Initialize test
   useEffect(() => {
@@ -25,20 +24,6 @@ const AdaptiveTestInterface = ({ onComplete }) => {
     setCurrentQuestion(initialState.asked[0]);
   }, []);
 
-  // Detect sector disagreement (2+ consecutive "Pas du tout" = 0)
-  const checkSectorDisagreement = (sector, answers) => {
-    const sectorAnswers = Object.entries(answers)
-      .filter(([qId]) =>
-        adaptiveQuestionPool.find(q => q.id === qId)?.sector === sector
-      )
-      .map(([, ans]) => ans.value)
-      .slice(-2); // Last 2 answers for this sector
-
-    if (sectorAnswers.length >= 2 && sectorAnswers.every(v => v === 0)) {
-      return true; // Skip this sector
-    }
-    return false;
-  };
 
   // Handle answer submission
   const handleAnswer = async (answerValue) => {
@@ -57,26 +42,8 @@ const AdaptiveTestInterface = ({ onComplete }) => {
         answerValue
       );
 
-      // Track sector responses and check for disagreement
-      const newSectorResponses = {
-        ...sectorResponses,
-        [currentQuestion.sector]: [...(sectorResponses[currentQuestion.sector] || []), answerValue],
-      };
-      setSectorResponses(newSectorResponses);
-
-      // Check if we should skip this sector
-      if (checkSectorDisagreement(currentQuestion.sector, state.answers)) {
-        const newSkipped = new Set(skippedSectors);
-        newSkipped.add(currentQuestion.sector);
-        setSkippedSectors(newSkipped);
-
-        // Signal to engine to avoid this sector
-        if (state.skippedSectors) {
-          state.skippedSectors = newSkipped;
-        } else {
-          state.skippedSectors = newSkipped;
-        }
-      }
+      // Update skipped categories from engine state
+      setSkippedCategories(new Set(state.skippedCategories));
 
       if (result.testComplete) {
         const finalResult = adaptiveTestEngine.finalizeTest(state);
@@ -176,7 +143,7 @@ const AdaptiveTestInterface = ({ onComplete }) => {
                       <Badge className="bg-indigo-100 text-indigo-700 hover:bg-indigo-200">
                         {currentQuestion.sector}
                       </Badge>
-                      {skippedSectors.has(currentQuestion.sector) && (
+                      {skippedCategories.has(currentQuestion.category) && (
                         <AlertCircle className="w-4 h-4 text-orange-500" />
                       )}
                     </div>
@@ -246,8 +213,8 @@ const AdaptiveTestInterface = ({ onComplete }) => {
 
             </motion.div>
 
-            {/* Skipped Sectors Warning */}
-            {skippedSectors.size > 0 && (
+            {/* Skipped Categories Warning */}
+            {skippedCategories.size > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -256,9 +223,9 @@ const AdaptiveTestInterface = ({ onComplete }) => {
                 <div className="flex gap-3">
                   <Zap className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-bold text-orange-900 text-sm">Secteurs adaptés</p>
+                    <p className="font-bold text-orange-900 text-sm">Profils déprioritisés</p>
                     <p className="text-xs text-orange-700 mt-1">
-                      {Array.from(skippedSectors).join(', ')} ne correspondent pas • Passage à d'autres domaines
+                      {Array.from(skippedCategories).join(', ')} moins adaptés • Mais encore évalués pour fiabilité
                     </p>
                   </div>
                 </div>
