@@ -85,20 +85,18 @@ export const adaptiveTestEngine = {
 
     // PHASE 1: BASELINE (Complete the 6 basic questions)
     if (state.phase === TestPhases.BASELINE) {
-      const basicsAsked = Object.values(state.answers).filter(a =>
-        adaptiveQuestionPool.find(q => q.id && q.difficulty === 'basic')?.category === a.category
-      ).length;
+      // Track which categories already have basic questions answered
+      const categoriesWithBasic = new Set();
+      state.asked.forEach(q => {
+        if (q.difficulty === 'basic') {
+          categoriesWithBasic.add(q.category);
+        }
+      });
 
-      if (basicsAsked < 6) {
-        // Find the next category that needs a basic question
-        const basicCategories = {};
-        Object.values(state.answers).forEach(a => {
-          const q = adaptiveQuestionPool.find(q => q.id);
-          if (q?.difficulty === 'basic') basicCategories[a.category] = true;
-        });
-
+      // If we haven't asked all 6 basic questions, continue with baseline
+      if (categoriesWithBasic.size < 6) {
         for (const cat of CATEGORIES) {
-          if (!basicCategories[cat]) {
+          if (!categoriesWithBasic.has(cat)) {
             const basicQuestion = unused.find(
               q => q.category === cat && q.difficulty === 'basic'
             );
@@ -117,27 +115,37 @@ export const adaptiveTestEngine = {
     if (state.phase === TestPhases.REFINEMENT) {
       const questionsAvailable = unused.filter(q => !state.skippedSectors.has(q.sector));
 
-      // Priority: Mid-range scores (40-60%) — need clarification
-      for (const cat of CATEGORIES) {
-        const score = state.scores[cat] || 50;
-        if (score >= 40 && score <= 60) {
-          const refinementQ = questionsAvailable.find(
-            q => q.category === cat && q.difficulty === 'intermediate'
-          );
-          if (refinementQ) {
-            state.asked.push(refinementQ);
-            state.askedIds.add(refinementQ.id);
-            return refinementQ;
+      if (questionsAvailable.length > 0) {
+        // Priority: Mid-range scores (40-60%) — need clarification
+        for (const cat of CATEGORIES) {
+          const score = state.scores[cat] || 50;
+          if (score >= 40 && score <= 60) {
+            const refinementQ = questionsAvailable.find(
+              q => q.category === cat && q.difficulty === 'intermediate'
+            );
+            if (refinementQ) {
+              state.asked.push(refinementQ);
+              state.askedIds.add(refinementQ.id);
+              return refinementQ;
+            }
           }
         }
-      }
 
-      // Fallback: Any intermediate question from available list
-      const intermediateQ = questionsAvailable.find(q => q.difficulty === 'intermediate');
-      if (intermediateQ) {
-        state.asked.push(intermediateQ);
-        state.askedIds.add(intermediateQ.id);
-        return intermediateQ;
+        // Fallback: Any intermediate question from available list
+        const intermediateQ = questionsAvailable.find(q => q.difficulty === 'intermediate');
+        if (intermediateQ) {
+          state.asked.push(intermediateQ);
+          state.askedIds.add(intermediateQ.id);
+          return intermediateQ;
+        }
+
+        // Last resort: Any available question
+        const anyQ = questionsAvailable[0];
+        if (anyQ) {
+          state.asked.push(anyQ);
+          state.askedIds.add(anyQ.id);
+          return anyQ;
+        }
       }
     }
 
@@ -145,41 +153,49 @@ export const adaptiveTestEngine = {
     if (state.phase === TestPhases.ADVANCED) {
       const questionsAvailable = unused.filter(q => !state.skippedSectors.has(q.sector));
 
-      // Priority: Advanced questions for dominant categories
-      const topCategories = Object.entries(state.scores)
-        .sort(([, a], [, b]) => b - a)
-        .slice(0, 2)
-        .map(([cat]) => cat);
-
-      for (const cat of topCategories) {
-        const advancedQ = questionsAvailable.find(
-          q => q.category === cat && q.difficulty === 'advanced'
-        );
-        if (advancedQ) {
-          state.asked.push(advancedQ);
-          state.askedIds.add(advancedQ.id);
-          return advancedQ;
-        }
-      }
-
-      // Fill in sector coverage
-      const coveredSectors = new Set(Object.values(state.answers).map(a => a.sector));
-      const uncoveredQ = questionsAvailable.find(
-        q => !coveredSectors.has(q.sector)
-      );
-      if (uncoveredQ) {
-        state.asked.push(uncoveredQ);
-        state.askedIds.add(uncoveredQ.id);
-        return uncoveredQ;
-      }
-
-      // Random remaining
       if (questionsAvailable.length > 0) {
+        // Priority: Advanced questions for dominant categories
+        const topCategories = Object.entries(state.scores)
+          .sort(([, a], [, b]) => b - a)
+          .slice(0, 2)
+          .map(([cat]) => cat);
+
+        for (const cat of topCategories) {
+          const advancedQ = questionsAvailable.find(
+            q => q.category === cat && q.difficulty === 'advanced'
+          );
+          if (advancedQ) {
+            state.asked.push(advancedQ);
+            state.askedIds.add(advancedQ.id);
+            return advancedQ;
+          }
+        }
+
+        // Fill in sector coverage
+        const coveredSectors = new Set(Object.values(state.answers).map(a => a.sector));
+        const uncoveredQ = questionsAvailable.find(
+          q => !coveredSectors.has(q.sector)
+        );
+        if (uncoveredQ) {
+          state.asked.push(uncoveredQ);
+          state.askedIds.add(uncoveredQ.id);
+          return uncoveredQ;
+        }
+
+        // Random remaining
         const random = questionsAvailable[Math.floor(Math.random() * questionsAvailable.length)];
         state.asked.push(random);
         state.askedIds.add(random.id);
         return random;
       }
+    }
+
+    // Fallback if no questions available from filtered list
+    if (unused.length > 0) {
+      const fallback = unused[0];
+      state.asked.push(fallback);
+      state.askedIds.add(fallback.id);
+      return fallback;
     }
 
     return null;
