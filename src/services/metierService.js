@@ -10,21 +10,37 @@ export const metierService = {
    */
   generateRiasecWeights: (majeur, mineur) => {
     const weights = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
-    
+    const sumMax = 100;
+
     if (majeur) {
-      for (const char of majeur.toUpperCase()) {
-        if (weights.hasOwnProperty(char)) weights[char] = 30;
-      }
-    }
-    
-    if (mineur) {
-      for (const char of mineur.toUpperCase()) {
-        if (weights.hasOwnProperty(char) && weights[char] === 0) {
-          weights[char] = 20;
+      const majorChars = majeur.toUpperCase().split('');
+      const majorWeight = 50 / majorChars.length;
+      for (const char of majorChars) {
+        if (weights.hasOwnProperty(char)) {
+          weights[char] = Math.round(majorWeight);
         }
       }
     }
-    
+
+    if (mineur) {
+      const minorChars = mineur.toUpperCase().split('').filter(char => !majeur?.toUpperCase().includes(char));
+      const minorWeight = 30 / Math.max(minorChars.length, 1);
+      for (const char of minorChars) {
+        if (weights.hasOwnProperty(char)) {
+          weights[char] = Math.round(minorWeight);
+        }
+      }
+    }
+
+    // Fill remaining with neutral values
+    const total = Object.values(weights).reduce((a, b) => a + b, 0);
+    if (total < sumMax) {
+      const remaining = (sumMax - total) / Object.values(weights).filter(v => v === 0).length;
+      for (const key in weights) {
+        if (weights[key] === 0) weights[key] = Math.round(remaining);
+      }
+    }
+
     return weights;
   },
 
@@ -34,16 +50,17 @@ export const metierService = {
   formatMetierForMatching: (rawMetier) => {
     try {
       let riasec = rawMetier.adjusted_weights;
-      
+
       if (!riasec || Object.keys(riasec).length === 0 || riasec === '0') {
          riasec = rawMetier.riasec_vector;
       }
-      
+
       if (!riasec || Object.keys(riasec).length === 0 || riasec === '0') {
         riasec = metierService.generateRiasecWeights(rawMetier.riasecMajeur, rawMetier.riasecMineur);
       }
 
-      const normalizedRiasec = {
+      // Normalize RIASEC weights to ensure consistent scale (0-100)
+      const rawNormalized = {
         R: Number(riasec.R || riasec.r || 0),
         I: Number(riasec.I || riasec.i || 0),
         A: Number(riasec.A || riasec.a || 0),
@@ -51,6 +68,16 @@ export const metierService = {
         E: Number(riasec.E || riasec.e || 0),
         C: Number(riasec.C || riasec.c || 0),
       };
+
+      // Normalize to 0-100 scale if needed
+      const total = Object.values(rawNormalized).reduce((a, b) => a + b, 0);
+      let normalizedRiasec = rawNormalized;
+      if (total > 0 && total !== 100) {
+        normalizedRiasec = {};
+        for (const [key, val] of Object.entries(rawNormalized)) {
+          normalizedRiasec[key] = Math.round((val / total) * 100);
+        }
+      }
 
       const hybridProfile = [];
       if (rawMetier.riasecMajeur) hybridProfile.push(rawMetier.riasecMajeur.charAt(0).toUpperCase());
@@ -62,15 +89,36 @@ export const metierService = {
       let demandLevel = 'moyenne';
       let growthTrend = 'stable';
 
-      if (debouchesLower.includes('très favorable') || debouchesLower.includes('forte demande')) {
+      // Improved demand level detection
+      if (
+        debouchesLower.includes('très favorable') ||
+        debouchesLower.includes('forte demande') ||
+        debouchesLower.includes('très élevée') ||
+        debouchesLower.includes('explor') ||
+        debouchesLower.includes('excellentes perspectives')
+      ) {
         demandLevel = 'très_élevée';
         growthTrend = 'croissant';
-      } else if (debouchesLower.includes('favorable') || debouchesLower.includes('bon')) {
+      } else if (
+        debouchesLower.includes('favorable') ||
+        debouchesLower.includes('bon potentiel') ||
+        debouchesLower.includes('élevée') ||
+        debouchesLower.includes('bonne demande')
+      ) {
         demandLevel = 'élevée';
         growthTrend = 'croissant';
-      } else if (debouchesLower.includes('difficile') || debouchesLower.includes('faible')) {
+      } else if (
+        debouchesLower.includes('difficile') ||
+        debouchesLower.includes('faible') ||
+        debouchesLower.includes('très faible') ||
+        debouchesLower.includes('decline') ||
+        debouchesLower.includes('restreint')
+      ) {
         demandLevel = 'faible';
         growthTrend = 'décroissant';
+      } else if (debouchesLower.includes('modéré')) {
+        demandLevel = 'moyenne';
+        growthTrend = 'stable';
       }
 
       return {
