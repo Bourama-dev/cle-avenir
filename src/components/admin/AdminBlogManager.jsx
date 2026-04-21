@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Loader2, Plus, Edit, Trash2, AlertCircle } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { getPublicBlogImageUrl } from '@/utils/blogImages';
 import BlogForm from './forms/BlogForm';
 
 export default function AdminBlogManager() {
@@ -106,7 +107,7 @@ export default function AdminBlogManager() {
                     <TableCell className="text-center">
                       {blog.featured_image ? (
                         <div className="w-12 h-12 rounded overflow-hidden mx-auto bg-slate-100 border">
-                          <img src={blog.featured_image} alt={blog.title} className="w-full h-full object-cover" loading="lazy" />
+                          <img src={getPublicBlogImageUrl(blog.featured_image)} alt={blog.title} className="w-full h-full object-cover" loading="lazy" />
                         </div>
                       ) : (
                         <div className="w-12 h-12 bg-slate-100 border rounded flex items-center justify-center text-[10px] text-slate-400 mx-auto">Sans Image</div>
