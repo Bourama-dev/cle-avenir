@@ -68,10 +68,13 @@ const TestResultsPage = () => {
       const advancedMatches = dbMetiers
         .map(metier => calculateAdvancedMatching(loadedProfile, metier))
         .filter(m => m !== null)
-        .sort((a, b) => b.finalScore - a.finalScore)
-        .slice(0, 15); // Get top 15 total to show locked ones
+        .sort((a, b) => b.finalScore - a.finalScore);
 
-      setMatches(advancedMatches);
+      // Separate matches: Good (>=50) and Less Suitable (<50)
+      const goodMatches = advancedMatches.filter(m => m.finalScore >= 50).slice(0, 15);
+      const allMatches = [...goodMatches];
+
+      setMatches(allMatches);
 
     } catch (err) {
       console.error("Error processing results:", err);
@@ -233,6 +236,7 @@ const TestResultsPage = () => {
                     metier={match}
                     isBlurred={isBlurred}
                     isTopThree={isTopThree}
+                    userProfile={profile}
                     onNavigate={handleNavigateDetail}
                     onCreatePlan={handleCreatePlan}
                   />
