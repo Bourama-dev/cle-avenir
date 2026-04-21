@@ -1,5 +1,5 @@
 /**
- * Adaptive RIASEC Test — 400 Questions Pool (ÉTAPE 1-3/4: Secteurs 1-30)
+ * Adaptive RIASEC Test — 400 Questions Pool (COMPLETE: All 40 Sectors)
  *
  * This pool feeds an adaptive algorithm that selects 24-30 questions
  * based on user responses. Each question is tagged with:
@@ -1967,6 +1967,656 @@ export const adaptiveQuestionPool = [
     id: 'anim-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
     sector: 'Animation Sociale',
     text: "Aimeriez-vous gérer les budgets et assurer la conformité des activités ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // LUXE & MODE - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'luxury-r-1', category: 'R', emoji: '👗', difficulty: 'basic',
+    sector: 'Luxe & Mode',
+    text: "Aimez-vous manipuler des textiles raffinés et des matériaux précieux ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'luxury-r-2', category: 'R', emoji: '✂️', difficulty: 'intermediate',
+    sector: 'Luxe & Mode',
+    text: "Êtes-vous à l'aise pour créer et assembler des vêtements ou accessoires ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'luxury-i-1', category: 'I', emoji: '📊', difficulty: 'basic',
+    sector: 'Luxe & Mode',
+    text: "Aimez-vous comprendre les tendances et l'évolution de la mode ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'luxury-i-2', category: 'I', emoji: '🔍', difficulty: 'intermediate',
+    sector: 'Luxe & Mode',
+    text: "Aimeriez-vous analyser les préférences de clientèle haut de gamme ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'luxury-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Luxe & Mode',
+    text: "Avez-vous une vision artistique forte pour la mode et le design ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'luxury-a-2', category: 'A', emoji: '✨', difficulty: 'advanced',
+    sector: 'Luxe & Mode',
+    text: "Aimeriez-vous créer des collections de mode luxe originales ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'luxury-s-1', category: 'S', emoji: '😊', difficulty: 'basic',
+    sector: 'Luxe & Mode',
+    text: "Aimez-vous servir une clientèle exigeante avec élégance ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'luxury-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Luxe & Mode',
+    text: "Êtes-vous doué pour créer des relations avec les clients VIP ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'luxury-e-1', category: 'E', emoji: '📈', difficulty: 'advanced',
+    sector: 'Luxe & Mode',
+    text: "Aimeriez-vous créer votre propre marque de luxe ou de mode ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'luxury-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Luxe & Mode',
+    text: "Aimeriez-vous gérer les stocks de produits de luxe ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // BEAUX-ARTS - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'beaux-r-1', category: 'R', emoji: '🖼️', difficulty: 'basic',
+    sector: 'Beaux-Arts',
+    text: "Aimez-vous créer et peindre avec vos mains ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'beaux-r-2', category: 'R', emoji: '🖌️', difficulty: 'intermediate',
+    sector: 'Beaux-Arts',
+    text: "Êtes-vous à l'aise avec les techniques traditionnelles des beaux-arts ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'beaux-i-1', category: 'I', emoji: '🔍', difficulty: 'basic',
+    sector: 'Beaux-Arts',
+    text: "Êtes-vous intéressé par l'histoire et la théorie de l'art ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'beaux-i-2', category: 'I', emoji: '📚', difficulty: 'intermediate',
+    sector: 'Beaux-Arts',
+    text: "Aimeriez-vous analyser et critiquer les œuvres d'art ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'beaux-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Beaux-Arts',
+    text: "Avez-vous une expression artistique personnelle et profonde ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'beaux-a-2', category: 'A', emoji: '✨', difficulty: 'advanced',
+    sector: 'Beaux-Arts',
+    text: "Aimeriez-vous développer votre propre style et vision artistique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'beaux-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Beaux-Arts',
+    text: "Aimez-vous partager votre art avec une communauté ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'beaux-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Beaux-Arts',
+    text: "Êtes-vous doué pour enseigner l'art à d'autres personnes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'beaux-e-1', category: 'E', emoji: '📢', difficulty: 'intermediate',
+    sector: 'Beaux-Arts',
+    text: "Aimeriez-vous promouvoir et vendre vos œuvres d'art ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'beaux-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Beaux-Arts',
+    text: "Aimeriez-vous gérer une galerie ou un studio d'art ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // MUSIQUE & SPECTACLE - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'music-r-1', category: 'R', emoji: '🎸', difficulty: 'basic',
+    sector: 'Musique & Spectacle',
+    text: "Aimez-vous jouer d'un instrument ou chanter passionnément ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'music-r-2', category: 'R', emoji: '🎹', difficulty: 'intermediate',
+    sector: 'Musique & Spectacle',
+    text: "Êtes-vous à l'aise avec les équipements et instruments de musique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'music-i-1', category: 'I', emoji: '🎵', difficulty: 'basic',
+    sector: 'Musique & Spectacle',
+    text: "Êtes-vous intéressé par la théorie musicale et la composition ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'music-i-2', category: 'I', emoji: '🧠', difficulty: 'intermediate',
+    sector: 'Musique & Spectacle',
+    text: "Aimeriez-vous analyser et critiquer les performances musicales ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'music-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Musique & Spectacle',
+    text: "Avez-vous une expression musicale ou artistique unique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'music-a-2', category: 'A', emoji: '✨', difficulty: 'advanced',
+    sector: 'Musique & Spectacle',
+    text: "Aimeriez-vous composer ou créer de la musique originale ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'music-s-1', category: 'S', emoji: '😊', difficulty: 'basic',
+    sector: 'Musique & Spectacle',
+    text: "Aimez-vous performer et émouvoir votre public ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'music-s-2', category: 'S', emoji: '👥', difficulty: 'intermediate',
+    sector: 'Musique & Spectacle',
+    text: "Êtes-vous doué pour collaborer avec d'autres musiciens ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'music-e-1', category: 'E', emoji: '📢', difficulty: 'intermediate',
+    sector: 'Musique & Spectacle',
+    text: "Aimeriez-vous produire ou organiser des concerts et événements ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'music-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Musique & Spectacle',
+    text: "Aimeriez-vous gérer les droits d'auteur et les contrats musicaux ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // JOURNALISME & ÉDITION - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'journal-r-1', category: 'R', emoji: '📰', difficulty: 'basic',
+    sector: 'Journalisme & Édition',
+    text: "Aimez-vous rédiger et publier des contenus écrits ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'journal-r-2', category: 'R', emoji: '✍️', difficulty: 'intermediate',
+    sector: 'Journalisme & Édition',
+    text: "Êtes-vous à l'aise pour collecter des informations et les vérifier ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'journal-i-1', category: 'I', emoji: '📚', difficulty: 'basic',
+    sector: 'Journalisme & Édition',
+    text: "Êtes-vous curieux et avide d'apprendre sur tous les sujets ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'journal-i-2', category: 'I', emoji: '🔍', difficulty: 'advanced',
+    sector: 'Journalisme & Édition',
+    text: "Aimeriez-vous enquêter et analyser des sujets en profondeur ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'journal-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Journalisme & Édition',
+    text: "Aimez-vous raconter des histoires de façon captivante ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'journal-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Journalisme & Édition',
+    text: "Aimeriez-vous créer des contenus éditoriaux originaux et percutants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'journal-s-1', category: 'S', emoji: '💬', difficulty: 'basic',
+    sector: 'Journalisme & Édition',
+    text: "Aimez-vous communiquer et vous connecter avec votre audience ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'journal-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Journalisme & Édition',
+    text: "Êtes-vous doué pour interviewer et écouter les témoignages ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'journal-e-1', category: 'E', emoji: '📢', difficulty: 'intermediate',
+    sector: 'Journalisme & Édition',
+    text: "Aimeriez-vous créer un média ou une publication indépendante ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'journal-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Journalisme & Édition',
+    text: "Aimeriez-vous gérer les droits d'auteur et les aspects légaux ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // MARKETING & COMMUNICATION - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'market-r-1', category: 'R', emoji: '📢', difficulty: 'basic',
+    sector: 'Marketing & Communication',
+    text: "Aimez-vous créer des campagnes et mettre en avant des produits ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'market-r-2', category: 'R', emoji: '📣', difficulty: 'intermediate',
+    sector: 'Marketing & Communication',
+    text: "Êtes-vous à l'aise pour gérer les événements et les relations publiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'market-i-1', category: 'I', emoji: '📊', difficulty: 'basic',
+    sector: 'Marketing & Communication',
+    text: "Aimez-vous analyser les données marketing et les comportements ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'market-i-2', category: 'I', emoji: '🔍', difficulty: 'intermediate',
+    sector: 'Marketing & Communication',
+    text: "Aimeriez-vous élaborer des stratégies marketing basées sur les données ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'market-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Marketing & Communication',
+    text: "Avez-vous une créativité naturelle pour la communication ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'market-a-2', category: 'A', emoji: '✨', difficulty: 'advanced',
+    sector: 'Marketing & Communication',
+    text: "Aimeriez-vous créer des campagnes publicitaires mémorables ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'market-s-1', category: 'S', emoji: '😊', difficulty: 'basic',
+    sector: 'Marketing & Communication',
+    text: "Aimez-vous engager votre audience et créer une communauté ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'market-s-2', category: 'S', emoji: '💬', difficulty: 'intermediate',
+    sector: 'Marketing & Communication',
+    text: "Êtes-vous doué pour écouter et répondre aux clients ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'market-e-1', category: 'E', emoji: '📈', difficulty: 'advanced',
+    sector: 'Marketing & Communication',
+    text: "Aimeriez-vous diriger un département marketing ou une agence ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'market-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Marketing & Communication',
+    text: "Aimeriez-vous gérer les budgets et mesurer le ROI ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // SPORTS & ACTIVITÉS PHYSIQUES - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'sports-r-1', category: 'R', emoji: '⚽', difficulty: 'basic',
+    sector: 'Sports & Activités Physiques',
+    text: "Aimez-vous pratiquer des sports et développer vos capacités physiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sports-r-2', category: 'R', emoji: '🏋️', difficulty: 'intermediate',
+    sector: 'Sports & Activités Physiques',
+    text: "Êtes-vous à l'aise avec l'équipement sportif et les installations ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sports-i-1', category: 'I', emoji: '📊', difficulty: 'basic',
+    sector: 'Sports & Activités Physiques',
+    text: "Aimez-vous comprendre les stratégies et tactiques sportives ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sports-i-2', category: 'I', emoji: '📈', difficulty: 'intermediate',
+    sector: 'Sports & Activités Physiques',
+    text: "Aimeriez-vous analyser les performances et les statistiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sports-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Sports & Activités Physiques',
+    text: "Aimeriez-vous créer des mouvements et des styles uniques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sports-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Sports & Activités Physiques',
+    text: "Aimez-vous innover dans la façon de pratiquer ou d'enseigner ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sports-s-1', category: 'S', emoji: '🤝', difficulty: 'basic',
+    sector: 'Sports & Activités Physiques',
+    text: "Aimez-vous participer en équipe et créer l'esprit d'équipe ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sports-s-2', category: 'S', emoji: '👥', difficulty: 'intermediate',
+    sector: 'Sports & Activités Physiques',
+    text: "Êtes-vous doué pour motiver vos coéquipiers ou collègues ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sports-e-1', category: 'E', emoji: '🏆', difficulty: 'advanced',
+    sector: 'Sports & Activités Physiques',
+    text: "Aimeriez-vous devenir un athlète professionnel ou champion ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sports-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Sports & Activités Physiques',
+    text: "Aimeriez-vous respecter les règles et les régulations sportives ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // SPORTS & COACHING - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'coach-sport-r-1', category: 'R', emoji: '💪', difficulty: 'basic',
+    sector: 'Sports & Coaching',
+    text: "Aimez-vous entraîner et préparer physiquement les athlètes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-sport-r-2', category: 'R', emoji: '🏃', difficulty: 'intermediate',
+    sector: 'Sports & Coaching',
+    text: "Êtes-vous à l'aise pour démontrer les techniques et exercices ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-sport-i-1', category: 'I', emoji: '📚', difficulty: 'basic',
+    sector: 'Sports & Coaching',
+    text: "Êtes-vous intéressé par la physiologie et la science du sport ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-sport-i-2', category: 'I', emoji: '📊', difficulty: 'intermediate',
+    sector: 'Sports & Coaching',
+    text: "Aimeriez-vous analyser les performances et optimiser les résultats ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-sport-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Sports & Coaching',
+    text: "Aimeriez-vous créer des programmes d'entraînement originaux ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-sport-a-2', category: 'A', emoji: '💡', difficulty: 'intermediate',
+    sector: 'Sports & Coaching',
+    text: "Aimez-vous innover dans les méthodes d'entraînement ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-sport-s-1', category: 'S', emoji: '❤️', difficulty: 'basic',
+    sector: 'Sports & Coaching',
+    text: "Aimez-vous aider les gens à atteindre leurs objectifs sportifs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-sport-s-2', category: 'S', emoji: '🤝', difficulty: 'advanced',
+    sector: 'Sports & Coaching',
+    text: "Êtes-vous doué pour motiver et encourager vos athlètes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-sport-e-1', category: 'E', emoji: '📈', difficulty: 'intermediate',
+    sector: 'Sports & Coaching',
+    text: "Aimeriez-vous créer une académie ou un centre de coaching sportif ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-sport-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Sports & Coaching',
+    text: "Aimeriez-vous gérer les certifications et assurer la conformité ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // MANAGEMENT SPORTIF - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'sport-mgmt-r-1', category: 'R', emoji: '🎪', difficulty: 'basic',
+    sector: 'Management Sportif',
+    text: "Aimez-vous organiser des événements sportifs et des compétitions ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sport-mgmt-r-2', category: 'R', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Management Sportif',
+    text: "Êtes-vous à l'aise pour gérer les installations et les ressources ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sport-mgmt-i-1', category: 'I', emoji: '📊', difficulty: 'basic',
+    sector: 'Management Sportif',
+    text: "Aimez-vous analyser les données sportives et les tendances ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sport-mgmt-i-2', category: 'I', emoji: '🧮', difficulty: 'intermediate',
+    sector: 'Management Sportif',
+    text: "Aimeriez-vous planifier la stratégie et le développement sportif ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sport-mgmt-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Management Sportif',
+    text: "Aimeriez-vous créer des expériences sportives mémorables ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sport-mgmt-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Management Sportif',
+    text: "Aimez-vous innover dans la promotion et le marketing sportif ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sport-mgmt-s-1', category: 'S', emoji: '😊', difficulty: 'basic',
+    sector: 'Management Sportif',
+    text: "Aimez-vous créer une communauté de fans et de supporters ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sport-mgmt-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Management Sportif',
+    text: "Êtes-vous doué pour négocier avec les partenaires sportifs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sport-mgmt-e-1', category: 'E', emoji: '📈', difficulty: 'advanced',
+    sector: 'Management Sportif',
+    text: "Aimeriez-vous diriger une équipe sportive ou une organisation ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sport-mgmt-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Management Sportif',
+    text: "Aimeriez-vous gérer les budgets et assurer la conformité réglementaire ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // CONFORMITÉ & AUDIT - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'compliance-r-1', category: 'R', emoji: '📋', difficulty: 'basic',
+    sector: 'Conformité & Audit',
+    text: "Aimez-vous vérifier et documenter les processus ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'compliance-r-2', category: 'R', emoji: '✅', difficulty: 'intermediate',
+    sector: 'Conformité & Audit',
+    text: "Êtes-vous à l'aise pour contrôler et certifier la qualité ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'compliance-i-1', category: 'I', emoji: '🔍', difficulty: 'basic',
+    sector: 'Conformité & Audit',
+    text: "Aimez-vous analyser les risques et détecter les anomalies ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'compliance-i-2', category: 'I', emoji: '📚', difficulty: 'advanced',
+    sector: 'Conformité & Audit',
+    text: "Aimeriez-vous interpréter les normes et réglementations ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'compliance-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Conformité & Audit',
+    text: "Aimeriez-vous créer des rapports clairs et compréhensibles ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'compliance-a-2', category: 'A', emoji: '💡', difficulty: 'intermediate',
+    sector: 'Conformité & Audit',
+    text: "Aimez-vous proposer des solutions créatives de conformité ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'compliance-s-1', category: 'S', emoji: '🤝', difficulty: 'basic',
+    sector: 'Conformité & Audit',
+    text: "Aimez-vous communiquer les enjeux de conformité aux équipes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'compliance-s-2', category: 'S', emoji: '💬', difficulty: 'intermediate',
+    sector: 'Conformité & Audit',
+    text: "Êtes-vous doué pour expliquer les implications réglementaires ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'compliance-e-1', category: 'E', emoji: '📈', difficulty: 'intermediate',
+    sector: 'Conformité & Audit',
+    text: "Aimeriez-vous diriger un département de conformité ou d'audit ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'compliance-c-1', category: 'C', emoji: '✅', difficulty: 'advanced',
+    sector: 'Conformité & Audit',
+    text: "Aimeriez-vous assurer l'adhésion stricte aux normes ISO ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // SERVICES À LA PERSONNE - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'service-r-1', category: 'R', emoji: '🧹', difficulty: 'basic',
+    sector: 'Services à la Personne',
+    text: "Aimez-vous accomplir des tâches pratiques et domestiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'service-r-2', category: 'R', emoji: '🛠️', difficulty: 'intermediate',
+    sector: 'Services à la Personne',
+    text: "Êtes-vous à l'aise pour entretenir et réparer les choses ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'service-i-1', category: 'I', emoji: '📚', difficulty: 'basic',
+    sector: 'Services à la Personne',
+    text: "Êtes-vous intéressé par les techniques de service et de bien-être ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'service-i-2', category: 'I', emoji: '🧠', difficulty: 'intermediate',
+    sector: 'Services à la Personne',
+    text: "Aimeriez-vous apprendre et maîtriser différentes spécialités ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'service-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Services à la Personne',
+    text: "Aimeriez-vous créer une ambiance agréable et accueillante ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'service-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Services à la Personne',
+    text: "Aimez-vous personnaliser vos services pour chaque client ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'service-s-1', category: 'S', emoji: '😊', difficulty: 'basic',
+    sector: 'Services à la Personne',
+    text: "Aimez-vous aider les personnes avec empathie et dévouement ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'service-s-2', category: 'S', emoji: '❤️', difficulty: 'advanced',
+    sector: 'Services à la Personne',
+    text: "Êtes-vous doué pour établir des relations de confiance ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'service-e-1', category: 'E', emoji: '📈', difficulty: 'intermediate',
+    sector: 'Services à la Personne',
+    text: "Aimeriez-vous créer votre propre entreprise de services ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'service-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Services à la Personne',
+    text: "Aimeriez-vous gérer les plannings et assurer la qualité ?",
     options: OPTIONS,
   },
 ];
