@@ -1,5 +1,5 @@
 /**
- * Adaptive RIASEC Test — 400 Questions Pool (ÉTAPE 1-2/4: Secteurs 1-20)
+ * Adaptive RIASEC Test — 400 Questions Pool (ÉTAPE 1-3/4: Secteurs 1-30)
  *
  * This pool feeds an adaptive algorithm that selects 24-30 questions
  * based on user responses. Each question is tagged with:
@@ -1317,6 +1317,656 @@ export const adaptiveQuestionPool = [
     id: 'agri-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
     sector: 'Agriculture & Métiers Verts',
     text: "Aimeriez-vous gérer les budgets, les subventions et la conformité ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // CHIMIE & PHARMACIE - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'chem-r-1', category: 'R', emoji: '🧪', difficulty: 'basic',
+    sector: 'Chimie & Pharmacie',
+    text: "Aimez-vous manipuler du matériel de laboratoire et des produits chimiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'chem-r-2', category: 'R', emoji: '⚗️', difficulty: 'intermediate',
+    sector: 'Chimie & Pharmacie',
+    text: "Êtes-vous à l'aise avec les équipements de chimie et les processus pratiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'chem-i-1', category: 'I', emoji: '🧬', difficulty: 'basic',
+    sector: 'Chimie & Pharmacie',
+    text: "Êtes-vous fasciné par les molécules, les réactions chimiques et la physique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'chem-i-2', category: 'I', emoji: '🔬', difficulty: 'advanced',
+    sector: 'Chimie & Pharmacie',
+    text: "Aimeriez-vous concevoir de nouveaux médicaments ou composés chimiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'chem-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Chimie & Pharmacie',
+    text: "Aimeriez-vous créer des formulations innovantes et esthétiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'chem-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Chimie & Pharmacie',
+    text: "Aimez-vous résoudre les défis complexes de façon créative ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'chem-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Chimie & Pharmacie',
+    text: "Aimez-vous expliquer les procédés chimiques aux personnes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'chem-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Chimie & Pharmacie',
+    text: "Êtes-vous doué pour collaborer en équipe scientifique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'chem-e-1', category: 'E', emoji: '📢', difficulty: 'intermediate',
+    sector: 'Chimie & Pharmacie',
+    text: "Aimeriez-vous créer une entreprise pharmaceutique ou chimique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'chem-c-1', category: 'C', emoji: '✅', difficulty: 'advanced',
+    sector: 'Chimie & Pharmacie',
+    text: "Aimeriez-vous assurer la conformité des normes de sécurité et qualité ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // RECHERCHE SCIENTIFIQUE - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'research-r-1', category: 'R', emoji: '🔬', difficulty: 'basic',
+    sector: 'Recherche Scientifique',
+    text: "Aimez-vous conduire des expériences pratiques et observer les résultats ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'research-r-2', category: 'R', emoji: '🧬', difficulty: 'intermediate',
+    sector: 'Recherche Scientifique',
+    text: "Êtes-vous à l'aise avec les appareils scientifiques complexes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'research-i-1', category: 'I', emoji: '📚', difficulty: 'basic',
+    sector: 'Recherche Scientifique',
+    text: "Avez-vous une soif intense de découverte et de connaissance ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'research-i-2', category: 'I', emoji: '🧮', difficulty: 'advanced',
+    sector: 'Recherche Scientifique',
+    text: "Aimeriez-vous contribuer à des découvertes scientifiques majeures ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'research-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Recherche Scientifique',
+    text: "Aimeriez-vous approcher la science de manière créative et innovante ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'research-a-2', category: 'A', emoji: '💡', difficulty: 'intermediate',
+    sector: 'Recherche Scientifique',
+    text: "Aimez-vous proposer des hypothèses originales et non conventionnelles ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'research-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Recherche Scientifique',
+    text: "Aimez-vous collaborer avec d'autres chercheurs et partager vos findings ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'research-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Recherche Scientifique',
+    text: "Êtes-vous doué pour présenter vos résultats et convaincre les pairs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'research-e-1', category: 'E', emoji: '📈', difficulty: 'intermediate',
+    sector: 'Recherche Scientifique',
+    text: "Aimeriez-vous diriger un laboratoire ou une équipe de recherche ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'research-c-1', category: 'C', emoji: '📋', difficulty: 'advanced',
+    sector: 'Recherche Scientifique',
+    text: "Aimeriez-vous gérer les budgets de recherche et la documentation ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // ENVIRONNEMENT & DÉVELOPPEMENT DURABLE - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'env-r-1', category: 'R', emoji: '♻️', difficulty: 'basic',
+    sector: 'Environnement & Développement Durable',
+    text: "Aimez-vous mettre en œuvre des solutions écologiques concrètes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'env-r-2', category: 'R', emoji: '🌱', difficulty: 'intermediate',
+    sector: 'Environnement & Développement Durable',
+    text: "Êtes-vous à l'aise pour gérer les déchets et les ressources durables ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'env-i-1', category: 'I', emoji: '🌍', difficulty: 'basic',
+    sector: 'Environnement & Développement Durable',
+    text: "Êtes-vous préoccupé par les enjeux environnementaux mondiaux ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'env-i-2', category: 'I', emoji: '📊', difficulty: 'advanced',
+    sector: 'Environnement & Développement Durable',
+    text: "Aimeriez-vous analyser et réduire l'empreinte carbone des entreprises ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'env-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Environnement & Développement Durable',
+    text: "Aimeriez-vous créer des campagnes écologiques inspirantes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'env-a-2', category: 'A', emoji: '🌈', difficulty: 'intermediate',
+    sector: 'Environnement & Développement Durable',
+    text: "Aimez-vous concevoir des projets durables et esthétiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'env-s-1', category: 'S', emoji: '❤️', difficulty: 'basic',
+    sector: 'Environnement & Développement Durable',
+    text: "Aimeriez-vous sensibiliser et éduquer les communautés ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'env-s-2', category: 'S', emoji: '👥', difficulty: 'intermediate',
+    sector: 'Environnement & Développement Durable',
+    text: "Aimez-vous mobiliser les gens pour des causes environnementales ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'env-e-1', category: 'E', emoji: '🚀', difficulty: 'intermediate',
+    sector: 'Environnement & Développement Durable',
+    text: "Aimeriez-vous créer une startup ou une ONG écologique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'env-c-1', category: 'C', emoji: '✅', difficulty: 'advanced',
+    sector: 'Environnement & Développement Durable',
+    text: "Aimeriez-vous assurer la conformité aux normes environnementales ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // INGÉNIERIE - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'eng-r-1', category: 'R', emoji: '🏗️', difficulty: 'basic',
+    sector: 'Ingénierie',
+    text: "Aimez-vous construire et assembler des structures complexes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'eng-r-2', category: 'R', emoji: '⚙️', difficulty: 'intermediate',
+    sector: 'Ingénierie',
+    text: "Êtes-vous à l'aise avec les outils et machines industrielles ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'eng-i-1', category: 'I', emoji: '📐', difficulty: 'basic',
+    sector: 'Ingénierie',
+    text: "Êtes-vous fasciné par les mathématiques, la physique et les systèmes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'eng-i-2', category: 'I', emoji: '🧮', difficulty: 'advanced',
+    sector: 'Ingénierie',
+    text: "Aimeriez-vous concevoir et optimiser des systèmes complexes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'eng-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Ingénierie',
+    text: "Aimeriez-vous créer des designs innovants et élégants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'eng-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Ingénierie',
+    text: "Aimez-vous trouver des solutions créatives aux défis techniques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'eng-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Ingénierie',
+    text: "Aimez-vous collaborer avec d'autres ingénieurs et experts ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'eng-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Ingénierie',
+    text: "Êtes-vous doué pour communiquer des concepts techniques complexes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'eng-e-1', category: 'E', emoji: '📈', difficulty: 'advanced',
+    sector: 'Ingénierie',
+    text: "Aimeriez-vous diriger un bureau d'études ou une équipe d'ingénierie ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'eng-c-1', category: 'C', emoji: '📋', difficulty: 'advanced',
+    sector: 'Ingénierie',
+    text: "Aimeriez-vous respecter les normes ISO et les réglementations techniques ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // ENTREPRENEURIAT - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'entre-r-1', category: 'R', emoji: '💼', difficulty: 'basic',
+    sector: 'Entrepreneuriat',
+    text: "Aimez-vous voir vos idées devenir réalité concrètement ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'entre-r-2', category: 'R', emoji: '🛠️', difficulty: 'intermediate',
+    sector: 'Entrepreneuriat',
+    text: "Êtes-vous à l'aise pour résoudre les problèmes pratiques rapidement ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'entre-i-1', category: 'I', emoji: '💡', difficulty: 'basic',
+    sector: 'Entrepreneuriat',
+    text: "Aimez-vous analyser les marchés et identifier les opportunités ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'entre-i-2', category: 'I', emoji: '📊', difficulty: 'intermediate',
+    sector: 'Entrepreneuriat',
+    text: "Aimeriez-vous étudier les tendances et planifier la croissance ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'entre-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Entrepreneuriat',
+    text: "Avez-vous une vision créative pour votre entreprise future ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'entre-a-2', category: 'A', emoji: '🌟', difficulty: 'intermediate',
+    sector: 'Entrepreneuriat',
+    text: "Aimez-vous innover et créer des solutions nouvelles ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'entre-s-1', category: 'S', emoji: '🤝', difficulty: 'basic',
+    sector: 'Entrepreneuriat',
+    text: "Aimez-vous inspirer et motiver une équipe autour de votre vision ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'entre-s-2', category: 'S', emoji: '💬', difficulty: 'intermediate',
+    sector: 'Entrepreneuriat',
+    text: "Êtes-vous doué pour négocier avec partenaires et investisseurs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'entre-e-1', category: 'E', emoji: '🚀', difficulty: 'advanced',
+    sector: 'Entrepreneuriat',
+    text: "Aimeriez-vous créer et diriger votre propre entreprise ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'entre-c-1', category: 'C', emoji: '📈', difficulty: 'intermediate',
+    sector: 'Entrepreneuriat',
+    text: "Aimeriez-vous gérer les finances et assurer la viabilité ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // CONSEIL & COACHING - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'coach-r-1', category: 'R', emoji: '📋', difficulty: 'basic',
+    sector: 'Conseil & Coaching',
+    text: "Aimez-vous organiser et structurer les actions concrètement ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-r-2', category: 'R', emoji: '✅', difficulty: 'intermediate',
+    sector: 'Conseil & Coaching',
+    text: "Êtes-vous à l'aise pour mettre en place et suivre les plans d'action ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-i-1', category: 'I', emoji: '🧠', difficulty: 'basic',
+    sector: 'Conseil & Coaching',
+    text: "Aimez-vous analyser les problèmes et trouver des solutions ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-i-2', category: 'I', emoji: '💡', difficulty: 'intermediate',
+    sector: 'Conseil & Coaching',
+    text: "Aimeriez-vous concevoir des stratégies et des formations personnalisées ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Conseil & Coaching',
+    text: "Aimeriez-vous créer des programmes d'accompagnement innovants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Conseil & Coaching',
+    text: "Aimez-vous trouver des approches créatives au développement humain ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-s-1', category: 'S', emoji: '❤️', difficulty: 'basic',
+    sector: 'Conseil & Coaching',
+    text: "Aimez-vous aider les personnes à atteindre leurs objectifs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-s-2', category: 'S', emoji: '🤝', difficulty: 'advanced',
+    sector: 'Conseil & Coaching',
+    text: "Êtes-vous doué pour établir une relation de confiance et de confiance ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-e-1', category: 'E', emoji: '📢', difficulty: 'intermediate',
+    sector: 'Conseil & Coaching',
+    text: "Aimeriez-vous créer votre propre entreprise de coaching ou conseil ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'coach-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Conseil & Coaching',
+    text: "Aimeriez-vous évaluer les résultats et assurer la conformité ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // PROFESSIONS MÉDICALES - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'med-r-1', category: 'R', emoji: '🩺', difficulty: 'basic',
+    sector: 'Professions Médicales',
+    text: "Aimez-vous manipuler du matériel médical avec précision ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'med-r-2', category: 'R', emoji: '🔬', difficulty: 'intermediate',
+    sector: 'Professions Médicales',
+    text: "Êtes-vous à l'aise avec les procédures médicales et les interventions ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'med-i-1', category: 'I', emoji: '🧬', difficulty: 'basic',
+    sector: 'Professions Médicales',
+    text: "Êtes-vous intéressé par l'anatomie et la physiologie humaine ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'med-i-2', category: 'I', emoji: '📚', difficulty: 'advanced',
+    sector: 'Professions Médicales',
+    text: "Aimeriez-vous contribuer à des avancées en médecine et santé ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'med-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Professions Médicales',
+    text: "Aimeriez-vous créer des approches innovantes aux soins de santé ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'med-a-2', category: 'A', emoji: '💡', difficulty: 'intermediate',
+    sector: 'Professions Médicales',
+    text: "Aimez-vous résoudre les cas médicaux complexes de manière créative ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'med-s-1', category: 'S', emoji: '❤️', difficulty: 'basic',
+    sector: 'Professions Médicales',
+    text: "Avez-vous une forte compassion pour les patients souffrants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'med-s-2', category: 'S', emoji: '🤝', difficulty: 'advanced',
+    sector: 'Professions Médicales',
+    text: "Êtes-vous doué pour communiquer des diagnostics difficiles ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'med-e-1', category: 'E', emoji: '📢', difficulty: 'intermediate',
+    sector: 'Professions Médicales',
+    text: "Aimeriez-vous diriger un hôpital ou une clinique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'med-c-1', category: 'C', emoji: '✅', difficulty: 'advanced',
+    sector: 'Professions Médicales',
+    text: "Aimeriez-vous assurer la conformité aux normes médicales et éthiques ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // SANTÉ & PARAMÉDICAL - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'param-r-1', category: 'R', emoji: '🏥', difficulty: 'basic',
+    sector: 'Santé & Paramédical',
+    text: "Aimez-vous aider les patients à se sentir mieux physiquement ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'param-r-2', category: 'R', emoji: '💪', difficulty: 'intermediate',
+    sector: 'Santé & Paramédical',
+    text: "Êtes-vous à l'aise pour appliquer des techniques thérapeutiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'param-i-1', category: 'I', emoji: '📖', difficulty: 'basic',
+    sector: 'Santé & Paramédical',
+    text: "Êtes-vous intéressé par les techniques de réadaptation et rééducation ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'param-i-2', category: 'I', emoji: '🧬', difficulty: 'intermediate',
+    sector: 'Santé & Paramédical',
+    text: "Aimeriez-vous contribuer à l'amélioration de la qualité de vie ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'param-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Santé & Paramédical',
+    text: "Aimeriez-vous créer des programmes de bien-être holistiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'param-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Santé & Paramédical',
+    text: "Aimez-vous innover dans les approches de soin et guérison ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'param-s-1', category: 'S', emoji: '❤️', difficulty: 'basic',
+    sector: 'Santé & Paramédical',
+    text: "Avez-vous une empathie naturelle pour les personnes en difficulté ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'param-s-2', category: 'S', emoji: '🤝', difficulty: 'advanced',
+    sector: 'Santé & Paramédical',
+    text: "Êtes-vous doué pour motiver les patients dans leur récupération ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'param-e-1', category: 'E', emoji: '📈', difficulty: 'intermediate',
+    sector: 'Santé & Paramédical',
+    text: "Aimeriez-vous créer un centre de soins ou un cabinet indépendant ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'param-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Santé & Paramédical',
+    text: "Aimeriez-vous gérer les dossiers patients et assurer la conformité ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // PETITE ENFANCE - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'child-r-1', category: 'R', emoji: '👶', difficulty: 'basic',
+    sector: 'Petite Enfance',
+    text: "Aimez-vous participer à des jeux et activités pratiques avec les enfants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'child-r-2', category: 'R', emoji: '🧸', difficulty: 'intermediate',
+    sector: 'Petite Enfance',
+    text: "Êtes-vous à l'aise pour gérer la sécurité et les besoins pratiques des enfants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'child-i-1', category: 'I', emoji: '📚', difficulty: 'basic',
+    sector: 'Petite Enfance',
+    text: "Êtes-vous intéressé par le développement et l'apprentissage de l'enfant ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'child-i-2', category: 'I', emoji: '🧠', difficulty: 'intermediate',
+    sector: 'Petite Enfance',
+    text: "Aimeriez-vous concevoir des programmes pédagogiques pour les tout-petits ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'child-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Petite Enfance',
+    text: "Aimeriez-vous créer des environnements colorés et stimulants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'child-a-2', category: 'A', emoji: '🎭', difficulty: 'intermediate',
+    sector: 'Petite Enfance',
+    text: "Aimez-vous animer des activités créatives et ludiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'child-s-1', category: 'S', emoji: '💕', difficulty: 'basic',
+    sector: 'Petite Enfance',
+    text: "Avez-vous beaucoup de patience et d'affection pour les enfants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'child-s-2', category: 'S', emoji: '🤝', difficulty: 'advanced',
+    sector: 'Petite Enfance',
+    text: "Êtes-vous doué pour communiquer avec les parents et créer des liens ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'child-e-1', category: 'E', emoji: '📢', difficulty: 'intermediate',
+    sector: 'Petite Enfance',
+    text: "Aimeriez-vous créer une crèche ou une école maternelle privée ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'child-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Petite Enfance',
+    text: "Aimeriez-vous gérer l'administration et les normes de sécurité ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // ANIMATION SOCIALE - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'anim-r-1', category: 'R', emoji: '🎪', difficulty: 'basic',
+    sector: 'Animation Sociale',
+    text: "Aimez-vous organiser et animer des événements pratiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'anim-r-2', category: 'R', emoji: '🎉', difficulty: 'intermediate',
+    sector: 'Animation Sociale',
+    text: "Êtes-vous à l'aise pour gérer le matériel et l'espace physique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'anim-i-1', category: 'I', emoji: '📊', difficulty: 'basic',
+    sector: 'Animation Sociale',
+    text: "Aimez-vous comprendre les besoins sociaux et les dynamiques de groupe ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'anim-i-2', category: 'I', emoji: '🔍', difficulty: 'intermediate',
+    sector: 'Animation Sociale',
+    text: "Aimeriez-vous analyser l'impact social de vos interventions ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'anim-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Animation Sociale',
+    text: "Avez-vous une créativité naturelle pour animer et divertir ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'anim-a-2', category: 'A', emoji: '🎭', difficulty: 'advanced',
+    sector: 'Animation Sociale',
+    text: "Aimeriez-vous créer des expériences mémorables et enrichissantes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'anim-s-1', category: 'S', emoji: '😊', difficulty: 'basic',
+    sector: 'Animation Sociale',
+    text: "Aimez-vous créer des moments de joie et de cohésion sociale ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'anim-s-2', category: 'S', emoji: '🤝', difficulty: 'advanced',
+    sector: 'Animation Sociale',
+    text: "Êtes-vous doué pour motiver les participants et créer l'inclusion ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'anim-e-1', category: 'E', emoji: '📈', difficulty: 'intermediate',
+    sector: 'Animation Sociale',
+    text: "Aimeriez-vous créer une association ou agence d'animation ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'anim-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Animation Sociale',
+    text: "Aimeriez-vous gérer les budgets et assurer la conformité des activités ?",
     options: OPTIONS,
   },
 ];
