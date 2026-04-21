@@ -134,20 +134,34 @@ export const adaptiveTestEngine = {
 
   /**
    * Select next question intelligently
+   * Avoids sectors where user has shown strong disagreement (2+ "Pas du tout")
    */
   _selectNextQuestion(state) {
-    // Strategy: Priority order
-    // 1. Categories with mid-range scores (45-55) — need clarification
-    // 2. Categories with lowest confidence
-    // 3. Sectors not yet covered
-    // 4. Any remaining
-
     const unused = adaptiveQuestionPool.filter(q => !state.askedIds.has(q.id));
 
     if (unused.length === 0) return null;
 
+    // Identify sectors to skip (2+ "Pas du tout" responses)
+    const sectorsToSkip = new Set();
+    const sectorResponses = {};
+
+    Object.values(state.answers).forEach(({ sector, value }) => {
+      sectorResponses[sector] = [...(sectorResponses[sector] || []), value];
+    });
+
+    Object.entries(sectorResponses).forEach(([sector, responses]) => {
+      const zeroCount = responses.filter(v => v === 0).length;
+      if (zeroCount >= 2) {
+        sectorsToSkip.add(sector);
+      }
+    });
+
+    // Filter out skipped sectors
+    const availableQuestions = unused.filter(q => !sectorsToSkip.has(q.sector));
+    const questionsToConsider = availableQuestions.length > 0 ? availableQuestions : unused;
+
     // Priority 1: Mid-range scores (need clarification)
-    const midRangeQuestion = unused.find(q => {
+    const midRangeQuestion = questionsToConsider.find(q => {
       const score = state.scores[q.category] || 50;
       return score >= 40 && score <= 60;
     });
@@ -161,27 +175,33 @@ export const adaptiveTestEngine = {
     const lowestConfCat = CATEGORIES.reduce((lowest, cat) =>
       (state.confidences[cat] || 0) < (state.confidences[lowest] || 0) ? cat : lowest
     );
-    const lowConfQuestion = unused.find(q => q.category === lowestConfCat);
+    const lowConfQuestion = questionsToConsider.find(q => q.category === lowestConfCat);
     if (lowConfQuestion) {
       state.asked.push(lowConfQuestion);
       state.askedIds.add(lowConfQuestion.id);
       return lowConfQuestion;
     }
 
-    // Priority 3: Sector coverage — pick a sector not yet asked
+    // Priority 3: Sector coverage — pick a sector not yet asked (avoid skipped)
     const coveredSectors = new Set(Object.values(state.answers).map(a => a.sector));
-    const uncoveredQuestion = unused.find(q => !coveredSectors.has(q.sector));
+    const uncoveredQuestion = questionsToConsider.find(
+      q => !coveredSectors.has(q.sector) && !sectorsToSkip.has(q.sector)
+    );
     if (uncoveredQuestion) {
       state.asked.push(uncoveredQuestion);
       state.askedIds.add(uncoveredQuestion.id);
       return uncoveredQuestion;
     }
 
-    // Fallback: Random remaining
-    const random = unused[Math.floor(Math.random() * unused.length)];
-    state.asked.push(random);
-    state.askedIds.add(random.id);
-    return random;
+    // Fallback: Random from available questions
+    const random = questionsToConsider[Math.floor(Math.random() * questionsToConsider.length)];
+    if (random) {
+      state.asked.push(random);
+      state.askedIds.add(random.id);
+      return random;
+    }
+
+    return null;
   },
 
   /**

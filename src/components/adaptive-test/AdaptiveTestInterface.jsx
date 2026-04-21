@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, ChevronRight, Brain, TrendingUp } from 'lucide-react';
+import { Loader2, ChevronRight, Brain, TrendingUp, AlertCircle, Zap } from 'lucide-react';
 import { adaptiveTestEngine } from '@/services/adaptiveTestEngine';
+import { adaptiveQuestionPool } from '@/data/adaptiveQuestions';
 
 const AdaptiveTestInterface = ({ onComplete }) => {
   const [state, setState] = useState(null);
@@ -14,6 +15,8 @@ const AdaptiveTestInterface = ({ onComplete }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [finalProfile, setFinalProfile] = useState(null);
+  const [skippedSectors, setSkippedSectors] = useState(new Set());
+  const [sectorResponses, setSectorResponses] = useState({});
 
   // Initialize test
   useEffect(() => {
@@ -22,15 +25,30 @@ const AdaptiveTestInterface = ({ onComplete }) => {
     setCurrentQuestion(initialState.asked[0]);
   }, []);
 
+  // Detect sector disagreement (2+ consecutive "Pas du tout" = 0)
+  const checkSectorDisagreement = (sector, answers) => {
+    const sectorAnswers = Object.entries(answers)
+      .filter(([qId]) =>
+        adaptiveQuestionPool.find(q => q.id === qId)?.sector === sector
+      )
+      .map(([, ans]) => ans.value)
+      .slice(-2); // Last 2 answers for this sector
+
+    if (sectorAnswers.length >= 2 && sectorAnswers.every(v => v === 0)) {
+      return true; // Skip this sector
+    }
+    return false;
+  };
+
   // Handle answer submission
   const handleAnswer = async (answerValue) => {
     if (!currentQuestion || isLoading) return;
 
     setIsLoading(true);
-    setSelectedAnswer(null);
+    setSelectedAnswer(answerValue);
 
     // Simulate slight delay for UX
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise(resolve => setTimeout(resolve, 400));
 
     try {
       const result = adaptiveTestEngine.recordAnswerAndGetNext(
@@ -39,20 +57,40 @@ const AdaptiveTestInterface = ({ onComplete }) => {
         answerValue
       );
 
+      // Track sector responses and check for disagreement
+      const newSectorResponses = {
+        ...sectorResponses,
+        [currentQuestion.sector]: [...(sectorResponses[currentQuestion.sector] || []), answerValue],
+      };
+      setSectorResponses(newSectorResponses);
+
+      // Check if we should skip this sector
+      if (checkSectorDisagreement(currentQuestion.sector, state.answers)) {
+        const newSkipped = new Set(skippedSectors);
+        newSkipped.add(currentQuestion.sector);
+        setSkippedSectors(newSkipped);
+
+        // Signal to engine to avoid this sector
+        if (state.skippedSectors) {
+          state.skippedSectors = newSkipped;
+        } else {
+          state.skippedSectors = newSkipped;
+        }
+      }
+
       if (result.testComplete) {
-        // Test finished
         const finalResult = adaptiveTestEngine.finalizeTest(state);
         setFinalProfile(finalResult);
         setShowResults(true);
       } else {
-        // Next question
         setCurrentQuestion(result.nextQuestion);
-        setState({ ...state }); // Trigger re-render
+        setState({ ...state });
       }
     } catch (error) {
       console.error('Test error:', error);
     } finally {
       setIsLoading(false);
+      setSelectedAnswer(null);
     }
   };
 
@@ -64,23 +102,29 @@ const AdaptiveTestInterface = ({ onComplete }) => {
 
   if (!state || !currentQuestion) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-slate-50 to-slate-100">
+        <motion.div animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 2, repeat: Infinity }}>
+          <Loader2 className="w-12 h-12 animate-spin text-indigo-600" />
+        </motion.div>
       </div>
     );
   }
 
-  // Current question index (1-based for display)
   const currentQuestionIndex = state.asked.findIndex(q => q.id === currentQuestion.id) + 1;
   const progress = (state.asked.length / 27) * 100;
+  const estimatedRemaining = Math.max(3, Math.ceil(27 - state.asked.length));
 
-  const optionVariants = {
-    hidden: { opacity: 0, y: 10 },
-    show: { opacity: 1, y: 0 },
-  };
+  // RIASEC score visualization
+  const topScores = Object.entries(state.scores || {})
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 3);
+
+  const answerLabels = ['Pas du tout', 'Un peu', 'Beaucoup', 'Passionnément'];
+  const answerColors = ['bg-red-500', 'bg-orange-500', 'bg-green-500', 'bg-blue-600'];
+  const answerEmojis = ['😞', '😐', '🙂', '🚀'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-slate-50 to-slate-100 p-4">
       <AnimatePresence mode="wait">
         {!showResults ? (
           <motion.div
@@ -88,109 +132,176 @@ const AdaptiveTestInterface = ({ onComplete }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="max-w-2xl mx-auto pt-8"
+            className="max-w-3xl mx-auto"
           >
-            {/* Header */}
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-indigo-100 mb-4">
-                <Brain className="w-7 h-7 text-indigo-600" />
+            {/* Compact Header */}
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <Brain className="w-6 h-6 text-indigo-600" />
+                  <h1 className="text-2xl font-black text-slate-900">Test RIASEC Adaptatif</h1>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-slate-500 uppercase font-bold tracking-wide">Temps estimé</p>
+                  <p className="text-lg font-bold text-indigo-600">~{estimatedRemaining} min</p>
+                </div>
               </div>
-              <h1 className="text-4xl font-extrabold text-slate-900 mb-2">
-                Test RIASEC Adaptatif
-              </h1>
-              <p className="text-slate-600 text-lg">
-                Questions intelligentes qui s'adaptent à vos réponses
-              </p>
+
+              {/* Progress Bar */}
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-bold text-slate-700">Question {currentQuestionIndex} / ~27</span>
+                  <span className="text-xs font-bold text-slate-500">{Math.round(progress)}%</span>
+                </div>
+                <Progress value={progress} className="h-2.5 rounded-full" />
+              </div>
             </div>
 
-            {/* Progress */}
-            <Card className="mb-8 border-slate-200 shadow-sm">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-bold text-slate-700">
-                    Progression du Test
-                  </span>
-                  <span className="text-sm font-bold text-indigo-600">
-                    {currentQuestionIndex} / ~27
-                  </span>
-                </div>
-                <Progress value={progress} className="h-3" />
-                <p className="text-xs text-slate-500 mt-2">
-                  {currentQuestionIndex < 10
-                    ? '⏱️ Commençons par les bases...'
-                    : currentQuestionIndex < 20
-                    ? '🎯 Affinage du profil en cours...'
-                    : '✨ Derniers ajustements...'}
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* Question Card */}
+            {/* Main Question Card */}
             <motion.div
               key={currentQuestion.id}
-              initial={{ opacity: 0, scale: 0.96 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-2xl shadow-lg p-8 mb-8"
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white rounded-3xl shadow-xl p-8 mb-6 border border-slate-100"
             >
-              <div className="flex items-start gap-3 mb-6">
-                <span className="text-4xl">{currentQuestion.emoji}</span>
-                <div className="flex-1">
-                  <Badge variant="secondary" className="text-xs mb-2">
-                    {currentQuestion.sector}
-                  </Badge>
-                  <h2 className="text-2xl font-bold text-slate-900">
-                    {currentQuestion.text}
-                  </h2>
+              {/* Question Header */}
+              <div className="mb-8">
+                <div className="flex items-start gap-4 mb-4">
+                  <motion.span
+                    className="text-5xl"
+                    animate={{ rotate: [0, 10, -10, 0] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    {currentQuestion.emoji}
+                  </motion.span>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge className="bg-indigo-100 text-indigo-700 hover:bg-indigo-200">
+                        {currentQuestion.sector}
+                      </Badge>
+                      {skippedSectors.has(currentQuestion.sector) && (
+                        <AlertCircle className="w-4 h-4 text-orange-500" />
+                      )}
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 leading-tight">
+                      {currentQuestion.text}
+                    </h2>
+                  </div>
                 </div>
               </div>
 
-              {/* Answer Options */}
-              <div className="space-y-3">
-                {currentQuestion.options.map((option, idx) => (
-                  <motion.button
-                    key={idx}
-                    variants={optionVariants}
-                    initial="hidden"
-                    animate="show"
-                    transition={{ delay: idx * 0.1 }}
-                    onClick={() => handleAnswer(option.value)}
+              {/* Enhanced Slider Answer */}
+              <div className="mb-8 space-y-6">
+                {/* Slider */}
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="text-sm font-bold text-slate-700">Votre réponse</label>
+                    {selectedAnswer !== null && (
+                      <span className={`text-sm font-bold px-3 py-1 rounded-full ${
+                        selectedAnswer === 0 ? 'bg-red-100 text-red-700' :
+                        selectedAnswer === 33 ? 'bg-orange-100 text-orange-700' :
+                        selectedAnswer === 66 ? 'bg-green-100 text-green-700' :
+                        'bg-blue-100 text-blue-700'
+                      }`}>
+                        {answerLabels[selectedAnswer / 33]}
+                      </span>
+                    )}
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    step="33"
+                    value={selectedAnswer !== null ? selectedAnswer : 50}
+                    onChange={(e) => setSelectedAnswer(Math.round(e.target.value / 33) * 33)}
                     disabled={isLoading}
-                    className={`w-full p-4 rounded-xl border-2 transition-all text-left font-medium ${
-                      selectedAnswer === option.value
-                        ? 'border-indigo-600 bg-indigo-50 text-indigo-900'
-                        : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-300 hover:bg-indigo-50/30'
-                    } ${isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span>{option.text}</span>
-                      <ChevronRight className="w-5 h-5" />
-                    </div>
-                  </motion.button>
-                ))}
+                    className="w-full h-3 bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                  />
+                  <div className="flex justify-between text-xs font-semibold text-slate-600">
+                    <span>Pas du tout</span>
+                    <span>Un peu</span>
+                    <span>Beaucoup</span>
+                    <span>Passionnément</span>
+                  </div>
+                </div>
+
+                {/* Quick Buttons */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {[0, 33, 66, 100].map((value, idx) => (
+                    <motion.button
+                      key={value}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => handleAnswer(value)}
+                      disabled={isLoading}
+                      className={`py-3 px-3 rounded-2xl font-bold text-sm transition-all border-2 flex items-center justify-center gap-2 ${
+                        selectedAnswer === value
+                          ? `${answerColors[idx]} text-white border-transparent shadow-lg`
+                          : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-indigo-300 hover:bg-indigo-50'
+                      } ${isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                    >
+                      <span className="text-xl">{answerEmojis[idx]}</span>
+                      <span className="hidden sm:inline">{answerLabels[idx]}</span>
+                    </motion.button>
+                  ))}
+                </div>
               </div>
 
-              {/* Category Scores Sidebar */}
-              <div className="mt-8 pt-6 border-t border-slate-200">
-                <h3 className="text-xs font-bold text-slate-600 uppercase mb-3 tracking-wider">
-                  Scores actuels
+              {/* Real-time RIASEC Radar */}
+              <div className="bg-gradient-to-br from-slate-50 to-indigo-50 rounded-2xl p-6 border border-slate-100">
+                <h3 className="text-xs font-bold text-slate-600 uppercase mb-4 tracking-wide">
+                  Profil en temps réel
                 </h3>
-                <div className="grid grid-cols-3 gap-2">
-                  {Object.entries(state.scores || {}).map(([cat, score]) => (
-                    <div key={cat} className="text-center">
-                      <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-1">
-                        <span className="font-bold text-indigo-600 text-sm">{score || 0}</span>
-                      </div>
-                      <span className="text-xs font-bold text-slate-600">{cat}</span>
-                    </div>
-                  ))}
+                <div className="grid grid-cols-3 gap-3">
+                  {Object.entries(state.scores || {}).map(([cat, score]) => {
+                    const isTop = topScores.some(([c]) => c === cat);
+                    return (
+                      <motion.div
+                        key={cat}
+                        whileHover={{ scale: 1.05 }}
+                        className={`text-center p-3 rounded-xl transition-all ${
+                          isTop
+                            ? 'bg-indigo-100 border-2 border-indigo-300 shadow-md'
+                            : 'bg-white border border-slate-200'
+                        }`}
+                      >
+                        <div className="text-2xl font-black text-indigo-600 mb-1">{cat}</div>
+                        <Progress value={score || 0} className="h-1.5 mb-2" />
+                        <span className={`text-xs font-bold ${isTop ? 'text-indigo-700' : 'text-slate-600'}`}>
+                          {score || 0}%
+                        </span>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </div>
             </motion.div>
 
-            {/* Info */}
-            <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-center">
-              <p className="text-sm text-indigo-900">
-                💡 Le test choisit les questions suivantes en fonction de vos réponses
+            {/* Skipped Sectors Warning */}
+            {skippedSectors.size > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-orange-50 border-l-4 border-orange-400 rounded-lg p-4 mb-6"
+              >
+                <div className="flex gap-3">
+                  <Zap className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-bold text-orange-900 text-sm">Secteurs adaptés</p>
+                    <p className="text-xs text-orange-700 mt-1">
+                      {Array.from(skippedSectors).join(', ')} ne correspondent pas • Passage à d'autres domaines
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Info Footer */}
+            <div className="text-center">
+              <p className="text-xs text-slate-500">
+                💡 Les questions suivantes s'ajustent selon vos réponses pour plus de précision
               </p>
             </div>
           </motion.div>
@@ -200,67 +311,76 @@ const AdaptiveTestInterface = ({ onComplete }) => {
             key="results"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-2xl mx-auto pt-8"
+            className="max-w-2xl mx-auto"
           >
-            <Card className="border-slate-200 shadow-xl">
-              <CardContent className="p-8">
+            <Card className="border-slate-200 shadow-2xl">
+              <CardContent className="p-8 md:p-12">
                 {/* Success Header */}
-                <div className="text-center mb-8">
+                <div className="text-center mb-10">
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    transition={{ type: 'spring', delay: 0.2 }}
-                    className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4"
+                    transition={{ type: 'spring', stiffness: 100, delay: 0.2 }}
+                    className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 mb-6"
                   >
-                    <TrendingUp className="w-8 h-8 text-green-600" />
+                    <TrendingUp className="w-10 h-10 text-white" />
                   </motion.div>
-                  <h2 className="text-3xl font-extrabold text-slate-900 mb-2">
-                    Test Complété !
-                  </h2>
-                  <p className="text-slate-600">
-                    {finalProfile.questionsAsked} questions adaptatives analysées
+                  <h2 className="text-4xl font-black text-slate-900 mb-2">Test Réussi !</h2>
+                  <p className="text-slate-600 text-lg">
+                    {finalProfile.questionsAsked} questions adaptatives • Analyse en 3-5 minutes
                   </p>
                 </div>
 
                 {/* Profile Code */}
-                <div className="flex justify-center mb-8">
-                  <div className="inline-flex flex-col items-center bg-indigo-600 text-white rounded-2xl px-8 py-6 shadow-lg">
-                    <span className="text-xs font-semibold uppercase tracking-widest text-indigo-200 mb-1">
-                      Votre code RIASEC
+                <div className="flex justify-center mb-10">
+                  <motion.div
+                    initial={{ rotateY: -90 }}
+                    animate={{ rotateY: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    className="bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-3xl px-10 py-8 shadow-xl"
+                  >
+                    <span className="text-xs font-semibold uppercase tracking-widest text-indigo-200 block mb-2">
+                      Votre Profil RIASEC
                     </span>
-                    <span className="text-5xl font-black tracking-widest">
-                      {finalProfile.profileCode}
-                    </span>
-                  </div>
+                    <span className="text-6xl font-black tracking-wider block">{finalProfile.profileCode}</span>
+                  </motion.div>
                 </div>
 
                 {/* Scores */}
-                <div className="bg-slate-50 rounded-xl p-6 mb-8">
-                  <h3 className="font-bold text-slate-900 mb-4">Scores par dimension</h3>
-                  <div className="space-y-3">
+                <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-8 mb-8">
+                  <h3 className="font-bold text-slate-900 mb-6 text-lg">Scores par dimension</h3>
+                  <div className="space-y-4">
                     {Object.entries(finalProfile.profile)
                       .sort(([, a], [, b]) => b - a)
-                      .map(([cat, score]) => (
-                        <div key={cat}>
-                          <div className="flex justify-between text-sm font-bold mb-1">
-                            <span className="text-slate-700">{cat}</span>
-                            <span className="text-indigo-600">{score}%</span>
+                      .map(([cat, score], idx) => (
+                        <motion.div
+                          key={cat}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.1 }}
+                        >
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="font-bold text-slate-700">{cat}</span>
+                            <span className="text-lg font-black text-indigo-600">{score}%</span>
                           </div>
-                          <Progress value={score} className="h-2" />
-                        </div>
+                          <Progress value={score} className="h-3 rounded-full" />
+                        </motion.div>
                       ))}
                   </div>
                 </div>
 
                 {/* Sector Coverage */}
-                <div className="bg-slate-50 rounded-xl p-6 mb-8">
+                <div className="mb-8">
                   <h3 className="font-bold text-slate-900 mb-4">Secteurs explorés</h3>
                   <div className="flex flex-wrap gap-2">
                     {Object.entries(finalProfile.coverageBySector)
                       .sort(([, a], [, b]) => b - a)
-                      .slice(0, 8)
+                      .slice(0, 10)
                       .map(([sector]) => (
-                        <Badge key={sector} variant="secondary" className="text-xs">
+                        <Badge
+                          key={sector}
+                          className="bg-indigo-100 text-indigo-700 hover:bg-indigo-200 text-xs py-1.5 px-3"
+                        >
                           {sector}
                         </Badge>
                       ))}
@@ -268,13 +388,15 @@ const AdaptiveTestInterface = ({ onComplete }) => {
                 </div>
 
                 {/* CTA */}
-                <Button
-                  size="lg"
-                  onClick={handleComplete}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold h-12"
-                >
-                  Voir mes recommandations de métiers
-                </Button>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    size="lg"
+                    onClick={handleComplete}
+                    className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold h-14 rounded-xl text-lg"
+                  >
+                    Découvrir mes métiers recommandés
+                  </Button>
+                </motion.div>
               </CardContent>
             </Card>
           </motion.div>
