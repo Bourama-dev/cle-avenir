@@ -7,7 +7,7 @@ import { usePlanLimitation } from '@/contexts/PlanLimitationContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { BarChart3, Search } from 'lucide-react';
+import { BarChart3, Search, LayoutDashboard } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { MATCHING_CONFIG } from '@/config/matchingAlgorithmConfig';
 import { motion } from 'framer-motion';
@@ -17,6 +17,7 @@ import UpgradePromptSection from '@/components/test-results/UpgradePromptSection
 import PlanAccessMessage from '@/components/test-results/PlanAccessMessage';
 import MetierLoadingSpinner from '@/components/MetierLoadingSpinner';
 import MetierErrorState from '@/components/MetierErrorState';
+import SectorDiscoveryModule from '@/components/test-results/SectorDiscoveryModule';
 
 import { RIASEC_META } from '@/data/optimizedQuestions';
 
@@ -215,8 +216,8 @@ const TestResultsPage = () => {
           <h2 className="text-3xl font-extrabold text-slate-900 mb-8 flex items-center gap-3">
              <span className="text-4xl">🎯</span> Vos Meilleures Correspondances
           </h2>
-          
-          <motion.div 
+
+          <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="show"
@@ -225,10 +226,10 @@ const TestResultsPage = () => {
             {matches.map((match, index) => {
               const isBlurred = index >= visibleCount;
               const isTopThree = index < 3;
-              
+
               return (
                 <motion.div key={match.metierCode} variants={itemVariants} className="h-full">
-                  <MetierCard 
+                  <MetierCard
                     metier={match}
                     isBlurred={isBlurred}
                     isTopThree={isTopThree}
@@ -245,8 +246,35 @@ const TestResultsPage = () => {
           )}
         </section>
 
-        {/* Secondary CTA Section - "Pas d'accord ?" */}
-        <section className="py-8">
+        {/* Sector Discovery Module */}
+        <section className="py-4 bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+          <SectorDiscoveryModule profile={profile} />
+        </section>
+
+        {/* CTAs Section */}
+        <section className="py-8 space-y-6">
+          {/* Go to Dashboard */}
+          <div className="bg-gradient-to-r from-violet-500 to-indigo-600 p-10 rounded-3xl shadow-lg text-center text-white animate-fade-in">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 mb-6">
+              <LayoutDashboard className="w-8 h-8" />
+            </div>
+            <h3 className="text-2xl font-extrabold mb-4">
+              Retour à votre Dashboard
+            </h3>
+            <p className="text-white/90 mb-8 text-lg max-w-2xl mx-auto">
+              Accédez à votre espace personnel pour explorer vos résultats en détail et créer votre plan d'action.
+            </p>
+            <Button
+              size="lg"
+              onClick={() => navigate('/dashboard')}
+              className="bg-white text-indigo-600 hover:bg-slate-50 font-semibold transition-all focus-visible:ring-2 focus-visible:ring-white text-base px-8 h-14"
+            >
+              <LayoutDashboard className="w-5 h-5 mr-2" />
+              Aller au Dashboard
+            </Button>
+          </div>
+
+          {/* Explore Professions */}
           <div className="bg-white p-10 rounded-3xl shadow-md border border-slate-200 text-center max-w-4xl mx-auto animate-fade-in">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-100 mb-6">
               <Search className="w-8 h-8 text-slate-600" />
@@ -255,7 +283,7 @@ const TestResultsPage = () => {
               Pas d'accord avec ces résultats ?
             </h3>
             <p className="text-slate-600 mb-8 text-lg max-w-2xl mx-auto">
-              Explorez notre base de données complète pour trouver le métier qui vous fait vraiment vibrer.
+              Explorez notre base de données complète pour découvrir tous les métiers disponibles.
             </p>
             <Button
               variant="outline"

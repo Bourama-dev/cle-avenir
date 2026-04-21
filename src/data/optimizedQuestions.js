@@ -25,22 +25,22 @@ export const optimizedQuestions = [
   // ── Bloc 1 (R I A S E C) ────────────────────────────────────────────────
   {
     id: 'r1', category: 'R', emoji: '🔧',
-    text: "Aimez-vous réparer des objets, assembler du mobilier ou bricoler à la maison ?",
+    text: "Aimez-vous réparer des objets, assembler du mobilier, entretenir des équipements ou bricoler ?",
     options: OPTIONS,
   },
   {
     id: 'i1', category: 'I', emoji: '🧠',
-    text: "Aimez-vous chercher à comprendre en profondeur comment les choses fonctionnent et pourquoi ?",
+    text: "Aimez-vous chercher à comprendre comment fonctionnent les mécanismes, les matériaux ou les processus ?",
     options: OPTIONS,
   },
   {
     id: 'a1', category: 'A', emoji: '🎨',
-    text: "Exprimez-vous votre créativité à travers le dessin, la musique, la photo ou l'écriture ?",
+    text: "Exprimez-vous votre créativité à travers le dessin, la musique, la mode, le textile ou l'écriture ?",
     options: OPTIONS,
   },
   {
     id: 's1', category: 'S', emoji: '🤝',
-    text: "Aimez-vous aider les autres à surmonter leurs difficultés personnelles ou professionnelles ?",
+    text: "Aimez-vous aider, secourir ou assister les autres dans leurs difficultés ?",
     options: OPTIONS,
   },
   {
@@ -57,17 +57,17 @@ export const optimizedQuestions = [
   // ── Bloc 2 (R I A S E C) ────────────────────────────────────────────────
   {
     id: 'r2', category: 'R', emoji: '🏗️',
-    text: "Préférez-vous un travail où vous voyez concrètement le résultat de ce que vous faites de vos mains ?",
+    text: "Préférez-vous un travail où vous voyez et touchez le résultat tangible — tissus, matériaux, structures ?",
     options: OPTIONS,
   },
   {
     id: 'i2', category: 'I', emoji: '🔬',
-    text: "Appréciez-vous les problèmes complexes qui demandent observation, méthode et analyse ?",
+    text: "Appréciez-vous les problèmes complexes en chimie, physique ou processus qui demandent analyse ?",
     options: OPTIONS,
   },
   {
     id: 'a2', category: 'A', emoji: '✨',
-    text: "Aimez-vous concevoir et réaliser des projets à votre façon, avec une grande liberté créative ?",
+    text: "Aimez-vous concevoir et réaliser des projets (espaces, bâtiments, objets) avec liberté créative ?",
     options: OPTIONS,
   },
   {
@@ -82,7 +82,7 @@ export const optimizedQuestions = [
   },
   {
     id: 'c2', category: 'C', emoji: '📋',
-    text: "Appréciez-vous les tâches qui demandent rigueur, méthode et respect strict des procédures ?",
+    text: "Appréciez-vous les tâches qui demandent rigueur, respect des procédures et des réglementations ?",
     options: OPTIONS,
   },
 
@@ -94,12 +94,12 @@ export const optimizedQuestions = [
   },
   {
     id: 'i3', category: 'I', emoji: '📚',
-    text: "Passez-vous du temps à lire, faire des recherches ou approfondir un sujet qui vous passionne ?",
+    text: "Passez-vous du temps à lire, chercher ou approfondir un sujet qui vous passionne ?",
     options: OPTIONS,
   },
   {
     id: 'a3', category: 'A', emoji: '🎭',
-    text: "Êtes-vous sensible à l'esthétique — les couleurs, les formes, les sons, la mise en scène ?",
+    text: "Êtes-vous sensible à l'esthétique — couleurs, formes, sons, matériaux, compositions visuelles ?",
     options: OPTIONS,
   },
   {
@@ -121,7 +121,7 @@ export const optimizedQuestions = [
   // ── Bloc 4 (R I S E C) ──────────────────────────────────────────────────
   {
     id: 'r4', category: 'R', emoji: '⚙️',
-    text: "Aimez-vous utiliser, entretenir ou régler des machines, outils ou équipements techniques ?",
+    text: "Aimez-vous utiliser, entretenir ou régler des machines, équipements techniques ou systèmes électroniques ?",
     options: OPTIONS,
   },
   {
@@ -131,34 +131,34 @@ export const optimizedQuestions = [
   },
   {
     id: 's4', category: 'S', emoji: '❤️',
-    text: "Avez-vous de l'empathie naturelle et aimez-vous soutenir les personnes en difficulté ?",
+    text: "Avez-vous de l'empathie naturelle et aimez-vous soutenir ou soigner les personnes en difficulté ?",
     options: OPTIONS,
   },
   {
     id: 'e4', category: 'E', emoji: '💡',
-    text: "Aimez-vous lancer de nouveaux projets, créer votre propre activité ou prendre des risques calculés ?",
+    text: "Aimez-vous lancer des projets (immobilier, entreprise, développement) ou créer votre activité ?",
     options: OPTIONS,
   },
   {
     id: 'c4', category: 'C', emoji: '🏢',
-    text: "Appréciez-vous un cadre de travail bien structuré, avec des rôles et des objectifs clairement définis ?",
+    text: "Appréciez-vous un cadre bien structuré, avec des rôles et des objectifs clairement définis ?",
     options: OPTIONS,
   },
 
   // ── Bloc 5 (R I S A) ────────────────────────────────────────────────────
   {
     id: 'r5', category: 'R', emoji: '🏭',
-    text: "Vous sentez-vous dans votre élément sur le terrain, en atelier, en laboratoire pratique ou en chantier ?",
+    text: "Vous sentez-vous dans votre élément sur le terrain, en atelier, en usine, en labo ou en chantier ?",
     options: OPTIONS,
   },
   {
     id: 'i5', category: 'I', emoji: '🔭',
-    text: "Préférez-vous travailler de façon approfondie et autonome sur des sujets scientifiques ou techniques ?",
+    text: "Préférez-vous travailler en profondeur sur des sujets scientifiques, chimiques ou techniques ?",
     options: OPTIONS,
   },
   {
     id: 's5', category: 'S', emoji: '👂',
-    text: "Appréciez-vous les métiers de contact humain : soins, éducation, conseil ou service à la personne ?",
+    text: "Appréciez-vous les métiers de contact : soins, éducation, sécurité, assistance ou conseil ?",
     options: OPTIONS,
   },
   {
