@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { 
-  BookOpen, Code, Layers, GitBranch, FileCode, Workflow, 
-  ChevronRight, Hash, Scale, MessageSquare, Zap, Target, 
+import {
+  BookOpen, Code, Layers, GitBranch, FileCode, Workflow,
+  ChevronRight, Hash, Scale, MessageSquare, Zap, Target,
   ArrowRight, ClipboardList, Compass, Database, Briefcase,
   Crosshair, BarChart, Users, Brain, Award, CheckCircle,
   HardDrive, Settings
@@ -13,6 +13,7 @@ import { Separator } from '@/components/ui/separator';
 
 const DocumentationPage = () => {
   const [activeSection, setActiveSection] = useState('collecte');
+  const sectionRefs = useRef({});
 
   const sections = [
     { id: 'collecte', title: '1️⃣ Collecte des réponses', icon: ClipboardList },
@@ -33,9 +34,39 @@ const DocumentationPage = () => {
     { id: 'rpc', title: '⚙️ Fonctions RPC', icon: Settings }
   ];
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.3, rootMargin: '-100px' }
+    );
+
+    sections.forEach((section) => {
+      const element = document.getElementById(section.id);
+      if (element) {
+        observer.observe(element);
+        sectionRefs.current[section.id] = element;
+      }
+    });
+
+    return () => {
+      Object.values(sectionRefs.current).forEach((element) => {
+        observer.unobserve(element);
+      });
+    };
+  }, []);
+
   const scrollToSection = (id) => {
-    setActiveSection(id);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setActiveSection(id);
+    }
   };
 
   return (
@@ -45,18 +76,18 @@ const DocumentationPage = () => {
         <meta name="description" content="CléAvenir - Moteur de Recommandation Hybride Auto-Apprenant" />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50" style={{ scrollBehavior: 'smooth' }}>
         {/* Hero Header */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-12 md:py-16">
           <div className="container mx-auto px-4 max-w-7xl">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 bg-white/10 rounded-xl backdrop-blur-sm">
-                <BookOpen className="h-10 w-10 text-white" />
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4">
+              <div className="p-3 bg-white/10 rounded-xl backdrop-blur-sm flex-shrink-0">
+                <BookOpen className="h-10 w-10 text-white" aria-hidden="true" />
               </div>
-              <h1 className="text-3xl md:text-5xl font-bold">CléAvenir - Moteur de Recommandation Hybride Auto-Apprenant</h1>
+              <h1 className="text-3xl md:text-5xl font-bold leading-tight">CléAvenir - Moteur de Recommandation Hybride Auto-Apprenant</h1>
             </div>
             <p className="text-lg md:text-xl text-blue-100 max-w-3xl ml-1">
-              Système scientifiquement cohérent combinant psychométrie, similarité vectorielle, statistiques adaptatives et reinforcement learning.
+              Système scientifiquement cohérent combinant psychométrie, similarité vectorielle, statistiques adaptatives et apprentissage par renforcement.
             </p>
           </div>
         </div>
@@ -64,26 +95,28 @@ const DocumentationPage = () => {
         <div className="container mx-auto px-4 max-w-7xl py-8">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Sidebar - Table of Contents */}
-            <aside className="lg:w-72 lg:sticky lg:top-24 h-fit z-10">
+            <aside className="lg:w-72 lg:sticky lg:top-24 h-fit z-10" role="navigation" aria-label="Table des matières">
               <Card className="shadow-lg border-none bg-white/80 backdrop-blur-sm">
                 <CardHeader className="pb-3">
                   <CardTitle className="text-lg font-bold text-slate-800">Table des matières</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-1 h-[65vh] overflow-y-auto custom-scrollbar">
+                <CardContent className="space-y-1 max-h-[70vh] lg:max-h-[65vh] overflow-y-auto custom-scrollbar pr-2">
                   {sections.map((section) => {
                     const Icon = section.icon;
                     return (
                       <button
                         key={section.id}
                         onClick={() => scrollToSection(section.id)}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all duration-200 group ${
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${
                           activeSection === section.id
-                            ? 'bg-blue-100 text-blue-700 font-bold shadow-sm'
+                            ? 'bg-blue-100 text-blue-900 font-semibold shadow-sm border border-blue-200'
                             : 'hover:bg-slate-100 text-slate-600 hover:text-slate-900'
                         }`}
+                        aria-current={activeSection === section.id ? 'page' : undefined}
+                        aria-label={`Aller à ${section.title}`}
                       >
                         <Icon className={`h-4 w-4 flex-shrink-0 transition-colors ${
-                          activeSection === section.id ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'
+                          activeSection === section.id ? 'text-blue-700' : 'text-slate-400 group-hover:text-slate-600'
                         }`} />
                         <span className="text-sm">{section.title}</span>
                       </button>
@@ -94,12 +127,12 @@ const DocumentationPage = () => {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 space-y-12">
+            <main className="flex-1 space-y-12" role="main">
               
               {/* Section 1 */}
               <section id="collecte" className="scroll-mt-28">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
+                  <div className="p-2 bg-blue-100 rounded-lg text-blue-600" aria-hidden="true">
                     <ClipboardList className="h-6 w-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-bold text-slate-800">1️⃣ Collecte des réponses</h2>
@@ -158,7 +191,7 @@ const DocumentationPage = () => {
               {/* Section 3 */}
               <section id="riasec" className="scroll-mt-28">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-green-100 rounded-lg text-green-600">
+                  <div className="p-2 bg-green-100 rounded-lg text-green-600" aria-hidden="true">
                     <Compass className="h-6 w-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-bold text-slate-800">3️⃣ Projection RIASEC</h2>
@@ -177,8 +210,8 @@ const DocumentationPage = () => {
                         <tbody className="divide-y divide-slate-100 bg-white">
                           <tr className="hover:bg-slate-50"><td className="px-6 py-3 font-bold text-slate-900">R (Réaliste)</td><td className="px-6 py-3 text-slate-600">pratique, construction, sport</td></tr>
                           <tr className="hover:bg-slate-50"><td className="px-6 py-3 font-bold text-slate-900">I (Investigateur)</td><td className="px-6 py-3 text-slate-600">analytique, tech, innovation</td></tr>
-                          <tr className="hover:bg-slate-50"><td className="px-6 py-3 font-bold text-slate-900">A (Artistique)</td><td className="px-6 py-3 text-slate-600">art, creativite</td></tr>
-                          <tr className="hover:bg-slate-50"><td className="px-6 py-3 font-bold text-slate-900">S (Social)</td><td className="px-6 py-3 text-slate-600">relationnel, education, sante</td></tr>
+                          <tr className="hover:bg-slate-50"><td className="px-6 py-3 font-bold text-slate-900">A (Artistique)</td><td className="px-6 py-3 text-slate-600">art, créativité</td></tr>
+                          <tr className="hover:bg-slate-50"><td className="px-6 py-3 font-bold text-slate-900">S (Social)</td><td className="px-6 py-3 text-slate-600">relationnel, éducation, santé</td></tr>
                           <tr className="hover:bg-slate-50"><td className="px-6 py-3 font-bold text-slate-900">E (Entreprenant)</td><td className="px-6 py-3 text-slate-600">commerce, leadership, marketing</td></tr>
                           <tr className="hover:bg-slate-50"><td className="px-6 py-3 font-bold text-slate-900">C (Conventionnel)</td><td className="px-6 py-3 text-slate-600">rigueur, droit</td></tr>
                         </tbody>
@@ -199,7 +232,7 @@ const DocumentationPage = () => {
               {/* Section 4 */}
               <section id="rome" className="scroll-mt-28">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-yellow-100 rounded-lg text-yellow-600">
+                  <div className="p-2 bg-yellow-100 rounded-lg text-yellow-600" aria-hidden="true">
                     <Database className="h-6 w-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-bold text-slate-800">4️⃣ Récupération métiers ROME</h2>
@@ -226,7 +259,7 @@ const DocumentationPage = () => {
               {/* Section 5 */}
               <section id="vecteur-metier" className="scroll-mt-28">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600">
+                  <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600" aria-hidden="true">
                     <Briefcase className="h-6 w-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-bold text-slate-800">5️⃣ Construction du vecteur métier</h2>
@@ -258,7 +291,7 @@ const DocumentationPage = () => {
               <div className="grid md:grid-cols-2 gap-8">
                 <section id="similarite" className="scroll-mt-28">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-pink-100 rounded-lg text-pink-600">
+                    <div className="p-2 bg-pink-100 rounded-lg text-pink-600" aria-hidden="true">
                       <Crosshair className="h-6 w-6" />
                     </div>
                     <h2 className="text-xl md:text-2xl font-bold text-slate-800">6️⃣ Similarité vectorielle</h2>
@@ -279,7 +312,7 @@ const DocumentationPage = () => {
 
                 <section id="zscore" className="scroll-mt-28">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-teal-100 rounded-lg text-teal-600">
+                    <div className="p-2 bg-teal-100 rounded-lg text-teal-600" aria-hidden="true">
                       <BarChart className="h-6 w-6" />
                     </div>
                     <h2 className="text-xl md:text-2xl font-bold text-slate-800">7️⃣ Normalisation Z-score</h2>
@@ -309,7 +342,7 @@ const DocumentationPage = () => {
               <div className="grid md:grid-cols-2 gap-8">
                 <section id="comportement" className="scroll-mt-28">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-orange-100 rounded-lg text-orange-600">
+                    <div className="p-2 bg-orange-100 rounded-lg text-orange-600" aria-hidden="true">
                       <Users className="h-6 w-6" />
                     </div>
                     <h2 className="text-xl md:text-2xl font-bold text-slate-800">8️⃣ Couche adaptative</h2>
@@ -334,7 +367,7 @@ const DocumentationPage = () => {
 
                 <section id="apprentissage" className="scroll-mt-28">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-cyan-100 rounded-lg text-cyan-600">
+                    <div className="p-2 bg-cyan-100 rounded-lg text-cyan-600" aria-hidden="true">
                       <Brain className="h-6 w-6" />
                     </div>
                     <h2 className="text-xl md:text-2xl font-bold text-slate-800">9️⃣ Apprentissage direct</h2>
@@ -360,7 +393,7 @@ const DocumentationPage = () => {
               {/* Section 10 */}
               <section id="resultat" className="scroll-mt-28">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-yellow-100 rounded-lg text-yellow-600">
+                  <div className="p-2 bg-yellow-100 rounded-lg text-yellow-600" aria-hidden="true">
                     <Award className="h-6 w-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-bold text-slate-800">🔟 Résultat final</h2>
@@ -394,7 +427,7 @@ const DocumentationPage = () => {
               <div className="grid md:grid-cols-2 gap-8">
                 <section id="moteur-realite" className="scroll-mt-28">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
+                    <div className="p-2 bg-blue-100 rounded-lg text-blue-600" aria-hidden="true">
                       <Zap className="h-6 w-6" />
                     </div>
                     <h2 className="text-xl md:text-2xl font-bold text-slate-800">🧠 Ce que le moteur fait réellement</h2>
@@ -404,12 +437,12 @@ const DocumentationPage = () => {
                     <CardContent className="pt-6 px-6 pb-8">
                       <p className="font-semibold text-slate-800 mb-4">Il combine :</p>
                       <ul className="space-y-3 text-slate-700">
-                        <li className="flex items-start gap-2"><CheckCircle className="h-5 w-5 text-blue-500 shrink-0"/> Psychométrie (dimensions + RIASEC)</li>
-                        <li className="flex items-start gap-2"><CheckCircle className="h-5 w-5 text-blue-500 shrink-0"/> Similarité vectorielle</li>
-                        <li className="flex items-start gap-2"><CheckCircle className="h-5 w-5 text-blue-500 shrink-0"/> Statistiques adaptatives</li>
-                        <li className="flex items-start gap-2"><CheckCircle className="h-5 w-5 text-blue-500 shrink-0"/> Reinforcement learning léger</li>
-                        <li className="flex items-start gap-2"><CheckCircle className="h-5 w-5 text-blue-500 shrink-0"/> Données gouvernementales ROME</li>
-                        <li className="flex items-start gap-2"><CheckCircle className="h-5 w-5 text-blue-500 shrink-0"/> Base évolutive auto-calibrée</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="h-5 w-5 text-blue-500 shrink-0" aria-hidden="true"/> Psychométrie (dimensions + RIASEC)</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="h-5 w-5 text-blue-500 shrink-0" aria-hidden="true"/> Similarité vectorielle</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="h-5 w-5 text-blue-500 shrink-0" aria-hidden="true"/> Statistiques adaptatives</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="h-5 w-5 text-blue-500 shrink-0" aria-hidden="true"/> Reinforcement learning léger</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="h-5 w-5 text-blue-500 shrink-0" aria-hidden="true"/> Données gouvernementales ROME</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="h-5 w-5 text-blue-500 shrink-0" aria-hidden="true"/> Base évolutive auto-calibrée</li>
                       </ul>
                     </CardContent>
                   </Card>
@@ -417,7 +450,7 @@ const DocumentationPage = () => {
 
                 <section id="resume" className="scroll-mt-28">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-green-100 rounded-lg text-green-600">
+                    <div className="p-2 bg-green-100 rounded-lg text-green-600" aria-hidden="true">
                       <CheckCircle className="h-6 w-6" />
                     </div>
                     <h2 className="text-xl md:text-2xl font-bold text-slate-800">📊 En résumé</h2>
@@ -425,13 +458,13 @@ const DocumentationPage = () => {
                   <Card className="shadow-lg border-none overflow-hidden h-full">
                     <div className="h-2 bg-gradient-to-r from-green-500 to-emerald-600"></div>
                     <CardContent className="pt-6 px-6 pb-8">
-                      <p className="font-semibold text-slate-800 mb-4">Le test est maintenant :</p>
+                      <p className="font-semibold text-slate-800 mb-4">Le moteur est maintenant :</p>
                       <ul className="space-y-3 text-slate-700">
-                        <li className="flex items-start gap-2"><Zap className="h-5 w-5 text-green-500 shrink-0"/> Scientifiquement cohérent</li>
-                        <li className="flex items-start gap-2"><Zap className="h-5 w-5 text-green-500 shrink-0"/> Mathématiquement stable</li>
-                        <li className="flex items-start gap-2"><Zap className="h-5 w-5 text-green-500 shrink-0"/> Basé sur données officielles</li>
-                        <li className="flex items-start gap-2"><Zap className="h-5 w-5 text-green-500 shrink-0"/> Auto-améliorant</li>
-                        <li className="flex items-start gap-2"><Zap className="h-5 w-5 text-green-500 shrink-0"/> Prêt pour ML supervisé futur</li>
+                        <li className="flex items-start gap-2"><Zap className="h-5 w-5 text-green-500 shrink-0" aria-hidden="true"/> Scientifiquement cohérent</li>
+                        <li className="flex items-start gap-2"><Zap className="h-5 w-5 text-green-500 shrink-0" aria-hidden="true"/> Mathématiquement stable</li>
+                        <li className="flex items-start gap-2"><Zap className="h-5 w-5 text-green-500 shrink-0" aria-hidden="true"/> Basé sur données officielles</li>
+                        <li className="flex items-start gap-2"><Zap className="h-5 w-5 text-green-500 shrink-0" aria-hidden="true"/> Auto-améliorant</li>
+                        <li className="flex items-start gap-2"><Zap className="h-5 w-5 text-green-500 shrink-0" aria-hidden="true"/> Prêt pour apprentissage supervisé futur</li>
                       </ul>
                     </CardContent>
                   </Card>
@@ -441,7 +474,7 @@ const DocumentationPage = () => {
               {/* Section 13 */}
               <section id="architecture" className="scroll-mt-28">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-purple-100 rounded-lg text-purple-600">
+                  <div className="p-2 bg-purple-100 rounded-lg text-purple-600" aria-hidden="true">
                     <Workflow className="h-6 w-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-bold text-slate-800">🏗️ Architecture globale</h2>
@@ -476,7 +509,7 @@ const DocumentationPage = () => {
               {/* Section 14 */}
               <section id="fichiers" className="scroll-mt-28">
                  <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600">
+                  <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600" aria-hidden="true">
                     <FileCode className="h-6 w-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-bold text-slate-800">📁 Fichiers clés</h2>
@@ -511,7 +544,7 @@ const DocumentationPage = () => {
               <div className="grid md:grid-cols-2 gap-8 mb-12">
                 <section id="tables" className="scroll-mt-28">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-rose-100 rounded-lg text-rose-600">
+                    <div className="p-2 bg-rose-100 rounded-lg text-rose-600" aria-hidden="true">
                       <HardDrive className="h-6 w-6" />
                     </div>
                     <h2 className="text-xl md:text-2xl font-bold text-slate-800">🗄️ Tables Supabase</h2>
@@ -539,7 +572,7 @@ const DocumentationPage = () => {
 
                 <section id="rpc" className="scroll-mt-28">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-slate-200 rounded-lg text-slate-700">
+                    <div className="p-2 bg-slate-200 rounded-lg text-slate-700" aria-hidden="true">
                       <Settings className="h-6 w-6" />
                     </div>
                     <h2 className="text-xl md:text-2xl font-bold text-slate-800">⚙️ Fonctions RPC</h2>
