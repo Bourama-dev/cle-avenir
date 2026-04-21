@@ -20,7 +20,8 @@ import {
   Shield,
   Menu,
   X,
-  Briefcase
+  Briefcase,
+  Wrench
 } from 'lucide-react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Button } from '@/components/ui/button';
@@ -63,6 +64,7 @@ const AdminSidebar = ({ currentPath }) => {
     { icon: <MessageSquare size={20} />, label: 'Support & Feedback', path: '/admin/support' },
     { icon: <Library size={20} />, label: 'Wiki Équipe', path: '/admin/wiki' },
     { icon: <FileCheck size={20} />, label: 'Docs & Checklists', path: '/admin/docs' },
+    { icon: <Wrench size={20} />, label: 'Opérations RGPD', path: '/admin/gdpr-ops' },
     
     { icon: <Settings size={20} />, label: 'Paramètres', path: '/admin/settings' },
   ];

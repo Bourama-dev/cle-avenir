@@ -144,17 +144,13 @@ const InstitutionDashboard = lazy(() => import('@/components/InstitutionDashboar
 const UserManagement = lazy(() => import('@/components/establishment/UserManagement'));
 
 // Admin Pages
-const AdminPage = lazy(() => import('@/pages/AdminPage'));
-const AdminDashboardPage = lazy(() => import('@/pages/AdminDashboardPage')); 
+const AdminDashboardPage = lazy(() => import('@/pages/AdminDashboardPage'));
 const AdminInstitutionsPage = lazy(() => import('@/pages/AdminInstitutionsPage'));
 const AdminInstitutionCodesPage = lazy(() => import('@/pages/AdminInstitutionCodesPage'));
 const AdminInstitutionStaffPage = lazy(() => import('@/pages/AdminInstitutionStaffPage'));
 const AdminAnalyticsDashboard = lazy(() => import('@/pages/AdminAnalyticsDashboard'));
 const AdminWeightAuditPage = lazy(() => import('@/pages/AdminWeightAuditPage'));
 const EstablishmentDashboardPage = lazy(() => import('@/pages/EstablishmentDashboardPage'));
-const RgpdCompliancePage = lazy(() => import('@/pages/admin/RgpdCompliancePage'));
-const LegalVersionsPage = lazy(() => import('@/pages/admin/LegalVersionsPage'));
-const SecurityAuditPage = lazy(() => import('@/pages/admin/SecurityAuditPage'));
 const AdminMetiers = lazy(() => import('@/pages/AdminMetiers'));
 const AdminSettingsPage = lazy(() => import('@/pages/AdminSettingsPage'));
 const ContentManagementPage = lazy(() => import('@/pages/admin/ContentManagementPage'));
@@ -390,7 +386,7 @@ const PageContent = () => {
                   <Route path="/user/cookies-preferences" element={<ProtectedRoute><PageTransition><CookiesPreferencesPage /></PageTransition></ProtectedRoute>} />
                   
                   {/* Admin Routes */}
-                  <Route path="/admin" element={<Navigate to="/admin/content" replace />} />
+                  <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
                   <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboardPage onNavigate={handleNavigate} /></AdminRoute>} />
                   <Route path="/admin/metiers" element={<AdminRoute><AdminMetiers /></AdminRoute>} />
                   <Route path="/admin/institutions" element={<AdminRoute><AdminInstitutionsPage /></AdminRoute>} />
@@ -399,9 +395,8 @@ const PageContent = () => {
                   <Route path="/admin/institution/:id/staff" element={<AdminRoute><AdminInstitutionStaffPage /></AdminRoute>} />
                   <Route path="/admin/analytics" element={<AdminRoute><AdminAnalyticsDashboard /></AdminRoute>} />
                   <Route path="/admin/weight-audit" element={<AdminRoute><AdminWeightAuditPage /></AdminRoute>} />
-                  <Route path="/admin/rgpd-compliance" element={<AdminRoute><RgpdCompliancePage /></AdminRoute>} />
-                  <Route path="/admin/legal-versions" element={<AdminRoute><LegalVersionsPage /></AdminRoute>} />
-                  <Route path="/admin/security-audit" element={<AdminRoute><SecurityAuditPage /></AdminRoute>} />
+                  <Route path="/admin/rgpd-compliance" element={<Navigate to="/admin/compliance" replace />} />
+                  <Route path="/admin/security-audit" element={<Navigate to="/admin/security" replace />} />
                   <Route path="/admin/settings" element={<AdminRoute><AdminSettingsPage /></AdminRoute>} />
                   <Route path="/admin/content" element={<AdminRoute><ContentManagementPage /></AdminRoute>} />
                   <Route path="/admin/*" element={<AdminRoute><AdminDashboardPage onNavigate={handleNavigate} /></AdminRoute>} />

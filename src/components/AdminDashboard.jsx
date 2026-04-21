@@ -78,6 +78,7 @@ const AdminDashboard = ({ onNavigate }) => {
               <Route path="security" element={<AdminSecurity />} />
               <Route path="legal-versions" element={<AdminLegalVersions />} />
               <Route path="docs" element={<AdminGdprDocs />} />
+              <Route path="gdpr-ops" element={<AdminGdprOps />} />
               
               <Route path="settings" element={<AdminSettings />} />
               
