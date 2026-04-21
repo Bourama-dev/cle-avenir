@@ -70,7 +70,10 @@ const AdaptiveTestInterface = ({ onComplete }) => {
     );
   }
 
+  // Current question index (1-based for display)
+  const currentQuestionIndex = state.asked.findIndex(q => q.id === currentQuestion.id) + 1;
   const progress = (state.asked.length / 27) * 100;
+
   const optionVariants = {
     hidden: { opacity: 0, y: 10 },
     show: { opacity: 1, y: 0 },
@@ -108,14 +111,14 @@ const AdaptiveTestInterface = ({ onComplete }) => {
                     Progression du Test
                   </span>
                   <span className="text-sm font-bold text-indigo-600">
-                    {state.asked.length} / 27
+                    {currentQuestionIndex} / ~27
                   </span>
                 </div>
                 <Progress value={progress} className="h-3" />
                 <p className="text-xs text-slate-500 mt-2">
-                  {state.asked.length < 15
+                  {currentQuestionIndex < 10
                     ? '⏱️ Commençons par les bases...'
-                    : state.asked.length < 20
+                    : currentQuestionIndex < 20
                     ? '🎯 Affinage du profil en cours...'
                     : '✨ Derniers ajustements...'}
                 </p>

@@ -21,20 +21,21 @@ const CONFIDENCE_THRESHOLD = 0.25; // Std dev threshold
 
 export const adaptiveTestEngine = {
   /**
-   * Initialize: Get first 6 questions (one per category, basic level)
+   * Initialize: Start with the FIRST basic question only
+   * Next questions will be selected adaptively
    */
   initializeTest() {
-    const firstQuestions = CATEGORIES.map(cat =>
-      adaptiveQuestionPool.find(q => q.category === cat && q.difficulty === 'basic')
-    ).filter(Boolean);
+    const firstQuestion = adaptiveQuestionPool.find(
+      q => q.category === 'R' && q.difficulty === 'basic'
+    );
 
     return {
-      asked: firstQuestions,
-      askedIds: new Set(firstQuestions.map(q => q.id)),
-      remaining: adaptiveQuestionPool.filter(q => !firstQuestions.some(fq => fq.id === q.id)),
+      asked: [firstQuestion],
+      askedIds: new Set([firstQuestion.id]),
+      remaining: adaptiveQuestionPool.filter(q => q.id !== firstQuestion.id),
       answers: {},
-      scores: {},
-      confidences: {},
+      scores: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
+      confidences: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
     };
   },
 
