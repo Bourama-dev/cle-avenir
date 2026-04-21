@@ -33,37 +33,43 @@
     --text-secondary: #64748b;
     --border-color: #e2e8f0;
     --color-primary: #4f46e5;
+
+    /* Dark Mode Transition */
+    color-scheme: light;
   }
 
   .dark, [data-theme="dark"] {
-    /* Shadcn UI Dark Mode Map */
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 243 75% 59%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    /* Shadcn UI Dark Mode Map - Improved */
+    --background: 217.2 32.6% 12.5%;
+    --foreground: 210 40% 96%;
+    --card: 217.2 32.6% 15.5%;
+    --card-foreground: 210 40% 96%;
+    --popover: 217.2 32.6% 15.5%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 244 78% 61%;
+    --primary-foreground: 217.2 32.6% 12.5%;
+    --secondary: 217.2 32.6% 22%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 217.2 32.6% 22%;
+    --muted-foreground: 215 20.2% 65%;
+    --accent: 217.2 32.6% 22%;
+    --accent-foreground: 210 40% 96%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 96%;
+    --border: 217.2 32.6% 22%;
+    --input: 217.2 32.6% 18%;
+    --ring: 244 78% 61%;
 
-    /* Custom App Variables */
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --border-color: #334155;
-    --color-primary: #818cf8;
+    /* Custom App Variables - Improved for Dark Mode */
+    --bg-primary: #0d1520;
+    --bg-secondary: #1a2235;
+    --text-primary: #f0f4f8;
+    --text-secondary: #a0aac4;
+    --border-color: #2d3748;
+    --color-primary: #a5b4fc;
+
+    /* Dark Mode Transition */
+    color-scheme: dark;
   }
 
   * {
@@ -76,10 +82,24 @@
     @apply antialiased selection:bg-primary/20 selection:text-primary min-h-screen flex flex-col font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight font-semibold text-slate-900 dark:text-white;
+    @apply tracking-tight font-semibold text-slate-900 dark:text-white transition-colors duration-300;
+  }
+
+  /* Smooth theme transitions for all elements */
+  * {
+    transition-property: background-color, border-color, color, box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+
+  /* Disable transitions during theme change to avoid flashing */
+  html.theme-transitioning *,
+  html.theme-transitioning {
+    transition: none !important;
   }
 }
 
@@ -87,13 +107,113 @@
   .transition-smooth {
     @apply transition-all duration-300 ease-in-out;
   }
-  
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  /* Dark Mode Shadows */
+  .dark .shadow-sm {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .shadow {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .shadow-xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Dark Mode Text */
+  .dark .text-slate-900 {
+    @apply text-slate-100;
+  }
+
+  .dark .text-slate-800 {
+    @apply text-slate-200;
+  }
+
+  .dark .text-slate-700 {
+    @apply text-slate-300;
+  }
+
+  .dark .text-slate-600 {
+    @apply text-slate-400;
+  }
+
+  .dark .text-slate-500 {
+    @apply text-slate-400;
+  }
+
+  .dark .text-gray-900 {
+    @apply text-gray-100;
+  }
+
+  .dark .text-gray-800 {
+    @apply text-gray-200;
+  }
+
+  .dark .text-gray-700 {
+    @apply text-gray-300;
+  }
+
+  .dark .text-gray-600 {
+    @apply text-gray-400;
+  }
+
+  /* Dark Mode Cards and Backgrounds */
+  .dark .bg-white {
+    @apply bg-slate-800;
+  }
+
+  .dark .bg-slate-50 {
+    @apply bg-slate-900;
+  }
+
+  .dark .bg-slate-100 {
+    @apply bg-slate-800;
+  }
+
+  .dark .bg-slate-200 {
+    @apply bg-slate-700;
+  }
+
+  .dark .bg-gray-50 {
+    @apply bg-gray-900;
+  }
+
+  .dark .bg-gray-100 {
+    @apply bg-gray-800;
+  }
+
+  /* Dark Mode Borders */
+  .dark .border-slate-200 {
+    @apply border-slate-700;
+  }
+
+  .dark .border-slate-300 {
+    @apply border-slate-600;
+  }
+
+  .dark .border-gray-200 {
+    @apply border-gray-700;
+  }
+
+  .dark .border-gray-300 {
+    @apply border-gray-600;
   }
 }
 
@@ -402,23 +522,191 @@ input, select {
 
 /* ─── Dark mode overrides ─── */
 .dark .blog-card {
-  background: #1e293b;
-  border-color: rgba(255,255,255,0.08);
+  background: #1a2235;
+  border-color: rgba(255,255,255,0.1);
 }
-.dark .blog-card__title { color: #f1f5f9; }
-.dark .blog-card:hover .blog-card__title { color: #818cf8; }
-.dark .blog-card__excerpt { color: #94a3b8; }
-.dark .blog-card__author { color: #94a3b8; }
-.dark .blog-card__footer { border-top-color: #334155; }
-.dark .blog-card__cat { background: rgba(30,41,59,0.95); color: #818cf8; }
-.dark .blog-sidebar__block { background: #1e293b; border-color: rgba(255,255,255,0.08); }
-.dark .blog-sidebar__recent-item { border-bottom-color: #334155; }
-.dark .blog-sidebar__recent-num { color: #475569; }
-.dark .blog-sidebar__recent-label { color: #cbd5e1; }
-.dark .blog-sidebar__recent-item:hover .blog-sidebar__recent-label { color: #818cf8; }
-.dark .blog-sidebar__cat { color: #94a3b8; border-bottom-color: #334155; }
-.dark .blog-sidebar__cat:hover { color: #818cf8; }
-.dark .blog-sidebar__tag { background: #1e293b; border-color: #334155; color: #94a3b8; }
-.dark .blog-sidebar__tag:hover { background: #312e81; border-color: #4f46e5; color: #a5b4fc; }
-.dark .blog-sidebar__recent-arrow { color: #475569; }
-.dark .blog-sidebar__recent-item:hover .blog-sidebar__recent-arrow { color: #818cf8; }
+
+.dark .blog-card:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+.dark .blog-card__title {
+  color: #f0f4f8;
+}
+
+.dark .blog-card:hover .blog-card__title {
+  color: #a5b4fc;
+}
+
+.dark .blog-card__excerpt {
+  color: #a0aac4;
+}
+
+.dark .blog-card__author {
+  color: #a0aac4;
+}
+
+.dark .blog-card__footer {
+  border-top-color: #2d3748;
+}
+
+.dark .blog-card__cat {
+  background: rgba(13,21,32,0.95);
+  color: #a5b4fc;
+  border: 1px solid rgba(165, 180, 252, 0.2);
+}
+
+.dark .blog-sidebar__block {
+  background: #1a2235;
+  border-color: rgba(255,255,255,0.1);
+}
+
+.dark .blog-sidebar__recent-item {
+  border-bottom-color: #2d3748;
+}
+
+.dark .blog-sidebar__recent-num {
+  color: #4a5a7a;
+}
+
+.dark .blog-sidebar__recent-label {
+  color: #cbd5e1;
+}
+
+.dark .blog-sidebar__recent-item:hover .blog-sidebar__recent-label {
+  color: #a5b4fc;
+}
+
+.dark .blog-sidebar__cat {
+  color: #a0aac4;
+  border-bottom-color: #2d3748;
+}
+
+.dark .blog-sidebar__cat:hover {
+  color: #a5b4fc;
+}
+
+.dark .blog-sidebar__tag {
+  background: #1a2235;
+  border-color: #2d3748;
+  color: #a0aac4;
+}
+
+.dark .blog-sidebar__tag:hover {
+  background: #2d3748;
+  border-color: #4f46e5;
+  color: #a5b4fc;
+}
+
+.dark .blog-sidebar__recent-arrow {
+  color: #4a5a7a;
+}
+
+.dark .blog-sidebar__recent-item:hover .blog-sidebar__recent-arrow {
+  color: #a5b4fc;
+}
+
+/* ─── Additional Dark Mode Styles ─── */
+.dark button {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Form Inputs in Dark Mode */
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark input[type="number"],
+.dark input[type="search"],
+.dark select,
+.dark textarea {
+  background-color: #2d3748;
+  border-color: #3d4a66;
+  color: #f0f4f8;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #7a8aa3;
+}
+
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: #a5b4fc;
+  box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.1);
+}
+
+/* Links in Dark Mode */
+.dark a {
+  color: #818cf8;
+  transition: color 0.2s ease;
+}
+
+.dark a:hover {
+  color: #a5b4fc;
+}
+
+/* Global Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1a2235;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #3d4a66;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4a5a7a;
+}
+
+/* Selection */
+::selection {
+  background-color: #818cf8;
+  color: white;
+}
+
+.dark ::selection {
+  background-color: #818cf8;
+  color: white;
+}
+
+/* Code blocks and pre */
+.dark code,
+.dark pre {
+  background-color: #0d1520;
+  border-color: #2d3748;
+}
+
+/* Tables */
+.dark table {
+  border-color: #2d3748;
+}
+
+.dark tbody tr {
+  border-color: #2d3748;
+}
+
+.dark tbody tr:hover {
+  background-color: #1a2235;
+}
