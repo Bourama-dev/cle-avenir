@@ -3,12 +3,13 @@ import { Helmet } from 'react-helmet-async';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
 import { FEATURES } from '@/constants/subscriptionTiers';
 import CleoSidebar from '@/components/cleo/CleoSidebar';
-import CleoActivitySystem from '@/components/cleo/CleoActivitySystem'; 
+import CleoActivitySystem from '@/components/cleo/CleoActivitySystem';
 import ContextPanel from '@/components/cleo/ContextPanel';
 import { Loader2 } from 'lucide-react';
 import CleoUpgradePrompt from '@/components/CleoUpgradePrompt';
 import { cleoService } from '@/services/cleoService';
 import { cleoEngine } from '@/services/cleoEngine';
+import { loadPreferences } from '@/components/cleo/CleoPreferencesModal';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { useToast } from '@/components/ui/use-toast';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -27,7 +28,8 @@ const CleoPage = () => {
   const [activeSessionId, setActiveSessionId] = useState(null);
   const [showProfileBuilder, setShowProfileBuilder] = useState(false);
   const [contextPanelOpen, setContextPanelOpen] = useState(true);
-  const [currentMode, setCurrentMode] = useState('career_advisor');
+  // Read default mode from saved preferences (falls back to 'career_advisor')
+  const [currentMode, setCurrentMode] = useState(() => loadPreferences().defaultMode || 'career_advisor');
   const [isSimulating, setIsSimulating] = useState(false); 
   const [activeTab, setActiveTab] = useState('chat');
   
@@ -85,13 +87,20 @@ const CleoPage = () => {
       // Check for risks in user input
       const risks = cleoEngine.detectRisks([...messages, userMsg]);
       
+      // Read current preferences for this message
+      const prefs = loadPreferences();
+      const styleHint =
+        prefs.responseStyle === 'concise'  ? ' Sois très concise, max 80 mots.' :
+        prefs.responseStyle === 'detailed' ? ' Sois détaillée et donne des exemples, max 300 mots.' :
+        ' Sois concise, max 150 mots.';
+
       // Send to backend
       const response = await cleoService.sendMessage(
-        userProfile.id, 
-        sessionId, 
-        content, 
-        messages, 
-        { profile: userProfile, risks },
+        userProfile.id,
+        sessionId,
+        content,
+        messages,
+        { profile: userProfile, risks, styleHint },
         currentMode
       );
 
@@ -177,10 +186,18 @@ const CleoPage = () => {
       <Helmet><title>Cléo - Intelligence Carrière - CléAvenir</title></Helmet>
 
       {!isSimulating && (
-        <CleoSidebar 
+        <CleoSidebar
+          userId={userProfile?.id}
           activeSessionId={activeSessionId}
           onSelectSession={handleSelectSession}
           onNewSession={() => { setActiveSessionId(null); setMessages([]); setActiveTab('chat'); }}
+          onSessionDeleted={(deletedId) => {
+            // If the deleted session was active, clear the chat
+            if (deletedId === activeSessionId) {
+              setActiveSessionId(null);
+              setMessages([]);
+            }
+          }}
         />
       )}
 

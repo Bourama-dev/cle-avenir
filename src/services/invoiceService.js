@@ -48,17 +48,11 @@ export class InvoiceService {
 
   /**
    * Télécharge une facture (PDF) depuis une URL.
-   * Supporte "mock" uniquement en mode démo.
+   * PRODUCTION ONLY: pas de mock handling
    */
   static async downloadInvoice(invoiceUrl, { filename } = {}) {
     try {
       if (!invoiceUrl) throw new Error('invoiceUrl manquant');
-
-      // Mock : uniquement si tu veux garder la démo
-      if (invoiceUrl.includes('cleavenir.com/mock')) {
-        alert('Simulation: facture mock');
-        return { success: true, mocked: true };
-      }
 
       const response = await fetch(invoiceUrl, { method: 'GET' });
       if (!response.ok) throw new Error(`Téléchargement échoué (${response.status})`);
