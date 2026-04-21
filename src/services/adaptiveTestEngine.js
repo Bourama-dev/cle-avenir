@@ -13,7 +13,7 @@
  * Phase 3 (Questions 17-27): Advanced Profiling & Sector Coverage
  * - Use advanced questions for dominant categories
  * - Explore sector coverage for all dimensions
- * - Skip sectors user has rejected (2+ "Pas du tout")
+ * - Skip sectors user has rejected (1+ "Pas du tout" for fast filtering)
  */
 
 import { adaptiveQuestionPool, getAdaptiveMaxPossible } from '@/data/adaptiveQuestions';
@@ -239,7 +239,8 @@ export const adaptiveTestEngine = {
   },
 
   /**
-   * Detect sectors to skip (2+ "Pas du tout" = 0)
+   * Detect sectors to skip (1+ "Pas du tout" = 0 for fast sector filtering)
+   * Single negative response is enough to mark sector as irrelevant
    */
   _detectSkippedSectors(state) {
     const sectorResponses = {};
@@ -250,7 +251,7 @@ export const adaptiveTestEngine = {
 
     Object.entries(sectorResponses).forEach(([sector, responses]) => {
       const zeroCount = responses.filter(v => v === 0).length;
-      if (zeroCount >= 2) {
+      if (zeroCount >= 1) {
         state.skippedSectors.add(sector);
       }
     });
