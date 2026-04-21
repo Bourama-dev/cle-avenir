@@ -13,7 +13,7 @@ function json(body: unknown, status = 200) {
   });
 }
 
-// ── OpenAI client (no SDK needed — just REST) ─────────────────────────────
+// ── OpenAI client ─────────────────────────────────────────────────────────────
 async function callOpenAI(
   apiKey: string,
   systemPrompt: string,
@@ -42,7 +42,7 @@ async function callOpenAI(
   return data.choices?.[0]?.message?.content ?? '';
 }
 
-// ── Build rich Cléo system prompt ─────────────────────────────────────────
+// ── Build rich Cléo system prompt ─────────────────────────────────────────────
 function buildSystemPrompt(mode: string, context: Record<string, unknown>): string {
   const profile = (context?.profile ?? {}) as Record<string, unknown>;
   const firstName = (profile.first_name as string) ?? 'l\'utilisateur';
@@ -128,107 +128,112 @@ STYLE DE RÉPONSE:
 MÉMOIRE CONVERSATIONNELLE: Tu te souviens de toute la conversation. Utilise le contexte précédent.`;
 }
 
-Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
+// ── Profile extraction from conversation ─────────────────────────────────────
+// Analyzes both the user message AND Cléo's reply to detect profile info.
+// Returns null if nothing is found.
+function extractProfileUpdates(
+  userMessage: string,
+  reply: string
+): Record<string, unknown> | null {
+  const combined = `${userMessage} ${reply}`;
+  const lower = combined.toLowerCase();
+  const updates: Record<string, unknown> = {};
 
-  try {
-    const anthropicKey = Deno.env.get('OPENAI_API_KEY');
-    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
-
-    const body = await req.json();
-    const { message, history = [], userId, context = {}, mode = 'career_advisor' } = body;
-
-    if (!message) return json({ error: 'Missing message' }, 400);
-
-    // ── Enrich context with user data from DB ────────────────────────────────
-    let enrichedContext = { ...context };
-
-    if (userId && supabaseUrl && supabaseKey) {
-      const sb = createClient(supabaseUrl, supabaseKey);
-      try {
-        // Fetch user profile
-        const { data: profile } = await sb
-          .from('profiles')
-          .select('first_name, last_name, main_goal, job_title, education_level, riasec_profile, skills, experience_level')
-          .eq('id', userId)
-          .maybeSingle();
-        if (profile) enrichedContext.profile = { ...enrichedContext.profile, ...profile };
-
-        // Fetch user's top recommendations
-        const { data: testResult } = await sb
-          .from('test_results')
-          .select('top_3_careers, riasec_profile')
-          .eq('user_id', userId)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .maybeSingle();
-
-        if (testResult?.top_3_careers) {
-          enrichedContext.recommendations = testResult.top_3_careers;
-        }
-        if (testResult?.riasec_profile && !enrichedContext.profile?.riasec_profile) {
-          enrichedContext.profile = { ...enrichedContext.profile, riasec_profile: testResult.riasec_profile };
-        }
-      } catch (dbErr) {
-        console.warn('[chat-advisor] DB enrichment failed:', dbErr);
-      }
+  // ── Career goal ──────────────────────────────────────────────────────────
+  const goalPatterns = [
+    /(?:je vise|je veux devenir|je voudrais être|je souhaite devenir|je vise le poste de|mon objectif est d(?:e|')|je vise un poste de)\s+([^.!?,\n]{3,60})/i,
+    /(?:mon projet(?:\s+professionnel)?\s+(?:est|:))\s+([^.!?,\n]{3,60})/i,
+    /(?:objectif\s*(?:professionnel)?\s*:)\s*([^.!?,\n]{3,60})/i,
+    /(?:devenir|être)\s+(développeur|médecin|infirmier|avocat|comptable|designer|architecte|ingénieur|professeur|enseignant|chef de projet|directeur|manager|commercial|marketing|data scientist|analyste)[^.!?,\n]{0,40}/i,
+  ];
+  for (const pattern of goalPatterns) {
+    const match = combined.match(pattern);
+    if (match) {
+      updates.main_goal = match[1].trim();
+      break;
     }
-
-    // ── Build messages for Claude ─────────────────────────────────────────────
-    const systemPrompt = context.systemInstruction ?? buildSystemPrompt(mode, enrichedContext);
-
-    // Convert history (last 12 turns)
-    const historyMessages = (history as { role: string; content: string }[])
-      .slice(-12)
-      .filter(m => m.content?.trim())
-      .map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content }));
-
-    // Ensure alternating user/assistant (Claude requirement)
-    const cleanHistory: { role: string; content: string }[] = [];
-    for (const msg of historyMessages) {
-      if (cleanHistory.length === 0 && msg.role === 'assistant') continue;
-      const last = cleanHistory[cleanHistory.length - 1];
-      if (last && last.role === msg.role) {
-        last.content += '\n' + msg.content; // merge same-role consecutive
-      } else {
-        cleanHistory.push({ ...msg });
-      }
-    }
-
-    const allMessages = [...cleanHistory, { role: 'user', content: message }];
-
-    // ── Call Anthropic ────────────────────────────────────────────────────────
-    let reply: string;
-
-    if (!anthropicKey) {
-      // Graceful fallback when key not configured
-      console.warn('[chat-advisor] OPENAI_API_KEY not set — returning fallback');
-      reply = `Bonjour ! Je suis Cléo, votre coach de carrière. Je suis là pour vous aider dans votre orientation professionnelle. Pour activer mes capacités complètes, l'administrateur doit configurer la clé OPENAI_API_KEY dans les variables d'environnement Supabase. En attendant, explorez le catalogue de métiers et passez votre test d'orientation ! 🚀`;
-    } else {
-      reply = await callOpenAI(anthropicKey, systemPrompt, allMessages);
-    }
-
-    // ── Extract profile updates from reply (simple pattern matching) ─────────
-    let profileUpdates: Record<string, string> | null = null;
-    const jobMatch = reply.match(/\bje vise\s+([^.!?\n]{3,50})/i)
-      ?? reply.match(/\bobjectif\s*:\s*([^.!?\n]{3,50})/i);
-    if (jobMatch) profileUpdates = { main_goal: jobMatch[1].trim() };
-
-    // ── Generate smart suggestions ────────────────────────────────────────────
-    const suggestions = generateSuggestions(mode, enrichedContext);
-
-    return json({ reply, suggestions, profileUpdates });
-
-  } catch (err) {
-    console.error('[chat-advisor] Error:', err);
-    return json({
-      reply: 'Désolé, une erreur technique est survenue. Pouvez-vous réessayer dans quelques instants ?',
-      suggestions: ['Réessayer', 'Voir les métiers', 'Passer le test'],
-    });
   }
-});
 
+  // ── Location ────────────────────────────────────────────────────────────
+  const locationPatterns = [
+    /(?:j'habite\s+(?:à|en)|je vis\s+(?:à|en)|je suis\s+(?:basé|situé)(?:e)?\s+(?:à|en)|je réside\s+(?:à|en))\s+([A-ZÀ-Ÿa-zà-ÿ][a-zà-ÿ\-]+(?:\s[A-ZÀ-Ÿ][a-zà-ÿ\-]+)?)/i,
+    /(?:je suis de|originaire de|ma ville est)\s+([A-ZÀ-Ÿa-zà-ÿ][a-zà-ÿ\-]+(?:\s[A-ZÀ-Ÿ][a-zà-ÿ\-]+)?)/i,
+  ];
+  for (const pattern of locationPatterns) {
+    const match = combined.match(pattern);
+    if (match) {
+      updates.location = match[1].trim();
+      break;
+    }
+  }
+
+  // ── Education level ──────────────────────────────────────────────────────
+  if (/bac\s*\+\s*5|master\s*2|m2\b|doctorat|phd|grande\s+école/i.test(lower)) {
+    updates.education_level = 'bac+5';
+  } else if (/master\s*1|m1\b|bac\s*\+\s*4/i.test(lower)) {
+    updates.education_level = 'bac+4';
+  } else if (/licence|bachelor|bac\s*\+\s*3/i.test(lower)) {
+    updates.education_level = 'bac+3';
+  } else if (/\bbts\b|\bdut\b|\biut\b|bac\s*\+\s*2/i.test(lower)) {
+    updates.education_level = 'bac+2';
+  } else if (/\bbac\b|terminale\b/i.test(lower) && !/bac\s*\+/i.test(lower)) {
+    updates.education_level = 'bac';
+  } else if (/cap\b|bep\b/i.test(lower)) {
+    updates.education_level = 'cap_bep';
+  }
+
+  // ── Salary expectations ──────────────────────────────────────────────────
+  const salaryPatterns = [
+    /(\d{1,3})\s*k\s*(?:€|euros?)/i,           // "35k€" or "35 k euros"
+    /(\d{4,6})\s*(?:€|euros?)/i,                 // "35000€" or "35000 euros"
+    /salaire\s+(?:de\s+|souhaité\s+)?(\d[\d\s]*)\s*(?:k|000)?\s*(?:€|euros?)/i,
+  ];
+  for (const pattern of salaryPatterns) {
+    const match = combined.match(pattern);
+    if (match) {
+      let amount = parseInt(match[1].replace(/\s/g, ''));
+      if (amount < 1000) amount *= 1000; // "35k" → 35000
+      if (amount >= 15000 && amount <= 250000) {
+        updates.constraints = { salary_expectations: amount };
+        break;
+      }
+    }
+  }
+
+  // ── Technical skills (from user message only, not Cléo's response) ──────
+  const skillKeywords: Record<string, string> = {
+    python: 'Python', javascript: 'JavaScript', typescript: 'TypeScript',
+    react: 'React', vue: 'Vue.js', angular: 'Angular',
+    'node.js': 'Node.js', nodejs: 'Node.js',
+    sql: 'SQL', postgresql: 'PostgreSQL', mysql: 'MySQL',
+    java: 'Java', php: 'PHP', 'c#': 'C#', 'c++': 'C++',
+    excel: 'Excel', powerpoint: 'PowerPoint', word: 'Word',
+    photoshop: 'Photoshop', illustrator: 'Illustrator', figma: 'Figma',
+    html: 'HTML', css: 'CSS',
+    docker: 'Docker', git: 'Git', linux: 'Linux',
+    marketing: 'Marketing', 'seo': 'SEO', 'crm': 'CRM',
+    comptabilité: 'Comptabilité', gestion: 'Gestion', management: 'Management',
+  };
+  const userLower = userMessage.toLowerCase();
+  const detectedSkills = Object.entries(skillKeywords)
+    .filter(([keyword]) => userLower.includes(keyword))
+    .map(([, label]) => label);
+  if (detectedSkills.length > 0) {
+    updates.skills = detectedSkills;
+  }
+
+  // ── Interests ────────────────────────────────────────────────────────────
+  const interestMatch = userMessage.match(
+    /(?:je m'intéresse|j'aime|je suis passionné par|ma passion est|j'adore)\s+([^.!?,\n]{3,50})/i
+  );
+  if (interestMatch) {
+    updates.interests = [interestMatch[1].trim()];
+  }
+
+  return Object.keys(updates).length > 0 ? updates : null;
+}
+
+// ── Generate smart suggestions ────────────────────────────────────────────────
 function generateSuggestions(mode: string, context: Record<string, unknown>): string[] {
   const profile = (context?.profile ?? {}) as Record<string, unknown>;
   const hasRiasec = !!(profile.riasec_profile);
@@ -248,3 +253,97 @@ function generateSuggestions(mode: string, context: Record<string, unknown>): st
 
   return ['Voir mes recommandations métiers', 'Trouver une formation', 'Préparer un entretien'];
 }
+
+// ── Main handler ──────────────────────────────────────────────────────────────
+Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
+
+  try {
+    const anthropicKey = Deno.env.get('OPENAI_API_KEY');
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+
+    const body = await req.json();
+    const { message, history = [], userId, context = {}, mode = 'career_advisor' } = body;
+
+    if (!message) return json({ error: 'Missing message' }, 400);
+
+    // ── Enrich context with user data from DB ──────────────────────────────
+    let enrichedContext = { ...context };
+
+    if (userId && supabaseUrl && supabaseKey) {
+      const sb = createClient(supabaseUrl, supabaseKey);
+      try {
+        const { data: profile } = await sb
+          .from('profiles')
+          .select('first_name, last_name, main_goal, job_title, education_level, riasec_profile, skills, experience_level, location, interests, constraints')
+          .eq('id', userId)
+          .maybeSingle();
+        if (profile) enrichedContext.profile = { ...enrichedContext.profile, ...profile };
+
+        const { data: testResult } = await sb
+          .from('test_results')
+          .select('top_3_careers, riasec_profile')
+          .eq('user_id', userId)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (testResult?.top_3_careers) {
+          enrichedContext.recommendations = testResult.top_3_careers;
+        }
+        if (testResult?.riasec_profile && !enrichedContext.profile?.riasec_profile) {
+          enrichedContext.profile = { ...enrichedContext.profile, riasec_profile: testResult.riasec_profile };
+        }
+      } catch (dbErr) {
+        console.warn('[chat-advisor] DB enrichment failed:', dbErr);
+      }
+    }
+
+    // ── Build messages for AI ──────────────────────────────────────────────
+    const systemPrompt = context.systemInstruction ?? buildSystemPrompt(mode, enrichedContext);
+
+    const historyMessages = (history as { role: string; content: string }[])
+      .slice(-12)
+      .filter(m => m.content?.trim())
+      .map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content }));
+
+    const cleanHistory: { role: string; content: string }[] = [];
+    for (const msg of historyMessages) {
+      if (cleanHistory.length === 0 && msg.role === 'assistant') continue;
+      const last = cleanHistory[cleanHistory.length - 1];
+      if (last && last.role === msg.role) {
+        last.content += '\n' + msg.content;
+      } else {
+        cleanHistory.push({ ...msg });
+      }
+    }
+
+    const allMessages = [...cleanHistory, { role: 'user', content: message }];
+
+    // ── Call AI ────────────────────────────────────────────────────────────
+    let reply: string;
+
+    if (!anthropicKey) {
+      console.warn('[chat-advisor] OPENAI_API_KEY not set — returning fallback');
+      reply = `Bonjour ! Je suis Cléo, votre coach de carrière. Pour activer mes capacités complètes, l'administrateur doit configurer la clé OPENAI_API_KEY dans les variables d'environnement Supabase. En attendant, explorez le catalogue de métiers et passez votre test d'orientation ! 🚀`;
+    } else {
+      reply = await callOpenAI(anthropicKey, systemPrompt, allMessages);
+    }
+
+    // ── Extract profile updates from conversation ──────────────────────────
+    const profileUpdates = extractProfileUpdates(message, reply);
+
+    // ── Smart suggestions ──────────────────────────────────────────────────
+    const suggestions = generateSuggestions(mode, enrichedContext);
+
+    return json({ reply, suggestions, profileUpdates });
+
+  } catch (err) {
+    console.error('[chat-advisor] Error:', err);
+    return json({
+      reply: 'Désolé, une erreur technique est survenue. Pouvez-vous réessayer dans quelques instants ?',
+      suggestions: ['Réessayer', 'Voir les métiers', 'Passer le test'],
+    });
+  }
+});
