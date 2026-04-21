@@ -1,4 +1,5 @@
 import { adaptiveTestQuestions } from '../data/adaptiveTestQuestions';
+import { realCareerDataService } from './realCareerDataService';
 
 export const AdaptiveQuestionEngine = {
   /**
@@ -61,57 +62,40 @@ export const AdaptiveQuestionEngine = {
   },
 
   /**
-   * Match matched sectors to careers
-   * This is a mock function using the Sector Tags logic
+   * Match sectors to REAL careers from database using RIASEC profile
    */
-  getMatchingCareers(history) {
-    const topSectors = this.getTopSectors(history, 5);
-    const primarySector = topSectors[0]?.sector;
+  async getMatchingCareers(history, userRIASECProfile = null) {
+    try {
+      // If RIASEC profile is provided, use it for better matching
+      if (userRIASECProfile) {
+        return await realCareerDataService.getCareersByRIASEC(userRIASECProfile, 15);
+      }
 
-    // Simple mock mapping (In real app, query database)
-    const careerDatabase = {
-      "Technology": [
-        { id: "dev_web", title: "Développeur Web", match: 95 },
-        { id: "data_scientist", title: "Data Scientist", match: 90 }
-      ],
-      "Santé": [
-        { id: "infirmier", title: "Infirmier D.E.", match: 95 },
-        { id: "psychologue", title: "Psychologue Clinicien", match: 88 }
-      ],
-      "Commerce": [
-        { id: "business_dev", title: "Business Developer", match: 92 },
-        { id: "chef_produit", title: "Chef de Produit", match: 85 }
-      ],
-      "Arts": [
-        { id: "ux_designer", title: "UX/UI Designer", match: 94 },
-        { id: "directeur_artistique", title: "Directeur Artistique", match: 89 }
-      ],
-      "Environnement": [
-        { id: "ingenieur_ecologue", title: "Ingénieur Écologue", match: 93 },
-        { id: "paysagiste", title: "Paysagiste", match: 86 }
-      ],
-      "Droit": [
-        { id: "avocat", title: "Avocat", match: 96 },
-        { id: "juriste", title: "Juriste d'entreprise", match: 90 }
-      ],
-      "Sport": [
-        { id: "coach_sportif", title: "Coach Sportif", match: 95 },
-        { id: "kine", title: "Kinésithérapeute", match: 88 }
-      ],
-      "Éducation": [
-        { id: "formateur", title: "Formateur pour Adultes", match: 92 },
-        { id: "professeur", title: "Professeur des Écoles", match: 87 }
-      ]
-    };
+      // Otherwise, get top sectors and fetch careers in those sectors
+      const topSectors = this.getTopSectors(history, 3);
 
-    if (primarySector && careerDatabase[primarySector]) {
-      return careerDatabase[primarySector];
+      if (topSectors.length === 0) {
+        // Fallback: return most in-demand careers
+        return await realCareerDataService.getAllCareers().then(careers => careers.slice(0, 15));
+      }
+
+      // Fetch careers for each top sector
+      const careersByTopSectors = [];
+      for (const { sector } of topSectors) {
+        const careers = await realCareerDataService.getCareersBySector(sector, 5);
+        careersByTopSectors.push(...careers);
+      }
+
+      // Return unique careers, up to 15 total
+      const uniqueCareers = Array.from(
+        new Map(careersByTopSectors.map(c => [c.code, c])).values()
+      ).slice(0, 15);
+
+      return uniqueCareers.length > 0 ? uniqueCareers : await realCareerDataService.getAllCareers().then(careers => careers.slice(0, 15));
+    } catch (error) {
+      console.error('Error getting matching careers:', error);
+      // Graceful fallback
+      return await realCareerDataService.getAllCareers().then(careers => careers.slice(0, 15));
     }
-
-    // Fallback
-    return [
-      { id: "generic_1", title: "Consultant", match: 80 },
-      { id: "generic_2", title: "Chef de Projet", match: 75 }
-    ];
   }
 };

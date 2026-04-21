@@ -141,55 +141,110 @@ const EstablishmentService = {
      return data;
   },
 
-  // Mock methods for new dashboard tabs
-  async getEstablishmentStudents(id) {
-    return [
-      { id: 1, name: 'Jean Dupont', email: 'jean@example.com', class: 'Terminal S', level: 'Terminale', status: 'Actif', enrollment_date: '2023-09-01', tests_completed: 2, dominant_profile: 'Analytique' },
-      { id: 2, name: 'Marie Martin', email: 'marie@example.com', class: 'Terminal ES', level: 'Terminale', status: 'Actif', enrollment_date: '2023-09-01', tests_completed: 1, dominant_profile: 'Créatif' }
-    ];
+  // Real data methods using realEstablishmentDataService
+  async getEstablishmentStudents(institutionId, limit = 50, offset = 0) {
+    try {
+      const { realEstablishmentDataService } = await import('./realEstablishmentDataService');
+      return await realEstablishmentDataService.getEstablishmentStudents(institutionId, limit, offset);
+    } catch (error) {
+      console.error('Error fetching real establishment students:', error);
+      return { students: [], total: 0 };
+    }
   },
 
-  async getEstablishmentClasses(id) {
-    return [
-      { id: 1, name: 'Terminal S', level: 'Terminale', student_count: 35, teacher: 'M. Dubois', status: 'Active' },
-      { id: 2, name: 'Terminal ES', level: 'Terminale', student_count: 32, teacher: 'Mme. Leroy', status: 'Active' }
-    ];
+  async getEstablishmentTeachers(institutionId, limit = 50) {
+    try {
+      const { realEstablishmentDataService } = await import('./realEstablishmentDataService');
+      return await realEstablishmentDataService.getEstablishmentStaff(institutionId, limit);
+    } catch (error) {
+      console.error('Error fetching real establishment teachers:', error);
+      return [];
+    }
   },
 
-  async getEstablishmentTeachers(id) {
-    return [
-      { id: 1, name: 'M. Dubois', email: 'dubois@school.com', subjects: 'Mathématiques', classes: 4, status: 'Actif' },
-      { id: 2, name: 'Mme. Leroy', email: 'leroy@school.com', subjects: 'Histoire', classes: 3, status: 'Actif' }
-    ];
+  async getEstablishmentClasses(institutionId, limit = 50) {
+    try {
+      const { realEstablishmentDataService } = await import('./realEstablishmentDataService');
+      return await realEstablishmentDataService.getInstitutionPrograms(institutionId, limit);
+    } catch (error) {
+      console.error('Error fetching real establishment classes:', error);
+      return [];
+    }
   },
 
-  async getEstablishmentTestResults(id) {
-    return {
-      byProfile: [{ name: 'Analytique', value: 45 }, { name: 'Créatif', value: 30 }, { name: 'Social', value: 25 }],
-      byClass: [{ name: 'Term S', value: 90 }, { name: 'Term ES', value: 85 }],
-      byLevel: [{ name: 'Seconde', value: 50 }, { name: 'Première', value: 70 }, { name: 'Terminale', value: 90 }]
-    };
+  async getEstablishmentTestResults(institutionId) {
+    try {
+      const { realEstablishmentDataService } = await import('./realEstablishmentDataService');
+      const recommendations = await realEstablishmentDataService.getStudentRecommendations(institutionId);
+
+      // Aggregate results by profile type
+      const profileCounts = {};
+      recommendations.forEach(rec => {
+        if (rec.dominant_profile) {
+          profileCounts[rec.dominant_profile] = (profileCounts[rec.dominant_profile] || 0) + 1;
+        }
+      });
+
+      return {
+        byProfile: Object.entries(profileCounts).map(([name, value]) => ({ name, value })),
+        byClass: [],
+        byLevel: []
+      };
+    } catch (error) {
+      console.error('Error fetching establishment test results:', error);
+      return { byProfile: [], byClass: [], byLevel: [] };
+    }
   },
 
-  async getEstablishmentRecommendations(id) {
-    return {
-      topCareers: [{ name: 'Développeur Web', value: 15 }, { name: 'Infirmier', value: 12 }, { name: 'Designer', value: 10 }],
-      byProfile: [{ name: 'Analytique', value: 40 }, { name: 'Créatif', value: 35 }],
-      byClass: [{ name: 'Term S', value: 50 }, { name: 'Term ES', value: 45 }]
-    };
+  async getEstablishmentRecommendations(institutionId) {
+    try {
+      const { realEstablishmentDataService } = await import('./realEstablishmentDataService');
+      const { realCareerDataService } = await import('./realCareerDataService');
+
+      const recommendations = await realEstablishmentDataService.getStudentRecommendations(institutionId, 100);
+
+      // Parse and count recommended careers
+      const careerCounts = {};
+      recommendations.forEach(rec => {
+        if (rec.recommended_metiers && Array.isArray(rec.recommended_metiers)) {
+          rec.recommended_metiers.forEach(career => {
+            const key = career.libelle || career.name || career;
+            careerCounts[key] = (careerCounts[key] || 0) + 1;
+          });
+        }
+      });
+
+      const topCareers = Object.entries(careerCounts)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 10)
+        .map(([name, value]) => ({ name, value }));
+
+      return {
+        topCareers: topCareers.length > 0 ? topCareers : [],
+        byProfile: [],
+        byClass: []
+      };
+    } catch (error) {
+      console.error('Error fetching establishment recommendations:', error);
+      return { topCareers: [], byProfile: [], byClass: [] };
+    }
   },
 
-  async getEstablishmentStatistics(id) {
-    return {
-      totalStudents: 1500,
-      activeStudents: 1420,
-      classes: 45,
-      teachers: 80,
-      completedTests: 1200,
-      recommendations: 3600,
-      completionRate: 85,
-      satisfactionRate: 92
-    };
+  async getEstablishmentStatistics(institutionId) {
+    try {
+      const { realEstablishmentDataService } = await import('./realEstablishmentDataService');
+      return await realEstablishmentDataService.getEstablishmentStatistics(institutionId);
+    } catch (error) {
+      console.error('Error fetching establishment statistics:', error);
+      return {
+        totalStudents: 0,
+        activeStudents: 0,
+        completedTests: 0,
+        completionRate: 0,
+        programCount: 0,
+        staffCount: 0
+      };
+    }
   }
 };
 
