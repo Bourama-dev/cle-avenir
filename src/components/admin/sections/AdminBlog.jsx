@@ -86,7 +86,7 @@ const AdminBlog = () => {
         const fileExt = imageFile.name.split('.').pop();
         const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
         const filePath = `blog-covers/${fileName}`;
-        
+
         const { error: uploadError } = await supabase.storage
           .from('blog-images')
           .upload(filePath, imageFile);
@@ -94,8 +94,8 @@ const AdminBlog = () => {
         if (uploadError) {
           throw new Error(`Échec du téléchargement de l'image: ${uploadError.message}`);
         }
-        
-        imagePath = filePath;
+
+        imagePath = getPublicBlogImageUrl(filePath);
       }
 
       const payload = {

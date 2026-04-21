@@ -64,7 +64,7 @@ export default function BlogForm({ initialData, onSubmit, onCancel }) {
         const fileExt = imageFile.name.split('.').pop();
         const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
         const filePath = `blog-covers/${fileName}`;
-        
+
         const { error: uploadError } = await supabase.storage
           .from('blog-images')
           .upload(filePath, imageFile);
@@ -72,8 +72,8 @@ export default function BlogForm({ initialData, onSubmit, onCancel }) {
         if (uploadError) {
           throw new Error(`Échec de l'upload: ${uploadError.message}`);
         }
-        
-        imagePath = filePath;
+
+        imagePath = getPublicBlogImageUrl(filePath);
         setUploading(false);
       }
       

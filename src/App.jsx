@@ -314,6 +314,7 @@ const PageContent = () => {
 
                   {/* New Orientation Flow */}
                   <Route path="/test" element={<PageTransition><TestPage /></PageTransition>} />
+                  <Route path="/adaptive-test" element={<PageTransition><EnhancedTestPage /></PageTransition>} />
                   <Route path="/test-orientation" element={<Navigate to="/test" replace />} />
                   <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
                   <Route path="/signup" element={<PageTransition><SignupPage /></PageTransition>} />

@@ -6,3 +6,4 @@
 - [Nos Offres & Forfaits - CléAvenir](/plans): Découvrez les différents forfaits CléAvenir : Découverte (gratuit), Premium, et Premium+ pour un accompagnement complet dans votre orientation professionnelle.
 - [Panneau Admin - CléAvenir](/admin): Panneau d
 - [Tableau de bord Établissement | CléAvenir](/establishmentdashboard): No description available
+- [Test RIASEC Adaptatif - CléAvenir](/adaptivetest): Découvrez votre profil professionnel avec notre test RIASEC adaptatif. Les questions s
