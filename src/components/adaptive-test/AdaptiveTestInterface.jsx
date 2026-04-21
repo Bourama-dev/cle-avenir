@@ -210,7 +210,7 @@ const AdaptiveTestInterface = ({ onComplete }) => {
                     max="100"
                     step="33"
                     value={selectedAnswer !== null ? selectedAnswer : 50}
-                    onChange={(e) => setSelectedAnswer(Math.round(e.target.value / 33) * 33)}
+                    onChange={(e) => setSelectedAnswer(Math.round(Number(e.target.value) / 33) * 33)}
                     disabled={isLoading}
                     className="w-full h-3 bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                   />
