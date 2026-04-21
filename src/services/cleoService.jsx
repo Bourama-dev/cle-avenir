@@ -37,6 +37,17 @@ export const cleoService = {
     if (error) throw error;
   },
 
+  async updateSession(sessionId, updates) {
+    const { data, error } = await supabase
+      .from('chat_sessions')
+      .update({ ...updates, updated_at: new Date().toISOString() })
+      .eq('id', sessionId)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+
   async getHistory(sessionId) {
     if (!sessionId) return [];
     const { data } = await supabase
@@ -141,13 +152,14 @@ export const cleoService = {
         .eq('id', sessionId);
     }
 
-    // 2. Build system instruction
+    // 2. Build system instruction (styleHint from preferences overrides default length)
+    const styleHint = context?.styleHint || ' Sois concise, max 150 mots.';
     let systemInstruction = `
       ROLE: Tu es Cléo, une coach de carrière experte, bienveillante et professionnelle.
       LANGUE: IMPÉRATIVEMENT FRANÇAIS (French). Tu ne dois jamais répondre en anglais.
 
       CONSIGNES DE RÉDACTION:
-      1. Sois concise (max 150 mots par réponse).
+      1.${styleHint}
       2. Utilise un formatage markdown clair : **gras** pour les termes importants, listes à puces pour énumérer.
       3. Ton style doit être encourageant mais direct et professionnel.
       4. N'utilise jamais d'astérisques bruts (* texte *), utilise le markdown standard.
