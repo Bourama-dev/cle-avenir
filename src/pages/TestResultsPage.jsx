@@ -18,6 +18,7 @@ import PlanAccessMessage from '@/components/test-results/PlanAccessMessage';
 import MetierLoadingSpinner from '@/components/MetierLoadingSpinner';
 import MetierErrorState from '@/components/MetierErrorState';
 import SectorDiscoveryModule from '@/components/test-results/SectorDiscoveryModule';
+import MetierFilterPanel from '@/components/test-results/MetierFilterPanel';
 
 import { RIASEC_META } from '@/data/optimizedQuestions';
 
@@ -34,6 +35,9 @@ const TestResultsPage = () => {
   const [matches, setMatches] = useState([]);
   const [isProcessing, setIsProcessing] = useState(true);
   const [error, setError] = useState(null);
+  const [filteredMatches, setFilteredMatches] = useState([]);
+  const [currentSort, setCurrentSort] = useState('score');
+  const [currentTab, setCurrentTab] = useState('all');
 
   const processData = async () => {
     try {
@@ -92,6 +96,52 @@ const TestResultsPage = () => {
     processData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
+
+  // Filter and sort logic
+  useEffect(() => {
+    if (matches.length === 0) {
+      setFilteredMatches([]);
+      return;
+    }
+
+    let filtered = [...matches];
+
+    // Tab filtering
+    if (currentTab === 'excellent') {
+      filtered = filtered.filter(m => m.finalScore >= 80);
+    } else if (currentTab === 'good') {
+      filtered = filtered.filter(m => m.finalScore >= 60 && m.finalScore < 80);
+    } else if (currentTab === 'explore') {
+      filtered = filtered.filter(m => m.finalScore < 60);
+    }
+
+    // Sorting
+    switch (currentSort) {
+      case 'demand':
+        filtered.sort((a, b) => (b.demandScore || 0) - (a.demandScore || 0));
+        break;
+      case 'growth':
+        filtered.sort((a, b) => (b.growthScore || 0) - (a.growthScore || 0));
+        break;
+      case 'name':
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'score':
+      default:
+        filtered.sort((a, b) => b.finalScore - a.finalScore);
+    }
+
+    setFilteredMatches(filtered);
+  }, [matches, currentSort, currentTab]);
+
+  const handleFilterChange = ({ sort, tab, reset }) => {
+    if (reset) {
+      setCurrentSort('score');
+      setCurrentTab('all');
+    }
+    if (sort) setCurrentSort(sort);
+    if (tab) setCurrentTab(tab);
+  };
 
   const handleCreatePlan = (match) => {
     const searchParams = new URLSearchParams({
@@ -246,8 +296,16 @@ const TestResultsPage = () => {
         {/* Results Section */}
         <section className="py-4">
           <h2 className="text-3xl font-extrabold text-slate-900 mb-8 flex items-center gap-3">
-             <span className="text-4xl">🎯</span> Vos Meilleures Correspondances
+             <span className="text-4xl">🎯</span> Vos Meilleures Correspondances ({filteredMatches.length})
           </h2>
+
+          {/* Filter Panel */}
+          <MetierFilterPanel
+            matches={matches}
+            onFilterChange={handleFilterChange}
+            currentSort={currentSort}
+            currentTab={currentTab}
+          />
 
           <motion.div
             variants={containerVariants}
@@ -255,7 +313,7 @@ const TestResultsPage = () => {
             animate="show"
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {matches.map((match, index) => {
+            {filteredMatches.map((match, index) => {
               const isBlurred = index >= visibleCount;
               const isTopThree = index < 3;
 
@@ -274,7 +332,7 @@ const TestResultsPage = () => {
             })}
           </motion.div>
 
-          {!canViewAllResults() && matches.length > visibleCount && (
+          {!canViewAllResults() && filteredMatches.length > visibleCount && (
             <UpgradePromptSection />
           )}
         </section>
