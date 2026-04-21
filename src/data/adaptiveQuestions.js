@@ -1,5 +1,5 @@
 /**
- * Adaptive RIASEC Test — 400 Questions Pool (ÉTAPE 1/4: Secteurs 1-10)
+ * Adaptive RIASEC Test — 400 Questions Pool (ÉTAPE 1-2/4: Secteurs 1-20)
  *
  * This pool feeds an adaptive algorithm that selects 24-30 questions
  * based on user responses. Each question is tagged with:
@@ -667,6 +667,656 @@ export const adaptiveQuestionPool = [
     id: 'green-c-1', category: 'C', emoji: '✅', difficulty: 'advanced',
     sector: 'Métiers Verts',
     text: "Aimeriez-vous assurer la conformité environnementale et les certifications ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // TOURISME & LOISIRS - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'tour-r-1', category: 'R', emoji: '✈️', difficulty: 'basic',
+    sector: 'Tourisme & Loisirs',
+    text: "Aimez-vous organiser et planifier des voyages et des excursions ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'tour-r-2', category: 'R', emoji: '🗺️', difficulty: 'intermediate',
+    sector: 'Tourisme & Loisirs',
+    text: "Êtes-vous à l'aise pour gérer la logistique de groupes touristiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'tour-i-1', category: 'I', emoji: '📚', difficulty: 'basic',
+    sector: 'Tourisme & Loisirs',
+    text: "Êtes-vous intéressé par la géographie, l'histoire et les cultures ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'tour-i-2', category: 'I', emoji: '🔍', difficulty: 'intermediate',
+    sector: 'Tourisme & Loisirs',
+    text: "Aimeriez-vous analyser les données de fréquentation et les tendances touristiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'tour-a-1', category: 'A', emoji: '📸', difficulty: 'basic',
+    sector: 'Tourisme & Loisirs',
+    text: "Aimeriez-vous créer des expériences touristiques originales et mémorables ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'tour-a-2', category: 'A', emoji: '🎨', difficulty: 'intermediate',
+    sector: 'Tourisme & Loisirs',
+    text: "Aimez-vous concevoir des événements et des animations créatives ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'tour-s-1', category: 'S', emoji: '😊', difficulty: 'basic',
+    sector: 'Tourisme & Loisirs',
+    text: "Aimez-vous accueillir et créer des expériences agréables pour les clients ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'tour-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Tourisme & Loisirs',
+    text: "Êtes-vous doué pour communiquer avec les touristes de différentes cultures ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'tour-e-1', category: 'E', emoji: '📈', difficulty: 'advanced',
+    sector: 'Tourisme & Loisirs',
+    text: "Aimeriez-vous développer une entreprise touristique ou une agence de voyages ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'tour-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Tourisme & Loisirs',
+    text: "Aimeriez-vous gérer les réservations et les contrats touristiques ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // HÔTELLERIE & RESTAURATION - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'hotel-r-1', category: 'R', emoji: '🍳', difficulty: 'basic',
+    sector: 'Hôtellerie & Restauration',
+    text: "Aimez-vous préparer et servir de la nourriture et des boissons ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hotel-r-2', category: 'R', emoji: '🔪', difficulty: 'intermediate',
+    sector: 'Hôtellerie & Restauration',
+    text: "Êtes-vous à l'aise pour gérer une cuisine ou une salle de service ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hotel-i-1', category: 'I', emoji: '📊', difficulty: 'basic',
+    sector: 'Hôtellerie & Restauration',
+    text: "Aimez-vous comprendre les techniques culinaires et les process ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hotel-i-2', category: 'I', emoji: '🧪', difficulty: 'intermediate',
+    sector: 'Hôtellerie & Restauration',
+    text: "Aimeriez-vous concevoir de nouveaux menus ou techniques culinaires ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hotel-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Hôtellerie & Restauration',
+    text: "Aimeriez-vous créer des plats esthétiquement beaux et appétissants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hotel-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Hôtellerie & Restauration',
+    text: "Aimez-vous décorer et créer une ambiance accueillante ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hotel-s-1', category: 'S', emoji: '😊', difficulty: 'basic',
+    sector: 'Hôtellerie & Restauration',
+    text: "Aimez-vous servir les clients et créer une expérience positive ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hotel-s-2', category: 'S', emoji: '💬', difficulty: 'intermediate',
+    sector: 'Hôtellerie & Restauration',
+    text: "Êtes-vous doué pour gérer les demandes spéciales des clients ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hotel-e-1', category: 'E', emoji: '🏨', difficulty: 'advanced',
+    sector: 'Hôtellerie & Restauration',
+    text: "Aimeriez-vous diriger un restaurant ou un établissement hôtelier ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hotel-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Hôtellerie & Restauration',
+    text: "Aimeriez-vous gérer les stocks, l'hygiène et les normes de sécurité ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // ÉDUCATION & ENSEIGNEMENT - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'edu-r-1', category: 'R', emoji: '📐', difficulty: 'basic',
+    sector: 'Éducation & Enseignement',
+    text: "Aimez-vous utiliser des matériels pédagogiques et des outils concrets ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'edu-r-2', category: 'R', emoji: '🏫', difficulty: 'intermediate',
+    sector: 'Éducation & Enseignement',
+    text: "Êtes-vous à l'aise pour mettre en place des activités pratiques et manuelles ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'edu-i-1', category: 'I', emoji: '📚', difficulty: 'basic',
+    sector: 'Éducation & Enseignement',
+    text: "Avez-vous une passion pour l'apprentissage et la transmission du savoir ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'edu-i-2', category: 'I', emoji: '🧠', difficulty: 'intermediate',
+    sector: 'Éducation & Enseignement',
+    text: "Aimeriez-vous développer des programmes pédagogiques innovants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'edu-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Éducation & Enseignement',
+    text: "Aimeriez-vous créer des supports pédagogiques attractifs et créatifs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'edu-a-2', category: 'A', emoji: '🎭', difficulty: 'intermediate',
+    sector: 'Éducation & Enseignement',
+    text: "Aimez-vous animer les cours de façon dynamique et engageante ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'edu-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Éducation & Enseignement',
+    text: "Aimez-vous enseigner et aider les élèves à progresser ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'edu-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Éducation & Enseignement',
+    text: "Êtes-vous doué pour motivar et créer un bon climat de classe ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'edu-e-1', category: 'E', emoji: '📢', difficulty: 'intermediate',
+    sector: 'Éducation & Enseignement',
+    text: "Aimeriez-vous diriger un établissement scolaire ou éducatif ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'edu-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Éducation & Enseignement',
+    text: "Aimeriez-vous gérer l'administration et les dossiers des élèves ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // MULTIMÉDIA & AUDIOVISUEL - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'media-r-1', category: 'R', emoji: '🎥', difficulty: 'basic',
+    sector: 'Multimédia & Audiovisuel',
+    text: "Aimez-vous utiliser des équipements de tournage et de montage ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'media-r-2', category: 'R', emoji: '🎙️', difficulty: 'intermediate',
+    sector: 'Multimédia & Audiovisuel',
+    text: "Êtes-vous à l'aise avec les technologies audiovisuelles et d'enregistrement ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'media-i-1', category: 'I', emoji: '📊', difficulty: 'basic',
+    sector: 'Multimédia & Audiovisuel',
+    text: "Êtes-vous intéressé par la technologie et les systèmes de diffusion ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'media-i-2', category: 'I', emoji: '🔍', difficulty: 'intermediate',
+    sector: 'Multimédia & Audiovisuel',
+    text: "Aimeriez-vous analyser les audiences et l'impact des contenus ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'media-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Multimédia & Audiovisuel',
+    text: "Avez-vous une vision créative pour raconter des histoires visuelles ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'media-a-2', category: 'A', emoji: '✨', difficulty: 'advanced',
+    sector: 'Multimédia & Audiovisuel',
+    text: "Aimeriez-vous créer des productions audiovisuelles originales ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'media-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Multimédia & Audiovisuel',
+    text: "Aimez-vous collaborer en équipe sur des projets créatifs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'media-s-2', category: 'S', emoji: '💬', difficulty: 'intermediate',
+    sector: 'Multimédia & Audiovisuel',
+    text: "Êtes-vous doué pour communiquer et exprimer des émotions ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'media-e-1', category: 'E', emoji: '📢', difficulty: 'intermediate',
+    sector: 'Multimédia & Audiovisuel',
+    text: "Aimeriez-vous lancer une entreprise de production audiovisuelle ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'media-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Multimédia & Audiovisuel',
+    text: "Aimeriez-vous gérer les budgets et les plannings de production ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // ARCHITECTURE - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'arch-r-1', category: 'R', emoji: '🏗️', difficulty: 'basic',
+    sector: 'Architecture',
+    text: "Aimez-vous construire, assembler et concevoir des structures ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'arch-r-2', category: 'R', emoji: '📏', difficulty: 'intermediate',
+    sector: 'Architecture',
+    text: "Êtes-vous à l'aise avec les matériaux de construction et les outils ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'arch-i-1', category: 'I', emoji: '📐', difficulty: 'basic',
+    sector: 'Architecture',
+    text: "Êtes-vous fasciné par les structures, les proportions et l'ingénierie ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'arch-i-2', category: 'I', emoji: '🧮', difficulty: 'advanced',
+    sector: 'Architecture',
+    text: "Aimeriez-vous concevoir des bâtiments durables et innovants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'arch-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Architecture',
+    text: "Avez-vous une forte sensibilité à l'esthétique des bâtiments ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'arch-a-2', category: 'A', emoji: '✨', difficulty: 'advanced',
+    sector: 'Architecture',
+    text: "Aimeriez-vous créer des espaces qui reflètent votre vision artistique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'arch-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Architecture',
+    text: "Aimez-vous travailler avec les clients pour comprendre leurs besoins ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'arch-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Architecture',
+    text: "Êtes-vous doué pour collaborer avec des équipes multidisciplinaires ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'arch-e-1', category: 'E', emoji: '📈', difficulty: 'intermediate',
+    sector: 'Architecture',
+    text: "Aimeriez-vous créer votre propre cabinet d'architecture ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'arch-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Architecture',
+    text: "Aimeriez-vous respecter les normes, réglementations et devis ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // IMMOBILIER & DÉVELOPPEMENT - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'real-r-1', category: 'R', emoji: '🏠', difficulty: 'basic',
+    sector: 'Immobilier & Développement',
+    text: "Aimez-vous visiter des propriétés et les évaluer concrètement ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'real-r-2', category: 'R', emoji: '🔑', difficulty: 'intermediate',
+    sector: 'Immobilier & Développement',
+    text: "Êtes-vous à l'aise pour gérer les aspects pratiques des transactions ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'real-i-1', category: 'I', emoji: '📊', difficulty: 'basic',
+    sector: 'Immobilier & Développement',
+    text: "Aimez-vous analyser le marché immobilier et les tendances des prix ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'real-i-2', category: 'I', emoji: '📐', difficulty: 'intermediate',
+    sector: 'Immobilier & Développement',
+    text: "Aimeriez-vous planifier et développer des projets immobiliers ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'real-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Immobilier & Développement',
+    text: "Aimeriez-vous concevoir des espaces attrayants et fonctionnels ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'real-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Immobilier & Développement',
+    text: "Aimez-vous créer une ambiance accueillante dans les propriétés ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'real-s-1', category: 'S', emoji: '😊', difficulty: 'basic',
+    sector: 'Immobilier & Développement',
+    text: "Aimez-vous interagir avec les clients et comprendre leurs rêves immobiliers ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'real-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Immobilier & Développement',
+    text: "Êtes-vous doué pour négocier et conclure des accords ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'real-e-1', category: 'E', emoji: '📈', difficulty: 'advanced',
+    sector: 'Immobilier & Développement',
+    text: "Aimeriez-vous créer une agence immobilière ou développer des projets ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'real-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Immobilier & Développement',
+    text: "Aimeriez-vous gérer les dossiers légaux et les contrats immobiliers ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // DROIT & LÉGAL - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'law-r-1', category: 'R', emoji: '📄', difficulty: 'basic',
+    sector: 'Droit & Légal',
+    text: "Aimez-vous organiser et classer les documents légaux ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'law-r-2', category: 'R', emoji: '⚖️', difficulty: 'intermediate',
+    sector: 'Droit & Légal',
+    text: "Êtes-vous à l'aise pour gérer des dossiers judiciaires et administratifs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'law-i-1', category: 'I', emoji: '📚', difficulty: 'basic',
+    sector: 'Droit & Légal',
+    text: "Avez-vous une passion pour la loi, la justice et l'ordre légal ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'law-i-2', category: 'I', emoji: '🔍', difficulty: 'advanced',
+    sector: 'Droit & Légal',
+    text: "Aimeriez-vous analyser les cas complexes et trouver des solutions légales ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'law-a-1', category: 'A', emoji: '🗣️', difficulty: 'basic',
+    sector: 'Droit & Légal',
+    text: "Aimeriez-vous exprimer vos idées avec éloquence et persuasion ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'law-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Droit & Légal',
+    text: "Aimez-vous rédiger des documents légaux clairs et persuasifs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'law-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Droit & Légal',
+    text: "Aimez-vous aider les personnes à comprendre leurs droits ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'law-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Droit & Légal',
+    text: "Êtes-vous doué pour négocier et trouver des solutions équitables ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'law-e-1', category: 'E', emoji: '📢', difficulty: 'advanced',
+    sector: 'Droit & Légal',
+    text: "Aimeriez-vous représenter des clients en tant qu'avocat ou avocat spécialisé ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'law-c-1', category: 'C', emoji: '📋', difficulty: 'advanced',
+    sector: 'Droit & Légal',
+    text: "Aimeriez-vous assurer le respect strict des normes et réglementations ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // RESSOURCES HUMAINES - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'hr-r-1', category: 'R', emoji: '📋', difficulty: 'basic',
+    sector: 'Ressources Humaines',
+    text: "Aimez-vous organiser des événements et des activités de team-building ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hr-r-2', category: 'R', emoji: '📊', difficulty: 'intermediate',
+    sector: 'Ressources Humaines',
+    text: "Êtes-vous à l'aise pour gérer les aspects administratifs du personnel ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hr-i-1', category: 'I', emoji: '📚', difficulty: 'basic',
+    sector: 'Ressources Humaines',
+    text: "Êtes-vous intéressé par la psychologie du travail et le comportement humain ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hr-i-2', category: 'I', emoji: '📊', difficulty: 'intermediate',
+    sector: 'Ressources Humaines',
+    text: "Aimeriez-vous analyser les données de performance et satisfaction du personnel ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hr-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Ressources Humaines',
+    text: "Aimeriez-vous créer des programs de développement personnel innovants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hr-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Ressources Humaines',
+    text: "Aimez-vous concevoir des stratégies de communication créatives ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hr-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Ressources Humaines',
+    text: "Aimez-vous écouter et aider les employés à résoudre leurs problèmes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hr-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Ressources Humaines',
+    text: "Êtes-vous doué pour créer un climat de confiance au travail ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hr-e-1', category: 'E', emoji: '📢', difficulty: 'intermediate',
+    sector: 'Ressources Humaines',
+    text: "Aimeriez-vous diriger le département RH et influencer la culture d'entreprise ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'hr-c-1', category: 'C', emoji: '📋', difficulty: 'advanced',
+    sector: 'Ressources Humaines',
+    text: "Aimeriez-vous assurer la conformité des règles d'emploi et des normes ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // LOGISTIQUE & TRANSPORT - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'logis-r-1', category: 'R', emoji: '🚚', difficulty: 'basic',
+    sector: 'Logistique & Transport',
+    text: "Aimez-vous conduire et vous déplacer pour livrer des marchandises ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'logis-r-2', category: 'R', emoji: '📦', difficulty: 'intermediate',
+    sector: 'Logistique & Transport',
+    text: "Êtes-vous à l'aise pour charger, décharger et manipuler des colis ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'logis-i-1', category: 'I', emoji: '🗺️', difficulty: 'basic',
+    sector: 'Logistique & Transport',
+    text: "Aimez-vous planifier des itinéraires et optimiser les déplacements ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'logis-i-2', category: 'I', emoji: '📊', difficulty: 'advanced',
+    sector: 'Logistique & Transport',
+    text: "Aimeriez-vous analyser les flux et optimiser les chaînes d'approvisionnement ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'logis-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Logistique & Transport',
+    text: "Aimeriez-vous concevoir des solutions créatives aux problèmes logistiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'logis-a-2', category: 'A', emoji: '💡', difficulty: 'intermediate',
+    sector: 'Logistique & Transport',
+    text: "Aimez-vous innover dans l'organisation et l'optimisation ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'logis-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Logistique & Transport',
+    text: "Aimez-vous travailler en équipe et coordonner avec d'autres ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'logis-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Logistique & Transport',
+    text: "Êtes-vous doué pour communiquer avec les clients et les fournisseurs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'logis-e-1', category: 'E', emoji: '📈', difficulty: 'advanced',
+    sector: 'Logistique & Transport',
+    text: "Aimeriez-vous gérer une entreprise de transport ou de logistique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'logis-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Logistique & Transport',
+    text: "Aimeriez-vous gérer les inventaires et assurer le suivi des expéditions ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // AGRICULTURE & MÉTIERS VERTS - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'agri-r-1', category: 'R', emoji: '🚜', difficulty: 'basic',
+    sector: 'Agriculture & Métiers Verts',
+    text: "Aimez-vous utiliser des machines agricoles et des outils pratiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'agri-r-2', category: 'R', emoji: '🌾', difficulty: 'intermediate',
+    sector: 'Agriculture & Métiers Verts',
+    text: "Êtes-vous à l'aise pour cultiver, semer et récolter ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'agri-i-1', category: 'I', emoji: '🧬', difficulty: 'basic',
+    sector: 'Agriculture & Métiers Verts',
+    text: "Êtes-vous intéressé par l'agronomie, les sols et les cultures ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'agri-i-2', category: 'I', emoji: '🌍', difficulty: 'advanced',
+    sector: 'Agriculture & Métiers Verts',
+    text: "Aimeriez-vous développer l'agriculture durable et écologique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'agri-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Agriculture & Métiers Verts',
+    text: "Aimeriez-vous créer de beaux espaces verts et paysagers ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'agri-a-2', category: 'A', emoji: '🌈', difficulty: 'intermediate',
+    sector: 'Agriculture & Métiers Verts',
+    text: "Aimez-vous concevoir des projets d'aménagement paysager ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'agri-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Agriculture & Métiers Verts',
+    text: "Aimez-vous travailler avec d'autres agriculteurs ou dans une coopérative ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'agri-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Agriculture & Métiers Verts',
+    text: "Êtes-vous doué pour enseigner les techniques agricoles ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'agri-e-1', category: 'E', emoji: '🚀', difficulty: 'intermediate',
+    sector: 'Agriculture & Métiers Verts',
+    text: "Aimeriez-vous créer une exploitation agricole ou une entreprise verte ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'agri-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Agriculture & Métiers Verts',
+    text: "Aimeriez-vous gérer les budgets, les subventions et la conformité ?",
     options: OPTIONS,
   },
 ];
