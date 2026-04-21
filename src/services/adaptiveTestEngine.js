@@ -19,8 +19,9 @@
 import { adaptiveQuestionPool } from '@/data/adaptiveQuestions';
 
 const CATEGORIES = ['R', 'I', 'A', 'S', 'E', 'C'];
-const TARGET_QUESTIONS = 27;
-const MIN_QUESTIONS = 15;
+const TARGET_QUESTIONS = 30;
+const MIN_QUESTIONS = 24;
+const MIN_QUESTIONS_PER_CATEGORY = 3; // Ensure each category has at least 3 questions
 const CONFIDENCE_THRESHOLD = 0.25;
 
 const TestPhases = {
@@ -116,7 +117,29 @@ export const adaptiveTestEngine = {
       const questionsAvailable = unused.filter(q => !state.skippedSectors.has(q.sector));
 
       if (questionsAvailable.length > 0) {
-        // Priority: Mid-range scores (40-60%) — need clarification
+        // Count questions per category
+        const answersPerCategory = {};
+        CATEGORIES.forEach(cat => {
+          answersPerCategory[cat] = Object.values(state.answers).filter(
+            a => a.category === cat
+          ).length;
+        });
+
+        // Priority 1: Categories with fewer questions (ensure minimum coverage)
+        for (const cat of CATEGORIES) {
+          if (answersPerCategory[cat] < MIN_QUESTIONS_PER_CATEGORY) {
+            const refinementQ = questionsAvailable.find(
+              q => q.category === cat && q.difficulty === 'intermediate'
+            );
+            if (refinementQ) {
+              state.asked.push(refinementQ);
+              state.askedIds.add(refinementQ.id);
+              return refinementQ;
+            }
+          }
+        }
+
+        // Priority 2: Mid-range scores (40-60%) — need clarification
         for (const cat of CATEGORIES) {
           const score = state.scores[cat] || 50;
           if (score >= 40 && score <= 60) {
@@ -154,7 +177,29 @@ export const adaptiveTestEngine = {
       const questionsAvailable = unused.filter(q => !state.skippedSectors.has(q.sector));
 
       if (questionsAvailable.length > 0) {
-        // Priority: Advanced questions for dominant categories
+        // Count questions per category
+        const answersPerCategory = {};
+        CATEGORIES.forEach(cat => {
+          answersPerCategory[cat] = Object.values(state.answers).filter(
+            a => a.category === cat
+          ).length;
+        });
+
+        // Priority 1: Categories with fewer questions (ensure minimum coverage)
+        for (const cat of CATEGORIES) {
+          if (answersPerCategory[cat] < MIN_QUESTIONS_PER_CATEGORY) {
+            const advancedQ = questionsAvailable.find(
+              q => q.category === cat && q.difficulty === 'advanced'
+            );
+            if (advancedQ) {
+              state.asked.push(advancedQ);
+              state.askedIds.add(advancedQ.id);
+              return advancedQ;
+            }
+          }
+        }
+
+        // Priority 2: Advanced questions for dominant categories
         const topCategories = Object.entries(state.scores)
           .sort(([, a], [, b]) => b - a)
           .slice(0, 2)
@@ -287,6 +332,20 @@ export const adaptiveTestEngine = {
 
     if (questionsAsked >= TARGET_QUESTIONS) return true;
     if (questionsAsked < MIN_QUESTIONS) return false;
+
+    // Check if each category has minimum questions
+    const answersPerCategory = {};
+    CATEGORIES.forEach(cat => {
+      answersPerCategory[cat] = Object.values(state.answers).filter(
+        a => a.category === cat
+      ).length;
+    });
+
+    const allCategoriesHaveMinimum = CATEGORIES.every(
+      cat => answersPerCategory[cat] >= MIN_QUESTIONS_PER_CATEGORY
+    );
+
+    if (!allCategoriesHaveMinimum) return false;
 
     const avgConfidence = CATEGORIES.reduce((sum, cat) => sum + state.confidences[cat], 0) / CATEGORIES.length;
     const stdDev = this._calculateStdDev(Object.values(state.scores));
