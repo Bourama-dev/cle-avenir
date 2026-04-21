@@ -114,11 +114,6 @@ const AdaptiveTestInterface = ({ onComplete }) => {
   const progress = (state.asked.length / 27) * 100;
   const estimatedRemaining = Math.max(3, Math.ceil(27 - state.asked.length));
 
-  // RIASEC score visualization
-  const topScores = Object.entries(state.scores || {})
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, 3);
-
   const answerLabels = ['Pas du tout', 'Un peu', 'Beaucoup', 'Passionnément'];
   const answerColors = ['bg-red-500', 'bg-orange-500', 'bg-green-500', 'bg-blue-600'];
   const answerEmojis = ['😞', '😐', '🙂', '🚀'];
@@ -249,34 +244,6 @@ const AdaptiveTestInterface = ({ onComplete }) => {
                 </div>
               </div>
 
-              {/* Real-time RIASEC Radar */}
-              <div className="bg-gradient-to-br from-slate-50 to-indigo-50 rounded-2xl p-6 border border-slate-100">
-                <h3 className="text-xs font-bold text-slate-600 uppercase mb-4 tracking-wide">
-                  Profil en temps réel
-                </h3>
-                <div className="grid grid-cols-3 gap-3">
-                  {Object.entries(state.scores || {}).map(([cat, score]) => {
-                    const isTop = topScores.some(([c]) => c === cat);
-                    return (
-                      <motion.div
-                        key={cat}
-                        whileHover={{ scale: 1.05 }}
-                        className={`text-center p-3 rounded-xl transition-all ${
-                          isTop
-                            ? 'bg-indigo-100 border-2 border-indigo-300 shadow-md'
-                            : 'bg-white border border-slate-200'
-                        }`}
-                      >
-                        <div className="text-2xl font-black text-indigo-600 mb-1">{cat}</div>
-                        <Progress value={score || 0} className="h-1.5 mb-2" />
-                        <span className={`text-xs font-bold ${isTop ? 'text-indigo-700' : 'text-slate-600'}`}>
-                          {score || 0}%
-                        </span>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
             </motion.div>
 
             {/* Skipped Sectors Warning */}
