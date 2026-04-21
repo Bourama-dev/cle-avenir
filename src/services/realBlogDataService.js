@@ -1,14 +1,18 @@
 import { supabase } from '@/lib/customSupabaseClient';
+import { CacheService } from './CacheService';
 
-/**
- * Service to fetch REAL blog content from database
- * Replaces hardcoded blogPosts.js and faqBlogArticles.js
- */
+const CACHE_TTL_ARTICLES  = 10 * 60 * 1000; // 10 minutes
+const CACHE_TTL_CATEGORIES = 60 * 60 * 1000; // 1 hour (categories rarely change)
+
 export const realBlogDataService = {
   /**
-   * Get all published blog articles
+   * Get all published blog articles (cached)
    */
   async getAllArticles(limit = 20, offset = 0) {
+    const cacheKey = CacheService.generateKey('blog_articles_all', { limit, offset });
+    const cached = CacheService.get(cacheKey);
+    if (cached) return cached;
+
     try {
       const { data, error, count } = await supabase
         .from('blog_articles')
@@ -19,7 +23,9 @@ export const realBlogDataService = {
 
       if (error) throw error;
 
-      return { articles: data || [], total: count || 0 };
+      const result = { articles: data || [], total: count || 0 };
+      CacheService.set(cacheKey, result, CACHE_TTL_ARTICLES);
+      return result;
     } catch (error) {
       console.error('Error fetching blog articles:', error);
       return { articles: [], total: 0 };
@@ -30,6 +36,10 @@ export const realBlogDataService = {
    * Get blog articles by category
    */
   async getArticlesByCategory(categoryId, limit = 20) {
+    const cacheKey = CacheService.generateKey('blog_articles_cat', { categoryId, limit });
+    const cached = CacheService.get(cacheKey);
+    if (cached) return cached;
+
     try {
       const { data, error } = await supabase
         .from('blog_articles')
@@ -41,7 +51,9 @@ export const realBlogDataService = {
 
       if (error) throw error;
 
-      return data || [];
+      const result = data || [];
+      CacheService.set(cacheKey, result, CACHE_TTL_ARTICLES);
+      return result;
     } catch (error) {
       console.error(`Error fetching articles for category ${categoryId}:`, error);
       return [];
@@ -52,6 +64,10 @@ export const realBlogDataService = {
    * Get a specific blog article by slug
    */
   async getArticleBySlug(slug) {
+    const cacheKey = `blog_article_slug_${slug}`;
+    const cached = CacheService.get(cacheKey);
+    if (cached) return cached;
+
     try {
       const { data, error } = await supabase
         .from('blog_articles')
@@ -62,6 +78,7 @@ export const realBlogDataService = {
 
       if (error && error.code !== 'PGRST116') throw error;
 
+      if (data) CacheService.set(cacheKey, data, CACHE_TTL_ARTICLES);
       return data || null;
     } catch (error) {
       console.error(`Error fetching article with slug ${slug}:`, error);
@@ -70,9 +87,13 @@ export const realBlogDataService = {
   },
 
   /**
-   * Get featured blog articles
+   * Get featured blog articles (cached)
    */
   async getFeaturedArticles(limit = 5) {
+    const cacheKey = CacheService.generateKey('blog_articles_featured', { limit });
+    const cached = CacheService.get(cacheKey);
+    if (cached) return cached;
+
     try {
       const { data, error } = await supabase
         .from('blog_articles')
@@ -84,7 +105,9 @@ export const realBlogDataService = {
 
       if (error) throw error;
 
-      return data || [];
+      const result = data || [];
+      CacheService.set(cacheKey, result, CACHE_TTL_ARTICLES);
+      return result;
     } catch (error) {
       console.error('Error fetching featured articles:', error);
       return [];
@@ -100,7 +123,7 @@ export const realBlogDataService = {
         .from('blog_articles')
         .select('*')
         .eq('status', 'published')
-        .or(`title.ilike.%${query}%,content.ilike.%${query}%,excerpt.ilike.%${query}%`)
+        .or(`title.ilike.%${query}%,excerpt.ilike.%${query}%`)
         .limit(limit);
 
       if (error) throw error;
@@ -113,9 +136,13 @@ export const realBlogDataService = {
   },
 
   /**
-   * Get all blog posts (legacy - for backward compatibility)
+   * Get all blog posts - legacy table (cached)
    */
   async getAllPosts(limit = 20, offset = 0) {
+    const cacheKey = CacheService.generateKey('blog_posts_all', { limit, offset });
+    const cached = CacheService.get(cacheKey);
+    if (cached) return cached;
+
     try {
       const { data, error, count } = await supabase
         .from('blog_posts')
@@ -125,7 +152,9 @@ export const realBlogDataService = {
 
       if (error) throw error;
 
-      return { posts: data || [], total: count || 0 };
+      const result = { posts: data || [], total: count || 0 };
+      CacheService.set(cacheKey, result, CACHE_TTL_ARTICLES);
+      return result;
     } catch (error) {
       console.error('Error fetching blog posts:', error);
       return { posts: [], total: 0 };
@@ -133,9 +162,13 @@ export const realBlogDataService = {
   },
 
   /**
-   * Get blog categories
+   * Get blog categories (long-lived cache - categories rarely change)
    */
   async getCategories() {
+    const cacheKey = 'blog_categories';
+    const cached = CacheService.get(cacheKey);
+    if (cached) return cached;
+
     try {
       const { data, error } = await supabase
         .from('blog_categories')
@@ -144,7 +177,9 @@ export const realBlogDataService = {
 
       if (error) throw error;
 
-      return data || [];
+      const result = data || [];
+      CacheService.set(cacheKey, result, CACHE_TTL_CATEGORIES);
+      return result;
     } catch (error) {
       console.error('Error fetching blog categories:', error);
       return [];
@@ -152,7 +187,7 @@ export const realBlogDataService = {
   },
 
   /**
-   * Get article comments
+   * Get article comments (not cached - should be real-time)
    */
   async getArticleComments(articleId) {
     try {
@@ -173,9 +208,13 @@ export const realBlogDataService = {
   },
 
   /**
-   * Get recent articles
+   * Get recent articles (cached)
    */
   async getRecentArticles(limit = 10) {
+    const cacheKey = CacheService.generateKey('blog_articles_recent', { limit });
+    const cached = CacheService.get(cacheKey);
+    if (cached) return cached;
+
     try {
       const { data, error } = await supabase
         .from('blog_articles')
@@ -186,7 +225,9 @@ export const realBlogDataService = {
 
       if (error) throw error;
 
-      return data || [];
+      const result = data || [];
+      CacheService.set(cacheKey, result, CACHE_TTL_ARTICLES);
+      return result;
     } catch (error) {
       console.error('Error fetching recent articles:', error);
       return [];
@@ -194,9 +235,13 @@ export const realBlogDataService = {
   },
 
   /**
-   * Get popular articles by view count
+   * Get popular articles by view count (cached)
    */
   async getPopularArticles(limit = 10) {
+    const cacheKey = CacheService.generateKey('blog_articles_popular', { limit });
+    const cached = CacheService.get(cacheKey);
+    if (cached) return cached;
+
     try {
       const { data, error } = await supabase
         .from('blog_articles')
@@ -207,10 +252,12 @@ export const realBlogDataService = {
 
       if (error) throw error;
 
-      return data || [];
+      const result = data || [];
+      CacheService.set(cacheKey, result, CACHE_TTL_ARTICLES);
+      return result;
     } catch (error) {
       console.error('Error fetching popular articles:', error);
       return [];
     }
-  }
+  },
 };

@@ -1,39 +1,29 @@
 import { supabase } from '@/lib/customSupabaseClient';
 
-/**
- * Service to fetch REAL establishment/institution data
- * Replaces mock student, class, and teacher data in establishmentService
- */
 export const realEstablishmentDataService = {
   /**
-   * Get actual students linked to an establishment
+   * Get actual students linked to an establishment.
+   * Optimized: single JOIN query instead of 3 sequential queries.
    */
   async getEstablishmentStudents(institutionId, limit = 50, offset = 0) {
     try {
-      // Get user links to institution
-      const { data: userLinks, error: linkError, count } = await supabase
+      // Single JOIN query: user_institution_links → profiles
+      const { data: links, error: linkError, count } = await supabase
         .from('user_institution_links')
-        .select('user_id', { count: 'exact' })
+        .select(
+          `user_id,
+           profiles!inner(id, first_name, last_name, email, avatar_url, education_level)`,
+          { count: 'exact' }
+        )
         .eq('institution_id', institutionId)
         .range(offset, offset + limit - 1);
 
       if (linkError) throw linkError;
+      if (!links || links.length === 0) return { students: [], total: count || 0 };
 
-      const userIds = userLinks?.map(l => l.user_id) || [];
+      const userIds = links.map(l => l.user_id);
 
-      if (userIds.length === 0) {
-        return { students: [], total: count || 0 };
-      }
-
-      // Get student profiles
-      const { data: profiles, error: profileError } = await supabase
-        .from('profiles')
-        .select('id, first_name, last_name, email, avatar_url, education_level')
-        .in('id', userIds);
-
-      if (profileError) throw profileError;
-
-      // Get test results for each student
+      // Fetch test results in parallel (one query for all users)
       const { data: testResults, error: testError } = await supabase
         .from('user_test_results')
         .select('user_id, dominant_profile, completed_at, total_score')
@@ -42,23 +32,33 @@ export const realEstablishmentDataService = {
 
       if (testError) throw testError;
 
-      // Merge data
-      const students = profiles?.map(profile => {
-        const userTests = testResults?.filter(t => t.user_id === profile.id) || [];
-        const latestTest = userTests[0];
+      // Build a Map for fast lookup: userId → latest test result
+      const latestTestMap = new Map();
+      const testCountMap = new Map();
+      (testResults || []).forEach(t => {
+        testCountMap.set(t.user_id, (testCountMap.get(t.user_id) || 0) + 1);
+        if (!latestTestMap.has(t.user_id)) {
+          latestTestMap.set(t.user_id, t);
+        }
+      });
+
+      const students = links.map(link => {
+        const profile = link.profiles;
+        const latestTest = latestTestMap.get(link.user_id);
+        const testsCount = testCountMap.get(link.user_id) || 0;
 
         return {
           id: profile.id,
           name: `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Étudiant',
           email: profile.email || 'N/A',
           avatar_url: profile.avatar_url,
-          tests_completed: userTests.length,
+          tests_completed: testsCount,
           dominant_profile: latestTest?.dominant_profile || 'Non évalué',
           last_test_date: latestTest?.completed_at || null,
           last_score: latestTest?.total_score || null,
-          status: userTests.length > 0 ? 'Actif' : 'Inscrit'
+          status: testsCount > 0 ? 'Actif' : 'Inscrit',
         };
-      }) || [];
+      });
 
       return { students, total: count || 0 };
     } catch (error) {
@@ -80,13 +80,13 @@ export const realEstablishmentDataService = {
 
       if (error) throw error;
 
-      return data?.map(staff => ({
+      return (data || []).map(staff => ({
         id: staff.id,
-        name: `${staff.first_name} ${staff.last_name}`,
+        name: `${staff.first_name || ''} ${staff.last_name || ''}`.trim(),
         email: staff.email,
         role: staff.role,
-        status: 'Actif'
-      })) || [];
+        status: 'Actif',
+      }));
     } catch (error) {
       console.error('Error fetching establishment staff:', error);
       return [];
@@ -100,26 +100,22 @@ export const realEstablishmentDataService = {
     try {
       const { data, error } = await supabase
         .from('institution_programs')
-        .select(`
-          id,
-          name,
-          level,
-          formation_id,
-          created_at,
-          formations(name)
-        `)
+        .select(
+          `id, name, level, formation_id, created_at,
+           formations(name)`
+        )
         .eq('institution_id', institutionId)
         .limit(limit);
 
       if (error) throw error;
 
-      return data?.map(prog => ({
+      return (data || []).map(prog => ({
         id: prog.id,
         name: prog.name,
         level: prog.level,
         formation_name: prog.formations?.name || 'Formation',
-        status: 'Active'
-      })) || [];
+        status: 'Active',
+      }));
     } catch (error) {
       console.error('Error fetching institution programs:', error);
       return [];
@@ -127,52 +123,58 @@ export const realEstablishmentDataService = {
   },
 
   /**
-   * Get establishment statistics from actual data
+   * Get establishment statistics from actual data.
+   * Optimized: all count queries run in parallel with Promise.all.
    */
   async getEstablishmentStatistics(institutionId) {
     try {
-      // Get total students
-      const { count: totalStudents } = await supabase
-        .from('user_institution_links')
-        .select('*', { count: 'exact', head: true })
-        .eq('institution_id', institutionId);
+      // Run all count queries in parallel
+      const [
+        { count: totalStudents },
+        { count: programCount },
+        { count: staffCount },
+        { data: userLinks },
+      ] = await Promise.all([
+        supabase
+          .from('user_institution_links')
+          .select('*', { count: 'exact', head: true })
+          .eq('institution_id', institutionId),
+        supabase
+          .from('institution_programs')
+          .select('*', { count: 'exact', head: true })
+          .eq('institution_id', institutionId),
+        supabase
+          .from('institution_staff')
+          .select('*', { count: 'exact', head: true })
+          .eq('institution_id', institutionId),
+        supabase
+          .from('user_institution_links')
+          .select('user_id')
+          .eq('institution_id', institutionId),
+      ]);
 
-      // Get students with tests
-      const { data: userLinks } = await supabase
-        .from('user_institution_links')
-        .select('user_id')
-        .eq('institution_id', institutionId);
+      const userIds = (userLinks || []).map(l => l.user_id);
 
-      const userIds = userLinks?.map(l => l.user_id) || [];
-
-      const { count: completedTests } = await supabase
-        .from('user_test_results')
-        .select('*', { count: 'exact', head: true })
-        .in('user_id', userIds);
-
-      // Get number of programs
-      const { count: programCount } = await supabase
-        .from('institution_programs')
-        .select('*', { count: 'exact', head: true })
-        .eq('institution_id', institutionId);
-
-      // Get number of staff
-      const { count: staffCount } = await supabase
-        .from('institution_staff')
-        .select('*', { count: 'exact', head: true })
-        .eq('institution_id', institutionId);
+      // Get completed tests count (needs userIds from previous query)
+      let completedTests = 0;
+      if (userIds.length > 0) {
+        const { count } = await supabase
+          .from('user_test_results')
+          .select('*', { count: 'exact', head: true })
+          .in('user_id', userIds);
+        completedTests = count || 0;
+      }
 
       const total = totalStudents || 0;
-      const completed = completedTests || 0;
-      const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+      const completionRate = total > 0 ? Math.round((completedTests / total) * 100) : 0;
 
       return {
         totalStudents: total,
-        activeStudents: completed,
-        completedTests: completed,
+        activeStudents: completedTests,
+        completedTests,
         completionRate,
         programCount: programCount || 0,
-        staffCount: staffCount || 0
+        staffCount: staffCount || 0,
       };
     } catch (error) {
       console.error('Error fetching establishment statistics:', error);
@@ -182,13 +184,14 @@ export const realEstablishmentDataService = {
         completedTests: 0,
         completionRate: 0,
         programCount: 0,
-        staffCount: 0
+        staffCount: 0,
       };
     }
   },
 
   /**
-   * Get student test recommendations/results
+   * Get student test recommendations/results.
+   * Optimized: fetches user IDs and test results in two parallel-ready queries.
    */
   async getStudentRecommendations(institutionId, limit = 10) {
     try {
@@ -197,8 +200,7 @@ export const realEstablishmentDataService = {
         .select('user_id')
         .eq('institution_id', institutionId);
 
-      const userIds = userLinks?.map(l => l.user_id) || [];
-
+      const userIds = (userLinks || []).map(l => l.user_id);
       if (userIds.length === 0) return [];
 
       const { data, error } = await supabase
@@ -235,5 +237,5 @@ export const realEstablishmentDataService = {
       console.error(`Error fetching institution ${institutionId}:`, error);
       return null;
     }
-  }
+  },
 };
