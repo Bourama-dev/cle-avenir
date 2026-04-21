@@ -1,13 +1,15 @@
 /**
- * Adaptive RIASEC Test — 60 Questions Pool
+ * Adaptive RIASEC Test — 400 Questions Pool (ÉTAPE 1/4: Secteurs 1-10)
  *
- * This pool feeds an adaptive algorithm that selects 20-27 questions
+ * This pool feeds an adaptive algorithm that selects 24-30 questions
  * based on user responses. Each question is tagged with:
  * - category: R, I, A, S, E, C
  * - sector: The professional domain it best represents
  * - difficulty: Used for adaptive selection (basic, intermediate, advanced)
  *
  * Scale: 0 = Pas du tout · 33 = Un peu · 66 = Beaucoup · 100 = Passionnément
+ *
+ * Distribution: 10 questions per sector × 40 sectors = 400 questions total
  */
 
 const OPTIONS = [
@@ -19,689 +21,656 @@ const OPTIONS = [
 
 export const adaptiveQuestionPool = [
   // ─────────────────────────────────────────────────────────────
-  // RÉALISTE (R) - 12 Questions
+  // GÉNÉRALISTE - 10 Questions (Foundation for all RIASEC)
   // ─────────────────────────────────────────────────────────────
 
   {
-    id: 'r-basic-1', category: 'R', emoji: '🔧', difficulty: 'basic',
+    id: 'gen-r-1', category: 'R', emoji: '🔧', difficulty: 'basic',
     sector: 'Généraliste',
     text: "Préférez-vous travailler avec des choses concrètes plutôt qu'avec des idées abstraites ?",
     options: OPTIONS,
   },
   {
-    id: 'r-basic-2', category: 'R', emoji: '🏗️', difficulty: 'basic',
-    sector: 'Généraliste',
-    text: "Aimez-vous voir le résultat tangible et immédiat de votre travail ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'r-basic-3', category: 'R', emoji: '🌿', difficulty: 'basic',
+    id: 'gen-r-2', category: 'R', emoji: '👐', difficulty: 'intermediate',
     sector: 'Généraliste',
     text: "Êtes-vous à l'aise avec les activités pratiques et manuelles ?",
     options: OPTIONS,
   },
   {
-    id: 'r-inter-1', category: 'R', emoji: '⚙️', difficulty: 'intermediate',
-    sector: 'Électricité & Électronique',
-    text: "Aimez-vous utiliser, entretenir et régler des équipements techniques ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'r-inter-2', category: 'R', emoji: '🏭', difficulty: 'intermediate',
-    sector: 'Industrie & Mécanique',
-    text: "Vous sentez-vous à l'aise en atelier, en usine ou en laboratoire pratique ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'r-inter-3', category: 'R', emoji: '🧵', difficulty: 'intermediate',
-    sector: 'Métiers du Textile',
-    text: "Aimeriez-vous travailler avec des matériaux (textile, cuir, bois, verre) ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'r-adv-1', category: 'R', emoji: '🛠️', difficulty: 'advanced',
-    sector: 'Métiers du Bois',
-    text: "Appréciez-vous les travaux d'artisanat qui demandent précision et savoir-faire ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'r-adv-2', category: 'R', emoji: '🚜', difficulty: 'advanced',
-    sector: 'Agriculture & Métiers Verts',
-    text: "Aimez-vous travailler avec la nature, les plantes ou les animaux ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'r-adv-3', category: 'R', emoji: '⚡', difficulty: 'advanced',
-    sector: 'Électricité & Électronique',
-    text: "Fascinez-vous par le fonctionnement des systèmes électriques ou mécaniques ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'r-sector-1', category: 'R', emoji: '💎', difficulty: 'intermediate',
-    sector: 'Verre & Cristal',
-    text: "Aimeriez-vous transformer des matières brutes en produits finis ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'r-sector-2', category: 'R', emoji: '📦', difficulty: 'intermediate',
-    sector: 'Logistique & Transport',
-    text: "Êtes-vous organisé et efficace dans les tâches pratiques et matérielles ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'r-sector-3', category: 'R', emoji: '🔨', difficulty: 'advanced',
-    sector: 'Métiers du Cuir',
-    text: "Appréciez-vous la création d'objets fonctionnels avec vos mains ?",
-    options: OPTIONS,
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // INVESTIGATEUR (I) - 12 Questions
-  // ─────────────────────────────────────────────────────────────
-
-  {
-    id: 'i-basic-1', category: 'I', emoji: '🧠', difficulty: 'basic',
+    id: 'gen-i-1', category: 'I', emoji: '🧠', difficulty: 'basic',
     sector: 'Généraliste',
-    text: "Aimez-vous comprendre et analyser comment les choses fonctionnent ?",
+    text: "Aimez-vous analyser les problèmes et comprendre comment les choses fonctionnent ?",
     options: OPTIONS,
   },
   {
-    id: 'i-basic-2', category: 'I', emoji: '🔬', difficulty: 'basic',
-    sector: 'Généraliste',
-    text: "Appréciez-vous résoudre des problèmes complexes et chercher des solutions ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'i-basic-3', category: 'I', emoji: '📚', difficulty: 'basic',
+    id: 'gen-i-2', category: 'I', emoji: '📚', difficulty: 'intermediate',
     sector: 'Généraliste',
     text: "Avez-vous une soif naturelle d'apprendre et d'approfondir vos connaissances ?",
     options: OPTIONS,
   },
   {
-    id: 'i-inter-1', category: 'I', emoji: '📐', difficulty: 'intermediate',
-    sector: 'Informatique & Numérique',
-    text: "Êtes-vous attiré par les mathématiques, l'informatique ou la logique ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'i-inter-2', category: 'I', emoji: '🧪', difficulty: 'intermediate',
-    sector: 'Chimie & Pharmacie',
-    text: "Aimeriez-vous conduire des expériences ou étudier des processus chimiques ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'i-inter-3', category: 'I', emoji: '🔭', difficulty: 'intermediate',
-    sector: 'Recherche Scientifique',
-    text: "Préférez-vous travailler de façon autonome sur des sujets techniques ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'i-adv-1', category: 'I', emoji: '💊', difficulty: 'advanced',
-    sector: 'Chimie & Pharmacie',
-    text: "Fascineriez-vous les molécules, les formules ou la pharmacologie ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'i-adv-2', category: 'I', emoji: '🧬', difficulty: 'advanced',
-    sector: 'Sciences de la Vie',
-    text: "Êtes-vous curieux des sciences biologiques et de la recherche médicale ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'i-adv-3', category: 'I', emoji: '⚛️', difficulty: 'advanced',
-    sector: 'Recherche & Développement',
-    text: "Aimeriez-vous contribuer à des innovations scientifiques ou technologiques ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'i-sector-1', category: 'I', emoji: '👓', difficulty: 'intermediate',
-    sector: 'Optique & Lunetterie',
-    text: "Intéressez-vous à la précision optique et aux appareils de mesure ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'i-sector-2', category: 'I', emoji: '🌍', difficulty: 'intermediate',
-    sector: 'Environnement & Développement Durable',
-    text: "Vous préoccupez-vous de l'impact environnemental et des solutions durables ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'i-sector-3', category: 'I', emoji: '🔩', difficulty: 'advanced',
-    sector: 'Ingénierie',
-    text: "Aimeriez-vous concevoir et optimiser des systèmes complexes ?",
-    options: OPTIONS,
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // ARTISTIQUE (A) - 11 Questions
-  // ─────────────────────────────────────────────────────────────
-
-  {
-    id: 'a-basic-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    id: 'gen-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
     sector: 'Généraliste',
     text: "Avez-vous besoin d'exprimer votre créativité et votre imagination au travail ?",
     options: OPTIONS,
   },
   {
-    id: 'a-basic-2', category: 'A', emoji: '✨', difficulty: 'basic',
+    id: 'gen-a-2', category: 'A', emoji: '🖌️', difficulty: 'intermediate',
     sector: 'Généraliste',
-    text: "Êtes-vous sensible à l'esthétique — couleurs, formes, design, beauté ?",
+    text: "Êtes-vous sensible à l'esthétique — couleurs, formes, design et beauté ?",
     options: OPTIONS,
   },
   {
-    id: 'a-basic-3', category: 'A', emoji: '🎭', difficulty: 'basic',
-    sector: 'Généraliste',
-    text: "Aimez-vous créer plutôt que de reproduire ou exécuter des tâches routinières ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'a-inter-1', category: 'A', emoji: '👗', difficulty: 'intermediate',
-    sector: 'Luxe & Mode',
-    text: "Aimeriez-vous créer des collections ou concevoir des tendances ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'a-inter-2', category: 'A', emoji: '🎬', difficulty: 'intermediate',
-    sector: 'Multimédia & Audiovisuel',
-    text: "Appréciez-vous produire du contenu vidéo, audio ou multimédia ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'a-inter-3', category: 'A', emoji: '🏛️', difficulty: 'intermediate',
-    sector: 'Architecture',
-    text: "Aimeriez-vous concevoir des espaces ou des bâtiments ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'a-adv-1', category: 'A', emoji: '🖼️', difficulty: 'advanced',
-    sector: 'Beaux-Arts',
-    text: "Voyez-vous l'art comme un moyen d'expression personnel profond ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'a-adv-2', category: 'A', emoji: '🎪', difficulty: 'advanced',
-    sector: 'Spectacle & Musique',
-    text: "Passionerie-vous par la performance ou l'expression scénique ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'a-sector-1', category: 'A', emoji: '🎸', difficulty: 'intermediate',
-    sector: 'Musique & Spectacle',
-    text: "Aimeriez-vous jouer d'un instrument ou chanter professionnellement ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'a-sector-2', category: 'A', emoji: '✍️', difficulty: 'intermediate',
-    sector: 'Édition & Journalisme',
-    text: "Aimez-vous raconter des histoires et communiquer par l'écrit ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'a-sector-3', category: 'A', emoji: '🌈', difficulty: 'advanced',
-    sector: 'Branding & Marketing Créatif',
-    text: "Préférez-vous des environnements qui valorisent l'originalité et l'imagination ?",
-    options: OPTIONS,
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // SOCIAL (S) - 12 Questions
-  // ─────────────────────────────────────────────────────────────
-
-  {
-    id: 's-basic-1', category: 'S', emoji: '🤝', difficulty: 'basic',
+    id: 'gen-s-1', category: 'S', emoji: '🤝', difficulty: 'basic',
     sector: 'Généraliste',
     text: "Aimez-vous aider, soutenir et vous occuper des autres ?",
     options: OPTIONS,
   },
   {
-    id: 's-basic-2', category: 'S', emoji: '🧑‍🏫', difficulty: 'basic',
+    id: 'gen-s-2', category: 'S', emoji: '👂', difficulty: 'intermediate',
     sector: 'Généraliste',
     text: "Êtes-vous empathique et doué pour écouter et comprendre les personnes ?",
     options: OPTIONS,
   },
   {
-    id: 's-basic-3', category: 'S', emoji: '👥', difficulty: 'basic',
-    sector: 'Généraliste',
-    text: "Préférez-vous travailler en équipe plutôt que seul ?",
-    options: OPTIONS,
-  },
-  {
-    id: 's-inter-1', category: 'S', emoji: '❤️', difficulty: 'intermediate',
-    sector: 'Santé & Social',
-    text: "Avez-vous de l'empathie naturelle et aimez-vous soutenir les personnes ?",
-    options: OPTIONS,
-  },
-  {
-    id: 's-inter-2', category: 'S', emoji: '🏥', difficulty: 'intermediate',
-    sector: 'Santé & Paramédical',
-    text: "Aimeriez-vous soigner, assister ou accompagner des patients ?",
-    options: OPTIONS,
-  },
-  {
-    id: 's-inter-3', category: 'S', emoji: '👂', difficulty: 'intermediate',
-    sector: 'Conseil & Coaching',
-    text: "Aimez-vous écouter, conseiller et orienter les personnes ?",
-    options: OPTIONS,
-  },
-  {
-    id: 's-adv-1', category: 'S', emoji: '🛡️', difficulty: 'advanced',
-    sector: 'Sécurité & Secours',
-    text: "Aimeriez-vous protéger et secourir les personnes en danger ?",
-    options: OPTIONS,
-  },
-  {
-    id: 's-adv-2', category: 'S', emoji: '👨‍⚕️', difficulty: 'advanced',
-    sector: 'Professions Médicales',
-    text: "Passioneriez-vous par les métiers de la santé et des soins intensifs ?",
-    options: OPTIONS,
-  },
-  {
-    id: 's-adv-3', category: 'S', emoji: '🧠', difficulty: 'advanced',
-    sector: 'Psychologie & Bien-être',
-    text: "Aimeriez-vous accompagner des personnes dans leur développement personnel ?",
-    options: OPTIONS,
-  },
-  {
-    id: 's-sector-1', category: 'S', emoji: '✈️', difficulty: 'intermediate',
-    sector: 'Tourisme & Loisirs',
-    text: "Aimez-vous accueillir et créer des expériences agréables pour les clients ?",
-    options: OPTIONS,
-  },
-  {
-    id: 's-sector-2', category: 'S', emoji: '🍽️', difficulty: 'intermediate',
-    sector: 'Hôtellerie & Restauration',
-    text: "Aimeriez-vous travailler dans l'accueil et le service à la clientèle ?",
-    options: OPTIONS,
-  },
-  {
-    id: 's-sector-3', category: 'S', emoji: '👶', difficulty: 'intermediate',
-    sector: 'Petite Enfance',
-    text: "Aimeriez-vous travailler avec des enfants et contribuer à leur éducation ?",
-    options: OPTIONS,
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // ENTREPRENANT (E) - 10 Questions
-  // ─────────────────────────────────────────────────────────────
-
-  {
-    id: 'e-basic-1', category: 'E', emoji: '🗣️', difficulty: 'basic',
+    id: 'gen-e-1', category: 'E', emoji: '🗣️', difficulty: 'basic',
     sector: 'Généraliste',
     text: "Aimez-vous influencer, convaincre et mener des projets ?",
     options: OPTIONS,
   },
   {
-    id: 'e-basic-2', category: 'E', emoji: '🚀', difficulty: 'basic',
+    id: 'gen-c-1', category: 'C', emoji: '📋', difficulty: 'basic',
     sector: 'Généraliste',
-    text: "Êtes-vous à l'aise pour prendre des décisions et assumer des responsabilités ?",
+    text: "Appréciez-vous la rigueur, la précision et l'organisation ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // INFORMATIQUE & NUMÉRIQUE - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'info-r-1', category: 'R', emoji: '⌨️', difficulty: 'basic',
+    sector: 'Informatique & Numérique',
+    text: "Aimez-vous assembler, monter et configurer des équipements informatiques ?",
     options: OPTIONS,
   },
   {
-    id: 'e-basic-3', category: 'E', emoji: '🏆', difficulty: 'basic',
-    sector: 'Généraliste',
-    text: "Avez-vous une ambition forte et aimez-vous relevez des défis ?",
+    id: 'info-r-2', category: 'R', emoji: '🖥️', difficulty: 'intermediate',
+    sector: 'Informatique & Numérique',
+    text: "Êtes-vous à l'aise pour dépanner et réparer des problèmes techniques ?",
     options: OPTIONS,
   },
   {
-    id: 'e-inter-1', category: 'E', emoji: '💡', difficulty: 'intermediate',
-    sector: 'Entrepreneuriat',
-    text: "Aimez-vous lancer des projets, créer une activité ou prendre des risques ?",
+    id: 'info-i-1', category: 'I', emoji: '💻', difficulty: 'basic',
+    sector: 'Informatique & Numérique',
+    text: "Êtes-vous attiré par la programmation, le code et la logique informatique ?",
     options: OPTIONS,
   },
   {
-    id: 'e-inter-2', category: 'E', emoji: '📈', difficulty: 'intermediate',
+    id: 'info-i-2', category: 'I', emoji: '🔐', difficulty: 'advanced',
+    sector: 'Informatique & Numérique',
+    text: "Aimeriez-vous résoudre des problèmes complexes de cybersécurité et de données ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'info-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Informatique & Numérique',
+    text: "Aimeriez-vous créer des interfaces et des designs web attrayants ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'info-a-2', category: 'A', emoji: '🌐', difficulty: 'intermediate',
+    sector: 'Informatique & Numérique',
+    text: "Appréciez-vous concevoir l'expérience utilisateur et l'ergonomie des applications ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'info-s-1', category: 'S', emoji: '💬', difficulty: 'basic',
+    sector: 'Informatique & Numérique',
+    text: "Aimeriez-vous aider les utilisateurs et fournir un support technique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'info-s-2', category: 'S', emoji: '👥', difficulty: 'intermediate',
+    sector: 'Informatique & Numérique',
+    text: "Aimez-vous travailler en équipe sur des projets informatiques collaboratifs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'info-e-1', category: 'E', emoji: '🚀', difficulty: 'intermediate',
+    sector: 'Informatique & Numérique',
+    text: "Aimeriez-vous lancer une startup technologique ou une app innovante ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'info-c-1', category: 'C', emoji: '📊', difficulty: 'intermediate',
+    sector: 'Informatique & Numérique',
+    text: "Aimeriez-vous gérer les bases de données et assurer leur conformité ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // SANTÉ & SOCIAL - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'health-r-1', category: 'R', emoji: '🩺', difficulty: 'basic',
+    sector: 'Santé & Social',
+    text: "Êtes-vous à l'aise pour manipuler du matériel médical et des équipements de soin ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'health-r-2', category: 'R', emoji: '💊', difficulty: 'intermediate',
+    sector: 'Santé & Social',
+    text: "Aimeriez-vous préparer et administrer des traitements ou des médicaments ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'health-i-1', category: 'I', emoji: '🧬', difficulty: 'intermediate',
+    sector: 'Santé & Social',
+    text: "Êtes-vous intéressé par la biologie et les mécanismes du corps humain ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'health-i-2', category: 'I', emoji: '📖', difficulty: 'advanced',
+    sector: 'Santé & Social',
+    text: "Aimeriez-vous étudier et contribuer à la recherche en santé ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'health-a-1', category: 'A', emoji: '🎭', difficulty: 'basic',
+    sector: 'Santé & Social',
+    text: "Aimeriez-vous créer des programmes ludiques ou des thérapies créatives ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'health-a-2', category: 'A', emoji: '🎵', difficulty: 'intermediate',
+    sector: 'Santé & Social',
+    text: "Aimeriez-vous utiliser l'art ou la musique comme moyen de soin ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'health-s-1', category: 'S', emoji: '❤️', difficulty: 'basic',
+    sector: 'Santé & Social',
+    text: "Avez-vous de l'empathie naturelle et aimez-vous soutenir les personnes souffrantes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'health-s-2', category: 'S', emoji: '🏥', difficulty: 'advanced',
+    sector: 'Santé & Social',
+    text: "Aimeriez-vous accompagner les patients dans leur parcours de soin ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'health-e-1', category: 'E', emoji: '📢', difficulty: 'intermediate',
+    sector: 'Santé & Social',
+    text: "Aimeriez-vous promouvoir la santé publique et sensibiliser les populations ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'health-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Santé & Social',
+    text: "Aimeriez-vous gérer les dossiers médicaux et les données des patients ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // ARTS & DESIGN - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'art-r-1', category: 'R', emoji: '🖌️', difficulty: 'basic',
+    sector: 'Arts & Design',
+    text: "Aimez-vous créer et manipuler des matériaux pour faire des objets artistiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'art-r-2', category: 'R', emoji: '🏺', difficulty: 'intermediate',
+    sector: 'Arts & Design',
+    text: "Aimeriez-vous travailler avec des matériaux bruts (argile, bois, métal) ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'art-i-1', category: 'I', emoji: '🔍', difficulty: 'basic',
+    sector: 'Arts & Design',
+    text: "Êtes-vous intéressé par l'histoire de l'art et les mouvements artistiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'art-i-2', category: 'I', emoji: '📐', difficulty: 'intermediate',
+    sector: 'Arts & Design',
+    text: "Appréciez-vous l'analyse des proportions et de l'harmonie visuelle ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'art-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Arts & Design',
+    text: "Avez-vous une forte sensibilité artistique et créative ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'art-a-2', category: 'A', emoji: '✨', difficulty: 'advanced',
+    sector: 'Arts & Design',
+    text: "Aimeriez-vous exprimer votre vision personnelle à travers une œuvre d'art ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'art-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Arts & Design',
+    text: "Aimez-vous partager votre créativité et inspirer les autres ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'art-s-2', category: 'S', emoji: '🎭', difficulty: 'intermediate',
+    sector: 'Arts & Design',
+    text: "Aimeriez-vous enseigner l'art ou animer des ateliers créatifs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'art-e-1', category: 'E', emoji: '💼', difficulty: 'intermediate',
+    sector: 'Arts & Design',
+    text: "Aimeriez-vous promouvoir et vendre vos créations artistiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'art-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Arts & Design',
+    text: "Aimeriez-vous gérer des catalogues et organiser des expositions ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // GESTION & MANAGEMENT - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'mgmt-r-1', category: 'R', emoji: '🏗️', difficulty: 'basic',
     sector: 'Gestion & Management',
-    text: "Aimeriez-vous diriger une équipe et atteindre des objectifs ambitieux ?",
+    text: "Aimez-vous voir les résultats concrets de vos décisions managériales ?",
     options: OPTIONS,
   },
   {
-    id: 'e-inter-3', category: 'E', emoji: '🏢', difficulty: 'intermediate',
-    sector: 'Immobilier & Développement',
-    text: "Aimeriez-vous développer des projets immobiliers ou commerciaux ?",
+    id: 'mgmt-r-2', category: 'R', emoji: '⚙️', difficulty: 'intermediate',
+    sector: 'Gestion & Management',
+    text: "Appréciez-vous optimiser les processus et améliorer l'efficacité ?",
     options: OPTIONS,
   },
   {
-    id: 'e-adv-1', category: 'E', emoji: '⚖️', difficulty: 'advanced',
-    sector: 'Droit & Notariat',
-    text: "Aimeriez-vous représenter, plaider ou négocier comme un avocat ?",
+    id: 'mgmt-i-1', category: 'I', emoji: '📊', difficulty: 'basic',
+    sector: 'Gestion & Management',
+    text: "Aimez-vous analyser les données et les statistiques pour prendre des décisions ?",
     options: OPTIONS,
   },
   {
-    id: 'e-adv-2', category: 'E', emoji: '📊', difficulty: 'advanced',
-    sector: 'Finances & Investissement',
-    text: "Fascineriez-vous par le monde de la finance et des investissements ?",
+    id: 'mgmt-i-2', category: 'I', emoji: '🧮', difficulty: 'intermediate',
+    sector: 'Gestion & Management',
+    text: "Êtes-vous à l'aise avec les chiffres, budgets et prévisions financières ?",
     options: OPTIONS,
   },
   {
-    id: 'e-adv-3', category: 'E', emoji: '🎯', difficulty: 'advanced',
-    sector: 'Stratégie Commerciale',
-    text: "Aimeriez-vous définir les stratégies et croissance d'une entreprise ?",
+    id: 'mgmt-a-1', category: 'A', emoji: '🎯', difficulty: 'basic',
+    sector: 'Gestion & Management',
+    text: "Aimeriez-vous créer une stratégie et une vision originale pour votre entreprise ?",
     options: OPTIONS,
   },
   {
-    id: 'e-sector-1', category: 'E', emoji: '🛍️', difficulty: 'intermediate',
+    id: 'mgmt-a-2', category: 'A', emoji: '💡', difficulty: 'intermediate',
+    sector: 'Gestion & Management',
+    text: "Aimez-vous innover et mettre en place de nouvelles approches ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'mgmt-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Gestion & Management',
+    text: "Aimez-vous motiver et développer votre équipe ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'mgmt-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Gestion & Management',
+    text: "Êtes-vous doué pour créer un climat de confiance au travail ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'mgmt-e-1', category: 'E', emoji: '🚀', difficulty: 'advanced',
+    sector: 'Gestion & Management',
+    text: "Aimeriez-vous diriger une entreprise et en assurer la croissance ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'mgmt-c-1', category: 'C', emoji: '📈', difficulty: 'intermediate',
+    sector: 'Gestion & Management',
+    text: "Aimeriez-vous mettre en place des systèmes de contrôle et de suivi ?",
+    options: OPTIONS,
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // COMMERCE & VENTE - 10 Questions
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'sales-r-1', category: 'R', emoji: '🛍️', difficulty: 'basic',
     sector: 'Commerce & Vente',
-    text: "Aimez-vous convertir les prospects en clients et atteindre les cibles ?",
+    text: "Aimez-vous manipuler des produits et les mettre en avant ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sales-r-2', category: 'R', emoji: '📦', difficulty: 'intermediate',
+    sector: 'Commerce & Vente',
+    text: "Êtes-vous à l'aise avec la gestion du stock et de l'inventaire ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sales-i-1', category: 'I', emoji: '📊', difficulty: 'basic',
+    sector: 'Commerce & Vente',
+    text: "Aimez-vous analyser les tendances de marché et le comportement des clients ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sales-i-2', category: 'I', emoji: '🔍', difficulty: 'intermediate',
+    sector: 'Commerce & Vente',
+    text: "Appréciez-vous comprendre les motivations d'achat des consommateurs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sales-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Commerce & Vente',
+    text: "Aimeriez-vous créer des présentations et des vitrines attractives ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sales-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Commerce & Vente',
+    text: "Aimez-vous concevoir des campagnes publicitaires créatives ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sales-s-1', category: 'S', emoji: '😊', difficulty: 'basic',
+    sector: 'Commerce & Vente',
+    text: "Aimez-vous interagir avec les clients et leur offrir une bonne expérience ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sales-s-2', category: 'S', emoji: '💬', difficulty: 'intermediate',
+    sector: 'Commerce & Vente',
+    text: "Êtes-vous doué pour écouter les besoins et proposer des solutions ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sales-e-1', category: 'E', emoji: '📈', difficulty: 'advanced',
+    sector: 'Commerce & Vente',
+    text: "Aimeriez-vous atteindre des objectifs de vente ambitieux et compétitifs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'sales-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Commerce & Vente',
+    text: "Aimeriez-vous gérer les contrats et assurer le suivi administratif des ventes ?",
     options: OPTIONS,
   },
 
   // ─────────────────────────────────────────────────────────────
-  // CONVENTIONNEL (C) - 13 Questions
+  // FINANCE & COMPTABILITÉ - 10 Questions
   // ─────────────────────────────────────────────────────────────
 
   {
-    id: 'c-basic-1', category: 'C', emoji: '📊', difficulty: 'basic',
-    sector: 'Généraliste',
-    text: "Aimez-vous travailler avec ordre, système et méthode ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'c-basic-2', category: 'C', emoji: '📋', difficulty: 'basic',
-    sector: 'Généraliste',
-    text: "Appréciez-vous la rigueur, la précision et la planification ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'c-basic-3', category: 'C', emoji: '📁', difficulty: 'basic',
-    sector: 'Généraliste',
-    text: "Êtes-vous à l'aise pour organiser, structurer et suivre les processus ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'c-inter-1', category: 'C', emoji: '💰', difficulty: 'intermediate',
+    id: 'finance-r-1', category: 'R', emoji: '💵', difficulty: 'basic',
     sector: 'Finance & Comptabilité',
-    text: "Aimeriez-vous analyser des bilans ou gérer un budget ?",
+    text: "Aimez-vous manier l'argent et gérer les transactions financières ?",
     options: OPTIONS,
   },
   {
-    id: 'c-inter-2', category: 'C', emoji: '📈', difficulty: 'intermediate',
-    sector: 'Contrôle de Gestion',
-    text: "Appréciez-vous suivre les performances et vérifier la conformité ?",
+    id: 'finance-r-2', category: 'R', emoji: '🏦', difficulty: 'intermediate',
+    sector: 'Finance & Comptabilité',
+    text: "Êtes-vous à l'aise pour archiver et classer les documents financiers ?",
     options: OPTIONS,
   },
   {
-    id: 'c-inter-3', category: 'C', emoji: '🏢', difficulty: 'intermediate',
-    sector: 'Fonction Publique',
-    text: "Aimeriez-vous travailler dans un cadre public avec des règles claires ?",
+    id: 'finance-i-1', category: 'I', emoji: '📊', difficulty: 'basic',
+    sector: 'Finance & Comptabilité',
+    text: "Aimez-vous comprendre les mécanismes financiers et économiques ?",
     options: OPTIONS,
   },
   {
-    id: 'c-inter-4', category: 'C', emoji: '🚚', difficulty: 'intermediate',
-    sector: 'Logistique & Transport',
-    text: "Aimeriez-vous optimiser la chaîne d'approvisionnement et les flux ?",
+    id: 'finance-i-2', category: 'I', emoji: '🧮', difficulty: 'advanced',
+    sector: 'Finance & Comptabilité',
+    text: "Aimeriez-vous analyser les états financiers et détecter les anomalies ?",
     options: OPTIONS,
   },
   {
-    id: 'c-adv-1', category: 'C', emoji: '⚖️', difficulty: 'advanced',
-    sector: 'Conformité & Audit',
-    text: "Aimeriez-vous vérifier la conformité et prévenir les risques ?",
+    id: 'finance-a-1', category: 'A', emoji: '📈', difficulty: 'basic',
+    sector: 'Finance & Comptabilité',
+    text: "Aimeriez-vous créer des visualisations et des graphiques financiers clairs ?",
     options: OPTIONS,
   },
   {
-    id: 'c-adv-2', category: 'C', emoji: '📜', difficulty: 'advanced',
-    sector: 'Droit & Légal',
-    text: "Aimeriez-vous interpréter les lois et appliquer les réglementations ?",
+    id: 'finance-a-2', category: 'A', emoji: '🎨', difficulty: 'intermediate',
+    sector: 'Finance & Comptabilité',
+    text: "Aimez-vous présenter les données financières de façon compréhensible ?",
     options: OPTIONS,
   },
   {
-    id: 'c-adv-3', category: 'C', emoji: '🔐', difficulty: 'advanced',
-    sector: 'Sécurité & Conformité',
-    text: "Appréciez-vous identifier et prévenir les risques systématiquement ?",
+    id: 'finance-s-1', category: 'S', emoji: '🤝', difficulty: 'basic',
+    sector: 'Finance & Comptabilité',
+    text: "Aimez-vous expliquer les concepts financiers aux clients et collègues ?",
     options: OPTIONS,
   },
   {
-    id: 'c-sector-1', category: 'C', emoji: '👔', difficulty: 'intermediate',
-    sector: 'Ressources Humaines',
-    text: "Aimeriez-vous gérer les processus RH (recrutement, paie, formations) ?",
+    id: 'finance-s-2', category: 'S', emoji: '👥', difficulty: 'intermediate',
+    sector: 'Finance & Comptabilité',
+    text: "Êtes-vous doué pour conseiller les personnes sur leurs finances ?",
     options: OPTIONS,
   },
   {
-    id: 'c-sector-2', category: 'C', emoji: '🗂️', difficulty: 'intermediate',
-    sector: 'Archivage & Documentation',
-    text: "Aimeriez-vous organiser et classer les documents et dossiers ?",
+    id: 'finance-e-1', category: 'E', emoji: '💡', difficulty: 'advanced',
+    sector: 'Finance & Comptabilité',
+    text: "Aimeriez-vous proposer des stratégies d'investissement innovantes ?",
     options: OPTIONS,
   },
   {
-    id: 'c-sector-3', category: 'C', emoji: '✅', difficulty: 'advanced',
-    sector: 'Qualité & Standards',
-    text: "Aimeriez-vous vérifier que les processus respectent les normes ISO ?",
-    options: OPTIONS,
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // SPORT & ACTIVITÉ PHYSIQUE - Questions Transversales
-  // ─────────────────────────────────────────────────────────────
-
-  {
-    id: 'r-sport-1', category: 'R', emoji: '⚽', difficulty: 'intermediate',
-    sector: 'Sports & Activités Physiques',
-    text: "Aimeriez-vous vivre une carrière comme athlète ou sportif professionnel ?",
-    options: OPTIONS,
-  },
-  {
-    id: 's-sport-1', category: 'S', emoji: '💪', difficulty: 'intermediate',
-    sector: 'Sports & Coaching',
-    text: "Aimeriez-vous entraîner, coacher ou préparer physiquement d'autres personnes ?",
-    options: OPTIONS,
-  },
-  {
-    id: 's-sport-2', category: 'S', emoji: '🏆', difficulty: 'intermediate',
-    sector: 'Sports & Coaching',
-    text: "Aimeriez-vous travailler en tant que moniteur de fitness ou de sports collectifs ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'e-sport-1', category: 'E', emoji: '🎯', difficulty: 'intermediate',
-    sector: 'Management Sportif',
-    text: "Aimeriez-vous organiser, promouvoir ou gérer des événements sportifs ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'e-sport-2', category: 'E', emoji: '📣', difficulty: 'advanced',
-    sector: 'Management Sportif',
-    text: "Aimeriez-vous être manager, agent sportif ou développer une carrière dans le sport professionnel ?",
-    options: OPTIONS,
-  },
-  {
-    id: 'c-sport-1', category: 'C', emoji: '🏟️', difficulty: 'intermediate',
-    sector: 'Gestion Sportive',
-    text: "Aimeriez-vous gérer une installation sportive, un club ou une structure de fitness ?",
+    id: 'finance-c-1', category: 'C', emoji: '✅', difficulty: 'advanced',
+    sector: 'Finance & Comptabilité',
+    text: "Aimeriez-vous assurer la conformité fiscale et comptable stricte ?",
     options: OPTIONS,
   },
 
   // ─────────────────────────────────────────────────────────────
-  // ENSEIGNEMENT & FORMATION
+  // INDUSTRIE & MÉCANIQUE - 10 Questions
   // ─────────────────────────────────────────────────────────────
 
   {
-    id: 's-education-1', category: 'S', emoji: '🎓', difficulty: 'intermediate',
-    sector: 'Enseignement & Éducation',
-    text: "Aimeriez-vous être professeur, formateur ou éducateur ?",
+    id: 'mech-r-1', category: 'R', emoji: '⚙️', difficulty: 'basic',
+    sector: 'Industrie & Mécanique',
+    text: "Aimez-vous assembler, monter et fabriquer des pièces mécaniques ?",
     options: OPTIONS,
   },
   {
-    id: 's-education-2', category: 'S', emoji: '📖', difficulty: 'intermediate',
-    sector: 'Enseignement Professionnel',
-    text: "Aimeriez-vous former des apprentis ou des professionnels dans un métier ?",
+    id: 'mech-r-2', category: 'R', emoji: '🔧', difficulty: 'intermediate',
+    sector: 'Industrie & Mécanique',
+    text: "Êtes-vous à l'aise pour réparer et entretenir des machines ?",
     options: OPTIONS,
   },
   {
-    id: 'i-education-1', category: 'I', emoji: '🧑‍🎓', difficulty: 'advanced',
-    sector: 'Recherche Pédagogique',
-    text: "Intéressez-vous à la recherche en éducation et aux innovations pédagogiques ?",
-    options: OPTIONS,
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // MÉDIAS, PRESSE & TÉLÉCOMMUNICATIONS
-  // ─────────────────────────────────────────────────────────────
-
-  {
-    id: 'a-media-1', category: 'A', emoji: '📰', difficulty: 'intermediate',
-    sector: 'Journalisme & Presse',
-    text: "Aimeriez-vous être journaliste, reporter ou rédacteur ?",
+    id: 'mech-i-1', category: 'I', emoji: '🔬', difficulty: 'basic',
+    sector: 'Industrie & Mécanique',
+    text: "Êtes-vous curieux de comprendre comment fonctionnent les systèmes mécaniques ?",
     options: OPTIONS,
   },
   {
-    id: 'a-media-2', category: 'A', emoji: '📺', difficulty: 'intermediate',
-    sector: 'Audiovisuel & Télévision',
-    text: "Aimeriez-vous travailler dans la télévision, radio ou production audiovisuelle ?",
+    id: 'mech-i-2', category: 'I', emoji: '📐', difficulty: 'advanced',
+    sector: 'Industrie & Mécanique',
+    text: "Aimeriez-vous concevoir et optimiser des systèmes mécaniques ?",
     options: OPTIONS,
   },
   {
-    id: 'i-telecom-1', category: 'I', emoji: '📡', difficulty: 'intermediate',
-    sector: 'Télécommunications',
-    text: "Intéressez-vous aux technologies de télécommunication et aux réseaux ?",
+    id: 'mech-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Industrie & Mécanique',
+    text: "Aimeriez-vous créer des prototypes et des designs innovants ?",
     options: OPTIONS,
   },
   {
-    id: 'e-media-1', category: 'E', emoji: '🎙️', difficulty: 'advanced',
-    sector: 'Production & Direction Médias',
-    text: "Aimeriez-vous diriger une rédaction, une chaîne ou un projet médias ?",
-    options: OPTIONS,
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // ÉVÉNEMENTIEL & ANIMATION
-  // ─────────────────────────────────────────────────────────────
-
-  {
-    id: 'e-event-1', category: 'E', emoji: '🎉', difficulty: 'intermediate',
-    sector: 'Événementiel & Promotion',
-    text: "Aimeriez-vous organiser et coordonner des événements, conférences ou festivals ?",
+    id: 'mech-a-2', category: 'A', emoji: '💡', difficulty: 'intermediate',
+    sector: 'Industrie & Mécanique',
+    text: "Appréciez-vous les défis créatifs de résolution de problèmes techniques ?",
     options: OPTIONS,
   },
   {
-    id: 'a-event-1', category: 'A', emoji: '🎪', difficulty: 'intermediate',
-    sector: 'Animation & Divertissement',
-    text: "Aimeriez-vous animer, créer du divertissement ou des spectacles événementiels ?",
+    id: 'mech-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Industrie & Mécanique',
+    text: "Aimez-vous travailler en équipe sur une chaîne de production ?",
     options: OPTIONS,
   },
   {
-    id: 's-event-1', category: 'S', emoji: '🎊', difficulty: 'intermediate',
-    sector: 'Animation Sociale',
-    text: "Aimeriez-vous créer des animations et dynamiser la vie d'un groupe ou d'une communauté ?",
+    id: 'mech-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Industrie & Mécanique',
+    text: "Êtes-vous prêt à partager vos connaissances avec des apprentis ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'mech-e-1', category: 'E', emoji: '📈', difficulty: 'intermediate',
+    sector: 'Industrie & Mécanique',
+    text: "Aimeriez-vous manager une équipe de production et atteindre des quotas ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'mech-c-1', category: 'C', emoji: '📋', difficulty: 'intermediate',
+    sector: 'Industrie & Mécanique',
+    text: "Aimeriez-vous assurer le contrôle qualité et les normes de sécurité ?",
     options: OPTIONS,
   },
 
   // ─────────────────────────────────────────────────────────────
-  // DÉFENSE, SÉCURITÉ & MILITAIRE
+  // ÉLECTRICITÉ & ÉLECTRONIQUE - 10 Questions
   // ─────────────────────────────────────────────────────────────
 
   {
-    id: 'r-defense-1', category: 'R', emoji: '⚔️', difficulty: 'intermediate',
-    sector: 'Défense & Militaire',
-    text: "Aimeriez-vous servir dans l'armée ou les forces de défense ?",
+    id: 'elec-r-1', category: 'R', emoji: '⚡', difficulty: 'basic',
+    sector: 'Électricité & Électronique',
+    text: "Aimez-vous installer, câbler et connecter des systèmes électriques ?",
     options: OPTIONS,
   },
   {
-    id: 'e-defense-1', category: 'E', emoji: '🎖️', difficulty: 'advanced',
-    sector: 'Commandement & Leadership Militaire',
-    text: "Aimeriez-vous suivre une carrière d'officier avec responsabilités de commandement ?",
+    id: 'elec-r-2', category: 'R', emoji: '🔌', difficulty: 'intermediate',
+    sector: 'Électricité & Électronique',
+    text: "Êtes-vous à l'aise pour dépanner des pannes électriques ?",
     options: OPTIONS,
   },
   {
-    id: 'c-defense-1', category: 'C', emoji: '🔐', difficulty: 'intermediate',
-    sector: 'Administration Militaire',
-    text: "Aimeriez-vous travailler dans l'administration ou la logistique militaire ?",
-    options: OPTIONS,
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // SERVICES À LA PERSONNE
-  // ─────────────────────────────────────────────────────────────
-
-  {
-    id: 's-services-1', category: 'S', emoji: '🧹', difficulty: 'intermediate',
-    sector: 'Services à la Personne',
-    text: "Aimeriez-vous aider dans les tâches quotidiennes (aide à domicile, nettoyage) ?",
+    id: 'elec-i-1', category: 'I', emoji: '⚙️', difficulty: 'basic',
+    sector: 'Électricité & Électronique',
+    text: "Êtes-vous fasciné par le fonctionnement des circuits électroniques ?",
     options: OPTIONS,
   },
   {
-    id: 's-services-2', category: 'S', emoji: '🛁', difficulty: 'intermediate',
-    sector: 'Services de Bien-être',
-    text: "Aimeriez-vous travailler dans le bien-être (massage, spa, coiffure) ?",
-    options: OPTIONS,
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // CULTURE, PATRIMOINE & MUSÉES
-  // ─────────────────────────────────────────────────────────────
-
-  {
-    id: 'a-culture-1', category: 'A', emoji: '🏛️', difficulty: 'intermediate',
-    sector: 'Patrimoine & Musées',
-    text: "Aimeriez-vous préserver, restaurer ou exposer le patrimoine et les œuvres d'art ?",
+    id: 'elec-i-2', category: 'I', emoji: '🧪', difficulty: 'advanced',
+    sector: 'Électricité & Électronique',
+    text: "Aimeriez-vous concevoir de nouveaux composants ou circuits innovants ?",
     options: OPTIONS,
   },
   {
-    id: 's-culture-1', category: 'S', emoji: '🎭', difficulty: 'intermediate',
-    sector: 'Animation Culturelle',
-    text: "Aimeriez-vous animer, médiatiser ou partager la culture avec le public ?",
+    id: 'elec-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Électricité & Électronique',
+    text: "Aimeriez-vous créer des designs élégants pour des appareils électroniques ?",
     options: OPTIONS,
   },
   {
-    id: 'i-culture-1', category: 'I', emoji: '📚', difficulty: 'advanced',
-    sector: 'Recherche Historique',
-    text: "Intéressez-vous à la recherche historique, archéologique ou d'archives ?",
-    options: OPTIONS,
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // LUXE & SERVICES HAUT DE GAMME
-  // ─────────────────────────────────────────────────────────────
-
-  {
-    id: 's-luxury-1', category: 'S', emoji: '👔', difficulty: 'advanced',
-    sector: 'Conciergerie & Luxe',
-    text: "Aimeriez-vous offrir un service haut de gamme et personnalisé à une clientèle de prestige ?",
+    id: 'elec-a-2', category: 'A', emoji: '✨', difficulty: 'intermediate',
+    sector: 'Électricité & Électronique',
+    text: "Aimez-vous inventer des solutions créatives aux problèmes techniques ?",
     options: OPTIONS,
   },
   {
-    id: 'e-luxury-1', category: 'E', emoji: '🏰', difficulty: 'advanced',
-    sector: 'Management du Luxe',
-    text: "Aimeriez-vous diriger un établissement de luxe (palace hôtel, restaurant, boutique) ?",
+    id: 'elec-s-1', category: 'S', emoji: '👥', difficulty: 'basic',
+    sector: 'Électricité & Électronique',
+    text: "Aimez-vous expliquer les concepts électriques aux clients ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'elec-s-2', category: 'S', emoji: '🤝', difficulty: 'intermediate',
+    sector: 'Électricité & Électronique',
+    text: "Êtes-vous doué pour conseiller les personnes sur leurs installations ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'elec-e-1', category: 'E', emoji: '📢', difficulty: 'intermediate',
+    sector: 'Électricité & Électronique',
+    text: "Aimeriez-vous lancer une entreprise d'électricité ou d'électronique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'elec-c-1', category: 'C', emoji: '✅', difficulty: 'advanced',
+    sector: 'Électricité & Électronique',
+    text: "Aimeriez-vous assurer la conformité aux normes électriques et de sécurité ?",
     options: OPTIONS,
   },
 
   // ─────────────────────────────────────────────────────────────
-  // ENVIRONNEMENT & TRANSITION ÉCOLOGIQUE
+  // MÉTIERS VERTS - 10 Questions
   // ─────────────────────────────────────────────────────────────
 
   {
-    id: 'r-green-1', category: 'R', emoji: '♻️', difficulty: 'intermediate',
-    sector: 'Métiers Verts Avancés',
-    text: "Aimeriez-vous œuvrer pour l'énergie renouvelable ou l'économie circulaire ?",
+    id: 'green-r-1', category: 'R', emoji: '🌱', difficulty: 'basic',
+    sector: 'Métiers Verts',
+    text: "Aimez-vous travailler avec la nature, les plantes et les animaux ?",
     options: OPTIONS,
   },
   {
-    id: 'e-green-1', category: 'E', emoji: '🌱', difficulty: 'advanced',
-    sector: 'Direction RSE & Développement Durable',
-    text: "Aimeriez-vous diriger une stratégie de développement durable ou de responsabilité sociale ?",
-    options: OPTIONS,
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // SECTEUR PUBLIC & FONCTION PUBLIQUE AVANCÉE
-  // ─────────────────────────────────────────────────────────────
-
-  {
-    id: 'e-public-1', category: 'E', emoji: '🏛️', difficulty: 'advanced',
-    sector: 'Fonction Publique Cadre',
-    text: "Aimeriez-vous être haut fonctionnaire ou avoir des responsabilités politiques/administratives ?",
+    id: 'green-r-2', category: 'R', emoji: '🌿', difficulty: 'intermediate',
+    sector: 'Métiers Verts',
+    text: "Êtes-vous à l'aise pour jardiner, cultiver ou entretenir la nature ?",
     options: OPTIONS,
   },
   {
-    id: 's-public-1', category: 'S', emoji: '👨‍⚖️', difficulty: 'intermediate',
-    sector: 'Justice & Services Publics Sociaux',
-    text: "Aimeriez-vous travailler dans la justice, l'administration sociale ou les services publics ?",
+    id: 'green-i-1', category: 'I', emoji: '🧬', difficulty: 'basic',
+    sector: 'Métiers Verts',
+    text: "Êtes-vous intéressé par l'écologie et les écosystèmes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'green-i-2', category: 'I', emoji: '🌍', difficulty: 'advanced',
+    sector: 'Métiers Verts',
+    text: "Aimeriez-vous étudier et résoudre les problèmes environnementaux ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'green-a-1', category: 'A', emoji: '🎨', difficulty: 'basic',
+    sector: 'Métiers Verts',
+    text: "Aimeriez-vous créer des paysages et des espaces verts beaux ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'green-a-2', category: 'A', emoji: '🌈', difficulty: 'intermediate',
+    sector: 'Métiers Verts',
+    text: "Appréciez-vous concevoir des jardins et des plans d'aménagement ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'green-s-1', category: 'S', emoji: '❤️', difficulty: 'basic',
+    sector: 'Métiers Verts',
+    text: "Aimeriez-vous sensibiliser les gens à l'environnement et à la nature ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'green-s-2', category: 'S', emoji: '👥', difficulty: 'intermediate',
+    sector: 'Métiers Verts',
+    text: "Aimez-vous travailler en équipe pour des projets écologiques ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'green-e-1', category: 'E', emoji: '🚀', difficulty: 'intermediate',
+    sector: 'Métiers Verts',
+    text: "Aimeriez-vous créer une entreprise verte ou un projet écologique ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'green-c-1', category: 'C', emoji: '✅', difficulty: 'advanced',
+    sector: 'Métiers Verts',
+    text: "Aimeriez-vous assurer la conformité environnementale et les certifications ?",
     options: OPTIONS,
   },
 ];
 
-/**
- * Helper: Get max possible score per category dynamically
- */
 export const getAdaptiveMaxPossible = () => {
   const maxOptionValue = 100;
   const counts = {};
