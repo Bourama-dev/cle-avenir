@@ -467,6 +467,47 @@ export const adaptiveQuestionPool = [
     text: "Aimeriez-vous vérifier que les processus respectent les normes ISO ?",
     options: OPTIONS,
   },
+
+  // ─────────────────────────────────────────────────────────────
+  // SPORT & ACTIVITÉ PHYSIQUE - Questions Transversales
+  // ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'r-sport-1', category: 'R', emoji: '⚽', difficulty: 'intermediate',
+    sector: 'Sports & Activités Physiques',
+    text: "Aimeriez-vous vivre une carrière comme athlète ou sportif professionnel ?",
+    options: OPTIONS,
+  },
+  {
+    id: 's-sport-1', category: 'S', emoji: '💪', difficulty: 'intermediate',
+    sector: 'Sports & Coaching',
+    text: "Aimeriez-vous entraîner, coacher ou préparer physiquement d'autres personnes ?",
+    options: OPTIONS,
+  },
+  {
+    id: 's-sport-2', category: 'S', emoji: '🏆', difficulty: 'intermediate',
+    sector: 'Sports & Coaching',
+    text: "Aimeriez-vous travailler en tant que moniteur de fitness ou de sports collectifs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'e-sport-1', category: 'E', emoji: '🎯', difficulty: 'intermediate',
+    sector: 'Management Sportif',
+    text: "Aimeriez-vous organiser, promouvoir ou gérer des événements sportifs ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'e-sport-2', category: 'E', emoji: '📣', difficulty: 'advanced',
+    sector: 'Management Sportif',
+    text: "Aimeriez-vous être manager, agent sportif ou développer une carrière dans le sport professionnel ?",
+    options: OPTIONS,
+  },
+  {
+    id: 'c-sport-1', category: 'C', emoji: '🏟️', difficulty: 'intermediate',
+    sector: 'Gestion Sportive',
+    text: "Aimeriez-vous gérer une installation sportive, un club ou une structure de fitness ?",
+    options: OPTIONS,
+  },
 ];
 
 /**
