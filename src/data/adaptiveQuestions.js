@@ -24,20 +24,20 @@ export const adaptiveQuestionPool = [
 
   {
     id: 'r-basic-1', category: 'R', emoji: '🔧', difficulty: 'basic',
-    sector: 'Industrie & Mécanique',
-    text: "Aimez-vous réparer des objets ou bricoler à la maison ?",
+    sector: 'Généraliste',
+    text: "Préférez-vous travailler avec des choses concrètes plutôt qu'avec des idées abstraites ?",
     options: OPTIONS,
   },
   {
     id: 'r-basic-2', category: 'R', emoji: '🏗️', difficulty: 'basic',
-    sector: 'Bâtiment & Travaux Publics',
-    text: "Préférez-vous un travail où vous voyez le résultat concret de vos mains ?",
+    sector: 'Généraliste',
+    text: "Aimez-vous voir le résultat tangible et immédiat de votre travail ?",
     options: OPTIONS,
   },
   {
     id: 'r-basic-3', category: 'R', emoji: '🌿', difficulty: 'basic',
-    sector: 'Métiers Verts',
-    text: "Êtes-vous à l'aise avec les activités physiques et le travail en plein air ?",
+    sector: 'Généraliste',
+    text: "Êtes-vous à l'aise avec les activités pratiques et manuelles ?",
     options: OPTIONS,
   },
   {
@@ -101,20 +101,20 @@ export const adaptiveQuestionPool = [
 
   {
     id: 'i-basic-1', category: 'I', emoji: '🧠', difficulty: 'basic',
-    sector: 'Informatique & Numérique',
-    text: "Aimez-vous comprendre comment les choses fonctionnent ?",
+    sector: 'Généraliste',
+    text: "Aimez-vous comprendre et analyser comment les choses fonctionnent ?",
     options: OPTIONS,
   },
   {
     id: 'i-basic-2', category: 'I', emoji: '🔬', difficulty: 'basic',
-    sector: 'Sciences & Santé',
-    text: "Appréciez-vous les problèmes complexes qui demandent analyse ?",
+    sector: 'Généraliste',
+    text: "Appréciez-vous résoudre des problèmes complexes et chercher des solutions ?",
     options: OPTIONS,
   },
   {
     id: 'i-basic-3', category: 'I', emoji: '📚', difficulty: 'basic',
-    sector: 'Recherche',
-    text: "Passez-vous du temps à lire ou approfondir un sujet qui vous passionne ?",
+    sector: 'Généraliste',
+    text: "Avez-vous une soif naturelle d'apprendre et d'approfondir vos connaissances ?",
     options: OPTIONS,
   },
   {
@@ -178,20 +178,20 @@ export const adaptiveQuestionPool = [
 
   {
     id: 'a-basic-1', category: 'A', emoji: '🎨', difficulty: 'basic',
-    sector: 'Arts & Design',
-    text: "Exprimez-vous votre créativité par le dessin, la musique ou l'écriture ?",
+    sector: 'Généraliste',
+    text: "Avez-vous besoin d'exprimer votre créativité et votre imagination au travail ?",
     options: OPTIONS,
   },
   {
     id: 'a-basic-2', category: 'A', emoji: '✨', difficulty: 'basic',
-    sector: 'Design',
-    text: "Aimez-vous concevoir des choses avec liberté créative ?",
+    sector: 'Généraliste',
+    text: "Êtes-vous sensible à l'esthétique — couleurs, formes, design, beauté ?",
     options: OPTIONS,
   },
   {
     id: 'a-basic-3', category: 'A', emoji: '🎭', difficulty: 'basic',
-    sector: 'Arts & Spectacle',
-    text: "Êtes-vous sensible à l'esthétique — couleurs, formes, sons ?",
+    sector: 'Généraliste',
+    text: "Aimez-vous créer plutôt que de reproduire ou exécuter des tâches routinières ?",
     options: OPTIONS,
   },
   {
@@ -249,20 +249,20 @@ export const adaptiveQuestionPool = [
 
   {
     id: 's-basic-1', category: 'S', emoji: '🤝', difficulty: 'basic',
-    sector: 'Services à la Personne',
-    text: "Aimez-vous aider les autres à surmonter leurs difficultés ?",
+    sector: 'Généraliste',
+    text: "Aimez-vous aider, soutenir et vous occuper des autres ?",
     options: OPTIONS,
   },
   {
     id: 's-basic-2', category: 'S', emoji: '🧑‍🏫', difficulty: 'basic',
-    sector: 'Éducation',
-    text: "Êtes-vous patient pour expliquer et enseigner à d'autres ?",
+    sector: 'Généraliste',
+    text: "Êtes-vous empathique et doué pour écouter et comprendre les personnes ?",
     options: OPTIONS,
   },
   {
     id: 's-basic-3', category: 'S', emoji: '👥', difficulty: 'basic',
-    sector: 'Travail en Équipe',
-    text: "Vous sentez-vous énergisé après avoir collaboré en équipe ?",
+    sector: 'Généraliste',
+    text: "Préférez-vous travailler en équipe plutôt que seul ?",
     options: OPTIONS,
   },
   {
@@ -326,20 +326,20 @@ export const adaptiveQuestionPool = [
 
   {
     id: 'e-basic-1', category: 'E', emoji: '🗣️', difficulty: 'basic',
-    sector: 'Commerce & Vente',
-    text: "Aimez-vous convaincre, négocier ou défendre vos idées ?",
+    sector: 'Généraliste',
+    text: "Aimez-vous influencer, convaincre et mener des projets ?",
     options: OPTIONS,
   },
   {
     id: 'e-basic-2', category: 'E', emoji: '🚀', difficulty: 'basic',
-    sector: 'Gestion & Management',
-    text: "Êtes-vous à l'aise pour prendre des décisions et assumer le leadership ?",
+    sector: 'Généraliste',
+    text: "Êtes-vous à l'aise pour prendre des décisions et assumer des responsabilités ?",
     options: OPTIONS,
   },
   {
     id: 'e-basic-3', category: 'E', emoji: '🏆', difficulty: 'basic',
-    sector: 'Compétition & Défi',
-    text: "Appréciez-vous les contextes compétitifs et les défis ambitieux ?",
+    sector: 'Généraliste',
+    text: "Avez-vous une ambition forte et aimez-vous relevez des défis ?",
     options: OPTIONS,
   },
   {
@@ -391,20 +391,20 @@ export const adaptiveQuestionPool = [
 
   {
     id: 'c-basic-1', category: 'C', emoji: '📊', difficulty: 'basic',
-    sector: 'Finance & Comptabilité',
-    text: "Aimez-vous travailler avec des chiffres, tableaux ou données ?",
+    sector: 'Généraliste',
+    text: "Aimez-vous travailler avec ordre, système et méthode ?",
     options: OPTIONS,
   },
   {
     id: 'c-basic-2', category: 'C', emoji: '📋', difficulty: 'basic',
-    sector: 'Administration',
-    text: "Appréciez-vous les tâches qui demandent rigueur et précision ?",
+    sector: 'Généraliste',
+    text: "Appréciez-vous la rigueur, la précision et la planification ?",
     options: OPTIONS,
   },
   {
     id: 'c-basic-3', category: 'C', emoji: '📁', difficulty: 'basic',
-    sector: 'Organisation & Gestion',
-    text: "Êtes-vous à l'aise pour planifier et organiser le travail ?",
+    sector: 'Généraliste',
+    text: "Êtes-vous à l'aise pour organiser, structurer et suivre les processus ?",
     options: OPTIONS,
   },
   {
