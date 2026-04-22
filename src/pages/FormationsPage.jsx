@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { extractFormationKeywords } from '@/utils/formationKeywords';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
 import { FEATURES } from '@/constants/subscriptionTiers';
-import { fetchFormations } from '@/services/parcoursup';
+import { unifiedFormationsService } from '@/services/unifiedFormationsService';
 import UpgradeModal from '@/components/UpgradeModal';
 import FormationDetailsPanel from '@/components/FormationDetailsPanel';
 import { calculateDistance } from '@/services/LocationFilterService';
@@ -55,6 +55,9 @@ const FormationsPage = ({ setAllFormations }) => {
   const [distanceFilter, setDistanceFilter] = useState('100');
   const [remoteFilter, setRemoteFilter] = useState(false);
 
+  // Source filter: 'parcoursup', 'onisep', or 'both'
+  const [sourceFilter, setSourceFilter] = useState('both');
+
   // Active search params (snapshot used for actual fetching) — pre-fill from ?q= URL param
   const [activeSearchParams, setActiveSearchParams] = useState(() => ({
     q: new URLSearchParams(window.location.search).get('q') || '',
@@ -84,6 +87,12 @@ const FormationsPage = ({ setAllFormations }) => {
   };
 
   const getFormationLevel = (formation) => {
+    // First check if ONISEP level field exists
+    if (formation.level && formation.level !== 'Non spécifié') {
+      return formation.level;
+    }
+
+    // Fallback to title parsing for Parcoursup data
     const text = (formation.libelle_formation || '').toUpperCase();
     if (text.includes('BTS')) return 'BAC+2';
     if (text.includes('BUT')) return 'BAC+3';
@@ -167,7 +176,29 @@ const FormationsPage = ({ setAllFormations }) => {
         ville: activeSearchParams.ville || undefined
       };
 
-      const response = await fetchFormations(params);
+      let response;
+
+      // Fetch from selected source(s)
+      if (sourceFilter === 'both') {
+        // Fetch from both sources
+        const parcoursupResponse = await unifiedFormationsService.fetchFormations('parcoursup', params);
+        const onisepResponse = await unifiedFormationsService.fetchFormations('onisep', params);
+
+        // Merge results
+        const combinedResults = [
+          ...(parcoursupResponse.results || []),
+          ...(onisepResponse.results || [])
+        ];
+
+        response = {
+          success: (parcoursupResponse.success || onisepResponse.success),
+          results: combinedResults,
+          total: (parcoursupResponse.total || 0) + (onisepResponse.total || 0)
+        };
+      } else {
+        // Fetch from single source
+        response = await unifiedFormationsService.fetchFormations(sourceFilter, params);
+      }
 
       if (response.success) {
         const newResults = response.results || [];
@@ -207,14 +238,14 @@ const FormationsPage = ({ setAllFormations }) => {
       setInitialLoading(false);
       setIsFetchingBatch(false);
     }
-  }, [activeSearchParams, setAllFormations]);
+  }, [activeSearchParams, sourceFilter, setAllFormations]);
 
   // --- 2. Effects ---
   useEffect(() => {
     setCurrentPage(1);
     offsetRef.current = 0;
     fetchBatch(0, true);
-  }, [fetchBatch]);
+  }, [fetchBatch, sourceFilter]);
 
   // --- 3. Client-Side Processing ---
   const filteredFetchedData = useMemo(() => {
@@ -222,10 +253,19 @@ const FormationsPage = ({ setAllFormations }) => {
 
     if (sectorFilter && sectorFilter !== 'all') {
       data = data.filter(f => {
-        const title = normalizeStr(f.libelle_formation);
-        if (sectorFilter === 'sante') return title.includes('infirmier') || title.includes('sante');
-        if (sectorFilter === 'commerce') return title.includes('commerce') || title.includes('vente');
-        if (sectorFilter === 'informatique') return title.includes('informatique') || title.includes('numerique') || title.includes('web');
+        const title = normalizeStr(f.libelle_formation || '');
+        const sector = normalizeStr(f.sector || '');
+
+        if (sectorFilter === 'sante') {
+          return title.includes('infirmier') || title.includes('sante') || sector.includes('sante') || sector.includes('médical');
+        }
+        if (sectorFilter === 'commerce') {
+          return title.includes('commerce') || title.includes('vente') || sector.includes('commerce') || sector.includes('vente');
+        }
+        if (sectorFilter === 'informatique') {
+          return title.includes('informatique') || title.includes('numerique') || title.includes('web') ||
+                 sector.includes('informatique') || sector.includes('numérique') || sector.includes('web');
+        }
         return true;
       });
     }
@@ -459,6 +499,48 @@ const FormationsPage = ({ setAllFormations }) => {
             onClose={handleClosePanel}
           />
         )}
+
+        {/* --- Source Filter --- */}
+        <div className="mb-6 p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Source :</span>
+            <div className="flex gap-2 flex-wrap">
+              <Badge
+                variant={sourceFilter === 'parcoursup' ? 'default' : 'outline'}
+                className={`cursor-pointer px-4 py-2 transition-all ${
+                  sourceFilter === 'parcoursup'
+                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                    : 'hover:bg-slate-100 dark:hover:bg-slate-800'
+                }`}
+                onClick={() => setSourceFilter('parcoursup')}
+              >
+                Parcoursup
+              </Badge>
+              <Badge
+                variant={sourceFilter === 'onisep' ? 'default' : 'outline'}
+                className={`cursor-pointer px-4 py-2 transition-all ${
+                  sourceFilter === 'onisep'
+                    ? 'bg-purple-500 hover:bg-purple-600 text-white'
+                    : 'hover:bg-slate-100 dark:hover:bg-slate-800'
+                }`}
+                onClick={() => setSourceFilter('onisep')}
+              >
+                ONISEP
+              </Badge>
+              <Badge
+                variant={sourceFilter === 'both' ? 'default' : 'outline'}
+                className={`cursor-pointer px-4 py-2 transition-all ${
+                  sourceFilter === 'both'
+                    ? 'bg-violet-500 hover:bg-violet-600 text-white'
+                    : 'hover:bg-slate-100 dark:hover:bg-slate-800'
+                }`}
+                onClick={() => setSourceFilter('both')}
+              >
+                Toutes les sources
+              </Badge>
+            </div>
+          </div>
+        </div>
 
         {/* --- Results List --- */}
         <div className="grid grid-cols-1 gap-6">
