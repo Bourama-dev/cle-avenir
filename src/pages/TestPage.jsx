@@ -63,14 +63,14 @@ const ResultsPreview = ({ profile, profileCode, onViewResults }) => {
           <CheckCircle2 className="w-10 h-10" />
         </div>
         <h2 className="text-3xl font-bold text-slate-900 mb-2">Test complété !</h2>
-        <p className="text-slate-500">Voici un aperçu de votre profil RIASEC</p>
+        <p className="text-slate-500">Voici un aperçu de ton profil RIASEC</p>
       </div>
 
       {/* Profile code badge */}
       <div className="flex justify-center mb-8">
         <div className="inline-flex flex-col items-center bg-indigo-600 text-white rounded-2xl px-8 py-5 shadow-lg">
           <span className="text-xs font-semibold uppercase tracking-widest text-indigo-200 mb-1">
-            Votre code RIASEC
+            Ton code RIASEC
           </span>
           <span className="text-5xl font-black tracking-widest">{profileCode}</span>
         </div>
@@ -125,7 +125,7 @@ const ResultsPreview = ({ profile, profileCode, onViewResults }) => {
         className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-base py-6 font-semibold"
         onClick={onViewResults}
       >
-        Voir mes recommandations métiers
+        Voir mes métiers
         <ArrowRight className="w-5 h-5 ml-2" />
       </Button>
     </motion.div>
