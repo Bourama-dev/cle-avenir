@@ -69,6 +69,13 @@ const AdaptiveTestInterface = ({ onComplete }) => {
 
   const handleComplete = () => {
     if (finalProfile) {
+      // Store test data for contextual recommendations
+      localStorage.setItem('test_riasec_state', JSON.stringify({
+        answers: state.answers,
+        asked: state.asked,
+        skippedSectors: Array.from(state.skippedSectors),
+      }));
+
       onComplete(finalProfile);
     }
   };

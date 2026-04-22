@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { metierService } from '@/services/metierService';
 import { calculateAdvancedMatching } from '@/services/matchingAlgorithm';
+import { contextualRecommendationService } from '@/services/contextualRecommendationService';
+import { adaptiveQuestionPool } from '@/data/adaptiveQuestions';
 import { usePlanLimitation } from '@/contexts/PlanLimitationContext';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -69,14 +71,57 @@ const TestResultsPage = () => {
         throw new Error("Aucun métier trouvé dans la base de données.");
       }
 
+      // Apply RIASEC matching
       const advancedMatches = dbMetiers
         .map(metier => calculateAdvancedMatching(loadedProfile, metier))
-        .filter(m => m !== null)
-        .sort((a, b) => b.finalScore - a.finalScore);
+        .filter(m => m !== null);
 
-      // Separate matches: Good (>=50) and Less Suitable (<50)
-      const goodMatches = advancedMatches.filter(m => m.finalScore >= 50).slice(0, 15);
+      // Retrieve test context data for contextual recommendations
+      const testStateStr = localStorage.getItem('test_riasec_state');
+      const testState = testStateStr ? JSON.parse(testStateStr) : { answers: {}, asked: [] };
+
+      // Detect dominant RIASEC axis
+      const dominantAxis = contextualRecommendationService.detectDominantRIASECAxis(loadedProfile);
+
+      // Analyze sector preference from test answers
+      const sectorScores = contextualRecommendationService.analyzeSectorPreference(
+        testState.answers,
+        adaptiveQuestionPool
+      );
+
+      // Identify primary sector
+      const primarySector = contextualRecommendationService.identifyPrimarySector(sectorScores);
+
+      // Build contextual mapping
+      const contextualMapping = contextualRecommendationService.buildContextualMapping(
+        dominantAxis,
+        primarySector
+      );
+
+      // Rank métiers by contextual relevance
+      const contextualMatches = contextualRecommendationService.rankMetiersByContext(
+        advancedMatches,
+        contextualMapping,
+        loadedProfile
+      );
+
+      // Sort by contextual score and get top 15
+      const goodMatches = contextualMatches
+        .filter(m => m.contextualScore >= 40)
+        .slice(0, 15);
+
       const allMatches = [...goodMatches];
+
+      // Store contextual info in state for display
+      localStorage.setItem('test_riasec_context', JSON.stringify({
+        dominantAxis,
+        primarySector,
+        contextRationale: contextualRecommendationService.getRecommendationRationale(
+          dominantAxis,
+          primarySector,
+          contextualMapping
+        ),
+      }));
 
       setMatches(allMatches);
 
