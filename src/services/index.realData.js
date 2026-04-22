@@ -10,6 +10,7 @@ export { realCareerDataService } from './realCareerDataService';
 
 // Formation/Training Data
 export { realFormationDataService } from './realFormationDataService';
+export { onisepSyncService } from './onisepSyncService';
 
 // Establishment/Institution Data
 export { realEstablishmentDataService } from './realEstablishmentDataService';
