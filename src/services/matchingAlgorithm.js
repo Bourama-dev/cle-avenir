@@ -30,19 +30,27 @@ export const extractMetierWeights = (metier) => {
 
 export const calculateRIASECScore = (userProfile, metierRiasec) => {
   if (!userProfile || !metierRiasec) return 0;
-  
-  let score = 0;
-  let maxPossible = 0;
-  
-  for (const [dim, weight] of Object.entries(metierRiasec)) {
-    const w = Number(weight) || 0;
-    const userVal = Number(userProfile[dim.toUpperCase()]) || 0;
-    
-    score += (userVal / 100) * w;
-    maxPossible += w;
+
+  const CATEGORIES = ['R', 'I', 'A', 'S', 'E', 'C'];
+  const weightedMatches = [];
+  let totalWeight = 0;
+
+  for (const dim of CATEGORIES) {
+    const metierWeight = Number(metierRiasec[dim]) || 0;
+    const userScore = Number(userProfile[dim]) || 0;
+
+    if (metierWeight === 0) continue;
+
+    // Calculate how well user matches this dimension
+    // Perfect match = user score equals or exceeds metier requirement
+    // Partial match = some alignment
+    const dimensionMatch = Math.max(0, 100 - Math.abs(userScore - (metierWeight / 100) * 100));
+
+    weightedMatches.push(dimensionMatch * metierWeight);
+    totalWeight += metierWeight;
   }
-  
-  return maxPossible > 0 ? Math.round((score / maxPossible) * 100) : 0;
+
+  return totalWeight > 0 ? Math.round(weightedMatches.reduce((a, b) => a + b, 0) / totalWeight) : 0;
 };
 
 export const getHybridProfile = (userProfile) => {
@@ -54,34 +62,56 @@ export const getHybridProfile = (userProfile) => {
 };
 
 export const calculateHybridScore = (userTop2, metierHybrid) => {
-  if (!metierHybrid || metierHybrid.length === 0) return 50; 
-  let matchCount = 0;
-  
-  if (metierHybrid[0] && userTop2.includes(metierHybrid[0])) matchCount += 1.5;
-  if (metierHybrid[1] && userTop2.includes(metierHybrid[1])) matchCount += 1.0;
-  
-  return Math.min(100, Math.round((matchCount / 2.5) * 100));
+  if (!metierHybrid || metierHybrid.length === 0) return 60;
+
+  let matches = 0;
+  let penalty = 0;
+
+  // Primary dimension match (highest weight)
+  if (metierHybrid[0] && userTop2.includes(metierHybrid[0])) {
+    matches += 1.5;
+  } else if (metierHybrid[0]) {
+    penalty += 0.3;
+  }
+
+  // Secondary dimension match
+  if (metierHybrid[1] && userTop2.includes(metierHybrid[1])) {
+    matches += 1.0;
+  } else if (metierHybrid[1]) {
+    penalty += 0.2;
+  }
+
+  // Check if user dimensions are orthogonal to metier needs
+  if (userTop2.length > 0 && !metierHybrid.includes(userTop2[0])) {
+    penalty += 0.15;
+  }
+
+  const finalScore = Math.max(20, matches * 25 - penalty * 10);
+  return Math.min(100, Math.round(finalScore));
 };
 
 export const calculateStabilityScore = (growthTrend) => {
-  if (growthTrend === 'stable') return 80;
-  if (growthTrend === 'croissant') return 90;
-  if (growthTrend === 'décroissant') return 40;
+  // Measures how stable/predictable the job market is
+  if (growthTrend === 'stable') return 85;
+  if (growthTrend === 'croissant') return 70;
+  if (growthTrend === 'décroissant') return 45;
   return 60;
 };
 
 export const calculateGrowthScore = (growthTrend) => {
-  if (growthTrend === 'croissant') return 95;
-  if (growthTrend === 'stable') return 60;
-  if (growthTrend === 'décroissant') return 20;
+  // Measures future opportunities and expansion
+  if (growthTrend === 'croissant') return 90;
+  if (growthTrend === 'stable') return 65;
+  if (growthTrend === 'décroissant') return 25;
   return 50;
 };
 
 export const calculateDemandScore = (demandLevel) => {
-  if (demandLevel === 'très_élevée') return 95;
-  if (demandLevel === 'élevée') return 80;
-  if (demandLevel === 'moyenne') return 60;
-  if (demandLevel === 'faible') return 30;
+  // Market demand affects career viability and job availability
+  if (demandLevel === 'très_élevée') return 92;
+  if (demandLevel === 'élevée') return 75;
+  if (demandLevel === 'moyenne') return 55;
+  if (demandLevel === 'faible') return 35;
   return 50;
 };
 

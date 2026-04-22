@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ChevronDown, Sparkles, TrendingUp } from 'lucide-react';
-import { SECTORS_CONFIG } from '@/constants/sectors';
+import { SECTORS, SECTOR_CATEGORIES } from '@/constants/sectors';
 
 const SectorDiscoveryModule = ({ profile }) => {
   const [expandedSector, setExpandedSector] = useState(null);

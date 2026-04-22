@@ -46,6 +46,10 @@ export const AuthService = {
 
           interests: profileData.interests || [],
 
+          // User preferences for job recommendations
+          salary_range_min: profileData.salaryRange?.[0] || null,
+          salary_range_max: profileData.salaryRange?.[1] || null,
+
           constraints: {
             selected: profileData.constraints || []
           },

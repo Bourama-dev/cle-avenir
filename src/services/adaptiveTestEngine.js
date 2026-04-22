@@ -1,48 +1,61 @@
 /**
- * Adaptive Test Engine — Intelligent Question Selection
+ * Adaptive RIASEC Test Engine — Intelligent Question Selection with Logical Flow
  *
- * Algorithm:
- * 1. Start with one basic question per category (6 questions)
- * 2. Based on responses, select next question from:
- *    - Highest uncertainty categories (affine the scores)
- *    - Categories with mid-range scores (to find exact profile)
- *    - Sectors not yet covered
- * 3. Stop when:
- *    - Total questions = 27 (target), OR
- *    - Confidence is high (std dev low, profile stable)
+ * Phase 1 (Questions 1-6): Baseline Discovery
+ * - One basic question per category (R, I, A, S, E, C)
+ * - Establish initial scores for all dimensions
+ *
+ * Phase 2 (Questions 7-16): Category Refinement
+ * - Focus on categories with mid-range scores (40-60%)
+ * - Clarify uncertain dimensions
+ * - Use intermediate difficulty questions
+ *
+ * Phase 3 (Questions 17-27): Advanced Profiling & Sector Coverage
+ * - Use advanced questions for dominant categories
+ * - Explore sector coverage for all dimensions
+ * - Skip sectors user has rejected (1+ "Pas du tout" for fast filtering)
  */
 
-import { adaptiveQuestionPool, getAdaptiveMaxPossible } from '@/data/adaptiveQuestions';
+import { adaptiveQuestionPool } from '@/data/adaptiveQuestions';
 
 const CATEGORIES = ['R', 'I', 'A', 'S', 'E', 'C'];
-const TARGET_QUESTIONS = 27;
-const MIN_QUESTIONS = 15;
-const CONFIDENCE_THRESHOLD = 0.25; // Std dev threshold
+const TARGET_QUESTIONS = 30;
+const MIN_QUESTIONS = 24;
+const MIN_QUESTIONS_PER_CATEGORY = 3; // Ensure each category has at least 3 questions
+const CONFIDENCE_THRESHOLD = 0.25;
+
+const TestPhases = {
+  BASELINE: 1,    // Questions 1-6
+  REFINEMENT: 2,  // Questions 7-16
+  ADVANCED: 3,    // Questions 17-27
+};
 
 export const adaptiveTestEngine = {
   /**
-   * Initialize: Get first 6 questions (one per category, basic level)
+   * Initialize: Start with the FIRST basic question only (Réaliste)
    */
   initializeTest() {
-    const firstQuestions = CATEGORIES.map(cat =>
-      adaptiveQuestionPool.find(q => q.category === cat && q.difficulty === 'basic')
-    ).filter(Boolean);
+    const firstQuestion = adaptiveQuestionPool.find(
+      q => q.category === 'R' && q.difficulty === 'basic'
+    );
 
     return {
-      asked: firstQuestions,
-      askedIds: new Set(firstQuestions.map(q => q.id)),
-      remaining: adaptiveQuestionPool.filter(q => !firstQuestions.some(fq => fq.id === q.id)),
+      asked: [firstQuestion],
+      askedIds: new Set([firstQuestion.id]),
+      remaining: adaptiveQuestionPool.filter(q => q.id !== firstQuestion.id),
       answers: {},
-      scores: {},
-      confidences: {},
+      scores: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
+      confidences: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
+      phase: TestPhases.BASELINE,
+      baselineQuestionsAsked: 1, // Track baseline progress
+      skippedSectors: new Set(),
     };
   },
 
   /**
-   * Record an answer and return the next question
+   * Record answer and intelligently select next question
    */
   recordAnswerAndGetNext(state, questionId, answerValue) {
-    // 1. Record answer
     const question = adaptiveQuestionPool.find(q => q.id === questionId);
     if (!question) throw new Error('Question not found');
 
@@ -52,45 +65,249 @@ export const adaptiveTestEngine = {
       sector: question.sector,
     };
 
-    // 2. Update scores
     this._updateScores(state);
+    this._detectSkippedSectors(state);
+    this._updatePhase(state);
 
-    // 3. Check stop conditions
     if (this._shouldStop(state)) {
-      return { nextQuestion: null, testComplete: true, stats: this._getStats(state) };
+      return { nextQuestion: null, testComplete: true };
     }
 
-    // 4. Select next question
-    const nextQuestion = this._selectNextQuestion(state);
-
+    const nextQuestion = this._selectNextQuestionLogical(state);
     return { nextQuestion, testComplete: false };
   },
 
   /**
-   * Calculate RIASEC scores from answers
+   * Logical question selection with clear phases
+   */
+  _selectNextQuestionLogical(state) {
+    // Exclude skipped sectors from question pool
+    const unused = adaptiveQuestionPool.filter(
+      q => !state.askedIds.has(q.id) && !state.skippedSectors.has(q.sector)
+    );
+    if (unused.length === 0) return null;
+
+    // PHASE 1: BASELINE (Complete the 6 basic questions)
+    if (state.phase === TestPhases.BASELINE) {
+      // Track which categories already have basic questions answered
+      const categoriesWithBasic = new Set();
+      state.asked.forEach(q => {
+        if (q.difficulty === 'basic') {
+          categoriesWithBasic.add(q.category);
+        }
+      });
+
+      // If we haven't asked all 6 basic questions, continue with baseline
+      if (categoriesWithBasic.size < 6) {
+        for (const cat of CATEGORIES) {
+          if (!categoriesWithBasic.has(cat)) {
+            const basicQuestion = unused.find(
+              q => q.category === cat && q.difficulty === 'basic'
+            );
+            if (basicQuestion) {
+              state.asked.push(basicQuestion);
+              state.askedIds.add(basicQuestion.id);
+              state.baselineQuestionsAsked++;
+              return basicQuestion;
+            }
+          }
+        }
+      }
+    }
+
+    // PHASE 2: REFINEMENT (Questions 7-16)
+    if (state.phase === TestPhases.REFINEMENT) {
+      // Count questions per category
+      const answersPerCategory = {};
+      CATEGORIES.forEach(cat => {
+        answersPerCategory[cat] = Object.values(state.answers).filter(
+          a => a.category === cat
+        ).length;
+      });
+
+      // Priority 1: RIASEC categories with fewer than minimum questions
+      for (const cat of CATEGORIES) {
+        if (answersPerCategory[cat] < MIN_QUESTIONS_PER_CATEGORY) {
+          const refinementQ = unused.find(
+            q => q.category === cat && q.difficulty === 'intermediate'
+          );
+          if (refinementQ) {
+            state.asked.push(refinementQ);
+            state.askedIds.add(refinementQ.id);
+            return refinementQ;
+          }
+        }
+      }
+
+      // Priority 2: RIASEC categories with mid-range scores (40-60%)
+      for (const cat of CATEGORIES) {
+        const score = state.scores[cat] || 50;
+        if (score >= 40 && score <= 60) {
+          const refinementQ = unused.find(
+            q => q.category === cat && q.difficulty === 'intermediate'
+          );
+          if (refinementQ) {
+            state.asked.push(refinementQ);
+            state.askedIds.add(refinementQ.id);
+            return refinementQ;
+          }
+        }
+      }
+
+      // Priority 3: Any intermediate question (sectors already filtered by unused)
+      const intermediateQ = unused.find(q => q.difficulty === 'intermediate');
+      if (intermediateQ) {
+        state.asked.push(intermediateQ);
+        state.askedIds.add(intermediateQ.id);
+        return intermediateQ;
+      }
+
+      // Fallback: Any intermediate question
+      const anyIntermediate = unused.find(q => q.difficulty === 'intermediate');
+      if (anyIntermediate) {
+        state.asked.push(anyIntermediate);
+        state.askedIds.add(anyIntermediate.id);
+        return anyIntermediate;
+      }
+
+      // Last resort: Any available question
+      if (unused.length > 0) {
+        const anyQ = unused[0];
+        state.asked.push(anyQ);
+        state.askedIds.add(anyQ.id);
+        return anyQ;
+      }
+    }
+
+    // PHASE 3: ADVANCED (Questions 17-27)
+    if (state.phase === TestPhases.ADVANCED) {
+      // Count questions per category
+      const answersPerCategory = {};
+      CATEGORIES.forEach(cat => {
+        answersPerCategory[cat] = Object.values(state.answers).filter(
+          a => a.category === cat
+        ).length;
+      });
+
+      // Priority 1: RIASEC categories with fewer than minimum questions
+      for (const cat of CATEGORIES) {
+        if (answersPerCategory[cat] < MIN_QUESTIONS_PER_CATEGORY) {
+          const advancedQ = unused.find(
+            q => q.category === cat && q.difficulty === 'advanced'
+          );
+          if (advancedQ) {
+            state.asked.push(advancedQ);
+            state.askedIds.add(advancedQ.id);
+            return advancedQ;
+          }
+        }
+      }
+
+      // Priority 2: Advanced questions for dominant RIASEC categories
+      const topCategories = Object.entries(state.scores)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 2)
+        .map(([cat]) => cat);
+
+      for (const cat of topCategories) {
+        const advancedQ = unused.find(
+          q => q.category === cat && q.difficulty === 'advanced'
+        );
+        if (advancedQ) {
+          state.asked.push(advancedQ);
+          state.askedIds.add(advancedQ.id);
+          return advancedQ;
+        }
+      }
+
+      // Priority 3: Fill in sector coverage
+      const coveredSectors = new Set(Object.values(state.answers).map(a => a.sector));
+      const uncoveredQ = unused.find(q => !coveredSectors.has(q.sector));
+      if (uncoveredQ) {
+        state.asked.push(uncoveredQ);
+        state.askedIds.add(uncoveredQ.id);
+        return uncoveredQ;
+      }
+
+      // Priority 4: Any advanced question
+      const advancedQ = unused.find(q => q.difficulty === 'advanced');
+      if (advancedQ) {
+        state.asked.push(advancedQ);
+        state.askedIds.add(advancedQ.id);
+        return advancedQ;
+      }
+
+      // Fallback: Any advanced question
+      const anyAdvanced = unused.find(q => q.difficulty === 'advanced');
+      if (anyAdvanced) {
+        state.asked.push(anyAdvanced);
+        state.askedIds.add(anyAdvanced.id);
+        return anyAdvanced;
+      }
+
+      // Last resort: Random remaining
+      if (unused.length > 0) {
+        const random = unused[Math.floor(Math.random() * unused.length)];
+        state.asked.push(random);
+        state.askedIds.add(random.id);
+        return random;
+      }
+    }
+
+    // Fallback if no questions available from filtered list
+    if (unused.length > 0) {
+      const fallback = unused[0];
+      state.asked.push(fallback);
+      state.askedIds.add(fallback.id);
+      return fallback;
+    }
+
+    return null;
+  },
+
+  /**
+   * Update test phase based on questions answered
+   */
+  _updatePhase(state) {
+    const questionsAsked = state.asked.length;
+
+    if (questionsAsked <= 6) {
+      state.phase = TestPhases.BASELINE;
+    } else if (questionsAsked <= 16) {
+      state.phase = TestPhases.REFINEMENT;
+    } else {
+      state.phase = TestPhases.ADVANCED;
+    }
+  },
+
+  /**
+   * Calculate normalized RIASEC scores
    */
   _updateScores(state) {
-    const maxPossible = getAdaptiveMaxPossible();
     const rawScores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
 
     Object.values(state.answers).forEach(({ category, value }) => {
       rawScores[category] = (rawScores[category] || 0) + value;
     });
 
-    // Normalize to 0-100
-    state.scores = {};
-    CATEGORIES.forEach(cat => {
-      const max = maxPossible[cat] || 100;
-      state.scores[cat] = Math.round((rawScores[cat] / max) * 100);
+    // Count actual questions asked per category (not pool size)
+    const questionsPerCategory = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
+    Object.values(state.answers).forEach(({ category }) => {
+      questionsPerCategory[category]++;
     });
 
-    // Calculate confidence (inverse of standard deviation)
+    state.scores = {};
+    CATEGORIES.forEach(cat => {
+      const count = questionsPerCategory[cat] || 1;
+      const max = count * 100; // Normalize by actual questions asked
+      state.scores[cat] = count > 0 ? Math.round((rawScores[cat] / max) * 100) : 0;
+    });
+
     this._updateConfidences(state);
   },
 
   /**
    * Update confidence for each category
-   * (Simplified: based on number of questions answered)
    */
   _updateConfidences(state) {
     const answersPerCategory = {};
@@ -102,10 +319,27 @@ export const adaptiveTestEngine = {
 
     state.confidences = {};
     CATEGORIES.forEach(cat => {
-      // More questions = higher confidence
-      // Formula: confidence = (questions_answered / max_questions) * 100
       const count = answersPerCategory[cat];
-      state.confidences[cat] = Math.min(count / 5, 1); // 5 = optimal for this category
+      state.confidences[cat] = Math.min(count / 5, 1);
+    });
+  },
+
+  /**
+   * Detect sectors to skip (1+ "Pas du tout" = 0 marks entire sector as rejected)
+   * User explicitly rejects a sector → exclude all questions from that sector
+   */
+  _detectSkippedSectors(state) {
+    const sectorResponses = {};
+
+    Object.values(state.answers).forEach(({ sector, value }) => {
+      sectorResponses[sector] = [...(sectorResponses[sector] || []), value];
+    });
+
+    Object.entries(sectorResponses).forEach(([sector, responses]) => {
+      const zeroCount = responses.filter(v => v === 0).length;
+      if (zeroCount >= 1) {
+        state.skippedSectors.add(sector);
+      }
     });
   },
 
@@ -115,76 +349,32 @@ export const adaptiveTestEngine = {
   _shouldStop(state) {
     const questionsAsked = state.asked.length;
 
-    // Stop if at target
     if (questionsAsked >= TARGET_QUESTIONS) return true;
-
-    // Continue if below minimum
     if (questionsAsked < MIN_QUESTIONS) return false;
 
-    // Check if confident enough
+    // Check if each category has minimum questions
+    const answersPerCategory = {};
+    CATEGORIES.forEach(cat => {
+      answersPerCategory[cat] = Object.values(state.answers).filter(
+        a => a.category === cat
+      ).length;
+    });
+
+    const allCategoriesHaveMinimum = CATEGORIES.every(
+      cat => answersPerCategory[cat] >= MIN_QUESTIONS_PER_CATEGORY
+    );
+
+    if (!allCategoriesHaveMinimum) return false;
+
     const avgConfidence = CATEGORIES.reduce((sum, cat) => sum + state.confidences[cat], 0) / CATEGORIES.length;
     const stdDev = this._calculateStdDev(Object.values(state.scores));
 
-    // Stop if high confidence and stable scores
     if (avgConfidence >= 0.8 && stdDev <= CONFIDENCE_THRESHOLD) return true;
-
     return false;
   },
 
   /**
-   * Select next question intelligently
-   */
-  _selectNextQuestion(state) {
-    // Strategy: Priority order
-    // 1. Categories with mid-range scores (45-55) — need clarification
-    // 2. Categories with lowest confidence
-    // 3. Sectors not yet covered
-    // 4. Any remaining
-
-    const unused = adaptiveQuestionPool.filter(q => !state.askedIds.has(q.id));
-
-    if (unused.length === 0) return null;
-
-    // Priority 1: Mid-range scores (need clarification)
-    const midRangeQuestion = unused.find(q => {
-      const score = state.scores[q.category] || 50;
-      return score >= 40 && score <= 60;
-    });
-    if (midRangeQuestion) {
-      state.asked.push(midRangeQuestion);
-      state.askedIds.add(midRangeQuestion.id);
-      return midRangeQuestion;
-    }
-
-    // Priority 2: Low confidence categories
-    const lowestConfCat = CATEGORIES.reduce((lowest, cat) =>
-      (state.confidences[cat] || 0) < (state.confidences[lowest] || 0) ? cat : lowest
-    );
-    const lowConfQuestion = unused.find(q => q.category === lowestConfCat);
-    if (lowConfQuestion) {
-      state.asked.push(lowConfQuestion);
-      state.askedIds.add(lowConfQuestion.id);
-      return lowConfQuestion;
-    }
-
-    // Priority 3: Sector coverage — pick a sector not yet asked
-    const coveredSectors = new Set(Object.values(state.answers).map(a => a.sector));
-    const uncoveredQuestion = unused.find(q => !coveredSectors.has(q.sector));
-    if (uncoveredQuestion) {
-      state.asked.push(uncoveredQuestion);
-      state.askedIds.add(uncoveredQuestion.id);
-      return uncoveredQuestion;
-    }
-
-    // Fallback: Random remaining
-    const random = unused[Math.floor(Math.random() * unused.length)];
-    state.asked.push(random);
-    state.askedIds.add(random.id);
-    return random;
-  },
-
-  /**
-   * Calculate standard deviation of scores
+   * Calculate standard deviation
    */
   _calculateStdDev(scores) {
     const mean = scores.reduce((a, b) => a + b, 0) / scores.length;
@@ -193,42 +383,76 @@ export const adaptiveTestEngine = {
   },
 
   /**
-   * Finalize test and return RIASEC profile
+   * Finalize test and return profile
    */
   finalizeTest(state) {
-    const profileCode = Object.entries(state.scores)
+    console.log('=== FINALIZING TEST ===');
+    console.log('State asked count:', state.asked?.length);
+    console.log('State answers count:', Object.keys(state.answers).length);
+    console.log('State scores:', state.scores);
+
+    if (!state || !state.scores || !state.asked) {
+      const error = 'État du test invalide: scores ou questions manquantes';
+      console.error(error);
+      console.error('state.asked:', state.asked);
+      console.error('state.scores:', state.scores);
+      throw new Error(error);
+    }
+
+    console.log('Scores entries:', Object.entries(state.scores));
+
+    const validEntries = Object.entries(state.scores).filter(
+      ([, score]) => typeof score === 'number' && !isNaN(score)
+    );
+    console.log('Valid score entries:', validEntries);
+
+    const profileCode = validEntries
       .sort(([, a], [, b]) => b - a)
       .slice(0, 3)
       .map(([letter]) => letter)
       .join('');
 
-    return {
+    console.log('Profile code:', profileCode);
+
+    if (!profileCode || profileCode.length === 0) {
+      const error = 'Impossible de créer le profil: scores invalides';
+      console.error(error);
+      console.error('Valid entries:', validEntries);
+      throw new Error(error);
+    }
+
+    console.log('Getting sector coverage...');
+    const coverageBySector = this._getSectorCoverage(state);
+    console.log('Sector coverage:', coverageBySector);
+
+    const result = {
       profile: state.scores,
       profileCode,
       questionsAsked: state.asked.length,
-      coverageBySector: this._getSectorCoverage(state),
+      coverageBySector,
     };
+
+    console.log('Final result:', result);
+    return result;
   },
 
   /**
-   * Get test statistics
-   */
-  _getStats(state) {
-    return {
-      totalQuestionsAsked: state.asked.length,
-      scoresByCategory: state.scores,
-      confidencesByCategory: state.confidences,
-    };
-  },
-
-  /**
-   * Track which sectors have been covered
+   * Get sector coverage
    */
   _getSectorCoverage(state) {
+    console.log('_getSectorCoverage - state.answers:', state.answers);
     const sectors = {};
-    Object.values(state.answers).forEach(({ sector }) => {
-      sectors[sector] = (sectors[sector] || 0) + 1;
-    });
+    try {
+      Object.values(state.answers).forEach(({ sector }) => {
+        if (!sector) {
+          console.warn('Question without sector found:', Object.values(state.answers).find(a => !a.sector));
+        }
+        sectors[sector] = (sectors[sector] || 0) + 1;
+      });
+    } catch (error) {
+      console.error('Error in _getSectorCoverage:', error);
+      throw new Error('Erreur lors du calcul de la couverture secteur: ' + error.message);
+    }
     return sectors;
   },
 };
