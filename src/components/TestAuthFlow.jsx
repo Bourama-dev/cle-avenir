@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,7 @@ import { Lock, ArrowRight, Save, UserPlus } from 'lucide-react';
 const TestAuthFlow = ({ onSaveGuest }) => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   if (loading) return null;
 
@@ -39,10 +40,10 @@ const TestAuthFlow = ({ onSaveGuest }) => {
           Créez un compte gratuitement pour conserver vos résultats, accéder à votre plan personnalisé et suivre votre évolution.
         </p>
         <div className="flex flex-col sm:flex-row gap-3">
-          <Button onClick={() => navigate('/signup')} className="flex-1 bg-indigo-600 hover:bg-indigo-700">
+          <Button onClick={() => navigate('/signup', { state: { from: location.pathname } })} className="flex-1 bg-indigo-600 hover:bg-indigo-700">
             <UserPlus className="w-4 h-4 mr-2" /> Créer un compte
           </Button>
-          <Button onClick={() => navigate('/login')} variant="outline" className="flex-1">
+          <Button onClick={() => navigate('/login', { state: { from: location.pathname } })} variant="outline" className="flex-1">
             Se connecter
           </Button>
           {onSaveGuest && (

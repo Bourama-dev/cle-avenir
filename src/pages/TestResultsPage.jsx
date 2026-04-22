@@ -22,6 +22,7 @@ import MetierLoadingSpinner from '@/components/MetierLoadingSpinner';
 import MetierErrorState from '@/components/MetierErrorState';
 import SectorDiscoveryModule from '@/components/test-results/SectorDiscoveryModule';
 import MetierFilterPanel from '@/components/test-results/MetierFilterPanel';
+import TestAuthFlow from '@/components/TestAuthFlow';
 
 import { RIASEC_META } from '@/data/optimizedQuestions';
 
@@ -393,6 +394,9 @@ const TestResultsPage = () => {
         <section className="py-4 bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
           <SectorDiscoveryModule profile={profile} />
         </section>
+
+        {/* Save Results Section */}
+        <TestAuthFlow />
 
         {/* CTAs Section */}
         <section className="py-8 space-y-6">

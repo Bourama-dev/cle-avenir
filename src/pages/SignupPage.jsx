@@ -1,5 +1,5 @@
 ﻿import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { AuthService } from '@/services/authService';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -19,7 +19,10 @@ const TOTAL_STEPS = 7;
 
 const SignupPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
+
+  const from = location.state?.from || '/results';
 
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -134,7 +137,7 @@ const SignupPage = () => {
 
     localStorage.removeItem('signup_draft');
     toast({ title: "Bienvenue !", description: "Votre profil a ete cree avec succes." });
-    navigate('/results');
+    navigate(from, { replace: true });
   };
 
   const renderStep = () => {
