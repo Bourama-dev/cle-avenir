@@ -246,7 +246,7 @@ const TestPage = () => {
   /* ── View results (after profile preview) ── */
   const handleViewResults = async () => {
     if (!user) {
-      navigate('/login', { state: { from: '/test-orientation' } });
+      navigate('/login', { state: { from: '/test-results' } });
       return;
     }
 
@@ -282,14 +282,14 @@ const TestPage = () => {
 
         localStorage.removeItem('temp_test_answers');
         localStorage.removeItem('temp_test_scores');
-        navigate('/results');
+        navigate('/test-results');
       } else {
         // Profile incomplete — go fill it (test_riasec_profile stays in localStorage)
         navigate('/profile/edit');
       }
     } catch {
       // Network error — navigate anyway, localStorage has the profile
-      navigate('/results');
+      navigate('/test-results');
     }
   };
 
