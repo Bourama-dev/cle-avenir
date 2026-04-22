@@ -56,8 +56,11 @@ const AdaptiveTestInterface = ({ onComplete }) => {
       }
     } catch (error) {
       console.error('Test error:', error);
+      console.error('Error stack:', error.stack);
+      console.error('Current state:', state);
+      console.error('Updated state:', updatedState);
       // Show error to user if test fails
-      alert('Erreur lors du test: ' + error.message);
+      alert('Erreur lors du test: ' + error.message + '\n\nVérifiez la console pour les détails (F12)');
     } finally {
       setIsLoading(false);
       setSelectedAnswer(null);
