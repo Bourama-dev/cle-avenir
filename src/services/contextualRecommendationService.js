@@ -92,9 +92,9 @@ export const contextualRecommendationService = {
 
   /**
    * Rank métiers by contextual relevance
-   * Combines RIASEC matching with sector and keyword bonus
+   * Combines RIASEC matching with sector, keywords, AND user profile criteria
    */
-  rankMetiersByContext(allMetiers, contextualMapping, riasecProfile) {
+  rankMetiersByContext(allMetiers, contextualMapping, riasecProfile, userCriteria = null) {
     if (!allMetiers || allMetiers.length === 0) return [];
 
     const rankedMetiers = allMetiers.map(metier => {
@@ -142,16 +142,108 @@ export const contextualRecommendationService = {
         }
       });
 
+      // BONUS 4: User profile criteria matching (if available)
+      let profileBonus = 1.0;
+      let profileIssues = [];
+
+      if (userCriteria && userCriteria.found) {
+        const criteriaMatch = this._validateMetierAgainstCriteria(metier, userCriteria);
+        profileBonus = criteriaMatch.score;
+        profileIssues = criteriaMatch.issues;
+      }
+
+      score *= profileBonus;
+
       return {
         ...metier,
         contextualScore: Math.round(score),
         contextReason: `Recommandé pour profil ${contextualMapping.axis} - ${contextualMapping.label}`,
         sectorMatch: contextualMapping.sector,
+        profileMatch: profileBonus,
+        profileIssues,
       };
     });
 
     // Sort by contextual score (descending)
     return rankedMetiers.sort((a, b) => b.contextualScore - a.contextualScore);
+  },
+
+  /**
+   * Helper: Validate métier against user profile criteria
+   */
+  _validateMetierAgainstCriteria(metier, criteria) {
+    if (!criteria.found) return { score: 1.0, issues: [] };
+
+    let score = 1.0;
+    const issues = [];
+
+    // 1. Check education compatibility
+    if (criteria.education_level) {
+      const userEdLevel = this._normalizeEducationLevel(criteria.education_level);
+      const metierEdLevel = this._normalizeEducationLevel(metier.niveau_etudes);
+
+      if (userEdLevel < metierEdLevel) {
+        score *= 0.5;
+        issues.push(`Education: ${metier.niveau_etudes} requis`);
+      }
+    }
+
+    // 2. Check salary compatibility
+    if (criteria.salary_min && criteria.salary_max) {
+      const metierSalary = this._extractSalaryRange(metier.salaire);
+
+      if (metierSalary) {
+        const [metierMin, metierMax] = metierSalary;
+        const userMin = criteria.salary_min;
+        const userMax = criteria.salary_max;
+
+        if (metierMin > userMax * 1.5) {
+          score *= 0.8;
+          issues.push(`Salaire haut (${metierMin}k€+)`);
+        }
+
+        if (metierMax < userMin * 0.8) {
+          score *= 0.7;
+          issues.push(`Salaire bas (${metierMax}k€ max)`);
+        }
+      }
+    }
+
+    return { score, issues };
+  },
+
+  /**
+   * Helper: Normalize education level to comparable scale
+   */
+  _normalizeEducationLevel(level) {
+    if (!level) return 0;
+    const normalized = level.toLowerCase();
+
+    if (normalized.includes('bac') && !normalized.includes('+')) return 1;
+    if (normalized.includes('bac+1') || normalized.includes('bac+2')) return 2;
+    if (normalized.includes('bac+3') || normalized.includes('licence')) return 3;
+    if (normalized.includes('master') || normalized.includes('bac+5')) return 4;
+    if (normalized.includes('doctorat') || normalized.includes('phd')) return 5;
+
+    return 1;
+  },
+
+  /**
+   * Helper: Extract salary range from string
+   */
+  _extractSalaryRange(salaryStr) {
+    if (!salaryStr) return null;
+
+    const match = salaryStr.match(/(\d+)\s*(?:000)?\s*-\s*(\d+)\s*(?:000)?/);
+    if (!match) return null;
+
+    let min = parseInt(match[1]);
+    let max = parseInt(match[2]);
+
+    if (min < 100) min *= 1000;
+    if (max < 100) max *= 1000;
+
+    return [min / 1000, max / 1000];
   },
 
   /**

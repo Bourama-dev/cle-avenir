@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { metierService } from '@/services/metierService';
 import { calculateAdvancedMatching } from '@/services/matchingAlgorithm';
 import { contextualRecommendationService } from '@/services/contextualRecommendationService';
+import { userProfileService } from '@/services/userProfileService';
 import { adaptiveQuestionPool } from '@/data/adaptiveQuestions';
 import { usePlanLimitation } from '@/contexts/PlanLimitationContext';
 
@@ -98,11 +99,17 @@ const TestResultsPage = () => {
         primarySector
       );
 
-      // Rank métiers by contextual relevance
+      // Get user profile criteria for intelligent filtering
+      const userCriteria = await userProfileService.getUserRecommendationCriteria();
+
+      console.log('📊 User criteria:', userCriteria);
+
+      // Rank métiers by contextual relevance + user criteria
       const contextualMatches = contextualRecommendationService.rankMetiersByContext(
         advancedMatches,
         contextualMapping,
-        loadedProfile
+        loadedProfile,
+        userCriteria
       );
 
       // Sort by contextual score and get top 15
