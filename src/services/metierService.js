@@ -1,6 +1,7 @@
 import { supabase } from '../lib/customSupabaseClient';
 import { getCachedMetier, setCachedMetier } from './metierCacheService';
 import { queueRequest } from './requestQueueService';
+import { mockMetiers } from '@/data/mockMetiers';
 
 const TABLE_NAME = 'rome_metiers';
 
@@ -147,17 +148,30 @@ export const metierService = {
       const { data, error } = await supabase
         .from(TABLE_NAME)
         .select('code, libelle, description, definition, riasecMajeur, riasecMineur, adjusted_weights, riasec_vector, salaire, debouches, niveau_etudes');
-      
+
       if (error) throw error;
-      
+
+      if (!data || data.length === 0) {
+        console.warn("Supabase returned empty data, using mock métiers for testing");
+        const formatted = mockMetiers
+          .map(metierService.formatMetierForMatching)
+          .filter(m => m !== null);
+        return formatted;
+      }
+
       const formatted = data
         .map(metierService.formatMetierForMatching)
         .filter(m => m !== null);
-        
+
       return formatted;
     } catch (err) {
       console.error("Error in getAllMetiersForMatching:", err);
-      return [];
+      console.warn("Falling back to mock métiers for testing");
+      // Use mock data as fallback when Supabase is unavailable
+      const formatted = mockMetiers
+        .map(metierService.formatMetierForMatching)
+        .filter(m => m !== null);
+      return formatted;
     }
   },
 
