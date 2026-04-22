@@ -15,7 +15,7 @@ const AdaptiveTestInterface = ({ onComplete }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [finalProfile, setFinalProfile] = useState(null);
-  const [skippedCategories, setSkippedCategories] = useState(new Set());
+  const [skippedSectors, setSkippedSectors] = useState(new Set());
 
   // Initialize test
   useEffect(() => {
@@ -43,8 +43,8 @@ const AdaptiveTestInterface = ({ onComplete }) => {
         answerValue
       );
 
-      // Update skipped categories from engine state
-      setSkippedCategories(new Set(updatedState.skippedCategories));
+      // Update skipped sectors from engine state
+      setSkippedSectors(new Set(updatedState.skippedSectors));
 
       if (result.testComplete) {
         const finalResult = adaptiveTestEngine.finalizeTest(updatedState);
@@ -146,7 +146,7 @@ const AdaptiveTestInterface = ({ onComplete }) => {
                       <Badge className="bg-indigo-100 text-indigo-700 hover:bg-indigo-200">
                         {currentQuestion.sector}
                       </Badge>
-                      {skippedCategories.has(currentQuestion.category) && (
+                      {skippedSectors.has(currentQuestion.sector) && (
                         <AlertCircle className="w-4 h-4 text-orange-500" />
                       )}
                     </div>
@@ -216,8 +216,8 @@ const AdaptiveTestInterface = ({ onComplete }) => {
 
             </motion.div>
 
-            {/* Skipped Categories Warning */}
-            {skippedCategories.size > 0 && (
+            {/* Skipped Sectors Warning */}
+            {skippedSectors.size > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -226,9 +226,9 @@ const AdaptiveTestInterface = ({ onComplete }) => {
                 <div className="flex gap-3">
                   <Zap className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-bold text-orange-900 text-sm">Profils déprioritisés</p>
+                    <p className="font-bold text-orange-900 text-sm">Secteurs exclus</p>
                     <p className="text-xs text-orange-700 mt-1">
-                      {Array.from(skippedCategories).join(', ')} moins adaptés • Mais encore évalués pour fiabilité
+                      {Array.from(skippedSectors).join(', ')} • Pas de questions supplémentaires dans ces domaines
                     </p>
                   </div>
                 </div>

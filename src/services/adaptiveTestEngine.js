@@ -48,7 +48,7 @@ export const adaptiveTestEngine = {
       confidences: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
       phase: TestPhases.BASELINE,
       baselineQuestionsAsked: 1, // Track baseline progress
-      skippedCategories: new Set(),
+      skippedSectors: new Set(),
     };
   },
 
@@ -66,7 +66,7 @@ export const adaptiveTestEngine = {
     };
 
     this._updateScores(state);
-    this._detectSkippedCategories(state);
+    this._detectSkippedSectors(state);
     this._updatePhase(state);
 
     if (this._shouldStop(state)) {
@@ -81,7 +81,10 @@ export const adaptiveTestEngine = {
    * Logical question selection with clear phases
    */
   _selectNextQuestionLogical(state) {
-    const unused = adaptiveQuestionPool.filter(q => !state.askedIds.has(q.id));
+    // Exclude skipped sectors from question pool
+    const unused = adaptiveQuestionPool.filter(
+      q => !state.askedIds.has(q.id) && !state.skippedSectors.has(q.sector)
+    );
     if (unused.length === 0) return null;
 
     // PHASE 1: BASELINE (Complete the 6 basic questions)
@@ -122,9 +125,9 @@ export const adaptiveTestEngine = {
         ).length;
       });
 
-      // Priority 1: Non-skipped categories with fewer questions
+      // Priority 1: RIASEC categories with fewer than minimum questions
       for (const cat of CATEGORIES) {
-        if (!state.skippedCategories.has(cat) && answersPerCategory[cat] < MIN_QUESTIONS_PER_CATEGORY) {
+        if (answersPerCategory[cat] < MIN_QUESTIONS_PER_CATEGORY) {
           const refinementQ = unused.find(
             q => q.category === cat && q.difficulty === 'intermediate'
           );
@@ -136,9 +139,10 @@ export const adaptiveTestEngine = {
         }
       }
 
-      // Priority 2: Skipped categories still need minimum coverage
+      // Priority 2: RIASEC categories with mid-range scores (40-60%)
       for (const cat of CATEGORIES) {
-        if (state.skippedCategories.has(cat) && answersPerCategory[cat] < MIN_QUESTIONS_PER_CATEGORY) {
+        const score = state.scores[cat] || 50;
+        if (score >= 40 && score <= 60) {
           const refinementQ = unused.find(
             q => q.category === cat && q.difficulty === 'intermediate'
           );
@@ -150,25 +154,8 @@ export const adaptiveTestEngine = {
         }
       }
 
-      // Priority 3: Non-skipped categories with mid-range scores (40-60%)
-      for (const cat of CATEGORIES) {
-        if (!state.skippedCategories.has(cat)) {
-          const score = state.scores[cat] || 50;
-          if (score >= 40 && score <= 60) {
-            const refinementQ = unused.find(
-              q => q.category === cat && q.difficulty === 'intermediate'
-            );
-            if (refinementQ) {
-              state.asked.push(refinementQ);
-              state.askedIds.add(refinementQ.id);
-              return refinementQ;
-            }
-          }
-        }
-      }
-
-      // Priority 4: Any intermediate from non-skipped categories
-      const intermediateQ = unused.find(q => q.difficulty === 'intermediate' && !state.skippedCategories.has(q.category));
+      // Priority 3: Any intermediate question (sectors already filtered by unused)
+      const intermediateQ = unused.find(q => q.difficulty === 'intermediate');
       if (intermediateQ) {
         state.asked.push(intermediateQ);
         state.askedIds.add(intermediateQ.id);
@@ -202,9 +189,9 @@ export const adaptiveTestEngine = {
         ).length;
       });
 
-      // Priority 1: Non-skipped categories with fewer questions
+      // Priority 1: RIASEC categories with fewer than minimum questions
       for (const cat of CATEGORIES) {
-        if (!state.skippedCategories.has(cat) && answersPerCategory[cat] < MIN_QUESTIONS_PER_CATEGORY) {
+        if (answersPerCategory[cat] < MIN_QUESTIONS_PER_CATEGORY) {
           const advancedQ = unused.find(
             q => q.category === cat && q.difficulty === 'advanced'
           );
@@ -216,24 +203,9 @@ export const adaptiveTestEngine = {
         }
       }
 
-      // Priority 2: Skipped categories still need minimum coverage
-      for (const cat of CATEGORIES) {
-        if (state.skippedCategories.has(cat) && answersPerCategory[cat] < MIN_QUESTIONS_PER_CATEGORY) {
-          const advancedQ = unused.find(
-            q => q.category === cat && q.difficulty === 'advanced'
-          );
-          if (advancedQ) {
-            state.asked.push(advancedQ);
-            state.askedIds.add(advancedQ.id);
-            return advancedQ;
-          }
-        }
-      }
-
-      // Priority 3: Advanced questions for non-skipped dominant categories
+      // Priority 2: Advanced questions for dominant RIASEC categories
       const topCategories = Object.entries(state.scores)
         .sort(([, a], [, b]) => b - a)
-        .filter(([cat]) => !state.skippedCategories.has(cat))
         .slice(0, 2)
         .map(([cat]) => cat);
 
@@ -248,23 +220,21 @@ export const adaptiveTestEngine = {
         }
       }
 
-      // Priority 4: Fill in sector coverage from non-skipped categories
+      // Priority 3: Fill in sector coverage
       const coveredSectors = new Set(Object.values(state.answers).map(a => a.sector));
-      const uncoveredQ = unused.find(
-        q => !coveredSectors.has(q.sector) && !state.skippedCategories.has(q.category)
-      );
+      const uncoveredQ = unused.find(q => !coveredSectors.has(q.sector));
       if (uncoveredQ) {
         state.asked.push(uncoveredQ);
         state.askedIds.add(uncoveredQ.id);
         return uncoveredQ;
       }
 
-      // Priority 5: Any advanced from non-skipped categories
-      const advancedNonSkipped = unused.find(q => q.difficulty === 'advanced' && !state.skippedCategories.has(q.category));
-      if (advancedNonSkipped) {
-        state.asked.push(advancedNonSkipped);
-        state.askedIds.add(advancedNonSkipped.id);
-        return advancedNonSkipped;
+      // Priority 4: Any advanced question
+      const advancedQ = unused.find(q => q.difficulty === 'advanced');
+      if (advancedQ) {
+        state.asked.push(advancedQ);
+        state.askedIds.add(advancedQ.id);
+        return advancedQ;
       }
 
       // Fallback: Any advanced question
@@ -355,20 +325,20 @@ export const adaptiveTestEngine = {
   },
 
   /**
-   * Detect categories to skip (1+ "Pas du tout" = 0 for fast category filtering)
-   * Single negative response marks category as disfavored (still gets min questions)
+   * Detect sectors to skip (1+ "Pas du tout" = 0 marks entire sector as rejected)
+   * User explicitly rejects a sector → exclude all questions from that sector
    */
-  _detectSkippedCategories(state) {
-    const categoryResponses = {};
+  _detectSkippedSectors(state) {
+    const sectorResponses = {};
 
-    Object.values(state.answers).forEach(({ category, value }) => {
-      categoryResponses[category] = [...(categoryResponses[category] || []), value];
+    Object.values(state.answers).forEach(({ sector, value }) => {
+      sectorResponses[sector] = [...(sectorResponses[sector] || []), value];
     });
 
-    Object.entries(categoryResponses).forEach(([category, responses]) => {
+    Object.entries(sectorResponses).forEach(([sector, responses]) => {
       const zeroCount = responses.filter(v => v === 0).length;
       if (zeroCount >= 1) {
-        state.skippedCategories.add(category);
+        state.skippedSectors.add(sector);
       }
     });
   },
