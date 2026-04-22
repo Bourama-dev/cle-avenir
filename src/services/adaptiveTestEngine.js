@@ -386,37 +386,73 @@ export const adaptiveTestEngine = {
    * Finalize test and return profile
    */
   finalizeTest(state) {
+    console.log('=== FINALIZING TEST ===');
+    console.log('State asked count:', state.asked?.length);
+    console.log('State answers count:', Object.keys(state.answers).length);
+    console.log('State scores:', state.scores);
+
     if (!state || !state.scores || !state.asked) {
-      throw new Error('État du test invalide: scores ou questions manquantes');
+      const error = 'État du test invalide: scores ou questions manquantes';
+      console.error(error);
+      console.error('state.asked:', state.asked);
+      console.error('state.scores:', state.scores);
+      throw new Error(error);
     }
 
-    const profileCode = Object.entries(state.scores)
-      .filter(([, score]) => typeof score === 'number' && !isNaN(score))
+    console.log('Scores entries:', Object.entries(state.scores));
+
+    const validEntries = Object.entries(state.scores).filter(
+      ([, score]) => typeof score === 'number' && !isNaN(score)
+    );
+    console.log('Valid score entries:', validEntries);
+
+    const profileCode = validEntries
       .sort(([, a], [, b]) => b - a)
       .slice(0, 3)
       .map(([letter]) => letter)
       .join('');
 
+    console.log('Profile code:', profileCode);
+
     if (!profileCode || profileCode.length === 0) {
-      throw new Error('Impossible de créer le profil: scores invalides');
+      const error = 'Impossible de créer le profil: scores invalides';
+      console.error(error);
+      console.error('Valid entries:', validEntries);
+      throw new Error(error);
     }
 
-    return {
+    console.log('Getting sector coverage...');
+    const coverageBySector = this._getSectorCoverage(state);
+    console.log('Sector coverage:', coverageBySector);
+
+    const result = {
       profile: state.scores,
       profileCode,
       questionsAsked: state.asked.length,
-      coverageBySector: this._getSectorCoverage(state),
+      coverageBySector,
     };
+
+    console.log('Final result:', result);
+    return result;
   },
 
   /**
    * Get sector coverage
    */
   _getSectorCoverage(state) {
+    console.log('_getSectorCoverage - state.answers:', state.answers);
     const sectors = {};
-    Object.values(state.answers).forEach(({ sector }) => {
-      sectors[sector] = (sectors[sector] || 0) + 1;
-    });
+    try {
+      Object.values(state.answers).forEach(({ sector }) => {
+        if (!sector) {
+          console.warn('Question without sector found:', Object.values(state.answers).find(a => !a.sector));
+        }
+        sectors[sector] = (sectors[sector] || 0) + 1;
+      });
+    } catch (error) {
+      console.error('Error in _getSectorCoverage:', error);
+      throw new Error('Erreur lors du calcul de la couverture secteur: ' + error.message);
+    }
     return sectors;
   },
 };
