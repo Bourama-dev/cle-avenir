@@ -2,6 +2,7 @@ import { supabase } from '../lib/customSupabaseClient';
 import { getCachedMetier, setCachedMetier } from './metierCacheService';
 import { queueRequest } from './requestQueueService';
 import { mockMetiers } from '@/data/mockMetiers';
+import { romeApiService } from './romeApiService';
 
 const TABLE_NAME = 'rome_metiers';
 
@@ -145,33 +146,80 @@ export const metierService = {
 
   getAllMetiersForMatching: async () => {
     try {
+      // STRATEGY: Try multiple sources with intelligent fallback
+      // 1. Supabase (if database is populated)
+      // 2. ROME API (official French job database)
+      // 3. ROME Fallback data (hardcoded essential jobs)
+      // 4. Mock data (for development)
+
+      console.log('🔍 Fetching métiers: trying Supabase first...');
+
       const { data, error } = await supabase
         .from(TABLE_NAME)
         .select('code, libelle, description, definition, riasecMajeur, riasecMineur, adjusted_weights, riasec_vector, salaire, debouches, niveau_etudes');
 
-      if (error) throw error;
-
-      if (!data || data.length === 0) {
-        console.warn("Supabase returned empty data, using mock métiers for testing");
-        const formatted = mockMetiers
+      if (!error && data && data.length > 0) {
+        console.log(`✅ Supabase: Found ${data.length} métiers`);
+        const formatted = data
           .map(metierService.formatMetierForMatching)
           .filter(m => m !== null);
         return formatted;
       }
 
-      const formatted = data
-        .map(metierService.formatMetierForMatching)
-        .filter(m => m !== null);
+      // Supabase failed or empty, try ROME API
+      console.warn('⚠️ Supabase empty or error, trying ROME API...');
 
-      return formatted;
-    } catch (err) {
-      console.error("Error in getAllMetiersForMatching:", err);
-      console.warn("Falling back to mock métiers for testing");
-      // Use mock data as fallback when Supabase is unavailable
+      const romeMetiers = await romeApiService.fetchAllMetiers();
+      if (romeMetiers && romeMetiers.length > 0) {
+        console.log(`✅ ROME API: Found ${romeMetiers.length} métiers`);
+        const formatted = romeMetiers
+          .map(metierService.formatMetierForMatching)
+          .filter(m => m !== null);
+        return formatted;
+      }
+
+      // ROME API failed, use hardcoded ROME fallback
+      console.warn('⚠️ ROME API failed, using ROME fallback data...');
+      const fallbackMetiers = romeApiService.getFallbackMetiers();
+      if (fallbackMetiers && fallbackMetiers.length > 0) {
+        console.log(`✅ ROME Fallback: Using ${fallbackMetiers.length} essential métiers`);
+        const formatted = fallbackMetiers
+          .map(metierService.formatMetierForMatching)
+          .filter(m => m !== null);
+        return formatted;
+      }
+
+      // Last resort: use mock data
+      console.warn('⚠️ All sources failed, using mock métiers for testing');
       const formatted = mockMetiers
         .map(metierService.formatMetierForMatching)
         .filter(m => m !== null);
+
+      if (formatted.length === 0) {
+        throw new Error('No métiers available from any source');
+      }
+
       return formatted;
+
+    } catch (err) {
+      console.error('❌ Error in getAllMetiersForMatching:', err);
+
+      // Final fallback: mock data
+      try {
+        console.warn('Using mock data as last resort...');
+        const formatted = mockMetiers
+          .map(metierService.formatMetierForMatching)
+          .filter(m => m !== null);
+
+        if (formatted.length > 0) {
+          return formatted;
+        }
+      } catch (mockErr) {
+        console.error('Even mock data failed:', mockErr);
+      }
+
+      // If everything fails, throw meaningful error
+      throw new Error('Impossible de charger les données de métiers. Veuillez vérifier votre connexion.');
     }
   },
 
