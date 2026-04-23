@@ -162,10 +162,16 @@ export const optimizedQuestions = [
     options: OPTIONS,
   },
   {
-    id: 'c4', category: 'C', emoji: '🏢',
-    text: "Appréciez-vous un environnement structuré avec des rôles clairs dans l'administration ou la gestion de projets ?",
-    sector: 'law',
-    options: OPTIONS,
+    id: 'domain', category: 'D', emoji: '🎯',
+    text: "Dans quel type de secteur d'activité vous projetez-vous principalement ?",
+    sector: 'multi',
+    isSectorQuestion: true,
+    options: [
+      { text: 'Technologie, Sciences & Recherche', value: 100 },
+      { text: 'Arts, Design & Culture', value: 66 },
+      { text: 'Santé, Social & Éducation', value: 33 },
+      { text: 'Commerce, Entrepreneuriat & Industrie', value: 0 },
+    ],
   },
 
   // ── Bloc 5 (R I S A) ────────────────────────────────────────────────────
@@ -208,13 +214,16 @@ export const RIASEC_MAX_POSSIBLE = (() => {
   const maxOptionValue = Math.max(...OPTIONS.map(o => o.value)); // 100
   const counts = {};
   optimizedQuestions.forEach(q => {
-    counts[q.category] = (counts[q.category] || 0) + 1;
+    // Exclude sector-specific questions (category 'D') from RIASEC scoring
+    if (q.category !== 'D') {
+      counts[q.category] = (counts[q.category] || 0) + 1;
+    }
   });
   const result = {};
   Object.entries(counts).forEach(([cat, n]) => {
     result[cat] = n * maxOptionValue;
   });
-  return result; // e.g. { R: 500, I: 500, A: 400, S: 500, E: 400, C: 400 }
+  return result; // e.g. { R: 500, I: 500, A: 400, S: 500, E: 400, C: 300 }
 })();
 
 /**

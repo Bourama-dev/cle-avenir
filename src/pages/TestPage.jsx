@@ -22,7 +22,10 @@ function computeProfile(answers) {
   const rawScores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
 
   Object.values(answers).forEach(({ category, value }) => {
-    rawScores[category] = (rawScores[category] || 0) + value;
+    // Ignore sector-specific questions (category 'D') from RIASEC scoring
+    if (category !== 'D') {
+      rawScores[category] = (rawScores[category] || 0) + value;
+    }
   });
 
   const profile = {};
