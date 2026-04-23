@@ -9,9 +9,6 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const supabaseKey = process.env.VITE_SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
@@ -28,19 +25,22 @@ const supabase = createClient(supabaseUrl, supabaseKey);
  */
 async function getAccessToken(clientId, secret) {
   try {
-    const response = await fetch('https://api.emploi-store.fr/oauth/authorize', {
+    // Try the correct endpoint for Emploi-Store API token
+    const response = await fetch('https://www.emploi-store.fr/oauth/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
         grant_type: 'client_credentials',
         client_id: clientId,
         client_secret: secret,
-        scope: 'nomenclatureRome',
+        scope: 'api_rome-metiers',
       }),
     });
 
     if (!response.ok) {
-      throw new Error(`Token request failed: ${response.statusText}`);
+      const errorText = await response.text();
+      console.error('Response:', errorText);
+      throw new Error(`Token request failed: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
