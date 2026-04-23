@@ -69,3 +69,15 @@ export const getAllDomainsForDisplay = () => {
   }));
 };
 
+/**
+ * Convert selected sectors (multi-choice answer) to ROME codes
+ * @param {string[]} selectedSectors - Array of sector IDs (e.g., ['technology', 'sciences'])
+ * @returns {string[]} Array of ROME codes matching selected sectors
+ */
+export const selectedSectorsToRomeCodes = (selectedSectors) => {
+  if (!Array.isArray(selectedSectors) || selectedSectors.length === 0) {
+    return [];
+  }
+  return getMultipleDomainRomeCodes(selectedSectors);
+};
+

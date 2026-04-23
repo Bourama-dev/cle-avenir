@@ -22,8 +22,8 @@ function computeProfile(answers) {
   const rawScores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
 
   Object.values(answers).forEach(({ category, value }) => {
-    // Ignore sector-specific questions (category 'D') from RIASEC scoring
-    if (category !== 'D') {
+    // Ignore sector-specific questions (category 'SECTOR') from RIASEC scoring
+    if (category !== 'SECTOR') {
       rawScores[category] = (rawScores[category] || 0) + value;
     }
   });
@@ -194,6 +194,23 @@ const TestPage = () => {
   /* ── Navigation ── */
   const handleSelect = (value) => {
     const question = optimizedQuestions[currentIdx];
+
+    // Handle multi-choice questions (sectors)
+    if (question.type === 'multi_choice' && question.isSectorQuestion) {
+      setAnswers(prev => {
+        const current = prev[question.id]?.values || [];
+        const updated = current.includes(value)
+          ? current.filter(v => v !== value)
+          : [...current, value];
+        return {
+          ...prev,
+          [question.id]: { category: question.category, values: updated },
+        };
+      });
+      return; // Don't auto-advance for multi-choice
+    }
+
+    // Handle single-choice RIASEC questions
     setAnswers(prev => ({
       ...prev,
       [question.id]: { category: question.category, value },
@@ -235,16 +252,16 @@ const TestPage = () => {
     const profile = computeProfile(answers);
     const code = computeProfileCode(profile);
 
-    // Extract sector preference from answers (category 'D')
-    const sectorAnswer = Object.values(answers).find(a => a.category === 'D');
-    const selectedSectorValue = sectorAnswer?.value;
+    // Extract sector preferences from answers (category 'SECTOR')
+    const sectorsAnswer = Object.values(answers).find(a => a.category === 'SECTOR');
+    const selectedSectors = sectorsAnswer?.values || [];
 
     // Persist to localStorage for TestResultsPage and ProfilePage
     localStorage.setItem('test_riasec_profile',      JSON.stringify(profile));
     localStorage.setItem('test_riasec_profile_code', code);
     localStorage.setItem('temp_test_answers',        JSON.stringify(answers));
     localStorage.setItem('temp_test_scores',         JSON.stringify(profile));
-    localStorage.setItem('test_selected_sector',     selectedSectorValue ? String(selectedSectorValue) : '');
+    localStorage.setItem('test_selected_sectors',    JSON.stringify(selectedSectors));
 
     setComputedProfile(profile);
     setProfileCode(code);
@@ -279,16 +296,16 @@ const TestPage = () => {
           Math.max(Object.keys(profile).length, 1)
         );
 
-        // Extract sector preference from answers (category 'D')
-        const sectorAnswer = Object.values(answers).find(a => a.category === 'D');
-        const selectedSectorValue = sectorAnswer?.value;
+        // Extract sector preferences from answers (category 'SECTOR')
+        const sectorsAnswer = Object.values(answers).find(a => a.category === 'SECTOR');
+        const selectedSectors = sectorsAnswer?.values || [];
 
         supabase.from('test_results').insert({
           user_id: user.id,
           riasec_profile: profile,
           answers: answers,
           test_score: testScore,
-          selected_sector_value: selectedSectorValue || null,
+          selected_sectors: selectedSectors,
         }).then(({ error }) => {
           if (error) console.warn('[TestPage] Sauvegarde test_results non critique :', error.message);
         });

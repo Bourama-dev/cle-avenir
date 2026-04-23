@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/customSupabaseClient';
 import { withRetry, parseSupabaseError } from '@/utils/supabaseErrorHandler';
 import { normalizeStr } from '@/utils/stringUtils';
-import { getSectorRomeDomains } from '@/utils/sectorToRomeDomains';
+import { selectedSectorsToRomeCodes } from '@/utils/sectorToRomeDomains';
 import { ROME_DOMAINS } from '@/data/romeMapping';
 
 export const metierRecommendationService = {
@@ -125,11 +125,10 @@ export const metierRecommendationService = {
         const topLetters = sortedLetters.slice(0, 3);
 
         if (topLetters.length > 0) {
-          // Get ROME codes for the selected sector (if available)
-          const selectedSectorValue = testResult.selected_sector_value;
-          const preferredDomains = selectedSectorValue !== undefined ? getSectorRomeDomains(parseInt(selectedSectorValue, 10)) : [];
-          const preferredCodes = preferredDomains.length > 0
-            ? preferredDomains.flatMap(domain => ROME_DOMAINS[domain]?.codes || [])
+          // Get ROME codes for selected sectors (if available)
+          const selectedSectors = testResult.selected_sectors || [];
+          const preferredCodes = selectedSectors.length > 0
+            ? selectedSectorsToRomeCodes(selectedSectors)
             : [];
 
           // Query metiers whose primary RIASEC letter matches any of the top 3
@@ -138,7 +137,7 @@ export const metierRecommendationService = {
             .select('code, libelle, description, salaire, debouches, niveau_etudes, riasecmajeur, riasecmineur')
             .in('riasecmajeur', topLetters);
 
-          // If sector preference exists, filter by preferred ROME codes
+          // If sector preferences exist, filter by preferred ROME codes
           if (preferredCodes.length > 0) {
             queryBuilder.in('code', preferredCodes);
           }
@@ -158,7 +157,7 @@ export const metierRecommendationService = {
                 else if (majorIdx === 2) score += 18;
                 if (minor && topLetters.includes(minor)) score += 8;
                 // Boost score if metier is in preferred sector codes
-                if (preferredCodes.includes(m.code)) score += 12;
+                if (preferredCodes.includes(m.code)) score += 15;
                 return { ...m, riasecMajeur: major, riasecMineur: minor, matchScore: Math.min(98, score) };
               })
               .sort((a, b) => b.matchScore - a.matchScore);
