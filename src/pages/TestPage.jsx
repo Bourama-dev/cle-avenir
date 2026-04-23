@@ -235,11 +235,16 @@ const TestPage = () => {
     const profile = computeProfile(answers);
     const code = computeProfileCode(profile);
 
+    // Extract sector preference from answers (category 'D')
+    const sectorAnswer = Object.values(answers).find(a => a.category === 'D');
+    const selectedSectorValue = sectorAnswer?.value;
+
     // Persist to localStorage for TestResultsPage and ProfilePage
     localStorage.setItem('test_riasec_profile',      JSON.stringify(profile));
     localStorage.setItem('test_riasec_profile_code', code);
     localStorage.setItem('temp_test_answers',        JSON.stringify(answers));
     localStorage.setItem('temp_test_scores',         JSON.stringify(profile));
+    localStorage.setItem('test_selected_sector',     selectedSectorValue ? String(selectedSectorValue) : '');
 
     setComputedProfile(profile);
     setProfileCode(code);
@@ -274,11 +279,16 @@ const TestPage = () => {
           Math.max(Object.keys(profile).length, 1)
         );
 
+        // Extract sector preference from answers (category 'D')
+        const sectorAnswer = Object.values(answers).find(a => a.category === 'D');
+        const selectedSectorValue = sectorAnswer?.value;
+
         supabase.from('test_results').insert({
           user_id: user.id,
           riasec_profile: profile,
           answers: answers,
           test_score: testScore,
+          selected_sector_value: selectedSectorValue || null,
         }).then(({ error }) => {
           if (error) console.warn('[TestPage] Sauvegarde test_results non critique :', error.message);
         });

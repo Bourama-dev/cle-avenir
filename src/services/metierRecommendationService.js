@@ -1,6 +1,8 @@
 import { supabase } from '@/lib/customSupabaseClient';
 import { withRetry, parseSupabaseError } from '@/utils/supabaseErrorHandler';
 import { normalizeStr } from '@/utils/stringUtils';
+import { getSectorRomeDomains } from '@/utils/sectorToRomeDomains';
+import { ROME_DOMAINS } from '@/data/romeMapping';
 
 export const metierRecommendationService = {
   /**
@@ -111,6 +113,7 @@ export const metierRecommendationService = {
       }
 
       // 4. RIASEC scores path — works with our riasec_profile column
+      // Now also filters by sector preference if available
       const riasecProfile = testResult.riasec_profile;
       if (riasecProfile && typeof riasecProfile === 'object' && Object.keys(riasecProfile).length > 0) {
         // Sort RIASEC letters by score descending
@@ -122,14 +125,25 @@ export const metierRecommendationService = {
         const topLetters = sortedLetters.slice(0, 3);
 
         if (topLetters.length > 0) {
+          // Get ROME codes for the selected sector (if available)
+          const selectedSectorValue = testResult.selected_sector_value;
+          const preferredDomains = selectedSectorValue !== undefined ? getSectorRomeDomains(parseInt(selectedSectorValue, 10)) : [];
+          const preferredCodes = preferredDomains.length > 0
+            ? preferredDomains.flatMap(domain => ROME_DOMAINS[domain]?.codes || [])
+            : [];
+
           // Query metiers whose primary RIASEC letter matches any of the top 3
-          const { data: metiers } = await withRetry(() =>
-            supabase
-              .from('rome_metiers')
-              .select('code, libelle, description, salaire, debouches, niveau_etudes, riasecmajeur, riasecmineur')
-              .in('riasecmajeur', topLetters)
-              .limit(15)
-          );
+          const queryBuilder = supabase
+            .from('rome_metiers')
+            .select('code, libelle, description, salaire, debouches, niveau_etudes, riasecmajeur, riasecmineur')
+            .in('riasecmajeur', topLetters);
+
+          // If sector preference exists, filter by preferred ROME codes
+          if (preferredCodes.length > 0) {
+            queryBuilder.in('code', preferredCodes);
+          }
+
+          const { data: metiers } = await withRetry(() => queryBuilder.limit(15));
 
           if (metiers && metiers.length > 0) {
             return metiers
@@ -143,6 +157,8 @@ export const metierRecommendationService = {
                 else if (majorIdx === 1) score += 28;
                 else if (majorIdx === 2) score += 18;
                 if (minor && topLetters.includes(minor)) score += 8;
+                // Boost score if metier is in preferred sector codes
+                if (preferredCodes.includes(m.code)) score += 12;
                 return { ...m, riasecMajeur: major, riasecMineur: minor, matchScore: Math.min(98, score) };
               })
               .sort((a, b) => b.matchScore - a.matchScore);
