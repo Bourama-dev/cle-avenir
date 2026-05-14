@@ -8,7 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const BASE_URL = 'https://cleavenir.com';
+const BASE_URL = 'https://www.cleavenir.com';
 const TODAY = new Date().toISOString().split('T')[0];
 
 // ─── Routes statiques publiques ──────────────────────────────────────────────

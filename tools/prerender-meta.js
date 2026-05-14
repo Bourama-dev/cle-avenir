@@ -12,7 +12,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DIST      = path.resolve(__dirname, '../dist');
-const BASE_URL  = 'https://cleavenir.com';
+const BASE_URL  = 'https://www.cleavenir.com';
 const OG_IMAGE  = `${BASE_URL}/og-image.jpg`;
 
 // ─── Méta par route ───────────────────────────────────────────────────────────

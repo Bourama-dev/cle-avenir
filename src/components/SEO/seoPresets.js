@@ -3,7 +3,7 @@
  * Use these to quickly implement SEO on different page templates
  */
 
-const baseUrl = 'https://cleavenir.com';
+const baseUrl = 'https://www.cleavenir.com';
 
 /**
  * Job Detail Page SEO Config
@@ -14,7 +14,7 @@ export const jobDetailSEO = (jobData) => ({
   title: jobData.title,
   description: jobData.description || `Découvrez l'offre d'emploi: ${jobData.title} chez ${jobData.company}`,
   keywords: `${jobData.title}, offre emploi, ${jobData.company}, ${jobData.city}, recrutement`,
-  image: jobData.image || 'https://cleavenir.com/og-image.jpg',
+  image: jobData.image || 'https://www.cleavenir.com/og-image.jpg',
   schemaType: 'job',
   breadcrumbs: [
     { name: 'Accueil', url: '/' },
@@ -50,7 +50,7 @@ export const formationDetailSEO = (formationData) => ({
   title: formationData.name,
   description: formationData.description || `Formation ${formationData.level} en ${formationData.domain}`,
   keywords: `formation, ${formationData.domain}, apprentissage, ${formationData.level}, développement professionnel`,
-  image: formationData.image || 'https://cleavenir.com/og-image.jpg',
+  image: formationData.image || 'https://www.cleavenir.com/og-image.jpg',
   schemaType: 'course',
   breadcrumbs: [
     { name: 'Accueil', url: '/' },
@@ -74,7 +74,7 @@ export const metierDetailSEO = (metierData) => ({
   title: `${metierData.name} - Guide Complet du Métier`,
   description: metierData.description || `Découvrez le métier de ${metierData.name}. Formations, salaires, évolutions de carrière et offres d'emploi.`,
   keywords: `${metierData.name}, métier, carrière, formation, salaire, emploi, ${metierData.sector}`,
-  image: metierData.image || 'https://cleavenir.com/og-image.jpg',
+  image: metierData.image || 'https://www.cleavenir.com/og-image.jpg',
   breadcrumbs: [
     { name: 'Accueil', url: '/' },
     { name: 'Explorer les Métiers', url: '/metiers' },
@@ -92,7 +92,7 @@ export const blogArticleSEO = (articleData) => ({
   title: articleData.title,
   description: articleData.excerpt || `Lire l'article: ${articleData.title}`,
   keywords: articleData.tags?.join(', ') || 'blog, carrière, orientation',
-  image: articleData.imageUrl || 'https://cleavenir.com/og-image.jpg',
+  image: articleData.imageUrl || 'https://www.cleavenir.com/og-image.jpg',
   type: 'article',
   schemaType: 'article',
   publishedTime: articleData.publishedDate,
@@ -115,7 +115,7 @@ export const landingPageSEO = (pageData) => ({
   title: pageData.title,
   description: pageData.description,
   keywords: pageData.keywords,
-  image: pageData.image || 'https://cleavenir.com/og-image.jpg',
+  image: pageData.image || 'https://www.cleavenir.com/og-image.jpg',
   breadcrumbs: pageData.breadcrumbName ? [
     { name: 'Accueil', url: '/' },
     { name: pageData.breadcrumbName, url: pageData.breadcrumbPath }
@@ -131,7 +131,7 @@ export const faqPageSEO = (faqs) => ({
   title: 'Questions Fréquemment Posées - CléAvenir',
   description: 'Réponses aux questions fréquemment posées sur CléAvenir, les tests d\'orientation, les formations et les offres d\'emploi.',
   keywords: 'FAQ, aide, questions fréquentes, orientation, offres d\'emploi, formation, carrière, alternance, stage, abonnement, CléAvenir',
-  image: 'https://cleavenir.com/og-image.jpg',
+  image: 'https://www.cleavenir.com/og-image.jpg',
   schemaType: 'faq',
   breadcrumbs: [
     { name: 'Accueil', url: '/' },
@@ -152,7 +152,7 @@ export const categoryPageSEO = (pageData) => ({
   title: pageData.title,
   description: pageData.description,
   keywords: pageData.keywords,
-  image: pageData.image || 'https://cleavenir.com/og-image.jpg',
+  image: pageData.image || 'https://www.cleavenir.com/og-image.jpg',
   breadcrumbs: [
     { name: 'Accueil', url: '/' },
     { name: pageData.category, url: pageData.categoryPath }
@@ -167,7 +167,7 @@ export const testPageSEO = () => ({
   title: 'Test d\'Orientation Professionnel Gratuit - CléAvenir',
   description: 'Découvrez votre orientation professionnelle avec notre test gratuit alimenté par l\'IA. Analysez vos compétences et trouvez les métiers qui vous conviennent.',
   keywords: 'test orientation gratuit, test métier, orientation professionnelle, quel métier me convient, trouver sa voie, IA orientation, Parcoursup, orientation après bac, reconversion professionnelle, bilan de compétences, carrière',
-  image: 'https://cleavenir.com/og-image.jpg',
+  image: 'https://www.cleavenir.com/og-image.jpg',
   breadcrumbs: [
     { name: 'Accueil', url: '/' },
     { name: 'Test d\'Orientation', url: '/test' }
@@ -185,7 +185,7 @@ export const authPageSEO = (page = 'login') => ({
     ? 'Connectez-vous à votre compte CléAvenir pour accéder à vos tests et résultats.'
     : 'Créez un compte CléAvenir gratuit pour démarrer votre test d\'orientation professionnel.',
   keywords: page === 'login' ? 'connexion, login' : 'inscription, créer compte, enregistrement',
-  image: 'https://cleavenir.com/og-image.jpg',
+  image: 'https://www.cleavenir.com/og-image.jpg',
   noIndex: true // Don't index auth pages
 });
 
@@ -197,6 +197,6 @@ export const dashboardPageSEO = () => ({
   title: 'Mon Tableau de Bord - CléAvenir',
   description: 'Consultez vos résultats d\'orientation, vos formations recommandées et vos offres d\'emploi personnalisées.',
   keywords: 'tableau de bord, mes résultats, formations recommandées, offres emploi',
-  image: 'https://cleavenir.com/og-image.jpg',
+  image: 'https://www.cleavenir.com/og-image.jpg',
   noIndex: true // Don't index user-specific pages
 });

@@ -27,4 +27,4 @@ Disallow: /maintenance
 Disallow: /auth
 
 # Sitemap
-Sitemap: https://cleavenir.com/sitemap.xml
+Sitemap: https://www.cleavenir.com/sitemap.xml
