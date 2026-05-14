@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Loader2, Save, MapPin, CheckCircle2, Clock, BookOpen, Target, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { motion } from 'framer-motion';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 const ActionPlanPage = () => {
   const [searchParams] = useSearchParams();
@@ -88,7 +89,12 @@ const ActionPlanPage = () => {
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col md:flex-row md:items-center justify-between gap-4"
+        >
           <div>
             <Button variant="ghost" onClick={() => navigate('/results')} className="pl-0 text-slate-500 hover:text-slate-900 -ml-2 mb-2">
               <ArrowLeft className="w-4 h-4 mr-2" /> Retour aux résultats
@@ -98,11 +104,13 @@ const ActionPlanPage = () => {
               <Clock className="w-4 h-4 mr-2" /> Durée estimée : {plan?.duration}
             </p>
           </div>
-          <Button onClick={handleSavePlan} disabled={saving} className="bg-indigo-600 hover:bg-indigo-700 text-white">
-            {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
-            Sauvegarder le plan
-          </Button>
-        </div>
+          <MagneticButton>
+            <Button onClick={handleSavePlan} disabled={saving} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+              {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+              Sauvegarder le plan
+            </Button>
+          </MagneticButton>
+        </motion.div>
 
         {/* Timeline */}
         <div className="relative border-l-2 border-indigo-100 ml-4 md:ml-6 space-y-10 py-6">

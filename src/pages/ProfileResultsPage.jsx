@@ -270,9 +270,11 @@ const ProfileResultsPage = () => {
             </div>
           </CardContent>
         </Card>
+        </AnimatedItem>
 
         {/* RIASEC Analysis */}
-        <Card className="lg:col-span-3 border-slate-200 shadow-sm">
+        <AnimatedItem className="lg:col-span-3">
+        <Card className="border-slate-200 shadow-sm h-full">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-800">
               <BarChart2 className="h-4 w-4 text-indigo-500" /> Analyse RIASEC
@@ -320,9 +322,12 @@ const ProfileResultsPage = () => {
             )}
           </CardContent>
         </Card>
-      </div>
+        </AnimatedItem>
+      </AnimatedSection>
 
       {/* Test history */}
+      <AnimatedSection>
+      <AnimatedItem>
       <Card className="border-slate-200 shadow-sm">
         <CardHeader className="pb-3 flex flex-row items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-800">
@@ -407,9 +412,13 @@ const ProfileResultsPage = () => {
           )}
         </CardContent>
       </Card>
+      </AnimatedItem>
+      </AnimatedSection>
 
       {/* Career recommendations */}
       {testResult && (
+        <AnimatedSection>
+        <AnimatedItem>
         <Card className="border-slate-200 shadow-sm">
           <CardHeader className="pb-3 flex flex-row items-center justify-between">
             <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-800">
@@ -421,12 +430,12 @@ const ProfileResultsPage = () => {
           </CardHeader>
           <CardContent>
             {careers.length > 0 ? (
-              <div className="space-y-2.5">
+              <AnimatedSection className="space-y-2.5">
                 {careers.slice(0, 5).map((career, idx) => {
                   const score = career.match_score ?? career.matchScore ?? career.score ?? null;
                   return (
+                    <AnimatedItem key={idx}>
                     <div
-                      key={idx}
                       className="flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors cursor-pointer group"
                       onClick={() => navigate('/metiers')}
                     >
@@ -454,9 +463,10 @@ const ProfileResultsPage = () => {
                         <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-slate-500 transition-colors" />
                       </div>
                     </div>
+                    </AnimatedItem>
                   );
                 })}
-              </div>
+              </AnimatedSection>
             ) : (
               <div className="text-center py-8">
                 <TrendingUp className="w-10 h-10 text-slate-200 mx-auto mb-2" />
@@ -468,6 +478,8 @@ const ProfileResultsPage = () => {
             )}
           </CardContent>
         </Card>
+        </AnimatedItem>
+        </AnimatedSection>
       )}
     </div>
   );

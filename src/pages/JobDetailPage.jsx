@@ -481,7 +481,8 @@ const JobDetailPage = () => {
                 )}
               </CardContent>
             </Card>
-          </div>
+            </AnimatedItem>
+          </AnimatedSection>
         </div>
       </div>
 
@@ -489,12 +490,15 @@ const JobDetailPage = () => {
       {relatedJobs.length > 0 && (
         <div className="bg-white border-t border-slate-200 py-16 mt-12">
            <div className="container mx-auto px-4 max-w-7xl">
-              <h2 className="text-2xl font-bold text-slate-900 mb-8">Offres similaires</h2>
+              <AnimatedSection>
+              <AnimatedItem>
+                <h2 className="text-2xl font-bold text-slate-900 mb-8">Offres similaires</h2>
+              </AnimatedItem>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                  {relatedJobs.map((relatedJob) => (
-                    <JobCard 
-                      key={relatedJob.id} 
-                      job={relatedJob} 
+                    <AnimatedItem key={relatedJob.id}>
+                    <JobCard
+                      job={relatedJob}
                       onClick={() => {
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                         navigate(`/job/${relatedJob.id}`);
@@ -504,13 +508,17 @@ const JobDetailPage = () => {
                         navigate(`/job/${relatedJob.id}`);
                       }}
                     />
+                    </AnimatedItem>
                  ))}
               </div>
+              <AnimatedItem>
               <div className="text-center mt-10">
                  <Button variant="outline" size="lg" onClick={() => navigate('/offres-emploi')}>
                     Voir toutes les offres similaires
                  </Button>
               </div>
+              </AnimatedItem>
+              </AnimatedSection>
            </div>
         </div>
       )}

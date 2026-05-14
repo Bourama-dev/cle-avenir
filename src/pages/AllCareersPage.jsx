@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { Search, Loader2, Briefcase, Filter } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import CareerModal from '@/components/test-results/CareerModal';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import TiltCard from '@/components/ui/TiltCard';
 
 const AllCareersPage = () => {
   const [careers, setCareers] = useState([]);
@@ -66,13 +68,16 @@ const AllCareersPage = () => {
   return (
     <div className="min-h-screen bg-slate-50 py-12">
       <div className="container mx-auto px-4 max-w-6xl">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-slate-900 mb-4">Annuaire des Métiers ROME</h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Explorez plus de 10 000 fiches métiers issues du référentiel officiel.
-          </p>
-        </div>
-
+        <AnimatedSection>
+          <AnimatedItem>
+            <div className="text-center mb-12">
+              <h1 className="text-4xl font-bold text-slate-900 mb-4">Annuaire des Métiers ROME</h1>
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                Explorez plus de 10 000 fiches métiers issues du référentiel officiel.
+              </p>
+            </div>
+          </AnimatedItem>
+          <AnimatedItem>
         <form onSubmit={handleSearch} className="mb-8 flex gap-4 max-w-2xl mx-auto">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-3 h-5 w-5 text-slate-400" />
@@ -85,6 +90,8 @@ const AllCareersPage = () => {
           </div>
           <Button type="submit" size="lg" className="h-12 px-8">Rechercher</Button>
         </form>
+          </AnimatedItem>
+        </AnimatedSection>
 
         {loading && careers.length === 0 ? (
           <div className="flex justify-center items-center py-20">
@@ -92,12 +99,17 @@ const AllCareersPage = () => {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <AnimatedSection className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {careers.map((career) => (
-                <Card 
-                  key={career.code} 
-                  className="cursor-pointer hover:shadow-lg transition-shadow border-slate-200"
+                <AnimatedItem key={career.code}>
+                <TiltCard
+                  intensity={6}
+                  glare={0.1}
                   onClick={() => setSelectedCareer(career)}
+                  className="cursor-pointer rounded-xl"
+                >
+                <Card
+                  className="cursor-pointer hover:shadow-lg transition-shadow border-slate-200"
                 >
                   <CardContent className="p-6">
                     <div className="flex justify-between items-start mb-4">
@@ -126,8 +138,10 @@ const AllCareersPage = () => {
                     </div>
                   </CardContent>
                 </Card>
+                </TiltCard>
+                </AnimatedItem>
               ))}
-            </div>
+            </AnimatedSection>
 
             {hasMore && !loading && (
               <div className="mt-12 text-center">

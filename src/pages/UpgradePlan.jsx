@@ -9,6 +9,9 @@ import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import { stripeService } from '@/services/stripeService';
 import { STRIPE_PRICES, STRIPE_MODES } from '@/constants/subscriptionTiers';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import TiltCard from '@/components/ui/TiltCard';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 // Mock plans data if database is empty initially
 const DEFAULT_PLANS = [
@@ -118,19 +121,24 @@ const UpgradePlan = () => {
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4">
       <div className="max-w-6xl mx-auto space-y-12">
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-slate-900">Choisissez votre plan</h1>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Investissez dans votre avenir professionnel avec nos outils premium.
-          </p>
-        </div>
+        <AnimatedSection>
+          <AnimatedItem>
+            <div className="text-center space-y-4">
+              <h1 className="text-4xl font-bold text-slate-900">Choisissez votre plan</h1>
+              <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+                Investissez dans votre avenir professionnel avec nos outils premium.
+              </p>
+            </div>
+          </AnimatedItem>
+        </AnimatedSection>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <AnimatedSection className="grid md:grid-cols-3 gap-8">
           {plans.map((plan) => (
-            <Card 
-              key={plan.id} 
+            <AnimatedItem key={plan.id}>
+            <TiltCard intensity={5} glare={0.12} className="h-full rounded-xl">
+            <Card
               className={cn(
-                "relative flex flex-col transition-all hover:shadow-xl",
+                "relative flex flex-col transition-all hover:shadow-xl h-full",
                 plan.highlight || plan.name === 'Pro' ? "border-primary shadow-lg scale-105 z-10" : "border-slate-200"
               )}
             >
@@ -162,26 +170,36 @@ const UpgradePlan = () => {
               </CardContent>
 
               <CardFooter>
-                <Button 
-                  className={cn("w-full h-11 text-base", plan.price === 0 ? "bg-slate-100 text-slate-900 hover:bg-slate-200" : "bg-primary hover:bg-primary/90")}
-                  variant={plan.price === 0 ? "outline" : "default"}
-                  onClick={() => handleSubscribe(plan)}
-                  disabled={!!processingId}
-                >
-                  {processingId === plan.id ? <Loader2 className="animate-spin h-5 w-5" /> : (plan.price === 0 ? "Plan actuel" : "Choisir ce plan")}
-                </Button>
+                <MagneticButton className="w-full">
+                  <Button
+                    className={cn("w-full h-11 text-base", plan.price === 0 ? "bg-slate-100 text-slate-900 hover:bg-slate-200" : "bg-primary hover:bg-primary/90")}
+                    variant={plan.price === 0 ? "outline" : "default"}
+                    onClick={() => handleSubscribe(plan)}
+                    disabled={!!processingId}
+                  >
+                    {processingId === plan.id ? <Loader2 className="animate-spin h-5 w-5" /> : (plan.price === 0 ? "Plan actuel" : "Choisir ce plan")}
+                  </Button>
+                </MagneticButton>
               </CardFooter>
             </Card>
+            </TiltCard>
+            </AnimatedItem>
           ))}
-        </div>
+        </AnimatedSection>
 
-        <div className="bg-white rounded-xl p-8 border border-slate-200 text-center">
-            <h3 className="font-semibold text-lg mb-2">Besoin d'aide pour choisir ?</h3>
-            <p className="text-slate-600 mb-4">Contactez notre équipe support pour des conseils personnalisés.</p>
-            <Button variant="outline" asChild>
-              <Link to="/contact">Contacter le support</Link>
-            </Button>
-        </div>
+        <AnimatedSection>
+          <AnimatedItem>
+            <div className="bg-white rounded-xl p-8 border border-slate-200 text-center">
+                <h3 className="font-semibold text-lg mb-2">Besoin d'aide pour choisir ?</h3>
+                <p className="text-slate-600 mb-4">Contactez notre équipe support pour des conseils personnalisés.</p>
+                <MagneticButton>
+                  <Button variant="outline" asChild>
+                    <Link to="/contact">Contacter le support</Link>
+                  </Button>
+                </MagneticButton>
+            </div>
+          </AnimatedItem>
+        </AnimatedSection>
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle2, Circle, Clock } from 'lucide-react';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import TextReveal from '@/components/ui/TextReveal';
 
 const RoadmapPage = () => {
   const roadmap = [
@@ -35,16 +37,24 @@ const RoadmapPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
-      <div className="text-center mb-12">
-        <h1 className="text-3xl font-bold text-slate-900 mb-4">Roadmap Produit</h1>
-        <p className="text-slate-600 max-w-2xl mx-auto">
-          Découvrez les prochaines fonctionnalités que nous construisons pour révolutionner votre orientation.
-        </p>
-      </div>
+      <AnimatedSection>
+        <AnimatedItem>
+          <div className="text-center mb-12">
+            <h1 className="text-3xl font-bold text-slate-900 mb-4">
+              <TextReveal text="Roadmap Produit" as="span" />
+            </h1>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Découvrez les prochaines fonctionnalités que nous construisons pour révolutionner votre orientation.
+            </p>
+          </div>
+        </AnimatedItem>
+      </AnimatedSection>
 
+      <AnimatedSection>
       <div className="relative border-l-2 border-slate-200 ml-4 md:ml-8 space-y-12">
         {roadmap.map((phase, idx) => (
-          <div key={idx} className="relative pl-8 md:pl-12">
+          <AnimatedItem key={idx}>
+          <div className="relative pl-8 md:pl-12">
             {/* Timeline Dot */}
             <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-white ${
               phase.status === 'completed' ? 'border-green-500 bg-green-500' : 
@@ -73,8 +83,10 @@ const RoadmapPage = () => {
               ))}
             </ul>
           </div>
+          </AnimatedItem>
         ))}
       </div>
+      </AnimatedSection>
     </div>
   );
 };

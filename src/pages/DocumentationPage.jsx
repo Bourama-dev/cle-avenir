@@ -593,11 +593,15 @@ const DocumentationPage = () => {
                      </Card>
                    ))}
                 </div>
+                </AnimatedItem>
               </section>
+              </AnimatedSection>
 
               {/* Section 15 & 16 */}
+              <AnimatedSection>
               <div className="grid md:grid-cols-2 gap-8 mb-12">
                 <section id="tables" className="scroll-mt-28">
+                  <AnimatedItem>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-rose-100 rounded-lg text-rose-600" aria-hidden="true">
                       <HardDrive className="h-6 w-6" />
@@ -623,9 +627,11 @@ const DocumentationPage = () => {
                        </div>
                     </CardContent>
                   </Card>
+                  </AnimatedItem>
                 </section>
 
                 <section id="rpc" className="scroll-mt-28">
+                  <AnimatedItem>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-slate-200 rounded-lg text-slate-700" aria-hidden="true">
                       <Settings className="h-6 w-6" />
@@ -651,8 +657,10 @@ const DocumentationPage = () => {
                        </div>
                     </CardContent>
                   </Card>
+                  </AnimatedItem>
                 </section>
               </div>
+              </AnimatedSection>
 
             </main>
           </div>
