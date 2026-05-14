@@ -39,12 +39,17 @@ const EnhancedFormationFilters = ({
     (levelFilter !== 'all' ? 1 : 0) +
     (formationTypeFilter !== 'all' ? 1 : 0);
 
-  const availableLevels = ['BAC+2', 'BAC+3', 'BAC+5', 'AUTRE'];
-  const availableTypes = ['Initial', 'Alternance'];
+  const availableLevels = ['CAP/BEP', 'BAC', 'BAC+2', 'BAC+3', 'BAC+5'];
+  const availableTypes = ['Parcoursup', 'Alternance', 'Initial'];
   const availableSectors = [
-    { value: 'commerce', label: 'Commerce & Vente' },
-    { value: 'informatique', label: 'Informatique & Numérique' },
-    { value: 'sante', label: 'Santé & Social' },
+    { value: 'informatique',  label: 'Informatique & Numérique' },
+    { value: 'sante',         label: 'Santé & Social' },
+    { value: 'commerce',      label: 'Commerce & Gestion' },
+    { value: 'sciences',      label: 'Sciences & Ingénierie' },
+    { value: 'droit',         label: 'Droit & Sciences Politiques' },
+    { value: 'arts',          label: 'Arts & Communication' },
+    { value: 'education',     label: 'Éducation & Formation' },
+    { value: 'tourisme',      label: 'Tourisme & Hôtellerie' },
   ];
   const availableDistances = [
     { value: '10', label: '10 km' },
