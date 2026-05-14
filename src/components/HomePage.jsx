@@ -46,9 +46,8 @@ const HomePage = ({ onNavigate }) => {
     offset: ['start start', 'end start'],
   });
 
-  const heroTextY   = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -55]);
-  const heroImageY  = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -28]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  const heroTextY  = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -55]);
+  const heroImageY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -28]);
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -71,7 +70,7 @@ const HomePage = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
           {/* Left — text + CTA (parallax layer) */}
-          <motion.div style={{ y: heroTextY, opacity: heroOpacity }} className="space-y-8">
+          <motion.div style={{ y: heroTextY }} className="space-y-8">
 
             {/* Badge */}
             <motion.div
