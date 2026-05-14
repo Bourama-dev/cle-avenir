@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Footer from '@/components/Footer';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import MagneticButton from '@/components/ui/MagneticButton';
 import PageHelmet from '@/components/SEO/PageHelmet';
 import { categoryPageSEO } from '@/components/SEO/seoPresets';
 import { Button } from '@/components/ui/button';
@@ -414,13 +416,15 @@ const FormationsPage = ({ setAllFormations }) => {
                 onKeyDown={(e) => e.key === 'Enter' && handleSearchSubmit()}
               />
             </div>
-            <Button
-              size="lg"
-              className="h-12 w-full md:w-auto px-8 bg-violet-600 hover:bg-violet-700 text-white font-bold shadow-md shadow-violet-200 hover:shadow-lg transition-all"
-              onClick={handleSearchSubmit}
-            >
-              Rechercher
-            </Button>
+            <MagneticButton>
+              <Button
+                size="lg"
+                className="h-12 w-full md:w-auto px-8 bg-violet-600 hover:bg-violet-700 text-white font-bold shadow-md shadow-violet-200 hover:shadow-lg transition-all"
+                onClick={handleSearchSubmit}
+              >
+                Rechercher
+              </Button>
+            </MagneticButton>
           </div>
         </div>
       </div>
@@ -461,7 +465,7 @@ const FormationsPage = ({ setAllFormations }) => {
         )}
 
         {/* --- Results List --- */}
-        <div className="grid grid-cols-1 gap-6">
+        <AnimatedSection className="grid grid-cols-1 gap-6">
           {initialLoading ? (
             Array(3).fill(0).map((_, i) => (
               <Card key={i} className="animate-pulse">
@@ -488,8 +492,8 @@ const FormationsPage = ({ setAllFormations }) => {
               const isSelected = selectedFormation && (formation.id_formation === selectedFormation.id_formation);
 
               return (
+                <AnimatedItem key={`${formation.id_formation}-${idx}`}>
                 <Card
-                  key={`${formation.id_formation}-${idx}`}
                   className={`group overflow-hidden hover:shadow-lg transition-all border-slate-200 dark:border-slate-700 hover:border-violet-200 dark:bg-slate-900 ${isSelected ? 'ring-2 ring-violet-500 border-violet-500' : ''}`}
                 >
                   <div className="flex flex-col md:flex-row">
@@ -623,10 +627,11 @@ const FormationsPage = ({ setAllFormations }) => {
                     </div>
                   </div>
                 </Card>
+                </AnimatedItem>
               );
             })
           )}
-        </div>
+        </AnimatedSection>
 
         <div className="mt-12 flex justify-center items-center gap-6">
           <Button

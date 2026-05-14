@@ -9,6 +9,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { Loader2, ArrowLeft, Mail } from 'lucide-react';
 import PageHelmet from '@/components/SEO/PageHelmet';
 import { categoryPageSEO } from '@/components/SEO/seoPresets';
+import MagneticButton from '@/components/ui/MagneticButton';
+import { motion } from 'framer-motion';
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
@@ -54,8 +56,14 @@ const ForgotPasswordPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
       <PageHelmet {...forgotPasswordSEO} />
-      
-      <Card className="w-full max-w-md shadow-lg">
+
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md"
+      >
+      <Card className="w-full shadow-lg">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Mot de passe oublié</CardTitle>
           <CardDescription className="text-center">
@@ -89,10 +97,12 @@ const ForgotPasswordPage = () => {
                   disabled={loading}
                 />
               </div>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={loading}>
-                {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                Envoyer le lien de réinitialisation
-              </Button>
+              <MagneticButton className="w-full">
+                <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={loading}>
+                  {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                  Envoyer le lien de réinitialisation
+                </Button>
+              </MagneticButton>
             </form>
           )}
         </CardContent>
@@ -103,6 +113,7 @@ const ForgotPasswordPage = () => {
           </Link>
         </CardFooter>
       </Card>
+      </motion.div>
     </div>
   );
 };

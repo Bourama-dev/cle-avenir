@@ -4,6 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import MagneticButton from '@/components/ui/MagneticButton';
+import { motion } from 'framer-motion';
 import {
   Loader2, MapPin, Mail, GraduationCap, Edit, RefreshCw,
   Trophy, Briefcase, User, AlertCircle, Clock, TrendingUp,
@@ -151,7 +154,13 @@ const ProfileResultsPage = () => {
     <div className="container mx-auto py-8 px-4 max-w-6xl space-y-6">
 
       {/* Page header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col md:flex-row md:items-center justify-between gap-4"
+      >
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
             <User className="w-6 h-6 text-indigo-500" />
@@ -163,17 +172,20 @@ const ProfileResultsPage = () => {
           <Button variant="outline" size="sm" onClick={() => navigate('/test-orientation')}>
             <RefreshCw className="mr-2 h-4 w-4" /> Repasser le test
           </Button>
-          <Button size="sm" onClick={() => navigate('/profile/edit')} className="bg-indigo-600 hover:bg-indigo-700">
-            <Edit className="mr-2 h-4 w-4" /> Modifier mon profil
-          </Button>
+          <MagneticButton>
+            <Button size="sm" onClick={() => navigate('/profile/edit')} className="bg-indigo-600 hover:bg-indigo-700">
+              <Edit className="mr-2 h-4 w-4" /> Modifier mon profil
+            </Button>
+          </MagneticButton>
         </div>
-      </div>
+      </motion.div>
 
       {/* Top row: Profile card + RIASEC */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+      <AnimatedSection className="grid grid-cols-1 lg:grid-cols-5 gap-6">
 
         {/* Profile card */}
-        <Card className="lg:col-span-2 border-slate-200 shadow-sm">
+        <AnimatedItem className="lg:col-span-2">
+        <Card className="border-slate-200 shadow-sm h-full">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-800">
               <User className="h-4 w-4 text-indigo-500" /> Profil Candidat
@@ -258,9 +270,11 @@ const ProfileResultsPage = () => {
             </div>
           </CardContent>
         </Card>
+        </AnimatedItem>
 
         {/* RIASEC Analysis */}
-        <Card className="lg:col-span-3 border-slate-200 shadow-sm">
+        <AnimatedItem className="lg:col-span-3">
+        <Card className="border-slate-200 shadow-sm h-full">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-800">
               <BarChart2 className="h-4 w-4 text-indigo-500" /> Analyse RIASEC
@@ -308,9 +322,12 @@ const ProfileResultsPage = () => {
             )}
           </CardContent>
         </Card>
-      </div>
+        </AnimatedItem>
+      </AnimatedSection>
 
       {/* Test history */}
+      <AnimatedSection>
+      <AnimatedItem>
       <Card className="border-slate-200 shadow-sm">
         <CardHeader className="pb-3 flex flex-row items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-800">
@@ -395,9 +412,13 @@ const ProfileResultsPage = () => {
           )}
         </CardContent>
       </Card>
+      </AnimatedItem>
+      </AnimatedSection>
 
       {/* Career recommendations */}
       {testResult && (
+        <AnimatedSection>
+        <AnimatedItem>
         <Card className="border-slate-200 shadow-sm">
           <CardHeader className="pb-3 flex flex-row items-center justify-between">
             <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-800">
@@ -409,12 +430,12 @@ const ProfileResultsPage = () => {
           </CardHeader>
           <CardContent>
             {careers.length > 0 ? (
-              <div className="space-y-2.5">
+              <AnimatedSection className="space-y-2.5">
                 {careers.slice(0, 5).map((career, idx) => {
                   const score = career.match_score ?? career.matchScore ?? career.score ?? null;
                   return (
+                    <AnimatedItem key={idx}>
                     <div
-                      key={idx}
                       className="flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors cursor-pointer group"
                       onClick={() => navigate('/metiers')}
                     >
@@ -442,9 +463,10 @@ const ProfileResultsPage = () => {
                         <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-slate-500 transition-colors" />
                       </div>
                     </div>
+                    </AnimatedItem>
                   );
                 })}
-              </div>
+              </AnimatedSection>
             ) : (
               <div className="text-center py-8">
                 <TrendingUp className="w-10 h-10 text-slate-200 mx-auto mb-2" />
@@ -456,6 +478,8 @@ const ProfileResultsPage = () => {
             )}
           </CardContent>
         </Card>
+        </AnimatedItem>
+        </AnimatedSection>
       )}
     </div>
   );

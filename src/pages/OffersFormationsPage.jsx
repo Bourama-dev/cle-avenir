@@ -19,6 +19,7 @@ import { useNavigation } from '@/hooks/useNavigation';
 import { normalizedIncludes } from '@/utils/stringUtils';
 import { metierToSlug } from '@/utils/slugUtils';
 import { getMetierSalary } from '@/utils/salaryUtils';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 const formatDate = (str) => {
@@ -339,39 +340,45 @@ const OffersFormationsPage = () => {
   return (
     <div className="container mx-auto py-8 px-4 max-w-5xl space-y-6">
       {/* Header */}
-      <div className="flex flex-col gap-4 mb-2">
-        <div className="flex items-center justify-between">
-          <Breadcrumbs />
-          <div className="flex gap-2">
-            <Button variant="ghost" size="sm" onClick={goHome} className="text-slate-600 hover:text-indigo-600">
-              <Home className="w-4 h-4 mr-2" /> Accueil
-            </Button>
-            <Button variant="ghost" size="sm" onClick={goBack} className="text-slate-600 hover:text-violet-600">
-              <ArrowLeft className="w-4 h-4 mr-2" /> Retour
-            </Button>
+      <AnimatedSection>
+        <AnimatedItem>
+        <div className="flex flex-col gap-4 mb-2">
+          <div className="flex items-center justify-between">
+            <Breadcrumbs />
+            <div className="flex gap-2">
+              <Button variant="ghost" size="sm" onClick={goHome} className="text-slate-600 hover:text-indigo-600">
+                <Home className="w-4 h-4 mr-2" /> Accueil
+              </Button>
+              <Button variant="ghost" size="sm" onClick={goBack} className="text-slate-600 hover:text-violet-600">
+                <ArrowLeft className="w-4 h-4 mr-2" /> Retour
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+        </AnimatedItem>
 
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900">Offres & Formations</h1>
-          <p className="text-slate-500 mt-1">
-            {userRomeCodes.length > 0
-              ? <>Résultats personnalisés selon vos recommandations <Badge variant="secondary" className="ml-1"><Sparkles className="w-3 h-3 mr-1 inline" />Personnalisé</Badge></>
-              : 'Passez le test d\'orientation pour obtenir des offres personnalisées.'}
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="relative w-full md:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-            <Input placeholder="Rechercher…" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-9" />
+        <AnimatedItem>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900">Offres & Formations</h1>
+            <p className="text-slate-500 mt-1">
+              {userRomeCodes.length > 0
+                ? <>Résultats personnalisés selon vos recommandations <Badge variant="secondary" className="ml-1"><Sparkles className="w-3 h-3 mr-1 inline" />Personnalisé</Badge></>
+                : 'Passez le test d\'orientation pour obtenir des offres personnalisées.'}
+            </p>
           </div>
-          <Button variant="outline" size="icon" onClick={loadData} title="Actualiser">
-            <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-          </Button>
+          <div className="flex items-center gap-2">
+            <div className="relative w-full md:w-64">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <Input placeholder="Rechercher…" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-9" />
+            </div>
+            <Button variant="outline" size="icon" onClick={loadData} title="Actualiser">
+              <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+            </Button>
+          </div>
         </div>
-      </div>
+        </AnimatedItem>
+      </AnimatedSection>
 
       {error && (
         <div className="flex items-center gap-3 bg-red-50 border border-red-200 rounded-xl p-4 text-red-700">
@@ -421,11 +428,13 @@ const OffersFormationsPage = () => {
               )}
             </div>
           ) : (
-            <div className="grid gap-4">
+            <AnimatedSection className="grid gap-4">
               {filteredJobs.map((job, idx) => (
-                <JobCard key={job.id || idx} job={job} onSave={toggleSaveJob} isSaved={savedJobIds.has(job.id)} />
+                <AnimatedItem key={job.id || idx}>
+                  <JobCard job={job} onSave={toggleSaveJob} isSaved={savedJobIds.has(job.id)} />
+                </AnimatedItem>
               ))}
-            </div>
+            </AnimatedSection>
           )}
         </TabsContent>
 
@@ -444,11 +453,13 @@ const OffersFormationsPage = () => {
               )}
             </div>
           ) : (
-            <div className="grid gap-4">
+            <AnimatedSection className="grid gap-4">
               {filteredFormations.map((f, idx) => (
-                <FormationCard key={f.id_formation || f.id || idx} formation={f} onSave={toggleSaveFormation} isSaved={savedFormationIds.has(f.id_formation || f.id)} />
+                <AnimatedItem key={f.id_formation || f.id || idx}>
+                  <FormationCard formation={f} onSave={toggleSaveFormation} isSaved={savedFormationIds.has(f.id_formation || f.id)} />
+                </AnimatedItem>
               ))}
-            </div>
+            </AnimatedSection>
           )}
         </TabsContent>
       </Tabs>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Brain, Zap, Target, Heart } from 'lucide-react';
+import TiltCard from '@/components/ui/TiltCard';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 
 const features = [
   {
@@ -58,36 +60,34 @@ const WhyChooseSection = () => {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 px-4">
+        <AnimatedSection className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 px-4">
           {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 group relative overflow-hidden h-full flex flex-col"
-            >
-              {/* Hover Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white to-slate-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0" />
-              
-              <div className="relative z-10 flex flex-col h-full">
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
-                  <feature.icon className="w-7 h-7 text-white" />
+            <AnimatedItem key={index}>
+              <TiltCard
+                intensity={7}
+                glare={0.1}
+                className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-slate-100 group relative overflow-hidden h-full flex flex-col"
+              >
+                {/* Hover Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white to-slate-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0" />
+
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                    <feature.icon className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">
+                    {feature.title}
+                  </h3>
+                  <p className="text-slate-600 leading-relaxed text-base">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-slate-900 group-hover:to-slate-700 transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-slate-600 leading-relaxed text-base">
-                  {feature.description}
-                </p>
-              </div>
-            </motion.div>
+              </TiltCard>
+            </AnimatedItem>
           ))}
-        </div>
+        </AnimatedSection>
       </div>
-      
+
       {/* Background blobs - optimized with simple CSS */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-rose-200/20 rounded-full blur-3xl -translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-violet-200/20 rounded-full blur-3xl translate-x-1/3 pointer-events-none" />

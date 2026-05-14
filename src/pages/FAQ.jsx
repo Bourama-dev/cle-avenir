@@ -8,6 +8,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { normalizedIncludes } from '@/utils/stringUtils';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import TextReveal from '@/components/ui/TextReveal';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 export default function FAQ() {
   const { toast } = useToast();
@@ -155,7 +158,7 @@ export default function FAQ() {
 
   // Flatten FAQs for search
   const allFaqs = Object.values(faqCategories).flatMap(cat => cat.items);
-  
+
   const filteredFaqs = searchTerm
     ? allFaqs.filter(item =>
         normalizedIncludes(item.question, searchTerm) ||
@@ -166,44 +169,57 @@ export default function FAQ() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
       <PageHelmet {...faqSEO} />
-      
+
       {/* Hero Section */}
       <div className="bg-slate-900 text-white py-16 md:py-24 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Comment pouvons-nous vous aider ?</h1>
-          <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-10">
-            Parcourez nos questions fréquentes ou contactez notre équipe support.
-          </p>
-          
-          <div className="max-w-xl mx-auto relative">
-            <Search className="absolute left-4 top-3.5 text-slate-400 w-5 h-5" />
-            <Input 
-              type="text" 
-              placeholder="Rechercher une question..." 
-              className="pl-12 h-12 rounded-full bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:bg-white/20 transition-all"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
+          <TextReveal
+            text="Comment pouvons-nous vous aider ?"
+            as="h1"
+            className="text-4xl md:text-5xl font-bold mb-6"
+          />
+          <AnimatedSection delay={0.3}>
+            <AnimatedItem>
+              <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-10">
+                Parcourez nos questions fréquentes ou contactez notre équipe support.
+              </p>
+            </AnimatedItem>
+            <AnimatedItem>
+              <div className="max-w-xl mx-auto relative">
+                <Search className="absolute left-4 top-3.5 text-slate-400 w-5 h-5" />
+                <Input
+                  type="text"
+                  placeholder="Rechercher une question..."
+                  className="pl-12 h-12 rounded-full bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:bg-white/20 transition-all"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+            </AnimatedItem>
+          </AnimatedSection>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-12 max-w-5xl">
-        
+
         {/* Search Results Mode */}
         {searchTerm ? (
           <div className="mb-16">
             <h2 className="text-2xl font-bold text-slate-900 mb-6">Résultats de recherche ({filteredFaqs.length})</h2>
             {filteredFaqs.length > 0 ? (
-              <div className="grid gap-4">
-                {filteredFaqs.map((faq, idx) => (
-                  <div key={idx} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">{faq.question}</h3>
-                    <p className="text-slate-600 leading-relaxed">{faq.answer}</p>
-                  </div>
-                ))}
-              </div>
+              <AnimatedSection>
+                <div className="grid gap-4">
+                  {filteredFaqs.map((faq, idx) => (
+                    <AnimatedItem key={idx}>
+                      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                        <h3 className="text-lg font-bold text-slate-900 mb-2">{faq.question}</h3>
+                        <p className="text-slate-600 leading-relaxed">{faq.answer}</p>
+                      </div>
+                    </AnimatedItem>
+                  ))}
+                </div>
+              </AnimatedSection>
             ) : (
               <div className="text-center py-12 bg-white rounded-xl border border-dashed border-slate-300">
                 <p className="text-slate-500">Aucun résultat trouvé pour "{searchTerm}".</p>
@@ -217,8 +233,8 @@ export default function FAQ() {
             <Tabs defaultValue="general" className="w-full">
               <TabsList className="flex flex-wrap h-auto w-full justify-start gap-2 bg-transparent p-0 mb-8">
                 {Object.entries(faqCategories).map(([key, category]) => (
-                  <TabsTrigger 
-                    key={key} 
+                  <TabsTrigger
+                    key={key}
                     value={key}
                     className="data-[state=active]:bg-primary data-[state=active]:text-white bg-white border border-slate-200 px-6 py-3 rounded-full shadow-sm hover:bg-slate-50 transition-all"
                   >
@@ -230,30 +246,34 @@ export default function FAQ() {
 
               {Object.entries(faqCategories).map(([key, category]) => (
                 <TabsContent key={key} value={key} className="space-y-4 animate-in fade-in-50 duration-300">
-                   {category.items.map((faq, idx) => (
-                    <div key={idx} className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-all">
-                      <button
-                        onClick={() => setOpenFAQ(openFAQ === `${key}-${idx}` ? null : `${key}-${idx}`)}
-                        className="w-full flex items-center justify-between p-6 text-left"
-                      >
-                        <span className="text-lg font-semibold text-slate-900 pr-8">{faq.question}</span>
-                        <ChevronDown
-                          className={`w-5 h-5 text-primary transition-transform duration-200 flex-shrink-0 ${
-                            openFAQ === `${key}-${idx}` ? 'rotate-180' : ''
-                          }`}
-                        />
-                      </button>
+                  <AnimatedSection>
+                    {category.items.map((faq, idx) => (
+                      <AnimatedItem key={idx}>
+                        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-all">
+                          <button
+                            onClick={() => setOpenFAQ(openFAQ === `${key}-${idx}` ? null : `${key}-${idx}`)}
+                            className="w-full flex items-center justify-between p-6 text-left"
+                          >
+                            <span className="text-lg font-semibold text-slate-900 pr-8">{faq.question}</span>
+                            <ChevronDown
+                              className={`w-5 h-5 text-primary transition-transform duration-200 flex-shrink-0 ${
+                                openFAQ === `${key}-${idx}` ? 'rotate-180' : ''
+                              }`}
+                            />
+                          </button>
 
-                      {openFAQ === `${key}-${idx}` && (
-                        <div className="px-6 pb-6 pt-0">
-                          <div className="h-px w-full bg-slate-100 mb-4"></div>
-                          <p className="text-slate-600 leading-relaxed">
-                            {faq.answer}
-                          </p>
+                          {openFAQ === `${key}-${idx}` && (
+                            <div className="px-6 pb-6 pt-0">
+                              <div className="h-px w-full bg-slate-100 mb-4"></div>
+                              <p className="text-slate-600 leading-relaxed">
+                                {faq.answer}
+                              </p>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  ))}
+                      </AnimatedItem>
+                    ))}
+                  </AnimatedSection>
                 </TabsContent>
               ))}
             </Tabs>
@@ -264,102 +284,108 @@ export default function FAQ() {
         <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
           <div className="p-8 md:p-12">
             <div className="flex flex-col md:flex-row gap-12">
-              <div className="md:w-1/3">
-                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
-                  <HelpCircle className="w-8 h-8" />
-                </div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4">Vous ne trouvez pas votre réponse ?</h2>
-                <p className="text-slate-600 mb-6 leading-relaxed">
-                  Notre équipe est là pour vous aider. Envoyez-nous votre question et nous vous répondrons sous 24h ouvrées.
-                </p>
-                <div className="space-y-4 text-sm text-slate-500">
-                  <p>📧 contact@cleavenir.com</p>
-                  <p>📍 Paris, France</p>
-                </div>
-              </div>
-
-              <div className="md:w-2/3">
-                {submitStatus === 'success' && (
-                  <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg animate-in fade-in slide-in-from-top-2">
-                    <p className="text-green-700 font-semibold flex items-center gap-2">
-                      ✅ Message envoyé avec succès ! Nous vous répondrons très vite.
-                    </p>
+              <AnimatedSection className="md:w-1/3">
+                <AnimatedItem>
+                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
+                    <HelpCircle className="w-8 h-8" />
                   </div>
-                )}
-
-                {submitStatus === 'error' && (
-                  <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg animate-in fade-in slide-in-from-top-2">
-                    <p className="text-red-700 font-semibold">
-                      ❌ Erreur lors de l'envoi. Veuillez réessayer.
-                    </p>
+                  <h2 className="text-2xl font-bold text-slate-900 mb-4">Vous ne trouvez pas votre réponse ?</h2>
+                  <p className="text-slate-600 mb-6 leading-relaxed">
+                    Notre équipe est là pour vous aider. Envoyez-nous votre question et nous vous répondrons sous 24h ouvrées.
+                  </p>
+                  <div className="space-y-4 text-sm text-slate-500">
+                    <p>📧 contact@cleavenir.com</p>
+                    <p>📍 Paris, France</p>
                   </div>
-                )}
+                </AnimatedItem>
+              </AnimatedSection>
 
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <AnimatedSection className="md:w-2/3">
+                <AnimatedItem>
+                  {submitStatus === 'success' && (
+                    <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg animate-in fade-in slide-in-from-top-2">
+                      <p className="text-green-700 font-semibold flex items-center gap-2">
+                        ✅ Message envoyé avec succès ! Nous vous répondrons très vite.
+                      </p>
+                    </div>
+                  )}
+
+                  {submitStatus === 'error' && (
+                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg animate-in fade-in slide-in-from-top-2">
+                      <p className="text-red-700 font-semibold">
+                        ❌ Erreur lors de l'envoi. Veuillez réessayer.
+                      </p>
+                    </div>
+                  )}
+
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Nom complet</label>
+                        <Input
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          required
+                          placeholder="Votre nom"
+                          className="bg-slate-50 border-slate-200 focus:bg-white"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Email</label>
+                        <Input
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          required
+                          placeholder="votre@email.com"
+                          className="bg-slate-50 border-slate-200 focus:bg-white"
+                        />
+                      </div>
+                    </div>
+
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">Nom complet</label>
+                      <label className="text-sm font-medium text-slate-700">Sujet</label>
                       <Input
-                        name="name"
-                        value={formData.name}
+                        name="subject"
+                        value={formData.subject}
                         onChange={handleChange}
                         required
-                        placeholder="Votre nom"
+                        placeholder="De quoi s'agit-il ?"
                         className="bg-slate-50 border-slate-200 focus:bg-white"
                       />
                     </div>
+
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">Email</label>
-                      <Input
-                        type="email"
-                        name="email"
-                        value={formData.email}
+                      <label className="text-sm font-medium text-slate-700">Message</label>
+                      <textarea
+                        name="message"
+                        value={formData.message}
                         onChange={handleChange}
                         required
-                        placeholder="votre@email.com"
-                        className="bg-slate-50 border-slate-200 focus:bg-white"
+                        rows="5"
+                        className="w-full rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 focus:bg-white transition-all resize-none"
+                        placeholder="Décrivez votre question en détail..."
                       />
                     </div>
-                  </div>
 
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-700">Sujet</label>
-                    <Input
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      placeholder="De quoi s'agit-il ?"
-                      className="bg-slate-50 border-slate-200 focus:bg-white"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-700">Message</label>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows="5"
-                      className="w-full rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 focus:bg-white transition-all resize-none"
-                      placeholder="Décrivez votre question en détail..."
-                    />
-                  </div>
-
-                  <Button 
-                    type="submit" 
-                    disabled={isSubmitting}
-                    className="w-full md:w-auto bg-primary hover:bg-primary/90 text-white min-w-[200px]"
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center gap-2">Envoi en cours...</span>
-                    ) : (
-                      <span className="flex items-center gap-2"><Send className="w-4 h-4" /> Envoyer le message</span>
-                    )}
-                  </Button>
-                </form>
-              </div>
+                    <MagneticButton>
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full md:w-auto bg-primary hover:bg-primary/90 text-white min-w-[200px]"
+                      >
+                        {isSubmitting ? (
+                          <span className="flex items-center gap-2">Envoi en cours...</span>
+                        ) : (
+                          <span className="flex items-center gap-2"><Send className="w-4 h-4" /> Envoyer le message</span>
+                        )}
+                      </Button>
+                    </MagneticButton>
+                  </form>
+                </AnimatedItem>
+              </AnimatedSection>
             </div>
           </div>
         </div>

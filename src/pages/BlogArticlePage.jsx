@@ -240,6 +240,12 @@ const BlogArticlePage = () => {
           
           {/* Main Article Content */}
           <div className="flex-1 min-w-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
             <div className="bg-white rounded-xl">
                <div
                  className="
@@ -292,6 +298,7 @@ const BlogArticlePage = () => {
                  dangerouslySetInnerHTML={{ __html: annotatedContent }}
                />
             </div>
+            </motion.div>
 
             {/* Tags */}
             {post.tags && post.tags.length > 0 && (

@@ -14,6 +14,7 @@ import { BarChart3, Search, LayoutDashboard } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { MATCHING_CONFIG } from '@/config/matchingAlgorithmConfig';
 import { motion } from 'framer-motion';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 import MetierCard from '@/components/test-results/MetierCard';
 import UpgradePromptSection from '@/components/test-results/UpgradePromptSection';
@@ -258,7 +259,12 @@ const TestResultsPage = () => {
       {/* Hero Section */}
       <div className="bg-slate-900 text-white pt-16 pb-32 px-4 relative overflow-hidden">
          <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-         <div className="max-w-4xl mx-auto text-center relative z-10 animate-fade-in">
+         <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl mx-auto text-center relative z-10"
+          >
             <h1 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
               Vos Résultats d'Orientation
             </h1>
@@ -275,7 +281,7 @@ const TestResultsPage = () => {
                 Profil dominant : {DIMENSION_LABELS[topType]?.name}
               </span>
             </div>
-         </div>
+         </motion.div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 -mt-20 relative z-20 space-y-12">
@@ -407,14 +413,16 @@ const TestResultsPage = () => {
             <p className="text-white/90 mb-8 text-lg max-w-2xl mx-auto">
               Accédez à votre espace personnel pour explorer vos résultats en détail et créer votre plan d'action.
             </p>
-            <Button
-              size="lg"
-              onClick={() => navigate('/dashboard')}
-              className="bg-white text-indigo-600 hover:bg-slate-50 font-semibold transition-all focus-visible:ring-2 focus-visible:ring-white text-base px-8 h-14"
-            >
-              <LayoutDashboard className="w-5 h-5 mr-2" />
-              Aller au Dashboard
-            </Button>
+            <MagneticButton>
+              <Button
+                size="lg"
+                onClick={() => navigate('/dashboard')}
+                className="bg-white text-indigo-600 hover:bg-slate-50 font-semibold transition-all focus-visible:ring-2 focus-visible:ring-white text-base px-8 h-14"
+              >
+                <LayoutDashboard className="w-5 h-5 mr-2" />
+                Aller au Dashboard
+              </Button>
+            </MagneticButton>
           </div>
 
           {/* Explore Professions */}
@@ -428,15 +436,17 @@ const TestResultsPage = () => {
             <p className="text-slate-600 mb-8 text-lg max-w-2xl mx-auto">
               Explorez notre base de données complète pour découvrir tous les métiers disponibles.
             </p>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => navigate('/metiers')}
-              className="text-slate-700 border-slate-300 hover:bg-slate-50 hover:text-blue-600 hover:border-blue-300 transition-all focus-visible:ring-2 focus-visible:ring-blue-500 text-base px-8 h-14"
-            >
-              <Search className="w-5 h-5 mr-2" />
-              Voir tous les métiers
-            </Button>
+            <MagneticButton>
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => navigate('/metiers')}
+                className="text-slate-700 border-slate-300 hover:bg-slate-50 hover:text-blue-600 hover:border-blue-300 transition-all focus-visible:ring-2 focus-visible:ring-blue-500 text-base px-8 h-14"
+              >
+                <Search className="w-5 h-5 mr-2" />
+                Voir tous les métiers
+              </Button>
+            </MagneticButton>
           </div>
         </section>
 

@@ -13,6 +13,10 @@ import {
   ArrowLeft, CreditCard, Loader2, Check, AlertCircle, RefreshCw,
   Crown, Zap, Star, ExternalLink,
 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import TiltCard from '@/components/ui/TiltCard';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 /* ─────────────────────────────────────────
    Plan cards shown when user is on free plan
@@ -72,13 +76,15 @@ const FreePlanView = ({ onUpgrade, upgradeLoading }) => (
       </CardContent>
     </Card>
 
-    <div className="grid md:grid-cols-2 gap-4">
+    <AnimatedSection className="grid md:grid-cols-2 gap-4">
       {PLANS.map((plan) => {
         const Icon = plan.icon;
         return (
-          <div
-            key={plan.key}
-            className={`relative p-6 bg-white rounded-2xl border-2 ${plan.color} shadow-sm hover:shadow-md transition-shadow`}
+          <AnimatedItem key={plan.key}>
+          <TiltCard
+            intensity={6}
+            glare={0.1}
+            className={`relative p-6 bg-white rounded-2xl border-2 ${plan.color} shadow-sm h-full`}
           >
             {plan.badge && (
               <div className={`absolute -top-3 left-1/2 -translate-x-1/2 ${plan.badgeClass} text-white text-xs font-bold px-3 py-1 rounded-full`}>
@@ -104,22 +110,25 @@ const FreePlanView = ({ onUpgrade, upgradeLoading }) => (
                 </li>
               ))}
             </ul>
-            <Button
-              className="w-full bg-slate-900 hover:bg-slate-800 text-white"
-              onClick={() => onUpgrade(plan.priceId)}
-              disabled={!!upgradeLoading}
-            >
-              {upgradeLoading === plan.priceId ? (
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              ) : (
-                <Zap className="h-4 w-4 mr-2" />
-              )}
-              Passer à {plan.name}
-            </Button>
-          </div>
+            <MagneticButton strength={0.15}>
+              <Button
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white"
+                onClick={() => onUpgrade(plan.priceId)}
+                disabled={!!upgradeLoading}
+              >
+                {upgradeLoading === plan.priceId ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <Zap className="h-4 w-4 mr-2" />
+                )}
+                Passer à {plan.name}
+              </Button>
+            </MagneticButton>
+          </TiltCard>
+          </AnimatedItem>
         );
       })}
-    </div>
+    </AnimatedSection>
   </div>
 );
 

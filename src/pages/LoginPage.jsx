@@ -7,6 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { AuthService } from '@/services/authService';
 import { Loader2 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import MagneticButton from '@/components/ui/MagneticButton';
+import { motion } from 'framer-motion';
 
 const GoogleIcon = () => (
   <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" aria-hidden="true">
@@ -76,7 +78,13 @@ const LoginPage = () => {
         </h1>
       </div>
 
-      <Card className="w-full max-w-md shadow-xl border-slate-200">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md"
+      >
+      <Card className="w-full shadow-xl border-slate-200">
         <CardHeader className="space-y-2 text-center pb-6">
           <CardTitle className="text-2xl font-bold text-slate-900">Connexion</CardTitle>
           <CardDescription className="text-slate-500">
@@ -86,19 +94,21 @@ const LoginPage = () => {
 
         <CardContent className="space-y-4">
           {/* Google OAuth */}
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full border-slate-300 hover:bg-slate-50 text-slate-700 font-medium py-5"
-            onClick={handleGoogleLogin}
-            disabled={isGoogleLoading || isLoading}
-          >
-            {isGoogleLoading
-              ? <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-              : <GoogleIcon />
-            }
-            Continuer avec Google
-          </Button>
+          <MagneticButton className="w-full">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full border-slate-300 hover:bg-slate-50 text-slate-700 font-medium py-5"
+              onClick={handleGoogleLogin}
+              disabled={isGoogleLoading || isLoading}
+            >
+              {isGoogleLoading
+                ? <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                : <GoogleIcon />
+              }
+              Continuer avec Google
+            </Button>
+          </MagneticButton>
 
           {/* Separator */}
           <div className="relative">
@@ -144,14 +154,16 @@ const LoginPage = () => {
                 disabled={isLoading || isGoogleLoading}
               />
             </div>
-            <Button
-              type="submit"
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white mt-2 py-5 text-base"
-              disabled={isLoading || isGoogleLoading}
-            >
-              {isLoading && <Loader2 className="w-5 h-5 mr-2 animate-spin" />}
-              Se connecter
-            </Button>
+            <MagneticButton className="w-full">
+              <Button
+                type="submit"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white mt-2 py-5 text-base"
+                disabled={isLoading || isGoogleLoading}
+              >
+                {isLoading && <Loader2 className="w-5 h-5 mr-2 animate-spin" />}
+                Se connecter
+              </Button>
+            </MagneticButton>
           </form>
         </CardContent>
 
@@ -164,6 +176,7 @@ const LoginPage = () => {
           </p>
         </CardFooter>
       </Card>
+      </motion.div>
     </div>
   );
 };

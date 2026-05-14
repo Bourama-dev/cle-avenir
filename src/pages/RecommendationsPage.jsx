@@ -12,6 +12,8 @@ import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { metierRecommendationService } from '@/services/metierRecommendationService';
 import { Skeleton } from '@/components/ui/skeleton';
 import { StatsGrid } from '@/components/cleo/charts/CleoChartLibrary';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import TiltCard from '@/components/ui/TiltCard';
 
 const RecommendationsPage = () => {
   const { user } = useAuth();
@@ -57,29 +59,37 @@ const RecommendationsPage = () => {
   return (
     <div className="container mx-auto py-8 px-4 max-w-7xl space-y-6">
       {/* Navigation Header */}
-      <div className="flex flex-col gap-4 mb-2">
-         <div className="flex items-center justify-between">
-            <Breadcrumbs />
-            <div className="flex gap-2">
-               <Button variant="ghost" size="sm" onClick={goHome} className="text-slate-600 hover:text-indigo-600">
-                  <Home className="w-4 h-4 mr-2" /> Accueil
-               </Button>
-               <Button variant="ghost" size="sm" onClick={goBack} className="text-slate-600 hover:text-violet-600">
-                  <ArrowLeft className="w-4 h-4 mr-2" /> Retour
-               </Button>
-            </div>
-         </div>
-      </div>
-
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-           <h1 className="text-3xl font-bold text-slate-900">Recommandations Métiers</h1>
-           <p className="text-slate-500 mt-1">Métiers sélectionnés selon votre profil et vos résultats.</p>
+      <AnimatedSection>
+        <AnimatedItem>
+        <div className="flex flex-col gap-4 mb-2">
+           <div className="flex items-center justify-between">
+              <Breadcrumbs />
+              <div className="flex gap-2">
+                 <Button variant="ghost" size="sm" onClick={goHome} className="text-slate-600 hover:text-indigo-600">
+                    <Home className="w-4 h-4 mr-2" /> Accueil
+                 </Button>
+                 <Button variant="ghost" size="sm" onClick={goBack} className="text-slate-600 hover:text-violet-600">
+                    <ArrowLeft className="w-4 h-4 mr-2" /> Retour
+                 </Button>
+              </div>
+           </div>
         </div>
-      </div>
+        </AnimatedItem>
+
+        <AnimatedItem>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+             <h1 className="text-3xl font-bold text-slate-900">Recommandations Métiers</h1>
+             <p className="text-slate-500 mt-1">Métiers sélectionnés selon votre profil et vos résultats.</p>
+          </div>
+        </div>
+        </AnimatedItem>
+      </AnimatedSection>
 
       {!loading && !error && careers.length > 0 && (
-        <StatsGrid
+        <AnimatedSection>
+          <AnimatedItem>
+          <StatsGrid
           stats={[
             {
               label: 'Recommandations',
@@ -107,6 +117,8 @@ const RecommendationsPage = () => {
             }
           ]}
         />
+          </AnimatedItem>
+        </AnimatedSection>
       )}
 
       {loading ? (
@@ -150,51 +162,55 @@ const RecommendationsPage = () => {
           </Button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <AnimatedSection className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {careers.map((career, index) => (
-            <Card key={career.code || index} className="flex flex-col hover:shadow-lg transition-all duration-300 border-slate-200">
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                   <Badge className={index < 3 ? "bg-purple-100 text-purple-700 hover:bg-purple-100" : "bg-slate-100 text-slate-700 hover:bg-slate-100"}>
-                      {career.matchScore || career.match_score || 85}% Match
-                   </Badge>
-                   <Button variant="ghost" size="icon" onClick={() => toggleFavorite(career)}>
-                      <Heart className="h-5 w-5 text-slate-400 hover:text-red-500 hover:fill-red-500" />
-                   </Button>
-                </div>
-                <CardTitle className="mt-2 text-xl line-clamp-2">{career.libelle || "Métier Inconnu"}</CardTitle>
-                <CardDescription className="flex items-center gap-2 font-mono text-xs mt-1">
-                   ROME {career.code}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex-grow space-y-4">
-                 <div className="grid grid-cols-2 gap-4 text-sm bg-slate-50 p-3 rounded-lg">
-                    <div className="space-y-1">
-                       <span className="text-slate-400 flex items-center gap-1 text-xs"><DollarSign className="w-3 h-3" /> Salaire</span>
-                       <span className="font-medium text-slate-700 line-clamp-1">{getMetierSalary(career)}</span>
+            <AnimatedItem key={career.code || index}>
+              <TiltCard intensity={8} glare={0.12} className="h-full">
+                <Card className="flex flex-col hover:shadow-lg transition-all duration-300 border-slate-200 h-full">
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                       <Badge className={index < 3 ? "bg-purple-100 text-purple-700 hover:bg-purple-100" : "bg-slate-100 text-slate-700 hover:bg-slate-100"}>
+                          {career.matchScore || career.match_score || 85}% Match
+                       </Badge>
+                       <Button variant="ghost" size="icon" onClick={() => toggleFavorite(career)}>
+                          <Heart className="h-5 w-5 text-slate-400 hover:text-red-500 hover:fill-red-500" />
+                       </Button>
                     </div>
-                    <div className="space-y-1">
-                       <span className="text-slate-400 flex items-center gap-1 text-xs"><TrendingUp className="w-3 h-3" /> Demande</span>
-                       <span className="font-medium text-slate-700 capitalize line-clamp-1" title={career.debouches}>
-                          {career.debouches || "Stable"}
-                       </span>
-                    </div>
-                 </div>
-                 
-                 {career.description && (
-                   <p className="text-sm text-slate-600 line-clamp-3">
-                      {career.description}
-                   </p>
-                 )}
-              </CardContent>
-              <CardFooter className="pt-2">
-                 <Button className="w-full bg-white text-purple-600 border border-purple-200 hover:bg-purple-50 hover:text-purple-700" onClick={() => navigate(`/metier/${career.code}`)}>
-                    Voir la fiche <ArrowRight className="ml-2 h-4 w-4" />
-                 </Button>
-              </CardFooter>
-            </Card>
+                    <CardTitle className="mt-2 text-xl line-clamp-2">{career.libelle || "Métier Inconnu"}</CardTitle>
+                    <CardDescription className="flex items-center gap-2 font-mono text-xs mt-1">
+                       ROME {career.code}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex-grow space-y-4">
+                     <div className="grid grid-cols-2 gap-4 text-sm bg-slate-50 p-3 rounded-lg">
+                        <div className="space-y-1">
+                           <span className="text-slate-400 flex items-center gap-1 text-xs"><DollarSign className="w-3 h-3" /> Salaire</span>
+                           <span className="font-medium text-slate-700 line-clamp-1">{getMetierSalary(career)}</span>
+                        </div>
+                        <div className="space-y-1">
+                           <span className="text-slate-400 flex items-center gap-1 text-xs"><TrendingUp className="w-3 h-3" /> Demande</span>
+                           <span className="font-medium text-slate-700 capitalize line-clamp-1" title={career.debouches}>
+                              {career.debouches || "Stable"}
+                           </span>
+                        </div>
+                     </div>
+
+                     {career.description && (
+                       <p className="text-sm text-slate-600 line-clamp-3">
+                          {career.description}
+                       </p>
+                     )}
+                  </CardContent>
+                  <CardFooter className="pt-2">
+                     <Button className="w-full bg-white text-purple-600 border border-purple-200 hover:bg-purple-50 hover:text-purple-700" onClick={() => navigate(`/metier/${career.code}`)}>
+                        Voir la fiche <ArrowRight className="ml-2 h-4 w-4" />
+                     </Button>
+                  </CardFooter>
+                </Card>
+              </TiltCard>
+            </AnimatedItem>
           ))}
-        </div>
+        </AnimatedSection>
       )}
     </div>
   );

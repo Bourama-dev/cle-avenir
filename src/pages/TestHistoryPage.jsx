@@ -8,6 +8,9 @@ import { Badge } from '@/components/ui/badge';
 import { History, Calendar, ArrowRight, Brain, Trash2, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { motion } from 'framer-motion';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 export default function TestHistoryPage() {
   const navigate = useNavigate();
@@ -49,7 +52,12 @@ export default function TestHistoryPage() {
     <div className="min-h-screen bg-slate-50 font-sans">
       
       <main className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="flex items-center justify-between mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center justify-between mb-8"
+        >
           <div>
             <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-3">
               <History className="w-8 h-8 text-violet-600" />
@@ -59,11 +67,13 @@ export default function TestHistoryPage() {
               Retrouvez vos 10 derniers résultats d'analyse de personnalité et d'orientation.
             </p>
           </div>
-          <Button onClick={() => navigate('/test')} className="bg-violet-600 hover:bg-violet-700 text-white">
-            <Brain className="w-4 h-4 mr-2" />
-            Nouveau Test
-          </Button>
-        </div>
+          <MagneticButton strength={0.2}>
+            <Button onClick={() => navigate('/test')} className="bg-violet-600 hover:bg-violet-700 text-white">
+              <Brain className="w-4 h-4 mr-2" />
+              Nouveau Test
+            </Button>
+          </MagneticButton>
+        </motion.div>
 
         {loading ? (
           <div className="space-y-4">
@@ -83,9 +93,10 @@ export default function TestHistoryPage() {
             </Button>
           </div>
         ) : (
-          <div className="space-y-4">
+          <AnimatedSection className="space-y-4">
             {history.map((test) => (
-              <Card key={test.id} className="group hover:shadow-md transition-all cursor-pointer border-slate-200" onClick={() => navigate(`/test-results?id=${test.id}`)}>
+              <AnimatedItem key={test.id}>
+              <Card className="group hover:shadow-md transition-all cursor-pointer border-slate-200" onClick={() => navigate(`/test-results?id=${test.id}`)}>
                 <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6">
                   {/* Icon */}
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-100 to-fuchsia-100 flex items-center justify-center text-3xl shadow-inner flex-shrink-0">
@@ -115,6 +126,7 @@ export default function TestHistoryPage() {
                   </div>
                 </CardContent>
               </Card>
+              </AnimatedItem>
             ))}
 
             <div className="mt-8 p-4 bg-amber-50 rounded-lg flex items-start gap-3 text-sm text-amber-800 border border-amber-100">
@@ -124,7 +136,7 @@ export default function TestHistoryPage() {
                 Pensez à exporter vos résultats importants si nécessaire.
               </p>
             </div>
-          </div>
+          </AnimatedSection>
         )}
       </main>
     </div>

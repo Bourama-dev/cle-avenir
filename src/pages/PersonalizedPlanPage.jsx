@@ -11,6 +11,9 @@ import { fetchFormations } from '@/services/parcoursup';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { LayoutDashboard, Target } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import MagneticButton from '@/components/ui/MagneticButton';
+import { motion } from 'framer-motion';
 
 import RiasecProfileSection from '@/components/personalized-plan/RiasecProfileSection';
 import RecommendedMetiersSection from '@/components/personalized-plan/RecommendedMetiersSection';
@@ -345,7 +348,12 @@ const PersonalizedPlanPage = () => {
       {/* Hero */}
       <div className="bg-gradient-to-b from-indigo-50 to-slate-50 py-12 md:py-16 border-b border-slate-200">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="max-w-3xl animate-fade-in">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl"
+          >
             <div className="inline-flex items-center justify-center p-3 bg-indigo-100 rounded-xl mb-6 shadow-sm border border-indigo-200/50">
               <Target className="w-8 h-8 text-indigo-700" />
             </div>
@@ -396,7 +404,7 @@ const PersonalizedPlanPage = () => {
                 )}
               </div>
             )}
-          </div>
+          </motion.div>
         </div>
       </div>
 
@@ -405,50 +413,62 @@ const PersonalizedPlanPage = () => {
         <div className="grid lg:grid-cols-12 gap-10">
 
           {/* Left column — main sections */}
-          <div className="lg:col-span-8 space-y-2">
-            <ProgressionSection
-              planData={planData}
-              hasTestData={hasTestData}
-              userProfile={userProfile}
-            />
-            <RiasecProfileSection riasecProfile={profileData} />
-
-            {metiersLoading ? (
-              <div className="mb-10"><MetierLoadingSpinner /></div>
-            ) : (
-              <RecommendedMetiersSection
-                metiers={enrichedMetiers}
-                onAddMetier={handleAddMetier}
-                isLoading={false}
+          <AnimatedSection className="lg:col-span-8 space-y-2">
+            <AnimatedItem>
+              <ProgressionSection
+                planData={planData}
+                hasTestData={hasTestData}
                 userProfile={userProfile}
               />
-            )}
+            </AnimatedItem>
+            <AnimatedItem>
+              <RiasecProfileSection riasecProfile={profileData} />
+            </AnimatedItem>
 
-            <FormationPathSection
-              formations={formations}
-              isLoading={formationsLoading}
-              userProfile={userProfile}
-            />
+            <AnimatedItem>
+              {metiersLoading ? (
+                <div className="mb-10"><MetierLoadingSpinner /></div>
+              ) : (
+                <RecommendedMetiersSection
+                  metiers={enrichedMetiers}
+                  onAddMetier={handleAddMetier}
+                  isLoading={false}
+                  userProfile={userProfile}
+                />
+              )}
+            </AnimatedItem>
+
+            <AnimatedItem>
+              <FormationPathSection
+                formations={formations}
+                isLoading={formationsLoading}
+                userProfile={userProfile}
+              />
+            </AnimatedItem>
 
             {/* Dashboard CTA — bottom of page */}
-            <div className="mt-10 pt-8 border-t border-slate-200">
-              <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl border border-indigo-100 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div>
-                  <h3 className="font-bold text-slate-900 text-lg">Votre plan est prêt !</h3>
-                  <p className="text-slate-500 text-sm mt-1">
-                    Retrouvez vos résultats, votre historique et vos métiers sauvegardés dans votre tableau de bord.
-                  </p>
+            <AnimatedItem>
+              <div className="mt-10 pt-8 border-t border-slate-200">
+                <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl border border-indigo-100 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-lg">Votre plan est prêt !</h3>
+                    <p className="text-slate-500 text-sm mt-1">
+                      Retrouvez vos résultats, votre historique et vos métiers sauvegardés dans votre tableau de bord.
+                    </p>
+                  </div>
+                  <MagneticButton>
+                    <button
+                      onClick={() => navigate('/dashboard')}
+                      className="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors whitespace-nowrap shadow-sm"
+                    >
+                      <LayoutDashboard className="w-5 h-5" />
+                      Aller au tableau de bord
+                    </button>
+                  </MagneticButton>
                 </div>
-                <button
-                  onClick={() => navigate('/dashboard')}
-                  className="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors whitespace-nowrap shadow-sm"
-                >
-                  <LayoutDashboard className="w-5 h-5" />
-                  Aller au tableau de bord
-                </button>
               </div>
-            </div>
-          </div>
+            </AnimatedItem>
+          </AnimatedSection>
 
           {/* Right column — sidebar */}
           <div className="lg:col-span-4">
@@ -460,13 +480,15 @@ const PersonalizedPlanPage = () => {
                 <RecommendedActionsSection userProfile={userProfile} />
               </div>
 
-              <button
-                onClick={() => navigate('/dashboard')}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors shadow-sm"
-              >
-                <LayoutDashboard className="w-4 h-4" />
-                Mon tableau de bord
-              </button>
+              <MagneticButton className="w-full">
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors shadow-sm"
+                >
+                  <LayoutDashboard className="w-4 h-4" />
+                  Mon tableau de bord
+                </button>
+              </MagneticButton>
             </div>
           </div>
         </div>

@@ -2,6 +2,10 @@ import React, { useState, useRef } from 'react';
 import { Send, CheckCircle, Target, DollarSign, Heart } from 'lucide-react';
 import { trackEvent } from '@/services/trackingService';
 import { useToast } from '@/components/ui/use-toast';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import TextReveal from '@/components/ui/TextReveal';
+import MagneticButton from '@/components/ui/MagneticButton';
+import TiltCard from '@/components/ui/TiltCard';
 
 export default function PartnershipPage({ onNavigate }) {
   const [formData, setFormData] = useState({
@@ -109,192 +113,214 @@ export default function PartnershipPage({ onNavigate }) {
       <div className="py-12 px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-slate-900 mb-3">
-              🤝 Programme Partenaires & Affiliation
-            </h1>
-            <p className="text-xl text-slate-600">
-              Connectez vos formations directement aux jeunes qui cherchent leur voie
-            </p>
-          </div>
+          <AnimatedSection>
+            <AnimatedItem>
+              <div className="text-center mb-12">
+                <h1 className="text-5xl font-bold text-slate-900 mb-3">
+                  🤝 Programme Partenaires & Affiliation
+                </h1>
+                <p className="text-xl text-slate-600">
+                  Connectez vos formations directement aux jeunes qui cherchent leur voie
+                </p>
+              </div>
+            </AnimatedItem>
 
-          {/* CTA Principal */}
-          <div className="text-center mb-16">
-            <button
-              onClick={() => document.getElementById('partnership-form').scrollIntoView({ behavior: 'smooth' })}
-              className="bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-700 hover:to-pink-800 text-white font-bold px-8 py-3 rounded-full transition inline-block shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-            >
-              Devenir Partenaire
-            </button>
-          </div>
+            {/* CTA Principal */}
+            <AnimatedItem>
+              <div className="text-center mb-16">
+                <MagneticButton>
+                  <button
+                    onClick={() => document.getElementById('partnership-form').scrollIntoView({ behavior: 'smooth' })}
+                    className="bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-700 hover:to-pink-800 text-white font-bold px-8 py-3 rounded-full transition inline-block shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  >
+                    Devenir Partenaire
+                  </button>
+                </MagneticButton>
+              </div>
+            </AnimatedItem>
+          </AnimatedSection>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Avantages */}
-            <div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-8">
-                Pourquoi rejoindre le réseau ?
-              </h2>
+            <AnimatedSection>
+              <AnimatedItem>
+                <h2 className="text-3xl font-bold text-slate-900 mb-8">
+                  Pourquoi rejoindre le réseau ?
+                </h2>
+              </AnimatedItem>
 
               <div className="space-y-6">
                 {/* Audience */}
-                <div className="flex gap-4 p-6 bg-white rounded-xl shadow-sm border border-slate-100">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-full bg-pink-100">
-                      <Target size={24} className="text-pink-600" />
+                <AnimatedItem>
+                  <TiltCard className="flex gap-4 p-6 bg-white rounded-xl shadow-sm border border-slate-100">
+                    <div className="flex-shrink-0">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-full bg-pink-100">
+                        <Target size={24} className="text-pink-600" />
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900">
-                      Audience Ultra-Qualifiée
-                    </h3>
-                    <p className="text-slate-600 mt-1">
-                      Nos utilisateurs ont passé des tests IA : nous savons exactement ce qu'ils cherchent.
-                    </p>
-                  </div>
-                </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-slate-900">
+                        Audience Ultra-Qualifiée
+                      </h3>
+                      <p className="text-slate-600 mt-1">
+                        Nos utilisateurs ont passé des tests IA : nous savons exactement ce qu'ils cherchent.
+                      </p>
+                    </div>
+                  </TiltCard>
+                </AnimatedItem>
 
                 {/* Modèle */}
-                <div className="flex gap-4 p-6 bg-white rounded-xl shadow-sm border border-slate-100">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-                      <DollarSign size={24} className="text-green-600" />
+                <AnimatedItem>
+                  <TiltCard className="flex gap-4 p-6 bg-white rounded-xl shadow-sm border border-slate-100">
+                    <div className="flex-shrink-0">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                        <DollarSign size={24} className="text-green-600" />
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900">
-                      Modèle au Résultat
-                    </h3>
-                    <p className="text-slate-600 mt-1">
-                      Payez uniquement pour les leads qualifiés ou les inscriptions (CPA/CPL).
-                    </p>
-                  </div>
-                </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-slate-900">
+                        Modèle au Résultat
+                      </h3>
+                      <p className="text-slate-600 mt-1">
+                        Payez uniquement pour les leads qualifiés ou les inscriptions (CPA/CPL).
+                      </p>
+                    </div>
+                  </TiltCard>
+                </AnimatedItem>
 
                 {/* Intégration */}
-                <div className="flex gap-4 p-6 bg-white rounded-xl shadow-sm border border-slate-100">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
-                      <Heart size={24} className="text-blue-600" />
+                <AnimatedItem>
+                  <TiltCard className="flex gap-4 p-6 bg-white rounded-xl shadow-sm border border-slate-100">
+                    <div className="flex-shrink-0">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
+                        <Heart size={24} className="text-blue-600" />
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900">
-                      Intégration Native
-                    </h3>
-                    <p className="text-slate-600 mt-1">
-                      Vos formations apparaissent naturellement dans les résultats de matching.
-                    </p>
-                  </div>
-                </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-slate-900">
+                        Intégration Native
+                      </h3>
+                      <p className="text-slate-600 mt-1">
+                        Vos formations apparaissent naturellement dans les résultats de matching.
+                      </p>
+                    </div>
+                  </TiltCard>
+                </AnimatedItem>
               </div>
-            </div>
+            </AnimatedSection>
 
             {/* Formulaire */}
-            <div id="partnership-form" className="bg-white rounded-xl shadow-xl p-8 border border-slate-200 h-fit sticky top-24">
-              <h3 className="text-2xl font-bold text-slate-900 mb-6">
-                Demande de partenariat
-              </h3>
+            <AnimatedSection>
+              <AnimatedItem>
+                <div id="partnership-form" className="bg-white rounded-xl shadow-xl p-8 border border-slate-200 h-fit sticky top-24">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-6">
+                    Demande de partenariat
+                  </h3>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Nom organisation */}
-                <div>
-                  <label className="block text-sm font-semibold text-slate-900 mb-2">
-                    Nom de l'organisme
-                  </label>
-                  <input
-                    type="text"
-                    name="organizationName"
-                    value={formData.organizationName}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-pink-600"
-                    placeholder="Votre organisme"
-                  />
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Nom organisation */}
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-900 mb-2">
+                        Nom de l'organisme
+                      </label>
+                      <input
+                        type="text"
+                        name="organizationName"
+                        value={formData.organizationName}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-2 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-pink-600"
+                        placeholder="Votre organisme"
+                      />
+                    </div>
+
+                    {/* Site web */}
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-900 mb-2">
+                        Site web
+                      </label>
+                      <input
+                        type="url"
+                        name="website"
+                        value={formData.website}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-pink-600"
+                        placeholder="https://..."
+                      />
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-900 mb-2">
+                        Contact email
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-2 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-pink-600"
+                        placeholder="contact@organisme.com"
+                      />
+                    </div>
+
+                    {/* Type partenariat */}
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-900 mb-2">
+                        Type de partenariat souhaité
+                      </label>
+                      <select
+                        name="partnershipType"
+                        value={formData.partnershipType}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-2 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-pink-600"
+                      >
+                        <option value="">Sélectionnez un type</option>
+                        <option value="affiliation">Affiliation (CPA/CPL)</option>
+                        <option value="integration">Intégration directe</option>
+                        <option value="white-label">White Label</option>
+                        <option value="other">Autre</option>
+                      </select>
+                    </div>
+
+                    {/* Status */}
+                    {submitStatus && (
+                      <div className={`p-4 rounded-lg flex items-center gap-3 ${
+                        submitStatus.type === 'success'
+                          ? 'bg-green-50 border border-green-200 text-green-700'
+                          : 'bg-red-50 border border-red-200 text-red-700'
+                      }`}>
+                        {submitStatus.type === 'success' && <CheckCircle size={20} />}
+                        {submitStatus.message}
+                      </div>
+                    )}
+
+                    {/* Bouton */}
+                    <MagneticButton className="w-full">
+                      <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-700 hover:to-pink-800 text-white font-bold py-3 rounded-lg transition disabled:opacity-50 flex items-center justify-center gap-2 mt-4"
+                      >
+                        {isLoading ? (
+                          <>
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                            Envoi en cours...
+                          </>
+                        ) : (
+                          <>
+                            <Send size={20} />
+                            Envoyer la demande
+                          </>
+                        )}
+                      </button>
+                    </MagneticButton>
+                  </form>
                 </div>
-
-                {/* Site web */}
-                <div>
-                  <label className="block text-sm font-semibold text-slate-900 mb-2">
-                    Site web
-                  </label>
-                  <input
-                    type="url"
-                    name="website"
-                    value={formData.website}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-pink-600"
-                    placeholder="https://..."
-                  />
-                </div>
-
-                {/* Email */}
-                <div>
-                  <label className="block text-sm font-semibold text-slate-900 mb-2">
-                    Contact email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-pink-600"
-                    placeholder="contact@organisme.com"
-                  />
-                </div>
-
-                {/* Type partenariat */}
-                <div>
-                  <label className="block text-sm font-semibold text-slate-900 mb-2">
-                    Type de partenariat souhaité
-                  </label>
-                  <select
-                    name="partnershipType"
-                    value={formData.partnershipType}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-pink-600"
-                  >
-                    <option value="">Sélectionnez un type</option>
-                    <option value="affiliation">Affiliation (CPA/CPL)</option>
-                    <option value="integration">Intégration directe</option>
-                    <option value="white-label">White Label</option>
-                    <option value="other">Autre</option>
-                  </select>
-                </div>
-
-                {/* Status */}
-                {submitStatus && (
-                  <div className={`p-4 rounded-lg flex items-center gap-3 ${
-                    submitStatus.type === 'success'
-                      ? 'bg-green-50 border border-green-200 text-green-700'
-                      : 'bg-red-50 border border-red-200 text-red-700'
-                  }`}>
-                    {submitStatus.type === 'success' && <CheckCircle size={20} />}
-                    {submitStatus.message}
-                  </div>
-                )}
-
-                {/* Bouton */}
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-700 hover:to-pink-800 text-white font-bold py-3 rounded-lg transition disabled:opacity-50 flex items-center justify-center gap-2 mt-4"
-                >
-                  {isLoading ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      Envoi en cours...
-                    </>
-                  ) : (
-                    <>
-                      <Send size={20} />
-                      Envoyer la demande
-                    </>
-                  )}
-                </button>
-              </form>
-            </div>
+              </AnimatedItem>
+            </AnimatedSection>
           </div>
         </div>
       </div>

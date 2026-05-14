@@ -20,6 +20,7 @@ import { activityService } from '@/services/activityService';
 import { textToSpeechService } from '@/services/textToSpeechService';
 import { speechRecognitionService } from '@/services/speechRecognitionService';
 import { supabase } from '@/lib/customSupabaseClient';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Cleo Avatar — animée selon l'état
@@ -799,7 +800,12 @@ const LearningPathPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               {!pathData ? (
-                <div className="text-center py-20 bg-white rounded-2xl border-2 border-dashed border-slate-200">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-center py-20 bg-white rounded-2xl border-2 border-dashed border-slate-200"
+                >
                   <Sparkles className="w-14 h-14 text-violet-300 mx-auto mb-4" />
                   <h2 className="text-2xl font-bold text-slate-900 mb-3">Votre parcours personnalisé</h2>
                   <p className="text-slate-500 max-w-md mx-auto mb-8 leading-relaxed">
@@ -825,9 +831,10 @@ const LearningPathPage = () => {
                       {' '}pour un parcours encore plus précis.
                     </p>
                   )}
-                </div>
+                </motion.div>
               ) : (
-                <>
+                <AnimatedSection>
+                  <AnimatedItem>
                   <div className="flex items-start justify-between mb-6">
                     <div>
                       <h2 className="text-xl font-bold text-slate-900">{pathData.path?.title}</h2>
@@ -844,7 +851,9 @@ const LearningPathPage = () => {
                       Regénérer
                     </Button>
                   </div>
+                  </AnimatedItem>
 
+                  <AnimatedItem>
                   <div className="bg-white rounded-2xl border border-slate-200 p-5 mb-6 shadow-sm">
                     <div className="flex justify-between items-center mb-3">
                       <span className="text-sm font-semibold text-slate-700">Progression globale</span>
@@ -856,7 +865,9 @@ const LearningPathPage = () => {
                       <span>~{pathData.path?.estimated_weeks || 4} semaines estimées</span>
                     </div>
                   </div>
+                  </AnimatedItem>
 
+                  <AnimatedItem>
                   <div className="relative pl-6 space-y-4">
                     <div className="absolute left-2 top-4 bottom-4 w-0.5 bg-slate-200" />
                     {pathData.activities.map((activity, idx) => (
@@ -869,12 +880,14 @@ const LearningPathPage = () => {
                       />
                     ))}
                   </div>
-                </>
+                  </AnimatedItem>
+                </AnimatedSection>
               )}
             </div>
 
             {/* Sidebar */}
-            <div className="space-y-5">
+            <AnimatedSection className="space-y-5">
+              <AnimatedItem>
               <Card className="border-0 shadow-md bg-gradient-to-br from-violet-600 to-indigo-700 text-white">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-2 mb-1">
@@ -888,7 +901,9 @@ const LearningPathPage = () => {
                   <p className="text-white/70 text-xs mt-2">{1000 - xpInLevel} XP pour le niveau {level + 1}</p>
                 </CardContent>
               </Card>
+              </AnimatedItem>
 
+              <AnimatedItem>
               <Card className="shadow-sm">
                 <CardContent className="p-5">
                   <div className="text-3xl mb-1">🔥</div>
@@ -897,7 +912,9 @@ const LearningPathPage = () => {
                   <p className="text-xs text-slate-400 mt-2">Apprenez chaque jour pour maintenir votre série !</p>
                 </CardContent>
               </Card>
+              </AnimatedItem>
 
+              <AnimatedItem>
               <Card className="shadow-sm">
                 <CardContent className="p-5">
                   <div className="flex items-center gap-2 mb-3">
@@ -908,7 +925,9 @@ const LearningPathPage = () => {
                   <p className="text-xs text-slate-400 mt-1">sur {total} dans ce parcours</p>
                 </CardContent>
               </Card>
+              </AnimatedItem>
 
+              <AnimatedItem>
               <Card className="shadow-sm border-violet-100 bg-violet-50/50">
                 <CardContent className="p-5">
                   <div className="flex items-center gap-2 mb-2">
@@ -920,17 +939,22 @@ const LearningPathPage = () => {
                   </p>
                 </CardContent>
               </Card>
-            </div>
+              </AnimatedItem>
+            </AnimatedSection>
           </div>
         )}
 
         {/* ═══ CATALOGUE ══════════════════════════════════════════════════ */}
         {view === 'catalog' && (
           <div>
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-slate-900">Catalogue complet</h2>
-              <p className="text-slate-500 text-sm mt-1">Explorez toutes les activités disponibles et lancez-en une quand vous le souhaitez.</p>
-            </div>
+            <AnimatedSection>
+              <AnimatedItem>
+              <div className="mb-6">
+                <h2 className="text-xl font-bold text-slate-900">Catalogue complet</h2>
+                <p className="text-slate-500 text-sm mt-1">Explorez toutes les activités disponibles et lancez-en une quand vous le souhaitez.</p>
+              </div>
+              </AnimatedItem>
+            </AnimatedSection>
 
             {catalogLoading ? (
               <div className="flex justify-center py-20">

@@ -10,6 +10,10 @@ import FAQSearch from '@/components/faq/FAQSearch';
 import FAQCategories from '@/components/faq/FAQCategories';
 import FAQAccordion from '@/components/faq/FAQAccordion';
 
+// Animation components
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import MagneticButton from '@/components/ui/MagneticButton';
+
 // Styles
 import './FAQPage.css';
 
@@ -84,8 +88,8 @@ const FAQPage = () => {
     // Filter by Search Term
     if (searchTerm.trim() !== '') {
       const lowerTerm = searchTerm.toLowerCase();
-      filtered = filtered.filter(item => 
-        item.question.toLowerCase().includes(lowerTerm) || 
+      filtered = filtered.filter(item =>
+        item.question.toLowerCase().includes(lowerTerm) ||
         item.answer.toLowerCase().includes(lowerTerm)
       );
     }
@@ -101,107 +105,135 @@ const FAQPage = () => {
       </Helmet>
 
       <FAQHero />
-      
-      <FAQSearch 
-        searchTerm={searchTerm} 
-        onSearch={setSearchTerm} 
+
+      <FAQSearch
+        searchTerm={searchTerm}
+        onSearch={setSearchTerm}
       />
 
       <div className="container mx-auto px-4 mt-8">
-        <FAQCategories 
-          activeCategory={activeCategory} 
-          onSelectCategory={setActiveCategory} 
+        <FAQCategories
+          activeCategory={activeCategory}
+          onSelectCategory={setActiveCategory}
         />
 
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-slate-800">
-            {activeCategory === 'all' 
-              ? 'Toutes les questions' 
-              : `Questions : ${faqData.find(d => d.category === activeCategory)?.category === 'pricing' ? 'Tarifs' : 
-                 faqData.find(d => d.category === activeCategory)?.category === 'test' ? 'Le Test' :
-                 faqData.find(d => d.category === activeCategory)?.category === 'results' ? 'Résultats' :
-                 faqData.find(d => d.category === activeCategory)?.category === 'account' ? 'Mon Compte' :
-                 faqData.find(d => d.category === activeCategory)?.category === 'security' ? 'Sécurité' : 'Général'
-                }`
-            }
-          </h2>
-          <p className="text-slate-500 mt-2">
-            {filteredFAQs.length} réponse{filteredFAQs.length > 1 ? 's' : ''} trouvée{filteredFAQs.length > 1 ? 's' : ''}
-          </p>
-        </div>
+        <AnimatedSection>
+          <AnimatedItem>
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold text-slate-800">
+                {activeCategory === 'all'
+                  ? 'Toutes les questions'
+                  : `Questions : ${faqData.find(d => d.category === activeCategory)?.category === 'pricing' ? 'Tarifs' :
+                     faqData.find(d => d.category === activeCategory)?.category === 'test' ? 'Le Test' :
+                     faqData.find(d => d.category === activeCategory)?.category === 'results' ? 'Résultats' :
+                     faqData.find(d => d.category === activeCategory)?.category === 'account' ? 'Mon Compte' :
+                     faqData.find(d => d.category === activeCategory)?.category === 'security' ? 'Sécurité' : 'Général'
+                    }`
+                }
+              </h2>
+              <p className="text-slate-500 mt-2">
+                {filteredFAQs.length} réponse{filteredFAQs.length > 1 ? 's' : ''} trouvée{filteredFAQs.length > 1 ? 's' : ''}
+              </p>
+            </div>
+          </AnimatedItem>
+        </AnimatedSection>
 
         <FAQAccordion items={filteredFAQs} searchTerm={searchTerm} />
       </div>
 
       {/* Contact Support Section */}
       <section className="faq-contact-section bg-white rounded-3xl my-8">
-        <h2 className="faq-section-title">Vous ne trouvez pas votre réponse ?</h2>
-        <div className="faq-contact-grid">
-          {/* Chat Cléo */}
-          <div className="faq-contact-card primary">
-            <div className="faq-contact-icon-wrapper">
-              <Sparkles className="w-8 h-8" />
-            </div>
-            <h3 className="faq-contact-title">Demander à Cléo</h3>
-            <p className="faq-contact-desc">Notre IA experte en orientation vous répond 24h/24 et 7j/7.</p>
-            <Button onClick={() => navigate('/cleo')} className="w-full bg-blue-600 hover:bg-blue-700">Discuter avec Cléo</Button>
-          </div>
+        <AnimatedSection>
+          <AnimatedItem>
+            <h2 className="faq-section-title">Vous ne trouvez pas votre réponse ?</h2>
+          </AnimatedItem>
+          <div className="faq-contact-grid">
+            {/* Chat Cléo */}
+            <AnimatedItem>
+              <div className="faq-contact-card primary">
+                <div className="faq-contact-icon-wrapper">
+                  <Sparkles className="w-8 h-8" />
+                </div>
+                <h3 className="faq-contact-title">Demander à Cléo</h3>
+                <p className="faq-contact-desc">Notre IA experte en orientation vous répond 24h/24 et 7j/7.</p>
+                <MagneticButton className="w-full">
+                  <Button onClick={() => navigate('/cleo')} className="w-full bg-blue-600 hover:bg-blue-700">Discuter avec Cléo</Button>
+                </MagneticButton>
+              </div>
+            </AnimatedItem>
 
-          {/* Email */}
-          <div className="faq-contact-card">
-            <div className="faq-contact-icon-wrapper">
-              <Mail className="w-8 h-8" />
-            </div>
-            <h3 className="faq-contact-title">Email</h3>
-            <p className="faq-contact-desc">Envoyez-nous un message, nous répondons sous 24h ouvrées.</p>
-            <Button onClick={() => navigate('/contact')} variant="outline" className="w-full">Formulaire de contact</Button>
-          </div>
+            {/* Email */}
+            <AnimatedItem>
+              <div className="faq-contact-card">
+                <div className="faq-contact-icon-wrapper">
+                  <Mail className="w-8 h-8" />
+                </div>
+                <h3 className="faq-contact-title">Email</h3>
+                <p className="faq-contact-desc">Envoyez-nous un message, nous répondons sous 24h ouvrées.</p>
+                <Button onClick={() => navigate('/contact')} variant="outline" className="w-full">Formulaire de contact</Button>
+              </div>
+            </AnimatedItem>
 
-          {/* Phone (Placeholder style) */}
-          <div className="faq-contact-card">
-            <div className="faq-contact-icon-wrapper">
-              <Phone className="w-8 h-8" />
-            </div>
-            <h3 className="faq-contact-title">Téléphone</h3>
-            <p className="faq-contact-desc">Disponible pour les abonnés Premium du lundi au vendredi.</p>
-            <Button variant="outline" className="w-full" disabled>Réservé Premium</Button>
+            {/* Phone (Placeholder style) */}
+            <AnimatedItem>
+              <div className="faq-contact-card">
+                <div className="faq-contact-icon-wrapper">
+                  <Phone className="w-8 h-8" />
+                </div>
+                <h3 className="faq-contact-title">Téléphone</h3>
+                <p className="faq-contact-desc">Disponible pour les abonnés Premium du lundi au vendredi.</p>
+                <Button variant="outline" className="w-full" disabled>Réservé Premium</Button>
+              </div>
+            </AnimatedItem>
           </div>
-        </div>
+        </AnimatedSection>
       </section>
 
       {/* Related Articles */}
       <section className="faq-related-section">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-10 text-slate-800">Articles populaires</h2>
-          <div className="faq-related-grid">
-            <div className="faq-article-card" onClick={() => navigate('/comment-ca-marche')}>
-              <div className="faq-article-icon"><Zap /></div>
-              <h3 className="faq-article-title">Bien démarrer</h3>
-              <p className="faq-article-desc">Tout ce qu'il faut savoir pour commencer votre bilan d'orientation.</p>
-              <span className="faq-article-link">Lire l'article <ArrowRight className="w-4 h-4" /></span>
-            </div>
+          <AnimatedSection>
+            <AnimatedItem>
+              <h2 className="text-2xl font-bold text-center mb-10 text-slate-800">Articles populaires</h2>
+            </AnimatedItem>
+            <div className="faq-related-grid">
+              <AnimatedItem>
+                <div className="faq-article-card" onClick={() => navigate('/comment-ca-marche')}>
+                  <div className="faq-article-icon"><Zap /></div>
+                  <h3 className="faq-article-title">Bien démarrer</h3>
+                  <p className="faq-article-desc">Tout ce qu'il faut savoir pour commencer votre bilan d'orientation.</p>
+                  <span className="faq-article-link">Lire l'article <ArrowRight className="w-4 h-4" /></span>
+                </div>
+              </AnimatedItem>
 
-            <div className="faq-article-card" onClick={() => navigate('/test-results')}>
-              <div className="faq-article-icon"><FileText /></div>
-              <h3 className="faq-article-title">Comprendre vos résultats</h3>
-              <p className="faq-article-desc">Comment interpréter votre profil RIASEC et vos suggestions métiers.</p>
-              <span className="faq-article-link">Lire l'article <ArrowRight className="w-4 h-4" /></span>
-            </div>
+              <AnimatedItem>
+                <div className="faq-article-card" onClick={() => navigate('/test-results')}>
+                  <div className="faq-article-icon"><FileText /></div>
+                  <h3 className="faq-article-title">Comprendre vos résultats</h3>
+                  <p className="faq-article-desc">Comment interpréter votre profil RIASEC et vos suggestions métiers.</p>
+                  <span className="faq-article-link">Lire l'article <ArrowRight className="w-4 h-4" /></span>
+                </div>
+              </AnimatedItem>
 
-            <div className="faq-article-card" onClick={() => navigate('/cleo')}>
-              <div className="faq-article-icon"><Sparkles /></div>
-              <h3 className="faq-article-title">Utiliser Cléo efficacement</h3>
-              <p className="faq-article-desc">Les meilleures questions à poser à votre coach IA pour avancer.</p>
-              <span className="faq-article-link">Lire l'article <ArrowRight className="w-4 h-4" /></span>
-            </div>
+              <AnimatedItem>
+                <div className="faq-article-card" onClick={() => navigate('/cleo')}>
+                  <div className="faq-article-icon"><Sparkles /></div>
+                  <h3 className="faq-article-title">Utiliser Cléo efficacement</h3>
+                  <p className="faq-article-desc">Les meilleures questions à poser à votre coach IA pour avancer.</p>
+                  <span className="faq-article-link">Lire l'article <ArrowRight className="w-4 h-4" /></span>
+                </div>
+              </AnimatedItem>
 
-            <div className="faq-article-card" onClick={() => navigate('/politique-confidentialite')}>
-              <div className="faq-article-icon"><Shield /></div>
-              <h3 className="faq-article-title">Sécurité & Confidentialité</h3>
-              <p className="faq-article-desc">Comment nous protégeons vos données personnelles et vos droits.</p>
-              <span className="faq-article-link">Lire l'article <ArrowRight className="w-4 h-4" /></span>
+              <AnimatedItem>
+                <div className="faq-article-card" onClick={() => navigate('/politique-confidentialite')}>
+                  <div className="faq-article-icon"><Shield /></div>
+                  <h3 className="faq-article-title">Sécurité & Confidentialité</h3>
+                  <p className="faq-article-desc">Comment nous protégeons vos données personnelles et vos droits.</p>
+                  <span className="faq-article-link">Lire l'article <ArrowRight className="w-4 h-4" /></span>
+                </div>
+              </AnimatedItem>
             </div>
-          </div>
+          </AnimatedSection>
         </div>
       </section>
     </div>
