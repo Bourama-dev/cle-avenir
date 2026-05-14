@@ -165,7 +165,7 @@ const RecommendationsPage = () => {
         <AnimatedSection className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {careers.map((career, index) => (
             <AnimatedItem key={career.code || index}>
-              <TiltCard intensity={8} glare className="h-full">
+              <TiltCard intensity={8} glare={0.12} className="h-full">
                 <Card className="flex flex-col hover:shadow-lg transition-all duration-300 border-slate-200 h-full">
                   <CardHeader>
                     <div className="flex justify-between items-start">
