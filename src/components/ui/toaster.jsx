@@ -91,22 +91,18 @@ export function Toaster() {
 }
 
 export function SafeToastProvider({ children }) {
-  // Pure client-side SPA (Vite) — no SSR, no need for a mounted guard.
-  // Rendering <Toaster /> immediately ensures the Radix ToastProvider context
-  // is fully in place before any Toast primitive mounts, preventing the
-  // "undefined is not an object" crash caused by the previous race condition.
   useEffect(() => {
     isProviderInitialized = true;
     return () => { isProviderInitialized = false; };
   }, []);
 
   return (
-    <ToastErrorBoundary>
-      <ToastProvider>
-        {children}
+    <ToastProvider>
+      {children}
+      <ToastErrorBoundary>
         <Toaster />
         <ToastDebugPanel />
-      </ToastProvider>
-    </ToastErrorBoundary>
+      </ToastErrorBoundary>
+    </ToastProvider>
   );
 }
