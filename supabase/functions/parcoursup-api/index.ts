@@ -1,3 +1,4 @@
+// v1.1 — Parcoursup + Catalogue Apprentissage
 import { corsHeaders } from "./cors.ts";
 
 // ─── API endpoints ────────────────────────────────────────────────────────────
@@ -154,7 +155,6 @@ async function fetchParcoursup(params: {
 
   const whereParts: string[] = [];
   if (q) {
-    // Full-text search on formation name OR etablissement name
     whereParts.push(`(lib_for_voe_ins like '%${q}%' or g_ea_lib_vx like '%${q}%')`);
   }
   if (ville) {
@@ -194,7 +194,6 @@ async function fetchCatalogue(params: {
 }): Promise<{ results: Formation[]; total: number }> {
   const { q, ville, limit, offset } = params;
 
-  // Build MongoDB-style query
   const query: Record<string, unknown> = { published: true };
   if (q) {
     query["intitule_long"] = { $regex: q, $options: "i" };
@@ -256,7 +255,6 @@ Deno.serve(async (req) => {
     const offset = Math.max(Number(body.offset) || 0, 0);
 
     if (action === "formations") {
-      // Fetch both sources in parallel; each gets half the limit
       const half = Math.ceil(limit / 2);
 
       const [psup, catalogue] = await Promise.allSettled([
@@ -270,7 +268,6 @@ Deno.serve(async (req) => {
       if (psup.status === "rejected") console.error("[parcoursup-api] Parcoursup failed:", psup.reason);
       if (catalogue.status === "rejected") console.error("[parcoursup-api] Catalogue failed:", catalogue.reason);
 
-      // Interleave results (parcoursup, apprentissage, parcoursup, apprentissage…)
       const merged: Formation[] = [];
       const maxLen = Math.max(psupData.results.length, catData.results.length);
       for (let i = 0; i < maxLen; i++) {
@@ -278,7 +275,6 @@ Deno.serve(async (req) => {
         if (i < catData.results.length) merged.push(catData.results[i]);
       }
 
-      // Deduplicate by id
       const seen = new Set<string>();
       const deduped = merged.filter(f => {
         if (seen.has(f.id_formation)) return false;
@@ -297,7 +293,6 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Unknown action
     return json({ success: false, error: `Unknown action: ${action}` }, 400);
 
   } catch (err) {
