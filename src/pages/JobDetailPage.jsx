@@ -330,30 +330,47 @@ const JobDetailPage = () => {
       <PageHelmet {...jobSEOProps} />
 
       {/* 1. Hero Section */}
-      <JobDetailHero 
-        job={job} 
-        isSaved={isSaved} 
-        onToggleSave={handleToggleSave} 
-        onShare={handleShare}
-        saveLoading={saveLoading}
-      />
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <JobDetailHero
+          job={job}
+          isSaved={isSaved}
+          onToggleSave={handleToggleSave}
+          onShare={handleShare}
+          saveLoading={saveLoading}
+        />
+      </motion.div>
 
       <div className="container mx-auto px-4 py-10 max-w-7xl">
         {/* 2. Key Info Summary Grid */}
-        <JobDetailSummary job={job} />
+        <AnimatedSection>
+          <AnimatedItem>
+            <JobDetailSummary job={job} />
+          </AnimatedItem>
+        </AnimatedSection>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Main Content Column */}
-          <div className="lg:col-span-8 space-y-8">
-            <JobDetailDescription job={job} />
-          </div>
+          <AnimatedSection className="lg:col-span-8 space-y-8">
+            <AnimatedItem>
+              <JobDetailDescription job={job} />
+            </AnimatedItem>
+          </AnimatedSection>
 
           {/* Sidebar Column */}
-          <div className="lg:col-span-4 space-y-6 sticky top-24">
-            <JobDetailApplication job={job} onApply={handleApply} />
-            <JobDetailCompanyInfo job={job} />
+          <AnimatedSection className="lg:col-span-4 space-y-6 sticky top-24">
+            <AnimatedItem>
+              <JobDetailApplication job={job} onApply={handleApply} />
+            </AnimatedItem>
+            <AnimatedItem>
+              <JobDetailCompanyInfo job={job} />
+            </AnimatedItem>
 
             {/* ── Métier associé ──────────────────────────────────────── */}
+            <AnimatedItem>
             <Card className="border-indigo-100 shadow-sm">
               <CardHeader className="pb-3 bg-indigo-50/60 rounded-t-xl border-b border-indigo-100">
                 <CardTitle className="text-base flex items-center gap-2 text-indigo-900">
@@ -400,8 +417,10 @@ const JobDetailPage = () => {
                 )}
               </CardContent>
             </Card>
+            </AnimatedItem>
 
             {/* ── Formations rapides ──────────────────────────────────── */}
+            <AnimatedItem>
             <Card className="border-pink-100 shadow-sm">
               <CardHeader className="pb-3 bg-pink-50/60 rounded-t-xl border-b border-pink-100">
                 <CardTitle className="text-base flex items-center gap-2 text-pink-900">

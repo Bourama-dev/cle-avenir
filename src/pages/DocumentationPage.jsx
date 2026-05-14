@@ -491,9 +491,11 @@ const DocumentationPage = () => {
                       </ul>
                     </CardContent>
                   </Card>
+                  </AnimatedItem>
                 </section>
 
                 <section id="resume" className="scroll-mt-28">
+                  <AnimatedItem>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-green-100 rounded-lg text-green-600" aria-hidden="true">
                       <CheckCircle className="h-6 w-6" />
@@ -513,11 +515,15 @@ const DocumentationPage = () => {
                       </ul>
                     </CardContent>
                   </Card>
+                  </AnimatedItem>
                 </section>
               </div>
+              </AnimatedSection>
 
               {/* Section 13 */}
+              <AnimatedSection>
               <section id="architecture" className="scroll-mt-28">
+                <AnimatedItem>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-purple-100 rounded-lg text-purple-600" aria-hidden="true">
                     <Workflow className="h-6 w-6" />
@@ -549,10 +555,14 @@ const DocumentationPage = () => {
                     </div>
                   </CardContent>
                 </Card>
+                </AnimatedItem>
               </section>
+              </AnimatedSection>
 
               {/* Section 14 */}
+              <AnimatedSection>
               <section id="fichiers" className="scroll-mt-28">
+                 <AnimatedItem>
                  <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600" aria-hidden="true">
                     <FileCode className="h-6 w-6" />
