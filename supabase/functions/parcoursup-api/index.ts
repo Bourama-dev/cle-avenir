@@ -1,3 +1,4 @@
+// v1.3 — replace broken Catalogue Apprentissage with Parcoursup alternance search
 // v1.2 — field-name-safe build
 import { corsHeaders } from "./cors.ts";
 
@@ -38,6 +39,17 @@ function slugId(prefix: string, s: string): string {
 }
 
 // ── Parcoursup ────────────────────────────────────────────────────────────────
+function isAlternanceFili(fili: string): boolean {
+  const t = fili.toLowerCase();
+  return (
+    t.includes("apprentissage") ||
+    t.includes("alternance") ||
+    t.includes("contrat pro") ||
+    t.includes("professionnalisation")
+  );
+}
+
+function normalizeParcoursup(r: Record<string, unknown>): Formation {
 function normalizeParcoursup(r: Record<string, unknown>): Formation {
   // Try every known field name variant for the formation title
   const title = pick(r,
@@ -55,6 +67,14 @@ function normalizeParcoursup(r: Record<string, unknown>): Formation {
   const fili = pick(r, "fili", "filiere", "type_formation");
   const lien = pick(r, "lien_form_psup", "url", "lien");
 
+  const titleLower = title.toLowerCase();
+  const isAlt = isAlternanceFili(fili) ||
+    titleLower.includes("apprentissage") ||
+    titleLower.includes("alternance");
+
+  const source: Formation["source"] = isAlt ? "apprentissage" : "parcoursup";
+  const tags = isAlt ? ["Alternance", "Apprentissage", "Parcoursup"] : ["Parcoursup"];
+
   return {
     id_formation: uai ? `psup_${uai}_${fili || "x"}` : slugId("psup", title),
     g_ea_lib_vx: etab,
@@ -62,6 +82,10 @@ function normalizeParcoursup(r: Record<string, unknown>): Formation {
     description: buildPsupDesc(r, fili),
     ville,
     etablissements: [{ nom: etab, ville }],
+    source,
+    lien: lien || undefined,
+    niveau: filiToNiveau(fili),
+    tags,
     source: "parcoursup",
     lien: lien || undefined,
     niveau: filiToNiveau(fili),
@@ -87,6 +111,8 @@ function buildPsupDesc(r: Record<string, unknown>, fili: string): string {
   return parts.join(" — ") || "Formation supérieure disponible sur Parcoursup.";
 }
 
+async function fetchParcoursup(params: { q: string; ville: string; limit: number; offset: number; extraSearch?: string }) {
+  const { q, ville, limit, offset, extraSearch } = params;
 async function fetchParcoursup(params: { q: string; ville: string; limit: number; offset: number }) {
   const { q, ville, limit, offset } = params;
   const sp = new URLSearchParams();
@@ -95,6 +121,8 @@ async function fetchParcoursup(params: { q: string; ville: string; limit: number
   sp.set("lang", "fr");
   sp.set("timezone", "Europe/Paris");
 
+  const searchTerm = extraSearch ? `${extraSearch}${q ? " " + q : ""}` : q;
+  if (searchTerm) sp.set("search", searchTerm);
   // Use free-text search — avoids assuming specific field names
   if (q) sp.set("search", q);
 
@@ -241,6 +269,24 @@ Deno.serve(async (req) => {
     const half = Math.ceil(limit / 2);
     const halfOffset = Math.floor(offset / 2);
 
+    // Two parallel Parcoursup queries: general + alternance-specific
+    const [general, alternance] = await Promise.allSettled([
+      fetchParcoursup({ q, ville, limit: half, offset: halfOffset }),
+      fetchParcoursup({ q, ville, limit: half, offset: halfOffset, extraSearch: "apprentissage alternance" }),
+    ]);
+
+    const generalData = general.status === "fulfilled" ? general.value : { results: [], total: 0 };
+    const altData = alternance.status === "fulfilled" ? alternance.value : { results: [], total: 0 };
+
+    if (general.status === "rejected") console.error("[psup-general] rejected", general.reason);
+    if (alternance.status === "rejected") console.error("[psup-alt] rejected", alternance.reason);
+
+    // Interleave so both types appear together
+    const merged: Formation[] = [];
+    const max = Math.max(generalData.results.length, altData.results.length);
+    for (let i = 0; i < max; i++) {
+      if (i < generalData.results.length) merged.push(generalData.results[i]);
+      if (i < altData.results.length) merged.push(altData.results[i]);
     const [psup, cat] = await Promise.allSettled([
       fetchParcoursup({ q, ville, limit: half, offset: halfOffset }),
       fetchCatalogue({ q, ville, limit: half, offset: halfOffset }),
@@ -267,11 +313,15 @@ Deno.serve(async (req) => {
       return true;
     });
 
+    const altCount = deduped.filter(f => f.source === "apprentissage").length;
+    console.log(`[parcoursup-api] OK — general:${generalData.results.length} alt:${altData.results.length} alternance_final:${altCount} total:${deduped.length}`);
     console.log(`[parcoursup-api] OK — psup:${psupData.results.length} cat:${catData.results.length} total:${deduped.length}`);
 
     return json({
       success: true,
       results: deduped,
+      total: generalData.total + altData.total,
+      sources: { parcoursup: deduped.filter(f => f.source === "parcoursup").length, apprentissage: altCount },
       total: psupData.total + catData.total,
       sources: { parcoursup: psupData.results.length, apprentissage: catData.results.length },
     });

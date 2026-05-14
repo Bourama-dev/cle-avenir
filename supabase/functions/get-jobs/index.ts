@@ -112,9 +112,25 @@ Deno.serve(async (req) => {
       if (dist) params.set("distance", dist);
     }
 
-    // Contract type: CDI, CDD, MIS (interim), etc.
+    // Contract type: map display labels to France Travail API codes
+    const CONTRACT_CODES: Record<string, string> = {
+      cdi: "CDI",
+      cdd: "CDD",
+      alternance: "ALT",
+      apprentissage: "ALT",
+      stage: "STG",
+      freelance: "LIB",
+      "indépendant": "LIB",
+      independant: "LIB",
+      intérim: "MIS",
+      interim: "MIS",
+      mission: "MIS",
+    };
     const contract = str(body.contract);
-    if (contract) params.set("typeContrat", contract.toUpperCase());
+    if (contract) {
+      const code = CONTRACT_CODES[contract.toLowerCase()] ?? contract.toUpperCase();
+      params.set("typeContrat", code);
+    }
 
     // Experience level: 1=no exp required, 2=1-3 yrs, 3=3+ yrs
     const experience = str(body.experience);
