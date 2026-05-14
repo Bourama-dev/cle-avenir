@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PageHelmet from '@/components/SEO/PageHelmet';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle2, Activity, AlertTriangle, Loader2, XCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -107,6 +108,12 @@ const StatusPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-3xl">
+      <PageHelmet
+        title="État des Services - CléAvenir"
+        description="Consultez en temps réel l'état des services CléAvenir : API, base de données, fonctions d'IA et plateforme."
+        keywords="statut, état services, uptime, disponibilité, CléAvenir"
+        noIndex={true}
+      />
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-bold text-slate-900">État des Services</h1>

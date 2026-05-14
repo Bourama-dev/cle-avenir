@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Helmet } from 'react-helmet-async';
+import PageHelmet from '@/components/SEO/PageHelmet';
 import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 import {
   BookOpen, Code, Layers, GitBranch, FileCode, Workflow,
@@ -72,10 +72,12 @@ const DocumentationPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Documentation - Moteur de Recommandation | CléAvenir</title>
-        <meta name="description" content="CléAvenir - Moteur de Recommandation Hybride Auto-Apprenant" />
-      </Helmet>
+      <PageHelmet
+        title="Documentation Technique - CléAvenir"
+        description="Documentation du moteur de recommandation hybride de CléAvenir : IA, algorithmes d'orientation, API et intégrations partenaires."
+        keywords="documentation, API, moteur recommandation, IA, orientation, développeur, CléAvenir"
+        noIndex={true}
+      />
 
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50" style={{ scrollBehavior: 'smooth' }}>
         {/* Hero Header */}

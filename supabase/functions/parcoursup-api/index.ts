@@ -1,12 +1,8 @@
 // v1.3 — replace broken Catalogue Apprentissage with Parcoursup alternance search
-// v1.2 — field-name-safe build
 import { corsHeaders } from "./cors.ts";
 
 const PARCOURSUP_API =
   "https://data.enseignementsup-recherche.gouv.fr/api/explore/v2.1/catalog/datasets/fr-esr-parcoursup/records";
-
-const CATALOGUE_API =
-  "https://catalogue-apprentissage.intercaricom.fr/api/v1/entity/formations";
 
 interface Formation {
   id_formation: string;
@@ -50,8 +46,6 @@ function isAlternanceFili(fili: string): boolean {
 }
 
 function normalizeParcoursup(r: Record<string, unknown>): Formation {
-function normalizeParcoursup(r: Record<string, unknown>): Formation {
-  // Try every known field name variant for the formation title
   const title = pick(r,
     "lib_for_voe_ins",
     "form_lib_voe_acc",
@@ -86,10 +80,6 @@ function normalizeParcoursup(r: Record<string, unknown>): Formation {
     lien: lien || undefined,
     niveau: filiToNiveau(fili),
     tags,
-    source: "parcoursup",
-    lien: lien || undefined,
-    niveau: filiToNiveau(fili),
-    tags: ["Parcoursup"],
   };
 }
 
@@ -113,8 +103,6 @@ function buildPsupDesc(r: Record<string, unknown>, fili: string): string {
 
 async function fetchParcoursup(params: { q: string; ville: string; limit: number; offset: number; extraSearch?: string }) {
   const { q, ville, limit, offset, extraSearch } = params;
-async function fetchParcoursup(params: { q: string; ville: string; limit: number; offset: number }) {
-  const { q, ville, limit, offset } = params;
   const sp = new URLSearchParams();
   sp.set("limit", String(Math.min(limit, 100)));
   sp.set("offset", String(offset));
@@ -123,10 +111,6 @@ async function fetchParcoursup(params: { q: string; ville: string; limit: number
 
   const searchTerm = extraSearch ? `${extraSearch}${q ? " " + q : ""}` : q;
   if (searchTerm) sp.set("search", searchTerm);
-  // Use free-text search — avoids assuming specific field names
-  if (q) sp.set("search", q);
-
-  // City filter only if provided — commune_etab is a verified field
   if (ville) sp.set("where", `commune_etab like '%${ville}%'`);
 
   const url = `${PARCOURSUP_API}?${sp.toString()}`;
@@ -148,95 +132,6 @@ async function fetchParcoursup(params: { q: string; ville: string; limit: number
     return { results: records.map(normalizeParcoursup), total: data?.total_count ?? records.length };
   } catch (e) {
     console.error("[psup] fetch failed", e);
-    return { results: [], total: 0 };
-  }
-}
-
-// ── Catalogue Apprentissage ───────────────────────────────────────────────────
-function normalizeCatalogue(r: Record<string, unknown>): Formation {
-  const id = pick(r, "_id", "id");
-  const title = pick(r,
-    "intitule_long",
-    "intitule_court",
-    "libelle_formation",
-    "intitule",
-  ) || "Formation en apprentissage";
-  const etab = pick(r,
-    "etablissement_gestionnaire_enseigne",
-    "etablissement_gestionnaire_raison_sociale",
-    "nom_organisme",
-  ) || "CFA";
-  const ville = pick(r,
-    "lieu_formation_adresse_computed_city",
-    "localite_responsable",
-    "commune",
-    "ville",
-  );
-  const cp = pick(r,
-    "lieu_formation_adresse_computed_code_postal",
-    "code_postal_responsable",
-    "code_postal",
-  );
-  const niveau = euNiveau(pick(r, "niveau_entree_obligatoire", "niveau_sortie"));
-
-  return {
-    id_formation: id ? `app_${id}` : slugId("app", title + ville),
-    libelle_formation: title,
-    description: buildCatDesc(r),
-    ville,
-    etablissements: [{ nom: etab, ville, code_postal: cp }],
-    source: "apprentissage",
-    niveau,
-    tags: ["Apprentissage", "Alternance"],
-  };
-}
-
-function euNiveau(code: string): string {
-  const m: Record<string, string> = { "3": "CAP/BEP", "4": "BAC", "5": "BAC+2", "6": "BAC+3", "7": "BAC+5", "8": "BAC+8" };
-  return m[code] || "BAC+2";
-}
-
-function buildCatDesc(r: Record<string, unknown>): string {
-  const parts: string[] = [];
-  const rncp = pick(r, "rncp_intitule");
-  if (rncp) parts.push(rncp);
-  const duree = pick(r, "duree_incoterms", "duree");
-  if (duree) parts.push(`Durée : ${duree}`);
-  parts.push("Formation en apprentissage.");
-  return parts.join(" — ");
-}
-
-async function fetchCatalogue(params: { q: string; ville: string; limit: number; offset: number }) {
-  const { q, ville, limit, offset } = params;
-  const query: Record<string, unknown> = { published: true };
-  if (q) query["intitule_long"] = { $regex: q, $options: "i" };
-  if (ville) query["lieu_formation_adresse_computed_city"] = { $regex: ville, $options: "i" };
-
-  const page = Math.floor(offset / limit) + 1;
-  const sp = new URLSearchParams();
-  sp.set("query", JSON.stringify(query));
-  sp.set("limit", String(Math.min(limit, 100)));
-  sp.set("page", String(page));
-
-  const url = `${CATALOGUE_API}?${sp.toString()}`;
-  console.log("[cat] GET", url);
-
-  try {
-    const res = await fetch(url, {
-      headers: { Accept: "application/json" },
-      signal: AbortSignal.timeout(10_000),
-    });
-    const text = await res.text();
-    if (!res.ok) {
-      console.error("[cat] error", res.status, text.slice(0, 300));
-      return { results: [], total: 0 };
-    }
-    const data = JSON.parse(text);
-    const records: Record<string, unknown>[] = Array.isArray(data?.formations) ? data.formations : [];
-    console.log("[cat] records", records.length, "total", data?.pagination?.total);
-    return { results: records.map(normalizeCatalogue), total: data?.pagination?.total ?? records.length };
-  } catch (e) {
-    console.error("[cat] fetch failed", e);
     return { results: [], total: 0 };
   }
 }
@@ -287,23 +182,6 @@ Deno.serve(async (req) => {
     for (let i = 0; i < max; i++) {
       if (i < generalData.results.length) merged.push(generalData.results[i]);
       if (i < altData.results.length) merged.push(altData.results[i]);
-    const [psup, cat] = await Promise.allSettled([
-      fetchParcoursup({ q, ville, limit: half, offset: halfOffset }),
-      fetchCatalogue({ q, ville, limit: half, offset: halfOffset }),
-    ]);
-
-    const psupData = psup.status === "fulfilled" ? psup.value : { results: [], total: 0 };
-    const catData  = cat.status  === "fulfilled" ? cat.value  : { results: [], total: 0 };
-
-    if (psup.status === "rejected") console.error("[psup] rejected", psup.reason);
-    if (cat.status  === "rejected") console.error("[cat] rejected",  cat.reason);
-
-    // Interleave so both sources appear together
-    const merged: Formation[] = [];
-    const max = Math.max(psupData.results.length, catData.results.length);
-    for (let i = 0; i < max; i++) {
-      if (i < psupData.results.length) merged.push(psupData.results[i]);
-      if (i < catData.results.length)  merged.push(catData.results[i]);
     }
 
     const seen = new Set<string>();
@@ -315,15 +193,12 @@ Deno.serve(async (req) => {
 
     const altCount = deduped.filter(f => f.source === "apprentissage").length;
     console.log(`[parcoursup-api] OK — general:${generalData.results.length} alt:${altData.results.length} alternance_final:${altCount} total:${deduped.length}`);
-    console.log(`[parcoursup-api] OK — psup:${psupData.results.length} cat:${catData.results.length} total:${deduped.length}`);
 
     return json({
       success: true,
       results: deduped,
       total: generalData.total + altData.total,
       sources: { parcoursup: deduped.filter(f => f.source === "parcoursup").length, apprentissage: altCount },
-      total: psupData.total + catData.total,
-      sources: { parcoursup: psupData.results.length, apprentissage: catData.results.length },
     });
 
   } catch (err) {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PageHelmet from '@/components/SEO/PageHelmet';
 import { FileText, Users, CreditCard, AlertTriangle, Scale, RefreshCw, ArrowLeft, ChevronDown, CheckCircle } from 'lucide-react';
 import { useLegalDocument } from '@/hooks/useLegalDocument';
 import DynamicLegalContent from '@/components/legal/DynamicLegalContent';
@@ -29,6 +30,12 @@ const TermsPage = () => {
 
   return (
     <DynamicLegalContent dbContent={dbContent} loading={dbLoading}>
+    <PageHelmet
+      title="Conditions Générales d'Utilisation - CléAvenir"
+      description="Lisez les conditions générales d'utilisation de CléAvenir : droits, obligations, abonnements et règles d'utilisation de la plateforme."
+      keywords="CGU, conditions utilisation, mentions légales, abonnement, CléAvenir"
+      breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'CGU', url: '/terms' }]}
+    />
     <div className="min-h-screen bg-[#070710] text-white">
       <div className="relative overflow-hidden bg-gradient-to-b from-rose-950/30 to-[#070710] pt-24 pb-20 px-6">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-rose-900/20 via-transparent to-transparent" />

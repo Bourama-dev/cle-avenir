@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import PageHelmet from '@/components/SEO/PageHelmet';
 import { Building2, Globe, Server, Phone, Shield, ArrowLeft, ExternalLink } from 'lucide-react';
 import { useLegalDocument } from '@/hooks/useLegalDocument';
 import DynamicLegalContent from '@/components/legal/DynamicLegalContent';
@@ -10,6 +11,12 @@ const LegalPage = () => {
   const { content: dbContent, loading: dbLoading } = useLegalDocument('mentions');
   return (
     <DynamicLegalContent dbContent={dbContent} loading={dbLoading}>
+    <PageHelmet
+      title="Mentions Légales - CléAvenir"
+      description="Mentions légales de CléAvenir : éditeur, hébergeur, propriété intellectuelle et informations légales obligatoires."
+      keywords="mentions légales, éditeur, hébergeur, SIRET, CléAvenir"
+      breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'Mentions légales', url: '/legal' }]}
+    />
     <div className="min-h-screen bg-[#080812] text-white">
       <div className="relative overflow-hidden pt-24 pb-16 px-6">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-slate-800/30 via-transparent to-transparent" />

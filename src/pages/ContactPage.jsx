@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PageHelmet from '@/components/SEO/PageHelmet';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -49,6 +50,12 @@ const ContactPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <PageHelmet
+        title="Contactez CléAvenir - Support & Questions"
+        description="Besoin d'aide ? Contactez l'équipe CléAvenir pour toute question sur l'orientation, nos formations, vos offres d'emploi ou votre compte."
+        keywords="contact, support, aide, CléAvenir, question, orientation, assistance"
+        breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'Contact', url: '/contact' }]}
+      />
       <AnimatedSection>
         <AnimatedItem>
           <div className="text-center mb-10">

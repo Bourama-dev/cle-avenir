@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
+import PageHelmet from '@/components/SEO/PageHelmet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -71,6 +72,11 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
+      <PageHelmet
+        title="Connexion - CléAvenir"
+        description="Connectez-vous à votre compte CléAvenir pour accéder à vos résultats d'orientation et formations recommandées."
+        noIndex={true}
+      />
 
       <div className="mb-8 text-center">
         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">

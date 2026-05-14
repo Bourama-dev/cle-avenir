@@ -1,4 +1,5 @@
 import React from 'react';
+import PageHelmet from '@/components/SEO/PageHelmet';
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle2, Circle, Clock } from 'lucide-react';
 import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
@@ -37,6 +38,12 @@ const RoadmapPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <PageHelmet
+        title="Feuille de Route - CléAvenir"
+        description="Découvrez les fonctionnalités à venir sur CléAvenir : nouvelles intégrations, améliorations du test d'orientation IA et outils carrière."
+        keywords="roadmap, feuille de route, nouveautés, fonctionnalités, CléAvenir"
+        breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'Roadmap', url: '/roadmap' }]}
+      />
       <AnimatedSection>
         <AnimatedItem>
           <div className="text-center mb-12">

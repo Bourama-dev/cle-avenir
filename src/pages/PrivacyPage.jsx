@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PageHelmet from '@/components/SEO/PageHelmet';
 import { Shield, Lock, Eye, Database, UserCheck, Trash2, Mail, ChevronRight, ArrowLeft, CheckCircle } from 'lucide-react';
 import { useLegalDocument } from '@/hooks/useLegalDocument';
 import DynamicLegalContent from '@/components/legal/DynamicLegalContent';
@@ -33,6 +34,12 @@ const PrivacyPage = () => {
 
   return (
     <DynamicLegalContent dbContent={dbContent} loading={dbLoading}>
+    <PageHelmet
+      title="Politique de Confidentialité - CléAvenir"
+      description="Découvrez comment CléAvenir collecte, utilise et protège vos données personnelles, conformément au RGPD."
+      keywords="politique confidentialité, RGPD, données personnelles, vie privée, CléAvenir"
+      breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'Confidentialité', url: '/privacy' }]}
+    />
     <div className="min-h-screen bg-[#0a0a0f] text-white">
       {/* Hero */}
       <div className="relative overflow-hidden bg-gradient-to-b from-violet-950/50 to-[#0a0a0f] pt-24 pb-20 px-6">

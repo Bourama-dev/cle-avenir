@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import PageHelmet from '@/components/SEO/PageHelmet';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -69,10 +69,12 @@ const PlansPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
-      <Helmet>
-        <title>Nos Offres & Forfaits - CléAvenir</title>
-        <meta name="description" content="Découvrez les différents forfaits CléAvenir : Découverte (gratuit), Premium, et Premium+ pour un accompagnement complet dans votre orientation professionnelle." />
-      </Helmet>
+      <PageHelmet
+        title="Nos Offres & Forfaits - CléAvenir"
+        description="Découvrez les forfaits CléAvenir : Découverte gratuit, Premium et Premium+ pour un accompagnement complet dans votre orientation et carrière."
+        keywords="tarifs, forfaits, abonnement, gratuit, premium, orientation professionnelle, CléAvenir, prix"
+        breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'Forfaits', url: '/plans' }]}
+      />
 
       <main className="container mx-auto px-4 py-16 max-w-6xl flex-grow">
         {/* INDIVIDUAL PLANS SECTION */}

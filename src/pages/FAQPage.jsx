@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Helmet } from 'react-helmet-async';
+import PageHelmet from '@/components/SEO/PageHelmet';
 import { useNavigate } from 'react-router-dom';
 import { Phone, Mail, MessageCircle, FileText, ArrowRight, Shield, Zap, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -99,10 +99,12 @@ const FAQPage = () => {
 
   return (
     <div className="faq-page-container">
-      <Helmet>
-        <title>Centre d'aide & FAQ - CléAvenir</title>
-        <meta name="description" content="Trouvez des réponses à vos questions sur l'orientation, le test CléAvenir, la gestion de compte et nos services." />
-      </Helmet>
+      <PageHelmet
+        title="Centre d'aide & FAQ - CléAvenir"
+        description="Trouvez des réponses à vos questions sur l'orientation, le test CléAvenir, la gestion de compte et nos services."
+        keywords="FAQ, aide, questions fréquentes, orientation, test carrière, compte, abonnement CléAvenir"
+        breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'FAQ', url: '/faq' }]}
+      />
 
       <FAQHero />
 
