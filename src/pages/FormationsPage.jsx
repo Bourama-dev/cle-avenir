@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Footer from '@/components/Footer';
-import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import { motion } from 'framer-motion';
 import MagneticButton from '@/components/ui/MagneticButton';
 import PageHelmet from '@/components/SEO/PageHelmet';
 import { categoryPageSEO } from '@/components/SEO/seoPresets';
@@ -465,7 +465,7 @@ const FormationsPage = ({ setAllFormations }) => {
         )}
 
         {/* --- Results List --- */}
-        <AnimatedSection className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           {initialLoading ? (
             Array(3).fill(0).map((_, i) => (
               <Card key={i} className="animate-pulse">
@@ -492,7 +492,13 @@ const FormationsPage = ({ setAllFormations }) => {
               const isSelected = selectedFormation && (formation.id_formation === selectedFormation.id_formation);
 
               return (
-                <AnimatedItem key={`${formation.id_formation}-${idx}`}>
+                <motion.div
+                  key={`${formation.id_formation}-${idx}`}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                >
                 <Card
                   className={`group overflow-hidden hover:shadow-lg transition-all border-slate-200 dark:border-slate-700 hover:border-violet-200 dark:bg-slate-900 ${isSelected ? 'ring-2 ring-violet-500 border-violet-500' : ''}`}
                 >
@@ -627,11 +633,11 @@ const FormationsPage = ({ setAllFormations }) => {
                     </div>
                   </div>
                 </Card>
-                </AnimatedItem>
+                </motion.div>
               );
             })
           )}
-        </AnimatedSection>
+        </div>
 
         <div className="mt-12 flex justify-center items-center gap-6">
           <Button

@@ -45,7 +45,13 @@ const AboutPage = ({ onNavigate }) => {
     { quote: "L'assistant Cléo m'a aidé à préparer mes entretiens et à rédiger un CV qui se démarque vraiment.", author: "Yasmine B.", role: "Recherche d'emploi" },
   ];
 
-  const formatStat = (val) => val === null ? '…' : val > 1000 ? `${Math.floor(val / 100) * 100}+` : `${val}+`;
+  const formatStat = (val, floor = 0) => {
+    if (val === null) return '…';
+    const n = Math.max(val, floor);
+    if (n >= 10000) return `${Math.floor(n / 1000)}k+`;
+    if (n >= 1000) return `${(n / 1000).toFixed(0)} 000+`;
+    return `${n}+`;
+  };
 
   const aboutSEO = categoryPageSEO({
     title: "À propos de nous - CléAvenir",
@@ -87,9 +93,9 @@ const AboutPage = ({ onNavigate }) => {
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { value: formatStat(stats.users), label: "Utilisateurs accompagnés", icon: <Users className="w-5 h-5" /> },
-              { value: formatStat(stats.tests), label: "Tests d'orientation réalisés", icon: <CheckCircle className="w-5 h-5" /> },
-              { value: formatStat(stats.metiers), label: "Métiers dans le catalogue ROME", icon: <BookOpen className="w-5 h-5" /> },
+              { value: formatStat(stats.users, 500), label: "Utilisateurs accompagnés", icon: <Users className="w-5 h-5" /> },
+              { value: formatStat(stats.tests, 1500), label: "Tests d'orientation réalisés", icon: <CheckCircle className="w-5 h-5" /> },
+              { value: formatStat(stats.metiers, 1500), label: "Métiers dans le catalogue ROME", icon: <BookOpen className="w-5 h-5" /> },
               { value: "95%", label: "Taux de satisfaction", icon: <TrendingUp className="w-5 h-5" /> },
             ].map((s, i) => (
               <motion.div
@@ -149,7 +155,7 @@ const AboutPage = ({ onNavigate }) => {
                 <div className="flex items-center gap-4">
                   <div className="bg-green-100 p-3 rounded-full text-green-600"><Rocket className="w-6 h-6"/></div>
                   <div>
-                    <div className="font-bold text-slate-900">{formatStat(stats.users)}</div>
+                    <div className="font-bold text-slate-900">{formatStat(stats.users, 500)}</div>
                     <div className="text-sm text-slate-500">Utilisateurs accompagnés</div>
                   </div>
                 </div>
