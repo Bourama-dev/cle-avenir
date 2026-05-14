@@ -19,6 +19,9 @@ import {
   ArrowRight, Clock, Building, MapPin, ChevronRight
 } from 'lucide-react';
 import { isValidUUID } from '@/lib/utils';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import MagneticButton from '@/components/ui/MagneticButton';
+import { motion } from 'framer-motion';
 
 // New Components
 import JobDetailHero from '@/components/job-detail/JobDetailHero';

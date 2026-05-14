@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 import {
   BookOpen, Code, Layers, GitBranch, FileCode, Workflow,
   ChevronRight, Hash, Scale, MessageSquare, Zap, Target,
@@ -80,15 +81,21 @@ const DocumentationPage = () => {
         {/* Hero Header */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-12 md:py-16">
           <div className="container mx-auto px-4 max-w-7xl">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4">
-              <div className="p-3 bg-white/10 rounded-xl backdrop-blur-sm flex-shrink-0">
-                <BookOpen className="h-10 w-10 text-white" aria-hidden="true" />
-              </div>
-              <h1 className="text-3xl md:text-5xl font-bold leading-tight">CléAvenir - Moteur de Recommandation Hybride Auto-Apprenant</h1>
-            </div>
-            <p className="text-lg md:text-xl text-blue-100 max-w-3xl ml-1">
-              Système scientifiquement cohérent combinant psychométrie, similarité vectorielle, statistiques adaptatives et apprentissage par renforcement.
-            </p>
+            <AnimatedSection>
+              <AnimatedItem>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4">
+                  <div className="p-3 bg-white/10 rounded-xl backdrop-blur-sm flex-shrink-0">
+                    <BookOpen className="h-10 w-10 text-white" aria-hidden="true" />
+                  </div>
+                  <h1 className="text-3xl md:text-5xl font-bold leading-tight">CléAvenir - Moteur de Recommandation Hybride Auto-Apprenant</h1>
+                </div>
+              </AnimatedItem>
+              <AnimatedItem>
+                <p className="text-lg md:text-xl text-blue-100 max-w-3xl ml-1">
+                  Système scientifiquement cohérent combinant psychométrie, similarité vectorielle, statistiques adaptatives et apprentissage par renforcement.
+                </p>
+              </AnimatedItem>
+            </AnimatedSection>
           </div>
         </div>
 
@@ -128,9 +135,11 @@ const DocumentationPage = () => {
 
             {/* Main Content */}
             <main className="flex-1 space-y-12" role="main">
-              
+
               {/* Section 1 */}
+              <AnimatedSection>
               <section id="collecte" className="scroll-mt-28">
+                <AnimatedItem>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-blue-100 rounded-lg text-blue-600" aria-hidden="true">
                     <ClipboardList className="h-6 w-6" />
@@ -150,10 +159,14 @@ const DocumentationPage = () => {
                     </ul>
                   </CardContent>
                 </Card>
+                </AnimatedItem>
               </section>
+              </AnimatedSection>
 
               {/* Section 2 */}
+              <AnimatedSection>
               <section id="vecteur-user" className="scroll-mt-28">
+                <AnimatedItem>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-purple-100 rounded-lg text-purple-600">
                     <Target className="h-6 w-6" />
@@ -186,10 +199,14 @@ const DocumentationPage = () => {
                     <p className="text-sm text-slate-500 italic">Note : Le vecteur est mathématiquement stable</p>
                   </CardContent>
                 </Card>
+                </AnimatedItem>
               </section>
+              </AnimatedSection>
 
               {/* Section 3 */}
+              <AnimatedSection>
               <section id="riasec" className="scroll-mt-28">
+                <AnimatedItem>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-green-100 rounded-lg text-green-600" aria-hidden="true">
                     <Compass className="h-6 w-6" />
@@ -227,10 +244,14 @@ const DocumentationPage = () => {
                     </div>
                   </CardContent>
                 </Card>
+                </AnimatedItem>
               </section>
+              </AnimatedSection>
 
               {/* Section 4 */}
+              <AnimatedSection>
               <section id="rome" className="scroll-mt-28">
+                <AnimatedItem>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-yellow-100 rounded-lg text-yellow-600" aria-hidden="true">
                     <Database className="h-6 w-6" />
@@ -254,10 +275,14 @@ const DocumentationPage = () => {
                     </div>
                   </CardContent>
                 </Card>
+                </AnimatedItem>
               </section>
+              </AnimatedSection>
 
               {/* Section 5 */}
+              <AnimatedSection>
               <section id="vecteur-metier" className="scroll-mt-28">
+                <AnimatedItem>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600" aria-hidden="true">
                     <Briefcase className="h-6 w-6" />
@@ -285,11 +310,15 @@ const DocumentationPage = () => {
                     </div>
                   </CardContent>
                 </Card>
+                </AnimatedItem>
               </section>
+              </AnimatedSection>
 
               {/* Section 6 & 7 */}
+              <AnimatedSection>
               <div className="grid md:grid-cols-2 gap-8">
                 <section id="similarite" className="scroll-mt-28">
+                  <AnimatedItem>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-pink-100 rounded-lg text-pink-600" aria-hidden="true">
                       <Crosshair className="h-6 w-6" />
@@ -308,9 +337,11 @@ const DocumentationPage = () => {
                       </div>
                     </CardContent>
                   </Card>
+                  </AnimatedItem>
                 </section>
 
                 <section id="zscore" className="scroll-mt-28">
+                  <AnimatedItem>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-teal-100 rounded-lg text-teal-600" aria-hidden="true">
                       <BarChart className="h-6 w-6" />
@@ -335,12 +366,16 @@ const DocumentationPage = () => {
                       </div>
                     </CardContent>
                   </Card>
+                  </AnimatedItem>
                 </section>
               </div>
+              </AnimatedSection>
 
               {/* Section 8 & 9 */}
+              <AnimatedSection>
               <div className="grid md:grid-cols-2 gap-8">
                 <section id="comportement" className="scroll-mt-28">
+                  <AnimatedItem>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-orange-100 rounded-lg text-orange-600" aria-hidden="true">
                       <Users className="h-6 w-6" />
@@ -363,9 +398,11 @@ const DocumentationPage = () => {
                       </ul>
                     </CardContent>
                   </Card>
+                  </AnimatedItem>
                 </section>
 
                 <section id="apprentissage" className="scroll-mt-28">
+                  <AnimatedItem>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-cyan-100 rounded-lg text-cyan-600" aria-hidden="true">
                       <Brain className="h-6 w-6" />
@@ -387,11 +424,15 @@ const DocumentationPage = () => {
                       </p>
                     </CardContent>
                   </Card>
+                  </AnimatedItem>
                 </section>
               </div>
+              </AnimatedSection>
 
               {/* Section 10 */}
+              <AnimatedSection>
               <section id="resultat" className="scroll-mt-28">
+                <AnimatedItem>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-yellow-100 rounded-lg text-yellow-600" aria-hidden="true">
                     <Award className="h-6 w-6" />
@@ -421,11 +462,15 @@ const DocumentationPage = () => {
                     </div>
                   </CardContent>
                 </Card>
+                </AnimatedItem>
               </section>
+              </AnimatedSection>
 
               {/* Section 11 & 12 */}
+              <AnimatedSection>
               <div className="grid md:grid-cols-2 gap-8">
                 <section id="moteur-realite" className="scroll-mt-28">
+                  <AnimatedItem>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-blue-100 rounded-lg text-blue-600" aria-hidden="true">
                       <Zap className="h-6 w-6" />

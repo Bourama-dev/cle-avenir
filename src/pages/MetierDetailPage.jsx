@@ -33,6 +33,9 @@ import { useMetierDataFetcher } from '@/utils/metierDataFetcher';
 import { JobMarketTrends, SalaryComparisonChart, SkillsRadarChart } from '@/components/cleo/charts/CleoChartLibrary';
 import { formatSalary, getMetierSalary } from '@/utils/salaryUtils';
 import { slugToMetierCode } from '@/utils/slugUtils';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import MagneticButton from '@/components/ui/MagneticButton';
+import { motion } from 'framer-motion';
 
 const FormattedText = ({ text, className = "" }) => {
   if (!text) return null;
@@ -322,7 +325,12 @@ const MetierDetailPage = () => {
         )}
 
         {/* Hero Section */}
-        <header className="bg-white rounded-3xl border border-slate-200/60 p-6 md:p-10 mb-8 shadow-xl shadow-slate-200/30 relative overflow-hidden group">
+        <motion.header
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="bg-white rounded-3xl border border-slate-200/60 p-6 md:p-10 mb-8 shadow-xl shadow-slate-200/30 relative overflow-hidden group"
+        >
            <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-50 rounded-full opacity-50 blur-3xl pointer-events-none"></div>
            <div className="relative z-10">
               <div className="flex flex-wrap gap-2 mb-6 items-center">
@@ -359,18 +367,20 @@ const MetierDetailPage = () => {
                  </div>
                  
                  <div className="flex flex-col gap-4 justify-center lg:border-l lg:pl-10 lg:border-slate-100">
-                    <Button 
-                        size="lg" 
-                        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white h-14 rounded-xl" 
-                        onClick={() => setIsPlanModalOpen(true)}
-                    >
-                       <Target className="mr-2 h-5 w-5" /> Créer mon plan d'action
-                    </Button>
-                    <Button 
-                        variant="outline" 
+                    <MagneticButton>
+                      <Button
+                          size="lg"
+                          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white h-14 rounded-xl"
+                          onClick={() => setIsPlanModalOpen(true)}
+                      >
+                         <Target className="mr-2 h-5 w-5" /> Créer mon plan d'action
+                      </Button>
+                    </MagneticButton>
+                    <Button
+                        variant="outline"
                         size="lg"
-                        className={cn("w-full h-14 rounded-xl border-slate-200", isSaved && "border-pink-200 bg-pink-50 text-pink-700")} 
-                        onClick={toggleSave} 
+                        className={cn("w-full h-14 rounded-xl border-slate-200", isSaved && "border-pink-200 bg-pink-50 text-pink-700")}
+                        onClick={toggleSave}
                         disabled={saving}
                     >
                        <Heart className={cn("mr-2 h-5 w-5", isSaved ? "fill-pink-500 text-pink-500" : "text-slate-400")} />
@@ -379,7 +389,7 @@ const MetierDetailPage = () => {
                  </div>
               </div>
            </div>
-        </header>
+        </motion.header>
 
         {/* TABS Navigation */}
         <Tabs defaultValue="overview" className="w-full">
@@ -395,62 +405,68 @@ const MetierDetailPage = () => {
             {/* TAB: Aperçu */}
             <TabsContent value="overview" className="space-y-8 animate-in fade-in">
               <div className="grid lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 space-y-8">
+                <AnimatedSection className="lg:col-span-2 space-y-8">
                   {/* Savoir-faire */}
-                  <Card className="border-slate-200 shadow-sm rounded-2xl">
-                      <CardHeader className="bg-slate-50/50 border-b border-slate-100">
-                        <CardTitle className="flex items-center gap-2">
-                            <CheckCircle2 className="w-5 h-5 text-indigo-600" /> Compétences requises
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-6">
-                        <ExpandableList
-                            items={toSafeArray(metier.competencesMobilisees || metier.competencesMobiliseesPrincipales)}
-                            limit={8}
-                            renderItem={(skill, idx) => {
-                              const label = typeof skill === 'string' ? skill : skill.libelle;
-                              return (
-                                <div key={idx} className="flex items-center gap-3 p-3 rounded-xl border border-slate-100 mb-2">
-                                    <div className="w-2 h-2 rounded-full bg-indigo-500" />
-                                    <span className="text-slate-800 text-sm"><FormattedText text={label} /></span>
-                                </div>
-                              )
-                            }}
-                        />
-                      </CardContent>
-                  </Card>
+                  <AnimatedItem>
+                    <Card className="border-slate-200 shadow-sm rounded-2xl">
+                        <CardHeader className="bg-slate-50/50 border-b border-slate-100">
+                          <CardTitle className="flex items-center gap-2">
+                              <CheckCircle2 className="w-5 h-5 text-indigo-600" /> Compétences requises
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="pt-6">
+                          <ExpandableList
+                              items={toSafeArray(metier.competencesMobilisees || metier.competencesMobiliseesPrincipales)}
+                              limit={8}
+                              renderItem={(skill, idx) => {
+                                const label = typeof skill === 'string' ? skill : skill.libelle;
+                                return (
+                                  <div key={idx} className="flex items-center gap-3 p-3 rounded-xl border border-slate-100 mb-2">
+                                      <div className="w-2 h-2 rounded-full bg-indigo-500" />
+                                      <span className="text-slate-800 text-sm"><FormattedText text={label} /></span>
+                                  </div>
+                                )
+                              }}
+                          />
+                        </CardContent>
+                    </Card>
+                  </AnimatedItem>
 
                   {/* Environnement */}
-                  <Card className="border-slate-200 shadow-sm rounded-2xl">
-                      <CardHeader className="bg-slate-50/50 border-b border-slate-100">
-                        <CardTitle className="flex items-center gap-2">
-                            <Factory className="w-5 h-5 text-amber-600" /> Environnement de travail
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-6">
-                        <div className="flex flex-wrap gap-2">
-                          {toSafeArray(metier.contextesTravail).slice(0, 10).map((ctx, idx) => (
-                            <Badge key={idx} variant="outline" className="text-slate-700 py-1.5 px-3">
-                                {typeof ctx === 'string' ? ctx : ctx.libelle}
-                            </Badge>
-                          ))}
-                        </div>
-                      </CardContent>
-                  </Card>
-                </div>
+                  <AnimatedItem>
+                    <Card className="border-slate-200 shadow-sm rounded-2xl">
+                        <CardHeader className="bg-slate-50/50 border-b border-slate-100">
+                          <CardTitle className="flex items-center gap-2">
+                              <Factory className="w-5 h-5 text-amber-600" /> Environnement de travail
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="pt-6">
+                          <div className="flex flex-wrap gap-2">
+                            {toSafeArray(metier.contextesTravail).slice(0, 10).map((ctx, idx) => (
+                              <Badge key={idx} variant="outline" className="text-slate-700 py-1.5 px-3">
+                                  {typeof ctx === 'string' ? ctx : ctx.libelle}
+                              </Badge>
+                            ))}
+                          </div>
+                        </CardContent>
+                    </Card>
+                  </AnimatedItem>
+                </AnimatedSection>
 
                 {/* Sidebar within Overview */}
-                <div className="space-y-6">
+                <AnimatedSection className="space-y-6">
                   {/* RIASEC Profile with Radar Chart */}
-                  <SkillsRadarChart
-                    data={riasecData.map(item => ({
-                      name: item.name,
-                      required: item.score,
-                      current: Math.max(40, item.score - 10)
-                    }))}
-                    title="Profil RIASEC"
-                  />
-                </div>
+                  <AnimatedItem>
+                    <SkillsRadarChart
+                      data={riasecData.map(item => ({
+                        name: item.name,
+                        required: item.score,
+                        current: Math.max(40, item.score - 10)
+                      }))}
+                      title="Profil RIASEC"
+                    />
+                  </AnimatedItem>
+                </AnimatedSection>
               </div>
             </TabsContent>
 
@@ -464,13 +480,16 @@ const MetierDetailPage = () => {
 
             {/* TAB: Parcours Professionnel - Integrated Jobs & Formations */}
             <TabsContent value="pathway" className="space-y-8 animate-in fade-in">
-              <div className="space-y-6">
+              <AnimatedSection className="space-y-6">
+                <AnimatedItem>
                 <div>
                   <h2 className="text-2xl font-bold text-slate-900 mb-2">Votre parcours vers ce métier</h2>
                   <p className="text-slate-600">Découvrez les formations pour accéder à ce métier et les offres d'emploi disponibles</p>
                 </div>
+                </AnimatedItem>
 
                 {/* Step 1: Formations */}
+                <AnimatedItem>
                 <Card className="border-slate-200 shadow-sm rounded-2xl overflow-hidden">
                   <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-50/30 border-b border-slate-100">
                     <div className="flex items-center gap-3">
@@ -500,6 +519,7 @@ const MetierDetailPage = () => {
                     )}
                   </CardContent>
                 </Card>
+                </AnimatedItem>
 
                 {/* Connection Arrow */}
                 <div className="flex justify-center py-2">
@@ -511,6 +531,7 @@ const MetierDetailPage = () => {
                 </div>
 
                 {/* Step 2: Job Offers */}
+                <AnimatedItem>
                 <Card className="border-slate-200 shadow-sm rounded-2xl overflow-hidden">
                   <CardHeader className="bg-gradient-to-r from-emerald-50 to-emerald-50/30 border-b border-slate-100">
                     <div className="flex items-center gap-3">
@@ -556,8 +577,10 @@ const MetierDetailPage = () => {
                     )}
                   </CardContent>
                 </Card>
+                </AnimatedItem>
 
                 {/* Market Insights Section */}
+                <AnimatedItem>
                 <div>
                   <h3 className="text-xl font-bold text-slate-900 mb-6">Tendances du marché et rémunération</h3>
                   <div className="grid lg:grid-cols-2 gap-6">
@@ -582,8 +605,10 @@ const MetierDetailPage = () => {
                     />
                   </div>
                 </div>
+                </AnimatedItem>
 
                 {/* Info Box */}
+                <AnimatedItem>
                 <Card className="bg-indigo-50/50 border-indigo-200 rounded-2xl">
                   <CardContent className="pt-6">
                     <div className="flex gap-3">
@@ -595,7 +620,8 @@ const MetierDetailPage = () => {
                     </div>
                   </CardContent>
                 </Card>
-              </div>
+                </AnimatedItem>
+              </AnimatedSection>
             </TabsContent>
 
             {/* TAB: Plan d'Action */}
@@ -612,9 +638,11 @@ const MetierDetailPage = () => {
                       <p className="text-slate-600 mb-6">
                         Nous vous aiderons à structurer votre démarche vers ce métier en définissant vos objectifs, les étapes clés, et un calendrier réaliste.
                       </p>
-                      <Button onClick={() => setIsPlanModalOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 h-12 px-8">
-                         Démarrer mon plan
-                      </Button>
+                      <MagneticButton>
+                        <Button onClick={() => setIsPlanModalOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 h-12 px-8">
+                           Démarrer mon plan
+                        </Button>
+                      </MagneticButton>
                     </div>
 
                     <div className="pt-6 border-t border-slate-100">

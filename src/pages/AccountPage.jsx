@@ -13,6 +13,8 @@ import { getDisplayPlanName } from '@/lib/subscriptionUtils';
 import { notificationService } from '@/services/notificationService';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { useNavigation } from '@/hooks/useNavigation';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import { motion } from 'framer-motion';
 
 const AccountPage = () => {
   const { user, userProfile, subscriptionTier } = useAuth();
@@ -110,7 +112,13 @@ const AccountPage = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+      >
         <div>
           <h1 className="text-3xl font-bold text-slate-900">Mon Compte</h1>
           <p className="text-slate-500">Gérez vos paramètres personnels et votre abonnement.</p>
@@ -118,135 +126,145 @@ const AccountPage = () => {
         <Button variant="outline" onClick={() => navigate('/profile/edit')}>
           <Edit className="mr-2 h-4 w-4" /> Modifier Profil
         </Button>
-      </div>
+      </motion.div>
 
-      {/* Personal Info */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <User className="h-5 w-5 text-slate-500" /> Informations Personnelles
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <Label className="text-slate-500 text-xs">Email</Label>
-              <div className="flex items-center gap-2 font-medium">
-                <Mail className="h-4 w-4 text-slate-400" /> {user?.email}
-              </div>
-            </div>
-            <div className="space-y-1">
-              <Label className="text-slate-500 text-xs">Téléphone</Label>
-              <div className="flex items-center gap-2 font-medium">
-                <Phone className="h-4 w-4 text-slate-400" /> {userProfile?.phone || 'Non renseigné'}
-              </div>
-            </div>
-            <div className="space-y-1">
-              <Label className="text-slate-500 text-xs">Membre depuis</Label>
-              <div className="flex items-center gap-2 font-medium">
-                <Calendar className="h-4 w-4 text-slate-400" />
-                {user?.created_at ? new Date(user.created_at).toLocaleDateString('fr-FR') : '-'}
-              </div>
-            </div>
-            <div className="space-y-1">
-              <Label className="text-slate-500 text-xs">Dernière connexion</Label>
-              <div className="flex items-center gap-2 font-medium">
-                <Shield className="h-4 w-4 text-slate-400" />
-                {user?.last_sign_in_at
-                  ? new Date(user.last_sign_in_at).toLocaleDateString('fr-FR')
-                  : new Date().toLocaleDateString('fr-FR')}
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Subscription */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CreditCard className="h-5 w-5 text-slate-500" /> Abonnement
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div>
-            <p className="font-semibold text-lg">{getDisplayPlanName(subscriptionTier)}</p>
-            <p className="text-sm text-slate-500">
-              Statut: <Badge variant="outline" className="text-green-600 border-green-200 bg-green-50">Actif</Badge>
-            </p>
-          </div>
-          <Button variant="secondary" onClick={() => navigate('/manage-subscription')}>
-            Gérer mon abonnement
-          </Button>
-        </CardContent>
-      </Card>
-
-      {/* Preferences */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Préférences de communication</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {prefLoading ? (
-            <div className="flex items-center gap-2 text-slate-400">
-              <Loader2 className="h-4 w-4 animate-spin" /> Chargement...
-            </div>
-          ) : (
-            <>
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label className="text-base">Notifications Email</Label>
-                  <p className="text-sm text-slate-500">Recevoir des mises à jour sur vos candidatures.</p>
+      <AnimatedSection className="space-y-6">
+        {/* Personal Info */}
+        <AnimatedItem>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <User className="h-5 w-5 text-slate-500" /> Informations Personnelles
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <Label className="text-slate-500 text-xs">Email</Label>
+                  <div className="flex items-center gap-2 font-medium">
+                    <Mail className="h-4 w-4 text-slate-400" /> {user?.email}
+                  </div>
                 </div>
-                <Switch
-                  checked={prefs.email_notifications}
-                  onCheckedChange={(val) => handlePrefChange('email_notifications', val)}
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label className="text-base">Newsletter</Label>
-                  <p className="text-sm text-slate-500">Recevoir nos conseils carrière hebdo.</p>
+                <div className="space-y-1">
+                  <Label className="text-slate-500 text-xs">Téléphone</Label>
+                  <div className="flex items-center gap-2 font-medium">
+                    <Phone className="h-4 w-4 text-slate-400" /> {userProfile?.phone || 'Non renseigné'}
+                  </div>
                 </div>
-                <Switch
-                  checked={prefs.newsletter}
-                  onCheckedChange={(val) => handlePrefChange('newsletter', val)}
-                />
+                <div className="space-y-1">
+                  <Label className="text-slate-500 text-xs">Membre depuis</Label>
+                  <div className="flex items-center gap-2 font-medium">
+                    <Calendar className="h-4 w-4 text-slate-400" />
+                    {user?.created_at ? new Date(user.created_at).toLocaleDateString('fr-FR') : '-'}
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-slate-500 text-xs">Dernière connexion</Label>
+                  <div className="flex items-center gap-2 font-medium">
+                    <Shield className="h-4 w-4 text-slate-400" />
+                    {user?.last_sign_in_at
+                      ? new Date(user.last_sign_in_at).toLocaleDateString('fr-FR')
+                      : new Date().toLocaleDateString('fr-FR')}
+                  </div>
+                </div>
               </div>
-            </>
-          )}
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </AnimatedItem>
 
-      {/* Security & Data */}
-      <Card className="border-red-100">
-        <CardHeader>
-          <CardTitle className="text-slate-900">Sécurité & Données</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Button variant="outline" className="w-full justify-start" onClick={handleChangePassword}>
-            <Shield className="mr-2 h-4 w-4" /> Changer mon mot de passe
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full justify-start"
-            onClick={handleDownloadData}
-            disabled={downloadLoading}
-          >
-            {downloadLoading
-              ? <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              : <Download className="mr-2 h-4 w-4" />}
-            Télécharger mes données (RGPD)
-          </Button>
-          <Button
-            variant="destructive"
-            className="w-full justify-start bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 border-red-100"
-            onClick={handleDeleteAccount}
-          >
-            <Trash2 className="mr-2 h-4 w-4" /> Demander la suppression de mon compte
-          </Button>
-        </CardContent>
-      </Card>
+        {/* Subscription */}
+        <AnimatedItem>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <CreditCard className="h-5 w-5 text-slate-500" /> Abonnement
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div>
+                <p className="font-semibold text-lg">{getDisplayPlanName(subscriptionTier)}</p>
+                <p className="text-sm text-slate-500">
+                  Statut: <Badge variant="outline" className="text-green-600 border-green-200 bg-green-50">Actif</Badge>
+                </p>
+              </div>
+              <Button variant="secondary" onClick={() => navigate('/manage-subscription')}>
+                Gérer mon abonnement
+              </Button>
+            </CardContent>
+          </Card>
+        </AnimatedItem>
+
+        {/* Preferences */}
+        <AnimatedItem>
+          <Card>
+            <CardHeader>
+              <CardTitle>Préférences de communication</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {prefLoading ? (
+                <div className="flex items-center gap-2 text-slate-400">
+                  <Loader2 className="h-4 w-4 animate-spin" /> Chargement...
+                </div>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label className="text-base">Notifications Email</Label>
+                      <p className="text-sm text-slate-500">Recevoir des mises à jour sur vos candidatures.</p>
+                    </div>
+                    <Switch
+                      checked={prefs.email_notifications}
+                      onCheckedChange={(val) => handlePrefChange('email_notifications', val)}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label className="text-base">Newsletter</Label>
+                      <p className="text-sm text-slate-500">Recevoir nos conseils carrière hebdo.</p>
+                    </div>
+                    <Switch
+                      checked={prefs.newsletter}
+                      onCheckedChange={(val) => handlePrefChange('newsletter', val)}
+                    />
+                  </div>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </AnimatedItem>
+
+        {/* Security & Data */}
+        <AnimatedItem>
+          <Card className="border-red-100">
+            <CardHeader>
+              <CardTitle className="text-slate-900">Sécurité & Données</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Button variant="outline" className="w-full justify-start" onClick={handleChangePassword}>
+                <Shield className="mr-2 h-4 w-4" /> Changer mon mot de passe
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={handleDownloadData}
+                disabled={downloadLoading}
+              >
+                {downloadLoading
+                  ? <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  : <Download className="mr-2 h-4 w-4" />}
+                Télécharger mes données (RGPD)
+              </Button>
+              <Button
+                variant="destructive"
+                className="w-full justify-start bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 border-red-100"
+                onClick={handleDeleteAccount}
+              >
+                <Trash2 className="mr-2 h-4 w-4" /> Demander la suppression de mon compte
+              </Button>
+            </CardContent>
+          </Card>
+        </AnimatedItem>
+      </AnimatedSection>
     </div>
   );
 };

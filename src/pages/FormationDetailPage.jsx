@@ -15,6 +15,9 @@ import {
   Euro, Briefcase, ChevronRight, AlertCircle, RefreshCw
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import MagneticButton from '@/components/ui/MagneticButton';
+import { motion } from 'framer-motion';
 
 // Lazy loaded components (Tasks 1-5)
 const FormationProgramme = lazy(() => import('@/components/formation/FormationProgramme'));
@@ -199,7 +202,12 @@ const FormationDetailPage = () => {
       <PageHelmet {...formationSEOProps} />
       
       {/* Hero Section */}
-      <div className="relative bg-white border-b border-slate-200 overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="relative bg-white border-b border-slate-200 overflow-hidden"
+      >
          <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 pointer-events-none" />
          <div className="container relative mx-auto px-4 py-8 md:py-12 max-w-6xl">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
@@ -252,9 +260,9 @@ const FormationDetailPage = () => {
 
               {/* Action Buttons */}
               <div className="flex sm:flex-row md:flex-col gap-3 min-w-[200px] mt-4 md:mt-0">
-                 <Button 
-                   onClick={handleSaveFormation} 
-                   variant="outline" 
+                 <Button
+                   onClick={handleSaveFormation}
+                   variant="outline"
                    className={cn("flex-1 md:w-full h-11 justify-center md:justify-start rounded-xl border-slate-200 hover:bg-slate-50 transition-all", isSaved && "bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100")}
                  >
                     {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin"/> : <Bookmark className={cn("mr-2 h-4 w-4", isSaved && "fill-indigo-700")} />}
@@ -267,34 +275,39 @@ const FormationDetailPage = () => {
               </div>
             </div>
          </div>
-      </div>
+      </motion.div>
 
       <div className="container mx-auto px-4 py-8 md:py-12 max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-10">
          
          {/* Main Content Sections */}
-         <div className="lg:col-span-8 space-y-12">
-            
+         <AnimatedSection className="lg:col-span-8 space-y-12">
+
             {/* Programme & Info */}
+            <AnimatedItem>
             <section id="programme">
                <h2 className="formation-section-title">Le programme de formation</h2>
                <Suspense fallback={<SectionSkeleton />}>
                  <FormationProgramme formation={formation} />
                </Suspense>
             </section>
+            </AnimatedItem>
 
-            <hr className="border-slate-200" />
+            <AnimatedItem><hr className="border-slate-200" /></AnimatedItem>
 
             {/* Certification */}
+            <AnimatedItem>
             <section id="certification">
                <h2 className="formation-section-title">Certification & Reconnaissance</h2>
                <Suspense fallback={<SectionSkeleton />}>
                  <FormationCertification formation={formation} />
                </Suspense>
             </section>
+            </AnimatedItem>
 
-            <hr className="border-slate-200" />
+            <AnimatedItem><hr className="border-slate-200" /></AnimatedItem>
 
             {/* Débouchés */}
+            <AnimatedItem>
             <section id="debouches">
                <h2 className="formation-section-title">Métiers ciblés & Débouchés</h2>
                <p className="text-slate-600 mb-6 text-lg">Cette formation vous prépare directement aux métiers suivants :</p>
@@ -302,8 +315,10 @@ const FormationDetailPage = () => {
                  <FormationDebouches careers={careers} />
                </Suspense>
             </section>
+            </AnimatedItem>
 
             {/* Statistiques (Premium Feature Mock) */}
+            <AnimatedItem>
             <section id="statistiques" className="relative">
                <h2 className="formation-section-title">Statistiques d'insertion</h2>
                {!isPremium ? (
@@ -330,10 +345,12 @@ const FormationDetailPage = () => {
                  </Suspense>
                )}
             </section>
+            </AnimatedItem>
 
-            <hr className="border-slate-200" />
+            <AnimatedItem><hr className="border-slate-200" /></AnimatedItem>
 
             {/* Offres d'emploi */}
+            <AnimatedItem>
             <section id="offres">
                <h2 className="formation-section-title">Offres d'emploi actuelles</h2>
                <p className="text-slate-600 mb-6 text-lg">Opportunités professionnelles correspondant à cette formation, en direct sur le marché :</p>
@@ -341,8 +358,9 @@ const FormationDetailPage = () => {
                  <FormationOffres offers={jobOffers} />
                </Suspense>
             </section>
+            </AnimatedItem>
 
-         </div>
+         </AnimatedSection>
 
          {/* Sidebar */}
          <div className="lg:col-span-4">
@@ -369,9 +387,11 @@ const FormationDetailPage = () => {
                     </div>
                     
                     <div className="p-8 space-y-6 bg-white">
-                       <Button className="w-full h-14 text-lg font-bold bg-indigo-600 hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all rounded-xl">
-                          Demander la brochure
-                       </Button>
+                       <MagneticButton>
+                         <Button className="w-full h-14 text-lg font-bold bg-indigo-600 hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all rounded-xl">
+                            Demander la brochure
+                         </Button>
+                       </MagneticButton>
                        <Button variant="outline" className="w-full h-14 text-base font-semibold border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl">
                           Contacter l'organisme
                        </Button>

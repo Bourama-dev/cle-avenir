@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 import { blogCategories, popularTags } from '@/data/blogPosts';
 import './BlogPage.css';
 import { normalizedIncludes } from '@/utils/stringUtils';
+import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -81,23 +83,31 @@ const BlogPage = () => {
       <header className="blog-hero">
         <div className="blog-hero__noise" />
         <div className="blog-hero__content">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className="blog-hero__label">
-              <Rss size={13} />
-              <span>Le blog CléAvenir</span>
-            </div>
-            <h1 className="blog-hero__title">
-              Construis ton<br />
-              <em>avenir professionnel</em>
-            </h1>
-            <p className="blog-hero__sub">
-              Conseils d'experts, tendances du marché et témoignages pour guider chaque étape de ta carrière.
-            </p>
-          </motion.div>
+          <AnimatedSection>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <AnimatedItem>
+                <div className="blog-hero__label">
+                  <Rss size={13} />
+                  <span>Le blog CléAvenir</span>
+                </div>
+              </AnimatedItem>
+              <AnimatedItem>
+                <h1 className="blog-hero__title">
+                  Construis ton<br />
+                  <em>avenir professionnel</em>
+                </h1>
+              </AnimatedItem>
+              <AnimatedItem>
+                <p className="blog-hero__sub">
+                  Conseils d'experts, tendances du marché et témoignages pour guider chaque étape de ta carrière.
+                </p>
+              </AnimatedItem>
+            </motion.div>
+          </AnimatedSection>
         </div>
         <div className="blog-hero__scroll-hint">
           <span />
@@ -113,6 +123,7 @@ const BlogPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
             >
+              <MagneticButton>
               <Link to={`/blog/${featuredPost.slug}`} className="blog-featured__card">
                 <div className="blog-featured__image">
                   <img
@@ -134,6 +145,7 @@ const BlogPage = () => {
                   </div>
                 </div>
               </Link>
+              </MagneticButton>
             </motion.div>
           </div>
         </section>
@@ -147,6 +159,8 @@ const BlogPage = () => {
           <div className="blog-articles-col">
 
             {/* Barre filtre/recherche */}
+            <AnimatedSection>
+            <AnimatedItem>
             <div className="blog-toolbar">
               <div className="blog-cats">
                 {['Tous', ...blogCategories].map((cat) => (
@@ -175,6 +189,8 @@ const BlogPage = () => {
                 )}
               </div>
             </div>
+            </AnimatedItem>
+            </AnimatedSection>
 
             {/* Grille articles */}
             {loading ? (

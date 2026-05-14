@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 import { Lock, CheckCircle, Loader2 } from 'lucide-react';
+import MagneticButton from '@/components/ui/MagneticButton';
+import { motion } from 'framer-motion';
 
 const UpdatePasswordPage = () => {
   const [password, setPassword] = useState('');
@@ -57,6 +59,12 @@ const UpdatePasswordPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md"
+      >
       <Card className="max-w-md w-full shadow-lg border-slate-100">
         <CardHeader className="text-center">
           <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 text-primary">
@@ -86,14 +94,17 @@ const UpdatePasswordPage = () => {
                     className="text-lg"
                 />
                 </div>
-                <Button type="submit" className="w-full" disabled={loading} size="lg">
-                {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                {loading ? 'Mise à jour...' : 'Confirmer le mot de passe'}
-                </Button>
+                <MagneticButton className="w-full">
+                  <Button type="submit" className="w-full" disabled={loading} size="lg">
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                    {loading ? 'Mise à jour...' : 'Confirmer le mot de passe'}
+                  </Button>
+                </MagneticButton>
             </form>
           )}
         </CardContent>
       </Card>
+      </motion.div>
     </div>
   );
 };
