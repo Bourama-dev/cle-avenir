@@ -63,6 +63,33 @@
     }
     </script>
 
+    <!-- Suppress known third-party script errors (GTM/YouTube yt.mid) before React loads -->
+    <script>
+      (function() {
+        var _thirdPartyPatterns = ['yt.mid', 'ytInitialData', 'youtube.com', 'googletagmanager', 'clarity.ms', 'fbq'];
+        function _isThirdParty(msg) {
+          if (!msg) return false;
+          var s = String(msg);
+          for (var i = 0; i < _thirdPartyPatterns.length; i++) {
+            if (s.indexOf(_thirdPartyPatterns[i]) !== -1) return true;
+          }
+          return false;
+        }
+        window.addEventListener('error', function(e) {
+          if (_isThirdParty(e.message) || _isThirdParty(e.filename)) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+          }
+        }, true);
+        window.addEventListener('unhandledrejection', function(e) {
+          if (_isThirdParty(e.reason && (e.reason.message || e.reason))) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+          }
+        }, true);
+      })();
+    </script>
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
