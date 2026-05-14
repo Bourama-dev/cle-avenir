@@ -33,6 +33,10 @@ export default function DynamicBackground({ children }) {
   const orbX = useTransform(mouseX, [0, 1], ['-10%', '10%']);
   const orbY = useTransform(mouseY, [0, 1], ['-8%', '8%']);
 
+  // Orbe curseur — hooks MUST be at top level, not inside JSX style props
+  const cursorLeft = useTransform(mouseX, [0, 1], ['-150px', 'calc(100vw - 150px)']);
+  const cursorTop  = useTransform(mouseY, [0, 1], ['-150px', 'calc(100vh - 150px)']);
+
   const handleMouseMove = useCallback((e) => {
     rawX.set(e.clientX / window.innerWidth);
     rawY.set(e.clientY / window.innerHeight);
@@ -122,8 +126,8 @@ export default function DynamicBackground({ children }) {
           height: 300,
           background: 'radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%)',
           filter: 'blur(30px)',
-          left: useTransform(mouseX, [0, 1], ['-150px', `calc(100vw - 150px)`]),
-          top:  useTransform(mouseY, [0, 1], ['-150px', `calc(100vh - 150px)`]),
+          left: cursorLeft,
+          top:  cursorTop,
           translateX: '-50%',
           translateY: '-50%',
         }}
