@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Footer from '@/components/Footer';
-import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
+import { motion } from 'framer-motion';
 import MagneticButton from '@/components/ui/MagneticButton';
 import PageHelmet from '@/components/SEO/PageHelmet';
 import { categoryPageSEO } from '@/components/SEO/seoPresets';
@@ -107,9 +107,9 @@ const FormationsPage = ({ setAllFormations }) => {
   const enrichFormationData = (f) => {
     const seed = f.id_formation || f.libelle_formation || "default";
     const rand = getPseudoRandom(seed);
-    const level = getFormationLevel(f);
+    // Use niveau from API when available, fall back to title-based detection
+    const level = f.niveau || getFormationLevel(f);
 
-    // Deterministic mock data for UI demo purposes
     const rating = (4 + (rand % 10) / 10).toFixed(1);
     const reviews = 20 + (rand % 150);
     const modules = 5 + (rand % 10);
@@ -119,21 +119,26 @@ const FormationsPage = ({ setAllFormations }) => {
     if (level === 'BAC+2') duration = "2 ans";
     if (level === 'BAC+3') duration = "3 ans";
     if (level === 'BAC+5') duration = "5 ans";
-    if (level === 'CAP') duration = "2 ans";
+    if (['CAP', 'CAP/BEP'].includes(level)) duration = "2 ans";
 
-    const isApprentissage = (f.libelle_formation || '').toLowerCase().includes('apprentissage');
+    // Detect alternance from source field or tags (reliable for Catalogue Apprentissage data)
+    const isAlternance =
+      f.source === 'apprentissage' ||
+      (f.tags || []).some(t => ['Apprentissage', 'Alternance'].includes(t)) ||
+      (f.libelle_formation || '').toLowerCase().includes('alternance') ||
+      (f.libelle_formation || '').toLowerCase().includes('apprentissage');
 
     return {
       ...f,
       ui_details: {
-        duration: duration,
+        duration,
         level_label: level,
         difficulty: getDifficultyLevel(level),
         modules_count: modules,
         certificate: "Diplôme d'État / RNCP",
         prerequisites: level === 'BAC' ? "Brevet des collèges" : "Baccalauréat ou équivalent",
         instructor: f.etablissements?.[0]?.nom || "Équipe pédagogique qualifiée",
-        rating: rating,
+        rating,
         reviews_count: reviews,
         access_duration: "Accès illimité ressources",
         outcomes: [
@@ -141,10 +146,10 @@ const FormationsPage = ({ setAllFormations }) => {
           "Gestion de projet",
           "Communication professionnelle"
         ],
-        format: isApprentissage ? "Alternance" : "Présentiel / Hybride",
+        format: isAlternance ? "Alternance" : "Présentiel / Hybride",
         language: "Français",
         total_hours: `${hours}h`,
-        cost: "Gratuit (Financé)" // added for details panel
+        cost: "Gratuit (Financé)"
       }
     };
   };
@@ -225,27 +230,32 @@ const FormationsPage = ({ setAllFormations }) => {
     if (sectorFilter && sectorFilter !== 'all') {
       data = data.filter(f => {
         const title = normalizeStr(f.libelle_formation);
-        if (sectorFilter === 'sante') return title.includes('infirmier') || title.includes('sante');
-        if (sectorFilter === 'commerce') return title.includes('commerce') || title.includes('vente');
-        if (sectorFilter === 'informatique') return title.includes('informatique') || title.includes('numerique') || title.includes('web');
+        const fili = normalizeStr(f.fili || '');
+        if (sectorFilter === 'informatique') return title.includes('informatique') || title.includes('numerique') || title.includes('web') || title.includes('developpeur') || title.includes('systeme') || title.includes('reseau') || fili.includes('informatique');
+        if (sectorFilter === 'sante') return title.includes('infirmier') || title.includes('sante') || title.includes('medecin') || title.includes('pharmacie') || title.includes('kinesitherapeute') || title.includes('aide soignant') || fili.includes('sante');
+        if (sectorFilter === 'commerce') return title.includes('commerce') || title.includes('vente') || title.includes('marketing') || title.includes('gestion') || title.includes('management') || title.includes('comptabilite') || fili.includes('commerce');
+        if (sectorFilter === 'sciences') return title.includes('science') || title.includes('chimie') || title.includes('physique') || title.includes('ingenieur') || title.includes('mathematique') || fili.includes('ing') || fili.includes('science');
+        if (sectorFilter === 'droit') return title.includes('droit') || title.includes('juridique') || title.includes('notaire') || title.includes('politique') || fili.includes('droit');
+        if (sectorFilter === 'arts') return title.includes('art') || title.includes('design') || title.includes('communication') || title.includes('graphisme') || title.includes('audiovisuel') || fili.includes('art');
+        if (sectorFilter === 'education') return title.includes('education') || title.includes('enseignement') || title.includes('professeur') || title.includes('pedagogie') || fili.includes('education');
+        if (sectorFilter === 'tourisme') return title.includes('tourisme') || title.includes('hotel') || title.includes('restauration') || title.includes('cuisinier') || fili.includes('tourisme');
         return true;
       });
     }
 
     if (levelFilter && levelFilter !== 'all') {
-      data = data.filter(f => getFormationLevel(f) === levelFilter);
+      // Use niveau from API when available, otherwise derive from title
+      data = data.filter(f => (f.niveau || getFormationLevel(f)) === levelFilter);
     }
 
     if (formationTypeFilter && formationTypeFilter !== 'all') {
       data = data.filter(f => {
         const title = normalizeStr(f.libelle_formation);
-        const tags = normalizeStr((f.tags || []).join(' '));
-        if (formationTypeFilter === 'Alternance') {
-          return title.includes('apprentissage') || title.includes('alternance') || tags.includes('apprentissage');
-        }
-        if (formationTypeFilter === 'Initial') {
-          return !title.includes('apprentissage') && !title.includes('alternance');
-        }
+        const tags = (f.tags || []).map(t => normalizeStr(t));
+        const isAlternance = f.source === 'apprentissage' || tags.some(t => t.includes('alternance') || t.includes('apprentissage')) || title.includes('apprentissage') || title.includes('alternance');
+        if (formationTypeFilter === 'Alternance') return isAlternance;
+        if (formationTypeFilter === 'Parcoursup') return f.source === 'parcoursup';
+        if (formationTypeFilter === 'Initial') return !isAlternance;
         return true;
       });
     }
@@ -465,7 +475,7 @@ const FormationsPage = ({ setAllFormations }) => {
         )}
 
         {/* --- Results List --- */}
-        <AnimatedSection className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           {initialLoading ? (
             Array(3).fill(0).map((_, i) => (
               <Card key={i} className="animate-pulse">
@@ -492,7 +502,13 @@ const FormationsPage = ({ setAllFormations }) => {
               const isSelected = selectedFormation && (formation.id_formation === selectedFormation.id_formation);
 
               return (
-                <AnimatedItem key={`${formation.id_formation}-${idx}`}>
+                <motion.div
+                  key={`${formation.id_formation}-${idx}`}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                >
                 <Card
                   className={`group overflow-hidden hover:shadow-lg transition-all border-slate-200 dark:border-slate-700 hover:border-violet-200 dark:bg-slate-900 ${isSelected ? 'ring-2 ring-violet-500 border-violet-500' : ''}`}
                 >
@@ -500,6 +516,12 @@ const FormationsPage = ({ setAllFormations }) => {
                     <div className="flex-1 p-6 flex flex-col justify-between">
                       <div>
                         <div className="flex flex-wrap items-center gap-2 mb-3">
+                          {formation.source === 'parcoursup' && (
+                            <Badge className="bg-blue-50 text-blue-700 border border-blue-200 font-semibold">Parcoursup</Badge>
+                          )}
+                          {formation.source === 'apprentissage' && (
+                            <Badge className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">Alternance</Badge>
+                          )}
                           <Badge variant="secondary" className="bg-violet-100 text-violet-700">
                             {ui_details.level_label}
                           </Badge>
@@ -627,11 +649,11 @@ const FormationsPage = ({ setAllFormations }) => {
                     </div>
                   </div>
                 </Card>
-                </AnimatedItem>
+                </motion.div>
               );
             })
           )}
-        </AnimatedSection>
+        </div>
 
         <div className="mt-12 flex justify-center items-center gap-6">
           <Button

@@ -22,7 +22,6 @@ const ORBS = [
 export default function DynamicBackground({ children }) {
   const containerRef = useRef(null);
   const [palette, setPalette] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
 
   // Suivi souris
   const rawX = useMotionValue(0.5);
@@ -54,12 +53,11 @@ export default function DynamicBackground({ children }) {
     const onScroll = () => {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-      setScrollProgress(progress);
       const idx = Math.min(
         Math.floor(progress * SCROLL_PALETTES.length),
         SCROLL_PALETTES.length - 1
       );
-      setPalette(idx);
+      setPalette(prev => prev === idx ? prev : idx);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
