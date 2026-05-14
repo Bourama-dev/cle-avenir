@@ -10,7 +10,7 @@ const JobOffersPage = () => {
   const jobOffersSEO = categoryPageSEO({
     title: "Offres d'emploi, Stages et Alternances en France | CléAvenir",
     description: "Parcourez des milliers d'offres d'emploi, de stages et d'alternances en France. Trouvez votre prochain poste grâce à notre moteur de recherche intelligent.",
-    keywords: "offres emploi, alternance, stage, recrutement, CDI, CDD, France",
+    keywords: "offres d'emploi, recherche emploi, offres emploi France, alternance, stage, apprentissage, recrutement, CDI, CDD, intérim, freelance, emploi Paris, emploi Lyon, emploi Bordeaux, trouver un travail, offre de stage, offre alternance 2025",
     category: "Offres d'emploi",
     categoryPath: "/offres-emploi"
   });

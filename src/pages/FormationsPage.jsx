@@ -397,7 +397,7 @@ const FormationsPage = ({ setAllFormations }) => {
   const formationsSEO = categoryPageSEO({
     title: "Formations en France - BTS, Licences, Masters | CléAvenir",
     description: "Explorez des milliers de formations en France : BTS, licence, master, CAP, bachelor et plus. Trouvez la formation qui correspond à votre projet professionnel.",
-    keywords: "formations, BTS, licence, master, CAP, bachelor, alternance, école, université, parcours professionnel",
+    keywords: "formations, recherche formation, BTS, licence, master, CAP, bachelor, alternance, apprentissage, Parcoursup, école, université, formation professionnelle, parcours professionnel, orientation après bac, formation en ligne, CFA, quelles études choisir",
     category: "Formations",
     categoryPath: "/formations"
   });

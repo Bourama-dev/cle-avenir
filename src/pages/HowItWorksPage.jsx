@@ -20,7 +20,7 @@ const HowItWorksPage = () => {
   const howItWorksSEO = categoryPageSEO({
     title: "Comment ça marche ? - CléAvenir",
     description: "Découvrez notre méthode unique d'orientation en 5 étapes. Test adaptatif, IA et données marché pour trouver votre voie.",
-    keywords: "orientation, test carrière, IA, méthode, étapes, parcours",
+    keywords: "orientation, comment fonctionne orientation, test carrière IA, méthode orientation professionnelle, trouver sa voie, bilan de compétences gratuit, étapes orientation, parcours professionnel, reconversion",
     category: "À propos",
     categoryPath: "/how-it-works"
   });

@@ -54,7 +54,7 @@ const HomePage = ({ onNavigate }) => {
       <PageHelmet
         title="CléAvenir - Test de Carrière Intelligent & Orientation IA"
         description="Découvrez votre avenir professionnel avec CléAvenir. Test d'orientation gratuit, analyse IA des compétences, fiches métiers, formations et offres d'emploi."
-        keywords="orientation professionnelle, test carrière, métiers, formations, emploi, IA, Parcoursup"
+        keywords="orientation, orientation professionnelle, test orientation gratuit, quel métier faire, recherche métier, offres d'emploi, carrière, formation, Parcoursup, alternance, stage, apprentissage, reconversion professionnelle, bilan de compétences, IA orientation, emploi, trouver sa voie, orientation après bac"
         image="https://cleavenir.com/og-image.jpg"
         breadcrumbs={[{ name: 'Accueil', url: '/' }]}
       />

@@ -130,7 +130,7 @@ export const landingPageSEO = (pageData) => ({
 export const faqPageSEO = (faqs) => ({
   title: 'Questions Fréquemment Posées - CléAvenir',
   description: 'Réponses aux questions fréquemment posées sur CléAvenir, les tests d\'orientation, les formations et les offres d\'emploi.',
-  keywords: 'FAQ, questions, orientation, formation, carrière, emploi',
+  keywords: 'FAQ, aide, questions fréquentes, orientation, offres d\'emploi, formation, carrière, alternance, stage, abonnement, CléAvenir',
   image: 'https://cleavenir.com/og-image.jpg',
   schemaType: 'faq',
   breadcrumbs: [
@@ -166,7 +166,7 @@ export const categoryPageSEO = (pageData) => ({
 export const testPageSEO = () => ({
   title: 'Test d\'Orientation Professionnel Gratuit - CléAvenir',
   description: 'Découvrez votre orientation professionnelle avec notre test gratuit alimenté par l\'IA. Analysez vos compétences et trouvez les métiers qui vous conviennent.',
-  keywords: 'test orientation, test métier, orientation professionnel, carrière, IA, parcoursup',
+  keywords: 'test orientation gratuit, test métier, orientation professionnelle, quel métier me convient, trouver sa voie, IA orientation, Parcoursup, orientation après bac, reconversion professionnelle, bilan de compétences, carrière',
   image: 'https://cleavenir.com/og-image.jpg',
   breadcrumbs: [
     { name: 'Accueil', url: '/' },

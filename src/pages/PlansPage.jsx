@@ -72,7 +72,7 @@ const PlansPage = () => {
       <PageHelmet
         title="Nos Offres & Forfaits - CléAvenir"
         description="Découvrez les forfaits CléAvenir : Découverte gratuit, Premium et Premium+ pour un accompagnement complet dans votre orientation et carrière."
-        keywords="tarifs, forfaits, abonnement, gratuit, premium, orientation professionnelle, CléAvenir, prix"
+        keywords="tarifs, forfaits, abonnement gratuit, premium, orientation professionnelle, offres emploi, formations, test métier, prix CléAvenir, reconversion professionnelle"
         breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'Forfaits', url: '/plans' }]}
       />
 

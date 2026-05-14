@@ -53,7 +53,7 @@ const ContactPage = () => {
       <PageHelmet
         title="Contactez CléAvenir - Support & Questions"
         description="Besoin d'aide ? Contactez l'équipe CléAvenir pour toute question sur l'orientation, nos formations, vos offres d'emploi ou votre compte."
-        keywords="contact, support, aide, CléAvenir, question, orientation, assistance"
+        keywords="contact CléAvenir, support, aide orientation, question offres emploi, question formation, assistance, service client"
         breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'Contact', url: '/contact' }]}
       />
       <AnimatedSection>

@@ -102,7 +102,7 @@ const FAQPage = () => {
       <PageHelmet
         title="Centre d'aide & FAQ - CléAvenir"
         description="Trouvez des réponses à vos questions sur l'orientation, le test CléAvenir, la gestion de compte et nos services."
-        keywords="FAQ, aide, questions fréquentes, orientation, test carrière, compte, abonnement CléAvenir"
+        keywords="FAQ, aide, questions fréquentes, orientation, offres d'emploi, recherche métier, formation alternance, test carrière, compte, abonnement CléAvenir"
         breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'FAQ', url: '/faq' }]}
       />
 
