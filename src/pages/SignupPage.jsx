@@ -106,16 +106,16 @@ const SignupPage = () => {
 
     if (step === 1 && !isGoogleFlow) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!formData.email) newErrors.email = "L email est requis";
-      else if (!emailRegex.test(formData.email)) newErrors.email = "Format d email invalide";
+      if (!formData.email) newErrors.email = "L'email est requis";
+      else if (!emailRegex.test(formData.email)) newErrors.email = "Format d'email invalide";
       if (!formData.password) newErrors.password = "Le mot de passe est requis";
-      else if (formData.password.length < 8) newErrors.password = "8 caracteres minimum";
+      else if (formData.password.length < 8) newErrors.password = "8 caractères minimum";
       if (formData.password !== formData.confirmPassword) {
         newErrors.confirmPassword = "Les mots de passe ne correspondent pas";
       }
     }
     if (step === 2 && !isGoogleFlow) {
-      if (!formData.first_name?.trim()) newErrors.first_name = "Prenom requis";
+      if (!formData.first_name?.trim()) newErrors.first_name = "Prénom requis";
       if (!formData.last_name?.trim()) newErrors.last_name = "Nom requis";
       if (!formData.dateOfBirth) newErrors.dateOfBirth = "Date de naissance requise";
       else {
@@ -124,19 +124,19 @@ const SignupPage = () => {
       }
     }
     if (step === 3) {
-      if (!formData.region) newErrors.region = "Region requise";
+      if (!formData.region) newErrors.region = "Région requise";
       if (!formData.city?.trim()) newErrors.city = "Ville requise";
     }
     if (step === 4) {
-      if (!formData.age) newErrors.age = "Age requis";
-      else if (formData.age < 13 || formData.age > 80) newErrors.age = "L age doit etre entre 13 et 80 ans";
+      if (!formData.age) newErrors.age = "Âge requis";
+      else if (formData.age < 13 || formData.age > 80) newErrors.age = "L'âge doit être entre 13 et 80 ans";
       if (!formData.current_status) newErrors.current_status = "Statut requis";
-      if (!formData.education_level) newErrors.education_level = "Niveau d etudes requis";
+      if (!formData.education_level) newErrors.education_level = "Niveau d'études requis";
       if (!formData.wants_long_studies) newErrors.wants_long_studies = "Veuillez choisir une option";
     }
     if (step === 5) {
       if (!formData.interests || formData.interests.length === 0) {
-        newErrors.interests = "Selectionnez au moins un domaine";
+        newErrors.interests = "Sélectionnez au moins un domaine";
       }
     }
 
@@ -205,10 +205,10 @@ const SignupPage = () => {
     if (error) {
       toast({
         variant: "destructive",
-        title: "Erreur d inscription",
+        title: "Erreur d'inscription",
         description: error.message === "User already registered"
-          ? "Cet email est deja utilise."
-          : "Une erreur est survenue lors de la creation de votre compte."
+          ? "Cet email est déjà utilisé."
+          : "Une erreur est survenue lors de la création de votre compte."
       });
       return;
     }
@@ -226,7 +226,7 @@ const SignupPage = () => {
       return;
     }
 
-    toast({ title: "Bienvenue !", description: "Votre profil a ete cree avec succes." });
+    toast({ title: "Bienvenue !", description: "Votre profil a été créé avec succès." });
     navigate('/results');
   };
 
@@ -282,11 +282,11 @@ const SignupPage = () => {
     />
     <div className="min-h-screen bg-slate-50 flex flex-col items-center py-12 px-4 sm:px-6">
       <div className="w-full max-w-2xl mb-8 text-center">
-        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">CleAvenir</h1>
+        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">CléAvenir</h1>
         {isGoogleFlow ? (
           <p className="mt-2 text-slate-600">Finalisez votre profil pour personnaliser votre expérience.</p>
         ) : (
-          <p className="mt-2 text-slate-600">Votre parcours d orientation personnalise commence ici.</p>
+          <p className="mt-2 text-slate-600">Votre parcours d'orientation personnalisé commence ici.</p>
         )}
       </div>
 
@@ -321,7 +321,7 @@ const SignupPage = () => {
         <div className="px-6 py-6 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
           {currentStep > FIRST_STEP ? (
             <Button variant="outline" onClick={handlePrev} className="border-slate-300">
-              <ArrowLeft className="w-4 h-4 mr-2" /> Precedent
+              <ArrowLeft className="w-4 h-4 mr-2" /> Précédent
             </Button>
           ) : <div />}
 
@@ -332,8 +332,8 @@ const SignupPage = () => {
           ) : (
             <Button onClick={handleSubmit} disabled={isSubmitting} className="bg-green-600 hover:bg-green-700 text-white min-w-[150px]">
               {isSubmitting
-                ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Sauvegarde...</>
-                : isGoogleFlow ? "Finaliser mon profil" : "Creer mon compte"}
+                ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Enregistrement...</>
+                : isGoogleFlow ? "Finaliser mon profil" : "Créer mon compte"}
             </Button>
           )}
         </div>
@@ -341,7 +341,7 @@ const SignupPage = () => {
 
       {!isGoogleFlow && currentStep === 1 && (
         <p className="mt-8 text-center text-sm text-slate-500">
-          Deja un compte ?{' '}
+          Déjà un compte ?{' '}
           <Link to="/login" className="font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
             Se connecter
           </Link>
