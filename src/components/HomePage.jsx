@@ -178,7 +178,7 @@ const HomePage = ({ onNavigate }) => {
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative px-6 pt-16 pb-32 md:pt-32 md:pb-40 overflow-hidden"
+        className="relative px-6 pt-16 pb-32 md:pt-32 md:pb-40 overflow-hidden [isolation:isolate]"
       >
         {/* Layer 1 — blobs (slowest) */}
         <motion.div
@@ -197,12 +197,12 @@ const HomePage = ({ onNavigate }) => {
         {/* Layer 3 — emoji rain (mid speed) */}
         <motion.div
           style={{ y: heroRainY }}
-          className="absolute inset-0 -z-[5] overflow-hidden pointer-events-none"
+          className="absolute inset-0 z-[1] overflow-hidden pointer-events-none"
         >
           <EmojiRain />
         </motion.div>
 
-        <motion.div style={{ opacity: heroOpacity }} className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <motion.div style={{ opacity: heroOpacity }} className="relative z-[2] max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
           {/* Left — text */}
           <motion.div style={{ y: heroTextY }} className="space-y-8">
