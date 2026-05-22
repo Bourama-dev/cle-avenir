@@ -156,8 +156,14 @@ const HomePage = ({ onNavigate }) => {
     offset: ['start start', 'end start'],
   });
 
-  const heroTextY  = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -55]);
-  const heroImageY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -28]);
+  // 5-layer parallax — each layer moves at a different speed
+  const heroBlobY      = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -22]);
+  const heroBlobScale  = useTransform(scrollYProgress, [0, 1], reduce ? [1, 1] : [1, 1.12]);
+  const heroRainY      = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -42]);
+  const heroTextY      = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -85]);
+  const heroImageY     = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -55]);
+  const heroImageScale = useTransform(scrollYProgress, [0, 1], reduce ? [1, 1] : [1, 0.94]);
+  const heroOpacity    = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -174,19 +180,29 @@ const HomePage = ({ onNavigate }) => {
         ref={heroRef}
         className="relative px-6 pt-16 pb-32 md:pt-32 md:pb-40 overflow-hidden"
       >
-        {/* Ambient blobs */}
-        <div className="absolute top-0 right-0 w-[55%] h-full bg-gradient-to-bl from-rose-50/80 via-rose-50/30 to-transparent -z-10 rounded-bl-[120px]" />
-        <div className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-gradient-to-tr from-cyan-50/60 to-transparent -z-10 rounded-tr-[120px]" />
-        {/* Dot grid decoration */}
-        <div className="absolute inset-0 -z-10 opacity-[0.025]"
+        {/* Layer 1 — blobs (slowest) */}
+        <motion.div
+          style={{ y: heroBlobY, scale: heroBlobScale }}
+          className="absolute top-0 right-0 w-[55%] h-full bg-gradient-to-bl from-rose-50/80 via-rose-50/30 to-transparent -z-10 rounded-bl-[120px] origin-top-right"
+        />
+        <motion.div
+          style={{ y: heroBlobY, scale: heroBlobScale }}
+          className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-gradient-to-tr from-cyan-50/60 to-transparent -z-10 rounded-tr-[120px] origin-bottom-left"
+        />
+
+        {/* Layer 2 — dot grid (static depth anchor) */}
+        <div className="absolute inset-0 -z-10 opacity-[0.03]"
           style={{ backgroundImage: 'radial-gradient(circle, #64748b 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
 
-        {/* Emoji rain */}
-        <div className="absolute inset-0 -z-[5] overflow-hidden pointer-events-none">
+        {/* Layer 3 — emoji rain (mid speed) */}
+        <motion.div
+          style={{ y: heroRainY }}
+          className="absolute inset-0 -z-[5] overflow-hidden pointer-events-none"
+        >
           <EmojiRain />
-        </div>
+        </motion.div>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <motion.div style={{ opacity: heroOpacity }} className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
           {/* Left — text */}
           <motion.div style={{ y: heroTextY }} className="space-y-8">
@@ -275,7 +291,7 @@ const HomePage = ({ onNavigate }) => {
 
           {/* Right — image + floating cards */}
           <motion.div
-            style={{ y: heroImageY }}
+            style={{ y: heroImageY, scale: heroImageScale }}
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
@@ -341,7 +357,7 @@ const HomePage = ({ onNavigate }) => {
               </motion.div>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ══ STATS STRIP ═════════════════════════════════════════════════════ */}
@@ -351,29 +367,32 @@ const HomePage = ({ onNavigate }) => {
         <div className="absolute bottom-0 right-1/4 w-96 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-6xl mx-auto px-6 relative">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
+          <AnimatedSection className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4" stagger={0.12}>
             {STATS.map((stat, i) => {
               const Icon = stat.icon;
               return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex flex-col items-center text-center gap-2"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-1">
-                    <Icon className="w-5 h-5 text-white/70" />
-                  </div>
-                  <div className="text-4xl md:text-5xl font-black text-white tabular-nums">
-                    <CountUp value={stat.value} suffix={stat.suffix} />
-                  </div>
-                  <div className="text-slate-400 text-sm font-medium leading-tight">{stat.label}</div>
-                </motion.div>
+                <AnimatedItem key={i}>
+                  <motion.div
+                    className="flex flex-col items-center text-center gap-2 group cursor-default"
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    <motion.div
+                      className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center mb-1 group-hover:bg-white/20 transition-colors duration-300"
+                      whileHover={{ scale: 1.15, rotate: 8 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Icon className="w-6 h-6 text-white/70" />
+                    </motion.div>
+                    <div className="text-4xl md:text-5xl font-black text-white tabular-nums">
+                      <CountUp value={stat.value} suffix={stat.suffix} />
+                    </div>
+                    <div className="text-slate-400 text-sm font-medium leading-tight">{stat.label}</div>
+                  </motion.div>
+                </AnimatedItem>
               );
             })}
-          </div>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -411,10 +430,10 @@ const HomePage = ({ onNavigate }) => {
             {FEATURES.map((feature, i) => (
               <AnimatedItem key={i}>
                 <TiltCard
-                  intensity={5}
-                  glare={0.1}
+                  intensity={10}
+                  glare={0.22}
                   onClick={() => onNavigate(feature.link)}
-                  className="bg-white p-8 rounded-3xl border border-slate-100/80 cursor-pointer group h-full hover:shadow-2xl hover:shadow-slate-200/60 hover:-translate-y-1 transition-all duration-500 relative overflow-hidden"
+                  className="bg-white p-8 rounded-3xl border border-slate-100/80 cursor-pointer group h-full hover:shadow-2xl hover:shadow-slate-200/60 transition-all duration-500 relative overflow-hidden"
                 >
                   {/* Subtle gradient wash on hover */}
                   <div className={`absolute inset-0 opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500 bg-gradient-to-br ${feature.gradient}`} />
@@ -468,33 +487,36 @@ const HomePage = ({ onNavigate }) => {
               <div className="absolute left-[48%] top-1/2 -translate-y-1/2 w-3 h-3 border-t-2 border-r-2 border-violet-300 rotate-45" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6">
+            <AnimatedSection className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6" stagger={0.18}>
               {STEPS.map((step, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 28 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ delay: i * 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex flex-col items-center text-center group"
-                >
-                  {/* Numbered circle */}
-                  <div className={`relative w-[4.5rem] h-[4.5rem] rounded-2xl bg-gradient-to-br ${step.gradient} flex items-center justify-center shadow-xl ${step.glow} mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-400 z-10`}>
-                    <span className="text-white font-black text-2xl">{step.number}</span>
-                  </div>
-
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 leading-tight">{step.title}</h3>
-                  <p className="text-slate-500 leading-relaxed text-sm max-w-[280px]">{step.desc}</p>
-
-                  <Link
-                    to={step.link}
-                    className="mt-5 text-sm font-bold text-rose-600 flex items-center gap-1 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-250"
+                <AnimatedItem key={i}>
+                  <TiltCard
+                    intensity={7}
+                    glare={0.14}
+                    className="flex flex-col items-center text-center group bg-white/60 rounded-3xl p-8 border border-slate-100/60 hover:border-slate-200/80 hover:shadow-xl hover:shadow-slate-100/80 transition-all duration-500 h-full"
                   >
-                    En savoir plus <ChevronRight className="w-4 h-4" />
-                  </Link>
-                </motion.div>
+                    {/* Numbered circle */}
+                    <motion.div
+                      className={`relative w-[4.5rem] h-[4.5rem] rounded-2xl bg-gradient-to-br ${step.gradient} flex items-center justify-center shadow-xl ${step.glow} mb-6 z-10`}
+                      whileHover={{ scale: 1.12, rotate: 6 }}
+                      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <span className="text-white font-black text-2xl">{step.number}</span>
+                    </motion.div>
+
+                    <h3 className="text-xl font-bold text-slate-900 mb-3 leading-tight">{step.title}</h3>
+                    <p className="text-slate-500 leading-relaxed text-sm max-w-[280px]">{step.desc}</p>
+
+                    <Link
+                      to={step.link}
+                      className="mt-5 text-sm font-bold text-rose-600 flex items-center gap-1 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+                    >
+                      En savoir plus <ChevronRight className="w-4 h-4" />
+                    </Link>
+                  </TiltCard>
+                </AnimatedItem>
               ))}
-            </div>
+            </AnimatedSection>
           </div>
 
           {/* Bottom CTA hint */}

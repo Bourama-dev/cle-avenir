@@ -15,7 +15,7 @@ const TiltCard = ({ children, className, intensity = 8, glare = 0.15, onClick, s
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
 
-  const springConfig = { stiffness: 160, damping: 22, mass: 0.6 };
+  const springConfig = { stiffness: 220, damping: 18, mass: 0.5 };
   const springX = useSpring(rawX, springConfig);
   const springY = useSpring(rawY, springConfig);
 
@@ -53,7 +53,7 @@ const TiltCard = ({ children, className, intensity = 8, glare = 0.15, onClick, s
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onClick={onClick}
-        whileHover={{ scale: 1.025, transition: { duration: 0.2 } }}
+        whileHover={{ scale: 1.03, z: 24, transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] } }}
       >
         {children}
 

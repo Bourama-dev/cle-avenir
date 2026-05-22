@@ -12,11 +12,12 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 36, scale: 0.96 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    scale: 1,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
@@ -28,9 +29,10 @@ const reducedItemVariants = {
 /**
  * AnimatedSection — scroll-triggered container that staggers its AnimatedItem children.
  * @param {number} delay - initial delay before stagger starts (seconds)
+ * @param {number} stagger - delay between each child (seconds)
  * @param {string} margin - viewport intersection margin (e.g. "-80px")
  */
-export function AnimatedSection({ children, className, delay = 0, margin = '-60px' }) {
+export function AnimatedSection({ children, className, delay = 0, stagger = 0.1, margin = '-60px' }) {
   return (
     <motion.div
       className={className}
@@ -41,7 +43,7 @@ export function AnimatedSection({ children, className, delay = 0, margin = '-60p
         hidden: {},
         visible: {
           transition: {
-            staggerChildren: 0.09,
+            staggerChildren: stagger,
             delayChildren: delay,
           },
         },
