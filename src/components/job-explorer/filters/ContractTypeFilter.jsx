@@ -3,7 +3,7 @@ import { FileText } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 
-const CONTRACT_TYPES = ['CDI', 'CDD', 'Alternance', 'Stage', 'Freelance', 'Intérim'];
+const CONTRACT_TYPES = ['CDI', 'CDD', 'Alternance', 'Freelance', 'Intérim'];
 
 const ContractTypeFilter = ({ selectedTypes = [], onChange }) => {
   const handleToggle = (type) => {

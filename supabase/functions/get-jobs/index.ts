@@ -58,6 +58,20 @@ async function getToken(clientId: string, secret: string): Promise<string> {
   throw new Error(`Auth failed: ${lastErr}`);
 }
 
+// Converts a French postal code to an INSEE commune code using the official geo API.
+// France Travail API requires INSEE codes (e.g. "33063") not postal codes ("33000").
+async function resolveInseeCode(postalCode: string): Promise<string | null> {
+  try {
+    const url = `https://geo.api.gouv.fr/communes?codePostal=${encodeURIComponent(postalCode)}&fields=code&limit=1`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(3_000) });
+    if (!res.ok) return null;
+    const communes = await res.json() as Array<{ code: string }>;
+    return communes[0]?.code ?? null;
+  } catch {
+    return null;
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -104,29 +118,58 @@ Deno.serve(async (req) => {
     const sort = [0, 1, 2].includes(Number(body.sort)) ? Number(body.sort) : 1;
     params.set("sort", String(sort));
 
-    // Location: commune (zipcode/INSEE) sent by hook
+    // Location: resolve postal code → INSEE code (France Travail requires INSEE, not postal)
     const commune = str(body.commune);
     if (commune) {
-      params.set("commune", commune);
+      const inseeCode = /^\d{5}$/.test(commune)
+        ? (await resolveInseeCode(commune)) ?? commune
+        : commune;
+      params.set("commune", inseeCode);
+      console.log(`[get-jobs] commune: ${commune} → ${inseeCode}`);
       const dist = str(body.distance);
       if (dist) params.set("distance", dist);
     }
 
-    // Contract types: map display labels → France Travail API codes (comma-separated)
-    const CONTRACT_CODES: Record<string, string> = {
-      cdi: "CDI", cdd: "CDD",
-      alternance: "ALT", apprentissage: "ALT",
-      stage: "STG",
-      freelance: "LIB", "indépendant": "LIB", independant: "LIB",
+    // Contract types mapping:
+    //   typeContrat: CDI, CDD, MIS (intérim), LIB (freelance)
+    //   natureContrat: E2 (apprentissage), FS (professionnalisation) → alternance
+    //   Stage is not a standard France Travail typeContrat filter
+    const TYPE_CONTRAT_MAP: Record<string, string> = {
+      cdi: "CDI",
+      cdd: "CDD",
       intérim: "MIS", interim: "MIS", mission: "MIS",
+      freelance: "LIB", "indépendant": "LIB", independant: "LIB",
     };
-    const contractsRaw = Array.isArray(body.contracts) ? body.contracts
+    // Codes that go into natureContrat instead of typeContrat
+    const NATURE_CONTRAT_MAP: Record<string, string> = {
+      alternance: "E2,FS",
+      apprentissage: "E2",
+    };
+
+    const contractsRaw: string[] = Array.isArray(body.contracts) ? body.contracts
       : body.contract ? [body.contract] : [];
-    if (contractsRaw.length > 0) {
-      const codes = [...new Set(
-        contractsRaw.map((c: string) => CONTRACT_CODES[c.toLowerCase()] ?? c.toUpperCase())
-      )];
-      params.set("typeContrat", codes.join(","));
+
+    const typeCodes: string[] = [];
+    const natureCodes: string[] = [];
+
+    for (const c of contractsRaw) {
+      const key = c.toLowerCase();
+      if (key in NATURE_CONTRAT_MAP) {
+        // Alternance → natureContrat (split comma values)
+        NATURE_CONTRAT_MAP[key].split(",").forEach(n => natureCodes.push(n));
+      } else if (key in TYPE_CONTRAT_MAP) {
+        typeCodes.push(TYPE_CONTRAT_MAP[key]);
+      } else if (key !== "stage") {
+        // Unknown type passed through; skip "stage" (not supported by API)
+        typeCodes.push(c.toUpperCase());
+      }
+    }
+
+    if ([...new Set(typeCodes)].length > 0) {
+      params.set("typeContrat", [...new Set(typeCodes)].join(","));
+    }
+    if ([...new Set(natureCodes)].length > 0) {
+      params.set("natureContrat", [...new Set(natureCodes)].join(","));
     }
 
     // Experience: UI sends '0'–'4', API expects '1' (débutant), '2' (1-3 ans), '3' (3+ ans)
