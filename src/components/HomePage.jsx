@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useRef, useState, useEffect } from 'react';
+import React, { Suspense, lazy, useRef, useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import {
@@ -79,6 +79,52 @@ const STEPS = [
   },
 ];
 
+// ── Emoji rain ────────────────────────────────────────────────────────────────
+const RAIN_EMOJIS = ['🎓', '💼', '🚀', '📊', '🔑', '💡', '🏆', '📝', '⭐', '🎯', '📚', '🤝', '🌟', '✨', '🏫', '📈'];
+
+function EmojiRain({ count = 22 }) {
+  const particles = useMemo(() =>
+    Array.from({ length: count }, (_, i) => ({
+      id: i,
+      emoji: RAIN_EMOJIS[i % RAIN_EMOJIS.length],
+      left: 2 + (i / count) * 96 + (Math.random() - 0.5) * 4,
+      size: 0.85 + Math.random() * 0.9,
+      delay: Math.random() * 12,
+      duration: 9 + Math.random() * 8,
+      drift: (Math.random() - 0.5) * 80,
+      rotate: (Math.random() - 0.5) * 360,
+      opacity: 0.25 + Math.random() * 0.35,
+    })),
+  []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
+      {particles.map((p) => (
+        <motion.span
+          key={p.id}
+          className="absolute select-none"
+          style={{ left: `${p.left}%`, top: '-3rem', fontSize: `${p.size}rem` }}
+          animate={{
+            y: ['0vh', '110vh'],
+            x: [0, p.drift],
+            rotate: [0, p.rotate],
+            opacity: [0, p.opacity, p.opacity, 0],
+          }}
+          transition={{
+            duration: p.duration,
+            delay: p.delay,
+            repeat: Infinity,
+            ease: 'linear',
+            times: [0, 0.08, 0.88, 1],
+          }}
+        >
+          {p.emoji}
+        </motion.span>
+      ))}
+    </div>
+  );
+}
+
 // ── Animated counter ──────────────────────────────────────────────────────────
 function CountUp({ value, suffix = '', duration = 1.8 }) {
   const ref = useRef(null);
@@ -134,6 +180,11 @@ const HomePage = ({ onNavigate }) => {
         {/* Dot grid decoration */}
         <div className="absolute inset-0 -z-10 opacity-[0.025]"
           style={{ backgroundImage: 'radial-gradient(circle, #64748b 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+
+        {/* Emoji rain */}
+        <div className="absolute inset-0 -z-[5] overflow-hidden pointer-events-none">
+          <EmojiRain />
+        </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
