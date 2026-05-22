@@ -124,7 +124,8 @@ const useJobFilters = () => {
           lonParam = lon;
         }
         
-        const val = filters.location.zipcode || filters.location.name;
+        // Prefer INSEE code (from geo.api.gouv.fr), fall back to postal code, then city name
+        const val = filters.location.inseeCode || filters.location.zipcode || filters.location.name;
         if (val && typeof val === 'string' && val.trim().length > 0) {
           communeParam = val.trim();
         }
