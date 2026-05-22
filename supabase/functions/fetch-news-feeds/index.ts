@@ -1,7 +1,13 @@
-// fetch-news-feeds v1.0
+// fetch-news-feeds v1.1
 // Aggregates news from French employment/career public sources (RSS + JSON APIs).
 // No API keys needed — all sources are freely accessible.
-import { corsHeaders } from "./cors.ts";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+  "Access-Control-Max-Age": "86400",
+};
 
 interface NewsItem {
   id: string;
