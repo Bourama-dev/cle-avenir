@@ -188,14 +188,14 @@ async function fetchDARES(): Promise<NewsItem[]> {
       const meta = (d.metas as Record<string, Record<string, unknown>>)?.default ?? {};
       const datasetId = String(d.dataset_id ?? "");
       const id = `dares_${datasetId.slice(0, 30)}`;
-      const fullDesc = stripHTML(String(meta.description ?? ""));
+      const rawDesc = String(meta.description ?? "");
       const keywords = Array.isArray(meta.keyword) ? (meta.keyword as string[]) : [];
       const theme = Array.isArray(meta.theme) ? (meta.theme as string[]) : [];
 
       return {
         id,
         title: String(meta.title ?? "Statistiques DARES"),
-        excerpt: fullDesc.slice(0, 300),
+        excerpt: stripHTML(rawDesc).slice(0, 300),
         link: `/actualites/${id}`,
         is_internal: true,
         external_url: `https://data.dares.travail-emploi.gouv.fr/explore/dataset/${datasetId}/information/`,
@@ -203,7 +203,7 @@ async function fetchDARES(): Promise<NewsItem[]> {
         source_logo: "📊",
         category: "marche-travail",
         published_at: String(meta.modified ?? new Date().toISOString()),
-        full_description: fullDesc,
+        full_description: rawDesc, // kept raw for HTML rendering in the frontend
         keywords,
         theme,
         publisher: String(meta.publisher ?? "DARES — Ministère du Travail"),
@@ -233,14 +233,14 @@ async function fetchDataGouv(): Promise<NewsItem[]> {
 
     return datasets.map((d) => {
       const id = `datagouv_${String(d.id ?? "").slice(0, 20)}`;
-      const fullDesc = stripHTML(String(d.description ?? ""));
+      const rawDesc = String(d.description ?? "");
       const tags: string[] = Array.isArray(d.tags) ? (d.tags as string[]) : [];
       const org = (d.organization as Record<string, unknown> | null)?.name;
 
       return {
         id,
         title: String(d.title ?? "Dataset emploi"),
-        excerpt: fullDesc.slice(0, 300),
+        excerpt: stripHTML(rawDesc).slice(0, 300),
         link: `/actualites/${id}`,
         is_internal: true,
         external_url: `https://www.data.gouv.fr/fr/datasets/${d.slug ?? d.id}/`,
@@ -248,7 +248,7 @@ async function fetchDataGouv(): Promise<NewsItem[]> {
         source_logo: "🗃️",
         category: "open-data",
         published_at: String(d.created_at ?? new Date().toISOString()),
-        full_description: fullDesc,
+        full_description: rawDesc, // kept raw for HTML rendering in the frontend
         keywords: tags.slice(0, 8),
         publisher: org ? String(org) : "data.gouv.fr",
         license: String((d.license as string | undefined) ?? "Licence Ouverte"),
@@ -278,14 +278,14 @@ async function fetchParcoursupStats(): Promise<NewsItem[]> {
       const meta = (d.metas as Record<string, Record<string, unknown>>)?.default ?? {};
       const datasetId = String(d.dataset_id ?? "");
       const id = `psup_${datasetId.slice(0, 30)}`;
-      const fullDesc = stripHTML(String(meta.description ?? ""));
+      const rawDesc = String(meta.description ?? "");
       const keywords = Array.isArray(meta.keyword) ? (meta.keyword as string[]) : [];
       const theme = Array.isArray(meta.theme) ? (meta.theme as string[]) : [];
 
       return {
         id,
         title: String(meta.title ?? "Données enseignement supérieur"),
-        excerpt: fullDesc.slice(0, 300),
+        excerpt: stripHTML(rawDesc).slice(0, 300),
         link: `/actualites/${id}`,
         is_internal: true,
         external_url: `https://data.enseignementsup-recherche.gouv.fr/explore/dataset/${datasetId}/`,
@@ -293,7 +293,7 @@ async function fetchParcoursupStats(): Promise<NewsItem[]> {
         source_logo: "🎓",
         category: "formation",
         published_at: String(meta.modified ?? new Date().toISOString()),
-        full_description: fullDesc,
+        full_description: rawDesc, // kept raw for HTML rendering in the frontend
         keywords,
         theme,
         publisher: "Ministère de l'Enseignement Supérieur (MESRI)",
