@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/customSupabaseClient';
 import { CacheService } from './CacheService';
+import { CURATED_ARTICLES } from '@/data/curatedArticles';
 
 const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 const CACHE_KEY_ALL = 'news_feeds_all';
@@ -26,9 +27,14 @@ export const newsService = {
 
       if (error) throw error;
 
+      const apiItems = data?.items || [];
+      const merged = [...CURATED_ARTICLES, ...apiItems].sort(
+        (a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime(),
+      );
+
       const result = {
-        items: data?.items || [],
-        total: data?.total || 0,
+        items: merged,
+        total: merged.length,
         fetched_at: data?.fetched_at || new Date().toISOString(),
       };
 
@@ -36,7 +42,8 @@ export const newsService = {
       return result;
     } catch (err) {
       console.error('[newsService] getAll failed:', err);
-      return { items: [], total: 0, fetched_at: null };
+      // Even on API failure, return curated articles
+      return { items: CURATED_ARTICLES, total: CURATED_ARTICLES.length, fetched_at: null };
     }
   },
 
