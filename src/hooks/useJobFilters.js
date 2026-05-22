@@ -27,37 +27,37 @@ const useJobFilters = () => {
 
   // Load filters from localStorage on mount
   useEffect(() => {
-    const savedFilters = localStorage.getItem('job_filters_v3');
+    const savedFilters = localStorage.getItem('job_filters_v4');
     if (savedFilters) {
       try {
         const parsed = JSON.parse(savedFilters);
-        
-        // Validate location structure if it exists
+
         if (parsed.location) {
-            parsed.location.lat = Number(parsed.location.lat);
-            parsed.location.lon = Number(parsed.location.lon);
-            
-            if (isNaN(parsed.location.lat) || isNaN(parsed.location.lon)) {
-                parsed.location = null;
-            }
+          const lat = Number(parsed.location.lat);
+          const lon = Number(parsed.location.lon);
+          // Discard location if coordinates are invalid OR if it lacks an inseeCode
+          // (old Nominatim-based locations had no inseeCode and sent city names to FT API)
+          if (isNaN(lat) || isNaN(lon) || !parsed.location.inseeCode) {
+            parsed.location = null;
+            parsed.radius = null;
+          } else {
+            parsed.location.lat = lat;
+            parsed.location.lon = lon;
+          }
         }
-        
-        setFilters(prev => ({
-            ...prev,
-            ...parsed,
-            limit: 20 // Enforce 20 limit
-        }));
+
+        setFilters(prev => ({ ...prev, ...parsed, limit: 20 }));
       } catch (e) {
         console.error('Failed to parse saved filters', e);
       }
     } else {
-        setFilters(prev => ({ ...prev, limit: 20 }));
+      setFilters(prev => ({ ...prev, limit: 20 }));
     }
   }, []);
 
   // Save filters to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem('job_filters_v3', JSON.stringify(filters));
+    localStorage.setItem('job_filters_v4', JSON.stringify(filters));
   }, [filters]);
 
   const resetFilters = useCallback(() => {
@@ -110,34 +110,29 @@ const useJobFilters = () => {
       setLoading(true);
       setError(null);
 
-      // Validate and format location parameter
-      let communeParam = undefined;
-      let latParam = undefined;
-      let lonParam = undefined;
-      
-      if (filters.location) {
-        const lat = Number(filters.location.lat);
-        const lon = Number(filters.location.lon);
+      // Location: send pre-resolved INSEE code as dedicated field so the edge function
+      // never runs resolveInseeCode on an already-resolved value (which would query
+      // geo.api.gouv.fr with an INSEE code as if it were a postal code).
+      let inseeCodeParam = undefined;
+      let communeParam   = undefined;  // fallback for postal code / city name
 
-        if (!isNaN(lat) && !isNaN(lon)) {
-          latParam = lat;
-          lonParam = lon;
-        }
-        
-        // Prefer INSEE code (from geo.api.gouv.fr), fall back to postal code, then city name
-        const val = filters.location.inseeCode || filters.location.zipcode || filters.location.name;
-        if (val && typeof val === 'string' && val.trim().length > 0) {
-          communeParam = val.trim();
+      if (filters.location) {
+        if (filters.location.inseeCode) {
+          inseeCodeParam = filters.location.inseeCode;
+        } else if (filters.location.zipcode) {
+          communeParam = filters.location.zipcode;
+        } else if (filters.location.name) {
+          communeParam = filters.location.name;
         }
       }
 
-      // Prepare payload for edge function
-      // Note: API only accepts single contract/experience, so we send first selected
-      // Client-side will apply additional filtering if needed
+      const hasLocation = Boolean(inseeCodeParam || communeParam);
+
       const payload = {
         search: filters.search?.trim() || undefined,
-        commune: communeParam,
-        distance: (communeParam && filters.radius) ? filters.radius : undefined,
+        inseeCode: inseeCodeParam,                                   // direct INSEE — highest priority
+        commune:   inseeCodeParam ? undefined : communeParam,        // postal/name — only if no inseeCode
+        distance:  (hasLocation && filters.radius) ? filters.radius : undefined,
         contracts: filters.contractTypes.length > 0 ? filters.contractTypes : undefined,
         experiences: filters.experiences.length > 0 ? filters.experiences : undefined,
         teletravauxOnly: filters.teletravauxOnly,

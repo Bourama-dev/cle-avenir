@@ -118,14 +118,31 @@ Deno.serve(async (req) => {
     const sort = [0, 1, 2].includes(Number(body.sort)) ? Number(body.sort) : 1;
     params.set("sort", String(sort));
 
-    // Location: resolve postal code → INSEE code (France Travail requires INSEE, not postal)
-    const commune = str(body.commune);
-    if (commune) {
-      const inseeCode = /^\d{5}$/.test(commune)
-        ? (await resolveInseeCode(commune)) ?? commune
-        : commune;
+    // Location — three possible inputs, in priority order:
+    //   1. body.inseeCode  — pre-resolved INSEE code sent by frontend (use directly, no API call)
+    //   2. body.commune    — postal code (5 digits) → resolve to INSEE via geo.api.gouv.fr
+    //   3. body.commune    — city name string → pass through (France Travail handles it poorly,
+    //                        but better than nothing when no code is available)
+    const directInsee = str(body.inseeCode);
+    const rawCommune  = str(body.commune);
+    const locationInput = directInsee || rawCommune;
+
+    if (locationInput) {
+      let inseeCode: string;
+
+      if (directInsee) {
+        // Frontend already resolved to INSEE — use directly, never re-query
+        inseeCode = directInsee;
+      } else if (/^\d{5}$/.test(rawCommune)) {
+        // Looks like a postal code — resolve to INSEE
+        inseeCode = (await resolveInseeCode(rawCommune)) ?? rawCommune;
+      } else {
+        // City name or other string — pass through as-is
+        inseeCode = rawCommune;
+      }
+
       params.set("commune", inseeCode);
-      console.log(`[get-jobs] commune: ${commune} → ${inseeCode}`);
+      console.log(`[get-jobs] location: inseeCode=${directInsee || "—"} rawCommune=${rawCommune || "—"} → commune=${inseeCode}`);
       const dist = str(body.distance);
       if (dist) params.set("distance", dist);
     }

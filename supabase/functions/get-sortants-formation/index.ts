@@ -1,17 +1,16 @@
 import { corsHeaders } from "./cors.ts";
 
-// API Sortants de formation et accès à l'emploi — France Travail
-// OAuth2 scope: api_sortiformationv1
+// API Stats Perspectives Retour Emploi — France Travail
+// Endpoint confirmed: https://api.francetravail.io/partenaire/stats-perspectives-retour-emploi/v1/indicateur/stat-acces-emploi
+// OAuth2 scope: api_stats-perspectives-retour-emploiv1
 // Returns: employment return rates for job seekers exiting training, by ROME code & territory
 // Data source: France Travail + ACOSS, updated quarterly
 // Note: sectors with <60 graduates at national level are excluded from results
-//
-// ⚠  Verify resource paths against the Swagger docs on francetravail.io before subscribing.
 
 const AUTH_URL =
   "https://entreprise.francetravail.fr/connexion/oauth2/access_token?realm=/partenaire";
-const BASE = "https://api.francetravail.io/partenaire/sortiformation/v1";
-const SCOPE = "api_sortiformationv1";
+const BASE = "https://api.francetravail.io/partenaire/stats-perspectives-retour-emploi/v1";
+const SCOPE = "api_stats-perspectives-retour-emploiv1";
 
 type TokenCache = { token: string; expiresAt: number };
 let TOKEN_CACHE: TokenCache | null = null;
@@ -104,8 +103,9 @@ Deno.serve(async (req) => {
     const romeCode = String(body.romeCode ?? body.rome ?? "").trim().toUpperCase();
     if (!romeCode) return respond({ stats: null, warning: "romeCode_required" });
 
-    const typeTerritory = String(body.typeTerritory ?? "N");   // N = national
-    const codeTerritory = String(body.codeTerritory ?? "00");  // 00 = national
+    // Territory: N = national (default), R = region, D = departement
+    const typeTerritory = String(body.typeTerritory ?? "N");
+    const codeTerritory = String(body.codeTerritory ?? "00");
 
     let token: string;
     try {
@@ -115,37 +115,21 @@ Deno.serve(async (req) => {
       return respond({ stats: null, warning: "auth_failed" });
     }
 
-    // Try several likely URL patterns
+    // Confirmed endpoint: /indicateur/stat-acces-emploi
     const qs = new URLSearchParams({ codeRome: romeCode, typeTerritory, codeTerritory });
-    const urls = [
-      `${BASE}/sortants/${romeCode}`,
-      `${BASE}/sortants?${qs}`,
-      `${BASE}/sortants/acces-emploi?codeRome=${romeCode}`,
-    ];
+    const url = `${BASE}/indicateur/stat-acces-emploi?${qs}`;
 
-    let apiRes: Response | null = null;
-    let usedUrl = "";
-    for (const url of urls) {
-      console.log(`[get-sortants-formation] GET ${url}`);
-      try {
-        const r = await fetch(url, {
-          headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
-          signal: AbortSignal.timeout(8_000),
-        });
-        if (r.status === 404) {
-          console.warn(`[get-sortants-formation] 404 at ${url}, trying next`);
-          continue;
-        }
-        apiRes = r;
-        usedUrl = url;
-        break;
-      } catch (e) {
-        console.warn(`[get-sortants-formation] fetch error at ${url}:`, e);
-      }
-    }
-
-    if (!apiRes) {
-      return respond({ stats: null, warning: "endpoint_not_found" });
+    console.log(`[get-sortants-formation] GET ${url}`);
+    let apiRes: Response;
+    let usedUrl = url;
+    try {
+      apiRes = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+        signal: AbortSignal.timeout(8_000),
+      });
+    } catch (e) {
+      console.error(`[get-sortants-formation] fetch error:`, e);
+      return respond({ stats: null, warning: "server_error" });
     }
 
     if (apiRes.status === 401 || apiRes.status === 403) {

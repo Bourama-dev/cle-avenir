@@ -77,11 +77,10 @@ const JobExplorer = ({ onNavigate }) => {
       fetchJobs();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [
-    filters.location, filters.contractTypes, filters.experiences,
-    filters.teletravauxOnly, filters.page, filters.radius,
-    debouncedSearch, activeTab,
-  ]);
+    // fetchJobs is a useCallback([filters]) — it changes whenever filters change,
+    // which is exactly when we want to re-run the search.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchJobs, activeTab]);
 
   const isGeoActive = filters.location && filters.radius !== null;
 
