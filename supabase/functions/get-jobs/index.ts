@@ -112,29 +112,35 @@ Deno.serve(async (req) => {
       if (dist) params.set("distance", dist);
     }
 
-    // Contract type: map display labels to France Travail API codes
+    // Contract types: map display labels → France Travail API codes (comma-separated)
     const CONTRACT_CODES: Record<string, string> = {
-      cdi: "CDI",
-      cdd: "CDD",
-      alternance: "ALT",
-      apprentissage: "ALT",
+      cdi: "CDI", cdd: "CDD",
+      alternance: "ALT", apprentissage: "ALT",
       stage: "STG",
-      freelance: "LIB",
-      "indépendant": "LIB",
-      independant: "LIB",
-      intérim: "MIS",
-      interim: "MIS",
-      mission: "MIS",
+      freelance: "LIB", "indépendant": "LIB", independant: "LIB",
+      intérim: "MIS", interim: "MIS", mission: "MIS",
     };
-    const contract = str(body.contract);
-    if (contract) {
-      const code = CONTRACT_CODES[contract.toLowerCase()] ?? contract.toUpperCase();
-      params.set("typeContrat", code);
+    const contractsRaw = Array.isArray(body.contracts) ? body.contracts
+      : body.contract ? [body.contract] : [];
+    if (contractsRaw.length > 0) {
+      const codes = [...new Set(
+        contractsRaw.map((c: string) => CONTRACT_CODES[c.toLowerCase()] ?? c.toUpperCase())
+      )];
+      params.set("typeContrat", codes.join(","));
     }
 
-    // Experience level: 1=no exp required, 2=1-3 yrs, 3=3+ yrs
-    const experience = str(body.experience);
-    if (experience && experience !== "all") params.set("experience", experience);
+    // Experience: UI sends '0'–'4', API expects '1' (débutant), '2' (1-3 ans), '3' (3+ ans)
+    const EXPERIENCE_MAP: Record<string, string> = {
+      "0": "1", "1": "2", "2": "3", "3": "3", "4": "3",
+    };
+    const experiencesRaw = Array.isArray(body.experiences) ? body.experiences
+      : body.experience ? [body.experience] : [];
+    if (experiencesRaw.length > 0) {
+      const apiVals = [...new Set(
+        experiencesRaw.map((e: unknown) => EXPERIENCE_MAP[String(e)]).filter(Boolean)
+      )].sort();
+      if (apiVals.length > 0) params.set("experience", apiVals[0]); // most inclusive
+    }
 
     // Télétravail filter
     if (body.teletravauxOnly === true || body.teletravauxOnly === "true") {
