@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/customSupabaseClient';
+import { consentManager } from '@/services/consentManager';
 
 const LOCAL_STORAGE_KEY = 'cleavenir_cookie_prefs';
 
@@ -9,6 +10,9 @@ export const cookieService = {
     
     // Save to local storage for quick access
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(mergedPrefs));
+
+    // Apply trackers based on new consent (only loads, never unloads — requires page reload to remove)
+    consentManager.applyConsent(mergedPrefs);
 
     // If logged in, save to db
     if (userId) {

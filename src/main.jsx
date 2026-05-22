@@ -5,7 +5,11 @@ import { HelmetProvider } from 'react-helmet-async';
 import * as Sentry from "@sentry/react";
 import App from '@/App';
 import { RootProviders } from '@/lib/providerConfig';
+import { consentManager } from '@/services/consentManager';
 import '@/index.css';
+
+// Load analytics trackers only if the user has already consented (returning visitors)
+consentManager.initFromStorage();
 
 // Sentry Initialization
 if (import.meta.env.VITE_SENTRY_DSN) {
