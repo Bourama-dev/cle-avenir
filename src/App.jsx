@@ -304,8 +304,8 @@ const PageContent = () => {
                   <Route path="/accueil" element={<Navigate to="/" replace />} />
                   <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
                   <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
-                  <Route path="/blog" element={<PageTransition><BlogPage /></PageTransition>} />
-                  <Route path="/blog/:slug" element={<PageTransition><BlogArticlePage /></PageTransition>} />
+                  <Route path="/blog" element={<Navigate to="/actualites" replace />} />
+                  <Route path="/blog/:slug" element={<Navigate to="/actualites" replace />} />
                   <Route path="/actualites" element={<PageTransition><ActualitesPage /></PageTransition>} />
                   <Route path="/actualites/:id" element={<PageTransition><ActualitesDetailPage /></PageTransition>} />
                   <Route path="/faq" element={<PageTransition><FAQPage /></PageTransition>} />
@@ -427,7 +427,7 @@ const PageContent = () => {
                   <Route path="/profil" element={<Navigate to="/profile" replace />} />
                   <Route path="/a-propos" element={<Navigate to="/about" replace />} />
                   <Route path="/contact-us" element={<Navigate to="/contact" replace />} />
-                  <Route path="/blog-posts" element={<Navigate to="/blog" replace />} />
+                  <Route path="/blog-posts" element={<Navigate to="/actualites" replace />} />
                   <Route path="/metiers-explorer" element={<Navigate to="/metiers" replace />} />
                   <Route path="/formations-explorer" element={<Navigate to="/formations" replace />} />
                   <Route path="/jobs-explorer" element={<Navigate to="/offres-emploi" replace />} />

@@ -14,6 +14,12 @@ export const CURATED_ARTICLES = [
     published_at: '2026-05-22T08:00:00.000Z',
     keywords: ['chômage', 'BIT', 'France Travail', 'marché du travail', 'seniors', 'jeunes NEET'],
     publisher: 'CléAvenir — Rapport Annuel 2026',
+    kpis: [
+      { label: 'Taux de chômage T1 2026', value: '8,1 %', trend: 1, trendLabel: '+0,2 pt en un trimestre' },
+      { label: "Demandeurs d'emploi", value: '5,73 M', trend: -1, trendLabel: '−0,3 % sur trois mois' },
+      { label: 'Chômage des 15–24 ans', value: '21,1 %', trend: null, trendLabel: 'niveau préoccupant' },
+      { label: 'Halo du chômage', value: '1,86 M', trend: null, trendLabel: 'personnes exclues du BIT' },
+    ],
     full_description: `
 <h2>Conjoncture économique et dynamique du chômage</h2>
 
@@ -93,6 +99,12 @@ export const CURATED_ARTICLES = [
     published_at: '2026-05-22T08:10:00.000Z',
     keywords: ['Plan Avenir', 'orientation scolaire', 'Onisep', 'Parcoursup', 'mixité', 'STI2D'],
     publisher: 'CléAvenir — Rapport Annuel 2026',
+    kpis: [
+      { label: 'Élèves concernés (stage)', value: '560 000', trend: null, trendLabel: 'stage entreprise obligatoire' },
+      { label: "Demi-journées d'orientation/an", value: '4', trend: null, trendLabel: 'par élève de 5e à Terminale' },
+      { label: 'Mise en place', value: 'Rentrée 2025', trend: null, trendLabel: 'plateforme Avenir(s)' },
+      { label: 'Classes prépa ≥50 % filles', value: '1/dépt.', trend: null, trendLabel: 'objectif rentrée 2026' },
+    ],
     full_description: `
 <h2>Qu'est-ce que le Plan Avenir ?</h2>
 
@@ -141,6 +153,12 @@ export const CURATED_ARTICLES = [
     published_at: '2026-05-22T08:20:00.000Z',
     keywords: ['bac professionnel', 'voie professionnelle', 'terminale', 'BTS', 'alternance', 'Parcoursup'],
     publisher: 'CléAvenir — Rapport Annuel 2026',
+    kpis: [
+      { label: 'Places Bac+1 spécialisation', value: '10 000', trend: null, trendLabel: 'rentrée 2026' },
+      { label: 'Objectif places 2027', value: '15 000', trend: null, trendLabel: 'certificats de spécialisation' },
+      { label: 'Accompagnement personnalisé', value: '2 semaines', trend: null, trendLabel: 'en mars, avant Parcoursup' },
+      { label: 'Note oral de projet', value: '50 %', trend: null, trendLabel: 'de la note globale du projet' },
+    ],
     full_description: `
 <h2>La réforme de la terminale professionnelle pour 2026-2027</h2>
 
@@ -203,6 +221,12 @@ export const CURATED_ARTICLES = [
     published_at: '2026-05-22T08:30:00.000Z',
     keywords: ['CPF', 'compte personnel formation', 'reste à charge', 'bilan compétences', 'RNCP', 'POEC', 'France Travail'],
     publisher: 'CléAvenir — Rapport Annuel 2026',
+    kpis: [
+      { label: 'Reste à charge (depuis avril)', value: '150 €', trend: 1, trendLabel: '+46,8 € vs début 2026' },
+      { label: 'Plafond bilan de compétences', value: '1 600 €', trend: null, trendLabel: "heures d'accompagnement direct" },
+      { label: 'POEC industrielles 2026', value: '25 000', trend: 1, trendLabel: '+50 % vs 2025' },
+      { label: 'Retour à emploi post-POEC', value: '68 %', trend: null, trendLabel: 'en 6 mois post-formation' },
+    ],
     full_description: `
 <h2>Les nouvelles règles du CPF en 2026</h2>
 
@@ -283,6 +307,12 @@ export const CURATED_ARTICLES = [
     published_at: '2026-05-22T08:40:00.000Z',
     keywords: ['BMO', 'recrutement', 'métiers en tension', 'BTP', 'santé', 'informatique', 'Apec', 'Data Engineer'],
     publisher: 'CléAvenir — Rapport Annuel 2026',
+    kpis: [
+      { label: 'Projets de recrutement', value: '2,28 M', trend: null, trendLabel: 'en France pour 2026' },
+      { label: 'Taux de difficulté global', value: '43,8 %', trend: -1, trendLabel: '−6,3 pts vs 2025' },
+      { label: 'Postes vacants informatique', value: '25 500', trend: 1, trendLabel: 'projection: 180 000 en 2030' },
+      { label: 'BTP — difficulté recrutement', value: '65 %', trend: null, trendLabel: 'secteur le plus tendu' },
+    ],
     full_description: `
 <h2>2,28 millions de projets de recrutement en 2026</h2>
 
@@ -376,6 +406,12 @@ export const CURATED_ARTICLES = [
     published_at: '2026-05-22T08:50:00.000Z',
     keywords: ['Parcoursup', 'salons emploi', 'orientation', 'Paris pour l\'emploi', 'Studyrama', 'calendrier 2026'],
     publisher: 'CléAvenir — Rapport Annuel 2026',
+    kpis: [
+      { label: 'Salons emploi & orientation', value: '8+', trend: null, trendLabel: 'événements clés en 2026' },
+      { label: 'Vœux Parcoursup max', value: '10', trend: null, trendLabel: 'sans classement obligatoire' },
+      { label: 'Clôture des vœux', value: '12 mars', trend: null, trendLabel: 'Parcoursup 2026' },
+      { label: 'Phase complémentaire', value: 'jusqu\'au 10 sept.', trend: null, trendLabel: 'nouveaux vœux possibles' },
+    ],
     full_description: `
 <h2>Les événements emploi et orientation à ne pas manquer en 2026</h2>
 
