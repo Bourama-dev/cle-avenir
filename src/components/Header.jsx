@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { User, LogOut, LayoutDashboard, Menu, LogIn, X, Home, BookOpen, Briefcase, Info, Edit, ChevronRight, Building, Rocket, Loader2, Lock, FileText, UserPlus, Crown, Star, ArrowLeft, FolderOpen, Target, Sun, Moon } from 'lucide-react';
+import { User, LogOut, LayoutDashboard, Menu, LogIn, X, Home, BookOpen, Briefcase, Info, Edit, ChevronRight, Building, Rocket, Loader2, Lock, FileText, UserPlus, Crown, Star, ArrowLeft, FolderOpen, Target, Sun, Moon, Newspaper } from 'lucide-react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { useSystemSettings } from '@/contexts/SystemSettingsContext';
 import { useAdminNavigation } from '@/hooks/useAdminNavigation';
@@ -187,6 +187,7 @@ const Header = ({ onNavigate }) => {
              { path: '/formations', label: 'Formations' },
              { path: '/metiers', label: 'Métiers' },
              { path: '/blog', label: '📚 Blog' },
+             { path: '/actualites', label: '🗞️ Actualités' },
              ...(user ? [{ path: '/personalized-plan', label: 'Mon Plan' }] : [])
            ].map((link) => (
              <NavLink 
@@ -406,6 +407,7 @@ const Header = ({ onNavigate }) => {
                     {isAdmin && <MobileNavLink icon={FileText} label="Documentation" path="/documentation" className="text-purple-600 bg-purple-50" />}
                     <MobileNavLink icon={Info} label="À propos" path="/about" />
                     <MobileNavLink icon={BookOpen} label="Blog" path="/blog" />
+                    <MobileNavLink icon={Newspaper} label="Actualités" path="/actualites" />
                     <MobileNavLink icon={Building} label="Espace Établissement" path="/establishment/login" className="text-blue-600" />
                     <MobileNavLink icon={UserPlus} label="S'inscrire" path="/signup" className="text-indigo-600" />
                     
