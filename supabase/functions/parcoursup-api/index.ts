@@ -88,6 +88,8 @@ function filiToNiveau(f: string): string {
   if (t.includes("MASTER") || t.includes("ING")) return "BAC+5";
   if (t.includes("LICENCE") || t.includes("BUT") || t.includes("STAPS")) return "BAC+3";
   if (t.includes("BTS") || t.includes("CPGE") || t.includes("DEUST") || t.includes("DUT")) return "BAC+2";
+  if (t.includes("CAP") || t.includes("BEP") || t.includes("BAC PRO") || t.includes("BREVET PRO")) return "CAP/BEP";
+  if (t.includes("BAC") || t.includes("TERMINALE") || t.includes("MENTION COMPLEMENTAIRE")) return "BAC";
   return "BAC+3";
 }
 

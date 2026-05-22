@@ -39,7 +39,7 @@ const Header = ({ onNavigate }) => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const siteName = settings?.general?.siteName || 'CléAvenir';
-  const logoUrl = settings?.general?.logo_url || 'https://storage.googleapis.com/hostinger-horizons-assets-prod/2a3aa4e1-f89b-4701-ac95-2a5df475caa5/d8ca901e80d017ffe3233aaf1581909b.png';
+  const logoUrl = settings?.general?.logo_url || '/favicon.svg';
   const primaryColor = settings?.colors?.primary || '#4f46e5';
 
   const isHomePage = location.pathname === '/' || location.pathname === '/accueil';

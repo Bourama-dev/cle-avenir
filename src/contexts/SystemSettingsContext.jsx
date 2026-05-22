@@ -7,7 +7,7 @@ const SystemSettingsContext = createContext();
 const defaultSettings = {
   general: { 
     siteName: 'CléAvenir', 
-    logo_url: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/2a3aa4e1-f89b-4701-ac95-2a5df475caa5/d8ca901e80d017ffe3233aaf1581909b.png', 
+    logo_url: '/favicon.svg',
     favicon_url: '/favicon.svg' 
   },
   theme: { mode: 'light' },

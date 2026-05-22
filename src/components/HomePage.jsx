@@ -311,11 +311,46 @@ const HomePage = ({ onNavigate }) => {
           >
             <div className="relative w-full max-w-lg aspect-square">
               <div className="absolute inset-0 bg-gradient-to-tr from-rose-100 to-cyan-100 rounded-full blur-3xl opacity-70 animate-pulse" />
-              <img
-                alt="Jeune professionnel confiant utilisant une application sur tablette"
-                className="relative z-10 w-full h-full object-cover rounded-3xl shadow-2xl shadow-rose-900/10 rotate-2 hover:rotate-0 transition-transform duration-700"
-                src="https://storage.googleapis.com/hostinger-horizons-assets-prod/2a3aa4e1-f89b-4701-ac95-2a5df475caa5/b332e387-2771-4da0-b054-67325add24f3-ouwvH.png"
-              />
+              {/* Hero illustration — gradient dashboard */}
+              <div className="relative z-10 w-full h-full rounded-3xl shadow-2xl shadow-rose-900/10 rotate-2 hover:rotate-0 transition-transform duration-700 overflow-hidden bg-gradient-to-br from-indigo-50 via-purple-50 to-rose-50 border border-white/80">
+                <svg viewBox="0 0 400 400" className="w-full h-full" aria-hidden="true">
+                  {/* Background circles */}
+                  <circle cx="320" cy="80" r="90" fill="url(#g1)" opacity="0.5" />
+                  <circle cx="80" cy="320" r="70" fill="url(#g2)" opacity="0.4" />
+                  {/* Dashboard card */}
+                  <rect x="60" y="80" width="280" height="180" rx="18" fill="white" opacity="0.9" />
+                  <rect x="60" y="80" width="280" height="40" rx="18" fill="#6366f1" opacity="0.9" />
+                  <rect x="60" y="100" width="280" height="20" fill="#6366f1" opacity="0.9" />
+                  <circle cx="88" cy="100" r="7" fill="white" opacity="0.6" />
+                  <circle cx="112" cy="100" r="7" fill="white" opacity="0.4" />
+                  <circle cx="136" cy="100" r="7" fill="white" opacity="0.3" />
+                  {/* Chart bars */}
+                  <rect x="90" y="185" width="28" height="55" rx="6" fill="#6366f1" opacity="0.7" />
+                  <rect x="132" y="160" width="28" height="80" rx="6" fill="#ec4899" opacity="0.7" />
+                  <rect x="174" y="175" width="28" height="65" rx="6" fill="#6366f1" opacity="0.5" />
+                  <rect x="216" y="148" width="28" height="92" rx="6" fill="#ec4899" opacity="0.8" />
+                  <rect x="258" y="168" width="28" height="72" rx="6" fill="#6366f1" opacity="0.6" />
+                  {/* Bottom cards */}
+                  <rect x="60" y="278" width="128" height="60" rx="14" fill="white" opacity="0.9" />
+                  <rect x="70" y="290" width="40" height="8" rx="4" fill="#6366f1" opacity="0.6" />
+                  <rect x="70" y="306" width="70" height="6" rx="3" fill="#94a3b8" opacity="0.5" />
+                  <rect x="70" y="318" width="50" height="6" rx="3" fill="#94a3b8" opacity="0.3" />
+                  <rect x="212" y="278" width="128" height="60" rx="14" fill="white" opacity="0.9" />
+                  <rect x="222" y="290" width="40" height="8" rx="4" fill="#ec4899" opacity="0.6" />
+                  <rect x="222" y="306" width="70" height="6" rx="3" fill="#94a3b8" opacity="0.5" />
+                  <rect x="222" y="318" width="50" height="6" rx="3" fill="#94a3b8" opacity="0.3" />
+                  <defs>
+                    <radialGradient id="g1" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#6366f1" />
+                      <stop offset="100%" stopColor="#a5b4fc" />
+                    </radialGradient>
+                    <radialGradient id="g2" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#ec4899" />
+                      <stop offset="100%" stopColor="#f9a8d4" />
+                    </radialGradient>
+                  </defs>
+                </svg>
+              </div>
 
               {/* Floating card — Précision IA */}
               <motion.div
