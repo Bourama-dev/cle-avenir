@@ -1,9 +1,27 @@
+# Robots.txt - CléAvenir
+# Auto-généré lors du build
+
+# Règles par défaut - Allow everything public
 User-agent: *
 Allow: /
+Allow: /sitemap.xml
 
-# Exclure les espaces privés
+# ─── Pages à ne pas indexer ──────────────────────────────────────────────
+
+# Espaces d'authentification
+Disallow: /auth
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /update-password
+Disallow: /email-confirmation-pending
+Disallow: /oauth/
+
+# Espaces privés (connectés)
 Disallow: /admin/
 Disallow: /dashboard
+Disallow: /profile/
 Disallow: /account
 Disallow: /settings
 Disallow: /my-documents
@@ -20,11 +38,32 @@ Disallow: /personalized-plan
 Disallow: /action-plan
 Disallow: /results
 Disallow: /test-history
+Disallow: /apprentissage
 Disallow: /user/
 Disallow: /establishment/
 Disallow: /institution/
-Disallow: /maintenance
-Disallow: /auth
 
-# Sitemap
+# Pages de maintenance et dev
+Disallow: /maintenance
+Disallow: /edge-function-diagnostics
+
+# ─── Règles spécifiques aux crawlers ──────────────────────────
+
+# Crawlers rapides/agressifs
+User-agent: MJ12bot
+Crawl-delay: 2
+
+User-agent: AhrefsBot
+Crawl-delay: 1
+
+User-agent: SemrushBot
+Crawl-delay: 1
+
+# ─── Sitemap ──────────────────────────────────────────────────
+
 Sitemap: https://www.cleavenir.com/sitemap.xml
+
+# ─── Cache Control ───────────────────────────────────────────
+
+# Suggère aux crawlers une fréquence de rechéck
+# (Non normalisé mais respecté par les bons crawlers)

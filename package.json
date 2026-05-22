@@ -5,10 +5,11 @@
   "private": true,
   "scripts": {
     "dev": "vite --host :: --port 5173",
-    "build": "node tools/generate-llms.js || true && node tools/generate-sitemap.js && vite build && node tools/prerender-meta.js",
+    "build": "node tools/generate-llms.js || true && node tools/generate-sitemap.js && node tools/generate-seo-headers.js && vite build && node tools/prerender-meta.js && node tools/audit-seo.js",
     "preview": "vite preview --host :: --port 3000",
     "eslint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "lint": "eslint . --quiet"
+    "lint": "eslint . --quiet",
+    "seo:audit": "node tools/audit-seo.js"
   },
   "dependencies": {
     "@babel/generator": "^7.26.3",
