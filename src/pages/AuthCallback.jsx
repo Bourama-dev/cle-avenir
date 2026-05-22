@@ -30,10 +30,22 @@ const AuthCallback = () => {
         if (code) {
           const { data, error } = await supabase.auth.exchangeCodeForSession(code);
           if (error) throw error;
-          
+
           if (data?.user) {
+            const isGoogleUser = data.user.app_metadata?.provider === 'google';
+            if (isGoogleUser) {
+              // Check if profile is complete (has region = user filled the form)
+              const { data: profile } = await supabase
+                .from('profiles')
+                .select('region')
+                .eq('id', data.user.id)
+                .maybeSingle();
+              if (!profile?.region) {
+                navigate('/signup?google=true', { replace: true });
+                return;
+              }
+            }
             EventLogger.logEvent('auth_email_confirmed', data.user.id);
-            // Successful exchange
             navigate('/dashboard', { replace: true });
             return;
           }

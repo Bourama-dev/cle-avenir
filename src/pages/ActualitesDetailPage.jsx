@@ -144,23 +144,35 @@ function sanitizeHTML(html) {
       if (node.nodeType === 3 /* TEXT_NODE */) return;
       if (node.nodeType === 1 /* ELEMENT_NODE */) {
         const tag = node.tagName.toLowerCase();
-        if (!allowed.has(tag)) {
+        // Never replace the body itself — only clean its children
+        if (tag !== 'body' && !allowed.has(tag)) {
           node.replaceWith(doc.createTextNode(node.textContent));
           return;
         }
-        const permitted = allowedAttrs[tag] || [];
-        [...node.attributes].forEach(attr => {
-          if (!permitted.includes(attr.name)) node.removeAttribute(attr.name);
-        });
-        if (tag === 'a') {
-          node.setAttribute('target', '_blank');
-          node.setAttribute('rel', 'noopener noreferrer');
+        if (tag !== 'body') {
+          const permitted = allowedAttrs[tag] || [];
+          [...node.attributes].forEach(attr => {
+            if (!permitted.includes(attr.name)) node.removeAttribute(attr.name);
+          });
+          if (tag === 'a') {
+            node.setAttribute('target', '_blank');
+            node.setAttribute('rel', 'noopener noreferrer');
+          }
         }
       }
       [...node.childNodes].forEach(clean);
     };
 
     clean(doc.body);
+
+    // Wrap every <table> in a scroll container for mobile responsiveness
+    doc.body.querySelectorAll('table').forEach(table => {
+      const wrapper = doc.createElement('div');
+      wrapper.className = 'table-scroll';
+      table.parentNode.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    });
+
     return doc.body.innerHTML;
   } catch {
     return html;

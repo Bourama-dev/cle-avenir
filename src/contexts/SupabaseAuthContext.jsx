@@ -91,15 +91,35 @@ export const AuthProvider = ({ children }) => {
       setUser(currentSession.user);
 
       // Fetch additional data
-      const profile = await fetchUserProfile(currentSession.user.id);
-      
-      // Default profile structure if missing
+      let profile = await fetchUserProfile(currentSession.user.id);
+
+      // New Google/OAuth user — no profile row yet: create it
+      if (!profile && currentSession.user.app_metadata?.provider === 'google') {
+        const meta = currentSession.user.user_metadata || {};
+        const nameParts = (meta.full_name || '').split(' ');
+        const { error: upsertError } = await supabase.from('profiles').upsert({
+          id: currentSession.user.id,
+          email: currentSession.user.email,
+          first_name: meta.given_name || nameParts[0] || '',
+          last_name: meta.family_name || nameParts.slice(1).join(' ') || '',
+          avatar_url: meta.avatar_url || null,
+          role: 'user',
+          updated_at: new Date().toISOString(),
+        }, { onConflict: 'id' });
+        if (upsertError) {
+          console.error('[AuthContext] Google profile creation failed:', upsertError);
+        } else {
+          profile = await fetchUserProfile(currentSession.user.id);
+        }
+      }
+
+      // Default profile structure if missing (non-Google fallback)
       const effectiveProfile = profile || {
         id: currentSession.user.id,
         email: currentSession.user.email,
         role: currentSession.user.user_metadata?.role || 'user'
       };
-      
+
       setUserProfile(effectiveProfile);
 
       const { tier, plan } = await fetchSubscriptionData(currentSession.user.id, effectiveProfile);

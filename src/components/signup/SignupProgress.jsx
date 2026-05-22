@@ -12,28 +12,29 @@ const steps = [
   { id: 7, name: 'Fin' }
 ];
 
-const SignupProgress = ({ currentStep }) => {
+const SignupProgress = ({ currentStep, googleFlow = false }) => {
   return (
     <div className="w-full py-6">
       <div className="flex items-center justify-between relative">
         <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-slate-200 rounded-full" />
-        
-        <div 
+
+        <div
           className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-indigo-600 rounded-full transition-all duration-500 ease-in-out"
           style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }}
         />
 
         {steps.map((step) => {
-          const isCompleted = currentStep > step.id;
+          const isPreCompleted = googleFlow && step.id <= 2;
+          const isCompleted = currentStep > step.id || isPreCompleted;
           const isCurrent = currentStep === step.id;
           
           return (
             <div key={step.id} className="relative z-10 flex flex-col items-center group">
-              <motion.div 
+              <motion.div
                 initial={false}
                 animate={{
-                  backgroundColor: isCompleted || isCurrent ? '#4f46e5' : '#ffffff',
-                  borderColor: isCompleted || isCurrent ? '#4f46e5' : '#e2e8f0',
+                  backgroundColor: isCompleted || isCurrent ? (isPreCompleted ? '#a5b4fc' : '#4f46e5') : '#ffffff',
+                  borderColor: isCompleted || isCurrent ? (isPreCompleted ? '#a5b4fc' : '#4f46e5') : '#e2e8f0',
                   scale: isCurrent ? 1.2 : 1
                 }}
                 className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-colors duration-300 ${

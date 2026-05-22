@@ -175,12 +175,46 @@ export const AuthService = {
         redirectTo: `${window.location.origin}/auth/callback`,
         queryParams: {
           access_type: 'offline',
-          prompt: 'consent'
+          // 'select_account' lets returning users pick their account without
+          // re-showing the full consent screen every time
+          prompt: 'select_account'
         }
       }
     });
     if (error) throw error;
     return data;
+  },
+
+  async completeGoogleProfile(userId, profileData) {
+    try {
+      let wantsLongStudiesBool = null;
+      if (profileData.wants_long_studies === 'Oui' || profileData.wants_long_studies === true) wantsLongStudiesBool = true;
+      else if (profileData.wants_long_studies === 'Non' || profileData.wants_long_studies === false) wantsLongStudiesBool = false;
+
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          id: userId,
+          region: profileData.region,
+          city: profileData.city,
+          education_level: profileData.education_level,
+          specialization: profileData.education_specialty,
+          user_status: profileData.current_status,
+          age_range: profileData.age ? `${profileData.age}-${profileData.age}` : null,
+          interests: profileData.interests || [],
+          salary_range_min: profileData.salaryRange?.[0] || null,
+          salary_range_max: profileData.salaryRange?.[1] || null,
+          constraints: { selected: profileData.constraints || [] },
+          answers: { wants_long_studies: wantsLongStudiesBool },
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'id' });
+
+      if (error) throw error;
+      return { error: null };
+    } catch (error) {
+      console.error('Complete Google profile error:', error.message);
+      return { error };
+    }
   },
 
   async isAuthenticated() {
