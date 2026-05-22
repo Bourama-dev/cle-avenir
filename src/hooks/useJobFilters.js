@@ -253,7 +253,7 @@ const useJobFilters = () => {
               if (job.distanceToUser !== null) {
                   return job.distanceToUser <= userRadius;
               }
-              return false;
+              return true; // keep jobs without coordinates rather than hiding them
           });
       }
 
@@ -266,8 +266,8 @@ const useJobFilters = () => {
       }
 
       setFilteredCount(filtered.length);
-      // Calculate total pages based on FILTERED results for accurate pagination
-      setTotalPages(Math.ceil(filtered.length / filters.limit));
+      // Base pagination on total server results to avoid cutting off pages when radius filter is active
+      setTotalPages(Math.ceil(totalResults / filters.limit));
 
     } catch (err) {
       console.error('Error fetching jobs:', err);

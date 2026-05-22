@@ -299,7 +299,7 @@ const FormationsPage = ({ setAllFormations }) => {
           }
 
           // If we can't find coordinates, keep the formation (don't filter it out)
-          if (isNaN(formLat) || isNaN(formLon)) {
+          if (formLat === null || formLon === null || isNaN(formLat) || isNaN(formLon)) {
             return true;
           }
 
