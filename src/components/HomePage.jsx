@@ -81,19 +81,22 @@ const STEPS = [
 
 // ── Emoji rain ────────────────────────────────────────────────────────────────
 const RAIN_EMOJIS = ['🎓', '💼', '🚀', '📊', '🔑', '💡', '🏆', '📝', '⭐', '🎯', '📚', '🤝', '🌟', '✨', '🏫', '📈'];
+// Logo particles appear every ~5 items (indices 4, 9, 14, 19 → 4 logos out of 24)
+const LOGO_INDICES = new Set([4, 9, 14, 19]);
 
-function EmojiRain({ count = 22 }) {
+function EmojiRain({ count = 24 }) {
   const particles = useMemo(() =>
     Array.from({ length: count }, (_, i) => ({
       id: i,
+      isLogo: LOGO_INDICES.has(i),
       emoji: RAIN_EMOJIS[i % RAIN_EMOJIS.length],
       left: 2 + (i / count) * 96 + (Math.random() - 0.5) * 4,
-      size: 0.85 + Math.random() * 0.9,
+      size: LOGO_INDICES.has(i) ? 1.4 + Math.random() * 0.6 : 0.85 + Math.random() * 0.9,
       delay: Math.random() * 12,
       duration: 9 + Math.random() * 8,
       drift: (Math.random() - 0.5) * 80,
       rotate: (Math.random() - 0.5) * 360,
-      opacity: 0.25 + Math.random() * 0.35,
+      opacity: LOGO_INDICES.has(i) ? 0.3 + Math.random() * 0.25 : 0.25 + Math.random() * 0.35,
     })),
   []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -102,8 +105,14 @@ function EmojiRain({ count = 22 }) {
       {particles.map((p) => (
         <motion.span
           key={p.id}
-          className="absolute select-none"
-          style={{ left: `${p.left}%`, top: '-3rem', fontSize: `${p.size}rem` }}
+          className="absolute select-none inline-flex items-center justify-center"
+          style={{
+            left: `${p.left}%`,
+            top: '-3rem',
+            fontSize: p.isLogo ? 0 : `${p.size}rem`,
+            width: p.isLogo ? `${p.size}rem` : undefined,
+            height: p.isLogo ? `${p.size}rem` : undefined,
+          }}
           animate={{
             y: ['0vh', '110vh'],
             x: [0, p.drift],
@@ -118,7 +127,10 @@ function EmojiRain({ count = 22 }) {
             times: [0, 0.08, 0.88, 1],
           }}
         >
-          {p.emoji}
+          {p.isLogo
+            ? <img src="/favicon.svg" alt="" width={`${p.size * 16}px`} height={`${p.size * 16}px`} draggable={false} />
+            : p.emoji
+          }
         </motion.span>
       ))}
     </div>
