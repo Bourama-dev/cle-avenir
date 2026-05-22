@@ -46,32 +46,39 @@ function tickShort(val) {
   return s.length > 12 ? s.slice(0, 11) + '…' : s;
 }
 
-// Whitelist-based HTML sanitizer (browser-side, no extra deps)
+// Whitelist-based HTML sanitizer — falls back to raw HTML if DOMParser is unavailable
 function sanitizeHTML(html) {
   if (!html || typeof html !== 'string') return '';
-  const allowed = new Set(['p','br','strong','b','em','i','u','s','ul','ol','li',
-    'h1','h2','h3','h4','h5','h6','blockquote','table','thead','tbody','tr','th','td',
-    'code','pre','hr','a','span','div','rowspan','colspan']);
-  const allowedAttrs = { a: ['href','target','rel'], td: ['rowspan','colspan'], th: ['rowspan','colspan'] };
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  function clean(node) {
-    if (node.nodeType === Node.TEXT_NODE) return;
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      const tag = node.tagName.toLowerCase();
-      if (!allowed.has(tag)) { node.replaceWith(...node.childNodes); return; }
-      const permitted = allowedAttrs[tag] || [];
-      [...node.attributes].forEach(attr => {
-        if (!permitted.includes(attr.name)) node.removeAttribute(attr.name);
-      });
-      if (tag === 'a') {
-        node.setAttribute('target', '_blank');
-        node.setAttribute('rel', 'noopener noreferrer');
+  try {
+    if (typeof window === 'undefined' || typeof DOMParser === 'undefined') return html;
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    if (!doc || !doc.body) return html;
+
+    const allowed = new Set(['p','br','strong','b','em','i','u','s','ul','ol','li',
+      'h1','h2','h3','h4','h5','h6','blockquote','table','thead','tbody','tr','th','td',
+      'code','pre','hr','a','span','div']);
+    const allowedAttrs = { a: ['href','target','rel'], td: ['rowspan','colspan'], th: ['rowspan','colspan'] };
+
+    const clean = (node) => {
+      if (!node) return;
+      if (node.nodeType === 3 /* TEXT_NODE */) return;
+      if (node.nodeType === 1 /* ELEMENT_NODE */) {
+        const tag = node.tagName.toLowerCase();
+        if (!allowed.has(tag)) { node.replaceWith(doc.createTextNode(node.textContent)); return; }
+        const permitted = allowedAttrs[tag] || [];
+        [...node.attributes].forEach(attr => {
+          if (!permitted.includes(attr.name)) node.removeAttribute(attr.name);
+        });
+        if (tag === 'a') { node.setAttribute('target', '_blank'); node.setAttribute('rel', 'noopener noreferrer'); }
       }
-    }
-    [...node.childNodes].forEach(clean);
+      [...node.childNodes].forEach(clean);
+    };
+
+    clean(doc.body);
+    return doc.body.innerHTML;
+  } catch {
+    return html;
   }
-  clean(doc.body);
-  return doc.body.innerHTML;
 }
 
 function getDatasetInfo(item) {
