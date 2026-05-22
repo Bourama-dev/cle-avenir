@@ -175,7 +175,9 @@ export const AuthService = {
         redirectTo: `${window.location.origin}/auth/callback`,
         queryParams: {
           access_type: 'offline',
-          prompt: 'consent'
+          // 'select_account' lets returning users pick their account without
+          // re-showing the full consent screen every time
+          prompt: 'select_account'
         }
       }
     });
