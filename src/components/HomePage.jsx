@@ -8,7 +8,6 @@ import TiltCard from '@/components/ui/TiltCard';
 import TextReveal from '@/components/ui/TextReveal';
 import MagneticButton from '@/components/ui/MagneticButton';
 
-const BlogCarousel = lazy(() => import('@/components/BlogCarousel'));
 const NewsPreview = lazy(() => import('@/components/NewsPreview'));
 
 const FEATURES = [
@@ -253,11 +252,6 @@ const HomePage = ({ onNavigate }) => {
           </AnimatedSection>
         </div>
       </section>
-
-      {/* ── Blog Carousel ─────────────────────────────────────────── */}
-      <Suspense fallback={<div className="h-[500px] w-full bg-slate-50 animate-pulse" />}>
-        <BlogCarousel />
-      </Suspense>
 
       {/* ── News Preview ──────────────────────────────────────────── */}
       <Suspense fallback={<div className="h-[340px] w-full bg-slate-50 animate-pulse" />}>

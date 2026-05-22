@@ -186,7 +186,6 @@ const Header = ({ onNavigate }) => {
              { path: '/offres-emploi', label: 'Offres' },
              { path: '/formations', label: 'Formations' },
              { path: '/metiers', label: 'Métiers' },
-             { path: '/blog', label: '📚 Blog' },
              { path: '/actualites', label: '🗞️ Actualités' },
              ...(user ? [{ path: '/personalized-plan', label: 'Mon Plan' }] : [])
            ].map((link) => (
@@ -406,7 +405,6 @@ const Header = ({ onNavigate }) => {
                     {user && <MobileNavLink icon={Target} label="Mon Plan" path="/personalized-plan" className="text-indigo-600" />}
                     {isAdmin && <MobileNavLink icon={FileText} label="Documentation" path="/documentation" className="text-purple-600 bg-purple-50" />}
                     <MobileNavLink icon={Info} label="À propos" path="/about" />
-                    <MobileNavLink icon={BookOpen} label="Blog" path="/blog" />
                     <MobileNavLink icon={Newspaper} label="Actualités" path="/actualites" />
                     <MobileNavLink icon={Building} label="Espace Établissement" path="/establishment/login" className="text-blue-600" />
                     <MobileNavLink icon={UserPlus} label="S'inscrire" path="/signup" className="text-indigo-600" />
