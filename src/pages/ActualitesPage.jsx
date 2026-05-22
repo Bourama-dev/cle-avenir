@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Search, X, RefreshCw, Newspaper, Clock } from 'lucide-react';
+import { ExternalLink, Search, X, RefreshCw, Newspaper, Clock, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Link } from 'react-router-dom';
 import { newsService, CATEGORIES } from '@/services/newsService';
 import { normalizedIncludes } from '@/utils/stringUtils';
 import MetaTags from '@/components/SEO/MetaTags';
@@ -67,15 +68,25 @@ function NewsCard({ item, index }) {
             <Clock className="w-3 h-3" />
             {formatDate(item.published_at)}
           </span>
-          <a
-            href={item.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs font-medium text-[var(--color-primary)] hover:underline"
-          >
-            Lire la suite
-            <ExternalLink className="w-3 h-3" />
-          </a>
+          {item.is_internal ? (
+            <Link
+              to={item.link}
+              className="flex items-center gap-1.5 text-xs font-medium text-[var(--color-primary)] hover:underline"
+            >
+              Voir le détail
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          ) : (
+            <a
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-xs font-medium text-[var(--color-primary)] hover:underline"
+            >
+              Lire la suite
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          )}
         </div>
       </div>
     </motion.article>

@@ -111,6 +111,7 @@ const ContactPage = lazy(() => import('@/pages/ContactPage'));
 const BlogPage = lazy(() => import('@/pages/BlogPage'));
 const BlogArticlePage = lazy(() => import('@/pages/BlogArticlePage'));
 const ActualitesPage = lazy(() => import('@/pages/ActualitesPage'));
+const ActualitesDetailPage = lazy(() => import('@/pages/ActualitesDetailPage'));
 const DocumentationPage = lazy(() => import('@/pages/DocumentationPage'));
 const StatusPage = lazy(() => import('@/pages/StatusPage'));
 const RoadmapPage = lazy(() => import('@/pages/RoadmapPage'));
@@ -306,6 +307,7 @@ const PageContent = () => {
                   <Route path="/blog" element={<PageTransition><BlogPage /></PageTransition>} />
                   <Route path="/blog/:slug" element={<PageTransition><BlogArticlePage /></PageTransition>} />
                   <Route path="/actualites" element={<PageTransition><ActualitesPage /></PageTransition>} />
+                  <Route path="/actualites/:id" element={<PageTransition><ActualitesDetailPage /></PageTransition>} />
                   <Route path="/faq" element={<PageTransition><FAQPage /></PageTransition>} />
                   <Route path="/how-it-works" element={<PageTransition><HowItWorksPage /></PageTransition>} />
                   <Route path="/plans" element={<PageTransition><PlansPage /></PageTransition>} />

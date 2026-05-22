@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ExternalLink, Clock, Loader2 } from 'lucide-react';
+import { ArrowRight, ExternalLink, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { newsService } from '@/services/newsService';
 
@@ -33,49 +33,66 @@ function NewsCard({ item, index }) {
     bg: 'bg-slate-100', text: 'text-slate-600', label: item.category,
   };
 
-  return (
-    <motion.a
-      href={item.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.07 }}
-      className="group flex flex-col bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-rose-100 transition-all duration-200 overflow-hidden"
-    >
+  const cardClass = "group flex flex-col bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-rose-100 transition-all duration-200 overflow-hidden";
+  const motionProps = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.4, delay: index * 0.07 },
+  };
+
+  const inner = (
+    <>
       {/* Top accent bar */}
       <div className="h-1 w-full bg-gradient-to-r from-rose-400 to-cyan-400 opacity-70" />
-
       <div className="flex flex-col flex-1 p-5 gap-3">
-        {/* Category + source */}
         <div className="flex items-center justify-between gap-2 flex-wrap">
-          <span
-            className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${style.bg} ${style.text}`}
-          >
+          <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${style.bg} ${style.text}`}>
             {style.label}
           </span>
           <span className="text-xs text-slate-400 truncate max-w-[110px]">
             {item.source_logo} {item.source}
           </span>
         </div>
-
-        {/* Title */}
         <h3 className="text-sm font-semibold text-slate-900 leading-snug line-clamp-3 group-hover:text-rose-600 transition-colors flex-1">
           {item.title}
         </h3>
-
-        {/* Footer */}
         <div className="flex items-center justify-between pt-2 border-t border-slate-50 mt-auto">
           <span className="flex items-center gap-1 text-xs text-slate-400">
             <Clock className="w-3 h-3" />
             {formatDate(item.published_at)}
           </span>
-          <span className="flex items-center gap-1 text-xs font-medium text-rose-500 group-hover:text-rose-700">
-            Lire <ExternalLink className="w-3 h-3" />
-          </span>
+          {item.is_internal ? (
+            <span className="flex items-center gap-1 text-xs font-medium text-rose-500 group-hover:text-rose-700">
+              Voir le détail <ArrowRight className="w-3 h-3" />
+            </span>
+          ) : (
+            <span className="flex items-center gap-1 text-xs font-medium text-rose-500 group-hover:text-rose-700">
+              Lire <ExternalLink className="w-3 h-3" />
+            </span>
+          )}
         </div>
       </div>
+    </>
+  );
+
+  if (item.is_internal) {
+    return (
+      <motion.div {...motionProps} className={cardClass}>
+        <Link to={item.link} className="flex flex-col flex-1">{inner}</Link>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.a
+      href={item.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      {...motionProps}
+      className={cardClass}
+    >
+      {inner}
     </motion.a>
   );
 }
