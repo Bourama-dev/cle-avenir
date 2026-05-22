@@ -1,88 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/customSupabaseClient';
-import { Loader2, CheckCircle, XCircle } from 'lucide-react';
+import { Loader2, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { EventLogger } from '@/services/eventLoggerService';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
 
 /**
  * AuthCallback Component
- * 
- * Handles the redirect from Supabase email links.
- * Extracts the code from the URL and exchanges it for a session.
- * 
- * Routes to:
- * - /dashboard on success
- * - /login on error
+ *
+ * With detectSessionInUrl: true + flowType: 'pkce' in the Supabase client,
+ * Supabase auto-exchanges the OAuth code on init and fires SIGNED_IN before
+ * this component even mounts. We therefore rely on the auth context (which
+ * has already processed the session) instead of calling exchangeCodeForSession
+ * manually — that would fail with "code already used".
+ *
+ * Flow:
+ * 1. App.jsx shows <LoadingFallback> while authLoading is true
+ * 2. Once authLoading is false, AuthCallback mounts and the effect runs
+ * 3. If the user is a new Google user (no region in profile) → /signup?google=true
+ * 4. Otherwise → /dashboard
  */
 const AuthCallback = () => {
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [processed, setProcessed] = useState(false);
 
   useEffect(() => {
-    const handleCallback = async () => {
-      try {
-        // Method 1: Check for 'code' query param (PKCE flow)
-        const code = searchParams.get('code');
-        
-        if (code) {
-          const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-          if (error) throw error;
+    if (authLoading || processed) return;
+    setProcessed(true);
 
-          if (data?.user) {
-            const isGoogleUser = data.user.app_metadata?.provider === 'google';
-            if (isGoogleUser) {
-              // Check if profile is complete (has region = user filled the form)
-              const { data: profile } = await supabase
-                .from('profiles')
-                .select('region')
-                .eq('id', data.user.id)
-                .maybeSingle();
-              if (!profile?.region) {
-                navigate('/signup?google=true', { replace: true });
-                return;
-              }
-            }
-            EventLogger.logEvent('auth_email_confirmed', data.user.id);
-            navigate('/dashboard', { replace: true });
+    const redirect = async () => {
+      try {
+        if (!user) {
+          throw new Error("Lien de validation invalide ou expiré.");
+        }
+
+        const isGoogleUser =
+          user.app_metadata?.provider === 'google' ||
+          user.app_metadata?.providers?.includes('google');
+
+        if (isGoogleUser) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('region')
+            .eq('id', user.id)
+            .maybeSingle();
+
+          if (!profile?.region) {
+            navigate('/signup?google=true', { replace: true });
             return;
           }
         }
-        
-        // Method 2: Check for implicit flow (access_token in hash) - usually handled by supabase client automatically
-        // However, we wait a moment to see if session is established by the listener in AuthContext
-        const { data: { session } } = await supabase.auth.getSession();
-        
-        if (session) {
-           navigate('/dashboard', { replace: true });
-        } else if (!code) {
-           // No code and no session found
-           throw new Error("Lien de validation invalide ou expiré.");
-        }
 
+        EventLogger.logEvent('auth_callback', user.id);
+        navigate('/dashboard', { replace: true });
       } catch (err) {
         console.error("Auth callback error:", err);
         setError(err.message || "Erreur lors de la validation.");
-        EventLogger.logEvent('auth_callback_failed', null, null, { error: err.message });
-      } finally {
-        setLoading(false);
       }
     };
 
-    handleCallback();
-  }, [navigate, searchParams]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
-        <Loader2 className="h-10 w-10 text-primary animate-spin mb-4" />
-        <h2 className="text-lg font-medium text-slate-700">Validation de votre compte...</h2>
-        <p className="text-slate-500">Veuillez patienter un instant.</p>
-      </div>
-    );
-  }
+    redirect();
+  }, [authLoading, user, navigate, processed]);
 
   if (error) {
     return (
@@ -94,19 +75,25 @@ const AuthCallback = () => {
           <h2 className="text-2xl font-bold text-slate-900 mb-2">Erreur de validation</h2>
           <p className="text-slate-600 mb-6">{error}</p>
           <div className="flex gap-4 justify-center">
-             <Button onClick={() => navigate('/login')} variant="outline">
-               Retour à la connexion
-             </Button>
-             <Button onClick={() => navigate('/signup')}>
-               S'inscrire à nouveau
-             </Button>
+            <Button onClick={() => navigate('/login')} variant="outline">
+              Retour à la connexion
+            </Button>
+            <Button onClick={() => navigate('/signup')}>
+              S'inscrire à nouveau
+            </Button>
           </div>
         </div>
       </div>
     );
   }
 
-  return null;
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
+      <Loader2 className="h-10 w-10 text-primary animate-spin mb-4" />
+      <h2 className="text-lg font-medium text-slate-700">Validation de votre compte...</h2>
+      <p className="text-slate-500">Veuillez patienter un instant.</p>
+    </div>
+  );
 };
 
 export default AuthCallback;
