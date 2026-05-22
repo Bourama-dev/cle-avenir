@@ -21,6 +21,9 @@ import PageHelmet from '@/components/SEO/PageHelmet';
 import { metierDetailSEO } from '@/components/SEO/seoPresets';
 import { cn } from '@/lib/utils';
 import MatchingContextPanel from '@/components/metiers/MatchingContextPanel';
+import OnisepCard from '@/components/metiers/OnisepCard';
+import MarcheTravailCard from '@/components/metiers/MarcheTravailCard';
+import SortantsFormationCard from '@/components/metiers/SortantsFormationCard';
 import { Progress } from "@/components/ui/progress";
 
 // New Components
@@ -466,6 +469,19 @@ const MetierDetailPage = () => {
                       title="Profil RIASEC"
                     />
                   </AnimatedItem>
+
+                  {/* ONISEP official career profile */}
+                  <AnimatedItem>
+                    <OnisepCard
+                      romeCode={metier.code || metier.code_rome}
+                      metierTitle={metier.libelle}
+                    />
+                  </AnimatedItem>
+
+                  {/* Labor market stats */}
+                  <AnimatedItem>
+                    <MarcheTravailCard romeCode={metier.code || metier.code_rome} />
+                  </AnimatedItem>
                 </AnimatedSection>
               </div>
             </TabsContent>
@@ -486,6 +502,11 @@ const MetierDetailPage = () => {
                   <h2 className="text-2xl font-bold text-slate-900 mb-2">Votre parcours vers ce métier</h2>
                   <p className="text-slate-600">Découvrez les formations pour accéder à ce métier et les offres d'emploi disponibles</p>
                 </div>
+                </AnimatedItem>
+
+                {/* Employment outcomes after training */}
+                <AnimatedItem>
+                  <SortantsFormationCard romeCode={metier.code || metier.code_rome} />
                 </AnimatedItem>
 
                 {/* Step 1: Formations */}
