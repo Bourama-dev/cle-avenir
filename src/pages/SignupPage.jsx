@@ -3,11 +3,12 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { AuthService } from '@/services/authService';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { Loader2, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Loader2, ArrowLeft, ArrowRight, Mail, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 
 import SignupProgress from '@/components/signup/SignupProgress';
+import ParentalConsentModal from '@/components/signup/ParentalConsentModal';
 import UnifiedSignupStep1 from '@/components/signup/UnifiedSignupStep1';
 import UnifiedSignupStep2 from '@/components/signup/UnifiedSignupStep2';
 import UnifiedSignupStep3 from '@/components/signup/UnifiedSignupStep3';
@@ -30,12 +31,16 @@ const SignupPage = () => {
   const [currentStep, setCurrentStep] = useState(isGoogleFlow ? 3 : 1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
+  const [showParentalModal, setShowParentalModal] = useState(false);
+  const [awaitingParentalConsent, setAwaitingParentalConsent] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     confirmPassword: '',
     first_name: '',
     last_name: '',
+    dateOfBirth: '',
+    parentEmail: '',
     region: '',
     city: '',
     age: '',
@@ -46,6 +51,16 @@ const SignupPage = () => {
     interests: [],
     constraints: []
   });
+
+  const calculateAge = (dateOfBirth) => {
+    if (!dateOfBirth) return null;
+    const birth = new Date(dateOfBirth);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+    return age;
+  };
 
   // Load saved draft — only in normal (non-Google) flow
   useEffect(() => {
@@ -102,6 +117,11 @@ const SignupPage = () => {
     if (step === 2 && !isGoogleFlow) {
       if (!formData.first_name?.trim()) newErrors.first_name = "Prenom requis";
       if (!formData.last_name?.trim()) newErrors.last_name = "Nom requis";
+      if (!formData.dateOfBirth) newErrors.dateOfBirth = "Date de naissance requise";
+      else {
+        const age = calculateAge(formData.dateOfBirth);
+        if (age < 13) newErrors.dateOfBirth = "Vous devez avoir au moins 13 ans pour créer un compte";
+      }
     }
     if (step === 3) {
       if (!formData.region) newErrors.region = "Region requise";
@@ -128,10 +148,24 @@ const SignupPage = () => {
   };
 
   const handleNext = () => {
-    if (validateStep(currentStep)) {
-      setCurrentStep(prev => Math.min(prev + 1, TOTAL_STEPS));
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (!validateStep(currentStep)) return;
+    // After step 2: check if under 15 and parental consent not yet collected
+    if (currentStep === 2 && !isGoogleFlow && !formData.parentEmail) {
+      const age = calculateAge(formData.dateOfBirth);
+      if (age !== null && age < 15) {
+        setShowParentalModal(true);
+        return;
+      }
     }
+    setCurrentStep(prev => Math.min(prev + 1, TOTAL_STEPS));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleParentalConsent = (parentEmail) => {
+    setFormData(prev => ({ ...prev, parentEmail }));
+    setShowParentalModal(false);
+    setCurrentStep(prev => Math.min(prev + 1, TOTAL_STEPS));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handlePrev = () => {
@@ -180,6 +214,18 @@ const SignupPage = () => {
     }
 
     localStorage.removeItem('signup_draft');
+
+    // Parental consent required: send request email and show waiting screen
+    if (formData.parentEmail && data?.user) {
+      await AuthService.createParentalConsentRequest(
+        data.user.id,
+        formData.parentEmail,
+        formData.first_name || formData.firstName
+      );
+      setAwaitingParentalConsent(true);
+      return;
+    }
+
     toast({ title: "Bienvenue !", description: "Votre profil a ete cree avec succes." });
     navigate('/results');
   };
@@ -198,7 +244,42 @@ const SignupPage = () => {
     }
   };
 
+  if (awaitingParentalConsent) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center space-y-5">
+          <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto">
+            <Mail className="w-8 h-8 text-amber-600" />
+          </div>
+          <h2 className="text-2xl font-bold text-slate-900">Demande envoyée !</h2>
+          <p className="text-slate-600 leading-relaxed">
+            Un email a été envoyé à <strong>{formData.parentEmail}</strong> pour demander l'autorisation parentale.
+          </p>
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-left">
+            <div className="flex items-start gap-2">
+              <Clock className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />
+              <p className="text-sm text-amber-800 leading-relaxed">
+                Votre compte sera activé dès que votre parent ou tuteur légal aura approuvé la demande.
+                Le lien est valable <strong>7 jours</strong>.
+              </p>
+            </div>
+          </div>
+          <p className="text-xs text-slate-400">
+            Des questions ? <a href="mailto:dpo@cleavenir.com" className="text-indigo-600">dpo@cleavenir.com</a>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
+    <>
+    <ParentalConsentModal
+      isOpen={showParentalModal}
+      childFirstName={formData.first_name || formData.firstName}
+      onConfirm={handleParentalConsent}
+      onClose={() => setShowParentalModal(false)}
+    />
     <div className="min-h-screen bg-slate-50 flex flex-col items-center py-12 px-4 sm:px-6">
       <div className="w-full max-w-2xl mb-8 text-center">
         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">CleAvenir</h1>
@@ -267,6 +348,7 @@ const SignupPage = () => {
         </p>
       )}
     </div>
+    </>
   );
 };
 

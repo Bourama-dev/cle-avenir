@@ -217,6 +217,40 @@ export const AuthService = {
     }
   },
 
+  async createParentalConsentRequest(userId, parentEmail, childFirstName) {
+    try {
+      const token = crypto.randomUUID();
+      const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+
+      const { error: insertError } = await supabase
+        .from('parental_consent_requests')
+        .insert({
+          user_id: userId,
+          parent_email: parentEmail,
+          token,
+          status: 'pending',
+          expires_at: expiresAt,
+        });
+
+      if (insertError) throw insertError;
+
+      await supabase
+        .from('profiles')
+        .update({ parental_consent_status: 'pending' })
+        .eq('id', userId);
+
+      // Send email — non-blocking, failure doesn't break signup
+      supabase.functions.invoke('send-parental-consent', {
+        body: { token, parentEmail, childFirstName },
+      }).catch(err => console.warn('[authService] Parental consent email failed:', err));
+
+      return { token, error: null };
+    } catch (error) {
+      console.error('Parental consent request error:', error.message);
+      return { token: null, error };
+    }
+  },
+
   async isAuthenticated() {
     const { data: { session } } = await supabase.auth.getSession();
     return !!session;

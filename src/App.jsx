@@ -63,6 +63,9 @@ const ResultsPage = lazy(() => import('@/pages/ResultsPage'));
 const ActionPlanPage = lazy(() => import('@/pages/ActionPlanPage'));
 const TestPage = lazy(() => import('@/pages/TestPage'));
 
+// Parental Consent
+const ParentalConsentPage = lazy(() => import('@/pages/ParentalConsentPage'));
+
 // Legacy Auth
 const AuthPage = lazy(() => import('@/pages/AuthPage'));
 const ForgotPasswordPage = lazy(() => import('@/pages/ForgotPasswordPage'));
@@ -250,7 +253,7 @@ const PageContent = () => {
     navigate(path, { state: data });
   };
 
-  const isAuthPage = ['/auth', '/login', '/signup', '/forgot-password', '/reset-password', '/email-confirmation-pending', '/auth/callback', '/institution/staff/login', '/oauth/consent'].some(p => location.pathname.startsWith(p));
+  const isAuthPage = ['/auth', '/login', '/signup', '/forgot-password', '/reset-password', '/email-confirmation-pending', '/auth/callback', '/institution/staff/login', '/oauth/consent', '/parental-consent'].some(p => location.pathname.startsWith(p));
   const isCVBuilder = location.pathname.startsWith('/cv-builder') || location.pathname.startsWith('/cover-letter-builder');
   const isAdminPage = location.pathname.startsWith('/admin');
   const isDashboard = ['/dashboard', '/settings', '/profil', '/profile', '/account', '/recommendations', '/offers-formations', '/my-documents', '/user/rgpd', '/user/cookies-preferences', '/personalized-plan', '/notifications', '/results', '/action-plan', '/apprentissage'].some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
@@ -323,6 +326,7 @@ const PageContent = () => {
                   <Route path="/test-orientation" element={<Navigate to="/test" replace />} />
                   <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
                   <Route path="/signup" element={<PageTransition><SignupPage /></PageTransition>} />
+                  <Route path="/parental-consent/:token" element={<PageTransition><ParentalConsentPage /></PageTransition>} />
                   
                   {/* Protected Flow Pages */}
                   <Route path="/profile" element={<ProtectedRoute><PageTransition><ProfileResultsPage /></PageTransition></ProtectedRoute>} />
