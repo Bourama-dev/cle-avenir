@@ -230,7 +230,7 @@ async function fetchDARES(): Promise<NewsItem[]> {
         id: `dares_${String(d.dataset_id ?? "").slice(0, 14)}`,
         title: String(meta.title ?? "Statistiques DARES"),
         excerpt: stripHTML(String(meta.description ?? "")).slice(0, 350),
-        link: `https://dares.travail-emploi.gouv.fr/donnees/${String(d.dataset_id ?? "")}`,
+        link: `https://data.dares.travail-emploi.gouv.fr/explore/dataset/${String(d.dataset_id ?? "")}/information/`,
         source: "DARES",
         source_logo: "📊",
         category: "marche-travail",
