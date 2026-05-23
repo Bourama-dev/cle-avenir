@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MapPin, Loader2, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { useDebounce } from '@/hooks/useDebounce';
 import { cn } from '@/lib/utils';
 
@@ -126,20 +125,25 @@ const LocationFilter = ({ value, onLocationChange }) => {
         {isOpen && suggestions.length > 0 && (
           <div className="absolute z-50 w-full mt-1 bg-white rounded-md shadow-lg border border-slate-100 max-h-60 overflow-y-auto">
             {suggestions.map((commune) => (
-              <Button
+              // onMouseDown + preventDefault keeps the Input focused while the
+              // selection fires, preventing any blur-triggered side-effects from
+              // racing with the click event and discarding the selection.
+              <div
                 key={commune.code}
-                variant="ghost"
-                className="w-full justify-start text-left h-auto py-2 px-3 text-sm hover:bg-slate-50"
-                onClick={() => handleSelect(commune)}
+                role="option"
+                aria-selected="false"
+                className="w-full flex items-baseline gap-2 py-2 px-3 text-sm hover:bg-slate-50 cursor-pointer select-none"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  handleSelect(commune);
+                }}
               >
-                <div className="flex items-baseline gap-2 w-full">
-                  <span className="font-medium text-slate-900">{commune.nom}</span>
-                  <span className="text-xs text-slate-400 ml-auto shrink-0">
-                    {commune.codesPostaux?.[0]}
-                    {commune.codeDepartement && ` · ${commune.codeDepartement}`}
-                  </span>
-                </div>
-              </Button>
+                <span className="font-medium text-slate-900">{commune.nom}</span>
+                <span className="text-xs text-slate-400 ml-auto shrink-0">
+                  {commune.codesPostaux?.[0]}
+                  {commune.codeDepartement && ` · ${commune.codeDepartement}`}
+                </span>
+              </div>
             ))}
           </div>
         )}
