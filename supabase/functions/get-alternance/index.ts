@@ -9,46 +9,67 @@ function str(v: unknown): string | null {
   return s.length ? s : null;
 }
 
-// Normalise a job offer from the LBA "jobs" array into a consistent shape
+// Normalise a job offer from the LBA "jobs" array into a consistent shape.
+// The LBA API v1 may return different field names depending on result type
+// (matcha offer vs LBB company). We try many aliases defensively.
 function normaliseJob(job: Record<string, unknown>, idx: number) {
-  // LBA returns nested objects — be defensive
-  const company = (job.company ?? job.entreprise ?? {}) as Record<string, unknown>;
-  const place   = (job.place ?? job.lieu ?? job.location ?? {}) as Record<string, unknown>;
-  const contract= (job.contract ?? job.contrat ?? {}) as Record<string, unknown>;
-  const apply   = (job.apply ?? job.candidature ?? {}) as Record<string, unknown>;
+  // Nested sub-objects — try every known alias
+  const company  = (job.company  ?? job.entreprise ?? job.employer ?? job.recruteur ?? {}) as Record<string, unknown>;
+  const place    = (job.place    ?? job.lieu       ?? job.location ?? job.workplace  ?? job.address ?? job.adresse ?? {}) as Record<string, unknown>;
+  const contract = (job.contract ?? job.contrat    ?? job.job      ?? {}) as Record<string, unknown>;
+  const apply    = (job.apply    ?? job.candidature ?? job.contact ?? {}) as Record<string, unknown>;
 
-  const id    = str(job._id ?? job.id) ?? `lba-${idx}`;
-  const title = str(job.title ?? job.intitule ?? job.libelle) ?? "Offre en alternance";
-  const desc  = str(job.description) ?? "";
+  const id = str(job._id ?? job.id ?? job.ideaType) ?? `lba-${idx}`;
 
-  const companyName = str(company.name ?? company.nom ?? company.label) ?? "";
-  const siret       = str(company.siret) ?? "";
+  // Title: many possible field names across LBA offer types
+  const title = str(
+    job.title ?? job.intitule ?? job.libelle ?? job.label ??
+    (job.offer as Record<string, unknown>)?.title ??
+    contract.romeDetails as string ??
+    null
+  ) ?? null;
 
-  const city    = str(place.city ?? place.ville ?? place.libelle) ?? "";
-  const zipcode = str(place.zipCode ?? place.codePostal ?? place.zip) ?? "";
-  const dept    = str(place.departementNumber ?? place.codeDepartement) ?? "";
+  const desc = str(job.description ?? (job.offer as Record<string, unknown>)?.description) ?? "";
+
+  const companyName = str(
+    company.name ?? company.nom ?? company.enseigne ??
+    company.label ?? company.raison_sociale ?? company.raisonSociale
+  ) ?? "";
+  const siret = str(company.siret) ?? "";
+
+  const city    = str(place.city ?? place.ville ?? place.libelle ?? place.commune) ?? "";
+  const zipcode = str(place.zipCode ?? place.codePostal ?? place.zip ?? place.cp) ?? "";
+  const dept    = str(place.departementNumber ?? place.codeDepartement ?? place.departement) ?? "";
   const lat     = place.latitude  ?? place.lat  ?? null;
   const lon     = place.longitude ?? place.lon  ?? null;
 
   const contractType = str(
-    contract.contractType ?? contract.typeContrat ?? contract.nature ?? job.typeContrat
-  ) ?? "";
-  const duration = str(contract.duration ?? contract.duree) ?? "";
+    contract.contractType ?? contract.typeContrat ??
+    contract.nature ?? job.typeContrat ?? job.contractType
+  ) ?? "Alternance";
+
+  const duration = str(contract.duration ?? contract.duree ?? contract.dureeTravail) ?? "";
 
   const url = str(
-    apply.url ?? apply.link ?? job.url ?? job.lien ??
-    (id && !id.startsWith("lba-") ? `https://labonnealternance.apprentissage.beta.gouv.fr/offre/${id}` : null)
+    apply.url ?? apply.link ?? apply.lien ??
+    job.url ?? job.lien ??
+    (typeof job._id === "string" && job._id
+      ? `https://labonnealternance.apprentissage.beta.gouv.fr/offre/${job._id}`
+      : null)
   ) ?? "";
 
   const createdAt = str(job.createdAt ?? job.dateCreation ?? job.date) ?? "";
-  const diploma   = str(job.diplomaLevel ?? job.niveauDiplome) ?? "";
+  const diploma   = str(job.diplomaLevel ?? job.niveauDiplome ?? job.niveau) ?? "";
 
   const romes: string[] = Array.isArray(job.romes) ? job.romes.map(String)
     : Array.isArray(job.rome) ? job.rome.map(String) : [];
 
+  // Use company name in fallback title so cards are more informative than just "Offre en alternance"
+  const displayTitle = title ?? (companyName ? `Offre en alternance — ${companyName}` : "Offre en alternance");
+
   return {
     id,
-    title,
+    title: displayTitle,
     description: desc,
     company: { name: companyName, siret },
     location: { city, zipcode, departement: dept, lat, lon },
@@ -175,6 +196,12 @@ Deno.serve(async (req) => {
     }
     const rawRecruiters: unknown[] = Array.isArray(data.recruiters) ? data.recruiters : [];
 
+    // Debug: log raw structure of first item to diagnose field mapping issues
+    if (rawJobs.length > 0) {
+      console.log('[get-alternance] First raw job keys:', Object.keys(rawJobs[0] as Record<string, unknown>).join(', '));
+      console.log('[get-alternance] First raw job sample:', JSON.stringify(rawJobs[0]).slice(0, 800));
+    }
+
     const allJobs = rawJobs.map((j, i) => normaliseJob(j as Record<string, unknown>, i));
     const allRecruiters = rawRecruiters.map((r, i) => normaliseRecruiter(r as Record<string, unknown>, i));
 
@@ -184,6 +211,7 @@ Deno.serve(async (req) => {
     const pagedJobs = allJobs.slice(start, start + limit);
 
     console.log(`[get-alternance] OK: ${allJobs.length} jobs, ${allRecruiters.length} recruiters`);
+    console.log(`[get-alternance] Sample normalised job:`, JSON.stringify(pagedJobs[0]).slice(0, 400));
 
     return respond({
       jobs: pagedJobs,
@@ -191,6 +219,7 @@ Deno.serve(async (req) => {
       total,
       totalPages,
       page,
+      _debug: rawJobs.length > 0 ? { firstRawJob: rawJobs[0], firstNormalisedJob: pagedJobs[0] } : null,
     });
 
   } catch (err) {

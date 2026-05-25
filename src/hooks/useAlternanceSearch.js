@@ -44,6 +44,13 @@ const useAlternanceSearch = ({ location, romeCodes, distance }) => {
       if (fnError) throw new Error(fnError.message);
       if (!data) throw new Error('Aucune donnée reçue');
 
+      if (data._debug) {
+        console.group('[get-alternance] Debug — structure brute de l\'API LBA');
+        console.log('First raw job:', data._debug.firstRawJob);
+        console.log('First normalised job:', data._debug.firstNormalisedJob);
+        console.groupEnd();
+      }
+
       if (data.warning) {
         setError(data.warning);
         setJobs([]);

@@ -131,22 +131,29 @@ Deno.serve(async (req) => {
       let inseeCode: string;
 
       if (directInsee) {
-        // Frontend already resolved to INSEE — use directly, never re-query
         inseeCode = directInsee;
       } else if (/^\d{5}$/.test(rawCommune)) {
-        // Looks like a postal code — resolve to INSEE
         inseeCode = (await resolveInseeCode(rawCommune)) ?? rawCommune;
       } else {
-        // City name or other string — pass through as-is
         inseeCode = rawCommune;
       }
 
-      params.set("commune", inseeCode);
-      // France Travail requires distance when commune is set.
-      // Omitting it causes a 400. Use 200 (API max) when the user chose "no limit".
+      // Paris (75056), Lyon (69123) and Marseille (13055) are meta-communes in the INSEE
+      // system. France Travail indexes jobs under arrondissement codes (75101, 69381, 13201).
+      // Remap to the first arrondissement so distance-based search covers the full city.
+      const PLM_REMAP: Record<string, string> = {
+        "75056": "75101", // Paris → Paris 1er
+        "69123": "69381", // Lyon → Lyon 1er
+        "13055": "13201", // Marseille → Marseille 1er
+      };
+      const resolvedCode = PLM_REMAP[inseeCode] ?? inseeCode;
+
+      params.set("commune", resolvedCode);
+      // France Travail requires distance when commune is set (400 without it).
+      // Use 200 (API max) when the user chose "no limit".
       const dist = str(body.distance);
       params.set("distance", dist ?? "200");
-      console.log(`[get-jobs] location: inseeCode=${directInsee || "—"} rawCommune=${rawCommune || "—"} → commune=${inseeCode} distance=${dist ?? "200"}`);
+      console.log(`[get-jobs] location: inseeCode=${directInsee || "—"} → resolved=${resolvedCode} distance=${dist ?? "200"}`);
     }
 
     // Contract types mapping:
