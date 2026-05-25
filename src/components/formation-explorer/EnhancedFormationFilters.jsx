@@ -9,6 +9,165 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import CityAutocomplete from '@/components/ui/CityAutocomplete';
 import { MapPin, Briefcase, GraduationCap, Layers, MapIcon, Wifi } from 'lucide-react';
 
+// Static option lists — defined at module level so they're never recreated
+const AVAILABLE_LEVELS = ['CAP/BEP', 'BAC', 'BAC+2', 'BAC+3', 'BAC+5'];
+const AVAILABLE_TYPES = ['Parcoursup', 'Alternance', 'Initial'];
+const AVAILABLE_SECTORS = [
+  { value: 'informatique',  label: 'Informatique & Numérique' },
+  { value: 'sante',         label: 'Santé & Social' },
+  { value: 'commerce',      label: 'Commerce & Gestion' },
+  { value: 'sciences',      label: 'Sciences & Ingénierie' },
+  { value: 'droit',         label: 'Droit & Sciences Politiques' },
+  { value: 'arts',          label: 'Arts & Communication' },
+  { value: 'education',     label: 'Éducation & Formation' },
+  { value: 'tourisme',      label: 'Tourisme & Hôtellerie' },
+];
+const AVAILABLE_DISTANCES = [
+  { value: '10',  label: '10 km' },
+  { value: '30',  label: '30 km' },
+  { value: '50',  label: '50 km' },
+  { value: '100', label: '100 km' },
+];
+
+// Defined at MODULE LEVEL so React never sees it as a new component type on
+// re-render — avoids unmounting CityAutocomplete (and losing its state) whenever
+// any filter changes.
+const FilterPanel = ({
+  cityInputValue, selectedCityData, sectorFilter, levelFilter,
+  formationTypeFilter, distanceFilter, remoteFilter,
+  onCityChange, onSectorChange, onLevelChange, onFormationTypeChange,
+  onDistanceChange, onRemoteChange, onSearch, onReset,
+}) => (
+  <div className="space-y-6">
+    <div className="space-y-4">
+      <div className="space-y-3">
+        <label className="text-sm font-medium flex items-center gap-2 text-slate-700">
+          <MapPin className="w-4 h-4 text-slate-500" />
+          Localisation
+        </label>
+        <CityAutocomplete
+          value={cityInputValue}
+          onCitySelect={onCityChange}
+          placeholder="Ville..."
+          className="w-full"
+        />
+      </div>
+
+      {selectedCityData && (
+        <div className="space-y-3">
+          <label className="text-sm font-medium flex items-center gap-2 text-slate-700">
+            <MapIcon className="w-4 h-4 text-slate-500" />
+            Rayon de recherche
+          </label>
+          <Select value={distanceFilter} onValueChange={onDistanceChange}>
+            <SelectTrigger className="bg-white border-slate-200">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {AVAILABLE_DISTANCES.map(d => (
+                <SelectItem key={d.value} value={d.value}>{d.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+    </div>
+
+    <div className="space-y-3">
+      <label className="text-sm font-medium flex items-center gap-2 text-slate-700">
+        <Briefcase className="w-4 h-4 text-slate-500" />
+        Secteur
+      </label>
+      <Select value={sectorFilter} onValueChange={onSectorChange}>
+        <SelectTrigger className="bg-white border-slate-200">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">Tous secteurs</SelectItem>
+          {AVAILABLE_SECTORS.map(s => (
+            <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+
+    <div className="space-y-3">
+      <label className="text-sm font-medium flex items-center gap-2 text-slate-700">
+        <GraduationCap className="w-4 h-4 text-slate-500" />
+        Niveau
+      </label>
+      <Select value={levelFilter} onValueChange={onLevelChange}>
+        <SelectTrigger className="bg-white border-slate-200">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">Tous niveaux</SelectItem>
+          {AVAILABLE_LEVELS.map(l => (
+            <SelectItem key={l} value={l}>{l}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+
+    <div className="space-y-3">
+      <label className="text-sm font-medium flex items-center gap-2 text-slate-700">
+        <Layers className="w-4 h-4 text-slate-500" />
+        Format
+      </label>
+      <Select value={formationTypeFilter} onValueChange={onFormationTypeChange}>
+        <SelectTrigger className="bg-white border-slate-200">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">Tous formats</SelectItem>
+          {AVAILABLE_TYPES.map(t => (
+            <SelectItem key={t} value={t}>{t}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+
+    <div className="space-y-3">
+      <label className="text-sm font-medium flex items-center gap-2 text-slate-700">
+        <Wifi className="w-4 h-4 text-slate-500" />
+        Distance
+      </label>
+      <Button
+        onClick={() => onRemoteChange(!remoteFilter)}
+        variant={remoteFilter ? "default" : "outline"}
+        className={`w-full justify-start ${remoteFilter ? 'bg-violet-600 hover:bg-violet-700 text-white' : 'bg-white border-slate-200'}`}
+      >
+        <input
+          type="checkbox"
+          checked={remoteFilter}
+          onChange={() => onRemoteChange(!remoteFilter)}
+          className="mr-2"
+        />
+        Formation à distance
+      </Button>
+    </div>
+
+    <Separator className="bg-slate-100" />
+
+    <div className="flex flex-col gap-3">
+      <Button
+        onClick={onSearch}
+        className="w-full bg-violet-600 hover:bg-violet-700 text-white shadow-md font-bold"
+      >
+        Appliquer les filtres
+      </Button>
+
+      <Button
+        onClick={onReset}
+        variant="outline"
+        className="w-full border-slate-200 text-slate-700 hover:bg-slate-50"
+      >
+        Réinitialiser
+      </Button>
+    </div>
+  </div>
+);
+
 const EnhancedFormationFilters = ({
   searchTerm,
   cityInputValue,
@@ -30,7 +189,6 @@ const EnhancedFormationFilters = ({
   className
 }) => {
 
-  // Calculate active filters count
   const activeFiltersCount =
     (selectedCityData ? 1 : 0) +
     (selectedCityData && distanceFilter !== '100' ? 1 : 0) +
@@ -39,155 +197,12 @@ const EnhancedFormationFilters = ({
     (levelFilter !== 'all' ? 1 : 0) +
     (formationTypeFilter !== 'all' ? 1 : 0);
 
-  const availableLevels = ['CAP/BEP', 'BAC', 'BAC+2', 'BAC+3', 'BAC+5'];
-  const availableTypes = ['Parcoursup', 'Alternance', 'Initial'];
-  const availableSectors = [
-    { value: 'informatique',  label: 'Informatique & Numérique' },
-    { value: 'sante',         label: 'Santé & Social' },
-    { value: 'commerce',      label: 'Commerce & Gestion' },
-    { value: 'sciences',      label: 'Sciences & Ingénierie' },
-    { value: 'droit',         label: 'Droit & Sciences Politiques' },
-    { value: 'arts',          label: 'Arts & Communication' },
-    { value: 'education',     label: 'Éducation & Formation' },
-    { value: 'tourisme',      label: 'Tourisme & Hôtellerie' },
-  ];
-  const availableDistances = [
-    { value: '10', label: '10 km' },
-    { value: '30', label: '30 km' },
-    { value: '50', label: '50 km' },
-    { value: '100', label: '100 km' },
-  ];
-
-  const FilterContent = () => (
-    <div className="space-y-6">
-      <div className="space-y-4">
-        <div className="space-y-3">
-          <label className="text-sm font-medium flex items-center gap-2 text-slate-700">
-            <MapPin className="w-4 h-4 text-slate-500" />
-            Localisation
-          </label>
-          <CityAutocomplete
-            value={cityInputValue}
-            onCitySelect={onCityChange}
-            placeholder="Ville..."
-            className="w-full"
-          />
-        </div>
-
-        {selectedCityData && (
-          <div className="space-y-3">
-            <label className="text-sm font-medium flex items-center gap-2 text-slate-700">
-              <MapIcon className="w-4 h-4 text-slate-500" />
-              Rayon de recherche
-            </label>
-            <Select value={distanceFilter} onValueChange={onDistanceChange}>
-              <SelectTrigger className="bg-white border-slate-200">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {availableDistances.map(d => (
-                  <SelectItem key={d.value} value={d.value}>{d.label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        )}
-      </div>
-
-      <div className="space-y-3">
-        <label className="text-sm font-medium flex items-center gap-2 text-slate-700">
-          <Briefcase className="w-4 h-4 text-slate-500" />
-          Secteur
-        </label>
-        <Select value={sectorFilter} onValueChange={onSectorChange}>
-          <SelectTrigger className="bg-white border-slate-200">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Tous secteurs</SelectItem>
-            {availableSectors.map(s => (
-              <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-3">
-        <label className="text-sm font-medium flex items-center gap-2 text-slate-700">
-          <GraduationCap className="w-4 h-4 text-slate-500" />
-          Niveau
-        </label>
-        <Select value={levelFilter} onValueChange={onLevelChange}>
-          <SelectTrigger className="bg-white border-slate-200">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Tous niveaux</SelectItem>
-            {availableLevels.map(l => (
-              <SelectItem key={l} value={l}>{l}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-3">
-        <label className="text-sm font-medium flex items-center gap-2 text-slate-700">
-          <Layers className="w-4 h-4 text-slate-500" />
-          Format
-        </label>
-        <Select value={formationTypeFilter} onValueChange={onFormationTypeChange}>
-          <SelectTrigger className="bg-white border-slate-200">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Tous formats</SelectItem>
-            {availableTypes.map(t => (
-              <SelectItem key={t} value={t}>{t}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-3">
-        <label className="text-sm font-medium flex items-center gap-2 text-slate-700">
-          <Wifi className="w-4 h-4 text-slate-500" />
-          Distance
-        </label>
-        <Button
-          onClick={() => onRemoteChange(!remoteFilter)}
-          variant={remoteFilter ? "default" : "outline"}
-          className={`w-full justify-start ${remoteFilter ? 'bg-violet-600 hover:bg-violet-700 text-white' : 'bg-white border-slate-200'}`}
-        >
-          <input
-            type="checkbox"
-            checked={remoteFilter}
-            onChange={() => onRemoteChange(!remoteFilter)}
-            className="mr-2"
-          />
-          Formation à distance
-        </Button>
-      </div>
-
-      <Separator className="bg-slate-100" />
-
-      <div className="flex flex-col gap-3">
-        <Button
-          onClick={onSearch}
-          className="w-full bg-violet-600 hover:bg-violet-700 text-white shadow-md font-bold"
-        >
-          Appliquer les filtres
-        </Button>
-
-        <Button
-          onClick={onReset}
-          variant="outline"
-          className="w-full border-slate-200 text-slate-700 hover:bg-slate-50"
-        >
-          Réinitialiser
-        </Button>
-      </div>
-    </div>
-  );
+  const panelProps = {
+    cityInputValue, selectedCityData, sectorFilter, levelFilter,
+    formationTypeFilter, distanceFilter, remoteFilter,
+    onCityChange, onSectorChange, onLevelChange, onFormationTypeChange,
+    onDistanceChange, onRemoteChange, onSearch, onReset,
+  };
 
   return (
     <>
@@ -202,7 +217,7 @@ const EnhancedFormationFilters = ({
               </Badge>
             )}
           </div>
-          <FilterContent />
+          <FilterPanel {...panelProps} />
         </div>
       </div>
 
@@ -226,7 +241,7 @@ const EnhancedFormationFilters = ({
               <SheetTitle className="text-xl font-bold text-slate-900">Filtres de recherche</SheetTitle>
             </SheetHeader>
             <ScrollArea className="h-[calc(100vh-80px)] pr-4 mt-6">
-              <FilterContent />
+              <FilterPanel {...panelProps} />
             </ScrollArea>
           </SheetContent>
         </Sheet>
@@ -236,3 +251,4 @@ const EnhancedFormationFilters = ({
 };
 
 export default EnhancedFormationFilters;
+
