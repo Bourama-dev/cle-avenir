@@ -1,9 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
-import { 
-  Send, Paperclip, Sparkles, Loader2, 
-  PanelRightClose, PanelRightOpen, HelpCircle
+import {
+  Send, Sparkles, Loader2,
+  PanelRightClose, PanelRightOpen
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -93,12 +93,12 @@ const MessageBubble = ({ message, isLast, onInteraction, widgets }) => {
   );
 };
 
-const ChatInterface = ({ 
-  messages = [], 
-  isLoading = false, 
-  onSendMessage = () => {}, 
+const ChatInterface = ({
+  messages = [],
+  isLoading = false,
+  onSendMessage = () => {},
   onInteraction = () => {},
-  inputValue = "", 
+  inputValue = "",
   setInputValue = () => {},
   toggleContextPanel,
   isContextPanelOpen,
@@ -112,6 +112,18 @@ const ChatInterface = ({
       scrollRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isLoading]);
+
+  // Auto-resize textarea to fit content
+  const autoResize = useCallback(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${Math.min(el.scrollHeight, 128)}px`;
+  }, []);
+
+  useEffect(() => {
+    autoResize();
+  }, [inputValue, autoResize]);
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -142,9 +154,14 @@ const ChatInterface = ({
       <ScrollArea className="flex-1 bg-slate-50/30">
         <div className="py-8 min-h-full max-w-5xl mx-auto w-full">
           {messages.length === 0 && !isLoading ? (
-             <div className="h-full flex flex-col items-center justify-center opacity-50 mt-20">
-                <Sparkles size={48} className="text-violet-300 mb-4" />
-                <p className="text-slate-400">Commencez l'analyse...</p>
+             <div className="h-full flex flex-col items-center justify-center mt-20 gap-3 px-6 text-center">
+                <div className="w-16 h-16 rounded-2xl bg-violet-50 border border-violet-100 flex items-center justify-center">
+                  <Sparkles size={28} className="text-violet-400" />
+                </div>
+                <p className="font-semibold text-slate-700">Bonjour, je suis Cléo !</p>
+                <p className="text-sm text-slate-400 max-w-xs leading-relaxed">
+                  Coach IA spécialisée en orientation professionnelle. Pose-moi une question pour commencer.
+                </p>
              </div>
           ) : (
             messages.map((msg, i) => (
@@ -180,39 +197,33 @@ const ChatInterface = ({
       {/* Input Bar */}
       <div className="p-4 bg-white border-t border-slate-100 z-20">
          <div className="max-w-3xl mx-auto">
-            <div className="relative flex items-end gap-2 bg-slate-50 border border-slate-200 rounded-2xl p-2 shadow-sm focus-within:ring-2 focus-within:ring-violet-100 focus-within:border-violet-300 transition-all">
-               <button className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-xl transition-colors shrink-0">
-                  <Paperclip size={20} />
-               </button>
-               
+            <div className="flex items-end gap-2 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 shadow-sm focus-within:ring-2 focus-within:ring-violet-100 focus-within:border-violet-300 transition-all">
                <textarea
                  ref={inputRef}
                  value={inputValue}
-                 onChange={(e) => setInputValue(e.target.value)}
+                 onChange={(e) => { setInputValue(e.target.value); }}
                  onKeyDown={handleKeyDown}
-                 placeholder="Décrivez votre situation ou posez une question..."
-                 className="w-full bg-transparent border-none focus:ring-0 resize-none max-h-32 min-h-[44px] py-2.5 text-sm placeholder:text-slate-400"
+                 placeholder="Décrivez votre situation ou posez une question…"
+                 className="flex-1 bg-transparent border-none focus:ring-0 resize-none min-h-[44px] py-1 text-sm placeholder:text-slate-400 leading-relaxed"
+                 style={{ scrollbarWidth: 'none' }}
                  rows={1}
                  disabled={isLoading}
                />
-
-               <div className="flex items-center gap-1 shrink-0 pb-1">
-                 <Button 
-                   onClick={() => onSendMessage()}
-                   disabled={!inputValue.trim() || isLoading}
-                   size="icon"
-                   className={cn(
-                     "rounded-xl transition-all w-10 h-10",
-                     inputValue.trim() ? "bg-violet-600 hover:bg-violet-700 text-white shadow-md" : "bg-slate-200 text-slate-400"
-                   )}
-                 >
-                   <Send size={18} />
-                 </Button>
-               </div>
+               <Button
+                 onClick={() => onSendMessage()}
+                 disabled={!inputValue.trim() || isLoading}
+                 size="icon"
+                 className={cn(
+                   "rounded-xl transition-all w-10 h-10 shrink-0",
+                   inputValue.trim() ? "bg-violet-600 hover:bg-violet-700 text-white shadow-md shadow-violet-200" : "bg-slate-200 text-slate-400"
+                 )}
+               >
+                 {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={18} />}
+               </Button>
             </div>
-            <div className="text-center text-[10px] text-slate-400 mt-2 flex justify-center gap-4">
-               <span className="flex items-center gap-1"><HelpCircle size={10}/> Mode Intelligent v3.0</span>
-            </div>
+            <p className="text-center text-[10px] text-slate-400 mt-2">
+              Entrée pour envoyer · Maj+Entrée pour sauter une ligne
+            </p>
          </div>
       </div>
     </div>
