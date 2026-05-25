@@ -82,6 +82,7 @@
     @apply antialiased selection:bg-primary/20 selection:text-primary min-h-screen flex flex-col font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
     overflow-x: hidden;
+    overscroll-behavior-y: none;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
