@@ -48,6 +48,8 @@ const useAlternanceSearch = ({ location, romeCodes, distance }) => {
         console.group('[get-alternance] Debug — structure brute de l\'API LBA');
         console.log('First raw job:', data._debug.firstRawJob);
         console.log('First normalised job:', data._debug.firstNormalisedJob);
+        console.log('First raw recruiter:', data._debug.firstRawRecruiter);
+        console.log('First normalised recruiter:', data._debug.firstNormalisedRecruiter);
         console.groupEnd();
       }
 

@@ -83,28 +83,47 @@ function normaliseJob(job: Record<string, unknown>, idx: number) {
   };
 }
 
-// Normalise a recruiter/LBB company from the LBA "recruiters" array
+// Normalise a recruiter/LBB company from the LBA "recruiters" array.
+// CompanyCard expects: name, naf_text, stars, city, zipcode, distance, headcount_text, url
 function normaliseRecruiter(rec: Record<string, unknown>, idx: number) {
-  const place  = (rec.place ?? rec.lieu ?? rec.address ?? {}) as Record<string, unknown>;
-  const id     = str(rec._id ?? rec.id ?? rec.siret) ?? `lba-rec-${idx}`;
-  const name   = str(rec.name ?? rec.nom ?? rec.enseigne ?? rec.raison_sociale) ?? "";
+  const place   = (rec.place ?? rec.lieu ?? rec.address ?? rec.adresse ?? {}) as Record<string, unknown>;
+  const contact = (rec.contact ?? rec.contacts ?? {}) as Record<string, unknown>;
+
+  const id   = str(rec._id ?? rec.id ?? rec.siret) ?? `lba-rec-${idx}`;
+  const name = str(
+    rec.name ?? rec.nom ?? rec.enseigne ?? rec.raison_sociale ?? rec.raisonSociale ??
+    rec.company_name ?? rec.companyName
+  ) ?? "";
+
+  const siret = str(rec.siret) ?? "";
+  const naf   = str(rec.naf ?? rec.nafCode ?? rec.code_naf ?? rec.activitePrincipale) ?? "";
+  const naf_text = str(
+    rec.nafLabel ?? rec.naf_text ?? rec.nafText ?? rec.libelleActivite ??
+    rec.secteur ?? rec.secteurActivite
+  ) ?? "";
+
+  const city    = str(place.city ?? place.ville ?? place.commune ?? rec.city ?? rec.ville) ?? "";
+  const zipcode = str(place.zipCode ?? place.codePostal ?? place.zip ?? rec.zipcode ?? rec.codePostal) ?? "";
+  const lat  = place.latitude  ?? place.lat  ?? rec.lat  ?? null;
+  const lon  = place.longitude ?? place.lon  ?? rec.lon  ?? null;
+  const dist = typeof rec.distance === "number" ? rec.distance : null;
+
+  const stars = typeof rec.stars === "number" ? rec.stars
+    : typeof rec.score_alternance === "number" ? rec.score_alternance
+    : typeof rec.scoring_alternance === "number" ? rec.scoring_alternance
+    : 0;
+
+  const headcount_text = str(rec.headcount_text ?? rec.trancheEffectif ?? rec.headcount) ?? "";
+
+  const url = str(
+    rec.url ?? rec.lien ?? contact.url ??
+    (siret ? `https://labonnealternance.apprentissage.beta.gouv.fr/recherche-apprentissage?siret=${siret}` : null)
+  ) ?? "";
 
   return {
-    id,
-    name,
-    siret: str(rec.siret) ?? "",
-    naf: str(rec.naf ?? rec.nafCode ?? rec.activitePrincipale) ?? "",
-    nafText: str(rec.nafLabel ?? rec.naf_text ?? rec.libelleActivite) ?? "",
-    city: str(place.city ?? place.ville ?? rec.city) ?? "",
-    zipcode: str(place.zipCode ?? place.codePostal ?? rec.zipcode) ?? "",
-    lat: place.latitude ?? place.lat ?? rec.lat ?? null,
-    lon: place.longitude ?? place.lon ?? rec.lon ?? null,
-    distance: typeof rec.distance === "number" ? rec.distance : null,
-    stars: typeof rec.stars === "number" ? rec.stars
-         : typeof rec.score_alternance === "number" ? rec.score_alternance : 0,
-    url: str(rec.url ?? rec.lien ?? (id
-      ? `https://labonnealternance.apprentissage.beta.gouv.fr/recherche-apprentissage?siret=${rec.siret ?? id}`
-      : null)) ?? "",
+    id, name, siret, naf, naf_text,
+    city, zipcode, lat, lon,
+    distance: dist, stars, headcount_text, url,
     source: "lba_recruiter",
   };
 }
@@ -219,7 +238,12 @@ Deno.serve(async (req) => {
       total,
       totalPages,
       page,
-      _debug: rawJobs.length > 0 ? { firstRawJob: rawJobs[0], firstNormalisedJob: pagedJobs[0] } : null,
+      _debug: {
+        firstRawJob: rawJobs[0] ?? null,
+        firstNormalisedJob: pagedJobs[0] ?? null,
+        firstRawRecruiter: rawRecruiters[0] ?? null,
+        firstNormalisedRecruiter: allRecruiters[0] ?? null,
+      },
     });
 
   } catch (err) {
