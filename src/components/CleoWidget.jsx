@@ -1,13 +1,87 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Sparkles, Lock, ExternalLink } from 'lucide-react';
+import { MessageSquare, X, Send, Sparkles, Lock, ExternalLink, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
-import { FEATURES } from '@/constants/subscriptionTiers';
+import { FEATURES, TIERS } from '@/constants/subscriptionTiers';
 import { supabase } from '@/lib/customSupabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+
+const PREMIUM_PLUS_FEATURES = [
+  'Cléo IA — coach illimité 24h/7j',
+  'Simulation d\'entretien interactive',
+  'Lettres de motivation générées par IA',
+  'Suivi mensuel personnalisé',
+];
+
+// État verrouillé contextualisé selon le plan actuel
+const UpgradePanel = ({ currentTier, onNavigate }) => {
+  const isPremium = currentTier === TIERS.PREMIUM;
+
+  return (
+    <div className="flex flex-col p-5 gap-4 bg-gradient-to-b from-slate-50 to-white flex-1">
+      {/* Badge plan actuel */}
+      {isPremium && (
+        <div className="flex items-center gap-2 bg-indigo-50 border border-indigo-100 rounded-lg px-3 py-2 text-xs font-medium text-indigo-700">
+          <CheckCircle2 size={13} className="text-indigo-500 shrink-0" />
+          Tu es actuellement sur le plan <strong>Premium</strong>
+        </div>
+      )}
+
+      <div className="flex items-start gap-3">
+        <div className="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center shrink-0 mt-0.5">
+          <Sparkles className="h-5 w-5 text-violet-600" />
+        </div>
+        <div>
+          <p className="font-bold text-slate-900 text-sm">
+            {isPremium ? 'Passe à Premium+ pour débloquer Cléo' : 'Cléo est réservée à Premium+'}
+          </p>
+          <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+            {isPremium
+              ? 'Tu es à un pas de ton coach IA personnel.'
+              : 'Ton coach IA disponible 24h/7j pour ton orientation.'}
+          </p>
+        </div>
+      </div>
+
+      {/* Liste des features */}
+      <ul className="space-y-1.5">
+        {PREMIUM_PLUS_FEATURES.map((f, i) => (
+          <li key={i} className="flex items-center gap-2 text-xs text-slate-600">
+            <CheckCircle2 size={13} className="text-violet-500 shrink-0" />
+            {f}
+          </li>
+        ))}
+      </ul>
+
+      {/* Flèche de progression Plan → Premium+ */}
+      {isPremium && (
+        <div className="flex items-center gap-2 text-[11px] font-medium text-slate-500 bg-slate-100 rounded-lg px-3 py-2">
+          <span className="bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-full text-[10px] font-bold">Premium</span>
+          <ArrowRight size={12} className="text-slate-400" />
+          <span className="bg-violet-600 text-white px-2 py-0.5 rounded-full text-[10px] font-bold">Premium+</span>
+          <span className="ml-auto text-slate-400">+10€/mois</span>
+        </div>
+      )}
+
+      <Button
+        onClick={onNavigate}
+        className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-200 font-semibold"
+      >
+        {isPremium ? 'Passer à Premium+' : 'Découvrir Premium+'}
+        <ArrowRight size={15} className="ml-1.5" />
+      </Button>
+
+      {!isPremium && (
+        <p className="text-center text-[10px] text-slate-400">
+          À partir de 19,90 €/mois · Sans engagement
+        </p>
+      )}
+    </div>
+  );
+};
 
 const INITIAL_SUGGESTIONS = [
   'Quel métier me correspond ?',
@@ -42,6 +116,7 @@ const CleoWidget = () => {
   const inputRef = useRef(null);
 
   const canAccessCleo = hasAccess(FEATURES.AI_COACH);
+  const { currentTier } = useSubscriptionAccess();
   const firstName = userProfile?.first_name || user?.user_metadata?.first_name;
 
   // Message de bienvenue à la première ouverture
@@ -266,24 +341,10 @@ const CleoWidget = () => {
                 </div>
               </>
             ) : (
-              /* État verrouillé */
-              <div className="flex flex-col items-center text-center p-6 gap-4 bg-slate-50 flex-1 justify-center">
-                <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
-                  <Lock className="h-5 w-5 text-slate-400" />
-                </div>
-                <div>
-                  <p className="font-semibold text-slate-900 mb-1">Fonctionnalité Premium+</p>
-                  <p className="text-sm text-slate-500 leading-relaxed">
-                    Cléo est disponible 24/7 pour t'accompagner dans ton orientation et ta recherche d'emploi.
-                  </p>
-                </div>
-                <Button
-                  onClick={() => { navigate('/tarifs'); setIsOpen(false); }}
-                  className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md"
-                >
-                  Découvrir Premium+
-                </Button>
-              </div>
+              <UpgradePanel
+                currentTier={currentTier}
+                onNavigate={() => { navigate('/tarifs'); setIsOpen(false); }}
+              />
             )}
           </motion.div>
         )}
