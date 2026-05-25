@@ -142,9 +142,11 @@ Deno.serve(async (req) => {
       }
 
       params.set("commune", inseeCode);
-      console.log(`[get-jobs] location: inseeCode=${directInsee || "—"} rawCommune=${rawCommune || "—"} → commune=${inseeCode}`);
+      // France Travail requires distance when commune is set.
+      // Omitting it causes a 400. Use 200 (API max) when the user chose "no limit".
       const dist = str(body.distance);
-      if (dist) params.set("distance", dist);
+      params.set("distance", dist ?? "200");
+      console.log(`[get-jobs] location: inseeCode=${directInsee || "—"} rawCommune=${rawCommune || "—"} → commune=${inseeCode} distance=${dist ?? "200"}`);
     }
 
     // Contract types mapping:
@@ -235,7 +237,11 @@ Deno.serve(async (req) => {
     if (!res.ok) {
       const text = await res.text();
       console.error(`[get-jobs] API error ${res.status}: ${text}`);
-      return empty(`api_error_${res.status}`);
+      console.error(`[get-jobs] Request URL was: ${url}`);
+      return new Response(
+        JSON.stringify({ data: { resultats: [] }, meta: { total: 0 }, warning: `api_error_${res.status}`, debug: text.slice(0, 300) }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     const data = await res.json();

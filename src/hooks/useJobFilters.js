@@ -163,6 +163,7 @@ const useJobFilters = () => {
       // === DIAGNOSTIC — visible dans DevTools > Console ===
       console.group('[get-jobs] Réponse brute');
       console.log('warning:', data?.warning);
+      if (data?.debug) console.error('[get-jobs] France Travail error detail:', data.debug);
       console.log('total:', data?.meta?.total);
       console.log('resultats count:', data?.data?.resultats?.length ?? 0);
       console.log('full response:', JSON.stringify(data).slice(0, 500));
