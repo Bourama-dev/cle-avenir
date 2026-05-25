@@ -160,7 +160,7 @@ const CityAutocomplete = ({ value, onCitySelect, placeholder = "Ville, région o
             {suggestions.map((city) => (
               <li
                 key={`${city.id}-${city['Code Postal']}`}
-                onClick={() => handleSelectCity(city)}
+                onMouseDown={(e) => { e.preventDefault(); handleSelectCity(city); }}
                 className="px-3 py-2.5 hover:bg-violet-50 cursor-pointer transition-colors flex items-center justify-between group text-sm border-b border-slate-50 last:border-0"
               >
                 <div className="flex flex-col">
