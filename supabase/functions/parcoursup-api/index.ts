@@ -113,7 +113,8 @@ async function fetchParcoursup(params: { q: string; ville: string; limit: number
 
   const searchTerm = extraSearch ? `${extraSearch}${q ? " " + q : ""}` : q;
   if (searchTerm) sp.set("search", searchTerm);
-  if (ville) sp.set("where", `commune_etab like '%${ville}%'`);
+  // Parcoursup/Socrata LIKE is case-sensitive; commune_etab is stored in uppercase.
+  if (ville) sp.set("where", `commune_etab like '%${ville.toUpperCase()}%'`);
 
   const url = `${PARCOURSUP_API}?${sp.toString()}`;
   console.log("[psup] GET", url);

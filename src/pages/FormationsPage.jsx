@@ -268,50 +268,12 @@ const FormationsPage = ({ setAllFormations }) => {
       });
     }
 
-    // Apply radius filter client-side if a city is selected
-    if (selectedCityData && selectedCityData.latitude && selectedCityData.longitude) {
-      const userLat = Number(selectedCityData.latitude);
-      const userLon = Number(selectedCityData.longitude);
-      const radiusKm = Number(distanceFilter) || 100;
-
-      if (!isNaN(userLat) && !isNaN(userLon)) {
-        data = data.filter(f => {
-          // Try to extract latitude/longitude from formation or its first establishment
-          let formLat = null;
-          let formLon = null;
-
-          // Try different possible locations for coordinates
-          if (f.latitude && f.longitude) {
-            formLat = Number(f.latitude);
-            formLon = Number(f.longitude);
-          } else if (f.location_lat && f.location_lng) {
-            formLat = Number(f.location_lat);
-            formLon = Number(f.location_lng);
-          } else if (f.lieu && f.lieu.latitude && f.lieu.longitude) {
-            formLat = Number(f.lieu.latitude);
-            formLon = Number(f.lieu.longitude);
-          } else if (f.etablissements && f.etablissements[0]) {
-            const etab = f.etablissements[0];
-            if (etab.latitude && etab.longitude) {
-              formLat = Number(etab.latitude);
-              formLon = Number(etab.longitude);
-            }
-          }
-
-          // If we can't find coordinates, keep the formation (don't filter it out)
-          if (formLat === null || formLon === null || isNaN(formLat) || isNaN(formLon)) {
-            return true;
-          }
-
-          // Calculate distance and filter
-          const distance = calculateDistance(userLat, userLon, formLat, formLon);
-          return distance !== null && distance <= radiusKm;
-        });
-      }
-    }
+    // Parcoursup data has no GPS coordinates, so client-side radius filtering is
+    // not possible. Location filtering is handled server-side by the ville parameter
+    // (via handleSearchSubmit → fetchBatch). No client-side location filter needed.
 
     return data;
-  }, [allFetchedFormations, sectorFilter, levelFilter, formationTypeFilter, remoteFilter, selectedCityData, distanceFilter]);
+  }, [allFetchedFormations, sectorFilter, levelFilter, formationTypeFilter, remoteFilter]);
 
   const totalPagesInFetched = Math.ceil(filteredFetchedData.length / UI_PAGE_SIZE);
 
