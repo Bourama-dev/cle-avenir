@@ -23,6 +23,39 @@ import { supabase } from '@/lib/customSupabaseClient';
 import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Conseil du jour dynamique
+// ─────────────────────────────────────────────────────────────────────────────
+const TIPS_BY_DOW = [
+  'Commencez la semaine avec une activité courte pour relancer votre élan.',       // lundi
+  'Un quiz de 10 minutes vaut mieux que rien — lancez-vous !',                    // mardi
+  'En milieu de semaine, revoyez vos notes sur les activités déjà faites.',       // mercredi
+  'Jeudi : idéal pour une simulation d\'entretien, vous êtes au top de la forme.',// jeudi
+  'Terminez la semaine en force avec une réflexion sur vos valeurs.',             // vendredi
+  'Le week-end, explorez le catalogue et choisissez votre prochaine activité.',   // samedi
+  'Dimanche : planifiez votre semaine d\'apprentissage à venir.',                 // dimanche
+];
+
+function getDailyTip(stats, activities) {
+  const streak = stats?.current_streak ?? 0;
+  const xp     = stats?.total_xp ?? 0;
+  const done   = (activities ?? []).filter(a => a.status === 'completed').length;
+
+  if (xp === 0 && done === 0)
+    return 'Bienvenue ! Lancez votre première activité pour démarrer votre parcours.';
+  if (streak === 0)
+    return 'Reprenez votre série aujourd\'hui — même 10 minutes comptent !';
+  if (streak >= 30)
+    return `Incroyable ! ${streak} jours de série. Vous êtes un exemple de régularité.`;
+  if (streak >= 7)
+    return `${streak} jours consécutifs — continuez, vous êtes sur une belle lancée !`;
+  if (done >= 5)
+    return `${done} activités complétées. Explorez des sujets plus avancés pour progresser encore.`;
+
+  const dow = new Date().getDay(); // 0=dim … 6=sam
+  return TIPS_BY_DOW[dow === 0 ? 6 : dow - 1];
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Cleo Avatar — animée selon l'état
 // ─────────────────────────────────────────────────────────────────────────────
 const CleoAvatar = ({ speaking, listening, size = 'md' }) => {
@@ -331,18 +364,22 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [voiceReady, setVoiceReady] = useState(false); // for interview/simulation steps
+  const [voiceReady, setVoiceReady] = useState(false);
+  // flashcard state
+  const [cardFlipped, setCardFlipped] = useState(false);
+  const [flashcardKnown, setFlashcardKnown] = useState(0);
   const { toast } = useToast();
 
   const steps = activity?.content?.steps || [];
   const currentStep = steps[step];
   const isLast = step === steps.length - 1;
 
-  // Reset voice state on step change
+  // Reset per-step state on step change
   useEffect(() => {
     setVoiceReady(false);
     setSelected(null);
     setAnswered(false);
+    setCardFlipped(false);
   }, [step]);
 
   // Stop TTS/STT when modal closes
@@ -362,11 +399,17 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
     }
   };
 
+  const handleFlashcard = (known) => {
+    if (known) setFlashcardKnown(c => c + 1);
+    setAnswered(true);
+  };
+
   const handleNext = () => {
     if (isLast) {
-      const quizSteps = steps.filter(s => s.type === 'quiz');
-      const score = quizSteps.length
-        ? Math.round((correctAnswers / quizSteps.length) * 100)
+      const scorableSteps = steps.filter(s => s.type === 'quiz' || s.type === 'flashcard');
+      const totalFlashcards = steps.filter(s => s.type === 'flashcard').length;
+      const score = scorableSteps.length
+        ? Math.round(((correctAnswers + flashcardKnown) / scorableSteps.length) * 100)
         : 100;
       onComplete(score);
     } else {
@@ -377,8 +420,9 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
   const canProceed = () => {
     if (!currentStep) return false;
     if (currentStep.type === 'quiz') return answered;
+    if (currentStep.type === 'flashcard') return answered;
     if (currentStep.type === 'interview' || currentStep.type === 'simulation') return voiceReady;
-    return true; // text step
+    return true;
   };
 
   if (!activity) return null;
@@ -476,6 +520,80 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
                     <strong>Explication :</strong> {currentStep.explanation}
                   </p>
                 </motion.div>
+              )}
+            </div>
+          )}
+
+          {/* ── FLASHCARD step ──────────────────────────────────────────── */}
+          {currentStep?.type === 'flashcard' && (
+            <div className="flex-1 flex flex-col items-center gap-5">
+              {currentStep.category && (
+                <Badge variant="outline" className="text-xs text-slate-500">{currentStep.category}</Badge>
+              )}
+
+              {/* Card flip container */}
+              <div
+                className="w-full cursor-pointer"
+                style={{ perspective: 1000 }}
+                onClick={() => !answered && setCardFlipped(f => !f)}
+              >
+                <motion.div
+                  animate={{ rotateY: cardFlipped ? 180 : 0 }}
+                  transition={{ duration: 0.45, ease: 'easeInOut' }}
+                  style={{ transformStyle: 'preserve-3d', position: 'relative', minHeight: 160 }}
+                >
+                  {/* Front */}
+                  <div
+                    style={{ backfaceVisibility: 'hidden' }}
+                    className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-violet-50 to-indigo-50 border-2 border-violet-200 rounded-2xl p-6 text-center"
+                  >
+                    <p className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-3">Question</p>
+                    <p className="text-slate-800 font-semibold text-base leading-relaxed">{currentStep.front}</p>
+                    {!cardFlipped && (
+                      <p className="text-xs text-slate-400 mt-4">Cliquez pour révéler la réponse</p>
+                    )}
+                  </div>
+
+                  {/* Back */}
+                  <div
+                    style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+                    className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl p-6 text-center"
+                  >
+                    <p className="text-xs font-semibold text-emerald-500 uppercase tracking-wider mb-3">Réponse</p>
+                    <p className="text-slate-700 text-sm leading-relaxed">{currentStep.back}</p>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Buttons appear after flip */}
+              <AnimatePresence>
+                {cardFlipped && !answered && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex gap-3 w-full"
+                  >
+                    <Button
+                      onClick={() => handleFlashcard(false)}
+                      variant="outline"
+                      className="flex-1 border-red-200 text-red-600 hover:bg-red-50"
+                    >
+                      À revoir 🔁
+                    </Button>
+                    <Button
+                      onClick={() => handleFlashcard(true)}
+                      className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white"
+                    >
+                      Je savais ✓
+                    </Button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {answered && (
+                <p className="text-sm text-slate-500">
+                  {flashcardKnown > 0 ? '✓ Réponse enregistrée' : '🔁 Noté pour révision'}
+                </p>
               )}
             </div>
           )}
@@ -935,7 +1053,7 @@ const LearningPathPage = () => {
                     <span className="font-semibold text-violet-900 text-sm">Conseil du jour</span>
                   </div>
                   <p className="text-slate-600 text-sm leading-relaxed italic">
-                    "La régularité bat l'intensité. 15 minutes d'apprentissage par jour surpassent 2 heures le dimanche."
+                    "{getDailyTip(stats, pathData?.activities)}"
                   </p>
                 </CardContent>
               </Card>

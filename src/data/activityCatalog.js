@@ -937,4 +937,130 @@ export const LOCAL_ACTIVITY_CATALOG = [
       ],
     },
   },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // FLASHCARDS — Vocabulaire RH & Entretien
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    id: 'local-06',
+    title: 'Vocabulaire clé de l\'entretien d\'embauche',
+    type: 'Flashcards',
+    difficulty: 'Débutant',
+    duration_minutes: 10,
+    xp_reward: 40,
+    skills_rewarded: ['communication', 'connaissance_soi'],
+    description: 'Maîtrisez les termes incontournables du recrutement pour vous exprimer avec aisance en entretien.',
+    content: {
+      steps: [
+        {
+          type: 'text',
+          title: 'Comment utiliser ces flashcards ?',
+          content: 'Lisez le terme ou la question, réfléchissez à la définition, puis retournez la carte pour vérifier. Cliquez "Je savais" ou "À revoir" pour suivre votre progression.',
+        },
+        {
+          type: 'flashcard',
+          category: 'Vocabulaire RH',
+          front: 'Qu\'est-ce qu\'une lettre de motivation ?',
+          back: 'Document d\'une page accompagnant le CV qui explique pourquoi vous postulez et ce que vous apportez à l\'entreprise. Elle doit être personnalisée pour chaque offre.',
+        },
+        {
+          type: 'flashcard',
+          category: 'Vocabulaire RH',
+          front: 'Qu\'est-ce que la méthode STAR ?',
+          back: 'Technique pour structurer une réponse comportementale : Situation → Tâche → Action → Résultat. Utilisée pour répondre aux questions du type "Donnez-moi un exemple de…"',
+        },
+        {
+          type: 'flashcard',
+          category: 'Vocabulaire RH',
+          front: 'Que signifie "compétence transférable" ?',
+          back: 'Une compétence acquise dans un contexte (étude, job précédent, bénévolat) qui est utile dans un autre contexte professionnel. Ex : gestion de projet, communication, analyse.',
+        },
+        {
+          type: 'flashcard',
+          category: 'Vocabulaire RH',
+          front: 'Qu\'est-ce qu\'un ATS (Applicant Tracking System) ?',
+          back: 'Logiciel utilisé par les recruteurs pour filtrer automatiquement les CV. Pour passer le filtre, votre CV doit contenir les mots-clés de l\'offre d\'emploi.',
+        },
+        {
+          type: 'flashcard',
+          category: 'Vocabulaire RH',
+          front: 'Quelle est la différence entre "hard skills" et "soft skills" ?',
+          back: 'Hard skills = compétences techniques mesurables (Excel, Python, comptabilité). Soft skills = compétences comportementales (communication, leadership, adaptabilité). Les deux sont valorisées.',
+        },
+        {
+          type: 'quiz',
+          question: 'Vous êtes en entretien. Le recruteur vous demande vos "prétentions salariales". Quelle est la meilleure approche ?',
+          choices: [
+            'Donner le salaire le plus bas possible pour maximiser vos chances',
+            'Donner une fourchette basée sur le marché et votre profil',
+            'Refuser de répondre car c\'est une question indiscrète',
+            'Donner le salaire de votre ami qui fait le même métier',
+          ],
+          correct: 1,
+          explanation: 'Une fourchette réaliste (basée sur les grilles du secteur, votre expérience et vos besoins) montre que vous avez fait vos recherches et laisse de la place pour négocier.',
+        },
+      ],
+    },
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // FLASHCARDS — Métiers du numérique
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    id: 'local-07',
+    title: 'Les métiers du numérique en 5 fiches',
+    type: 'Flashcards',
+    difficulty: 'Débutant',
+    duration_minutes: 12,
+    xp_reward: 45,
+    skills_rewarded: ['orientation', 'recherche'],
+    description: 'Démêlez les titres du secteur tech : développeur, data scientist, UX designer… Quelles différences ?',
+    content: {
+      steps: [
+        {
+          type: 'flashcard',
+          category: 'Métiers Tech',
+          front: 'Quel est le rôle d\'un développeur front-end ?',
+          back: 'Il crée la partie visible d\'un site ou d\'une application (interface, boutons, animations). Il maîtrise HTML, CSS et JavaScript. Son travail, c\'est ce que l\'utilisateur voit et utilise.',
+        },
+        {
+          type: 'flashcard',
+          category: 'Métiers Tech',
+          front: 'Quelle est la différence entre un Data Analyst et un Data Scientist ?',
+          back: 'Data Analyst : analyse des données existantes pour produire des rapports et aider à la décision (SQL, Excel, Power BI). Data Scientist : crée des modèles prédictifs et des algorithmes IA (Python, Machine Learning).',
+        },
+        {
+          type: 'flashcard',
+          category: 'Métiers Tech',
+          front: 'Qu\'est-ce qu\'un UX Designer ?',
+          back: 'Professionnel qui conçoit l\'expérience utilisateur d\'un produit digital. Il mène des recherches, crée des maquettes (wireframes) et teste l\'ergonomie. Il fait le pont entre les utilisateurs et les développeurs.',
+        },
+        {
+          type: 'flashcard',
+          category: 'Métiers Tech',
+          front: 'Que fait un Chef de Projet Digital ?',
+          back: 'Il coordonne les équipes (développeurs, designers, clients) pour livrer un projet digital dans les délais et le budget. Il maîtrise les méthodes agiles (Scrum, Kanban) et les outils de gestion de projet.',
+        },
+        {
+          type: 'flashcard',
+          category: 'Métiers Tech',
+          front: 'Qu\'est-ce que la cybersécurité comme métier ?',
+          back: 'Les experts en cybersécurité protègent les systèmes informatiques contre les attaques. Rôles : analyste SOC, pentesteur (testeur d\'intrusion), RSSI (Responsable Sécurité SI). Secteur en forte demande.',
+        },
+        {
+          type: 'quiz',
+          question: 'Quel langage est INCONTOURNABLE pour le développement web front-end ?',
+          choices: ['Python', 'JavaScript', 'Java', 'C++'],
+          correct: 1,
+          explanation: 'JavaScript est le seul langage qui s\'exécute nativement dans les navigateurs. Il est indispensable pour tout développeur front-end.',
+        },
+        {
+          type: 'interview',
+          question: 'Parmi les métiers du numérique que vous venez de découvrir, lequel vous attire le plus et pourquoi ?',
+          hint: 'Reliez votre réponse à vos points forts (analyse, créativité, relation humaine, logique…) pour montrer une vraie cohérence.',
+          auto_listen: true,
+        },
+      ],
+    },
+  },
 ];
