@@ -56,6 +56,209 @@ function getDailyTip(stats, activities) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// MatchingGame — cliquer pour associer terme ↔ définition
+// ─────────────────────────────────────────────────────────────────────────────
+const MatchingGame = ({ pairs, onComplete }) => {
+  const [shuffledDefs] = useState(() =>
+    [...pairs].map((p, i) => ({ ...p, origIdx: i })).sort(() => Math.random() - 0.5)
+  );
+  const [selectedTerm, setSelectedTerm] = useState(null);
+  const [matched, setMatched] = useState(new Set()); // set of pair origIdx that are matched
+  const [wrongDef, setWrongDef]   = useState(null);
+  const [wrongTerm, setWrongTerm] = useState(null);
+  const [done, setDone] = useState(false);
+
+  const handleTermClick = (idx) => {
+    if (matched.has(idx) || done) return;
+    setSelectedTerm(idx === selectedTerm ? null : idx);
+  };
+
+  const handleDefClick = (defIdx) => {
+    if (wrongDef !== null || done) return;
+    const def = shuffledDefs[defIdx];
+    const termOrigIdx = def.origIdx;
+
+    if (matched.has(termOrigIdx)) return;
+
+    if (selectedTerm === null) {
+      setSelectedTerm(termOrigIdx);
+      return;
+    }
+
+    if (selectedTerm === termOrigIdx) {
+      const next = new Set([...matched, termOrigIdx]);
+      setMatched(next);
+      setSelectedTerm(null);
+      if (next.size === pairs.length) {
+        setDone(true);
+        onComplete(100);
+      }
+    } else {
+      setWrongDef(defIdx);
+      setWrongTerm(selectedTerm);
+      setTimeout(() => { setWrongDef(null); setWrongTerm(null); setSelectedTerm(null); }, 700);
+    }
+  };
+
+  const isDefMatched = (defIdx) => matched.has(shuffledDefs[defIdx].origIdx);
+
+  return (
+    <div className="flex-1 flex flex-col gap-4">
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-medium text-slate-600">Cliquez un terme, puis sa définition</p>
+        <Badge className="bg-violet-100 text-violet-700 border-0">{matched.size}/{pairs.length} associés</Badge>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        {/* Termes */}
+        <div className="space-y-2">
+          {pairs.map((pair, termIdx) => {
+            const isMatchedTerm = matched.has(termIdx);
+            const isSelected = selectedTerm === termIdx;
+            const isWrong = wrongTerm === termIdx;
+            return (
+              <motion.button
+                key={termIdx}
+                whileHover={!isMatchedTerm ? { scale: 1.02 } : {}}
+                onClick={() => handleTermClick(termIdx)}
+                className={cn(
+                  'w-full text-left px-3 py-2.5 rounded-xl border-2 text-sm font-semibold transition-all',
+                  isMatchedTerm ? 'border-green-300 bg-green-50 text-green-800 cursor-default' :
+                  isWrong       ? 'border-red-400  bg-red-50  text-red-800' :
+                  isSelected    ? 'border-violet-500 bg-violet-50 text-violet-800 shadow-md ring-2 ring-violet-200' :
+                  'border-slate-200 hover:border-violet-300 text-slate-700 cursor-pointer',
+                )}
+              >
+                {pair.term}
+                {isMatchedTerm && <CheckCircle2 size={13} className="inline ml-1.5 text-green-600" />}
+              </motion.button>
+            );
+          })}
+        </div>
+
+        {/* Définitions */}
+        <div className="space-y-2">
+          {shuffledDefs.map((def, defIdx) => {
+            const isMDef = isDefMatched(defIdx);
+            const isWrong = wrongDef === defIdx;
+            return (
+              <motion.button
+                key={defIdx}
+                whileHover={!isMDef && selectedTerm !== null ? { scale: 1.02 } : {}}
+                onClick={() => !isMDef && handleDefClick(defIdx)}
+                className={cn(
+                  'w-full text-left px-3 py-2.5 rounded-xl border-2 text-xs leading-relaxed transition-all',
+                  isMDef    ? 'border-green-300 bg-green-50 text-green-700 cursor-default' :
+                  isWrong   ? 'border-red-400 bg-red-50 text-red-800' :
+                  selectedTerm !== null ? 'border-slate-200 hover:border-violet-300 text-slate-600 cursor-pointer' :
+                  'border-slate-100 text-slate-400 cursor-default',
+                )}
+              >
+                {def.definition}
+              </motion.button>
+            );
+          })}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {done && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="p-3 bg-green-50 border border-green-200 rounded-xl text-center"
+          >
+            <p className="text-green-800 font-semibold text-sm">✓ Toutes les paires trouvées !</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FillBlank — compléter la phrase avec le bon mot
+// ─────────────────────────────────────────────────────────────────────────────
+const FillBlank = ({ step, onDone }) => {
+  const [input, setInput] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [correct, setCorrect] = useState(false);
+
+  const check = () => {
+    if (!input.trim()) return;
+    const accepted = [step.answer, ...(step.alternatives ?? [])].map(a => a.toLowerCase().trim());
+    const isCorrect = accepted.includes(input.toLowerCase().trim());
+    setCorrect(isCorrect);
+    setSubmitted(true);
+    onDone(isCorrect);
+  };
+
+  const parts = (step.sentence ?? '').split('___');
+
+  return (
+    <div className="flex-1 flex flex-col gap-5">
+      <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200 text-base leading-loose text-slate-800">
+        {parts.map((part, i) => (
+          <React.Fragment key={i}>
+            <span>{part}</span>
+            {i < parts.length - 1 && (
+              <input
+                autoFocus
+                value={input}
+                onChange={e => !submitted && setInput(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && !submitted && check()}
+                disabled={submitted}
+                placeholder="   ?"
+                className={cn(
+                  'inline-block border-b-2 mx-2 px-2 py-0.5 w-32 font-bold text-center bg-transparent outline-none text-sm transition-colors',
+                  !submitted    ? 'border-violet-400 text-violet-700 focus:border-violet-600' :
+                  correct       ? 'border-green-500 text-green-700' :
+                  'border-red-400 text-red-600 line-through',
+                )}
+              />
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+
+      {step.hint && !submitted && (
+        <p className="text-xs text-slate-400 italic flex items-center gap-1.5">
+          <span>💡</span> Indice : {step.hint}
+        </p>
+      )}
+
+      {!submitted ? (
+        <Button
+          onClick={check}
+          disabled={!input.trim()}
+          className="self-start bg-violet-600 hover:bg-violet-700 text-white"
+        >
+          Vérifier
+        </Button>
+      ) : (
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={cn(
+              'p-4 rounded-2xl border',
+              correct ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200',
+            )}
+          >
+            <p className={cn('font-semibold text-sm', correct ? 'text-green-800' : 'text-red-800')}>
+              {correct ? '✓ Bonne réponse !' : `✗ Bonne réponse : "${step.answer}"`}
+            </p>
+            {step.explanation && (
+              <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">{step.explanation}</p>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      )}
+    </div>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Cleo Avatar — animée selon l'état
 // ─────────────────────────────────────────────────────────────────────────────
 const CleoAvatar = ({ speaking, listening, size = 'md' }) => {
@@ -365,9 +568,11 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
   const [answered, setAnswered] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [voiceReady, setVoiceReady] = useState(false);
-  // flashcard state
   const [cardFlipped, setCardFlipped] = useState(false);
   const [flashcardKnown, setFlashcardKnown] = useState(0);
+  const [matchingDone, setMatchingDone] = useState(false);
+  const [fillDone, setFillDone] = useState(false);
+  const [bonusCorrect, setBonusCorrect] = useState(0);
   const { toast } = useToast();
 
   const steps = activity?.content?.steps || [];
@@ -380,6 +585,8 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
     setSelected(null);
     setAnswered(false);
     setCardFlipped(false);
+    setMatchingDone(false);
+    setFillDone(false);
   }, [step]);
 
   // Stop TTS/STT when modal closes
@@ -404,12 +611,21 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
     setAnswered(true);
   };
 
+  const handleMatchingComplete = useCallback((pct) => {
+    if (pct === 100) setBonusCorrect(c => c + 1);
+    setMatchingDone(true);
+  }, []);
+
+  const handleFillDone = useCallback((isCorrect) => {
+    if (isCorrect) setBonusCorrect(c => c + 1);
+    setFillDone(true);
+  }, []);
+
   const handleNext = () => {
     if (isLast) {
-      const scorableSteps = steps.filter(s => s.type === 'quiz' || s.type === 'flashcard');
-      const totalFlashcards = steps.filter(s => s.type === 'flashcard').length;
+      const scorableSteps = steps.filter(s => ['quiz', 'flashcard', 'matching', 'fill'].includes(s.type));
       const score = scorableSteps.length
-        ? Math.round(((correctAnswers + flashcardKnown) / scorableSteps.length) * 100)
+        ? Math.round(((correctAnswers + flashcardKnown + bonusCorrect) / scorableSteps.length) * 100)
         : 100;
       onComplete(score);
     } else {
@@ -421,6 +637,8 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
     if (!currentStep) return false;
     if (currentStep.type === 'quiz') return answered;
     if (currentStep.type === 'flashcard') return answered;
+    if (currentStep.type === 'matching') return matchingDone;
+    if (currentStep.type === 'fill') return fillDone;
     if (currentStep.type === 'interview' || currentStep.type === 'simulation') return voiceReady;
     return true;
   };
@@ -598,6 +816,24 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
             </div>
           )}
 
+          {/* ── MATCHING step ──────────────────────────────────────────── */}
+          {currentStep?.type === 'matching' && (
+            <MatchingGame
+              key={step}
+              pairs={currentStep.pairs}
+              onComplete={handleMatchingComplete}
+            />
+          )}
+
+          {/* ── FILL step ───────────────────────────────────────────────── */}
+          {currentStep?.type === 'fill' && (
+            <FillBlank
+              key={step}
+              step={currentStep}
+              onDone={handleFillDone}
+            />
+          )}
+
           {/* ── INTERVIEW step ──────────────────────────────────────────── */}
           {(currentStep?.type === 'interview' || currentStep?.type === 'simulation') && (
             <CleoVoiceStep
@@ -750,6 +986,8 @@ const LearningPathPage = () => {
   const [view,           setView]           = useState('path');
   const [catalog,        setCatalog]        = useState([]);
   const [catalogLoading, setCatalogLoading] = useState(false);
+  const [aiTip,          setAiTip]          = useState(null);
+  const [tipLoading,     setTipLoading]     = useState(false);
 
   const loadPath = useCallback(async () => {
     if (!user?.id) return;
@@ -769,6 +1007,30 @@ const LearningPathPage = () => {
   }, [user?.id]);
 
   useEffect(() => { loadPath(); }, [loadPath]);
+
+  // AI-generated daily tip — cached per user per day
+  useEffect(() => {
+    if (!user?.id || loading) return;
+    const today = new Date().toISOString().slice(0, 10);
+    const cacheKey = `cleo_daily_tip_${user.id}_${today}`;
+    const cached = localStorage.getItem(cacheKey);
+    if (cached) { setAiTip(cached); return; }
+
+    setTipLoading(true);
+    const done  = (pathData?.activities || []).filter(a => a.status === 'completed').length;
+    const total = pathData?.activities?.length || 0;
+    const msg   = `Donne-moi un conseil du jour motivant et personnalisé en 1 à 2 phrases maximum. Contexte utilisateur : ${done} activité(s) complétée(s) sur ${total}, ${stats.total_xp || 0} XP total, ${stats.current_streak || 0} jour(s) consécutifs.`;
+
+    supabase.functions.invoke('chat-advisor', {
+      body: { message: msg, userId: user.id, mode: 'progress_tracker' },
+    }).then(({ data, error }) => {
+      if (!error && data?.reply) {
+        const tip = data.reply.replace(/^["«»]+|["«»]+$/g, '').trim().slice(0, 220);
+        setAiTip(tip);
+        localStorage.setItem(cacheKey, tip);
+      }
+    }).catch(() => {}).finally(() => setTipLoading(false));
+  }, [user?.id, loading]); // eslint-disable-line react-hooks/exhaustive-deps -- intentionally fires once after load
 
   const handleGenerate = async () => {
     setGenerating(true);
@@ -1051,10 +1313,23 @@ const LearningPathPage = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <Zap size={16} className="text-violet-600" />
                     <span className="font-semibold text-violet-900 text-sm">Conseil du jour</span>
+                    {tipLoading && <Loader2 size={11} className="animate-spin text-violet-400 ml-auto" />}
                   </div>
-                  <p className="text-slate-600 text-sm leading-relaxed italic">
-                    "{getDailyTip(stats, pathData?.activities)}"
-                  </p>
+                  {tipLoading && !aiTip ? (
+                    <div className="space-y-2">
+                      <div className="h-3 bg-violet-100 rounded animate-pulse w-full" />
+                      <div className="h-3 bg-violet-100 rounded animate-pulse w-3/4" />
+                    </div>
+                  ) : (
+                    <p className="text-slate-600 text-sm leading-relaxed italic">
+                      "{aiTip || getDailyTip(stats, pathData?.activities)}"
+                    </p>
+                  )}
+                  {aiTip && (
+                    <p className="text-[10px] text-violet-400 mt-2 flex items-center gap-1">
+                      <Sparkles size={9} /> Généré par Cléo
+                    </p>
+                  )}
                 </CardContent>
               </Card>
               </AnimatedItem>

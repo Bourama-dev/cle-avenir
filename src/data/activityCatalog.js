@@ -7,8 +7,11 @@
  *   skills_rewarded, description, content: { steps: [...] }
  *
  * Step types:
- *   text   — { type, title?, content }
- *   quiz   — { type, question, choices[], correct, explanation }
+ *   text       — { type, title?, content }
+ *   quiz       — { type, question, choices[], correct, explanation }
+ *   flashcard  — { type, category?, front, back }
+ *   matching   — { type, pairs: [{ term, definition }] }
+ *   fill       — { type, sentence (with ___), answer, alternatives?, hint?, explanation }
  *   interview  — { type, question, hint?, auto_listen? }
  *   simulation — { type, context, cleo_line, user_role?, hint? }
  */
@@ -933,6 +936,119 @@ export const LOCAL_ACTIVITY_CATALOG = [
           user_role: 'Candidat(e)',
           hint: 'Préparez 3 questions pertinentes qui montrent votre intérêt pour le fond : "Quelle est la culture managériale ?", "Quels sont les principaux défis de l\'équipe ?", "Comment mesure-t-on le succès sur ce poste ?"',
           auto_listen: true,
+        },
+      ],
+    },
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // CATÉGORIE 10 : MINI-JEUX INTERACTIFS (Matching + Fill)
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    id: 'local-16',
+    title: 'Jeu d\'association : vocabulaire du recrutement',
+    type: 'Mini-jeu',
+    difficulty: 'Débutant',
+    duration_minutes: 8,
+    xp_reward: 35,
+    skills_rewarded: ['communication', 'orientation'],
+    description: 'Associez chaque terme RH à sa définition. Un jeu rapide pour ancrer les concepts clés du recrutement.',
+    content: {
+      steps: [
+        {
+          type: 'text',
+          title: 'Comment jouer ?',
+          content: 'Cliquez sur un terme à gauche, puis sur sa définition à droite. Trouvez toutes les paires pour avancer !',
+        },
+        {
+          type: 'matching',
+          pairs: [
+            { term: 'ATS',          definition: 'Logiciel qui filtre automatiquement les CV avant qu\'un humain les lise' },
+            { term: 'Méthode STAR', definition: 'Technique pour structurer une réponse : Situation → Tâche → Action → Résultat' },
+            { term: 'CPF',          definition: 'Compte Personnel de Formation — crédit attaché à la personne tout au long de sa vie' },
+            { term: 'VAE',          definition: 'Validation des Acquis de l\'Expérience — obtenir un diplôme via son expérience professionnelle' },
+            { term: 'Soft skills',  definition: 'Compétences comportementales : communication, leadership, adaptabilité…' },
+          ],
+        },
+        {
+          type: 'fill',
+          sentence: 'Un recruteur passe en moyenne ___ secondes à lire un CV avant de décider de le garder ou non.',
+          answer: '7',
+          alternatives: ['sept'],
+          hint: 'C\'est très court — moins de 10 secondes.',
+          explanation: 'En moyenne 7 secondes : c\'est pourquoi la mise en page et les mots-clés dès le début du CV sont cruciaux.',
+        },
+        {
+          type: 'quiz',
+          question: 'Lequel de ces éléments est le MOINS important pour passer un ATS ?',
+          choices: [
+            'Les mots-clés de l\'offre d\'emploi',
+            'La couleur de la police utilisée',
+            'Un format de fichier compatible (.docx ou .pdf)',
+            'Des sections clairement nommées (Expérience, Formation…)',
+          ],
+          correct: 1,
+          explanation: 'Les ATS analysent le texte brut et ignorent les couleurs. La mise en forme visuelle compte pour le recruteur humain, pas pour l\'algorithme.',
+        },
+      ],
+    },
+  },
+
+  {
+    id: 'local-17',
+    title: 'Complétez les phrases clés de l\'entretien',
+    type: 'Mini-jeu',
+    difficulty: 'Intermédiaire',
+    duration_minutes: 10,
+    xp_reward: 45,
+    skills_rewarded: ['communication', 'connaissance_soi'],
+    description: 'Testez vos connaissances sur l\'entretien en complétant des phrases essentielles. Entraînement actif garanti !',
+    content: {
+      steps: [
+        {
+          type: 'fill',
+          sentence: 'En entretien, la règle des ___ secondes dit que le recruteur se fait une première impression très rapidement.',
+          answer: '30',
+          alternatives: ['trente'],
+          hint: 'Moins d\'une minute, plus de 10 secondes.',
+          explanation: 'Les 30 premières secondes sont décisives : poignée de main, tenue, sourire et posture. La première impression est très difficile à effacer.',
+        },
+        {
+          type: 'fill',
+          sentence: 'La méthode ___ aide à structurer une réponse à "Donnez-moi un exemple de situation difficile".',
+          answer: 'STAR',
+          alternatives: ['star'],
+          hint: 'Un acronyme en 4 lettres lié aux étoiles.',
+          explanation: 'STAR = Situation, Tâche, Action, Résultat. Cette méthode transforme une anecdote floue en démonstration de compétence claire et mémorable.',
+        },
+        {
+          type: 'matching',
+          pairs: [
+            { term: 'Question ouverte',        definition: '"Racontez-moi une situation où vous avez dû gérer un conflit."' },
+            { term: 'Question fermée',         definition: '"Avez-vous de l\'expérience en gestion de projet ?"' },
+            { term: 'Question piège',          definition: '"Quel est votre plus grand défaut ?"' },
+            { term: 'Question situationnelle', definition: '"Que feriez-vous si un client vous insultait ?"' },
+          ],
+        },
+        {
+          type: 'fill',
+          sentence: 'Lorsque le recruteur demande "Où vous voyez-vous dans ___ ans ?", il évalue votre ambition et votre cohérence avec le poste.',
+          answer: '5',
+          alternatives: ['cinq'],
+          hint: 'La durée classique pour un plan de carrière à moyen terme.',
+          explanation: 'Cette question teste si vos ambitions sont alignées avec le poste et si vous envisagez une durée raisonnable dans l\'entreprise.',
+        },
+        {
+          type: 'quiz',
+          question: 'À la fin d\'un entretien, le recruteur dit "Nous reviendrons vers vous". Que devez-vous faire ?',
+          choices: [
+            'Attendre passivement sa réponse',
+            'Envoyer un e-mail de remerciement dans les 24h et relancer poliment après le délai convenu',
+            'Appeler tous les jours pour montrer votre motivation',
+            'Postuler ailleurs immédiatement car c\'est probablement refusé',
+          ],
+          correct: 1,
+          explanation: 'Un e-mail de remerciement bref et professionnel dans les 24h démarque les candidats. La relance est normale et bienvenue une fois le délai annoncé dépassé.',
         },
       ],
     },
