@@ -4,11 +4,13 @@ import { normalizeStr } from '@/utils/stringUtils';
 import { calculateAdvancedMatching, generateRiasecWeights } from './matchingAlgorithm';
 import { userProfileService } from './userProfileService';
 
-// All fields needed for advanced RIASEC + profile scoring
+// All fields needed for advanced RIASEC + profile scoring.
+// Uses confirmed column names (riasecMajeur/riasecMineur match realCareerDataService.js).
+// adjusted_weights and riasec_vector are omitted — riasec_profile covers all 6 dimensions.
 const METIER_FIELDS = [
   'code', 'libelle', 'description', 'salaire', 'debouches', 'niveau_etudes',
-  'riasecmajeur', 'riasecmineur', 'riasec_profile', 'adjusted_weights',
-  'riasec_vector', 'growth_rate', 'job_market_demand', 'salary_range',
+  'riasecMajeur', 'riasecMineur', 'riasec_profile',
+  'growth_rate', 'job_market_demand', 'salary_range',
 ].join(', ');
 
 export const metierRecommendationService = {
@@ -59,23 +61,27 @@ export const metierRecommendationService = {
    * PostgREST returns lowercase column names (riasecmajeur, not riasecMajeur).
    */
   _mapMetierForMatching(metier) {
-    // Prefer riasec_profile (full 0-100 per dimension) → adjusted_weights → riasec_vector
+    // riasec_profile has full 0-100 scores per dimension — preferred over letter-only weights
     const riasecVector =
-      (metier.riasec_profile && Object.keys(metier.riasec_profile).length > 0 ? metier.riasec_profile : null) ||
-      (metier.adjusted_weights && Object.keys(metier.adjusted_weights).length > 0 ? metier.adjusted_weights : null) ||
-      (metier.riasec_vector && Object.keys(metier.riasec_vector).length > 0 ? metier.riasec_vector : null);
+      metier.riasec_profile && Object.keys(metier.riasec_profile).length > 0
+        ? metier.riasec_profile
+        : null;
+
+    // PostgREST may return camelCase or lowercase depending on how the column was created
+    const majeur = metier.riasecMajeur || metier.riasecmajeur;
+    const mineur = metier.riasecMineur || metier.riasecmineur;
 
     // Top-2 RIASEC letters for hybrid profile scoring
     const hybridProfile = riasecVector
       ? Object.entries(riasecVector).sort(([, a], [, b]) => b - a).slice(0, 2).map(([k]) => k)
-      : [metier.riasecmajeur, metier.riasecmineur].filter(Boolean);
+      : [majeur, mineur].filter(Boolean);
 
     return {
       code: metier.code,
       name: metier.libelle,       // contextualRecommendationService uses .name
       libelle: metier.libelle,
       description: metier.description,
-      riasec: riasecVector || generateRiasecWeights(metier.riasecmajeur, metier.riasecmineur),
+      riasec: riasecVector || generateRiasecWeights(majeur, mineur),
       hybridProfile,
       growthTrend: metier.growth_rate || this._debouchesToGrowthTrend(metier.debouches),
       demandLevel: metier.job_market_demand || this._debouchesToDemandLevel(metier.debouches),
@@ -85,6 +91,8 @@ export const metierRecommendationService = {
       salaire: metier.salaire,
       niveau_etudes: metier.niveau_etudes,
       debouches: metier.debouches,
+      riasecMajeur: majeur,
+      riasecMineur: mineur,
       rawMetier: metier,
     };
   },
