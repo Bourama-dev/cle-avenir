@@ -25,7 +25,10 @@ export const extractMetierWeights = (metier) => {
   if (metier.riasec_vector && Object.keys(metier.riasec_vector).length > 0) {
     return metier.riasec_vector;
   }
-  return generateRiasecWeights(metier.riasecMajeur, metier.riasecMineur);
+  return generateRiasecWeights(
+    metier.riasecMajeur || metier.riasecmajeur,
+    metier.riasecMineur || metier.riasecmineur
+  );
 };
 
 export const calculateRIASECScore = (userProfile, metierRiasec) => {
