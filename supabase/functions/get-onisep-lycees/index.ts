@@ -85,27 +85,22 @@ async function queryMEN(params: {
 
   const conditions: string[] = [];
 
-  // Base filter: only lycées
-  conditions.push(`type_etablissement like 'Lyc%'`);
+  // Base filter: lycées seulement via code numérique — aucun wildcard % nécessaire
+  // 300 = Lycée général et technologique, 301 = Lycée professionnel, 302 = Lycée polyvalent
+  conditions.push(`code_nature_uai in (300, 301, 302)`);
 
   if (type === "professionnel") {
-    conditions.push(
-      `(type_etablissement like '%professionnel%' OR type_etablissement like '%agricole%')`,
-    );
+    conditions.push(`code_nature_uai = 301`);
   } else if (type === "general") {
-    // Do NOT exclude technologique — "Lycée général et technologique" must appear here
-    conditions.push(`NOT type_etablissement like '%professionnel%'`);
-    conditions.push(`NOT type_etablissement like '%agricole%'`);
+    conditions.push(`code_nature_uai != 301`);
   } else if (type === "technologique") {
-    conditions.push(`type_etablissement like '%technologique%'`);
-    conditions.push(`NOT type_etablissement like '%professionnel%'`);
-    conditions.push(`NOT type_etablissement like '%agricole%'`);
+    conditions.push(`code_nature_uai != 301`);
   }
-  // type === "all": just `type like 'Lyc%'` (already pushed)
+  // type === "all": code_nature_uai in (300, 301, 302) suffit
 
-  // Statut — prefix match
-  if (statut === "public") conditions.push(`statut_public_prive like 'Pub%'`);
-  else if (statut === "prive") conditions.push(`statut_public_prive like 'Priv%'`);
+  // Statut — valeur exacte, aucun wildcard %
+  if (statut === "public") conditions.push(`statut_public_prive = 'Public'`);
+  else if (statut === "prive") conditions.push(`NOT statut_public_prive = 'Public'`);
 
   // Location filters
   if (ville) {
@@ -138,7 +133,7 @@ async function queryMEN(params: {
   const encodedWhere = encodeWhere(whereClause);
   const url = `${MEN_API}?where=${encodedWhere}&${base}`;
 
-  console.log(`[get-onisep-lycees] v10 GET ${url}`);
+  console.log(`[get-onisep-lycees] v12 GET ${url}`);
 
   const res = await fetch(url, {
     headers: { Accept: "application/json" },
