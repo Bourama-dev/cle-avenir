@@ -86,13 +86,15 @@ async function queryMEN(params: {
   if (statut === "public") conditions.push("statut_public_prive = 'Public'");
   else if (statut === "prive") conditions.push("statut_public_prive like '%riv%'");
 
-  // City filter — dataset stores communes in various cases, use LIKE
+  // Location filter — accepts commune name, département name, or département code
   if (ville) {
-    const safeVille = ville.replace(/'/g, "''").toUpperCase();
-    conditions.push(`nom_commune like '%${safeVille}%'`);
+    const safe = ville.replace(/'/g, "''").toUpperCase();
+    conditions.push(
+      `(nom_commune like '%${safe}%' OR libelle_departement like '%${safe}%' OR code_departement_insee like '${safe}%')`,
+    );
   }
 
-  // Department filter
+  // Department filter (separate param, still supported)
   if (departement) {
     const safeDep = departement.replace(/'/g, "''").toUpperCase();
     conditions.push(
