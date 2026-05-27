@@ -15,6 +15,9 @@ function detectType(typeEtab: string, nom = ""): Exclude<LyceeType, "all"> {
   const n = nom.toLowerCase();
   if (t.includes("professionnel") || t.includes("agricole")) return "professionnel";
   if (t.includes("polyvalent")) return "polyvalent";
+  // "Lycée général et technologique" is the most common French type — classify as polyvalent
+  const hasGeneral = t.includes("général") || t.includes("general");
+  if (hasGeneral && t.includes("technologique")) return "polyvalent";
   if (t.includes("technologique")) return "technologique";
   if (n.includes("professionnel") || n.includes("agricole")) return "professionnel";
   if (n.includes("polyvalent")) return "polyvalent";
@@ -90,9 +93,9 @@ async function queryMEN(params: {
       `(type_etablissement like '%professionnel%' OR type_etablissement like '%agricole%')`,
     );
   } else if (type === "general") {
+    // Do NOT exclude technologique — "Lycée général et technologique" must appear here
     conditions.push(`NOT type_etablissement like '%professionnel%'`);
     conditions.push(`NOT type_etablissement like '%agricole%'`);
-    conditions.push(`NOT type_etablissement like '%technologique%'`);
   } else if (type === "technologique") {
     conditions.push(`type_etablissement like '%technologique%'`);
     conditions.push(`NOT type_etablissement like '%professionnel%'`);
@@ -135,7 +138,7 @@ async function queryMEN(params: {
   const encodedWhere = encodeWhere(whereClause);
   const url = `${MEN_API}?where=${encodedWhere}&${base}`;
 
-  console.log(`[get-onisep-lycees] v9 GET ${url}`);
+  console.log(`[get-onisep-lycees] v10 GET ${url}`);
 
   const res = await fetch(url, {
     headers: { Accept: "application/json" },
