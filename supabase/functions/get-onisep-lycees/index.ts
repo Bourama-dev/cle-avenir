@@ -10,16 +10,23 @@ function str(v: unknown): string {
   return v != null ? String(v).trim() : "";
 }
 
-function detectType(typeEtab: string): Exclude<LyceeType, "all"> {
+function detectType(typeEtab: string, nom = ""): Exclude<LyceeType, "all"> {
   const t = typeEtab.toLowerCase();
+  const n = nom.toLowerCase();
+  // Check type field first (most reliable)
   if (t.includes("professionnel") || t.includes("agricole")) return "professionnel";
   if (t.includes("polyvalent")) return "polyvalent";
   if (t.includes("technologique")) return "technologique";
+  // For generic "Lycée" entries, fall back to the school name
+  if (n.includes("professionnel") || n.includes("agricole")) return "professionnel";
+  if (n.includes("polyvalent")) return "polyvalent";
+  if (n.includes("technologique") || n.includes("technique")) return "technologique";
   return "general";
 }
 
 function normaliseLycee(r: Record<string, unknown>) {
   const typeEtab = str(r.type_etablissement ?? "");
+  const nom = str(r.nom_etablissement ?? r.appellation_officielle ?? "");
   const statutRaw = str(r.statut_public_prive ?? "").toLowerCase();
   const statut = statutRaw.includes("priv") ? ("prive" as const) : ("public" as const);
   const lat = r.latitude != null ? Number(r.latitude) : null;
@@ -28,14 +35,14 @@ function normaliseLycee(r: Record<string, unknown>) {
   return {
     id: str(r.identifiant_de_l_etablissement ?? r.numero_uai ?? ""),
     uai: str(r.identifiant_de_l_etablissement ?? r.numero_uai ?? ""),
-    nom: str(r.nom_etablissement ?? r.appellation_officielle ?? ""),
+    nom,
     adresse: str(r.adresse_1 ?? r.adresse ?? ""),
     ville: str(r.nom_commune ?? r.libelle_commune ?? ""),
     code_postal: str(r.code_postal ?? ""),
     departement: str(r.libelle_departement ?? ""),
     code_departement: str(r.code_departement ?? ""),
     region: str(r.libelle_region ?? ""),
-    type: detectType(typeEtab),
+    type: detectType(typeEtab, nom),
     statut,
     telephone: str(r.telephone ?? ""),
     email: str(r.mail ?? ""),
@@ -62,19 +69,22 @@ async function queryMEN(params: {
 
   const conditions: string[] = [];
 
-  // ODSQL uses double-quoted string literals
+  // ODSQL: type filters — also exclude schools mis-classified in the dataset
+  // (some schools have type="Lycée" but are actually professional/agricultural)
   if (type === "professionnel") {
-    conditions.push(`type_etablissement like "Lyc%professionnel%"`);
+    conditions.push(
+      `(type_etablissement like "Lyc%professionnel%" OR type_etablissement like "%agricole%" OR (type_etablissement = "Lycée" AND (nom_etablissement like "%professionnel%" OR nom_etablissement like "%agricole%")))`,
+    );
   } else if (type === "general") {
     conditions.push(
-      `(type_etablissement = "Lycée" OR type_etablissement like "%général%" OR type_etablissement like "%technologique%")`,
+      `(type_etablissement = "Lycée" OR type_etablissement like "%général%" OR type_etablissement like "%technologique%") AND NOT (nom_etablissement like "%professionnel%" OR nom_etablissement like "%agricole%")`,
     );
   } else if (type === "technologique") {
     conditions.push(
-      `(type_etablissement like "%technologique%" OR type_etablissement = "Lycée")`,
+      `(type_etablissement like "%technologique%" OR type_etablissement = "Lycée") AND NOT (nom_etablissement like "%professionnel%" OR nom_etablissement like "%agricole%")`,
     );
   } else {
-    // All lycées — broad match
+    // All lycées
     conditions.push(`type_etablissement like "Lyc%"`);
   }
 
