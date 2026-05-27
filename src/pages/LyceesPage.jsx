@@ -57,6 +57,7 @@ export default function LyceesPage() {
 
   const abortRef = useRef(null);
   const resultsRef = useRef(null);
+  const didInitialLoad = useRef(false);
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
@@ -112,7 +113,17 @@ export default function LyceesPage() {
     resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  // Trigger search if type changes after first search
+  // Auto-load on mount
+  useEffect(() => {
+    if (didInitialLoad.current) return;
+    didInitialLoad.current = true;
+    const params = { q: '', ville: '', type: 'all', statut: 'all' };
+    setActiveParams(params);
+    doSearch(params, 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Re-search when type tab changes after first load
   useEffect(() => {
     if (activeParams !== null) {
       const params = { ...activeParams, type };
