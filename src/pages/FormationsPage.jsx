@@ -12,7 +12,8 @@ import CityAutocomplete from '@/components/ui/CityAutocomplete';
 import {
   Search, MapPin, Building, ChevronLeft, ChevronRight, AlertCircle,
   Clock, BookOpen, Award, Star, Globe,
-  CheckCircle2, FileText, MonitorPlay, Lock, Briefcase, ArrowRight
+  CheckCircle2, FileText, MonitorPlay, Lock, Briefcase, ArrowRight,
+  School, GraduationCap
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { extractFormationKeywords } from '@/utils/formationKeywords';
@@ -373,6 +374,51 @@ const FormationsPage = ({ setAllFormations }) => {
         onClose={() => setShowUpgradeModal(false)}
         defaultTier="premium"
       />
+
+      {/* ── Niveau selector ──────────────────────────────────────────────── */}
+      <div className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white">
+        <div className="container mx-auto px-4 py-5 max-w-7xl">
+          <p className="text-xs font-semibold uppercase tracking-widest text-violet-200 mb-3">
+            Quel est ton niveau&nbsp;?
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3">
+            {/* Lycées — collégiens */}
+            <button
+              onClick={() => navigate('/lycees')}
+              className="flex items-center gap-3 flex-1 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl px-5 py-3.5 text-left transition-colors group"
+            >
+              <div className="w-10 h-10 bg-indigo-500/40 rounded-lg flex items-center justify-center shrink-0">
+                <School className="w-5 h-5" />
+              </div>
+              <div className="min-w-0">
+                <p className="font-semibold text-sm leading-tight">Collégien → Lycée</p>
+                <p className="text-xs text-violet-200 leading-tight mt-0.5 truncate">
+                  Bac général, techno, pro, CAP — seconde à terminale
+                </p>
+              </div>
+              <ArrowRight className="w-4 h-4 text-violet-200 ml-auto shrink-0 group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            {/* Post-bac — current page, highlighted as active */}
+            <div className="flex items-center gap-3 flex-1 bg-white/20 border-2 border-white/40 rounded-xl px-5 py-3.5 cursor-default">
+              <div className="w-10 h-10 bg-white/30 rounded-lg flex items-center justify-center shrink-0">
+                <GraduationCap className="w-5 h-5" />
+              </div>
+              <div className="min-w-0">
+                <p className="font-semibold text-sm leading-tight flex items-center gap-1.5">
+                  Lycéen → Formations supérieures
+                  <span className="text-[10px] font-bold bg-white text-violet-700 px-1.5 py-0.5 rounded-full">
+                    Actif
+                  </span>
+                </p>
+                <p className="text-xs text-violet-200 leading-tight mt-0.5 truncate">
+                  BTS, BUT, Licence, Master, Ingénieur, Alternance…
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Header & Search */}
       <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30 shadow-sm transition-all duration-200">
