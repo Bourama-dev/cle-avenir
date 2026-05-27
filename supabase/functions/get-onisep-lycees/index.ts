@@ -33,7 +33,7 @@ function normaliseLycee(r: Record<string, unknown>) {
     ville: str(r.nom_commune ?? r.libelle_commune ?? ""),
     code_postal: str(r.code_postal ?? ""),
     departement: str(r.libelle_departement ?? ""),
-    code_departement: str(r.code_departement_insee ?? r.code_departement ?? ""),
+    code_departement: str(r.code_departement ?? ""),
     region: str(r.libelle_region ?? ""),
     type: detectType(typeEtab),
     statut,
@@ -81,19 +81,17 @@ async function queryMEN(params: {
   if (statut === "public") conditions.push(`statut_public_prive = "Public"`);
   else if (statut === "prive") conditions.push(`statut_public_prive like "%riv%"`);
 
-  // Location — accepts commune name, département name, or département code
+  // Location — accepts commune name or département name (code_departement_insee doesn't exist in this dataset)
   if (ville) {
     const safe = ville.replace(/"/g, "").toUpperCase();
     conditions.push(
-      `(nom_commune like "%${safe}%" OR libelle_departement like "%${safe}%" OR code_departement_insee like "${safe}%")`,
+      `(nom_commune like "%${safe}%" OR libelle_departement like "%${safe}%")`,
     );
   }
 
   if (departement) {
     const safe = departement.replace(/"/g, "").toUpperCase();
-    conditions.push(
-      `(libelle_departement like "%${safe}%" OR code_departement_insee like "${safe}%")`,
-    );
+    conditions.push(`libelle_departement like "%${safe}%"`);
   }
 
   const whereClause = conditions.join(" AND ");
