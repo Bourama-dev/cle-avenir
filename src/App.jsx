@@ -88,6 +88,8 @@ const ExploreMetiersPage = lazy(() => import('@/pages/ExploreMetiersPage'));
 const MetierDetailPage = lazy(() => import('@/pages/MetierDetailPage'));
 const FormationsPage = lazy(() => import('@/pages/FormationsPage'));
 const FormationDetailPage = lazy(() => import('@/pages/FormationDetailPage'));
+const LyceesPage = lazy(() => import('@/pages/LyceesPage'));
+const LyceeDetailPage = lazy(() => import('@/pages/LyceeDetailPage'));
 const JobOffersPage = lazy(() => import('@/pages/JobOffersPage')); 
 const JobDetailPage = lazy(() => import('@/pages/JobDetailPage'));
 const OfferDetailPage = lazy(() => import('@/pages/OfferDetailPage'));
@@ -358,6 +360,8 @@ const PageContent = () => {
                   <Route path="/metiers/:slug" element={<RedirectWithParam to="/metier" paramName="slug" />} />
                   <Route path="/formations" element={<PageTransition><FormationsPage /></PageTransition>} />
                   <Route path="/formation/:slug" element={<PageTransition><FormationDetailPage /></PageTransition>} />
+                  <Route path="/lycees" element={<PageTransition><LyceesPage /></PageTransition>} />
+                  <Route path="/lycee/:uai" element={<PageTransition><LyceeDetailPage /></PageTransition>} />
                   <Route path="/formations/:slug" element={<RedirectWithParam to="/formation" paramName="slug" />} />
                   <Route path="/offres-emploi" element={<PageTransition><JobExplorer onNavigate={handleNavigate} /></PageTransition>} />
                   <Route path="/job/:id" element={<PageTransition><JobDetailPage /></PageTransition>} />
