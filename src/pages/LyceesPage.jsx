@@ -82,6 +82,8 @@ export default function LyceesPage() {
       setTotal(result.total);
       setSearched(true);
       setPage(pageNum);
+      // Surface API-level warnings (e.g. external API error details)
+      if (result.warning) setError(`Avertissement API : ${result.warning}`);
     } catch (err) {
       if (token !== abortRef.current) return;
       setError(err?.message ?? 'Erreur lors de la recherche');

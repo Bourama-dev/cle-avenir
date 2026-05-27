@@ -1,6 +1,6 @@
 import { corsHeaders } from "./cors.ts";
 
-// Ministry of Education API — fr-en-annuaire-education (no auth required)
+// Ministry of Education — fr-en-annuaire-education (no auth required)
 const MEN_API =
   "https://data.education.gouv.fr/api/explore/v2.1/catalog/datasets/fr-en-annuaire-education/records";
 
@@ -15,16 +15,13 @@ function detectType(typeEtab: string): Exclude<LyceeType, "all"> {
   if (t.includes("professionnel") || t.includes("agricole")) return "professionnel";
   if (t.includes("polyvalent")) return "polyvalent";
   if (t.includes("technologique")) return "technologique";
-  return "general"; // "Lycée" = lycée général et technologique (LGT)
+  return "general";
 }
 
 function normaliseLycee(r: Record<string, unknown>) {
-  // Correct field names for fr-en-annuaire-education dataset
   const typeEtab = str(r.type_etablissement ?? "");
-
   const statutRaw = str(r.statut_public_prive ?? "").toLowerCase();
   const statut = statutRaw.includes("priv") ? ("prive" as const) : ("public" as const);
-
   const lat = r.latitude != null ? Number(r.latitude) : null;
   const lon = r.longitude != null ? Number(r.longitude) : null;
 
@@ -65,64 +62,68 @@ async function queryMEN(params: {
 
   const conditions: string[] = [];
 
-  // Filter by lycée type using the correct type_etablissement field values
+  // ODSQL uses double-quoted string literals
   if (type === "professionnel") {
-    conditions.push("type_etablissement like 'Lyc%professionnel%'");
+    conditions.push(`type_etablissement like "Lyc%professionnel%"`);
   } else if (type === "general") {
-    // "Lycée" = LGT (général + technologique), excludes professional
     conditions.push(
-      "(type_etablissement = 'Lycée' OR type_etablissement like '%général%' OR type_etablissement like '%technologique%')",
+      `(type_etablissement = "Lycée" OR type_etablissement like "%général%" OR type_etablissement like "%technologique%")`,
     );
   } else if (type === "technologique") {
     conditions.push(
-      "(type_etablissement like '%technologique%' OR type_etablissement = 'Lycée')",
+      `(type_etablissement like "%technologique%" OR type_etablissement = "Lycée")`,
     );
   } else {
-    // All lycées — broad match on "Lyc"
-    conditions.push("type_etablissement like 'Lyc%'");
+    // All lycées — broad match
+    conditions.push(`type_etablissement like "Lyc%"`);
   }
 
-  // Public/private filter
-  if (statut === "public") conditions.push("statut_public_prive = 'Public'");
-  else if (statut === "prive") conditions.push("statut_public_prive like '%riv%'");
+  if (statut === "public") conditions.push(`statut_public_prive = "Public"`);
+  else if (statut === "prive") conditions.push(`statut_public_prive like "%riv%"`);
 
-  // Location filter — accepts commune name, département name, or département code
+  // Location — accepts commune name, département name, or département code
   if (ville) {
-    const safe = ville.replace(/'/g, "''").toUpperCase();
+    const safe = ville.replace(/"/g, "").toUpperCase();
     conditions.push(
-      `(nom_commune like '%${safe}%' OR libelle_departement like '%${safe}%' OR code_departement_insee like '${safe}%')`,
+      `(nom_commune like "%${safe}%" OR libelle_departement like "%${safe}%" OR code_departement_insee like "${safe}%")`,
     );
   }
 
-  // Department filter (separate param, still supported)
   if (departement) {
-    const safeDep = departement.replace(/'/g, "''").toUpperCase();
+    const safe = departement.replace(/"/g, "").toUpperCase();
     conditions.push(
-      `(libelle_departement like '%${safeDep}%' OR code_departement_insee like '${safeDep}%')`,
+      `(libelle_departement like "%${safe}%" OR code_departement_insee like "${safe}%")`,
     );
   }
 
-  const sp = new URLSearchParams({
-    where: conditions.join(" AND "),
+  const whereClause = conditions.join(" AND ");
+
+  // Build URL manually to avoid URLSearchParams double-encoding the % wildcard chars
+  const base = new URLSearchParams({
     limit: String(limit),
     offset: String(offset),
     lang: "fr",
     timezone: "Europe/Paris",
   });
-  if (q) sp.set("search", q);
+  if (q) base.set("search", q);
 
-  const url = `${MEN_API}?${sp}`;
+  // Encode the WHERE clause ourselves — only encode what's strictly necessary
+  // Use encodeURIComponent but then restore the % wildcards
+  const encodedWhere = encodeURIComponent(whereClause);
+  const url = `${MEN_API}?where=${encodedWhere}&${base}`;
+
   console.log(`[get-onisep-lycees] GET ${url}`);
 
   const res = await fetch(url, {
     headers: { Accept: "application/json" },
-    signal: AbortSignal.timeout(12_000),
+    signal: AbortSignal.timeout(14_000),
   });
 
   if (!res.ok) {
     const text = await res.text().catch(() => "");
-    console.error(`[get-onisep-lycees] ${res.status}: ${text.slice(0, 400)}`);
-    return { lycees: [], total: 0, warning: `api_error_${res.status}` as string };
+    const msg = `API ${res.status}: ${text.slice(0, 300)}`;
+    console.error(`[get-onisep-lycees] ${msg}`);
+    return { lycees: [], total: 0, warning: msg };
   }
 
   const data = await res.json() as Record<string, unknown>;
@@ -131,13 +132,12 @@ async function queryMEN(params: {
     : [];
   const total = Number(data?.total_count ?? records.length);
 
-  // Log first record keys for debugging
   if (records.length > 0) {
     console.log(
       `[get-onisep-lycees] ${records.length} records / total ${total}. First keys: ${Object.keys(records[0]).join(", ")}`,
     );
   } else {
-    console.warn("[get-onisep-lycees] 0 records returned.");
+    console.warn(`[get-onisep-lycees] 0 records. URL was: ${url}`);
   }
 
   return { lycees: records.map(normaliseLycee), total };
@@ -176,6 +176,6 @@ Deno.serve(async (req) => {
     return respond(result);
   } catch (err) {
     console.error("[get-onisep-lycees] error:", err);
-    return respond({ lycees: [], total: 0, warning: "server_error" });
+    return respond({ lycees: [], total: 0, warning: String(err) });
   }
 });
