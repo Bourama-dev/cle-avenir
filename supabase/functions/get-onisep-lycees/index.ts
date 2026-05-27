@@ -13,11 +13,9 @@ function str(v: unknown): string {
 function detectType(typeEtab: string, nom = ""): Exclude<LyceeType, "all"> {
   const t = typeEtab.toLowerCase();
   const n = nom.toLowerCase();
-  // Check type field first (most reliable)
   if (t.includes("professionnel") || t.includes("agricole")) return "professionnel";
   if (t.includes("polyvalent")) return "polyvalent";
   if (t.includes("technologique")) return "technologique";
-  // For generic "Lycée" entries, fall back to the school name
   if (n.includes("professionnel") || n.includes("agricole")) return "professionnel";
   if (n.includes("polyvalent")) return "polyvalent";
   if (n.includes("technologique") || n.includes("technique")) return "technologique";
@@ -69,29 +67,34 @@ async function queryMEN(params: {
 
   const conditions: string[] = [];
 
-  // ODSQL: type filters — also exclude schools mis-classified in the dataset
-  // (some schools have type="Lycée" but are actually professional/agricultural)
+  // All filters start from lycée-typed establishments
+  conditions.push(`type_etablissement like "Lyc%"`);
+
   if (type === "professionnel") {
+    // Type field contains professionnel/agricole OR school name does (for bare "Lycée" entries)
     conditions.push(
-      `(type_etablissement like "Lyc%professionnel%" OR type_etablissement like "%agricole%" OR (type_etablissement = "Lycée" AND (nom_etablissement like "%professionnel%" OR nom_etablissement like "%agricole%")))`,
+      `(type_etablissement like "%professionnel%" OR type_etablissement like "%agricole%" OR nom_etablissement like "%professionnel%" OR nom_etablissement like "%agricole%")`,
     );
   } else if (type === "general") {
-    conditions.push(
-      `(type_etablissement = "Lycée" OR type_etablissement like "%général%" OR type_etablissement like "%technologique%") AND NOT (nom_etablissement like "%professionnel%" OR nom_etablissement like "%agricole%")`,
-    );
+    // Exclude professional/agricultural by type and name; exclude purely technologique
+    conditions.push(`NOT type_etablissement like "%professionnel%"`);
+    conditions.push(`NOT type_etablissement like "%agricole%"`);
+    conditions.push(`NOT type_etablissement like "%technologique%"`);
+    conditions.push(`NOT nom_etablissement like "%professionnel%"`);
+    conditions.push(`NOT nom_etablissement like "%agricole%"`);
   } else if (type === "technologique") {
-    conditions.push(
-      `(type_etablissement like "%technologique%" OR type_etablissement = "Lycée") AND NOT (nom_etablissement like "%professionnel%" OR nom_etablissement like "%agricole%")`,
-    );
-  } else {
-    // All lycées
-    conditions.push(`type_etablissement like "Lyc%"`);
+    conditions.push(`type_etablissement like "%technologique%"`);
+    conditions.push(`NOT type_etablissement like "%professionnel%"`);
+    conditions.push(`NOT nom_etablissement like "%professionnel%"`);
+    conditions.push(`NOT nom_etablissement like "%agricole%"`);
   }
+  // type === "all": just `type like "Lyc%"` (already pushed)
 
-  if (statut === "public") conditions.push(`statut_public_prive = "Public"`);
-  else if (statut === "prive") conditions.push(`statut_public_prive like "%riv%"`);
+  // Statut — prefix match avoids exact-case issues
+  if (statut === "public") conditions.push(`statut_public_prive like "Pub%"`);
+  else if (statut === "prive") conditions.push(`statut_public_prive like "Priv%"`);
 
-  // Location — accepts commune name or département name (code_departement_insee doesn't exist in this dataset)
+  // Location — accepts commune name or département name
   if (ville) {
     const safe = ville.replace(/"/g, "").toUpperCase();
     conditions.push(
@@ -106,7 +109,6 @@ async function queryMEN(params: {
 
   const whereClause = conditions.join(" AND ");
 
-  // Build URL manually to avoid URLSearchParams double-encoding the % wildcard chars
   const base = new URLSearchParams({
     limit: String(limit),
     offset: String(offset),
@@ -115,8 +117,7 @@ async function queryMEN(params: {
   });
   if (q) base.set("search", q);
 
-  // Encode the WHERE clause ourselves — only encode what's strictly necessary
-  // Use encodeURIComponent but then restore the % wildcards
+  // encodeURIComponent encodes % to %25; ODSQL server decodes back to % wildcard
   const encodedWhere = encodeURIComponent(whereClause);
   const url = `${MEN_API}?where=${encodedWhere}&${base}`;
 

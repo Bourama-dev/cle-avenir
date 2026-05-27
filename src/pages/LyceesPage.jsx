@@ -2,7 +2,8 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Search, MapPin, SlidersHorizontal, RefreshCw, AlertCircle,
-  ChevronLeft, ChevronRight, GraduationCap, Cpu, Wrench, Building2, RotateCcw
+  ChevronLeft, ChevronRight, GraduationCap, Cpu, Wrench, Building2, RotateCcw,
+  Layers,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -26,6 +27,27 @@ const STATUT_FILTERS = [
   { key: 'all',    label: 'Tous' },
   { key: 'public', label: 'Public' },
   { key: 'prive',  label: 'Privé' },
+];
+
+// Quick-search chips — clicking sets the q field and triggers a search
+const FILIERES_PRO = [
+  { label: '🍽️ Hôtellerie', q: 'hôtellerie' },
+  { label: '💻 Numérique', q: 'numérique' },
+  { label: '🏗️ Bâtiment', q: 'bâtiment' },
+  { label: '🚗 Auto / Mécanique', q: 'automobile' },
+  { label: '🛍️ Commerce', q: 'commerce' },
+  { label: '✂️ Coiffure', q: 'coiffure' },
+  { label: '🌱 Agriculture', q: 'agricole' },
+  { label: '🏥 Santé / Social', q: 'sanitaire' },
+];
+
+const SERIES_TECHNO = [
+  { label: 'STMG', q: 'STMG' },
+  { label: 'STI2D', q: 'STI2D' },
+  { label: 'ST2S', q: 'ST2S' },
+  { label: 'STL', q: 'STL' },
+  { label: 'STD2A', q: 'STD2A' },
+  { label: 'STHR', q: 'STHR' },
 ];
 
 export default function LyceesPage() {
@@ -108,6 +130,17 @@ export default function LyceesPage() {
   const handlePageChange = (newPage) => {
     if (!activeParams) return;
     doSearch(activeParams, newPage);
+    resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const handleChipSearch = (chipQ, chipType = null) => {
+    const newQ = chipQ;
+    const newType = chipType ?? type;
+    setQ(newQ);
+    if (chipType) setType(chipType);
+    const params = { q: newQ, ville, type: newType, statut };
+    setActiveParams(params);
+    doSearch(params, 1);
     resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
@@ -228,6 +261,44 @@ export default function LyceesPage() {
                     }`}
                   >
                     {f.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Filières professionnelles */}
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                <Layers className="h-4 w-4 text-emerald-500" />
+                Filières pro
+              </h3>
+              <div className="flex flex-wrap gap-1.5">
+                {FILIERES_PRO.map((f) => (
+                  <button
+                    key={f.q}
+                    onClick={() => handleChipSearch(f.q, 'professionnel')}
+                    className="text-xs px-2.5 py-1 rounded-full border border-emerald-200 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition-colors font-medium"
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Séries technologiques */}
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                <Cpu className="h-4 w-4 text-violet-500" />
+                Séries techno
+              </h3>
+              <div className="flex flex-wrap gap-1.5">
+                {SERIES_TECHNO.map((s) => (
+                  <button
+                    key={s.q}
+                    onClick={() => handleChipSearch(s.q, 'technologique')}
+                    className="text-xs px-2.5 py-1 rounded-full border border-violet-200 text-violet-700 bg-violet-50 hover:bg-violet-100 transition-colors font-medium"
+                  >
+                    {s.label}
                   </button>
                 ))}
               </div>

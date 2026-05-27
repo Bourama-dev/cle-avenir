@@ -82,10 +82,37 @@ export const onisepLyceeService = {
     if (error) throw error;
 
     const lycees = data?.lycees ?? [];
-    // Match exact UAI
     const lycee = lycees.find((l) => l.uai === uai) ?? lycees[0] ?? null;
     toCache(key, lycee);
     return lycee;
+  },
+
+  /**
+   * Fetch formations/specialties for a specific lycée by UAI.
+   * Returns { formations: [{libelle, diplome, code_specialite, niveau}], extras: string[] }
+   */
+  async getLyceeFormations(uai) {
+    if (!uai) return { formations: [], extras: [] };
+    const key = `formations:${uai}`;
+    const cached = fromCache(key);
+    if (cached) return cached;
+
+    const { data, error } = await supabase.functions.invoke('get-lycee-formations', {
+      body: { uai },
+    });
+
+    if (error) {
+      console.warn('[onisepLyceeService] getLyceeFormations error:', error);
+      return { formations: [], extras: [] };
+    }
+
+    const result = {
+      formations: data?.formations ?? [],
+      extras: data?.extras ?? [],
+      available_fields: data?.available_fields ?? [],
+    };
+    toCache(key, result);
+    return result;
   },
 };
 
