@@ -140,7 +140,7 @@ export default function LyceesPage() {
         description="Trouve ton futur lycée — général, technologique ou professionnel. Informations, formations et conseils pour collégiens."
       />
 
-      <div className="min-h-screen bg-[var(--bg-primary)]">
+      <div className="bg-[var(--bg-primary)]">
         {/* ── Hero ─────────────────────────────────────────────────── */}
         <section className="bg-gradient-to-br from-indigo-50 via-blue-50 to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 border-b border-[var(--border-color)]">
           <div className="max-w-4xl mx-auto px-4 py-12 md:py-16 text-center">
@@ -257,7 +257,7 @@ export default function LyceesPage() {
         <div ref={resultsRef} className="max-w-7xl mx-auto px-4 pb-16">
           {/* Type filter tabs */}
           {searched && (
-            <div className="sticky top-0 z-10 bg-[var(--bg-primary)] py-4 border-b border-[var(--border-color)] mb-6">
+            <div className="py-4 border-b border-[var(--border-color)] mb-6">
               <div className="flex items-center gap-2 flex-wrap">
                 {TYPE_TABS.map((tab) => (
                   <button

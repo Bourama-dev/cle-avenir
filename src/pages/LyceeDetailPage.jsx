@@ -113,7 +113,7 @@ export default function LyceeDetailPage() {
         description={`${typeInfo.short}. ${lycee.nom}, ${lycee.ville} (${lycee.code_postal}).`}
       />
 
-      <div className="min-h-screen bg-[var(--bg-primary)]">
+      <div className="bg-[var(--bg-primary)] pb-16">
         {/* ── Hero ─────────────────────────────────────────────── */}
         <section className={`bg-gradient-to-br ${bgGradient} border-b border-[var(--border-color)]`}>
           <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
