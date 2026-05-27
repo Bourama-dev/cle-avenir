@@ -54,6 +54,21 @@ function normaliseLycee(r: Record<string, unknown>) {
   };
 }
 
+/**
+ * Encode a WHERE clause for the OpenDataSoft API.
+ * Unlike standard URL encoding, we preserve literal % wildcard characters
+ * because the API's ODSQL engine expects them as raw % in the URL,
+ * not as %25 (which would be treated as the literal string "%25").
+ */
+function encodeWhere(where: string): string {
+  return encodeURIComponent(where).replace(/%25/g, "%");
+}
+
+// Strip characters that could cause ODSQL injection or encoding issues
+function safeStr(s: string): string {
+  return s.replace(/['"%;|]/g, "").trim();
+}
+
 async function queryMEN(params: {
   q: string;
   ville: string;
@@ -67,24 +82,21 @@ async function queryMEN(params: {
 
   const conditions: string[] = [];
 
-  // Use single-quoted string literals — ODSQL standard is single quotes for values
+  // Base filter: only lycées
   conditions.push(`type_etablissement like 'Lyc%'`);
 
   if (type === "professionnel") {
     conditions.push(
-      `(type_etablissement like '%professionnel%' OR type_etablissement like '%agricole%' OR nom_etablissement like '%professionnel%' OR nom_etablissement like '%agricole%')`,
+      `(type_etablissement like '%professionnel%' OR type_etablissement like '%agricole%')`,
     );
   } else if (type === "general") {
     conditions.push(`NOT type_etablissement like '%professionnel%'`);
     conditions.push(`NOT type_etablissement like '%agricole%'`);
     conditions.push(`NOT type_etablissement like '%technologique%'`);
-    conditions.push(`NOT nom_etablissement like '%professionnel%'`);
-    conditions.push(`NOT nom_etablissement like '%agricole%'`);
   } else if (type === "technologique") {
     conditions.push(`type_etablissement like '%technologique%'`);
     conditions.push(`NOT type_etablissement like '%professionnel%'`);
-    conditions.push(`NOT nom_etablissement like '%professionnel%'`);
-    conditions.push(`NOT nom_etablissement like '%agricole%'`);
+    conditions.push(`NOT type_etablissement like '%agricole%'`);
   }
   // type === "all": just `type like 'Lyc%'` (already pushed)
 
@@ -92,17 +104,21 @@ async function queryMEN(params: {
   if (statut === "public") conditions.push(`statut_public_prive like 'Pub%'`);
   else if (statut === "prive") conditions.push(`statut_public_prive like 'Priv%'`);
 
-  // Location — accepts commune name or département name
+  // Location filters
   if (ville) {
-    const safe = ville.replace(/'/g, "").toUpperCase();
-    conditions.push(
-      `(nom_commune like '%${safe}%' OR libelle_departement like '%${safe}%')`,
-    );
+    const safe = safeStr(ville).toUpperCase();
+    if (safe) {
+      conditions.push(
+        `(nom_commune like '%${safe}%' OR libelle_departement like '%${safe}%')`,
+      );
+    }
   }
 
   if (departement) {
-    const safe = departement.replace(/'/g, "").toUpperCase();
-    conditions.push(`libelle_departement like '%${safe}%'`);
+    const safe = safeStr(departement).toUpperCase();
+    if (safe) {
+      conditions.push(`libelle_departement like '%${safe}%'`);
+    }
   }
 
   const whereClause = conditions.join(" AND ");
@@ -115,10 +131,11 @@ async function queryMEN(params: {
   });
   if (q) base.set("search", q);
 
-  const encodedWhere = encodeURIComponent(whereClause);
+  // Preserve % as literal wildcard in URL (not encoded as %25)
+  const encodedWhere = encodeWhere(whereClause);
   const url = `${MEN_API}?where=${encodedWhere}&${base}`;
 
-  console.log(`[get-onisep-lycees] GET ${url}`);
+  console.log(`[get-onisep-lycees] v9 GET ${url}`);
 
   const res = await fetch(url, {
     headers: { Accept: "application/json" },
@@ -133,12 +150,10 @@ async function queryMEN(params: {
     return { lycees: [], total: 0, warning: msg };
   }
 
-  console.log(`[get-onisep-lycees] OK status=${res.status} body_preview=${responseText.slice(0, 200)}`);
-
   let data: Record<string, unknown>;
   try {
     data = JSON.parse(responseText) as Record<string, unknown>;
-  } catch (e) {
+  } catch (_e) {
     const msg = `JSON parse error: ${responseText.slice(0, 200)}`;
     console.error(`[get-onisep-lycees] ${msg}`);
     return { lycees: [], total: 0, warning: msg };
@@ -151,7 +166,7 @@ async function queryMEN(params: {
 
   if (records.length > 0) {
     console.log(
-      `[get-onisep-lycees] ${records.length} records / total ${total}. First keys: ${Object.keys(records[0]).join(", ")}`,
+      `[get-onisep-lycees] ${records.length} records / total ${total}. Keys: ${Object.keys(records[0]).join(", ")}`,
     );
   } else {
     console.warn(`[get-onisep-lycees] 0 records. total_count=${data?.total_count}. URL: ${url}`);
