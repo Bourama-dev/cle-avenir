@@ -67,44 +67,42 @@ async function queryMEN(params: {
 
   const conditions: string[] = [];
 
-  // All filters start from lycée-typed establishments
-  conditions.push(`type_etablissement like "Lyc%"`);
+  // Use single-quoted string literals — ODSQL standard is single quotes for values
+  conditions.push(`type_etablissement like 'Lyc%'`);
 
   if (type === "professionnel") {
-    // Type field contains professionnel/agricole OR school name does (for bare "Lycée" entries)
     conditions.push(
-      `(type_etablissement like "%professionnel%" OR type_etablissement like "%agricole%" OR nom_etablissement like "%professionnel%" OR nom_etablissement like "%agricole%")`,
+      `(type_etablissement like '%professionnel%' OR type_etablissement like '%agricole%' OR nom_etablissement like '%professionnel%' OR nom_etablissement like '%agricole%')`,
     );
   } else if (type === "general") {
-    // Exclude professional/agricultural by type and name; exclude purely technologique
-    conditions.push(`NOT type_etablissement like "%professionnel%"`);
-    conditions.push(`NOT type_etablissement like "%agricole%"`);
-    conditions.push(`NOT type_etablissement like "%technologique%"`);
-    conditions.push(`NOT nom_etablissement like "%professionnel%"`);
-    conditions.push(`NOT nom_etablissement like "%agricole%"`);
+    conditions.push(`NOT type_etablissement like '%professionnel%'`);
+    conditions.push(`NOT type_etablissement like '%agricole%'`);
+    conditions.push(`NOT type_etablissement like '%technologique%'`);
+    conditions.push(`NOT nom_etablissement like '%professionnel%'`);
+    conditions.push(`NOT nom_etablissement like '%agricole%'`);
   } else if (type === "technologique") {
-    conditions.push(`type_etablissement like "%technologique%"`);
-    conditions.push(`NOT type_etablissement like "%professionnel%"`);
-    conditions.push(`NOT nom_etablissement like "%professionnel%"`);
-    conditions.push(`NOT nom_etablissement like "%agricole%"`);
+    conditions.push(`type_etablissement like '%technologique%'`);
+    conditions.push(`NOT type_etablissement like '%professionnel%'`);
+    conditions.push(`NOT nom_etablissement like '%professionnel%'`);
+    conditions.push(`NOT nom_etablissement like '%agricole%'`);
   }
-  // type === "all": just `type like "Lyc%"` (already pushed)
+  // type === "all": just `type like 'Lyc%'` (already pushed)
 
-  // Statut — prefix match avoids exact-case issues
-  if (statut === "public") conditions.push(`statut_public_prive like "Pub%"`);
-  else if (statut === "prive") conditions.push(`statut_public_prive like "Priv%"`);
+  // Statut — prefix match
+  if (statut === "public") conditions.push(`statut_public_prive like 'Pub%'`);
+  else if (statut === "prive") conditions.push(`statut_public_prive like 'Priv%'`);
 
   // Location — accepts commune name or département name
   if (ville) {
-    const safe = ville.replace(/"/g, "").toUpperCase();
+    const safe = ville.replace(/'/g, "").toUpperCase();
     conditions.push(
-      `(nom_commune like "%${safe}%" OR libelle_departement like "%${safe}%")`,
+      `(nom_commune like '%${safe}%' OR libelle_departement like '%${safe}%')`,
     );
   }
 
   if (departement) {
-    const safe = departement.replace(/"/g, "").toUpperCase();
-    conditions.push(`libelle_departement like "%${safe}%"`);
+    const safe = departement.replace(/'/g, "").toUpperCase();
+    conditions.push(`libelle_departement like '%${safe}%'`);
   }
 
   const whereClause = conditions.join(" AND ");
@@ -117,7 +115,6 @@ async function queryMEN(params: {
   });
   if (q) base.set("search", q);
 
-  // encodeURIComponent encodes % to %25; ODSQL server decodes back to % wildcard
   const encodedWhere = encodeURIComponent(whereClause);
   const url = `${MEN_API}?where=${encodedWhere}&${base}`;
 
@@ -128,14 +125,25 @@ async function queryMEN(params: {
     signal: AbortSignal.timeout(14_000),
   });
 
+  const responseText = await res.text().catch(() => "");
+
   if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    const msg = `API ${res.status}: ${text.slice(0, 300)}`;
+    const msg = `API ${res.status}: ${responseText.slice(0, 300)}`;
+    console.error(`[get-onisep-lycees] FAIL ${msg}`);
+    return { lycees: [], total: 0, warning: msg };
+  }
+
+  console.log(`[get-onisep-lycees] OK status=${res.status} body_preview=${responseText.slice(0, 200)}`);
+
+  let data: Record<string, unknown>;
+  try {
+    data = JSON.parse(responseText) as Record<string, unknown>;
+  } catch (e) {
+    const msg = `JSON parse error: ${responseText.slice(0, 200)}`;
     console.error(`[get-onisep-lycees] ${msg}`);
     return { lycees: [], total: 0, warning: msg };
   }
 
-  const data = await res.json() as Record<string, unknown>;
   const records = Array.isArray(data?.results)
     ? (data.results as Record<string, unknown>[])
     : [];
@@ -146,7 +154,7 @@ async function queryMEN(params: {
       `[get-onisep-lycees] ${records.length} records / total ${total}. First keys: ${Object.keys(records[0]).join(", ")}`,
     );
   } else {
-    console.warn(`[get-onisep-lycees] 0 records. URL was: ${url}`);
+    console.warn(`[get-onisep-lycees] 0 records. total_count=${data?.total_count}. URL: ${url}`);
   }
 
   return { lycees: records.map(normaliseLycee), total };
