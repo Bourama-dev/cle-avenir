@@ -51,6 +51,64 @@ const SECTEUR_KEYWORDS = [
   { label: 'Textile / Mode', keywords: ['mode', 'textile', 'confection', 'habillement'] },
 ];
 
+const FORMATION_CATEGORIES = [
+  { key: 'seconde',   label: 'Seconde',                icon: '📚', match: (l) => l.startsWith('classe de 2de') },
+  { key: 'premiere',  label: 'Première',               icon: '📖', match: (l) => l.startsWith('classe de 1re') || l.startsWith('classe de 1ère') },
+  { key: 'bac-gen',   label: 'Bac Général',            icon: '🎓', match: (l) => l === 'bac général' || l.startsWith('bac général ') || l.startsWith('terminale générale') },
+  { key: 'bac-tech',  label: 'Bac Technologique',      icon: '⚙️', match: (l) => l.startsWith('bac techno') },
+  { key: 'bac-pro',   label: 'Bac Professionnel',      icon: '🔧', match: (l) => l.startsWith('bac pro') },
+  { key: 'cap',       label: 'CAP',                    icon: '🛠️', match: (l) => l.startsWith('cap ') || l === 'cap' },
+  { key: 'bpjeps',    label: 'BPJEPS / Brevet pro',    icon: '🏅', match: (l) => l.startsWith('bpjeps') || l.startsWith('bp ') || l.startsWith('brevet professionnel') },
+  { key: 'mc',        label: 'Mention Complémentaire', icon: '✨', match: (l) => l.startsWith('mc ') || l.startsWith('mention complémentaire') },
+  { key: 'other',     label: 'Autres formations',      icon: '📋', match: () => true },
+];
+
+const CATEGORY_STYLES = {
+  seconde:    { badge: 'bg-slate-50 text-slate-700 border-slate-200',      header: 'text-slate-500'    },
+  premiere:   { badge: 'bg-slate-50 text-slate-700 border-slate-200',      header: 'text-slate-500'    },
+  'bac-gen':  { badge: 'bg-blue-50 text-blue-700 border-blue-200',         header: 'text-blue-600'     },
+  'bac-tech': { badge: 'bg-violet-50 text-violet-700 border-violet-200',   header: 'text-violet-600'   },
+  'bac-pro':  { badge: 'bg-emerald-50 text-emerald-700 border-emerald-200',header: 'text-emerald-600'  },
+  cap:        { badge: 'bg-orange-50 text-orange-700 border-orange-200',   header: 'text-orange-600'   },
+  bpjeps:     { badge: 'bg-amber-50 text-amber-700 border-amber-200',      header: 'text-amber-600'    },
+  mc:         { badge: 'bg-pink-50 text-pink-700 border-pink-200',         header: 'text-pink-600'     },
+  other:      { badge: 'bg-gray-50 text-gray-600 border-gray-200',         header: 'text-gray-500'     },
+};
+
+function classifyFormation(libelle) {
+  const l = (libelle || '').toLowerCase().trim();
+  for (const cat of FORMATION_CATEGORIES) {
+    if (cat.match(l)) return cat.key;
+  }
+  return 'other';
+}
+
+function cleanFormationLabel(catKey, libelle) {
+  const l = (libelle || '').trim();
+  // For bac techno: extract "SERIE — enseignement spécifique X" → "SERIE — X"
+  if (catKey === 'bac-tech') {
+    const m = l.match(/^(\w+)\s+.+?enseignement\s+spécifique\s+(.+)$/i);
+    if (m) return `${m[1].toUpperCase()} — ${m[2]}`;
+    const serie = l.match(/^(\w+)/);
+    if (serie) return serie[1].toUpperCase();
+    return l;
+  }
+  const prefixes = {
+    'bac-pro':  /^bac\s+pro\s+/i,
+    'cap':      /^cap\s+/i,
+    'seconde':  /^classe\s+de\s+2de\s+/i,
+    'premiere': /^(?:classe\s+de\s+1re\s+|classe\s+de\s+1ère\s+)/i,
+    'bac-gen':  /^bac\s+général\s*/i,
+    'bpjeps':   /^bpjeps\s+spécialité\s+/i,
+    'mc':       /^(?:mc|mention\s+complémentaire)\s+/i,
+  };
+  const pat = prefixes[catKey];
+  if (!pat) return l;
+  const cleaned = l.replace(pat, '').trim();
+  if (!cleaned) return l;
+  return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+}
+
 function detectFilieresFromText(text) {
   const lower = text.toLowerCase();
   return SECTEUR_KEYWORDS.filter(({ keywords }) =>
@@ -153,13 +211,20 @@ export default function LyceeDetailPage() {
     ? detectFilieresFromText(nameAndNature)
     : [];
 
-  // Group real formations by diplôme type
-  const formationsByDiplome = formations.reduce((acc, f) => {
-    const key = f.diplome || 'Autre';
-    if (!acc[key]) acc[key] = [];
-    acc[key].push(f);
-    return acc;
-  }, {});
+  // Group formations by smart category, deduplicate by libelle
+  const groupedFormations = (() => {
+    const groups = {};
+    for (const f of formations) {
+      const raw = (f.libelle || f.diplome || '').trim();
+      if (!raw) continue;
+      const key = classifyFormation(raw);
+      if (!groups[key]) groups[key] = new Map();
+      if (!groups[key].has(raw.toLowerCase())) groups[key].set(raw.toLowerCase(), f);
+    }
+    return FORMATION_CATEGORIES
+      .filter((cat) => groups[cat.key]?.size > 0)
+      .map((cat) => ({ ...cat, items: [...groups[cat.key].values()] }));
+  })();
 
   const hasRealFormations = formations.length > 0;
 
@@ -306,32 +371,46 @@ export default function LyceeDetailPage() {
                 )}
 
                 {!formationsLoading && hasRealFormations && (
-                  <div className="space-y-4">
-                    {Object.entries(formationsByDiplome).map(([diplome, flist]) => (
-                      <div key={diplome}>
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
-                          <Award className="w-3.5 h-3.5" /> {diplome}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {flist.map((f, i) => (
-                            <Badge
-                              key={i}
-                              variant="outline"
-                              className="text-xs border-indigo-200 text-indigo-700 bg-indigo-50"
-                            >
-                              {f.code_specialite ? `${f.code_specialite} — ` : ''}{f.libelle || f.diplome}
-                            </Badge>
-                          ))}
+                  <div className="space-y-5">
+                    {groupedFormations.map(({ key, label, icon, items }) => {
+                      const styles = CATEGORY_STYLES[key] ?? CATEGORY_STYLES.other;
+                      return (
+                        <div key={key}>
+                          <p className={`text-xs font-semibold uppercase tracking-wide mb-2.5 flex items-center gap-1.5 ${styles.header}`}>
+                            <span>{icon}</span> {label}
+                            <span className="ml-1 normal-case font-normal text-slate-400 text-[11px]">({items.length})</span>
+                          </p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {items.map((f, i) => {
+                              const fullLabel = (f.libelle || f.diplome || '').trim();
+                              const display = cleanFormationLabel(key, fullLabel);
+                              return f.url_onisep ? (
+                                <a
+                                  key={i}
+                                  href={f.url_onisep}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  title={fullLabel}
+                                  className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border ${styles.badge} hover:opacity-75 transition-opacity`}
+                                >
+                                  {display}
+                                  <ExternalLink className="w-2.5 h-2.5 opacity-50 shrink-0" />
+                                </a>
+                              ) : (
+                                <Badge
+                                  key={i}
+                                  variant="outline"
+                                  title={fullLabel}
+                                  className={`text-xs ${styles.badge}`}
+                                >
+                                  {display}
+                                </Badge>
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                    {formationExtras.length > 0 && (
-                      <div className="flex flex-wrap gap-2 pt-1">
-                        {formationExtras.map((e, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">{e}</Badge>
-                        ))}
-                      </div>
-                    )}
+                      );
+                    })}
                   </div>
                 )}
 
