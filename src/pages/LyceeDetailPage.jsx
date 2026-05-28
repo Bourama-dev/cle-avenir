@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   MapPin, Phone, Globe, Mail, ArrowLeft, School,
   GraduationCap, Wrench, Cpu, Building2,
-  CheckCircle2, ChevronRight, ExternalLink, AlertCircle, RefreshCw,
+  CheckCircle2, ChevronRight, ChevronDown, ExternalLink, AlertCircle, RefreshCw,
   BookOpen, Award, Layers,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -51,6 +51,66 @@ const SECTEUR_KEYWORDS = [
   { label: 'Textile / Mode', keywords: ['mode', 'textile', 'confection', 'habillement'] },
 ];
 
+const FORMATION_CATEGORIES = [
+  { key: 'seconde',   label: 'Seconde',                icon: '📚', match: (l) => l.startsWith('classe de 2de') },
+  { key: 'premiere',  label: 'Première',               icon: '📖', match: (l) => l.startsWith('classe de 1re') || l.startsWith('classe de 1ère') },
+  { key: 'bac-gen',   label: 'Bac Général',            icon: '🎓', match: (l) => l === 'bac général' || l.startsWith('bac général ') || l.startsWith('terminale générale') },
+  { key: 'bac-tech',  label: 'Bac Technologique',      icon: '⚙️', match: (l) => l.startsWith('bac techno') },
+  { key: 'bac-pro',   label: 'Bac Professionnel',      icon: '🔧', match: (l) => l.startsWith('bac pro') },
+  { key: 'cap',       label: 'CAP',                    icon: '🛠️', match: (l) => l.startsWith('cap ') || l === 'cap' },
+  { key: 'bpjeps',    label: 'BPJEPS / Brevet pro',    icon: '🏅', match: (l) => l.startsWith('bpjeps') || l.startsWith('bp ') || l.startsWith('brevet professionnel') },
+  { key: 'mc',        label: 'Mention Complémentaire', icon: '✨', match: (l) => l.startsWith('mc ') || l.startsWith('mention complémentaire') },
+  { key: 'other',     label: 'Autres formations',      icon: '📋', match: () => true },
+];
+
+const CATEGORY_STYLES = {
+  seconde:    { badge: 'bg-slate-50 text-slate-700 border-slate-200',      header: 'text-slate-500'    },
+  premiere:   { badge: 'bg-slate-50 text-slate-700 border-slate-200',      header: 'text-slate-500'    },
+  'bac-gen':  { badge: 'bg-blue-50 text-blue-700 border-blue-200',         header: 'text-blue-600'     },
+  'bac-tech': { badge: 'bg-violet-50 text-violet-700 border-violet-200',   header: 'text-violet-600'   },
+  'bac-pro':  { badge: 'bg-emerald-50 text-emerald-700 border-emerald-200',header: 'text-emerald-600'  },
+  cap:        { badge: 'bg-orange-50 text-orange-700 border-orange-200',   header: 'text-orange-600'   },
+  bpjeps:     { badge: 'bg-amber-50 text-amber-700 border-amber-200',      header: 'text-amber-600'    },
+  mc:         { badge: 'bg-pink-50 text-pink-700 border-pink-200',         header: 'text-pink-600'     },
+  other:      { badge: 'bg-gray-50 text-gray-600 border-gray-200',         header: 'text-gray-500'     },
+};
+
+function classifyFormation(libelle) {
+  const l = (libelle || '').toLowerCase().trim();
+  for (const cat of FORMATION_CATEGORIES) {
+    if (cat.match(l)) return cat.key;
+  }
+  return 'other';
+}
+
+function cleanFormationLabel(catKey, libelle) {
+  const l = (libelle || '').trim();
+  // For bac techno: extract "SERIE — enseignement spécifique X" → "SERIE — X"
+  if (catKey === 'bac-tech') {
+    // "bac techno STMG ... enseignement spécifique gestion et finance" → "STMG — gestion et finance"
+    const m = l.match(/^bac\s+techno\s+(\w+)\s+.+?enseignement\s+spécifique\s+(.+)$/i);
+    if (m) return `${m[1].toUpperCase()} — ${m[2]}`;
+    // "bac techno ST2S sciences et technologies de la santé..." → "ST2S"
+    const serie = l.match(/^bac\s+techno\s+(\w+)/i);
+    if (serie) return serie[1].toUpperCase();
+    return l;
+  }
+  const prefixes = {
+    'bac-pro':  /^bac\s+pro\s+/i,
+    'cap':      /^cap\s+/i,
+    'seconde':  /^classe\s+de\s+2de\s+/i,
+    'premiere': /^(?:classe\s+de\s+1re\s+|classe\s+de\s+1ère\s+)/i,
+    'bac-gen':  /^bac\s+général\s*/i,
+    'bpjeps':   /^bpjeps\s+spécialité\s+/i,
+    'mc':       /^(?:mc|mention\s+complémentaire)\s+/i,
+  };
+  const pat = prefixes[catKey];
+  if (!pat) return l;
+  const cleaned = l.replace(pat, '').trim();
+  if (!cleaned) return l;
+  return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+}
+
 function detectFilieresFromText(text) {
   const lower = text.toLowerCase();
   return SECTEUR_KEYWORDS.filter(({ keywords }) =>
@@ -91,6 +151,7 @@ export default function LyceeDetailPage() {
   const [formations, setFormations] = useState([]);
   const [formationExtras, setFormationExtras] = useState([]);
   const [formationsLoading, setFormationsLoading] = useState(false);
+  const [openGroups, setOpenGroups] = useState(new Set());
 
   // Load lycée data if not passed via navigation state
   useEffect(() => {
@@ -111,8 +172,16 @@ export default function LyceeDetailPage() {
     setFormationsLoading(true);
     onisepLyceeService.getLyceeFormations(lycee.uai)
       .then((data) => {
-        setFormations(data.formations ?? []);
+        const list = data.formations ?? [];
+        setFormations(list);
         setFormationExtras(data.extras ?? []);
+        // Auto-open the first non-empty group
+        if (list.length > 0) {
+          const firstKey = FORMATION_CATEGORIES.find((cat) =>
+            list.some((f) => classifyFormation((f.libelle || f.diplome || '').trim()) === cat.key)
+          )?.key;
+          if (firstKey) setOpenGroups(new Set([firstKey]));
+        }
       })
       .catch(() => {})
       .finally(() => setFormationsLoading(false));
@@ -153,13 +222,20 @@ export default function LyceeDetailPage() {
     ? detectFilieresFromText(nameAndNature)
     : [];
 
-  // Group real formations by diplôme type
-  const formationsByDiplome = formations.reduce((acc, f) => {
-    const key = f.diplome || 'Autre';
-    if (!acc[key]) acc[key] = [];
-    acc[key].push(f);
-    return acc;
-  }, {});
+  // Group formations by smart category, deduplicate by libelle
+  const groupedFormations = (() => {
+    const groups = {};
+    for (const f of formations) {
+      const raw = (f.libelle || f.diplome || '').trim();
+      if (!raw) continue;
+      const key = classifyFormation(raw);
+      if (!groups[key]) groups[key] = new Map();
+      if (!groups[key].has(raw.toLowerCase())) groups[key].set(raw.toLowerCase(), f);
+    }
+    return FORMATION_CATEGORIES
+      .filter((cat) => groups[cat.key]?.size > 0)
+      .map((cat) => ({ ...cat, items: [...groups[cat.key].values()] }));
+  })();
 
   const hasRealFormations = formations.length > 0;
 
@@ -306,32 +382,75 @@ export default function LyceeDetailPage() {
                 )}
 
                 {!formationsLoading && hasRealFormations && (
-                  <div className="space-y-4">
-                    {Object.entries(formationsByDiplome).map(([diplome, flist]) => (
-                      <div key={diplome}>
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
-                          <Award className="w-3.5 h-3.5" /> {diplome}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {flist.map((f, i) => (
-                            <Badge
-                              key={i}
-                              variant="outline"
-                              className="text-xs border-indigo-200 text-indigo-700 bg-indigo-50"
-                            >
-                              {f.code_specialite ? `${f.code_specialite} — ` : ''}{f.libelle || f.diplome}
-                            </Badge>
-                          ))}
+                  <div className="divide-y divide-[var(--border-color)] rounded-xl border border-[var(--border-color)] overflow-hidden">
+                    {groupedFormations.map(({ key, label, icon, items }) => {
+                      const styles = CATEGORY_STYLES[key] ?? CATEGORY_STYLES.other;
+                      const isOpen = openGroups.has(key);
+                      const toggle = () => setOpenGroups((prev) => {
+                        const next = new Set(prev);
+                        isOpen ? next.delete(key) : next.add(key);
+                        return next;
+                      });
+                      return (
+                        <div key={key}>
+                          <button
+                            type="button"
+                            onClick={toggle}
+                            className="w-full flex items-center justify-between px-4 py-3 bg-[var(--bg-primary)] hover:bg-[var(--bg-secondary)] transition-colors text-left"
+                          >
+                            <span className={`flex items-center gap-2 text-sm font-semibold ${styles.header}`}>
+                              <span>{icon}</span>
+                              {label}
+                              <span className="font-normal text-slate-400 text-xs">({items.length})</span>
+                            </span>
+                            <ChevronDown
+                              className={`w-4 h-4 text-slate-400 transition-transform duration-200 shrink-0 ${isOpen ? 'rotate-180' : ''}`}
+                            />
+                          </button>
+                          <AnimatePresence initial={false}>
+                            {isOpen && (
+                              <motion.div
+                                key="content"
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.2, ease: 'easeInOut' }}
+                                className="overflow-hidden"
+                              >
+                                <div className="px-4 pb-4 pt-1 flex flex-wrap gap-1.5 bg-[var(--bg-secondary)]/40">
+                                  {items.map((f, i) => {
+                                    const fullLabel = (f.libelle || f.diplome || '').trim();
+                                    const display = cleanFormationLabel(key, fullLabel);
+                                    return f.url_onisep ? (
+                                      <a
+                                        key={i}
+                                        href={f.url_onisep}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        title={fullLabel}
+                                        className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border ${styles.badge} hover:opacity-75 transition-opacity`}
+                                      >
+                                        {display}
+                                        <ExternalLink className="w-2.5 h-2.5 opacity-50 shrink-0" />
+                                      </a>
+                                    ) : (
+                                      <Badge
+                                        key={i}
+                                        variant="outline"
+                                        title={fullLabel}
+                                        className={`text-xs ${styles.badge}`}
+                                      >
+                                        {display}
+                                      </Badge>
+                                    );
+                                  })}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
                         </div>
-                      </div>
-                    ))}
-                    {formationExtras.length > 0 && (
-                      <div className="flex flex-wrap gap-2 pt-1">
-                        {formationExtras.map((e, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">{e}</Badge>
-                        ))}
-                      </div>
-                    )}
+                      );
+                    })}
                   </div>
                 )}
 
