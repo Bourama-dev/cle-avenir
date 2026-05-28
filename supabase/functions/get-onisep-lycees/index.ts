@@ -85,18 +85,20 @@ async function queryMEN(params: {
 
   const conditions: string[] = [];
 
-  // Base filter: lycées seulement via code numérique — aucun wildcard % nécessaire
-  // 300 = Lycée général et technologique, 301 = Lycée professionnel, 302 = Lycée polyvalent
-  conditions.push(`code_nature_uai in (300, 301, 302)`);
-
+  // Base + type filter : valeurs exactes, zéro wildcard %
+  // "Lycée général et technologique" couvre la grande majorité des lycées français
   if (type === "professionnel") {
-    conditions.push(`code_nature_uai = 301`);
-  } else if (type === "general") {
-    conditions.push(`code_nature_uai != 301`);
-  } else if (type === "technologique") {
-    conditions.push(`code_nature_uai != 301`);
+    conditions.push(`type_etablissement = 'Lycée professionnel'`);
+  } else if (type === "general" || type === "technologique") {
+    conditions.push(
+      `(type_etablissement = 'Lycée général et technologique' OR type_etablissement = 'Lycée polyvalent')`,
+    );
+  } else {
+    // type === "all"
+    conditions.push(
+      `(type_etablissement = 'Lycée général et technologique' OR type_etablissement = 'Lycée professionnel' OR type_etablissement = 'Lycée polyvalent')`,
+    );
   }
-  // type === "all": code_nature_uai in (300, 301, 302) suffit
 
   // Statut — valeur exacte, aucun wildcard %
   if (statut === "public") conditions.push(`statut_public_prive = 'Public'`);
@@ -133,7 +135,7 @@ async function queryMEN(params: {
   const encodedWhere = encodeWhere(whereClause);
   const url = `${MEN_API}?where=${encodedWhere}&${base}`;
 
-  console.log(`[get-onisep-lycees] v12 GET ${url}`);
+  console.log(`[get-onisep-lycees] v13 GET ${url}`);
 
   const res = await fetch(url, {
     headers: { Accept: "application/json" },
