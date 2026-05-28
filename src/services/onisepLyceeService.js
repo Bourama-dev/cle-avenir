@@ -1,5 +1,12 @@
 import { supabase } from '@/lib/customSupabaseClient';
 
+// Call ONISEP directly from the browser — public open-data API with CORS enabled.
+// This avoids routing through Supabase Edge Functions which adds ~20-30 s of relay
+// latency when the Supabase region is far from ONISEP servers (France).
+const ONISEP_LYCEES_URL = 'https://api.opendata.onisep.fr/api/1.0/dataset/5fa5816ac6a6e/search';
+const TYPE_GENERAL = 'lycée général, technologique ou polyvalent';
+const TYPE_PROFESSIONNEL = 'lycée professionnel';
+
 const CACHE = new Map();
 const CACHE_TTL = 5 * 60 * 1000; // 5 min
 
@@ -16,25 +23,74 @@ function fromCache(key) {
 
 function toCache(key, data) {
   CACHE.set(key, { data, ts: Date.now() });
-  // Evict oldest when cache grows large
-  if (CACHE.size > 80) {
-    CACHE.delete(CACHE.keys().next().value);
+  if (CACHE.size > 80) CACHE.delete(CACHE.keys().next().value);
+}
+
+function normaliseLycee(r) {
+  const typeRaw = (r.type_detablissement ?? '').toLowerCase();
+  let type;
+  if (typeRaw.includes('professionnel') || typeRaw.includes('agricole')) type = 'professionnel';
+  else if (typeRaw.includes('polyvalent')) type = 'polyvalent';
+  else type = 'general';
+
+  const statutRaw = (r.statut ?? '').toLowerCase();
+  const statut = statutRaw === 'public' ? 'public' : 'prive';
+
+  const geoloc = r._geoloc;
+  const lat = geoloc?.lat != null ? Number(geoloc.lat) : r.latitude_y != null ? Number(r.latitude_y) : null;
+  const lon = geoloc?.lon != null ? Number(geoloc.lon) : r.longitude_x != null ? Number(r.longitude_x) : null;
+
+  return {
+    id: r.code_uai ?? '',
+    uai: r.code_uai ?? '',
+    nom: r.nom ?? '',
+    adresse: r.adresse ?? '',
+    ville: r.commune ?? '',
+    code_postal: r.cp ?? '',
+    departement: r.departement ?? '',
+    code_departement: '',
+    region: r.region ?? '',
+    academie: r.academie ?? '',
+    type,
+    statut,
+    telephone: r.telephone ?? '',
+    email: '',
+    url: r.url_et_id_onisep ?? '',
+    nombre_eleves: null,
+    coordonnees: lat != null && lon != null && !isNaN(lat) && !isNaN(lon) ? { lat, lon } : null,
+    nature: r.type_detablissement ?? '',
+    langues: r.langues_enseignees ?? '',
+    jpo: r.journees_portes_ouvertes ?? '',
+  };
+}
+
+async function fetchOnisepLycees({ q, ville, departement, type, statut, limit, offset }) {
+  const p = new URLSearchParams({ size: String(limit), from: String(offset) });
+
+  const textSearch = [q, ville].filter(Boolean).join(' ');
+  if (textSearch) p.set('q', textSearch);
+
+  if (type === 'professionnel') {
+    p.append('facet.type_detablissement', TYPE_PROFESSIONNEL);
+  } else if (type === 'all') {
+    p.append('facet.type_detablissement', TYPE_GENERAL);
+    p.append('facet.type_detablissement', TYPE_PROFESSIONNEL);
+  } else {
+    p.append('facet.type_detablissement', TYPE_GENERAL);
   }
+
+  if (statut === 'public') p.append('facet.statut', 'public');
+  else if (statut === 'prive') p.append('facet.statut', 'privé sous contrat');
+  if (departement) p.append('facet.departement', departement);
+
+  const res = await fetch(`${ONISEP_LYCEES_URL}?${p}`, { headers: { Accept: 'application/json' } });
+  if (!res.ok) throw new Error(`ONISEP ${res.status}`);
+  const data = await res.json();
+  const records = Array.isArray(data?.results) ? data.results : [];
+  return { lycees: records.map(normaliseLycee), total: Number(data?.total ?? records.length) };
 }
 
 export const onisepLyceeService = {
-  /**
-   * Search lycées with optional filters.
-   * @param {object} params
-   * @param {string} [params.q]            - Full-text search (name, specialty…)
-   * @param {string} [params.ville]        - City name
-   * @param {string} [params.departement]  - Department name or code
-   * @param {'general'|'technologique'|'professionnel'|'all'} [params.type]
-   * @param {'public'|'prive'|'all'} [params.statut]
-   * @param {number} [params.limit]
-   * @param {number} [params.offset]
-   * @returns {{ lycees: object[], total: number }}
-   */
   async searchLycees({
     q = '',
     ville = '',
@@ -49,39 +105,18 @@ export const onisepLyceeService = {
     const cached = fromCache(key);
     if (cached) return cached;
 
-    const { data, error } = await supabase.functions.invoke('get-onisep-lycees', {
-      body: params,
-    });
-
-    if (error) throw error;
-
-    const result = {
-      lycees: data?.lycees ?? [],
-      total: data?.total ?? 0,
-      warning: data?.warning ?? null,
-    };
-
+    const result = await fetchOnisepLycees(params);
     toCache(key, result);
     return result;
   },
 
-  /**
-   * Get details for a single lycée by UAI code.
-   * Uses the same search function filtered to the UAI identifier.
-   */
   async getLyceeByUai(uai) {
     if (!uai) return null;
     const key = `uai:${uai}`;
     const cached = fromCache(key);
     if (cached) return cached;
 
-    const { data, error } = await supabase.functions.invoke('get-onisep-lycees', {
-      body: { q: uai, limit: 5, enrich: true },
-    });
-
-    if (error) throw error;
-
-    const lycees = data?.lycees ?? [];
+    const { lycees } = await fetchOnisepLycees({ q: uai, type: 'all', statut: 'all', limit: 5, offset: 0, ville: '', departement: '' });
     const lycee = lycees.find((l) => l.uai === uai) ?? lycees[0] ?? null;
     toCache(key, lycee);
     return lycee;
