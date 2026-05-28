@@ -87,9 +87,11 @@ function cleanFormationLabel(catKey, libelle) {
   const l = (libelle || '').trim();
   // For bac techno: extract "SERIE — enseignement spécifique X" → "SERIE — X"
   if (catKey === 'bac-tech') {
-    const m = l.match(/^(\w+)\s+.+?enseignement\s+spécifique\s+(.+)$/i);
+    // "bac techno STMG ... enseignement spécifique gestion et finance" → "STMG — gestion et finance"
+    const m = l.match(/^bac\s+techno\s+(\w+)\s+.+?enseignement\s+spécifique\s+(.+)$/i);
     if (m) return `${m[1].toUpperCase()} — ${m[2]}`;
-    const serie = l.match(/^(\w+)/);
+    // "bac techno ST2S sciences et technologies de la santé..." → "ST2S"
+    const serie = l.match(/^bac\s+techno\s+(\w+)/i);
     if (serie) return serie[1].toUpperCase();
     return l;
   }
