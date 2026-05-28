@@ -95,11 +95,11 @@ async function queryONISEP(params: {
   if (departement) urlParams.append("facet.departement", departement);
 
   const url = `${ONISEP_API}?${urlParams}`;
-  console.log(`[get-onisep-lycees] v14 GET ${url}`);
+  console.log(`[get-onisep-lycees] v15 GET ${url}`);
 
   const res = await fetch(url, {
     headers: { Accept: "application/json" },
-    signal: AbortSignal.timeout(14_000),
+    signal: AbortSignal.timeout(28_000),
   });
 
   const responseText = await res.text().catch(() => "");
