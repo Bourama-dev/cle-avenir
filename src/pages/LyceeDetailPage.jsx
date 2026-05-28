@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   MapPin, Phone, Globe, Mail, ArrowLeft, School,
   GraduationCap, Wrench, Cpu, Building2,
-  CheckCircle2, ChevronRight, ExternalLink, AlertCircle, RefreshCw,
+  CheckCircle2, ChevronRight, ChevronDown, ExternalLink, AlertCircle, RefreshCw,
   BookOpen, Award, Layers,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -151,6 +151,7 @@ export default function LyceeDetailPage() {
   const [formations, setFormations] = useState([]);
   const [formationExtras, setFormationExtras] = useState([]);
   const [formationsLoading, setFormationsLoading] = useState(false);
+  const [openGroups, setOpenGroups] = useState(new Set());
 
   // Load lycée data if not passed via navigation state
   useEffect(() => {
@@ -171,8 +172,16 @@ export default function LyceeDetailPage() {
     setFormationsLoading(true);
     onisepLyceeService.getLyceeFormations(lycee.uai)
       .then((data) => {
-        setFormations(data.formations ?? []);
+        const list = data.formations ?? [];
+        setFormations(list);
         setFormationExtras(data.extras ?? []);
+        // Auto-open the first non-empty group
+        if (list.length > 0) {
+          const firstKey = FORMATION_CATEGORIES.find((cat) =>
+            list.some((f) => classifyFormation((f.libelle || f.diplome || '').trim()) === cat.key)
+          )?.key;
+          if (firstKey) setOpenGroups(new Set([firstKey]));
+        }
       })
       .catch(() => {})
       .finally(() => setFormationsLoading(false));
@@ -373,43 +382,72 @@ export default function LyceeDetailPage() {
                 )}
 
                 {!formationsLoading && hasRealFormations && (
-                  <div className="space-y-5">
+                  <div className="divide-y divide-[var(--border-color)] rounded-xl border border-[var(--border-color)] overflow-hidden">
                     {groupedFormations.map(({ key, label, icon, items }) => {
                       const styles = CATEGORY_STYLES[key] ?? CATEGORY_STYLES.other;
+                      const isOpen = openGroups.has(key);
+                      const toggle = () => setOpenGroups((prev) => {
+                        const next = new Set(prev);
+                        isOpen ? next.delete(key) : next.add(key);
+                        return next;
+                      });
                       return (
                         <div key={key}>
-                          <p className={`text-xs font-semibold uppercase tracking-wide mb-2.5 flex items-center gap-1.5 ${styles.header}`}>
-                            <span>{icon}</span> {label}
-                            <span className="ml-1 normal-case font-normal text-slate-400 text-[11px]">({items.length})</span>
-                          </p>
-                          <div className="flex flex-wrap gap-1.5">
-                            {items.map((f, i) => {
-                              const fullLabel = (f.libelle || f.diplome || '').trim();
-                              const display = cleanFormationLabel(key, fullLabel);
-                              return f.url_onisep ? (
-                                <a
-                                  key={i}
-                                  href={f.url_onisep}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  title={fullLabel}
-                                  className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border ${styles.badge} hover:opacity-75 transition-opacity`}
-                                >
-                                  {display}
-                                  <ExternalLink className="w-2.5 h-2.5 opacity-50 shrink-0" />
-                                </a>
-                              ) : (
-                                <Badge
-                                  key={i}
-                                  variant="outline"
-                                  title={fullLabel}
-                                  className={`text-xs ${styles.badge}`}
-                                >
-                                  {display}
-                                </Badge>
-                              );
-                            })}
-                          </div>
+                          <button
+                            type="button"
+                            onClick={toggle}
+                            className="w-full flex items-center justify-between px-4 py-3 bg-[var(--bg-primary)] hover:bg-[var(--bg-secondary)] transition-colors text-left"
+                          >
+                            <span className={`flex items-center gap-2 text-sm font-semibold ${styles.header}`}>
+                              <span>{icon}</span>
+                              {label}
+                              <span className="font-normal text-slate-400 text-xs">({items.length})</span>
+                            </span>
+                            <ChevronDown
+                              className={`w-4 h-4 text-slate-400 transition-transform duration-200 shrink-0 ${isOpen ? 'rotate-180' : ''}`}
+                            />
+                          </button>
+                          <AnimatePresence initial={false}>
+                            {isOpen && (
+                              <motion.div
+                                key="content"
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.2, ease: 'easeInOut' }}
+                                className="overflow-hidden"
+                              >
+                                <div className="px-4 pb-4 pt-1 flex flex-wrap gap-1.5 bg-[var(--bg-secondary)]/40">
+                                  {items.map((f, i) => {
+                                    const fullLabel = (f.libelle || f.diplome || '').trim();
+                                    const display = cleanFormationLabel(key, fullLabel);
+                                    return f.url_onisep ? (
+                                      <a
+                                        key={i}
+                                        href={f.url_onisep}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        title={fullLabel}
+                                        className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border ${styles.badge} hover:opacity-75 transition-opacity`}
+                                      >
+                                        {display}
+                                        <ExternalLink className="w-2.5 h-2.5 opacity-50 shrink-0" />
+                                      </a>
+                                    ) : (
+                                      <Badge
+                                        key={i}
+                                        variant="outline"
+                                        title={fullLabel}
+                                        className={`text-xs ${styles.badge}`}
+                                      >
+                                        {display}
+                                      </Badge>
+                                    );
+                                  })}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
                         </div>
                       );
                     })}
