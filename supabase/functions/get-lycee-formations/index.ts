@@ -1,149 +1,85 @@
 import { corsHeaders } from "./cors.ts";
 
-const MEN_API_BASE =
-  "https://data.education.gouv.fr/api/explore/v2.1/catalog/datasets";
-
-// Annuaire full-record fetch (to get all available fields for a UAI)
-const ANNUAIRE =
-  `${MEN_API_BASE}/fr-en-annuaire-education/records`;
-
-// IDEO formations dataset (formations per school by UAI)
-const IDEO_FORMATIONS =
-  `${MEN_API_BASE}/fr-en-ideo-formations-lycees/records`;
+// ONISEP — Idéo-Actions de formation initiale-Univers lycée
+const ONISEP_FORMATIONS_API =
+  "https://api.opendata.onisep.fr/api/1.0/dataset/605340ddc19a9/search";
 
 function str(v: unknown): string {
   return v != null ? String(v).trim() : "";
 }
 
-// Extract specialties/filières from the raw annuaire record
-function extractFromAnnuaire(r: Record<string, unknown>) {
-  const fields: string[] = [];
-
-  // Fields that might contain formation info in the annuaire dataset
-  const candidates = [
-    "secteurs_de_formation",
-    "secteur_formations",
-    "formations_dispensees",
-    "libelle_formation",
-    "liste_formations",
-    "options",
-    "secteur_lycee",
-    "voies",
-    "filiere",
-  ];
-
-  for (const key of candidates) {
-    const val = r[key];
-    if (!val) continue;
-    if (Array.isArray(val)) {
-      fields.push(...val.map((v) => String(v).trim()).filter(Boolean));
-    } else if (typeof val === "string" && val.trim()) {
-      // Sometimes values are comma/semicolon-separated lists
-      const parts = val.split(/[;,]/).map((s) => s.trim()).filter(Boolean);
-      fields.push(...parts);
-    }
-  }
-
-  return [...new Set(fields)]; // deduplicate
-}
-
-// Normalise one record from the ideo-formations dataset
-function normaliseIdeo(r: Record<string, unknown>): {
+interface Formation {
+  id: string;
   libelle: string;
   diplome: string;
-  code_specialite: string;
   niveau: string;
-} | null {
-  // Try several possible field name conventions
-  const libelle =
-    str(r.libelle_formation ?? r.libelle ?? r.denomination ?? r.nom_formation ?? "");
-  const diplome =
-    str(r.libelle_diplome ?? r.diplome ?? r.type_diplome ?? r.code_diplome ?? "");
-  const code_specialite =
-    str(r.code_specialite ?? r.code_formation ?? r.code ?? "");
-  const niveau =
-    str(r.libelle_niveau ?? r.niveau_diplome ?? r.niveau ?? "");
+  type: string;
+  url_onisep: string;
+  domaine: string;
+}
 
+function normaliseFormation(r: Record<string, unknown>): Formation | null {
+  const libelle = str(r.formation_for_libelle ?? r.for_libelle ?? "");
+  const diplome = str(r.for_nature_du_certificat ?? r.for_type ?? "");
   if (!libelle && !diplome) return null;
-  return { libelle, diplome, code_specialite, niveau };
+
+  return {
+    id: str(r.action_de_formation_af_identifiant_onisep ?? r.af_identifiant_onisep ?? ""),
+    libelle,
+    diplome,
+    niveau: str(r.for_niveau_de_sortie ?? ""),
+    type: str(r.for_type ?? ""),
+    url_onisep: str(r.for_url_et_id_onisep ?? ""),
+    domaine: str(r.for_indexation_domaine_web_onisep ?? ""),
+  };
 }
 
-// Fetch annuaire record for the UAI, extract any formation fields
-async function fetchAnnuaireExtras(
-  uai: string,
-): Promise<{ formations: string[]; allFields: string[] }> {
-  const where = encodeURIComponent(`identifiant_de_l_etablissement="${uai}"`);
-  const url = `${ANNUAIRE}?where=${where}&limit=1&lang=fr`;
+async function fetchFormations(uai: string): Promise<{ formations: Formation[]; total: number }> {
+  const urlParams = new URLSearchParams({ size: "100", from: "0" });
+  urlParams.append("facet.ens_code_uai", uai);
 
+  const url = `${ONISEP_FORMATIONS_API}?${urlParams}`;
+  console.log(`[get-lycee-formations] v2 GET ${url}`);
+
+  const res = await fetch(url, {
+    headers: { Accept: "application/json" },
+    signal: AbortSignal.timeout(12_000),
+  });
+
+  const responseText = await res.text().catch(() => "");
+
+  if (!res.ok) {
+    const msg = `API ${res.status}: ${responseText.slice(0, 300)}`;
+    console.error(`[get-lycee-formations] FAIL ${msg}`);
+    return { formations: [], total: 0 };
+  }
+
+  let data: Record<string, unknown>;
   try {
-    const res = await fetch(url, {
-      headers: { Accept: "application/json" },
-      signal: AbortSignal.timeout(8_000),
-    });
-    if (!res.ok) return { formations: [], allFields: [] };
-
-    const data = await res.json() as Record<string, unknown>;
-    const records = Array.isArray(data?.results)
-      ? (data.results as Record<string, unknown>[])
-      : [];
-    if (records.length === 0) return { formations: [], allFields: [] };
-
-    const r = records[0];
-    const allFields = Object.keys(r);
-    console.log(`[get-lycee-formations] annuaire fields: ${allFields.join(", ")}`);
-    return { formations: extractFromAnnuaire(r), allFields };
-  } catch {
-    return { formations: [], allFields: [] };
-  }
-}
-
-// Fetch from ideo-formations dataset by UAI
-async function fetchIdeoFormations(
-  uai: string,
-): Promise<ReturnType<typeof normaliseIdeo>[]> {
-  // Try multiple UAI field names the dataset might use
-  const uaiFields = [
-    `identifiant_de_l_etablissement="${uai}"`,
-    `numero_uai="${uai}"`,
-    `uai="${uai}"`,
-    `code_uai="${uai}"`,
-  ];
-
-  for (const filter of uaiFields) {
-    const where = encodeURIComponent(filter);
-    const url = `${IDEO_FORMATIONS}?where=${where}&limit=100&lang=fr`;
-
-    try {
-      const res = await fetch(url, {
-        headers: { Accept: "application/json" },
-        signal: AbortSignal.timeout(10_000),
-      });
-
-      if (res.status === 404) {
-        console.warn("[get-lycee-formations] ideo dataset not found (404)");
-        return [];
-      }
-      if (!res.ok) continue;
-
-      const data = await res.json() as Record<string, unknown>;
-      const records = Array.isArray(data?.results)
-        ? (data.results as Record<string, unknown>[])
-        : [];
-
-      if (records.length > 0) {
-        console.log(
-          `[get-lycee-formations] ideo: ${records.length} formations. Keys: ${Object.keys(records[0]).join(", ")}`,
-        );
-        return records.map(normaliseIdeo).filter(Boolean) as ReturnType<
-          typeof normaliseIdeo
-        >[];
-      }
-    } catch {
-      continue;
-    }
+    data = JSON.parse(responseText) as Record<string, unknown>;
+  } catch (_e) {
+    console.error(`[get-lycee-formations] JSON parse error`);
+    return { formations: [], total: 0 };
   }
 
-  return [];
+  const records = Array.isArray(data?.results)
+    ? (data.results as Record<string, unknown>[])
+    : [];
+  const total = Number(data?.total ?? records.length);
+
+  if (records.length > 0) {
+    console.log(
+      `[get-lycee-formations] ${records.length} formations / total ${total}. Keys: ${Object.keys(records[0]).join(", ")}`,
+    );
+  } else {
+    console.warn(`[get-lycee-formations] 0 formations for UAI=${uai}`);
+  }
+
+  const formations = records
+    .map(normaliseFormation)
+    .filter((f): f is Formation => f !== null);
+
+  return { formations, total };
 }
 
 // ── Main Handler ──────────────────────────────────────────────────────────────
@@ -164,22 +100,12 @@ Deno.serve(async (req) => {
         : await req.json().catch(() => ({}));
 
     const uai = str(body.uai ?? "").toUpperCase();
-    if (!uai) return respond({ formations: [], extras: [], error: "uai required" }, 400);
+    if (!uai) return respond({ formations: [], total: 0, error: "uai required" }, 400);
 
-    // Run both fetches in parallel
-    const [ideoFormations, annuaireExtras] = await Promise.all([
-      fetchIdeoFormations(uai),
-      fetchAnnuaireExtras(uai),
-    ]);
-
-    return respond({
-      uai,
-      formations: ideoFormations,
-      extras: annuaireExtras.formations,
-      available_fields: annuaireExtras.allFields,
-    });
+    const { formations, total } = await fetchFormations(uai);
+    return respond({ uai, formations, total });
   } catch (err) {
     console.error("[get-lycee-formations] error:", err);
-    return respond({ formations: [], extras: [], error: String(err) });
+    return respond({ formations: [], total: 0, error: String(err) });
   }
 });
