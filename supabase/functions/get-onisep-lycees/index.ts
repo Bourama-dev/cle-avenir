@@ -1,8 +1,7 @@
 import { corsHeaders } from "./cors.ts";
 
-// Ministry of Education — fr-en-annuaire-education (no auth required)
-const MEN_API =
-  "https://data.education.gouv.fr/api/explore/v2.1/catalog/datasets/fr-en-annuaire-education/records";
+// ONISEP — Idéo-Structures d'enseignement secondaire (open data, no auth required)
+const ONISEP_API = "https://api.opendata.onisep.fr/api/1.0/dataset/5fa5816ac6a6e/search";
 
 type LyceeType = "general" | "technologique" | "professionnel" | "polyvalent" | "all";
 
@@ -10,69 +9,53 @@ function str(v: unknown): string {
   return v != null ? String(v).trim() : "";
 }
 
-function detectType(typeEtab: string, nom = ""): Exclude<LyceeType, "all"> {
-  const t = typeEtab.toLowerCase();
-  const n = nom.toLowerCase();
-  if (t.includes("professionnel") || t.includes("agricole")) return "professionnel";
-  if (t.includes("polyvalent")) return "polyvalent";
-  // "Lycée général et technologique" is the most common French type — classify as polyvalent
-  const hasGeneral = t.includes("général") || t.includes("general");
-  if (hasGeneral && t.includes("technologique")) return "polyvalent";
-  if (t.includes("technologique")) return "technologique";
-  if (n.includes("professionnel") || n.includes("agricole")) return "professionnel";
-  if (n.includes("polyvalent")) return "polyvalent";
-  if (n.includes("technologique") || n.includes("technique")) return "technologique";
-  return "general";
-}
+// Exact ONISEP facet values for type_detablissement
+const TYPE_GENERAL = "lycée général, technologique ou polyvalent";
+const TYPE_PROFESSIONNEL = "lycée professionnel";
 
 function normaliseLycee(r: Record<string, unknown>) {
-  const typeEtab = str(r.type_etablissement ?? "");
-  const nom = str(r.nom_etablissement ?? r.appellation_officielle ?? "");
-  const statutRaw = str(r.statut_public_prive ?? "").toLowerCase();
-  const statut = statutRaw.includes("priv") ? ("prive" as const) : ("public" as const);
-  const lat = r.latitude != null ? Number(r.latitude) : null;
-  const lon = r.longitude != null ? Number(r.longitude) : null;
+  const typeRaw = str(r.type_detablissement ?? "").toLowerCase();
+  let type: Exclude<LyceeType, "all">;
+  if (typeRaw.includes("professionnel") || typeRaw.includes("agricole")) type = "professionnel";
+  else if (typeRaw.includes("polyvalent")) type = "polyvalent";
+  else type = "general";
+
+  const statutRaw = str(r.statut ?? "").toLowerCase();
+  const statut = statutRaw === "public" ? ("public" as const) : ("prive" as const);
+
+  const geoloc = r._geoloc as Record<string, number> | null;
+  const lat = geoloc?.lat != null ? Number(geoloc.lat)
+    : r.latitude_y != null ? Number(r.latitude_y) : null;
+  const lon = geoloc?.lon != null ? Number(geoloc.lon)
+    : r.longitude_x != null ? Number(r.longitude_x) : null;
 
   return {
-    id: str(r.identifiant_de_l_etablissement ?? r.numero_uai ?? ""),
-    uai: str(r.identifiant_de_l_etablissement ?? r.numero_uai ?? ""),
-    nom,
-    adresse: str(r.adresse_1 ?? r.adresse ?? ""),
-    ville: str(r.nom_commune ?? r.libelle_commune ?? ""),
-    code_postal: str(r.code_postal ?? ""),
-    departement: str(r.libelle_departement ?? ""),
-    code_departement: str(r.code_departement ?? ""),
-    region: str(r.libelle_region ?? ""),
-    type: detectType(typeEtab, nom),
+    id: str(r.code_uai ?? ""),
+    uai: str(r.code_uai ?? ""),
+    nom: str(r.nom ?? ""),
+    adresse: str(r.adresse ?? ""),
+    ville: str(r.commune ?? ""),
+    code_postal: str(r.cp ?? ""),
+    departement: str(r.departement ?? ""),
+    code_departement: "",
+    region: str(r.region ?? ""),
+    academie: str(r.academie ?? ""),
+    type,
     statut,
     telephone: str(r.telephone ?? ""),
-    email: str(r.mail ?? ""),
-    url: str(r.web ?? ""),
-    nombre_eleves: r.nombre_d_eleves != null ? Number(r.nombre_d_eleves) : null,
-    coordonnees:
-      lat != null && lon != null && !isNaN(lat) && !isNaN(lon)
-        ? { lat, lon }
-        : null,
-    nature: typeEtab,
+    email: "",
+    url: str(r.url_et_id_onisep ?? ""),
+    nombre_eleves: null,
+    coordonnees: lat != null && lon != null && !isNaN(lat) && !isNaN(lon)
+      ? { lat, lon }
+      : null,
+    nature: str(r.type_detablissement ?? ""),
+    langues: str(r.langues_enseignees ?? ""),
+    jpo: str(r.journees_portes_ouvertes ?? ""),
   };
 }
 
-/**
- * Encode a WHERE clause for the OpenDataSoft API.
- * Unlike standard URL encoding, we preserve literal % wildcard characters
- * because the API's ODSQL engine expects them as raw % in the URL,
- * not as %25 (which would be treated as the literal string "%25").
- */
-function encodeWhere(where: string): string {
-  return encodeURIComponent(where).replace(/%25/g, "%");
-}
-
-// Strip characters that could cause ODSQL injection or encoding issues
-function safeStr(s: string): string {
-  return s.replace(/['"%;|]/g, "").trim();
-}
-
-async function queryMEN(params: {
+async function queryONISEP(params: {
   q: string;
   ville: string;
   departement: string;
@@ -83,59 +66,36 @@ async function queryMEN(params: {
 }) {
   const { q, ville, departement, type, statut, limit, offset } = params;
 
-  const conditions: string[] = [];
-
-  // Base + type filter : valeurs exactes, zéro wildcard %
-  // "Lycée général et technologique" couvre la grande majorité des lycées français
-  if (type === "professionnel") {
-    conditions.push(`type_etablissement = 'Lycée professionnel'`);
-  } else if (type === "general" || type === "technologique") {
-    conditions.push(
-      `(type_etablissement = 'Lycée général et technologique' OR type_etablissement = 'Lycée polyvalent')`,
-    );
-  } else {
-    // type === "all"
-    conditions.push(
-      `(type_etablissement = 'Lycée général et technologique' OR type_etablissement = 'Lycée professionnel' OR type_etablissement = 'Lycée polyvalent')`,
-    );
-  }
-
-  // Statut — valeur exacte, aucun wildcard %
-  if (statut === "public") conditions.push(`statut_public_prive = 'Public'`);
-  else if (statut === "prive") conditions.push(`NOT statut_public_prive = 'Public'`);
-
-  // Location filters
-  if (ville) {
-    const safe = safeStr(ville).toUpperCase();
-    if (safe) {
-      conditions.push(
-        `(nom_commune like '%${safe}%' OR libelle_departement like '%${safe}%')`,
-      );
-    }
-  }
-
-  if (departement) {
-    const safe = safeStr(departement).toUpperCase();
-    if (safe) {
-      conditions.push(`libelle_departement like '%${safe}%'`);
-    }
-  }
-
-  const whereClause = conditions.join(" AND ");
-
-  const base = new URLSearchParams({
-    limit: String(limit),
-    offset: String(offset),
-    lang: "fr",
-    timezone: "Europe/Paris",
+  const urlParams = new URLSearchParams({
+    size: String(limit),
+    from: String(offset),
   });
-  if (q) base.set("search", q);
 
-  // Preserve % as literal wildcard in URL (not encoded as %25)
-  const encodedWhere = encodeWhere(whereClause);
-  const url = `${MEN_API}?where=${encodedWhere}&${base}`;
+  // Full-text search — combine user query + ville (ONISEP doesn't have a separate commune facet)
+  const textSearch = [q, ville].filter(Boolean).join(" ");
+  if (textSearch) urlParams.set("q", textSearch);
 
-  console.log(`[get-onisep-lycees] v13 GET ${url}`);
+  // Type filter using exact ONISEP facet values
+  // Multiple values for the same facet are ORed by the API
+  if (type === "professionnel") {
+    urlParams.append("facet.type_detablissement", TYPE_PROFESSIONNEL);
+  } else if (type === "all") {
+    urlParams.append("facet.type_detablissement", TYPE_GENERAL);
+    urlParams.append("facet.type_detablissement", TYPE_PROFESSIONNEL);
+  } else {
+    // general, technologique, polyvalent → all map to the same ONISEP type
+    urlParams.append("facet.type_detablissement", TYPE_GENERAL);
+  }
+
+  // Statut filter
+  if (statut === "public") urlParams.append("facet.statut", "public");
+  else if (statut === "prive") urlParams.append("facet.statut", "privé sous contrat");
+
+  // Département filter (exact facet match)
+  if (departement) urlParams.append("facet.departement", departement);
+
+  const url = `${ONISEP_API}?${urlParams}`;
+  console.log(`[get-onisep-lycees] v14 GET ${url}`);
 
   const res = await fetch(url, {
     headers: { Accept: "application/json" },
@@ -162,14 +122,14 @@ async function queryMEN(params: {
   const records = Array.isArray(data?.results)
     ? (data.results as Record<string, unknown>[])
     : [];
-  const total = Number(data?.total_count ?? records.length);
+  const total = Number(data?.total ?? records.length);
 
   if (records.length > 0) {
     console.log(
-      `[get-onisep-lycees] ${records.length} records / total ${total}. Keys: ${Object.keys(records[0]).join(", ")}`,
+      `[get-onisep-lycees] ${records.length} records / total ${total}. Ex: "${str(records[0].nom)}" type="${str(records[0].type_detablissement)}"`,
     );
   } else {
-    console.warn(`[get-onisep-lycees] 0 records. total_count=${data?.total_count}. URL: ${url}`);
+    console.warn(`[get-onisep-lycees] 0 records. total=${data?.total}. URL: ${url}`);
   }
 
   return { lycees: records.map(normaliseLycee), total };
@@ -196,14 +156,14 @@ Deno.serve(async (req) => {
     const ville = str(body.ville);
     const departement = str(body.departement);
     const rawType = str(body.type ?? body.typeFormation ?? "all").toLowerCase();
-    const type = (["general", "technologique", "professionnel", "all"].includes(rawType)
+    const type = (["general", "technologique", "professionnel", "polyvalent", "all"].includes(rawType)
       ? rawType
       : "all") as LyceeType;
     const statut = str(body.statut ?? "all").toLowerCase();
     const limit = Math.min(Math.max(Number(body.limit) || 20, 1), 50);
     const offset = Math.max(Number(body.offset) || 0, 0);
 
-    const result = await queryMEN({ q, ville, departement, type, statut, limit, offset });
+    const result = await queryONISEP({ q, ville, departement, type, statut, limit, offset });
 
     return respond(result);
   } catch (err) {
