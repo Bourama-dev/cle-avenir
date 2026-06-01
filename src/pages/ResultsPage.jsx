@@ -116,12 +116,12 @@ const ResultsPage = () => {
 
           // 5a. RIASEC matching (primary scoring)
           if (Object.keys(riasecProfile).length > 0) {
-            const { matchScore: riasecScore } = calculateRiasecMatch(riasecProfile, jobRiasecProfile);
-            matchScore = riasecScore;
+            const matchResult = calculateRiasecMatch(riasecProfile, jobRiasecProfile);
+            matchScore = matchResult.matchScore;
             if (idx < 3) {
-              console.log(`[ResultsPage] ${job.libelle} - User: ${JSON.stringify(riasecProfile)}, Job: ${JSON.stringify(jobRiasecProfile)}, Score: ${riasecScore}%`);
+              console.log(`[ResultsPage] ${job.libelle} - Score: ${matchResult.matchScore}%, Similarité: ${matchResult.similarity}%, Confiance: ${matchResult.confidence}%`);
             }
-            if (riasecScore >= 70) {
+            if (matchResult.matchScore >= 70) {
               reason.push("Correspond à votre profil RIASEC");
             }
           } else {
