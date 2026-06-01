@@ -10,6 +10,8 @@ import { Loader2, GraduationCap, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { StatsGrid } from '@/components/cleo/charts/CleoChartLibrary';
 import { normalizedIncludes } from '@/utils/stringUtils';
+import { calculateRiasecMatch } from '@/utils/riasecMatchingAlgorithm';
+import { METIER_ENRICHED_DATA } from '@/data/romeMapping';
 
 const ResultsPage = () => {
   const navigate = useNavigate();
@@ -24,71 +26,93 @@ const ResultsPage = () => {
         // 1. Check Auth manually to ensure robust redirect
         const isAuth = await AuthService.isAuthenticated();
         if (!isAuth) {
-          navigate('/login');
+          navigate('/login', { state: { from: '/results' } });
           return;
         }
 
         const session = await AuthService.getSession();
-        
+
         // 2. Fetch Profile Data
         const { data: profileData } = await supabase
           .from('profiles')
           .select('*')
           .eq('id', session.user.id)
           .single();
-          
+
         if (!profileData) {
-          // Fallback if profile doesn't exist for some reason
           navigate('/profile');
           return;
         }
         setProfile(profileData);
 
-        // 3. Fetch Jobs (Simulated from rome_metiers)
+        // 3. Get RIASEC profile from localStorage (saved by TestPage)
+        const riasecProfile = JSON.parse(localStorage.getItem('test_riasec_profile') || '{}');
+
+        // 4. Fetch Jobs from rome_metiers
         const { data: jobsData } = await supabase
           .from('rome_metiers')
           .select('code, libelle, description, niveau_etudes, salaire')
-          .limit(30); 
-          
-        // 4. Process & Score Jobs based on user profile preferences
+          .limit(100);
+
+        // 5. Score jobs based on RIASEC matching + education + interests
         const processedJobs = (jobsData || []).map(job => {
-          let baseScore = 60 + Math.floor(Math.random() * 20); // Random base for demonstration
-          
-          // Education level constraint matching
-          const reqLevel = job.niveau_etudes || '';
-          if (profileData.wants_long_studies === 'Oui' && reqLevel.includes('Bac+5')) {
-            baseScore += 15;
-          } else if (profileData.wants_long_studies === 'Non' && reqLevel.includes('Bac+5')) {
-            baseScore -= 20;
+          let matchScore = 0;
+          let reason = [];
+
+          // Get enriched RIASEC data for the job (or use default)
+          const enrichedData = METIER_ENRICHED_DATA[job.code] || METIER_ENRICHED_DATA.DEFAULT;
+          const jobRiasecProfile = enrichedData.riasec || {};
+
+          // 5a. RIASEC matching (primary scoring)
+          if (Object.keys(riasecProfile).length > 0) {
+            const { matchScore: riasecScore } = calculateRiasecMatch(riasecProfile, jobRiasecProfile);
+            matchScore = riasecScore;
+            if (riasecScore >= 70) {
+              reason.push("Correspond à votre profil RIASEC");
+            }
+          } else {
+            // Fallback if no RIASEC profile
+            matchScore = 50;
           }
 
-          // Domain matching (basic keyword check)
-          if (profileData.interests && profileData.interests.length > 0) {
+          // 5b. Education level constraint
+          const reqLevel = job.niveau_etudes || '';
+          if (profileData.wants_long_studies === 'Oui' && reqLevel.includes('Bac+5')) {
+            matchScore += 10;
+            reason.push("Correspond à votre préférence d'études longues");
+          } else if (profileData.wants_long_studies === 'Non' && reqLevel.includes('Bac+5')) {
+            matchScore -= 15;
+            reason.push("Nécessite des études longues non souhaitées");
+          }
+
+          // 5c. Interest matching
+          if (profileData.interests && Array.isArray(profileData.interests) && profileData.interests.length > 0) {
             const hasMatch = profileData.interests.some(interest =>
               normalizedIncludes(job.description, interest) ||
-              normalizedIncludes(job.libelle, interest)
+              normalizedIncludes(job.libelle, interest) ||
+              normalizedIncludes(enrichedData.matchKeywords?.join(' ') || '', interest)
             );
-            if (hasMatch) baseScore += 15;
+            if (hasMatch) {
+              matchScore += 10;
+              if (!reason.includes("Correspond à vos domaines d'intérêt")) {
+                reason.push("Correspond à vos domaines d'intérêt");
+              }
+            }
           }
-          
-          const finalScore = Math.min(98, Math.max(15, baseScore));
-          
-          let reason = null;
-          if (finalScore < 60) {
-            reason = profileData.wants_long_studies === 'Non' && reqLevel.includes('Bac+5') 
-              ? "Nécessite des études longues non souhaitées." 
-              : "Ne correspond pas directement à vos domaines d'intérêt principaux.";
-          }
-          
+
+          // Clamp final score
+          matchScore = Math.min(98, Math.max(15, matchScore));
+
           return {
             ...job,
-            matchScore: finalScore,
-            reason
+            ...enrichedData,
+            matchScore,
+            reason: reason.length > 0 ? reason[0] : "Profil compatible"
           };
         }).sort((a, b) => b.matchScore - a.matchScore);
 
-        setRecommendedJobs(processedJobs.filter(j => j.matchScore >= 75).slice(0, 6));
-        setOtherJobs(processedJobs.filter(j => j.matchScore < 75).slice(0, 3));
+        setRecommendedJobs(processedJobs.filter(j => j.matchScore >= 70).slice(0, 6));
+        setOtherJobs(processedJobs.filter(j => j.matchScore < 70 && j.matchScore >= 40).slice(0, 3));
 
       } catch (err) {
         console.error("Error fetching results", err);
