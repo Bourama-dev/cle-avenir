@@ -51,12 +51,7 @@ export function calculateRiasecMatch(rawUserVec, rawMetierVec) {
   
   // Ensure we clamp between 0 and 100
   matchScore = Math.min(100, Math.max(0, Math.round(matchScore)));
-  
-  // Ensure good matches are in a realistic high range if similarity is decent
-  if (matchScore > 50 && intersection.length > 0) {
-    matchScore = Math.max(matchScore, 70); // Bump floor for matching profiles
-  }
-  
+
   return {
     matchScore,
     userProfile,
