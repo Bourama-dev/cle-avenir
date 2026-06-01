@@ -245,7 +245,7 @@ const ResultsPage = () => {
               subtitle: 'métiers à fort potentiel'
             },
             {
-              label: 'Match moyen',
+              label: 'Compatibilité moyenne',
               value: `${Math.round(recommendedJobs.reduce((sum, j) => sum + j.matchScore, 0) / (recommendedJobs.length || 1))}%`,
               trend: 'up',
               subtitle: 'avec votre profil'
@@ -283,7 +283,7 @@ const ResultsPage = () => {
                   <CardHeader className="pb-4">
                     <div className="flex justify-between items-start mb-2">
                       <Badge className="bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border-none px-3 py-1">
-                        Match {job.matchScore}%
+                        Compatibilité {job.matchScore}%
                       </Badge>
                       <GraduationCap className="text-slate-400 w-5 h-5" />
                     </div>
@@ -329,7 +329,7 @@ const ResultsPage = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="text-xs text-red-600 font-medium mb-3">⚠️ {job.reason}</p>
-                    <Badge variant="outline" className="text-slate-500 border-slate-300 bg-white">Match {job.matchScore}%</Badge>
+                    <Badge variant="outline" className="text-slate-500 border-slate-300 bg-white">Compatibilité {job.matchScore}%</Badge>
                   </CardContent>
                 </Card>
               ))}
