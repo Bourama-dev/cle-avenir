@@ -103,7 +103,7 @@ const ResultsPage = () => {
         console.log('[ResultsPage] Using', jobsData?.length ? 'real' : 'mock', 'jobs:', finalJobsData.length, 'jobs');
 
         // 5. Score jobs based on RIASEC matching + education + interests
-        const processedJobs = finalJobsData.map(job => {
+        const processedJobs = finalJobsData.map((job, idx) => {
           let matchScore = 0;
           let reason = [];
 
@@ -118,6 +118,9 @@ const ResultsPage = () => {
           if (Object.keys(riasecProfile).length > 0) {
             const { matchScore: riasecScore } = calculateRiasecMatch(riasecProfile, jobRiasecProfile);
             matchScore = riasecScore;
+            if (idx < 3) {
+              console.log(`[ResultsPage] ${job.libelle} - User: ${JSON.stringify(riasecProfile)}, Job: ${JSON.stringify(jobRiasecProfile)}, Score: ${riasecScore}%`);
+            }
             if (riasecScore >= 70) {
               reason.push("Correspond à votre profil RIASEC");
             }
@@ -151,8 +154,15 @@ const ResultsPage = () => {
             }
           }
 
+          // Log before clamping to debug
+          const scoreBeforeClamping = matchScore;
+
           // Clamp final score
           matchScore = Math.min(98, Math.max(15, matchScore));
+
+          if (idx < 5) {
+            console.log(`[ResultsPage] ${job.libelle} - Before clamp: ${scoreBeforeClamping.toFixed(2)}%, After clamp: ${matchScore}%`);
+          }
 
           return {
             ...job,
