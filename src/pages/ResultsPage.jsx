@@ -84,12 +84,18 @@ const ResultsPage = () => {
 
         // 3. Get RIASEC profile from localStorage (saved by TestPage)
         const riasecProfile = JSON.parse(localStorage.getItem('test_riasec_profile') || '{}');
+        console.log('[ResultsPage] RIASEC Profile from localStorage:', riasecProfile);
 
         // 4. Fetch Jobs from rome_metiers
-        const { data: jobsData } = await supabase
+        const { data: jobsData, error: jobsError } = await supabase
           .from('rome_metiers')
           .select('code, libelle, description, niveau_etudes, salaire')
           .limit(100);
+
+        if (jobsError) {
+          console.error('[ResultsPage] Error fetching jobs:', jobsError);
+        }
+        console.log('[ResultsPage] Jobs fetched:', jobsData?.length || 0, 'jobs');
 
         // 5. Score jobs based on RIASEC matching + education + interests
         const processedJobs = (jobsData || []).map(job => {
@@ -162,8 +168,21 @@ const ResultsPage = () => {
           };
         }).sort((a, b) => b.matchScore - a.matchScore);
 
-        setRecommendedJobs(processedJobs.filter(j => j.matchScore >= 70).slice(0, 6));
-        setOtherJobs(processedJobs.filter(j => j.matchScore < 70 && j.matchScore >= 40).slice(0, 3));
+        console.log('[ResultsPage] Processed jobs:', processedJobs.length, 'jobs');
+        console.log('[ResultsPage] Top 5 jobs by score:', processedJobs.slice(0, 5).map(j => ({ libelle: j.libelle, score: j.matchScore })));
+
+        // Always show top jobs, even if scores are lower than ideal
+        const recommended = processedJobs.filter(j => j.matchScore >= 70).slice(0, 6);
+        const others = processedJobs.filter(j => j.matchScore < 70 && j.matchScore >= 50).slice(0, 3);
+
+        // If no recommended jobs found, show top jobs regardless of threshold
+        if (recommended.length === 0 && processedJobs.length > 0) {
+          setRecommendedJobs(processedJobs.slice(0, 6));
+          setOtherJobs(processedJobs.slice(6, 9));
+        } else {
+          setRecommendedJobs(recommended);
+          setOtherJobs(others.length > 0 ? others : processedJobs.filter(j => j.matchScore < 70 && j.matchScore >= 40).slice(0, 3));
+        }
 
       } catch (err) {
         console.error("Error fetching results", err);
