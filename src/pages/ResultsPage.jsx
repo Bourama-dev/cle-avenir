@@ -13,6 +13,43 @@ import { normalizedIncludes } from '@/utils/stringUtils';
 import { calculateRiasecMatch } from '@/utils/riasecMatchingAlgorithm';
 import { METIER_ENRICHED_DATA } from '@/data/romeMapping';
 
+// Generate a basic RIASEC profile based on job keywords
+const generateBasicRiasecProfile = (jobLibelle, jobDescription) => {
+  const text = `${jobLibelle} ${jobDescription}`.toLowerCase();
+
+  // Keyword mappings for RIASEC dimensions
+  const keywords = {
+    R: ['manuel', 'main', 'mécanicien', 'construction', 'ouvrier', 'technique', 'réparation', 'électricien', 'plomberie'],
+    I: ['recherche', 'analyse', 'scientifique', 'informatique', 'développeur', 'programmation', 'data', 'ingénieur', 'technique'],
+    A: ['design', 'créatif', 'art', 'dessin', 'graphique', 'musique', 'création', 'artiste', 'animation', 'web'],
+    S: ['social', 'aide', 'soin', 'santé', 'infirmier', 'coach', 'accompagnement', 'éducation', 'travail social', 'communication', 'relation'],
+    E: ['vente', 'commercial', 'entrepreneuriat', 'direction', 'manager', 'leadership', 'négociation', 'business'],
+    C: ['organisation', 'administratif', 'comptabilité', 'gestion', 'réglementation', 'contrôle', 'respect', 'ordre']
+  };
+
+  const profile = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
+  let totalMatches = 0;
+
+  Object.entries(keywords).forEach(([dimension, words]) => {
+    const matches = words.filter(word => text.includes(word)).length;
+    profile[dimension] = matches;
+    totalMatches += matches;
+  });
+
+  // Normalize to sum to a reasonable total (around 350 so normalized to 100)
+  if (totalMatches === 0) {
+    // Default if no keywords match
+    return { R: 50, I: 50, A: 50, S: 50, E: 50, C: 50 };
+  }
+
+  const factor = 350 / totalMatches;
+  Object.keys(profile).forEach(key => {
+    profile[key] = Math.round(profile[key] * factor);
+  });
+
+  return profile;
+};
+
 const ResultsPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -59,9 +96,10 @@ const ResultsPage = () => {
           let matchScore = 0;
           let reason = [];
 
-          // Get enriched RIASEC data for the job (or use default)
-          const enrichedData = METIER_ENRICHED_DATA[job.code] || METIER_ENRICHED_DATA.DEFAULT;
-          const jobRiasecProfile = enrichedData.riasec || {};
+          // Get enriched RIASEC data for the job (or generate one from keywords)
+          const enrichedData = METIER_ENRICHED_DATA[job.code];
+          const jobRiasecProfile = enrichedData?.riasec ||
+            generateBasicRiasecProfile(job.libelle, job.description || '');
 
           // 5a. RIASEC matching (primary scoring)
           if (Object.keys(riasecProfile).length > 0) {
@@ -105,7 +143,20 @@ const ResultsPage = () => {
 
           return {
             ...job,
-            ...enrichedData,
+            // Keep original job name, only use enriched data for missing fields
+            libelle: job.libelle, // Keep the original job libelle from DB
+            description: job.description || enrichedData?.description,
+            salary: job.salaire || enrichedData?.salary,
+            salaryMin: enrichedData?.salaryMin,
+            salaryMax: enrichedData?.salaryMax,
+            demand: enrichedData?.demand,
+            difficulty: enrichedData?.difficulty,
+            progression: enrichedData?.progression,
+            access: enrichedData?.access,
+            tags: enrichedData?.tags || [],
+            domain: enrichedData?.domain || 'Secteur',
+            matchKeywords: enrichedData?.matchKeywords || [],
+            riasec: jobRiasecProfile,
             matchScore,
             reason: reason.length > 0 ? reason[0] : "Profil compatible"
           };
