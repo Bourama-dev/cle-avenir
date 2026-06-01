@@ -90,8 +90,9 @@ const ResultsPage = () => {
         // 4. Fetch Jobs from rome_metiers
         const { data: jobsData, error: jobsError } = await supabase
           .from('rome_metiers')
-          .select('code, libelle, description, niveau_etudes, salaire')
-          .limit(100);
+          .select('code, libelle, description, niveau_etudes, salaire, riasec_profile, adjusted_weights, domain, debouches, salary_range, job_market_demand')
+          .eq('is_active', true)
+          .limit(150);
 
         if (jobsError) {
           console.error('[ResultsPage] Error fetching jobs:', jobsError);
@@ -108,8 +109,9 @@ const ResultsPage = () => {
 
           // Get enriched RIASEC data for the job (or generate one from keywords)
           const enrichedData = METIER_ENRICHED_DATA[job.code];
-          // Use adjusted_weights from mock data, or enriched RIASEC, or generate from keywords
-          const jobRiasecProfile = job.adjusted_weights || enrichedData?.riasec ||
+          // Priority: DB adjusted_weights → DB riasec_profile → static enrichedData → keyword generation
+          const jobRiasecProfile = job.adjusted_weights || job.riasec_profile ||
+            enrichedData?.riasec ||
             generateBasicRiasecProfile(job.libelle, job.description || job.definition || '');
 
           // 5a. RIASEC matching (primary scoring)
@@ -139,7 +141,7 @@ const ResultsPage = () => {
             const hasMatch = profileData.interests.some(interest =>
               normalizedIncludes(job.description, interest) ||
               normalizedIncludes(job.libelle, interest) ||
-              normalizedIncludes(enrichedData.matchKeywords?.join(' ') || '', interest)
+              normalizedIncludes(enrichedData?.matchKeywords?.join(' ') || '', interest)
             );
             if (hasMatch) {
               matchScore += 10;
