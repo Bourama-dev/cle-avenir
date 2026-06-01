@@ -183,16 +183,17 @@ const HomePage = ({ onNavigate }) => {
     offset: ['start start', 'end start'],
   });
 
-  // Check if user is admin (check email against admin list)
+  // Check if user is admin (check role from profile)
   useEffect(() => {
     const checkAdmin = async () => {
-      const ADMIN_EMAILS = ['bouramad900@gmail.com', 'admin@cleavenir.com'];
       try {
         const isAuth = await AuthService.isAuthenticated();
         if (isAuth) {
           const session = await AuthService.getSession();
-          const userEmail = session?.user?.email || '';
-          setIsAdmin(ADMIN_EMAILS.includes(userEmail));
+          if (session?.user?.id) {
+            const { data: profile } = await AuthService.getProfile(session.user.id);
+            setIsAdmin(profile?.role === 'admin');
+          }
         }
       } catch (err) {
         console.log('Not authenticated or error checking admin status');
