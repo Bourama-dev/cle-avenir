@@ -157,8 +157,8 @@ const ResultsPage = () => {
           // Log before clamping to debug
           const scoreBeforeClamping = matchScore;
 
-          // Clamp final score
-          matchScore = Math.min(98, Math.max(15, matchScore));
+          // Clamp final score and round to integer
+          matchScore = Math.round(Math.min(98, Math.max(15, matchScore)));
 
           if (idx < 5) {
             console.log(`[ResultsPage] ${job.libelle} - Before clamp: ${scoreBeforeClamping.toFixed(2)}%, After clamp: ${matchScore}%`);
