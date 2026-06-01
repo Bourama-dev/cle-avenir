@@ -112,9 +112,9 @@ export function calculateRiasecMatch(rawUserVec, rawMetierVec) {
 
   // Premium Method 1: Cosine similarity as base (0-1 scale)
   const similarity = cosineSimilarity(userProfile, romeProfile);
-  let matchScore = similarity * 110; // Boost base score for higher starting point
+  let matchScore = similarity * 100; // Base from similarity
 
-  // Premium Method 2: Euclidean distance penalty for refinement
+  // Premium Method 2: Euclidean distance penalty for maximum differentiation
   let euclideanDist = 0;
   const dimensions = ['R', 'I', 'A', 'S', 'E', 'C'];
   dimensions.forEach(dim => {
@@ -122,13 +122,13 @@ export function calculateRiasecMatch(rawUserVec, rawMetierVec) {
   });
   euclideanDist = Math.sqrt(euclideanDist);
 
-  // Enhanced penalty for better differentiation (increased from 35 to 50)
-  const euclideanPenalty = (euclideanDist / 245) * 50;
+  // Premium differentiation: scale penalty to use full available range (0-245 range maps to 0-100)
+  const euclideanPenalty = (euclideanDist / 245) * 100;
   matchScore -= euclideanPenalty;
 
-  // Premium Method 3: Incompatibility analysis (increased penalty)
+  // Premium Method 3: Incompatibility analysis with strong weight
   const incompatibilityPenalty = analyzeIncompatibility(userProfile, romeProfile);
-  matchScore -= (incompatibilityPenalty * 1.2); // Amplify incompatibility impact
+  matchScore -= (incompatibilityPenalty * 2.0);
 
   // Premium Method 4: Advanced weighted bonuses
   const advancedBonus = calculateAdvancedBonus(userProfile, romeProfile, similarity);
