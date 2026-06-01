@@ -12,6 +12,7 @@ import { StatsGrid } from '@/components/cleo/charts/CleoChartLibrary';
 import { normalizedIncludes } from '@/utils/stringUtils';
 import { calculateRiasecMatch } from '@/utils/riasecMatchingAlgorithm';
 import { METIER_ENRICHED_DATA } from '@/data/romeMapping';
+import { mockMetiers } from '@/data/mockMetiers';
 
 // Generate a basic RIASEC profile based on job keywords
 const generateBasicRiasecProfile = (jobLibelle, jobDescription) => {
@@ -95,17 +96,21 @@ const ResultsPage = () => {
         if (jobsError) {
           console.error('[ResultsPage] Error fetching jobs:', jobsError);
         }
-        console.log('[ResultsPage] Jobs fetched:', jobsData?.length || 0, 'jobs');
+
+        // Use mock data as fallback if no jobs fetched
+        const finalJobsData = jobsData && jobsData.length > 0 ? jobsData : mockMetiers;
+        console.log('[ResultsPage] Using', jobsData?.length ? 'real' : 'mock', 'jobs:', finalJobsData.length, 'jobs');
 
         // 5. Score jobs based on RIASEC matching + education + interests
-        const processedJobs = (jobsData || []).map(job => {
+        const processedJobs = finalJobsData.map(job => {
           let matchScore = 0;
           let reason = [];
 
           // Get enriched RIASEC data for the job (or generate one from keywords)
           const enrichedData = METIER_ENRICHED_DATA[job.code];
-          const jobRiasecProfile = enrichedData?.riasec ||
-            generateBasicRiasecProfile(job.libelle, job.description || '');
+          // Use adjusted_weights from mock data, or enriched RIASEC, or generate from keywords
+          const jobRiasecProfile = job.adjusted_weights || enrichedData?.riasec ||
+            generateBasicRiasecProfile(job.libelle, job.description || job.definition || '');
 
           // 5a. RIASEC matching (primary scoring)
           if (Object.keys(riasecProfile).length > 0) {
@@ -151,12 +156,12 @@ const ResultsPage = () => {
             ...job,
             // Keep original job name, only use enriched data for missing fields
             libelle: job.libelle, // Keep the original job libelle from DB
-            description: job.description || enrichedData?.description,
+            description: job.description || job.definition || enrichedData?.description,
             salary: job.salaire || enrichedData?.salary,
             salaryMin: enrichedData?.salaryMin,
             salaryMax: enrichedData?.salaryMax,
-            demand: enrichedData?.demand,
-            difficulty: enrichedData?.difficulty,
+            demand: job.debouches || enrichedData?.demand,
+            difficulty: job.niveau_etudes || enrichedData?.difficulty,
             progression: enrichedData?.progression,
             access: enrichedData?.access,
             tags: enrichedData?.tags || [],
