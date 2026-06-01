@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight, CheckCircle2, Sparkles, Target, Zap, Search,
-  GraduationCap, Users, BookOpen, Clock, ChevronRight, Briefcase,
+  GraduationCap, Users, BookOpen, Clock, ChevronRight, Briefcase, Wand2,
 } from 'lucide-react';
 import { motion, useScroll, useTransform, useReducedMotion, useInView } from 'framer-motion';
 import PageHelmet from '@/components/SEO/PageHelmet';
@@ -11,6 +11,7 @@ import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 import TiltCard from '@/components/ui/TiltCard';
 import TextReveal from '@/components/ui/TextReveal';
 import MagneticButton from '@/components/ui/MagneticButton';
+import { AuthService } from '@/services/authService';
 
 const NewsPreview = lazy(() => import('@/components/NewsPreview'));
 
@@ -158,15 +159,68 @@ function CountUp({ value, suffix = '', duration = 1.8 }) {
   return <span ref={ref}>{display.toLocaleString('fr-FR')}{suffix}</span>;
 }
 
+// ── Utility functions ────────────────────────────────────────────────────────
+function generateRandomRiasecProfile() {
+  const profile = {};
+  const dimensions = ['R', 'I', 'A', 'S', 'E', 'C'];
+
+  dimensions.forEach(dim => {
+    profile[dim] = Math.floor(Math.random() * 100) + 20; // Random between 20-120
+  });
+
+  return profile;
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 const HomePage = ({ onNavigate }) => {
   const heroRef = useRef(null);
   const reduce = useReducedMotion();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isSimulating, setIsSimulating] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
+
+  // Check if user is admin (check role from profile)
+  useEffect(() => {
+    const checkAdmin = async () => {
+      try {
+        const isAuth = await AuthService.isAuthenticated();
+        if (isAuth) {
+          const session = await AuthService.getSession();
+          if (session?.user?.id) {
+            const { data: profile } = await AuthService.getProfile(session.user.id);
+            setIsAdmin(profile?.role === 'admin');
+          }
+        }
+      } catch (err) {
+        console.log('Not authenticated or error checking admin status');
+      }
+    };
+
+    checkAdmin();
+  }, []);
+
+  // Simulate RIASEC test answers
+  const handleSimulateTest = async () => {
+    setIsSimulating(true);
+    try {
+      // Generate random RIASEC profile
+      const profile = generateRandomRiasecProfile();
+
+      // Save to localStorage (same location as TestPage)
+      localStorage.setItem('test_riasec_profile', JSON.stringify(profile));
+
+      // Navigate to results page
+      onNavigate('/results');
+    } catch (err) {
+      console.error('Error simulating test:', err);
+    } finally {
+      setIsSimulating(false);
+    }
+  };
 
   // 5-layer parallax — each layer moves at a different speed
   const heroBlobY      = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -22]);
@@ -299,6 +353,26 @@ const HomePage = ({ onNavigate }) => {
                 </span>
               ))}
             </motion.div>
+
+            {/* Admin button (hidden unless authenticated as admin) */}
+            {isAdmin && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 1.3 }}
+                className="pt-4"
+              >
+                <Button
+                  onClick={handleSimulateTest}
+                  disabled={isSimulating}
+                  size="sm"
+                  className="bg-slate-800 hover:bg-slate-700 text-white gap-2 text-xs font-semibold"
+                >
+                  <Wand2 className="w-4 h-4" />
+                  {isSimulating ? 'Simulation...' : 'Admin: Simuler test'}
+                </Button>
+              </motion.div>
+            )}
           </motion.div>
 
           {/* Right — image + floating cards */}

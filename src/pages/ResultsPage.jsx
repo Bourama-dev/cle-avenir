@@ -12,6 +12,44 @@ import { StatsGrid } from '@/components/cleo/charts/CleoChartLibrary';
 import { normalizedIncludes } from '@/utils/stringUtils';
 import { calculateRiasecMatch } from '@/utils/riasecMatchingAlgorithm';
 import { METIER_ENRICHED_DATA } from '@/data/romeMapping';
+import { mockMetiers } from '@/data/mockMetiers';
+
+// Generate a basic RIASEC profile based on job keywords
+const generateBasicRiasecProfile = (jobLibelle, jobDescription) => {
+  const text = `${jobLibelle} ${jobDescription}`.toLowerCase();
+
+  // Keyword mappings for RIASEC dimensions
+  const keywords = {
+    R: ['manuel', 'main', 'mécanicien', 'construction', 'ouvrier', 'technique', 'réparation', 'électricien', 'plomberie'],
+    I: ['recherche', 'analyse', 'scientifique', 'informatique', 'développeur', 'programmation', 'data', 'ingénieur', 'technique'],
+    A: ['design', 'créatif', 'art', 'dessin', 'graphique', 'musique', 'création', 'artiste', 'animation', 'web'],
+    S: ['social', 'aide', 'soin', 'santé', 'infirmier', 'coach', 'accompagnement', 'éducation', 'travail social', 'communication', 'relation'],
+    E: ['vente', 'commercial', 'entrepreneuriat', 'direction', 'manager', 'leadership', 'négociation', 'business'],
+    C: ['organisation', 'administratif', 'comptabilité', 'gestion', 'réglementation', 'contrôle', 'respect', 'ordre']
+  };
+
+  const profile = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
+  let totalMatches = 0;
+
+  Object.entries(keywords).forEach(([dimension, words]) => {
+    const matches = words.filter(word => text.includes(word)).length;
+    profile[dimension] = matches;
+    totalMatches += matches;
+  });
+
+  // Normalize to sum to a reasonable total (around 350 so normalized to 100)
+  if (totalMatches === 0) {
+    // Default if no keywords match
+    return { R: 50, I: 50, A: 50, S: 50, E: 50, C: 50 };
+  }
+
+  const factor = 350 / totalMatches;
+  Object.keys(profile).forEach(key => {
+    profile[key] = Math.round(profile[key] * factor);
+  });
+
+  return profile;
+};
 
 const ResultsPage = () => {
   const navigate = useNavigate();
@@ -47,27 +85,43 @@ const ResultsPage = () => {
 
         // 3. Get RIASEC profile from localStorage (saved by TestPage)
         const riasecProfile = JSON.parse(localStorage.getItem('test_riasec_profile') || '{}');
+        console.log('[ResultsPage] RIASEC Profile from localStorage:', riasecProfile);
 
         // 4. Fetch Jobs from rome_metiers
-        const { data: jobsData } = await supabase
+        const { data: jobsData, error: jobsError } = await supabase
           .from('rome_metiers')
-          .select('code, libelle, description, niveau_etudes, salaire')
-          .limit(100);
+          .select('code, libelle, description, niveau_etudes, salaire, riasec_profile, adjusted_weights, domain, debouches, salary_range, job_market_demand')
+          .eq('is_active', true)
+          .limit(150);
+
+        if (jobsError) {
+          console.error('[ResultsPage] Error fetching jobs:', jobsError);
+        }
+
+        // Use mock data as fallback if no jobs fetched
+        const finalJobsData = jobsData && jobsData.length > 0 ? jobsData : mockMetiers;
+        console.log('[ResultsPage] Using', jobsData?.length ? 'real' : 'mock', 'jobs:', finalJobsData.length, 'jobs');
 
         // 5. Score jobs based on RIASEC matching + education + interests
-        const processedJobs = (jobsData || []).map(job => {
+        const processedJobs = finalJobsData.map((job, idx) => {
           let matchScore = 0;
           let reason = [];
 
-          // Get enriched RIASEC data for the job (or use default)
-          const enrichedData = METIER_ENRICHED_DATA[job.code] || METIER_ENRICHED_DATA.DEFAULT;
-          const jobRiasecProfile = enrichedData.riasec || {};
+          // Get enriched RIASEC data for the job (or generate one from keywords)
+          const enrichedData = METIER_ENRICHED_DATA[job.code];
+          // Priority: DB adjusted_weights → DB riasec_profile → static enrichedData → keyword generation
+          const jobRiasecProfile = job.adjusted_weights || job.riasec_profile ||
+            enrichedData?.riasec ||
+            generateBasicRiasecProfile(job.libelle, job.description || job.definition || '');
 
           // 5a. RIASEC matching (primary scoring)
           if (Object.keys(riasecProfile).length > 0) {
-            const { matchScore: riasecScore } = calculateRiasecMatch(riasecProfile, jobRiasecProfile);
-            matchScore = riasecScore;
-            if (riasecScore >= 70) {
+            const matchResult = calculateRiasecMatch(riasecProfile, jobRiasecProfile);
+            matchScore = matchResult.matchScore;
+            if (idx < 3) {
+              console.log(`[ResultsPage] ${job.libelle} - Score: ${matchResult.matchScore}%, Similarité: ${matchResult.similarity}%, Confiance: ${matchResult.confidence}%`);
+            }
+            if (matchResult.matchScore >= 70) {
               reason.push("Correspond à votre profil RIASEC");
             }
           } else {
@@ -90,7 +144,7 @@ const ResultsPage = () => {
             const hasMatch = profileData.interests.some(interest =>
               normalizedIncludes(job.description, interest) ||
               normalizedIncludes(job.libelle, interest) ||
-              normalizedIncludes(enrichedData.matchKeywords?.join(' ') || '', interest)
+              normalizedIncludes(enrichedData?.matchKeywords?.join(' ') || '', interest)
             );
             if (hasMatch) {
               matchScore += 10;
@@ -100,19 +154,52 @@ const ResultsPage = () => {
             }
           }
 
-          // Clamp final score
-          matchScore = Math.min(98, Math.max(15, matchScore));
+          // Log before clamping to debug
+          const scoreBeforeClamping = matchScore;
+
+          // Clamp final score and round to integer
+          matchScore = Math.round(Math.min(98, Math.max(15, matchScore)));
+
+          if (idx < 5) {
+            console.log(`[ResultsPage] ${job.libelle} - Before clamp: ${scoreBeforeClamping.toFixed(2)}%, After clamp: ${matchScore}%`);
+          }
 
           return {
             ...job,
-            ...enrichedData,
+            // Keep original job name, only use enriched data for missing fields
+            libelle: job.libelle, // Keep the original job libelle from DB
+            description: job.description || job.definition || enrichedData?.description,
+            salary: job.salaire || enrichedData?.salary,
+            salaryMin: enrichedData?.salaryMin,
+            salaryMax: enrichedData?.salaryMax,
+            demand: job.debouches || enrichedData?.demand,
+            difficulty: job.niveau_etudes || enrichedData?.difficulty,
+            progression: enrichedData?.progression,
+            access: enrichedData?.access,
+            tags: enrichedData?.tags || [],
+            domain: enrichedData?.domain || 'Secteur',
+            matchKeywords: enrichedData?.matchKeywords || [],
+            riasec: jobRiasecProfile,
             matchScore,
             reason: reason.length > 0 ? reason[0] : "Profil compatible"
           };
         }).sort((a, b) => b.matchScore - a.matchScore);
 
-        setRecommendedJobs(processedJobs.filter(j => j.matchScore >= 70).slice(0, 6));
-        setOtherJobs(processedJobs.filter(j => j.matchScore < 70 && j.matchScore >= 40).slice(0, 3));
+        console.log('[ResultsPage] Processed jobs:', processedJobs.length, 'jobs');
+        console.log('[ResultsPage] Top 5 jobs by score:', processedJobs.slice(0, 5).map(j => ({ libelle: j.libelle, score: j.matchScore })));
+
+        // Always show top jobs, even if scores are lower than ideal
+        const recommended = processedJobs.filter(j => j.matchScore >= 70).slice(0, 6);
+        const others = processedJobs.filter(j => j.matchScore < 70 && j.matchScore >= 50).slice(0, 3);
+
+        // If no recommended jobs found, show top jobs regardless of threshold
+        if (recommended.length === 0 && processedJobs.length > 0) {
+          setRecommendedJobs(processedJobs.slice(0, 6));
+          setOtherJobs(processedJobs.slice(6, 9));
+        } else {
+          setRecommendedJobs(recommended);
+          setOtherJobs(others.length > 0 ? others : processedJobs.filter(j => j.matchScore < 70 && j.matchScore >= 40).slice(0, 3));
+        }
 
       } catch (err) {
         console.error("Error fetching results", err);
@@ -170,7 +257,7 @@ const ResultsPage = () => {
               subtitle: 'métiers à fort potentiel'
             },
             {
-              label: 'Match moyen',
+              label: 'Compatibilité moyenne',
               value: `${Math.round(recommendedJobs.reduce((sum, j) => sum + j.matchScore, 0) / (recommendedJobs.length || 1))}%`,
               trend: 'up',
               subtitle: 'avec votre profil'
@@ -208,7 +295,7 @@ const ResultsPage = () => {
                   <CardHeader className="pb-4">
                     <div className="flex justify-between items-start mb-2">
                       <Badge className="bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border-none px-3 py-1">
-                        Match {job.matchScore}%
+                        Compatibilité {job.matchScore}%
                       </Badge>
                       <GraduationCap className="text-slate-400 w-5 h-5" />
                     </div>
@@ -254,7 +341,7 @@ const ResultsPage = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="text-xs text-red-600 font-medium mb-3">⚠️ {job.reason}</p>
-                    <Badge variant="outline" className="text-slate-500 border-slate-300 bg-white">Match {job.matchScore}%</Badge>
+                    <Badge variant="outline" className="text-slate-500 border-slate-300 bg-white">Compatibilité {job.matchScore}%</Badge>
                   </CardContent>
                 </Card>
               ))}

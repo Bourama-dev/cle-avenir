@@ -17,7 +17,7 @@ const steps = [
   },
   {
     id: "03",
-    title: "Matching Métiers",
+    title: "Correspondance Métiers",
     description: "Accédez à votre Top 5 des métiers compatibles parmi plus de 200 références croisées avec le marché.",
     icon: Lightbulb
   },

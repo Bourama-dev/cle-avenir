@@ -20,19 +20,19 @@ const ProfessionsVerification = () => {
       
       if (result.success) {
         toast({
-          title: "✅ Verification Complete",
-          description: `Found ${result.count} professions in database`
+          title: "✅ Vérification terminée",
+          description: `${result.count} professions trouvées dans la base de données`
         });
       } else {
         toast({
-          title: "❌ Verification Failed",
-          description: result.error?.message || 'Unknown error',
+          title: "❌ Vérification échouée",
+          description: result.error?.message || 'Erreur inconnue',
           variant: 'destructive'
         });
       }
     } catch (error) {
       toast({
-        title: "Error",
+        title: "Erreur",
         description: error.message,
         variant: 'destructive'
       });
@@ -49,19 +49,19 @@ const ProfessionsVerification = () => {
       
       if (result.success) {
         toast({
-          title: "✅ Matching Test Complete",
-          description: `Tested ${result.profilesTested} user profiles`
+          title: "✅ Test de correspondance terminé",
+          description: `${result.profilesTested} profils utilisateurs testés`
         });
       } else {
         toast({
-          title: "❌ Test Failed",
-          description: result.error?.message || 'Unknown error',
+          title: "❌ Test échoué",
+          description: result.error?.message || 'Erreur inconnue',
           variant: 'destructive'
         });
       }
     } catch (error) {
       toast({
-        title: "Error",
+        title: "Erreur",
         description: error.message,
         variant: 'destructive'
       });
@@ -77,19 +77,19 @@ const ProfessionsVerification = () => {
       
       if (result.success) {
         toast({
-          title: "✅ Quick Test Passed",
-          description: `Profile: ${result.profileType}, Top Match: ${result.topMatch?.libelle || 'N/A'}`
+          title: "✅ Test rapide réussi",
+          description: `Profil : ${result.profileType}, Meilleur résultat : ${result.topMatch?.libelle || 'N/A'}`
         });
       } else {
         toast({
-          title: "⚠️ Test Issue",
-          description: result.error || 'No matches found',
+          title: "⚠️ Problème de test",
+          description: result.error || 'Aucune correspondance trouvée',
           variant: 'destructive'
         });
       }
     } catch (error) {
       toast({
-        title: "Error",
+        title: "Erreur",
         description: error.message,
         variant: 'destructive'
       });
