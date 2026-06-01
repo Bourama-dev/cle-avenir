@@ -246,7 +246,7 @@ const TestPage = () => {
   /* ── View results (after profile preview) ── */
   const handleViewResults = async () => {
     if (!user) {
-      navigate('/login', { state: { from: '/test-orientation' } });
+      navigate('/login', { state: { from: '/results' } });
       return;
     }
 
