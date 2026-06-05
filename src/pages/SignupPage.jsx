@@ -317,6 +317,26 @@ const SignupPage = () => {
             </motion.div>
           </AnimatePresence>
         </div>
+
+        <div className="px-6 py-6 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+          {currentStep > FIRST_STEP ? (
+            <Button variant="outline" onClick={handlePrev} className="border-slate-300">
+              <ArrowLeft className="w-4 h-4 mr-2" /> Précédent
+            </Button>
+          ) : <div />}
+
+          {currentStep < TOTAL_STEPS ? (
+            <Button onClick={handleNext} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+              Suivant <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          ) : (
+            <Button onClick={handleSubmit} disabled={isSubmitting} className="bg-green-600 hover:bg-green-700 text-white min-w-[150px]">
+              {isSubmitting
+                ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Enregistrement...</>
+                : isGoogleFlow ? "Finaliser mon profil" : "Créer mon compte"}
+            </Button>
+          )}
+        </div>
       </div>
 
       {!isGoogleFlow && currentStep === 1 && (
