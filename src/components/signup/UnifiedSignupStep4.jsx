@@ -40,6 +40,22 @@ const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPre
       </div>
 
       <div className="space-y-6">
+        {/* Age Input */}
+        <div className="space-y-2">
+            <Label htmlFor="age" className="font-semibold text-slate-700">Âge</Label>
+            <Input
+                id="age"
+                type="number"
+                value={formData.age || ''}
+                onChange={(e) => handleFieldChange('age', e.target.value ? parseInt(e.target.value) : '')}
+                className={`bg-white border-slate-200 ${errors.age ? "border-red-500 ring-red-100" : ""}`}
+                placeholder="Ex: 25"
+                min="13"
+                max="80"
+            />
+            {errors.age && <p className="text-xs text-red-500 font-medium">{errors.age}</p>}
+        </div>
+
         {/* Status Selection - Wrapped in RadioGroup */}
         <div className="space-y-3">
             <Label className="text-base font-semibold text-slate-700">Situation actuelle</Label>
@@ -100,16 +116,47 @@ const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPre
             </div>
         </div>
 
+        {/* Long Studies */}
+        <div className="space-y-3">
+            <Label className="text-base font-semibold text-slate-700">Souhaitez-vous poursuivre de longues études ?</Label>
+            <RadioGroup
+                value={formData.wants_long_studies || ''}
+                onValueChange={(val) => handleFieldChange('wants_long_studies', val)}
+                className="grid grid-cols-2 gap-3"
+            >
+                {[
+                    { id: 'yes', label: 'Oui' },
+                    { id: 'no', label: 'Non' }
+                ].map((option) => (
+                    <div key={option.id}>
+                        <RadioGroupItem value={option.id} id={option.id} className="peer sr-only" />
+                        <Label
+                            htmlFor={option.id}
+                            className={`flex items-center justify-center p-4 rounded-xl border-2 cursor-pointer transition-all h-24 shadow-sm
+                            ${formData.wants_long_studies === option.id
+                                ? 'border-blue-600 bg-blue-50 text-blue-900 shadow-md ring-1 ring-blue-200'
+                                : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                            }
+                            `}
+                        >
+                            <span className="font-medium text-sm">{option.label}</span>
+                        </Label>
+                    </div>
+                ))}
+            </RadioGroup>
+            {errors.wants_long_studies && <p className="text-xs text-red-500 font-medium">{errors.wants_long_studies}</p>}
+        </div>
+
         <div className="space-y-2">
             <Label className="font-semibold text-slate-700">Centres d'intérêt principaux</Label>
             <div className="flex flex-wrap gap-2">
                 {INTERESTS_LIST.map(interest => (
-                    <Badge 
+                    <Badge
                         key={interest}
                         onClick={() => toggleInterest(interest)}
                         className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all rounded-lg select-none
-                            ${formData.interests?.includes(interest) 
-                                ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-200' 
+                            ${formData.interests?.includes(interest)
+                                ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-200'
                                 : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300'
                             }
                         `}
