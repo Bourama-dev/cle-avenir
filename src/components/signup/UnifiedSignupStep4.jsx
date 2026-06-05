@@ -44,8 +44,8 @@ const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPre
         <div className="space-y-3">
             <Label className="text-base font-semibold text-slate-700">Situation actuelle</Label>
             <RadioGroup
-                value={formData.status}
-                onValueChange={(val) => handleFieldChange('status', val)}
+                value={formData.current_status}
+                onValueChange={(val) => handleFieldChange('current_status', val)}
                 className="grid grid-cols-2 gap-3"
             >
                 {statuses.map((status) => (
@@ -54,29 +54,29 @@ const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPre
                         <Label
                             htmlFor={status.id}
                             className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 cursor-pointer transition-all hover:bg-slate-50 h-24 shadow-sm
-                            ${formData.status === status.id 
-                                ? 'border-blue-600 bg-blue-50 text-blue-900 shadow-md ring-1 ring-blue-200' 
+                            ${formData.current_status === status.id
+                                ? 'border-blue-600 bg-blue-50 text-blue-900 shadow-md ring-1 ring-blue-200'
                                 : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
                             }
                             `}
                         >
-                            <status.icon className={`w-6 h-6 mb-2 ${formData.status === status.id ? 'text-blue-600' : 'text-slate-400'}`} />
+                            <status.icon className={`w-6 h-6 mb-2 ${formData.current_status === status.id ? 'text-blue-600' : 'text-slate-400'}`} />
                             <span className="font-medium text-sm text-center">{status.label}</span>
                         </Label>
                     </div>
                 ))}
             </RadioGroup>
-            {errors.status && <p className="text-xs text-red-500 font-medium">{errors.status}</p>}
+            {errors.current_status && <p className="text-xs text-red-500 font-medium">{errors.current_status}</p>}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
                 <Label className="font-semibold text-slate-700">Niveau d'études</Label>
-                <Select 
-                    value={formData.educationLevel} 
-                    onValueChange={(val) => handleFieldChange('educationLevel', val)}
+                <Select
+                    value={formData.education_level}
+                    onValueChange={(val) => handleFieldChange('education_level', val)}
                 >
-                    <SelectTrigger className={`bg-white border-slate-200 ${errors.educationLevel ? "border-red-500 ring-red-100" : ""}`}>
+                    <SelectTrigger className={`bg-white border-slate-200 ${errors.education_level ? "border-red-500 ring-red-100" : ""}`}>
                         <SelectValue placeholder="Sélectionner" />
                     </SelectTrigger>
                     <SelectContent>
@@ -85,7 +85,7 @@ const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPre
                         ))}
                     </SelectContent>
                 </Select>
-                {errors.educationLevel && <p className="text-xs text-red-500 font-medium">{errors.educationLevel}</p>}
+                {errors.education_level && <p className="text-xs text-red-500 font-medium">{errors.education_level}</p>}
             </div>
 
             <div className="space-y-2">

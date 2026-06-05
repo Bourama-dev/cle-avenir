@@ -18,24 +18,24 @@ const UnifiedSignupStep2 = ({ formData, handleFieldChange, errors, onNext, onPre
             <Label htmlFor="firstName">Prénom</Label>
             <Input
               id="firstName"
-              value={formData.firstName}
-              onChange={(e) => handleFieldChange('firstName', e.target.value)}
-              className={errors.firstName ? "border-red-500 bg-red-50" : ""}
+              value={formData.first_name}
+              onChange={(e) => handleFieldChange('first_name', e.target.value)}
+              className={errors.first_name ? "border-red-500 bg-red-50" : ""}
               placeholder="Jean"
             />
-            {errors.firstName && <p className="text-xs text-red-500 font-medium">{errors.firstName}</p>}
+            {errors.first_name && <p className="text-xs text-red-500 font-medium">{errors.first_name}</p>}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="lastName">Nom</Label>
             <Input
               id="lastName"
-              value={formData.lastName}
-              onChange={(e) => handleFieldChange('lastName', e.target.value)}
-              className={errors.lastName ? "border-red-500 bg-red-50" : ""}
+              value={formData.last_name}
+              onChange={(e) => handleFieldChange('last_name', e.target.value)}
+              className={errors.last_name ? "border-red-500 bg-red-50" : ""}
               placeholder="Dupont"
             />
-            {errors.lastName && <p className="text-xs text-red-500 font-medium">{errors.lastName}</p>}
+            {errors.last_name && <p className="text-xs text-red-500 font-medium">{errors.last_name}</p>}
           </div>
         </div>
 
