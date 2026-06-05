@@ -132,16 +132,16 @@ const UnifiedSignupStep1 = ({ formData, handleFieldChange, errors, onNext }) => 
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="passwordConfirm">Confirmer le mot de passe</Label>
+          <Label htmlFor="confirmPassword">Confirmer le mot de passe</Label>
           <Input
-            id="passwordConfirm"
+            id="confirmPassword"
             type="password"
-            value={formData.passwordConfirm}
-            onChange={(e) => handleFieldChange('passwordConfirm', e.target.value)}
-            className={errors.passwordConfirm ? "border-red-500 bg-red-50" : ""}
+            value={formData.confirmPassword}
+            onChange={(e) => handleFieldChange('confirmPassword', e.target.value)}
+            className={errors.confirmPassword ? "border-red-500 bg-red-50" : ""}
             placeholder="Répétez votre mot de passe"
           />
-          {errors.passwordConfirm && <p className="text-xs text-red-500 font-medium">{errors.passwordConfirm}</p>}
+          {errors.confirmPassword && <p className="text-xs text-red-500 font-medium">{errors.confirmPassword}</p>}
         </div>
       </div>
 
