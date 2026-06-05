@@ -4,8 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, ArrowRight, GraduationCap, Briefcase, Search, User, Check } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, ArrowRight, GraduationCap, Briefcase, Search, User } from 'lucide-react';
 
 const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPrev }) => {
   const statuses = [
@@ -18,19 +17,6 @@ const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPre
   const levels = [
     "Collège", "Lycée", "Bac", "Bac +2", "Bac +3", "Bac +5", "Doctorat"
   ];
-
-  const INTERESTS_LIST = [
-    "Technologie", "Santé", "Business", "Art & Design", 
-    "Sciences", "Social", "Environnement", "Education"
-  ];
-
-  const toggleInterest = (interest) => {
-    const current = formData.interests || [];
-    const newInterests = current.includes(interest)
-      ? current.filter(i => i !== interest)
-      : [...current, interest];
-    handleFieldChange('interests', newInterests);
-  };
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-right-8 duration-500">
@@ -147,27 +133,6 @@ const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPre
             {errors.wants_long_studies && <p className="text-xs text-red-500 font-medium">{errors.wants_long_studies}</p>}
         </div>
 
-        <div className="space-y-2">
-            <Label className="font-semibold text-slate-700">Centres d'intérêt principaux</Label>
-            <div className="flex flex-wrap gap-2">
-                {INTERESTS_LIST.map(interest => (
-                    <Badge
-                        key={interest}
-                        onClick={() => toggleInterest(interest)}
-                        className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all rounded-lg select-none
-                            ${formData.interests?.includes(interest)
-                                ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-200'
-                                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300'
-                            }
-                        `}
-                    >
-                        {interest}
-                        {formData.interests?.includes(interest) && <Check className="ml-1.5 w-3.5 h-3.5" />}
-                    </Badge>
-                ))}
-            </div>
-            {errors.interests && <p className="text-xs text-red-500 font-medium">{errors.interests}</p>}
-        </div>
       </div>
 
       <div className="flex gap-4 pt-6">
