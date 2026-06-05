@@ -2,12 +2,12 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
-const BASE_URL = 'https://cleavenir.com';
+const BASE_URL = 'https://www.cleavenir.com';
 
 const MetaTags = ({
   title = "CléAvenir - Orientation Professionnelle par IA",
   description = "Trouvez votre voie professionnelle grâce à notre IA avancée. Tests d'orientation, fiches métiers et conseils personnalisés pour votre carrière.",
-  image = "https://cleavenir.com/og-image.jpg",
+  image = "https://www.cleavenir.com/og-image.jpg",
   type = "website"
 }) => {
   const location = useLocation();

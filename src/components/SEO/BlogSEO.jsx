@@ -2,12 +2,12 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
-const BASE_URL = 'https://cleavenir.com';
+const BASE_URL = 'https://www.cleavenir.com';
 
 const BlogSEO = ({ title, description, image, url, type = 'article', publishedTime, modifiedTime, author, tags }) => {
   const location = useLocation();
   const fullUrl = url ? `${BASE_URL}${url}` : `${BASE_URL}${location.pathname}`;
-  const defaultImage = 'https://cleavenir.com/og-image.jpg';
+  const defaultImage = 'https://www.cleavenir.com/og-image.jpg';
   const fullImage = image || defaultImage;
 
   return (
