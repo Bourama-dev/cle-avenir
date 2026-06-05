@@ -10,11 +10,24 @@ import { Badge } from '@/components/ui/badge';
 import { verifyEstablishmentCode } from '@/services/establishmentCodeValidationService';
 import { useToast } from '@/components/ui/use-toast';
 
+const INTERESTS_LIST = [
+  "Technologie", "Santé", "Business", "Art & Design",
+  "Sciences", "Social", "Environnement", "Education"
+];
+
 const UnifiedSignupStep5 = ({ formData, handleFieldChange, errors, onNext, onPrev }) => {
   const [skillInput, setSkillInput] = useState('');
   const [validatingCode, setValidatingCode] = useState(false);
   const [codeStatus, setCodeStatus] = useState(null); // 'success', 'error', 'idle'
   const { toast } = useToast();
+
+  const toggleInterest = (interest) => {
+    const current = formData.interests || [];
+    const newInterests = current.includes(interest)
+      ? current.filter(i => i !== interest)
+      : [...current, interest];
+    handleFieldChange('interests', newInterests);
+  };
 
   useEffect(() => {
     // Reset status if user changes code manually
@@ -88,6 +101,29 @@ const UnifiedSignupStep5 = ({ formData, handleFieldChange, errors, onNext, onPre
       </div>
 
       <div className="space-y-6">
+        {/* Interests Section */}
+        <div className="space-y-3">
+            <Label className="text-base font-semibold text-slate-700">Centres d'intérêt principaux</Label>
+            <div className="flex flex-wrap gap-2">
+                {INTERESTS_LIST.map(interest => (
+                    <Badge
+                        key={interest}
+                        onClick={() => toggleInterest(interest)}
+                        className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all rounded-lg select-none
+                            ${formData.interests?.includes(interest)
+                                ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-200'
+                                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300'
+                            }
+                        `}
+                    >
+                        {interest}
+                        {formData.interests?.includes(interest) && <Check className="ml-1.5 w-3.5 h-3.5" />}
+                    </Badge>
+                ))}
+            </div>
+            {errors.interests && <p className="text-xs text-red-500 font-medium">{errors.interests}</p>}
+        </div>
+
         {/* Skills Section */}
         <div className="space-y-3 bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:border-blue-100 transition-colors">
             <Label className="text-base font-semibold text-slate-700">Compétences clés</Label>

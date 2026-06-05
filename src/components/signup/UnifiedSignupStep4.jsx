@@ -4,8 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, ArrowRight, GraduationCap, Briefcase, Search, User, Check } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, ArrowRight, GraduationCap, Briefcase, Search, User } from 'lucide-react';
 
 const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPrev }) => {
   const statuses = [
@@ -19,19 +18,6 @@ const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPre
     "Collège", "Lycée", "Bac", "Bac +2", "Bac +3", "Bac +5", "Doctorat"
   ];
 
-  const INTERESTS_LIST = [
-    "Technologie", "Santé", "Business", "Art & Design", 
-    "Sciences", "Social", "Environnement", "Education"
-  ];
-
-  const toggleInterest = (interest) => {
-    const current = formData.interests || [];
-    const newInterests = current.includes(interest)
-      ? current.filter(i => i !== interest)
-      : [...current, interest];
-    handleFieldChange('interests', newInterests);
-  };
-
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-right-8 duration-500">
       <div className="text-center mb-6">
@@ -40,12 +26,28 @@ const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPre
       </div>
 
       <div className="space-y-6">
+        {/* Age Input */}
+        <div className="space-y-2">
+            <Label htmlFor="age" className="font-semibold text-slate-700">Âge</Label>
+            <Input
+                id="age"
+                type="number"
+                value={formData.age || ''}
+                onChange={(e) => handleFieldChange('age', e.target.value ? parseInt(e.target.value) : '')}
+                className={`bg-white border-slate-200 ${errors.age ? "border-red-500 ring-red-100" : ""}`}
+                placeholder="Ex: 25"
+                min="13"
+                max="80"
+            />
+            {errors.age && <p className="text-xs text-red-500 font-medium">{errors.age}</p>}
+        </div>
+
         {/* Status Selection - Wrapped in RadioGroup */}
         <div className="space-y-3">
             <Label className="text-base font-semibold text-slate-700">Situation actuelle</Label>
             <RadioGroup
-                value={formData.status}
-                onValueChange={(val) => handleFieldChange('status', val)}
+                value={formData.current_status}
+                onValueChange={(val) => handleFieldChange('current_status', val)}
                 className="grid grid-cols-2 gap-3"
             >
                 {statuses.map((status) => (
@@ -54,29 +56,29 @@ const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPre
                         <Label
                             htmlFor={status.id}
                             className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 cursor-pointer transition-all hover:bg-slate-50 h-24 shadow-sm
-                            ${formData.status === status.id 
-                                ? 'border-blue-600 bg-blue-50 text-blue-900 shadow-md ring-1 ring-blue-200' 
+                            ${formData.current_status === status.id
+                                ? 'border-blue-600 bg-blue-50 text-blue-900 shadow-md ring-1 ring-blue-200'
                                 : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
                             }
                             `}
                         >
-                            <status.icon className={`w-6 h-6 mb-2 ${formData.status === status.id ? 'text-blue-600' : 'text-slate-400'}`} />
+                            <status.icon className={`w-6 h-6 mb-2 ${formData.current_status === status.id ? 'text-blue-600' : 'text-slate-400'}`} />
                             <span className="font-medium text-sm text-center">{status.label}</span>
                         </Label>
                     </div>
                 ))}
             </RadioGroup>
-            {errors.status && <p className="text-xs text-red-500 font-medium">{errors.status}</p>}
+            {errors.current_status && <p className="text-xs text-red-500 font-medium">{errors.current_status}</p>}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
                 <Label className="font-semibold text-slate-700">Niveau d'études</Label>
-                <Select 
-                    value={formData.educationLevel} 
-                    onValueChange={(val) => handleFieldChange('educationLevel', val)}
+                <Select
+                    value={formData.education_level}
+                    onValueChange={(val) => handleFieldChange('education_level', val)}
                 >
-                    <SelectTrigger className={`bg-white border-slate-200 ${errors.educationLevel ? "border-red-500 ring-red-100" : ""}`}>
+                    <SelectTrigger className={`bg-white border-slate-200 ${errors.education_level ? "border-red-500 ring-red-100" : ""}`}>
                         <SelectValue placeholder="Sélectionner" />
                     </SelectTrigger>
                     <SelectContent>
@@ -85,7 +87,7 @@ const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPre
                         ))}
                     </SelectContent>
                 </Select>
-                {errors.educationLevel && <p className="text-xs text-red-500 font-medium">{errors.educationLevel}</p>}
+                {errors.education_level && <p className="text-xs text-red-500 font-medium">{errors.education_level}</p>}
             </div>
 
             <div className="space-y-2">
@@ -100,27 +102,37 @@ const UnifiedSignupStep4 = ({ formData, handleFieldChange, errors, onNext, onPre
             </div>
         </div>
 
-        <div className="space-y-2">
-            <Label className="font-semibold text-slate-700">Centres d'intérêt principaux</Label>
-            <div className="flex flex-wrap gap-2">
-                {INTERESTS_LIST.map(interest => (
-                    <Badge 
-                        key={interest}
-                        onClick={() => toggleInterest(interest)}
-                        className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all rounded-lg select-none
-                            ${formData.interests?.includes(interest) 
-                                ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-200' 
-                                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300'
+        {/* Long Studies */}
+        <div className="space-y-3">
+            <Label className="text-base font-semibold text-slate-700">Souhaitez-vous poursuivre de longues études ?</Label>
+            <RadioGroup
+                value={formData.wants_long_studies || ''}
+                onValueChange={(val) => handleFieldChange('wants_long_studies', val)}
+                className="grid grid-cols-2 gap-3"
+            >
+                {[
+                    { id: 'yes', label: 'Oui' },
+                    { id: 'no', label: 'Non' }
+                ].map((option) => (
+                    <div key={option.id}>
+                        <RadioGroupItem value={option.id} id={option.id} className="peer sr-only" />
+                        <Label
+                            htmlFor={option.id}
+                            className={`flex items-center justify-center p-4 rounded-xl border-2 cursor-pointer transition-all h-24 shadow-sm
+                            ${formData.wants_long_studies === option.id
+                                ? 'border-blue-600 bg-blue-50 text-blue-900 shadow-md ring-1 ring-blue-200'
+                                : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
                             }
-                        `}
-                    >
-                        {interest}
-                        {formData.interests?.includes(interest) && <Check className="ml-1.5 w-3.5 h-3.5" />}
-                    </Badge>
+                            `}
+                        >
+                            <span className="font-medium text-sm">{option.label}</span>
+                        </Label>
+                    </div>
                 ))}
-            </div>
-            {errors.interests && <p className="text-xs text-red-500 font-medium">{errors.interests}</p>}
+            </RadioGroup>
+            {errors.wants_long_studies && <p className="text-xs text-red-500 font-medium">{errors.wants_long_studies}</p>}
         </div>
+
       </div>
 
       <div className="flex gap-4 pt-6">

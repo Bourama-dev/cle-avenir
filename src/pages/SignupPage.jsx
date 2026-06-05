@@ -220,7 +220,7 @@ const SignupPage = () => {
       await AuthService.createParentalConsentRequest(
         data.user.id,
         formData.parentEmail,
-        formData.first_name || formData.firstName
+        formData.first_name
       );
       setAwaitingParentalConsent(true);
       return;
@@ -231,7 +231,7 @@ const SignupPage = () => {
   };
 
   const renderStep = () => {
-    const props = { formData, handleFieldChange: handleChange, onChange: handleChange, errors };
+    const props = { formData, handleFieldChange: handleChange, onChange: handleChange, errors, onNext: handleNext, onPrev: handlePrev };
     switch (currentStep) {
       case 1: return <UnifiedSignupStep1 {...props} />;
       case 2: return <UnifiedSignupStep2 {...props} />;
@@ -239,7 +239,7 @@ const SignupPage = () => {
       case 4: return <UnifiedSignupStep4 {...props} />;
       case 5: return <UnifiedSignupStep5 {...props} />;
       case 6: return <UnifiedSignupStep6 {...props} />;
-      case 7: return <UnifiedSignupStep7 {...props} />;
+      case 7: return <UnifiedSignupStep7 {...props} onSubmit={handleSubmit} isLoading={isSubmitting} setStep={setCurrentStep} />;
       default: return null;
     }
   };
@@ -276,7 +276,7 @@ const SignupPage = () => {
     <>
     <ParentalConsentModal
       isOpen={showParentalModal}
-      childFirstName={formData.first_name || formData.firstName}
+      childFirstName={formData.first_name}
       onConfirm={handleParentalConsent}
       onClose={() => setShowParentalModal(false)}
     />

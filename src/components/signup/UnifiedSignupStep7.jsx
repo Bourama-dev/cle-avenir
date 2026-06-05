@@ -40,7 +40,7 @@ const UnifiedSignupStep7 = ({ formData, handleFieldChange, onPrev, onSubmit, isL
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[450px] overflow-y-auto pr-2 custom-scrollbar p-1">
          <SectionSummary title="Identité" stepIndex={2}>
-            <p className="text-lg text-slate-900">{formData.firstName} {formData.lastName}</p>
+            <p className="text-lg text-slate-900">{formData.first_name} {formData.last_name}</p>
             <p className="text-slate-500">{formData.email}</p>
             {formData.phone && <p className="text-slate-500">{formData.phone}</p>}
          </SectionSummary>
@@ -54,10 +54,10 @@ const UnifiedSignupStep7 = ({ formData, handleFieldChange, onPrev, onSubmit, isL
          <SectionSummary title="Profil Pro" stepIndex={4}>
             <div className="flex flex-wrap gap-2 mb-1">
                <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded text-xs font-semibold uppercase">
-                   {formData.status?.replace('_', ' ')}
+                   {formData.current_status?.replace('_', ' ')}
                </span>
                <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded text-xs">
-                   {formData.educationLevel}
+                   {formData.education_level}
                </span>
             </div>
             {formData.interests?.length > 0 && (
