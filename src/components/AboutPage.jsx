@@ -259,6 +259,22 @@ const AboutPage = ({ onNavigate }) => {
             </div>
           </div>
         </div>
+
+          {/* Video */}
+          <div className="mt-16 flex justify-center">
+            <div className="w-full max-w-3xl aspect-video rounded-2xl overflow-hidden shadow-xl">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/QedCSeYSDe8"
+                title="Présentation de l'équipe fondatrice"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* CTA */}
