@@ -258,7 +258,6 @@ const AboutPage = ({ onNavigate }) => {
               </div>
             </div>
           </div>
-        </div>
 
           {/* Video */}
           <div className="mt-16 flex justify-center">
