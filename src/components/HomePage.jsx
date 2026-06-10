@@ -659,6 +659,25 @@ const HomePage = ({ onNavigate }) => {
         </div>
       </section>
 
+      {/* ══ VIDEO ═══════════════════════════════════════════════════════════ */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-slate-900 mb-4">Découvrez CléAvenir en vidéo</h2>
+          <p className="text-slate-500 mb-10 max-w-xl mx-auto">Regardez comment CléAvenir vous aide à construire votre avenir professionnel.</p>
+          <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-xl">
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/z6SXP8BO15M"
+              title="Découvrez CléAvenir"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </section>
+
       {/* ══ ACTUALITÉS ══════════════════════════════════════════════════════ */}
       <section className="bg-slate-50/60 pt-6 pb-4">
         <motion.div
