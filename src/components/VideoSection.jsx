@@ -10,8 +10,8 @@ const VIDEOS = [
   },
   {
     id: 'QedCSeYSDe8',
-    title: 'CléAvenir - Fonctionnalités',
-    label: 'Fonctionnalités',
+    title: 'CléAvenir - Présentation du fondateur',
+    label: 'Le fondateur',
   },
 ];
 
