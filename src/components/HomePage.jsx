@@ -12,6 +12,7 @@ import TiltCard from '@/components/ui/TiltCard';
 import TextReveal from '@/components/ui/TextReveal';
 import MagneticButton from '@/components/ui/MagneticButton';
 import { AuthService } from '@/services/authService';
+import VideoSection from '@/components/VideoSection';
 
 const NewsPreview = lazy(() => import('@/components/NewsPreview'));
 
@@ -516,6 +517,9 @@ const HomePage = ({ onNavigate }) => {
           </AnimatedSection>
         </div>
       </section>
+
+      {/* ══ VIDEO ═══════════════════════════════════════════════════════════ */}
+      <VideoSection />
 
       {/* ══ FEATURES ════════════════════════════════════════════════════════ */}
       <section className="py-28 bg-slate-50/80">
