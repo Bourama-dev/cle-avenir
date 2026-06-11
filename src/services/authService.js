@@ -58,6 +58,7 @@ export const AuthService = {
             wants_long_studies: wantsLongStudiesBool
           },
 
+          completed_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
 
         }, { onConflict: 'id' });

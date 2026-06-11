@@ -1,7 +1,8 @@
 -- Migration: Slack notification trigger for new user registrations
--- On each new profile INSERT, calls the Slack Incoming Webhook (stored in
--- Supabase Vault as 'slack_webhook_nouvelle_utilisateur') to post a message
--- in the #nouvelle-utilisateur channel.
+-- Fires when a profile's completed_at is set for the first time — meaning
+-- the user has finished the entire signup form and all fields are populated.
+-- Covers both email/password signup (INSERT with completed_at) and Google
+-- OAuth signup (UPDATE that adds completed_at after the multi-step form).
 --
 -- Vault secret must be created once:
 --   SELECT vault.create_secret('<webhook_url>', 'slack_webhook_nouvelle_utilisateur', '...');
@@ -15,6 +16,14 @@ DECLARE
   webhook_url TEXT;
   payload     JSONB;
 BEGIN
+  -- Only notify when completed_at is being set for the first time
+  IF NEW.completed_at IS NULL THEN
+    RETURN NEW;
+  END IF;
+  IF TG_OP = 'UPDATE' AND OLD.completed_at IS NOT NULL THEN
+    RETURN NEW;
+  END IF;
+
   SELECT decrypted_secret
     INTO webhook_url
     FROM vault.decrypted_secrets
@@ -42,7 +51,7 @@ BEGIN
       COALESCE(NEW.location, '—'),
       COALESCE(NEW.main_goal, '—'),
       COALESCE(NEW.subscription_tier, 'free'),
-      COALESCE(to_char(NEW.created_at, 'DD/MM/YYYY à HH24:MI'), to_char(now(), 'DD/MM/YYYY à HH24:MI'))
+      COALESCE(to_char(NEW.completed_at, 'DD/MM/YYYY à HH24:MI'), to_char(now(), 'DD/MM/YYYY à HH24:MI'))
     )
   );
 
@@ -57,6 +66,6 @@ END;
 $$;
 
 CREATE OR REPLACE TRIGGER trigger_notify_slack_new_user
-  AFTER INSERT ON public.profiles
+  AFTER INSERT OR UPDATE OF completed_at ON public.profiles
   FOR EACH ROW
   EXECUTE FUNCTION public.notify_slack_new_user();
