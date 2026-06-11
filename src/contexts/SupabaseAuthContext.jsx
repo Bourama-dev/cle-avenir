@@ -110,6 +110,18 @@ export const AuthProvider = ({ children }) => {
         }, { onConflict: 'id' });
         if (upsertError) {
           console.error('[AuthContext] Google profile creation failed:', upsertError);
+          // FK violation (23503) means the session references a user that no
+          // longer exists in auth.users — purge it so the user can log in fresh.
+          if (upsertError.code === '23503') {
+            await supabase.auth.signOut();
+            setUser(null);
+            setSession(null);
+            setUserProfile(null);
+            setSubscriptionPlan(null);
+            setSubscriptionTier(PLAN_TYPES.FREE);
+            setLoading(false);
+            return;
+          }
         } else {
           profile = await fetchUserProfile(currentSession.user.id);
         }
