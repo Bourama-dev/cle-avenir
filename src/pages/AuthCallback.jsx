@@ -27,6 +27,23 @@ const AuthCallback = () => {
   const [error, setError] = useState(null);
   const [processed, setProcessed] = useState(false);
 
+  // Check for OAuth error params in the URL (e.g. ?error=access_denied)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const oauthError = params.get('error');
+    const oauthDesc  = params.get('error_description');
+    if (oauthError) {
+      setError(oauthDesc?.replace(/\+/g, ' ') || "Connexion refusée. Veuillez réessayer.");
+    }
+  }, []);
+
+  // Auto-redirect to login after 5 s if an error is displayed
+  useEffect(() => {
+    if (!error) return;
+    const t = setTimeout(() => navigate('/login', { replace: true }), 5000);
+    return () => clearTimeout(t);
+  }, [error, navigate]);
+
   useEffect(() => {
     if (authLoading || processed) return;
     setProcessed(true);
@@ -34,6 +51,11 @@ const AuthCallback = () => {
     const redirect = async () => {
       try {
         if (!user) {
+          // PKCE failure: code_verifier missing (Safari ITP, private mode, cross-tab)
+          const params = new URLSearchParams(window.location.search);
+          if (params.get('code')) {
+            throw new Error("La session a expiré pendant la connexion. Veuillez réessayer depuis le même onglet et navigateur.");
+          }
           throw new Error("Lien de validation invalide ou expiré.");
         }
 
@@ -72,14 +94,15 @@ const AuthCallback = () => {
           <div className="mx-auto w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4">
             <XCircle className="h-6 w-6 text-red-600" />
           </div>
-          <h2 className="text-2xl font-bold text-slate-900 mb-2">Erreur de validation</h2>
-          <p className="text-slate-600 mb-6">{error}</p>
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">Erreur de connexion</h2>
+          <p className="text-slate-600 mb-2">{error}</p>
+          <p className="text-sm text-slate-400 mb-6">Redirection automatique dans 5 secondes…</p>
           <div className="flex gap-4 justify-center">
-            <Button onClick={() => navigate('/login')} variant="outline">
+            <Button onClick={() => navigate('/login', { replace: true })} variant="outline">
               Retour à la connexion
             </Button>
-            <Button onClick={() => navigate('/signup')}>
-              S'inscrire à nouveau
+            <Button onClick={() => navigate('/signup', { replace: true })}>
+              S'inscrire
             </Button>
           </div>
         </div>
