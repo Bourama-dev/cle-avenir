@@ -122,41 +122,105 @@ export const getRecommendation = (finalScore) => {
   return "🤔 Éloigné de vos affinités dominantes, mais peut constituer un défi motivant si vous êtes passionné(e).";
 };
 
-export const generateAdvice = (scores) => {
+const RIASEC_VERB = {
+  R: 'tes aptitudes manuelles et techniques',
+  I: 'ta curiosité analytique',
+  A: 'ta créativité',
+  S: 'ton sens du contact humain',
+  E: 'ton leadership',
+  C: 'ta rigueur et ton sens de l\'organisation',
+};
+
+export const generateAdvice = (scores, userContext = {}) => {
+  const { status, education, riasecTop, region } = userContext;
   const advices = [];
-  if (scores.riasecScore >= 80) advices.push("💪 Vos traits de personnalité correspondent très bien à ce métier.");
-  else if (scores.riasecScore >= 60) advices.push("🤔 Votre personnalité a des points communs avec ce métier, mais quelques écarts existent.");
-  
-  if (scores.hybridScore >= 80) advices.push("🧬 Votre combinaison unique de talents correspond parfaitement.");
-  if (scores.demandScore >= 80) advices.push("📈 Le marché est très porteur : vos compétences seront très recherchées !");
-  if (scores.growthScore >= 80) advices.push("🌱 Ce secteur est en pleine mutation, restez curieux(se) et formez-vous en continu.");
-  
-  if (advices.length === 0) advices.push("💡 Prenez le temps d'échanger avec des professionnels de ce secteur pour valider votre intérêt.");
+
+  // RIASEC fit
+  if (scores.riasecScore >= 80) {
+    const verb = riasecTop ? RIASEC_VERB[riasecTop] : 'tes traits de personnalité';
+    advices.push(`💪 ${verb.charAt(0).toUpperCase() + verb.slice(1)} correspondent très bien à ce métier.`);
+  } else if (scores.riasecScore >= 60) {
+    advices.push("🤔 Tu as des points communs avec ce métier, mais quelques écarts existent à explorer.");
+  }
+
+  // Market signals
+  if (scores.demandScore >= 80) {
+    const regionHint = region ? ` en ${region}` : '';
+    advices.push(`📈 Forte demande de recrutement${regionHint} — le marché est favorable.`);
+  }
+  if (scores.growthScore >= 80) advices.push("🌱 Secteur en croissance : les opportunités vont s'accélérer dans les prochaines années.");
+
+  // Status-specific advice
+  if (status === 'lyceen' && scores.finalScore >= 70)
+    advices.push("🎓 Excellent choix d'orientation post-bac — explore les BTS, licences pro ou BUT liés.");
+  if (status === 'reconversion' && scores.finalScore >= 65)
+    advices.push("🔄 Accessible en reconversion via une formation courte ou un bilan de compétences CPF.");
+  if (status === 'en_recherche' && scores.finalScore >= 70)
+    advices.push("💼 Des offres existent dans ce secteur — commence par cibler les entreprises qui recrutent.");
+  if (status === 'en_emploi' && scores.finalScore >= 70)
+    advices.push("📊 Une évolution vers ce métier est envisageable avec une montée en compétences ciblée.");
+
+  // Criteria mismatch note
+  if (scores.criteriaNotes?.length > 0)
+    advices.push(`⚠️ Point de vigilance : ${scores.criteriaNotes[0].toLowerCase()}`);
+
+  if (advices.length === 0)
+    advices.push("💡 Échange avec des professionnels de ce secteur pour valider ton intérêt avant de te lancer.");
+
   return advices;
 };
 
-export const generateNextSteps = (scores) => {
+export const generateNextSteps = (scores, userContext = {}) => {
+  const { status, education, riasecTop, region } = userContext;
+  const regionHint = region ? ` en ${region}` : '';
   const steps = [];
+
   if (scores.finalScore >= 85) {
-    steps.push("Consulter les offres de formation certifiantes dans votre région.");
-    steps.push("Identifier les entreprises qui recrutent massivement.");
-    steps.push("Mettre à jour votre CV en valorisant vos soft skills clés.");
+    if (status === 'lyceen') {
+      steps.push(`Recherche les formations post-bac menant à ce métier${regionHint}.`);
+      steps.push("Inscris-toi sur Parcoursup ou candidature directe selon la filière.");
+      steps.push("Cherche un stage ou une alternance pour confirmer ton choix.");
+    } else if (status === 'reconversion') {
+      steps.push("Identifie les formations certifiantes finançables par le CPF.");
+      steps.push(`Contacte un conseiller en évolution professionnelle (CEP)${regionHint}.`);
+      steps.push("Mets en avant tes compétences transférables dans ton CV.");
+    } else if (status === 'en_recherche') {
+      steps.push(`Consulte les offres d'emploi ciblées sur ce métier${regionHint}.`);
+      steps.push("Actualise ton CV en valorisant les soft skills liés à ce profil.");
+      steps.push("Prépare un pitch de 2 minutes sur ta motivation pour ce secteur.");
+    } else {
+      steps.push(`Consulter les offres de formation certifiantes${regionHint}.`);
+      steps.push("Identifier les entreprises du secteur qui recrutent activement.");
+      steps.push("Mettre à jour ton CV en valorisant tes compétences clés.");
+    }
   } else if (scores.finalScore >= 70) {
-    steps.push("Réaliser des enquêtes métiers (interviews de professionnels).");
-    steps.push("Chercher une immersion professionnelle (stage court).");
-    steps.push("Identifier les compétences manquantes pour créer un plan de formation.");
+    if (status === 'reconversion') {
+      steps.push("Fais un bilan de compétences pour valider la faisabilité.");
+      steps.push("Rencontre des professionnels du secteur (LinkedIn, forums métiers).");
+      steps.push("Identifie les compétences manquantes et le plan de formation associé.");
+    } else {
+      steps.push("Réalise des enquêtes métiers (interviews de professionnels en poste).");
+      steps.push("Cherche une immersion professionnelle (stage court, job shadowing).");
+      steps.push("Identifie les compétences manquantes pour créer un plan de formation.");
+    }
   } else {
-    steps.push("Explorer d'autres pistes professionnelles plus alignées avec votre profil.");
-    steps.push("Discuter avec un conseiller d'orientation pour affiner vos choix.");
-    steps.push("Faire un bilan de compétences complet.");
+    if (status === 'lyceen') {
+      steps.push("Passe le test d'orientation de ton lycée pour affiner tes pistes.");
+      steps.push("Explore les journées portes ouvertes des écoles de ce secteur.");
+    } else {
+      steps.push("Explore d'autres pistes professionnelles plus alignées avec ton profil.");
+      steps.push("Discute avec un conseiller d'orientation pour affiner tes choix.");
+      steps.push("Envisage un bilan de compétences complet pour clarifier ton projet.");
+    }
   }
+
   return steps;
 };
 
-export const getPersonalizedRecommendations = (matchResult) => {
+export const getPersonalizedRecommendations = (matchResult, userContext = {}) => {
   return {
-    advice: generateAdvice(matchResult),
-    nextSteps: generateNextSteps(matchResult)
+    advice:    generateAdvice(matchResult, userContext),
+    nextSteps: generateNextSteps(matchResult, userContext),
   };
 };
 
@@ -299,7 +363,15 @@ export const calculateAdvancedMatching = (userProfile, metier, userCriteria = nu
       rawMetier: metier.rawMetier
     };
 
-    const { advice, nextSteps } = getPersonalizedRecommendations(baseResult);
+    // Build user context for personalized advice and next steps
+    const userContext = {
+      status:    userCriteria?.current_status || null,
+      education: userCriteria?.education_level || null,
+      region:    userCriteria?.full_profile?.region || null,
+      riasecTop: Object.entries(userProfile).sort(([, a], [, b]) => b - a)[0]?.[0] || null,
+    };
+
+    const { advice, nextSteps } = getPersonalizedRecommendations(baseResult, userContext);
     baseResult.advice = advice;
     baseResult.nextSteps = nextSteps;
 
