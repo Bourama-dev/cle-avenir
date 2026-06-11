@@ -1,16 +1,16 @@
 # Graph Report - cle-avenir  (2026-06-11)
 
 ## Corpus Check
-- 959 files · ~445,382 words
+- 959 files · ~446,028 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 3234 nodes · 3381 edges · 602 communities (386 shown, 216 thin omitted)
+- 3239 nodes · 3388 edges · 607 communities (388 shown, 219 thin omitted)
 - Extraction: 85% EXTRACTED · 15% INFERRED · 0% AMBIGUOUS · INFERRED: 493 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e66c6193`
+- Built from commit: `150e4d7e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -383,7 +383,12 @@
 - [[_COMMUNITY_ui_switch|ui_switch]]
 - [[_COMMUNITY_ui_textarea|ui_textarea]]
 - [[_COMMUNITY_ui_tooltip|ui_tooltip]]
+- [[_COMMUNITY_Community 575|Community 575]]
 - [[_COMMUNITY_utils_establishmentcodegenerator|utils_establishmentcodegenerator]]
+- [[_COMMUNITY_Community 603|Community 603]]
+- [[_COMMUNITY_Community 604|Community 604]]
+- [[_COMMUNITY_Community 605|Community 605]]
+- [[_COMMUNITY_Community 606|Community 606]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `useToast()` - 137 edges
@@ -391,7 +396,7 @@
 3. `useAuth()` - 94 edges
 4. `categoryPageSEO()` - 17 edges
 5. `trackEvent()` - 15 edges
-6. `calculateAdvancedMatching()` - 13 edges
+6. `calculateAdvancedMatching()` - 14 edges
 7. `BlogCacheService` - 12 edges
 8. `normalizeCVData()` - 12 edges
 9. `useDebounce()` - 10 edges
@@ -400,8 +405,8 @@
 ## Surprising Connections (you probably didn't know these)
 - `Breadcrumbs()` --calls--> `cn()`  [INFERRED]
   src/components/Breadcrumbs.jsx → src/lib/utils.js
-- `ProfileTest()` --calls--> `useAuth()`  [INFERRED]
-  src/components/ProfileTest.jsx → src/contexts/SupabaseAuthContext.jsx
+- `InstitutionDashboard()` --calls--> `useToast()`  [INFERRED]
+  src/components/InstitutionDashboard.jsx → src/components/ui/use-toast.js
 - `MetierDetailPage()` --calls--> `metierDetailSEO()`  [INFERRED]
   src/pages/MetierDetailPage.jsx → src/components/SEO/seoPresets.js
 - `LegalLayout()` --calls--> `categoryPageSEO()`  [INFERRED]
@@ -412,7 +417,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (602 total, 216 thin omitted)
+## Communities (607 total, 219 thin omitted)
 
 ### Community 0 - "src_app"
 Cohesion: 0.02
@@ -420,11 +425,11 @@ Nodes (89): AboutPage, AccountPage, ActionPlanPage, ActualitesDetailPage, Actual
 
 ### Community 1 - "adaptive_test_enhancedquestioncard"
 Cohesion: 0.02
-Nodes (44): EnhancedQuestionCard(), UserManagement(), InteractiveChart(), AdaptiveQuestion(), COLORS, InstitutionDashboard(), OrganizationDashboard(), SocialMediaShare() (+36 more)
+Nodes (44): EnhancedQuestionCard(), UserManagement(), InteractiveChart(), AdaptiveQuestion(), OrganizationDashboard(), SocialMediaShare(), CVImport(), EstablishmentLogs() (+36 more)
 
 ### Community 2 - "admin_adminsidebar"
 Cohesion: 0.02
-Nodes (44): AdminSidebar(), RgpdCompliancePage(), SecurityAuditPage(), AuthModal(), EnhancedSignupForm(), INTERESTS_LIST, TestGateModal(), BlogCommentForm() (+36 more)
+Nodes (42): AdminSidebar(), RgpdCompliancePage(), SecurityAuditPage(), AuthModal(), EnhancedSignupForm(), INTERESTS_LIST, TestGateModal(), BlogCommentForm() (+34 more)
 
 ### Community 3 - "package_dependencies"
 Cohesion: 0.03
@@ -432,7 +437,7 @@ Nodes (71): dependencies, @babel/generator, @babel/parser, @babel/traverse, @bab
 
 ### Community 4 - "lib_customsupabaseclient"
 Cohesion: 0.06
-Nodes (32): customSupabaseClient, educationApi, normalizeLimitOffset(), normalizeSecteur(), toInt(), toStr(), formationService, calculateAdvancedMatching() (+24 more)
+Nodes (34): customSupabaseClient, educationApi, normalizeLimitOffset(), normalizeSecteur(), toInt(), toStr(), formationService, applyCriteriaMultiplier() (+26 more)
 
 ### Community 5 - "scripts_testmatching"
 Cohesion: 0.11
@@ -440,7 +445,7 @@ Nodes (37): quickMatchTest(), testCareerMatching(), buildReasons(), cacheGet(), 
 
 ### Community 6 - "adaptive_test_questionchoice"
 Cohesion: 0.07
-Nodes (24): QuestionChoice(), AuthTabs(), ImageLoader(), FormFieldGroup(), PreviewToggle(), FormationCard(), cn(), Field() (+16 more)
+Nodes (31): ImageLoader(), FormFieldGroup(), PreviewToggle(), FormationCard(), cn(), Field(), FieldContent(), FieldDescription() (+23 more)
 
 ### Community 7 - "components_metiersexplorer"
 Cohesion: 0.07
@@ -495,8 +500,8 @@ Cohesion: 0.10
 Nodes (11): AboutPage(), Blog(), AuthPage(), FAQ(), ForgotPasswordPage(), MyDocumentsPage(), NotFoundPage(), NotificationsPage() (+3 more)
 
 ### Community 20 - "filters_locationfilter"
-Cohesion: 0.15
-Nodes (6): EstablishmentFilters(), LocationFilter(), useDebounce(), CityAutocomplete(), EstablishmentSearch(), InstitutionSearchSplit()
+Cohesion: 0.18
+Nodes (5): LocationFilter(), useDebounce(), CityAutocomplete(), EstablishmentSearch(), InstitutionSearchSplit()
 
 ### Community 21 - "lib_testresultsclassifier"
 Cohesion: 0.13
@@ -507,8 +512,8 @@ Cohesion: 0.12
 Nodes (11): ARTICLE_CHARTS, ArticleView(), CATEGORY_STYLES, CHART_COLORS, DataDashboard(), DEFAULT_STYLE, fmtCell(), fmtDate() (+3 more)
 
 ### Community 23 - "admin_etablissementstab"
-Cohesion: 0.11
-Nodes (6): EstablishmentCodeManager(), EstablishmentEmailsManager(), EstablishmentForm(), EstablishmentPasswordManager(), EstablishmentsTable(), AdminEstablishments()
+Cohesion: 0.20
+Nodes (4): EstablishmentCodeManager(), EstablishmentEmailsManager(), EstablishmentForm(), EstablishmentPasswordManager()
 
 ### Community 24 - "components"
 Cohesion: 0.10
@@ -539,8 +544,8 @@ Cohesion: 0.19
 Nodes (17): ALLOWED_PARENT_ORIGINS, createDisabledTooltip(), disableEditMode(), enableEditMode(), findDisabledElementAtPoint(), findEditableElementAtPoint(), getParentOrigin(), handleDisabledElementHover() (+9 more)
 
 ### Community 31 - "package_devdependencies"
-Cohesion: 0.07
-Nodes (28): devDependencies, autoprefixer, eslint, eslint-config-react-app, eslint-import-resolver-alias, eslint-plugin-import, eslint-plugin-react, eslint-plugin-react-hooks (+20 more)
+Cohesion: 0.12
+Nodes (17): devDependencies, autoprefixer, eslint, eslint-config-react-app, eslint-import-resolver-alias, eslint-plugin-import, eslint-plugin-react, eslint-plugin-react-hooks (+9 more)
 
 ### Community 32 - "ui_menubar"
 Cohesion: 0.12
@@ -552,7 +557,7 @@ Nodes (9): Dashboard(), Header(), useAdminNavigation(), useNavigation(), contrac
 
 ### Community 34 - "filters_contracttypefilter"
 Cohesion: 0.15
-Nodes (3): EXPERIENCE_LEVELS, RADIUS_OPTIONS, RadiusFilter()
+Nodes (3): CONTRACT_TYPES, RADIUS_OPTIONS, RadiusFilter()
 
 ### Community 35 - "personalized_plan_formationpathsection"
 Cohesion: 0.16
@@ -591,8 +596,8 @@ Cohesion: 0.27
 Nodes (12): CLEAN_CONTENT_REGEX, cleanContent(), cleanText(), ensureDirectoryExists(), extractHelmetData(), EXTRACTION_REGEX, extractRoutes(), findReactFiles() (+4 more)
 
 ### Community 47 - "ui_item"
-Cohesion: 0.18
-Nodes (12): Item(), ItemActions(), ItemContent(), ItemDescription(), ItemFooter(), ItemGroup(), ItemHeader(), ItemMedia() (+4 more)
+Cohesion: 0.17
+Nodes (11): name, private, scripts, build, dev, eslint, lint, preview (+3 more)
 
 ### Community 48 - "utils_riasecmatchingalgorithm"
 Cohesion: 0.29
@@ -673,6 +678,10 @@ Nodes (3): COLORS, ComparisonBarChart(), SkillsRadarChart()
 ### Community 68 - "components_formationdetailspanel"
 Cohesion: 0.24
 Nodes (5): FormationDetailsPanel(), getSector(), REVIEWS, SECTORS, seedRandom()
+
+### Community 69 - "components_subscriptionstatus"
+Cohesion: 0.20
+Nodes (3): EstablishmentFilters(), EstablishmentsTable(), AdminEstablishments()
 
 ### Community 70 - "job_detail_jobdetaildescription"
 Cohesion: 0.31
@@ -974,13 +983,17 @@ Nodes (3): blogCategories, blogPosts, popularTags
 Cohesion: 0.50
 Nodes (3): AdminAnalyticsDashboard(), mockFeedbackTrend, mockTopMetiers
 
+### Community 186 - "pages_managesubscriptionpage"
+Cohesion: 0.22
+Nodes (5): TIER_FEATURES, TIER_PRICES, useUserSubscription(), ManageSubscriptionPage(), PLANS
+
 ### Community 189 - "pages_upgradeplan"
 Cohesion: 0.50
 Nodes (3): DEFAULT_PLANS, PLAN_PRICE_MAP, UpgradePlan()
 
 ### Community 190 - "personalized_plan_recommendedactionssect"
-Cohesion: 0.67
-Nodes (3): ACTION_DEFS, getActionsForStatus(), RecommendedActionsSection()
+Cohesion: 0.33
+Nodes (5): ACTION_BASE, getActionsForStatus(), RecommendedActionsSection(), RIASEC_TRAIT, STATUS_LABEL
 
 ### Community 191 - "sections_trainingssection"
 Cohesion: 0.67
@@ -1027,24 +1040,24 @@ Cohesion: 0.83
 Nodes (3): getConsentRequirements(), isEUUser(), validateConsent()
 
 ## Knowledge Gaps
-- **811 isolated node(s):** `OAuthConsentPage`, `LoginPage`, `SignupPage`, `ProfilePage`, `ActionPlanPage` (+806 more)
+- **813 isolated node(s):** `RIASEC_TRAIT`, `STATUS_LABEL`, `ACTION_BASE`, `DIMENSION_LABELS`, `OAuthConsentPage` (+808 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **216 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **219 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `useToast()` connect `adaptive_test_enhancedquestioncard` to `admin_adminsidebar`, `components_metiersexplorer`, `contexts_establishmentauthcontext`, `cv_cverrorboundary`, `analytics_analyticsdashboard`, `cleo_chatinterface`, `signup_enhancedsignupform`, `hooks_usemetierfeedback`, `components_aboutpage`, `admin_etablissementstab`, `pages_cleopage`, `sections_admintests`, `components_dashboard`, `lib_adminroute`, `dashboard_connectionactivitychart`, `admin_adminformationmanager`, `admin_adminmetiermanager`, `admin_adminblogmanager`, `cleo_contextpanel`, `Community 432`, `cleo_cleoactivitysystem`, `hooks_usetestresults`, `package`, `formation_finder_locationfilter`, `pages_jobdetailpage`, `Community 438`, `Community 440`, `pages_adminanalyticsdashboard`, `components_cleowidget`, `pages_oauthconsentpage`, `components_maintenancecountdown`, `components_subscriptiondebugpanel`, `pages_upgradeplan`, `personalized_plan_recommendedactionssect`, `sections_adminsettings`, `Community 447`, `pages_learningpathpage`, `pages_profilepage`, `ui_toaster`, `admin_contentmanagementpage`, `contexts_planlimitationcontext`, `pages_formationdetailpage`, `auth_enhancedsignupform`, `ui_use_toast`, `components_spontaneousapplicationfinder`, `dashboard_establishmentlogs`, `notifications_notificationcenter`, `hooks_useusersubscription`, `pages_loginpage`?**
-  _High betweenness centrality (0.066) - this node is a cross-community bridge._
-- **Why does `useAuth()` connect `admin_adminsidebar` to `components_metiersexplorer`, `contexts_establishmentauthcontext`, `cleo_chatinterface`, `hooks_usemetierfeedback`, `components_aboutpage`, `hooks_uselegaldocument`, `components_dashboard`, `lib_adminroute`, `cleo_cleo`, `cleo_contextpanel`, `cleo_cleoactivitysystem`, `hooks_usetestresults`, `pages_jobdetailpage`, `Community 438`, `Community 440`, `components_adminbadge`, `components_cleowidget`, `pages_oauthconsentpage`, `components_subscriptiondebugpanel`, `pages_upgradeplan`, `Community 447`, `components_subscriptionstatus`, `pages_learningpathpage`, `pages_profilepage`, `contexts_planlimitationcontext`, `pages_formationdetailpage`, `auth_enhancedsignupform`, `contexts_establishmentcontext`, `components_spontaneousapplicationfinder`, `hooks_usetheme`, `notifications_notificationcenter`, `hooks_useusersubscription`, `pages_testpage`, `auth_forminput`, `components_notificationbell`?**
+- **Why does `useToast()` connect `adaptive_test_enhancedquestioncard` to `admin_adminsidebar`, `components_metiersexplorer`, `contexts_establishmentauthcontext`, `cv_cverrorboundary`, `analytics_analyticsdashboard`, `cleo_chatinterface`, `signup_enhancedsignupform`, `hooks_usemetierfeedback`, `components_aboutpage`, `admin_etablissementstab`, `pages_cleopage`, `sections_admintests`, `components_dashboard`, `lib_adminroute`, `dashboard_connectionactivitychart`, `admin_adminformationmanager`, `admin_adminmetiermanager`, `admin_adminblogmanager`, `cleo_contextpanel`, `cleo_cleoactivitysystem`, `hooks_usetestresults`, `package`, `formation_finder_locationfilter`, `pages_jobdetailpage`, `Community 440`, `pages_adminanalyticsdashboard`, `components_cleowidget`, `pages_oauthconsentpage`, `components_maintenancecountdown`, `components_subscriptiondebugpanel`, `pages_managesubscriptionpage`, `pages_upgradeplan`, `personalized_plan_recommendedactionssect`, `sections_adminsettings`, `Community 447`, `components_subscriptionstatus`, `pages_learningpathpage`, `pages_profilepage`, `ui_toaster`, `admin_contentmanagementpage`, `contexts_planlimitationcontext`, `pages_formationdetailpage`, `auth_enhancedsignupform`, `Community 603`, `Community 604`, `ui_use_toast`, `Community 606`, `components_spontaneousapplicationfinder`, `dashboard_establishmentlogs`, `notifications_notificationcenter`, `hooks_useusersubscription`, `pages_resultspage`?**
+  _High betweenness centrality (0.071) - this node is a cross-community bridge._
+- **Why does `cn()` connect `adaptive_test_questionchoice` to `adaptive_test_enhancedquestioncard`, `admin_adminsidebar`, `ui_badge`, `components_metiersexplorer`, `ui_helpbutton`, `contexts_establishmentauthcontext`, `analytics_analyticsdashboard`, `cleo_chatinterface`, `metiers_blurredmetiercard`, `signup_enhancedsignupform`, `filters_locationfilter`, `admin_etablissementstab`, `ui_menubar`, `components_dashboard`, `filters_contracttypefilter`, `ui_button_group`, `cleo_cleo`, `ui_button`, `Community 432`, `cleo_cleoactivitysystem`, `Community 438`, `cleo_cleopreferencesmodal`, `components_cleowidget`, `Community 575`, `pages_learningpathpage`, `pages_profilepage`, `ui_command`, `ui_context_menu`, `ui_dropdown_menu`, `admin_contentmanagementpage`, `pages_formationdetailpage`, `ui_alert_dialog`, `ui_input_group`, `ui_sheet`, `pages_adminmetiers`, `components_breadcrumbs`, `Community 605`, `contexts_establishmentcontext`, `cv_mobileformlayout`, `ui_breadcrumb`, `dashboard_establishmentactions`, `ui_empty`, `dashboard_establishmentmenu`, `dashboard_establishmentstats`, `job_detail_jobdetailhero`, `ui_dialog`, `auth_forminput`, `dashboard_widgeterrorboundary`?**
   _High betweenness centrality (0.060) - this node is a cross-community bridge._
-- **Why does `cn()` connect `adaptive_test_questionchoice` to `adaptive_test_enhancedquestioncard`, `admin_adminsidebar`, `ui_badge`, `components_metiersexplorer`, `ui_helpbutton`, `contexts_establishmentauthcontext`, `analytics_analyticsdashboard`, `cleo_chatinterface`, `metiers_blurredmetiercard`, `signup_enhancedsignupform`, `filters_locationfilter`, `admin_etablissementstab`, `ui_menubar`, `components_dashboard`, `filters_contracttypefilter`, `ui_button_group`, `cleo_cleo`, `ui_button`, `ui_item`, `cleo_cleoactivitysystem`, `cleo_cleopreferencesmodal`, `components_cleowidget`, `pages_learningpathpage`, `pages_profilepage`, `ui_command`, `ui_context_menu`, `ui_dropdown_menu`, `admin_contentmanagementpage`, `pages_formationdetailpage`, `ui_alert_dialog`, `ui_input_group`, `ui_sheet`, `pages_adminmetiers`, `components_breadcrumbs`, `contexts_establishmentcontext`, `cv_mobileformlayout`, `ui_breadcrumb`, `dashboard_establishmentactions`, `ui_empty`, `dashboard_establishmentmenu`, `dashboard_establishmentstats`, `job_detail_jobdetailhero`, `ui_dialog`, `auth_forminput`, `dashboard_widgeterrorboundary`?**
-  _High betweenness centrality (0.057) - this node is a cross-community bridge._
+- **Why does `useAuth()` connect `admin_adminsidebar` to `components_metiersexplorer`, `contexts_establishmentauthcontext`, `cleo_chatinterface`, `hooks_usemetierfeedback`, `components_aboutpage`, `hooks_uselegaldocument`, `components_dashboard`, `lib_adminroute`, `cleo_cleo`, `cleo_contextpanel`, `cleo_cleoactivitysystem`, `hooks_usetestresults`, `pages_jobdetailpage`, `Community 440`, `components_adminbadge`, `components_cleowidget`, `pages_oauthconsentpage`, `pages_managesubscriptionpage`, `components_subscriptiondebugpanel`, `pages_upgradeplan`, `Community 447`, `pages_learningpathpage`, `pages_profilepage`, `contexts_planlimitationcontext`, `pages_formationdetailpage`, `Community 603`, `Community 604`, `Community 606`, `contexts_establishmentcontext`, `components_spontaneousapplicationfinder`, `hooks_usetheme`, `notifications_notificationcenter`, `hooks_useusersubscription`, `pages_testpage`, `auth_forminput`, `components_notificationbell`?**
+  _High betweenness centrality (0.056) - this node is a cross-community bridge._
 - **Are the 136 inferred relationships involving `useToast()` (e.g. with `EnhancedQuestionCard()` and `AdminBlogManager()`) actually correct?**
   _`useToast()` has 136 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 118 inferred relationships involving `cn()` (e.g. with `EnhancedQuestionCard()` and `QuestionChoice()`) actually correct?**
   _`cn()` has 118 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 93 inferred relationships involving `useAuth()` (e.g. with `AdminSidebar()` and `RgpdCompliancePage()`) actually correct?**
   _`useAuth()` has 93 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `OAuthConsentPage`, `LoginPage`, `SignupPage` to the rest of the system?**
-  _811 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `RIASEC_TRAIT`, `STATUS_LABEL`, `ACTION_BASE` to the rest of the system?**
+  _813 weakly-connected nodes found - possible documentation gaps or missing edges._
