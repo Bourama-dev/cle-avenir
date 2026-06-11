@@ -6,113 +6,59 @@ import { Button } from '@/components/ui/button';
 import { EventLogger } from '@/services/eventLoggerService';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 
-const EXCHANGE_TIMEOUT_MS = 10000;
-
 /**
- * AuthCallback handles the PKCE code exchange manually because
- * detectSessionInUrl is set to false in the Supabase client (to avoid
- * the client blocking app init on a network request).
+ * AuthCallback — post-OAuth redirect handler.
  *
- * Flow:
- * 1. Extract ?code from URL and call exchangeCodeForSession with a timeout.
- * 2. Once exchanged, onAuthStateChange fires SIGNED_IN → AuthContext sets user.
- * 3. Wait for authLoading to settle, then redirect based on profile completeness.
+ * detectSessionInUrl: true in the Supabase client means the JS SDK exchanges
+ * the PKCE code automatically during initialization, before INITIAL_SESSION
+ * fires. By the time this component runs its effect, the auth context has
+ * already processed the session (authLoading is false and user is set).
+ *
+ * We therefore do NOT call exchangeCodeForSession here — doing so would
+ * either race with the SDK's own exchange or fail with "code already used".
  */
 const AuthCallback = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
-  const [exchangeDone, setExchangeDone] = useState(false);
-  const [redirectDone, setRedirectDone] = useState(false);
+  const [redirected, setRedirected] = useState(false);
   const [error, setError] = useState(null);
 
-  // Step 1: exchange the PKCE code
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const code = url.searchParams.get('code');
+    if (authLoading || redirected) return;
+    setRedirected(true);
 
-    if (!code) {
-      setExchangeDone(true);
+    if (!user) {
+      setError('La connexion a échoué ou le lien a expiré. Veuillez réessayer.');
       return;
     }
 
-    let cancelled = false;
-    const timeout = setTimeout(() => {
-      if (!cancelled) {
-        cancelled = true;
-        setError('La connexion avec Google a pris trop de temps. Veuillez réessayer.');
-      }
-    }, EXCHANGE_TIMEOUT_MS);
-
-    supabase.auth.exchangeCodeForSession(code)
-      .then(({ error: exchangeError }) => {
-        if (cancelled) return;
-        clearTimeout(timeout);
-        if (exchangeError) {
-          console.error('[AuthCallback] Exchange error:', exchangeError);
-          // "code already used" means PKCE exchange already happened (e.g. strict
-          // mode double-mount) — treat it as success so the redirect can proceed.
-          if (!exchangeError.message?.includes('already')) {
-            setError('Lien de connexion invalide ou expiré. Veuillez vous reconnecter.');
-            return;
-          }
-        }
-        // Remove the code from the URL without a full reload
-        url.searchParams.delete('code');
-        window.history.replaceState({}, document.title, url.pathname + (url.search || ''));
-        setExchangeDone(true);
-      })
-      .catch((err) => {
-        if (cancelled) return;
-        clearTimeout(timeout);
-        console.error('[AuthCallback] Exchange threw:', err);
-        setError('Une erreur est survenue lors de la connexion. Veuillez réessayer.');
-        setExchangeDone(true);
-      });
-
-    return () => {
-      cancelled = true;
-      clearTimeout(timeout);
-    };
-  }, []);
-
-  // Step 2: redirect once exchange is done and auth context has settled
-  useEffect(() => {
-    if (!exchangeDone || authLoading || redirectDone || error) return;
-    setRedirectDone(true);
-
     const redirect = async () => {
-      try {
-        if (!user) {
-          throw new Error('Lien de connexion invalide ou expiré. Veuillez vous reconnecter.');
+      const isGoogleUser =
+        user.app_metadata?.provider === 'google' ||
+        user.app_metadata?.providers?.includes('google');
+
+      if (isGoogleUser) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('region')
+          .eq('id', user.id)
+          .maybeSingle();
+
+        if (!profile?.region) {
+          navigate('/signup?google=true', { replace: true });
+          return;
         }
-
-        const isGoogleUser =
-          user.app_metadata?.provider === 'google' ||
-          user.app_metadata?.providers?.includes('google');
-
-        if (isGoogleUser) {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('region')
-            .eq('id', user.id)
-            .maybeSingle();
-
-          if (!profile?.region) {
-            navigate('/signup?google=true', { replace: true });
-            return;
-          }
-        }
-
-        EventLogger.logEvent('auth_callback', user.id);
-        navigate('/dashboard', { replace: true });
-      } catch (err) {
-        console.error('[AuthCallback] Redirect error:', err);
-        setError(err.message || 'Erreur lors de la validation.');
       }
+
+      EventLogger.logEvent('auth_callback', user.id);
+      navigate('/dashboard', { replace: true });
     };
 
-    redirect();
-  }, [exchangeDone, authLoading, user, navigate, redirectDone, error]);
+    redirect().catch((err) => {
+      console.error('[AuthCallback] Redirect error:', err);
+      setError(err.message || 'Erreur lors de la validation.');
+    });
+  }, [authLoading, user, navigate, redirected]);
 
   if (error) {
     return (

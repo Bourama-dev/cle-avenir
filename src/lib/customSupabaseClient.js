@@ -11,7 +11,7 @@ const customSupabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
-    detectSessionInUrl: false, // AuthCallback handles the PKCE exchange manually
+    detectSessionInUrl: true,
     storage: window.localStorage,
     flowType: 'pkce'
   }
