@@ -53,7 +53,7 @@ const InteractiveResponse = ({ components, onAction }) => (
 const Cleo = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { isPremium, cleoCreditsRemaining, cleoFreeLimit, hasCleoCredits, consumeCleoCredit } = usePlanLimitation();
+  const { isPremiumPlus, cleoCreditsRemaining, cleoFreeLimit, hasCleoCredits, consumeCleoCredit } = usePlanLimitation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -310,7 +310,7 @@ const Cleo = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-sm">Cléo Assistant</h3>
-                  {user && isPremium ? (
+                  {user && isPremiumPlus ? (
                     <div className="flex items-center gap-2 text-xs text-indigo-100">
                       <span className="flex items-center gap-1">
                         <Star size={10} className="fill-yellow-300 text-yellow-300" />
@@ -456,12 +456,12 @@ const Cleo = () => {
               <div className="p-4 bg-gradient-to-r from-violet-50 to-indigo-50 border-t border-indigo-100 text-center">
                 <Lock className="w-5 h-5 text-indigo-400 mx-auto mb-1.5" />
                 <p className="text-xs font-bold text-slate-700 mb-0.5">Tes {cleoFreeLimit} messages découverte sont utilisés</p>
-                <p className="text-xs text-slate-500 mb-2">Passe à Premium pour continuer avec Cléo sans limite.</p>
+                <p className="text-xs text-slate-500 mb-2">Cléo est disponible en illimité avec le plan <strong>Premium+</strong>.</p>
                 <button
                   onClick={() => { setIsOpen(false); navigate('/plans'); }}
                   className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-xs font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-1.5 hover:opacity-90 transition"
                 >
-                  <Zap size={13} /> Débloquer Cléo Premium
+                  <Zap size={13} /> Découvrir Premium+
                 </button>
               </div>
             )}

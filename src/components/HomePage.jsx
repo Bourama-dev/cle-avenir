@@ -555,17 +555,17 @@ const HomePage = ({ onNavigate }) => {
                   </div>
                   <ul className="space-y-3">
                     {[
-                      { icon: BarChart3, text: 'Top 3 métiers compatibles avec ton profil', ok: true },
-                      { icon: MessageSquare, text: '5 messages avec Cléo pour explorer tes options', ok: true },
-                      { icon: GraduationCap, text: 'Recherche de formations et d\'offres', ok: true },
-                      { icon: Lock, text: 'Résultats complets (4 à 15 métiers)', ok: false },
-                      { icon: Lock, text: 'Plans d\'action illimités', ok: false },
-                      { icon: Lock, text: 'Cléo sans limite de messages', ok: false },
-                    ].map(({ icon: Icon, text, ok }, i) => (
+                      { text: 'Top 3 métiers compatibles avec ton profil', ok: true },
+                      { text: '5 messages découverte avec Cléo', ok: true },
+                      { text: 'Recherche de formations et d\'offres', ok: true },
+                      { text: 'Résultats complets (4 à 15 métiers)', ok: false },
+                      { text: 'Plans d\'action illimités', ok: false },
+                      { text: 'Cléo illimitée (plan Premium+)', ok: false },
+                    ].map(({ text, ok }, i) => (
                       <li key={i} className={`flex items-start gap-3 text-sm ${ok ? 'text-slate-700' : 'text-slate-400'}`}>
                         {ok
                           ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                          : <Lock className="w-4 h-4 shrink-0 mt-0.5" />
+                          : <Lock className="w-4 h-4 shrink-0 mt-0.5 text-slate-300" />
                         }
                         {text}
                       </li>
@@ -601,10 +601,10 @@ const HomePage = ({ onNavigate }) => {
                   </div>
                   <ul className="space-y-3">
                     {[
-                      'Top 3 métiers + tous les résultats compatibles',
-                      'Cléo illimitée — coach IA disponible 24/7',
+                      'Tous les résultats compatibles (4 à 15 métiers)',
                       'Plans d\'action personnalisés sans limite',
                       'Suivi de progression et alertes métiers',
+                      'Cléo illimitée incluse dans Premium+',
                       'Accès prioritaire aux nouvelles fonctionnalités',
                     ].map((text, i) => (
                       <li key={i} className="flex items-start gap-3 text-sm text-white">

@@ -17,25 +17,26 @@ export const PlanLimitationProvider = ({ children }) => {
     }
   }, [subscriptionTier]);
 
-  const isPremium = userPlan === 'Premium' || userPlan === 'Premium+';
+  const isPremium     = userPlan === 'Premium' || userPlan === 'Premium+';
+  const isPremiumPlus = userPlan === 'Premium+';
 
-  // ── Cleo credits (plan gratuit uniquement) ─────────────────────────────────
+  // ── Cleo credits — illimité seulement en Premium+, découverte 5 msgs sinon ─
   const [cleoCreditsUsed, setCleoCreditsUsed] = useState(() => {
     try { return parseInt(localStorage.getItem(CLEO_CREDITS_KEY) || '0', 10); }
     catch { return 0; }
   });
 
-  const cleoCreditsRemaining = isPremium
+  const cleoCreditsRemaining = isPremiumPlus
     ? Infinity
     : Math.max(0, CLEO_FREE_LIMIT - cleoCreditsUsed);
 
   const hasCleoCredits = useCallback(
-    () => isPremium || cleoCreditsUsed < CLEO_FREE_LIMIT,
-    [isPremium, cleoCreditsUsed]
+    () => isPremiumPlus || cleoCreditsUsed < CLEO_FREE_LIMIT,
+    [isPremiumPlus, cleoCreditsUsed]
   );
 
   const consumeCleoCredit = useCallback(() => {
-    if (isPremium) return;
+    if (isPremiumPlus) return;
     const next = cleoCreditsUsed + 1;
     setCleoCreditsUsed(next);
     try { localStorage.setItem(CLEO_CREDITS_KEY, String(next)); } catch {}
@@ -47,6 +48,7 @@ export const PlanLimitationProvider = ({ children }) => {
   const value = {
     userPlan,
     isPremium,
+    isPremiumPlus,
     canViewAllResults,
     getVisibleMetierCount,
     cleoCreditsRemaining,
