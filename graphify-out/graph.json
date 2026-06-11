@@ -4,6 +4,86 @@
   "graph": {},
   "nodes": [
     {
+      "label": "MetierCard.jsx",
+      "file_type": "code",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_results_metiercard",
+      "community": 160,
+      "norm_label": "metiercard.jsx"
+    },
+    {
+      "label": "RIASEC_NAMES",
+      "file_type": "code",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "test_results_metiercard_riasec_names",
+      "community": 160,
+      "norm_label": "riasec_names"
+    },
+    {
+      "label": "DEMAND_LABELS",
+      "file_type": "code",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "test_results_metiercard_demand_labels",
+      "community": 160,
+      "norm_label": "demand_labels"
+    },
+    {
+      "label": "GROWTH_LABELS",
+      "file_type": "code",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "test_results_metiercard_growth_labels",
+      "community": 160,
+      "norm_label": "growth_labels"
+    },
+    {
+      "label": "getCompatibilityLabel()",
+      "file_type": "code",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "test_results_metiercard_getcompatibilitylabel",
+      "community": 160,
+      "norm_label": "getcompatibilitylabel()"
+    },
+    {
+      "label": "generateMatchExplanation()",
+      "file_type": "code",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "test_results_metiercard_generatematchexplanation",
+      "community": 160,
+      "norm_label": "generatematchexplanation()"
+    },
+    {
+      "label": "ScoreBar()",
+      "file_type": "code",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L61",
+      "_origin": "ast",
+      "id": "test_results_metiercard_scorebar",
+      "community": 160,
+      "norm_label": "scorebar()"
+    },
+    {
+      "label": "MetierCard()",
+      "file_type": "code",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L78",
+      "_origin": "ast",
+      "id": "test_results_metiercard_metiercard",
+      "community": 160,
+      "norm_label": "metiercard()"
+    },
+    {
       "label": "TestPage.jsx",
       "file_type": "code",
       "source_file": "src/pages/TestPage.jsx",
@@ -74,14 +154,44 @@
       "norm_label": "testpage()"
     },
     {
+      "label": "TestResultsPage.jsx",
+      "file_type": "code",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pages_testresultspage",
+      "community": 83,
+      "norm_label": "testresultspage.jsx"
+    },
+    {
+      "label": "DIMENSION_LABELS",
+      "file_type": "code",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "pages_testresultspage_dimension_labels",
+      "community": 83,
+      "norm_label": "dimension_labels"
+    },
+    {
+      "label": "TestResultsPage()",
+      "file_type": "code",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "pages_testresultspage_testresultspage",
+      "community": 83,
+      "norm_label": "testresultspage()"
+    },
+    {
       "label": "matchingAlgorithm.js",
       "file_type": "code",
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "services_matchingalgorithm",
       "community": 4,
-      "norm_label": "matchingalgorithm.js"
+      "norm_label": "matchingalgorithm.js",
+      "id": "services_matchingalgorithm"
     },
     {
       "label": "generateRiasecWeights()",
@@ -89,9 +199,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_generateriasecweights",
       "community": 4,
-      "norm_label": "generateriasecweights()"
+      "norm_label": "generateriasecweights()",
+      "id": "services_matchingalgorithm_generateriasecweights"
     },
     {
       "label": "extractMetierWeights()",
@@ -99,9 +209,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L21",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_extractmetierweights",
       "community": 4,
-      "norm_label": "extractmetierweights()"
+      "norm_label": "extractmetierweights()",
+      "id": "services_matchingalgorithm_extractmetierweights"
     },
     {
       "label": "calculateRIASECScore()",
@@ -109,9 +219,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_calculateriasecscore",
       "community": 4,
-      "norm_label": "calculateriasecscore()"
+      "norm_label": "calculateriasecscore()",
+      "id": "services_matchingalgorithm_calculateriasecscore"
     },
     {
       "label": "getHybridProfile()",
@@ -119,9 +229,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L59",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_gethybridprofile",
       "community": 4,
-      "norm_label": "gethybridprofile()"
+      "norm_label": "gethybridprofile()",
+      "id": "services_matchingalgorithm_gethybridprofile"
     },
     {
       "label": "calculateHybridScore()",
@@ -129,9 +239,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L67",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_calculatehybridscore",
       "community": 4,
-      "norm_label": "calculatehybridscore()"
+      "norm_label": "calculatehybridscore()",
+      "id": "services_matchingalgorithm_calculatehybridscore"
     },
     {
       "label": "calculateStabilityScore()",
@@ -139,9 +249,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L81",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_calculatestabilityscore",
       "community": 4,
-      "norm_label": "calculatestabilityscore()"
+      "norm_label": "calculatestabilityscore()",
+      "id": "services_matchingalgorithm_calculatestabilityscore"
     },
     {
       "label": "calculateGrowthScore()",
@@ -149,9 +259,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L89",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_calculategrowthscore",
       "community": 4,
-      "norm_label": "calculategrowthscore()"
+      "norm_label": "calculategrowthscore()",
+      "id": "services_matchingalgorithm_calculategrowthscore"
     },
     {
       "label": "calculateDemandScore()",
@@ -159,9 +269,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L97",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_calculatedemandscore",
       "community": 4,
-      "norm_label": "calculatedemandscore()"
+      "norm_label": "calculatedemandscore()",
+      "id": "services_matchingalgorithm_calculatedemandscore"
     },
     {
       "label": "calculateConfidence()",
@@ -169,9 +279,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L106",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_calculateconfidence",
       "community": 4,
-      "norm_label": "calculateconfidence()"
+      "norm_label": "calculateconfidence()",
+      "id": "services_matchingalgorithm_calculateconfidence"
     },
     {
       "label": "getRecommendation()",
@@ -179,9 +289,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L118",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_getrecommendation",
       "community": 4,
-      "norm_label": "getrecommendation()"
+      "norm_label": "getrecommendation()",
+      "id": "services_matchingalgorithm_getrecommendation"
     },
     {
       "label": "generateAdvice()",
@@ -189,9 +299,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L125",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_generateadvice",
       "community": 4,
-      "norm_label": "generateadvice()"
+      "norm_label": "generateadvice()",
+      "id": "services_matchingalgorithm_generateadvice"
     },
     {
       "label": "generateNextSteps()",
@@ -199,9 +309,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L138",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_generatenextsteps",
       "community": 4,
-      "norm_label": "generatenextsteps()"
+      "norm_label": "generatenextsteps()",
+      "id": "services_matchingalgorithm_generatenextsteps"
     },
     {
       "label": "getPersonalizedRecommendations()",
@@ -209,9 +319,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L156",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_getpersonalizedrecommendations",
       "community": 4,
-      "norm_label": "getpersonalizedrecommendations()"
+      "norm_label": "getpersonalizedrecommendations()",
+      "id": "services_matchingalgorithm_getpersonalizedrecommendations"
     },
     {
       "label": "calculateAdvancedMatching()",
@@ -219,9 +329,9 @@
       "source_file": "src/services/matchingAlgorithm.js",
       "source_location": "L166",
       "_origin": "ast",
-      "id": "services_matchingalgorithm_calculateadvancedmatching",
       "community": 4,
-      "norm_label": "calculateadvancedmatching()"
+      "norm_label": "calculateadvancedmatching()",
+      "id": "services_matchingalgorithm_calculateadvancedmatching"
     },
     {
       "label": "components.json",
@@ -5709,7 +5819,7 @@
       "source_file": "src/components/UpgradeButton.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 230,
       "norm_label": "upgradebutton.jsx",
       "id": "components_upgradebutton"
     },
@@ -5719,7 +5829,7 @@
       "source_file": "src/components/UpgradeButton.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 2,
+      "community": 230,
       "norm_label": "upgradebutton()",
       "id": "components_upgradebutton_upgradebutton"
     },
@@ -6139,7 +6249,7 @@
       "source_file": "src/components/admin/AdminMetierManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 169,
+      "community": 1,
       "norm_label": "adminmetiermanager.jsx",
       "id": "admin_adminmetiermanager"
     },
@@ -6149,7 +6259,7 @@
       "source_file": "src/components/admin/AdminMetierManager.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 169,
+      "community": 1,
       "norm_label": "adminmetiermanager()",
       "id": "admin_adminmetiermanager_adminmetiermanager"
     },
@@ -6159,7 +6269,7 @@
       "source_file": "src/components/admin/AdminOffreManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 51,
+      "community": 1,
       "norm_label": "adminoffremanager.jsx",
       "id": "admin_adminoffremanager"
     },
@@ -6169,7 +6279,7 @@
       "source_file": "src/components/admin/AdminOffreManager.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 51,
+      "community": 1,
       "norm_label": "adminoffremanager()",
       "id": "admin_adminoffremanager_adminoffremanager"
     },
@@ -6289,7 +6399,7 @@
       "source_file": "src/components/admin/forms/MetierForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 169,
+      "community": 1,
       "norm_label": "metierform.jsx",
       "id": "forms_metierform"
     },
@@ -6299,7 +6409,7 @@
       "source_file": "src/components/admin/forms/MetierForm.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 169,
+      "community": 1,
       "norm_label": "metierform()",
       "id": "forms_metierform_metierform"
     },
@@ -6309,7 +6419,7 @@
       "source_file": "src/components/admin/forms/OffreForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 51,
+      "community": 1,
       "norm_label": "offreform.jsx",
       "id": "forms_offreform"
     },
@@ -6319,7 +6429,7 @@
       "source_file": "src/components/admin/forms/OffreForm.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 51,
+      "community": 1,
       "norm_label": "offreform()",
       "id": "forms_offreform_offreform"
     },
@@ -6969,7 +7079,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentFilters.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 20,
       "norm_label": "establishmentfilters.jsx",
       "id": "establishments_establishmentfilters"
     },
@@ -6979,7 +7089,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentFilters.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 23,
+      "community": 20,
       "norm_label": "establishmentfilters()",
       "id": "establishments_establishmentfilters_establishmentfilters"
     },
@@ -7299,7 +7409,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 230,
+      "community": 1,
       "norm_label": "establishmentlogs.jsx",
       "id": "dashboard_establishmentlogs"
     },
@@ -7309,7 +7419,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 230,
+      "community": 1,
       "norm_label": "log_filters",
       "id": "dashboard_establishmentlogs_log_filters"
     },
@@ -7319,7 +7429,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 230,
+      "community": 1,
       "norm_label": "establishmentlogs()",
       "id": "dashboard_establishmentlogs_establishmentlogs"
     },
@@ -7859,7 +7969,7 @@
       "source_file": "src/components/auth/AuthTabs.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 51,
       "norm_label": "authtabs.jsx",
       "id": "auth_authtabs"
     },
@@ -7869,7 +7979,7 @@
       "source_file": "src/components/auth/AuthTabs.jsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 6,
+      "community": 51,
       "norm_label": "authtabs()",
       "id": "auth_authtabs_authtabs"
     },
@@ -8049,7 +8159,7 @@
       "source_file": "src/components/blog/BlogCommentForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 169,
       "norm_label": "blogcommentform.jsx",
       "id": "blog_blogcommentform"
     },
@@ -8059,7 +8169,7 @@
       "source_file": "src/components/blog/BlogCommentForm.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 2,
+      "community": 169,
       "norm_label": "blogcommentform()",
       "id": "blog_blogcommentform_blogcommentform"
     },
@@ -11469,7 +11579,7 @@
       "source_file": "src/components/formation-finder/FormationCard.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 247,
       "norm_label": "formationcard.jsx",
       "id": "formation_finder_formationcard"
     },
@@ -11479,7 +11589,7 @@
       "source_file": "src/components/formation-finder/FormationCard.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 6,
+      "community": 247,
       "norm_label": "formationcard()",
       "id": "formation_finder_formationcard_formationcard"
     },
@@ -12719,7 +12829,7 @@
       "source_file": "src/components/legal/RGPDPreferences.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 247,
+      "community": 2,
       "norm_label": "rgpdpreferences.jsx",
       "id": "legal_rgpdpreferences"
     },
@@ -12729,7 +12839,7 @@
       "source_file": "src/components/legal/RGPDPreferences.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 247,
+      "community": 2,
       "norm_label": "rgpdpreferences()",
       "id": "legal_rgpdpreferences_rgpdpreferences"
     },
@@ -13479,7 +13589,7 @@
       "source_file": "src/components/plans/CreatePlanModal.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 438,
       "norm_label": "createplanmodal.jsx",
       "id": "plans_createplanmodal"
     },
@@ -13489,7 +13599,7 @@
       "source_file": "src/components/plans/CreatePlanModal.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 2,
+      "community": 438,
       "norm_label": "createplanmodal()",
       "id": "plans_createplanmodal_createplanmodal"
     },
@@ -14144,56 +14254,6 @@
       "id": "test_results_jobcard_jobcard"
     },
     {
-      "label": "MetierCard.jsx",
-      "file_type": "code",
-      "source_file": "src/components/test-results/MetierCard.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 160,
-      "norm_label": "metiercard.jsx",
-      "id": "test_results_metiercard"
-    },
-    {
-      "label": "RIASEC_NAMES",
-      "file_type": "code",
-      "source_file": "src/components/test-results/MetierCard.jsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 160,
-      "norm_label": "riasec_names",
-      "id": "test_results_metiercard_riasec_names"
-    },
-    {
-      "label": "getCompatibilityLabel()",
-      "file_type": "code",
-      "source_file": "src/components/test-results/MetierCard.jsx",
-      "source_location": "L16",
-      "_origin": "ast",
-      "community": 160,
-      "norm_label": "getcompatibilitylabel()",
-      "id": "test_results_metiercard_getcompatibilitylabel"
-    },
-    {
-      "label": "generateMatchExplanation()",
-      "file_type": "code",
-      "source_file": "src/components/test-results/MetierCard.jsx",
-      "source_location": "L24",
-      "_origin": "ast",
-      "community": 160,
-      "norm_label": "generatematchexplanation()",
-      "id": "test_results_metiercard_generatematchexplanation"
-    },
-    {
-      "label": "MetierCard()",
-      "file_type": "code",
-      "source_file": "src/components/test-results/MetierCard.jsx",
-      "source_location": "L46",
-      "_origin": "ast",
-      "community": 160,
-      "norm_label": "metiercard()",
-      "id": "test_results_metiercard_metiercard"
-    },
-    {
       "label": "MetierFilterPanel.jsx",
       "file_type": "code",
       "source_file": "src/components/test-results/MetierFilterPanel.jsx",
@@ -14819,7 +14879,7 @@
       "source_file": "src/components/ui/LazyImage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 440,
       "norm_label": "lazyimage.jsx",
       "id": "ui_lazyimage"
     },
@@ -14829,7 +14889,7 @@
       "source_file": "src/components/ui/LazyImage.jsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 6,
+      "community": 440,
       "norm_label": "lazyimage()",
       "id": "ui_lazyimage_lazyimage"
     },
@@ -14839,7 +14899,7 @@
       "source_file": "src/components/ui/LoadingSpinner.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 447,
       "norm_label": "loadingspinner.jsx",
       "id": "ui_loadingspinner"
     },
@@ -14849,7 +14909,7 @@
       "source_file": "src/components/ui/LoadingSpinner.jsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 6,
+      "community": 447,
       "norm_label": "loadingspinner()",
       "id": "ui_loadingspinner_loadingspinner"
     },
@@ -16509,7 +16569,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "item.jsx",
       "id": "ui_item"
     },
@@ -16519,7 +16579,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemgroup()",
       "id": "ui_item_itemgroup"
     },
@@ -16529,7 +16589,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemseparator()",
       "id": "ui_item_itemseparator"
     },
@@ -16539,7 +16599,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemvariants",
       "id": "ui_item_itemvariants"
     },
@@ -16549,7 +16609,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L55",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "item()",
       "id": "ui_item_item"
     },
@@ -16559,7 +16619,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L73",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemmediavariants",
       "id": "ui_item_itemmediavariants"
     },
@@ -16569,7 +16629,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L90",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemmedia()",
       "id": "ui_item_itemmedia"
     },
@@ -16579,7 +16639,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L104",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemcontent()",
       "id": "ui_item_itemcontent"
     },
@@ -16589,7 +16649,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L119",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemtitle()",
       "id": "ui_item_itemtitle"
     },
@@ -16599,7 +16659,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L134",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemdescription()",
       "id": "ui_item_itemdescription"
     },
@@ -16609,7 +16669,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L150",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemactions()",
       "id": "ui_item_itemactions"
     },
@@ -16619,7 +16679,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L162",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemheader()",
       "id": "ui_item_itemheader"
     },
@@ -16629,7 +16689,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L174",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemfooter()",
       "id": "ui_item_itemfooter"
     },
@@ -19999,7 +20059,7 @@
       "source_file": "src/hooks/useUserSubscription.js",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 186,
+      "community": 2,
       "norm_label": "useusersubscription()",
       "id": "hooks_useusersubscription_useusersubscription"
     },
@@ -20559,7 +20619,7 @@
       "source_file": "src/pages/ActionPlanPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 249,
       "norm_label": "actionplanpage.jsx",
       "id": "pages_actionplanpage"
     },
@@ -20569,7 +20629,7 @@
       "source_file": "src/pages/ActionPlanPage.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 2,
+      "community": 249,
       "norm_label": "actionplanpage()",
       "id": "pages_actionplanpage_actionplanpage"
     },
@@ -20979,7 +21039,7 @@
       "source_file": "src/pages/AdminMetiers.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 47,
       "norm_label": "adminmetiers.jsx",
       "id": "pages_adminmetiers"
     },
@@ -20989,7 +21049,7 @@
       "source_file": "src/pages/AdminMetiers.jsx",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 1,
+      "community": 47,
       "norm_label": "initialformstate",
       "id": "pages_adminmetiers_initialformstate"
     },
@@ -20999,7 +21059,7 @@
       "source_file": "src/pages/AdminMetiers.jsx",
       "source_location": "L45",
       "_origin": "ast",
-      "community": 1,
+      "community": 47,
       "norm_label": "adminmetiers()",
       "id": "pages_adminmetiers_adminmetiers"
     },
@@ -21729,7 +21789,7 @@
       "source_file": "src/pages/InterviewPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 432,
       "norm_label": "interviewpage.jsx",
       "id": "pages_interviewpage"
     },
@@ -21739,7 +21799,7 @@
       "source_file": "src/pages/InterviewPage.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 2,
+      "community": 432,
       "norm_label": "interviewpage()",
       "id": "pages_interviewpage_interviewpage"
     },
@@ -21929,7 +21989,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 249,
+      "community": 1,
       "norm_label": "loginpage.jsx",
       "id": "pages_loginpage"
     },
@@ -21939,7 +21999,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 249,
+      "community": 1,
       "norm_label": "googleicon()",
       "id": "pages_loginpage_googleicon"
     },
@@ -21949,7 +22009,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 249,
+      "community": 1,
       "norm_label": "loginpage()",
       "id": "pages_loginpage_loginpage"
     },
@@ -22169,7 +22229,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 186,
+      "community": 2,
       "norm_label": "managesubscriptionpage.jsx",
       "id": "pages_managesubscriptionpage"
     },
@@ -22179,7 +22239,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 186,
+      "community": 2,
       "norm_label": "plans",
       "id": "pages_managesubscriptionpage_plans"
     },
@@ -22189,7 +22249,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 186,
+      "community": 2,
       "norm_label": "freeplanview()",
       "id": "pages_managesubscriptionpage_freeplanview"
     },
@@ -22199,7 +22259,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L138",
       "_origin": "ast",
-      "community": 186,
+      "community": 2,
       "norm_label": "paidplanview()",
       "id": "pages_managesubscriptionpage_paidplanview"
     },
@@ -22209,7 +22269,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L235",
       "_origin": "ast",
-      "community": 186,
+      "community": 2,
       "norm_label": "managesubscriptionpage()",
       "id": "pages_managesubscriptionpage_managesubscriptionpage"
     },
@@ -23124,36 +23184,6 @@
       "id": "pages_testresults_testresults"
     },
     {
-      "label": "TestResultsPage.jsx",
-      "file_type": "code",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 83,
-      "norm_label": "testresultspage.jsx",
-      "id": "pages_testresultspage"
-    },
-    {
-      "label": "DIMENSION_LABELS",
-      "file_type": "code",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L29",
-      "_origin": "ast",
-      "community": 83,
-      "norm_label": "dimension_labels",
-      "id": "pages_testresultspage_dimension_labels"
-    },
-    {
-      "label": "TestResultsPage()",
-      "file_type": "code",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L33",
-      "_origin": "ast",
-      "community": 83,
-      "norm_label": "testresultspage()",
-      "id": "pages_testresultspage_testresultspage"
-    },
-    {
       "label": "UpdatePasswordPage.jsx",
       "file_type": "code",
       "source_file": "src/pages/UpdatePasswordPage.jsx",
@@ -23469,7 +23499,7 @@
       "source_file": "src/pages/user/CookiesPreferencesPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 575,
+      "community": 2,
       "norm_label": "cookiespreferencespage.jsx",
       "id": "user_cookiespreferencespage"
     },
@@ -23479,7 +23509,7 @@
       "source_file": "src/pages/user/CookiesPreferencesPage.jsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 575,
+      "community": 2,
       "norm_label": "cookiespreferencespage()",
       "id": "user_cookiespreferencespage_cookiespreferencespage"
     },
@@ -32358,6 +32388,98 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "test_results_metiercard",
+      "target": "test_results_metiercard_demand_labels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_results_metiercard",
+      "target": "test_results_metiercard_generatematchexplanation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_results_metiercard",
+      "target": "test_results_metiercard_getcompatibilitylabel"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "test_results_metiercard",
+      "target": "test_results_metiercard_growth_labels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L46",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_results_metiercard",
+      "target": "test_results_metiercard_metiercard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_results_metiercard",
+      "target": "test_results_metiercard_riasec_names"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "test_results_metiercard",
+      "target": "test_results_metiercard_scorebar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_results_metiercard_metiercard",
+      "target": "test_results_metiercard_getcompatibilitylabel"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/test-results/MetierCard.jsx",
+      "source_location": "L48",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_results_metiercard_metiercard",
+      "target": "test_results_metiercard_generatematchexplanation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/pages/TestPage.jsx",
       "source_location": "L21",
       "weight": 1.0,
@@ -32381,9 +32503,9 @@
       "source_file": "src/pages/TestPage.jsx",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_testpage",
-      "target": "pages_testpage_computeprofilemeta",
-      "confidence_score": 1.0
+      "target": "pages_testpage_computeprofilemeta"
     },
     {
       "relation": "contains",
@@ -32436,6 +32558,48 @@
       "weight": 1.0,
       "source": "pages_testpage_testpage",
       "target": "seo_seopresets_testpageseo"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_testresultspage",
+      "target": "pages_testresultspage_dimension_labels"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_testresultspage",
+      "target": "pages_testresultspage_testresultspage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "pages_testresultspage_testresultspage",
+      "target": "contexts_planlimitationcontext_useplanlimitation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "pages_testresultspage_testresultspage",
+      "target": "ui_use_toast_usetoast"
     },
     {
       "relation": "contains",
@@ -47762,68 +47926,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/test-results/MetierCard.jsx",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_results_metiercard",
-      "target": "test_results_metiercard_generatematchexplanation"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/test-results/MetierCard.jsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_results_metiercard",
-      "target": "test_results_metiercard_getcompatibilitylabel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/test-results/MetierCard.jsx",
-      "source_location": "L46",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_results_metiercard",
-      "target": "test_results_metiercard_metiercard"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/test-results/MetierCard.jsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_results_metiercard",
-      "target": "test_results_metiercard_riasec_names"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/test-results/MetierCard.jsx",
-      "source_location": "L47",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_results_metiercard_metiercard",
-      "target": "test_results_metiercard_getcompatibilitylabel"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/test-results/MetierCard.jsx",
-      "source_location": "L48",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_results_metiercard_metiercard",
-      "target": "test_results_metiercard_generatematchexplanation"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/components/test-results/MetierFilterPanel.jsx",
       "source_location": "L6",
       "weight": 1.0,
@@ -52482,17 +52584,6 @@
       "context": "call",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "pages_testresultspage_testresultspage",
-      "target": "ui_use_toast_usetoast"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
       "source_file": "src/pages/UpdatePasswordPage.jsx",
       "source_location": "L17",
       "weight": 1.0,
@@ -52918,17 +53009,6 @@
       "weight": 1.0,
       "source": "contexts_planlimitationcontext_planlimitationprovider",
       "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L36",
-      "weight": 1.0,
-      "source": "pages_testresultspage_testresultspage",
-      "target": "contexts_planlimitationcontext_useplanlimitation"
     },
     {
       "relation": "contains",
@@ -57310,26 +57390,6 @@
       "confidence_score": 1.0,
       "source": "pages_testresults",
       "target": "pages_testresults_testresults"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_testresultspage",
-      "target": "pages_testresultspage_dimension_labels"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L33",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_testresultspage",
-      "target": "pages_testresultspage_testresultspage"
     },
     {
       "relation": "contains",
@@ -67265,5 +67325,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "453a02f007e7fc4ccfc8f8f3772af5d6efc79b18"
+  "built_at_commit": "abf66843815017f73cf902c6c6f265ff6b8b6412"
 }
