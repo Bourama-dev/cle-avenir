@@ -205,8 +205,8 @@
     "semantic_hash": "ae2e09639184baa5ab96e59b8111189b"
   },
   "src/components/HomePage.jsx": {
-    "mtime": 1781137850.2977695,
-    "ast_hash": "5c6584ef38d65f261007db0c4fc614ef",
+    "mtime": 1781164928.1913629,
+    "ast_hash": "27710cfacfea7599aea5a65fcc03b928",
     "semantic_hash": ""
   },
   "src/components/ImageLoader.jsx": {
@@ -1030,9 +1030,9 @@
     "semantic_hash": "79ada37f60de09041e615eb8728b0ded"
   },
   "src/components/cleo/Cleo.jsx": {
-    "mtime": 1780647208.5312865,
-    "ast_hash": "539f24e71b91d3301dd47b6ad6ed9194",
-    "semantic_hash": "539f24e71b91d3301dd47b6ad6ed9194"
+    "mtime": 1781164894.7713635,
+    "ast_hash": "c0fad058d720128ab153860615f882fc",
+    "semantic_hash": ""
   },
   "src/components/cleo/CleoActivitySystem.jsx": {
     "mtime": 1780647208.5312865,
@@ -2680,9 +2680,9 @@
     "semantic_hash": "b05564b9618a19167bd775afe7349ab2"
   },
   "src/contexts/PlanLimitationContext.jsx": {
-    "mtime": 1780647208.5838976,
-    "ast_hash": "4e0b7cf064cf194c7579e824d6d04922",
-    "semantic_hash": "4e0b7cf064cf194c7579e824d6d04922"
+    "mtime": 1781164829.859365,
+    "ast_hash": "e453ffa7f8d24d60dbf521992207d643",
+    "semantic_hash": ""
   },
   "src/contexts/SupabaseAuthContext.jsx": {
     "mtime": 1780647208.5838976,
@@ -3450,8 +3450,8 @@
     "semantic_hash": "cc62d93d515db863f175ede0a8e579f8"
   },
   "src/pages/TestResultsPage.jsx": {
-    "mtime": 1781138321.6577976,
-    "ast_hash": "fa328a303532c8e5bdaa40d238aec930",
+    "mtime": 1781164959.8393621,
+    "ast_hash": "c61900f5554774e04c0abdd104b44e2c",
     "semantic_hash": ""
   },
   "src/pages/UpdatePasswordPage.jsx": {

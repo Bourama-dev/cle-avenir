@@ -437,9 +437,7 @@
   "435": "pages_edgefunctiondiagnostics",
   "436": "pages_establishmentforgotpasswordpage",
   "437": "pages_establishmentloginpage",
-  "438": "Community 438",
   "439": "pages_institutionstafflogin",
-  "440": "Community 440",
   "441": "pages_jobofferspage",
   "442": "pages_parentalconsentpage",
   "443": "pages_privacydashboard",
@@ -574,7 +572,6 @@
   "572": "ui_textreveal",
   "573": "ui_tiltcard",
   "574": "ui_tooltip",
-  "575": "Community 575",
   "576": "utils_coverletterpdfexporter",
   "577": "utils_cvdataextractor",
   "578": "utils_cvdatavalidator",
@@ -601,6 +598,5 @@
   "599": "tailwind_config",
   "600": "tests_etablissements_route_test",
   "601": "three_heroscene3d",
-  "602": "ui_collapsible",
-  "603": "Community 603"
+  "602": "ui_collapsible"
 }
