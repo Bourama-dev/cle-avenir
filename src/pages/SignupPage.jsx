@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation, Link } from 'react-router-dom';
 import { AuthService } from '@/services/authService';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -22,10 +22,12 @@ const TOTAL_STEPS = 7;
 const SignupPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const { toast } = useToast();
   const { user, loading: authLoading } = useAuth();
 
   const isGoogleFlow = searchParams.get('google') === 'true';
+  const redirectTo = location.state?.from || '/dashboard';
   const FIRST_STEP = isGoogleFlow ? 3 : 1;
 
   const [currentStep, setCurrentStep] = useState(isGoogleFlow ? 3 : 1);
@@ -196,7 +198,7 @@ const SignupPage = () => {
         return;
       }
       toast({ title: 'Profil complété !', description: 'Bienvenue sur CléAvenir !' });
-      navigate('/results');
+      navigate(redirectTo, { replace: true });
       return;
     }
 
