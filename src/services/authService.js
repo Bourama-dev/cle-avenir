@@ -166,6 +166,15 @@ export const AuthService = {
   },
 
   async signInWithGoogle() {
+    // Clear any existing local session before starting a fresh OAuth flow.
+    // If a stale/expired session sits in localStorage, Supabase's internal
+    // _recoverAndRefresh() will try to refresh it on the callback page.
+    // When the refresh fails it calls its internal _logout() which deletes
+    // the PKCE code_verifier — making the subsequent exchangeCodeForSession
+    // fail with "both auth code and code verifier should be non-empty".
+    // scope:'local' clears storage without an API call (safe even if offline).
+    await supabase.auth.signOut({ scope: 'local' }).catch(() => {});
+
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
