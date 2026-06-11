@@ -205,8 +205,8 @@
     "semantic_hash": "ae2e09639184baa5ab96e59b8111189b"
   },
   "src/components/HomePage.jsx": {
-    "mtime": 1781164928.1913629,
-    "ast_hash": "27710cfacfea7599aea5a65fcc03b928",
+    "mtime": 1781165168.1073573,
+    "ast_hash": "6b1814b77eff97612e6e61e069c29a7a",
     "semantic_hash": ""
   },
   "src/components/ImageLoader.jsx": {
@@ -1030,8 +1030,8 @@
     "semantic_hash": "79ada37f60de09041e615eb8728b0ded"
   },
   "src/components/cleo/Cleo.jsx": {
-    "mtime": 1781164894.7713635,
-    "ast_hash": "c0fad058d720128ab153860615f882fc",
+    "mtime": 1781165147.7873578,
+    "ast_hash": "908150932b2e0af5e50bf23f6a391e17",
     "semantic_hash": ""
   },
   "src/components/cleo/CleoActivitySystem.jsx": {
@@ -2680,8 +2680,8 @@
     "semantic_hash": "b05564b9618a19167bd775afe7349ab2"
   },
   "src/contexts/PlanLimitationContext.jsx": {
-    "mtime": 1781164829.859365,
-    "ast_hash": "e453ffa7f8d24d60dbf521992207d643",
+    "mtime": 1781165128.1033583,
+    "ast_hash": "e63479e8f4ea465f1f832b0db94f8a3d",
     "semantic_hash": ""
   },
   "src/contexts/SupabaseAuthContext.jsx": {
@@ -3450,8 +3450,8 @@
     "semantic_hash": "cc62d93d515db863f175ede0a8e579f8"
   },
   "src/pages/TestResultsPage.jsx": {
-    "mtime": 1781164959.8393621,
-    "ast_hash": "c61900f5554774e04c0abdd104b44e2c",
+    "mtime": 1781193338.3621912,
+    "ast_hash": "34353b5900ac6e642c854dc169c6b00b",
     "semantic_hash": ""
   },
   "src/pages/UpdatePasswordPage.jsx": {
@@ -4080,9 +4080,9 @@
     "semantic_hash": "f13a0c3014b90a75dd345bef8fbe3c22"
   },
   "src/services/metierRecommendationService.js": {
-    "mtime": 1780647208.637283,
-    "ast_hash": "592de9d241314ccc587cb8e7a8fc1f8e",
-    "semantic_hash": "592de9d241314ccc587cb8e7a8fc1f8e"
+    "mtime": 1781193328.4861915,
+    "ast_hash": "24958f5c87f35187f157da76aa1c05ac",
+    "semantic_hash": ""
   },
   "src/services/metierScoringService.js": {
     "mtime": 1780647208.637283,

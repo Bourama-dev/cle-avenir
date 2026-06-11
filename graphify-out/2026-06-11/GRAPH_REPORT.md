@@ -1,7 +1,7 @@
 # Graph Report - cle-avenir  (2026-06-11)
 
 ## Corpus Check
-- 959 files · ~447,558 words
+- 959 files · ~447,551 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3f7da9d9`
+- Built from commit: `fdaf1743`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
