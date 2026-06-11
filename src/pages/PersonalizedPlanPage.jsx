@@ -164,55 +164,75 @@ const PersonalizedPlanPage = () => {
     }
   };
 
-  /* ── Fetch formations — from Parcoursup API (same source as /formations) ── */
+  /* ── Normalise one Parcoursup result → FormationPathSection shape ────── */
+  const normaliseFormation = (f) => {
+    const primaryEtab = f.etablissements?.[0] || {};
+    const title = (f.libelle_formation || '').toUpperCase();
+
+    let reqLevel = 'bac';
+    if (title.includes('CAP') || title.includes('BEP'))                         reqLevel = 'cap_bep';
+    else if (title.includes('BTS') || (title.includes('BUT') && !title.includes('BUT3'))) reqLevel = 'bac+2';
+    else if (title.includes('BUT') || title.includes('LICENCE') || title.includes('BACHELOR')) reqLevel = 'bac+3';
+    else if (title.includes('MASTER') || title.includes('INGÉNIEUR') || title.includes('INGENIEUR')) reqLevel = 'bac+5';
+    else if (title.includes('DOCTORAT')) reqLevel = 'doctorat';
+
+    const durationMap = { 'cap_bep': '2 ans', 'bac': '3 ans', 'bac+2': '2 ans', 'bac+3': '3 ans', 'bac+5': '2 ans', 'doctorat': '3 ans' };
+
+    return {
+      id:                       f.id_formation || f.g_ea_lib_vx,
+      title:                    f.libelle_formation || 'Formation',
+      provider:                 primaryEtab.nom || f.etablissement || 'Établissement',
+      provider_name:            primaryEtab.nom || f.etablissement || 'Établissement',
+      required_education_level: reqLevel,
+      duration:                 durationMap[reqLevel] || 'Variable',
+      location_city:            primaryEtab.ville || f.ville || '',
+      region:                   primaryEtab.region || f.region || '',
+      description:              f.description || null,
+      _raw: f,
+    };
+  };
+
+  /* ── Fetch formations — personalised by métiers + region + status ─────── */
   const fetchFormationsForMetiers = async (metiers, profile) => {
     setFormationsLoading(true);
     try {
-      // Build a search keyword from the first recommended metier's label
-      const keyword = metiers[0]?.libelle || metiers[0]?.name || '';
+      // Build keywords from top 2 metiers
+      const keywords = metiers
+        .slice(0, 2)
+        .map(m => m.libelle || m.name || '')
+        .filter(Boolean);
 
-      const response = await fetchFormations({ q: keyword, limit: 20 });
-
-      if (!response.success || !response.results?.length) {
+      if (keywords.length === 0) {
         if (isMounted.current) setFormations([]);
         return;
       }
 
-      // Normalise Parcoursup shape → FormationPathSection shape
-      const normalised = response.results.map(f => {
-        const primaryEtab = f.etablissements?.[0] || {};
+      // Use user's region as location hint if available
+      const ville = profile?.region || undefined;
 
-        // Derive required_education_level from formation title (same logic as FormationsPage)
-        const title = (f.libelle_formation || '').toUpperCase();
-        let reqLevel = 'bac'; // default
-        if (title.includes('CAP') || title.includes('BEP')) reqLevel = 'cap_bep';
-        else if (title.includes('BTS') || title.includes('BUT') && !title.includes('BUT3'))
-          reqLevel = 'bac+2';
-        else if (title.includes('BUT') || title.includes('LICENCE') || title.includes('BACHELOR'))
-          reqLevel = 'bac+3';
-        else if (title.includes('MASTER') || title.includes('INGÉNIEUR') || title.includes('INGENIEUR'))
-          reqLevel = 'bac+5';
-        else if (title.includes('DOCTORAT')) reqLevel = 'doctorat';
+      // Fetch in parallel for each keyword, then merge
+      const responses = await Promise.all(
+        keywords.map(kw => fetchFormations({ q: kw, ville, limit: 20 }))
+      );
 
-        // Duration label
-        const durationMap = { 'cap_bep': '2 ans', 'bac': '3 ans', 'bac+2': '2 ans', 'bac+3': '3 ans', 'bac+5': '2 ans', 'doctorat': '3 ans' };
+      const seen = new Set();
+      const allResults = [];
+      for (const resp of responses) {
+        if (!resp.success) continue;
+        for (const f of resp.results || []) {
+          const id = f.id_formation || f.g_ea_lib_vx;
+          if (id && seen.has(id)) continue;
+          if (id) seen.add(id);
+          allResults.push(f);
+        }
+      }
 
-        return {
-          // FormationPathSection keys
-          id:                      f.id_formation || f.g_ea_lib_vx,
-          title:                   f.libelle_formation || 'Formation',
-          provider:                primaryEtab.nom || f.etablissement || 'Établissement',
-          provider_name:           primaryEtab.nom || f.etablissement || 'Établissement',
-          required_education_level: reqLevel,
-          duration:                durationMap[reqLevel] || 'Variable',
-          location_city:           primaryEtab.ville || f.ville || '',
-          region:                  primaryEtab.region || f.region || '',
-          description:             f.description || null,
-          // Keep original data for detail navigation
-          _raw: f,
-        };
-      });
+      if (allResults.length === 0) {
+        if (isMounted.current) setFormations([]);
+        return;
+      }
 
+      const normalised = allResults.map(normaliseFormation);
       const filtered = filterAndSortFormations(normalised, profile);
       if (isMounted.current) setFormations(filtered);
     } catch (err) {
@@ -224,32 +244,53 @@ const PersonalizedPlanPage = () => {
   };
 
   /**
-   * Filters formations by user education level (don't show those requiring
-   * a level the user hasn't reached yet) and sorts accessible ones first.
+   * Filters and sorts formations based on user profile:
+   *  - Education level accessibility (hard filter)
+   *  - Status-based type priority:
+   *    lycéen      → BTS / BUT / licence pro first
+   *    reconversion→ short certifications first (cap_bep, bac+2)
+   *    étudiant    → masters / licences
+   *    en_emploi   → bac+5 / masters (upskilling)
+   *    en_recherche→ accessible formations, shortest first
    */
   const filterAndSortFormations = (formations, profile) => {
     if (!profile?.education_level) return formations.slice(0, 6);
 
     const userLevel = getUserEducationLevel(profile);
+    const status = profile?.user_status || null;
+
+    // Status → preferred education levels (ordered priority)
+    const statusPriority = {
+      lyceen:       ['bac+2', 'bac+3', 'bac'],
+      etudiant:     ['bac+5', 'bac+3', 'bac+2'],
+      en_emploi:    ['bac+5', 'bac+3'],
+      en_recherche: ['bac+2', 'bac', 'bac+3'],
+      reconversion: ['bac+2', 'cap_bep', 'bac'],
+    };
+    const preferred = statusPriority[status] || [];
 
     return formations
       .map(f => {
-        // Compute the required level for this formation
         const raw = f.required_education_level || f.minimum_education || f.level || null;
         let reqLevel = 0;
         if (raw) {
           reqLevel = EDUCATION_ORDER[raw] ??
             EDUCATION_ORDER[String(raw).toLowerCase().replace(/\s/g, '')] ?? 0;
         }
-        return { ...f, _reqLevel: reqLevel, _accessible: userLevel >= reqLevel };
+        const accessible = userLevel >= reqLevel;
+        const priorityIdx = preferred.indexOf(f.required_education_level ?? '');
+        const priorityScore = priorityIdx === -1 ? 99 : priorityIdx;
+        return { ...f, _reqLevel: reqLevel, _accessible: accessible, _priorityScore: priorityScore };
       })
-      // Sort: accessible first, then by level proximity
       .sort((a, b) => {
+        // Accessible formations first
         if (a._accessible && !b._accessible) return -1;
         if (!a._accessible && b._accessible) return 1;
-        // Within accessible: prefer formations just above the user's level
-        return Math.abs(a._reqLevel - (getUserEducationLevel(profile) + 1)) -
-               Math.abs(b._reqLevel - (getUserEducationLevel(profile) + 1));
+        // Among accessible: preferred levels first
+        if (a._priorityScore !== b._priorityScore) return a._priorityScore - b._priorityScore;
+        // Then by level proximity to user's current level + 1 (next step up)
+        const target = userLevel + 1;
+        return Math.abs(a._reqLevel - target) - Math.abs(b._reqLevel - target);
       })
       .slice(0, 6);
   };

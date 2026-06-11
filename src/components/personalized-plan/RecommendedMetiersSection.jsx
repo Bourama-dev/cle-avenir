@@ -98,12 +98,32 @@ const RecommendedMetiersSection = ({ metiers, onAddMetier, isLoading, userProfil
   }
 
   /* ── Metier cards ───────────────────────────────────────────────────── */
+  const riasecTop = userProfile
+    ? Object.entries(
+        // Filter to only RIASEC keys
+        Object.fromEntries(
+          Object.entries(userProfile).filter(([k]) => ['R','I','A','S','E','C'].includes(k))
+        )
+      ).sort(([, a], [, b]) => b - a)[0]?.[0]
+    : null;
+
+  const RIASEC_LABEL = { R:'manuel', I:'analytique', A:'créatif', S:'social', E:'entrepreneurial', C:'rigoureux' };
+  const profileHint = riasecTop ? ` adaptés à ton profil ${RIASEC_LABEL[riasecTop] || ''}` : '';
+
   return (
     <div className="mb-10 animate-fade-in">
-      <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-        <Briefcase className="w-6 h-6 text-indigo-600" />
-        Top {Math.min(metiers.length, 3)} Métiers Recommandés
-      </h2>
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+          <Briefcase className="w-6 h-6 text-indigo-600" />
+          Top {Math.min(metiers.length, 3)} Métiers Recommandés
+        </h2>
+        {profileHint && (
+          <p className="text-sm text-slate-500 mt-1">
+            Métiers{profileHint}
+            {userProfile?.education_level ? `, accessibles avec ton niveau (${userProfile.education_level})` : ''}
+          </p>
+        )}
+      </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
         {metiers.slice(0, 3).map((metier, idx) => {
