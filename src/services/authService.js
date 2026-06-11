@@ -185,16 +185,26 @@ export const AuthService = {
     return data;
   },
 
-  async completeGoogleProfile(userId, profileData) {
+  async completeGoogleProfile(userId, profileData, user = null) {
     try {
       let wantsLongStudiesBool = null;
       if (profileData.wants_long_studies === 'Oui' || profileData.wants_long_studies === true) wantsLongStudiesBool = true;
       else if (profileData.wants_long_studies === 'Non' || profileData.wants_long_studies === false) wantsLongStudiesBool = false;
 
+      // Include identity fields so the upsert works even if the profile stub was
+      // never created (e.g. after a hard reload before the stub was saved).
+      const meta = user?.user_metadata || {};
+      const nameParts = (meta.full_name || '').split(' ');
+
       const { error } = await supabase
         .from('profiles')
         .upsert({
           id: userId,
+          email: user?.email || profileData.email || null,
+          first_name: meta.given_name || nameParts[0] || profileData.first_name || '',
+          last_name: meta.family_name || nameParts.slice(1).join(' ') || profileData.last_name || '',
+          avatar_url: meta.avatar_url || null,
+          role: 'user',
           region: profileData.region,
           city: profileData.city,
           education_level: profileData.education_level,

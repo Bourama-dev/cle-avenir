@@ -27,16 +27,25 @@ const AuthCallback = () => {
   const [error, setError] = useState(null);
   const [processed, setProcessed] = useState(false);
 
+  // If auth finished loading but there's still no user after a short grace period,
+  // show a real error. This handles genuinely invalid / expired links while avoiding
+  // a false "invalid link" message when the SIGNED_IN event arrives slightly after
+  // authLoading flips to false (PKCE timing race).
   useEffect(() => {
-    if (authLoading || processed) return;
+    if (authLoading || user || error) return;
+    const timer = setTimeout(() => {
+      setError("Lien de validation invalide ou expiré.");
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [authLoading, user, error]);
+
+  useEffect(() => {
+    // Wait for auth to settle AND for a user to be available before proceeding.
+    if (authLoading || processed || !user) return;
     setProcessed(true);
 
     const redirect = async () => {
       try {
-        if (!user) {
-          throw new Error("Lien de validation invalide ou expiré.");
-        }
-
         const isGoogleUser =
           user.app_metadata?.provider === 'google' ||
           user.app_metadata?.providers?.includes('google');

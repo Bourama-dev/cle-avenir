@@ -183,7 +183,7 @@ const SignupPage = () => {
         navigate('/login');
         return;
       }
-      const { error } = await AuthService.completeGoogleProfile(user.id, formData);
+      const { error } = await AuthService.completeGoogleProfile(user.id, formData, user);
       setIsSubmitting(false);
       if (error) {
         toast({
