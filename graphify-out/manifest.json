@@ -205,9 +205,9 @@
     "semantic_hash": "ae2e09639184baa5ab96e59b8111189b"
   },
   "src/components/HomePage.jsx": {
-    "mtime": 1781133912.8317678,
-    "ast_hash": "23240490b5b9fb7b7d636b8942768201",
-    "semantic_hash": "23240490b5b9fb7b7d636b8942768201"
+    "mtime": 1781137850.2977695,
+    "ast_hash": "5c6584ef38d65f261007db0c4fc614ef",
+    "semantic_hash": ""
   },
   "src/components/ImageLoader.jsx": {
     "mtime": 1780647208.5012832,
