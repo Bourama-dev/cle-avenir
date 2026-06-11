@@ -4,14 +4,304 @@
   "graph": {},
   "nodes": [
     {
+      "label": "RecommendedActionsSection.jsx",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection",
+      "community": 190,
+      "norm_label": "recommendedactionssection.jsx"
+    },
+    {
+      "label": "RIASEC_TRAIT",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_riasec_trait",
+      "community": 190,
+      "norm_label": "riasec_trait"
+    },
+    {
+      "label": "STATUS_LABEL",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_status_label",
+      "community": 190,
+      "norm_label": "status_label"
+    },
+    {
+      "label": "buildSublabel()",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_buildsublabel",
+      "community": 190,
+      "norm_label": "buildsublabel()"
+    },
+    {
+      "label": "ACTION_BASE",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_action_base",
+      "community": 190,
+      "norm_label": "action_base"
+    },
+    {
+      "label": "getActionsForStatus()",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L127",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_getactionsforstatus",
+      "community": 190,
+      "norm_label": "getactionsforstatus()"
+    },
+    {
+      "label": "RecommendedActionsSection()",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L138",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_recommendedactionssection",
+      "community": 190,
+      "norm_label": "recommendedactionssection()"
+    },
+    {
+      "label": "PersonalizedPlanPage.jsx",
+      "file_type": "code",
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pages_personalizedplanpage",
+      "community": 50,
+      "norm_label": "personalizedplanpage.jsx"
+    },
+    {
+      "label": "PersonalizedPlanPage()",
+      "file_type": "code",
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "pages_personalizedplanpage_personalizedplanpage",
+      "community": 50,
+      "norm_label": "personalizedplanpage()"
+    },
+    {
+      "label": "TestResultsPage.jsx",
+      "file_type": "code",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pages_testresultspage",
+      "community": 83,
+      "norm_label": "testresultspage.jsx"
+    },
+    {
+      "label": "DIMENSION_LABELS",
+      "file_type": "code",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "pages_testresultspage_dimension_labels",
+      "community": 83,
+      "norm_label": "dimension_labels"
+    },
+    {
+      "label": "TestResultsPage()",
+      "file_type": "code",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "pages_testresultspage_testresultspage",
+      "community": 83,
+      "norm_label": "testresultspage()"
+    },
+    {
+      "label": "matchingAlgorithm.js",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm",
+      "community": 4,
+      "norm_label": "matchingalgorithm.js"
+    },
+    {
+      "label": "generateRiasecWeights()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_generateriasecweights",
+      "community": 4,
+      "norm_label": "generateriasecweights()"
+    },
+    {
+      "label": "extractMetierWeights()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_extractmetierweights",
+      "community": 4,
+      "norm_label": "extractmetierweights()"
+    },
+    {
+      "label": "calculateRIASECScore()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_calculateriasecscore",
+      "community": 4,
+      "norm_label": "calculateriasecscore()"
+    },
+    {
+      "label": "getHybridProfile()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_gethybridprofile",
+      "community": 4,
+      "norm_label": "gethybridprofile()"
+    },
+    {
+      "label": "calculateHybridScore()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L67",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_calculatehybridscore",
+      "community": 4,
+      "norm_label": "calculatehybridscore()"
+    },
+    {
+      "label": "calculateStabilityScore()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L81",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_calculatestabilityscore",
+      "community": 4,
+      "norm_label": "calculatestabilityscore()"
+    },
+    {
+      "label": "calculateGrowthScore()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L89",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_calculategrowthscore",
+      "community": 4,
+      "norm_label": "calculategrowthscore()"
+    },
+    {
+      "label": "calculateDemandScore()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L97",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_calculatedemandscore",
+      "community": 4,
+      "norm_label": "calculatedemandscore()"
+    },
+    {
+      "label": "calculateConfidence()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L106",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_calculateconfidence",
+      "community": 4,
+      "norm_label": "calculateconfidence()"
+    },
+    {
+      "label": "getRecommendation()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L118",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_getrecommendation",
+      "community": 4,
+      "norm_label": "getrecommendation()"
+    },
+    {
+      "label": "generateAdvice()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L125",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_generateadvice",
+      "community": 4,
+      "norm_label": "generateadvice()"
+    },
+    {
+      "label": "generateNextSteps()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L138",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_generatenextsteps",
+      "community": 4,
+      "norm_label": "generatenextsteps()"
+    },
+    {
+      "label": "getPersonalizedRecommendations()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L156",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_getpersonalizedrecommendations",
+      "community": 4,
+      "norm_label": "getpersonalizedrecommendations()"
+    },
+    {
+      "label": "_normalizeEducationLevel()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L167",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_normalizeeducationlevel",
+      "community": 4,
+      "norm_label": "_normalizeeducationlevel()"
+    },
+    {
+      "label": "applyCriteriaMultiplier()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L182",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_applycriteriamultiplier",
+      "community": 4,
+      "norm_label": "applycriteriamultiplier()"
+    },
+    {
+      "label": "calculateAdvancedMatching()",
+      "file_type": "code",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L232",
+      "_origin": "ast",
+      "id": "services_matchingalgorithm_calculateadvancedmatching",
+      "community": 4,
+      "norm_label": "calculateadvancedmatching()"
+    },
+    {
       "label": "App.jsx",
       "file_type": "code",
       "source_file": "src/App.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_app",
       "community": 0,
-      "norm_label": "app.jsx"
+      "norm_label": "app.jsx",
+      "id": "src_app"
     },
     {
       "label": "OAuthConsentPage",
@@ -19,9 +309,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L58",
       "_origin": "ast",
-      "id": "src_app_oauthconsentpage",
       "community": 0,
-      "norm_label": "oauthconsentpage"
+      "norm_label": "oauthconsentpage",
+      "id": "src_app_oauthconsentpage"
     },
     {
       "label": "LoginPage",
@@ -29,9 +319,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L59",
       "_origin": "ast",
-      "id": "src_app_loginpage",
       "community": 0,
-      "norm_label": "loginpage"
+      "norm_label": "loginpage",
+      "id": "src_app_loginpage"
     },
     {
       "label": "SignupPage",
@@ -39,9 +329,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L60",
       "_origin": "ast",
-      "id": "src_app_signuppage",
       "community": 0,
-      "norm_label": "signuppage"
+      "norm_label": "signuppage",
+      "id": "src_app_signuppage"
     },
     {
       "label": "ProfilePage",
@@ -49,9 +339,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L61",
       "_origin": "ast",
-      "id": "src_app_profilepage",
       "community": 0,
-      "norm_label": "profilepage"
+      "norm_label": "profilepage",
+      "id": "src_app_profilepage"
     },
     {
       "label": "ActionPlanPage",
@@ -59,9 +349,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L62",
       "_origin": "ast",
-      "id": "src_app_actionplanpage",
       "community": 0,
-      "norm_label": "actionplanpage"
+      "norm_label": "actionplanpage",
+      "id": "src_app_actionplanpage"
     },
     {
       "label": "TestPage",
@@ -69,9 +359,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L63",
       "_origin": "ast",
-      "id": "src_app_testpage",
       "community": 0,
-      "norm_label": "testpage"
+      "norm_label": "testpage",
+      "id": "src_app_testpage"
     },
     {
       "label": "ParentalConsentPage",
@@ -79,9 +369,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L66",
       "_origin": "ast",
-      "id": "src_app_parentalconsentpage",
       "community": 0,
-      "norm_label": "parentalconsentpage"
+      "norm_label": "parentalconsentpage",
+      "id": "src_app_parentalconsentpage"
     },
     {
       "label": "AuthPage",
@@ -89,9 +379,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L69",
       "_origin": "ast",
-      "id": "src_app_authpage",
       "community": 0,
-      "norm_label": "authpage"
+      "norm_label": "authpage",
+      "id": "src_app_authpage"
     },
     {
       "label": "ForgotPasswordPage",
@@ -99,9 +389,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L70",
       "_origin": "ast",
-      "id": "src_app_forgotpasswordpage",
       "community": 0,
-      "norm_label": "forgotpasswordpage"
+      "norm_label": "forgotpasswordpage",
+      "id": "src_app_forgotpasswordpage"
     },
     {
       "label": "ResetPasswordPage",
@@ -109,9 +399,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L71",
       "_origin": "ast",
-      "id": "src_app_resetpasswordpage",
       "community": 0,
-      "norm_label": "resetpasswordpage"
+      "norm_label": "resetpasswordpage",
+      "id": "src_app_resetpasswordpage"
     },
     {
       "label": "EmailConfirmationPending",
@@ -119,9 +409,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L72",
       "_origin": "ast",
-      "id": "src_app_emailconfirmationpending",
       "community": 0,
-      "norm_label": "emailconfirmationpending"
+      "norm_label": "emailconfirmationpending",
+      "id": "src_app_emailconfirmationpending"
     },
     {
       "label": "AuthCallback",
@@ -129,9 +419,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L73",
       "_origin": "ast",
-      "id": "src_app_authcallback",
       "community": 0,
-      "norm_label": "authcallback"
+      "norm_label": "authcallback",
+      "id": "src_app_authcallback"
     },
     {
       "label": "UpdatePasswordPage",
@@ -139,9 +429,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L74",
       "_origin": "ast",
-      "id": "src_app_updatepasswordpage",
       "community": 0,
-      "norm_label": "updatepasswordpage"
+      "norm_label": "updatepasswordpage",
+      "id": "src_app_updatepasswordpage"
     },
     {
       "label": "TestResults",
@@ -149,9 +439,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L77",
       "_origin": "ast",
-      "id": "src_app_testresults",
       "community": 0,
-      "norm_label": "testresults"
+      "norm_label": "testresults",
+      "id": "src_app_testresults"
     },
     {
       "label": "EnhancedTestPage",
@@ -159,9 +449,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L78",
       "_origin": "ast",
-      "id": "src_app_enhancedtestpage",
       "community": 0,
-      "norm_label": "enhancedtestpage"
+      "norm_label": "enhancedtestpage",
+      "id": "src_app_enhancedtestpage"
     },
     {
       "label": "TestGatePage",
@@ -169,9 +459,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L79",
       "_origin": "ast",
-      "id": "src_app_testgatepage",
       "community": 0,
-      "norm_label": "testgatepage"
+      "norm_label": "testgatepage",
+      "id": "src_app_testgatepage"
     },
     {
       "label": "TestResultsPage",
@@ -179,9 +469,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L80",
       "_origin": "ast",
-      "id": "src_app_testresultspage",
       "community": 0,
-      "norm_label": "testresultspage"
+      "norm_label": "testresultspage",
+      "id": "src_app_testresultspage"
     },
     {
       "label": "TestFormationsPage",
@@ -189,9 +479,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L81",
       "_origin": "ast",
-      "id": "src_app_testformationspage",
       "community": 0,
-      "norm_label": "testformationspage"
+      "norm_label": "testformationspage",
+      "id": "src_app_testformationspage"
     },
     {
       "label": "TestPlanPage",
@@ -199,9 +489,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L82",
       "_origin": "ast",
-      "id": "src_app_testplanpage",
       "community": 0,
-      "norm_label": "testplanpage"
+      "norm_label": "testplanpage",
+      "id": "src_app_testplanpage"
     },
     {
       "label": "AllCareersPage",
@@ -209,9 +499,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L83",
       "_origin": "ast",
-      "id": "src_app_allcareerspage",
       "community": 0,
-      "norm_label": "allcareerspage"
+      "norm_label": "allcareerspage",
+      "id": "src_app_allcareerspage"
     },
     {
       "label": "ExploreMetiersPage",
@@ -219,9 +509,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L86",
       "_origin": "ast",
-      "id": "src_app_exploremetierspage",
       "community": 0,
-      "norm_label": "exploremetierspage"
+      "norm_label": "exploremetierspage",
+      "id": "src_app_exploremetierspage"
     },
     {
       "label": "MetierDetailPage",
@@ -229,9 +519,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L87",
       "_origin": "ast",
-      "id": "src_app_metierdetailpage",
       "community": 0,
-      "norm_label": "metierdetailpage"
+      "norm_label": "metierdetailpage",
+      "id": "src_app_metierdetailpage"
     },
     {
       "label": "FormationsPage",
@@ -239,9 +529,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L88",
       "_origin": "ast",
-      "id": "src_app_formationspage",
       "community": 0,
-      "norm_label": "formationspage"
+      "norm_label": "formationspage",
+      "id": "src_app_formationspage"
     },
     {
       "label": "FormationDetailPage",
@@ -249,9 +539,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L89",
       "_origin": "ast",
-      "id": "src_app_formationdetailpage",
       "community": 0,
-      "norm_label": "formationdetailpage"
+      "norm_label": "formationdetailpage",
+      "id": "src_app_formationdetailpage"
     },
     {
       "label": "LyceesPage",
@@ -259,9 +549,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L90",
       "_origin": "ast",
-      "id": "src_app_lyceespage",
       "community": 0,
-      "norm_label": "lyceespage"
+      "norm_label": "lyceespage",
+      "id": "src_app_lyceespage"
     },
     {
       "label": "LyceeDetailPage",
@@ -269,9 +559,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L91",
       "_origin": "ast",
-      "id": "src_app_lyceedetailpage",
       "community": 0,
-      "norm_label": "lyceedetailpage"
+      "norm_label": "lyceedetailpage",
+      "id": "src_app_lyceedetailpage"
     },
     {
       "label": "JobOffersPage",
@@ -279,9 +569,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L92",
       "_origin": "ast",
-      "id": "src_app_jobofferspage",
       "community": 0,
-      "norm_label": "jobofferspage"
+      "norm_label": "jobofferspage",
+      "id": "src_app_jobofferspage"
     },
     {
       "label": "JobDetailPage",
@@ -289,9 +579,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L93",
       "_origin": "ast",
-      "id": "src_app_jobdetailpage",
       "community": 0,
-      "norm_label": "jobdetailpage"
+      "norm_label": "jobdetailpage",
+      "id": "src_app_jobdetailpage"
     },
     {
       "label": "OfferDetailPage",
@@ -299,9 +589,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L94",
       "_origin": "ast",
-      "id": "src_app_offerdetailpage",
       "community": 0,
-      "norm_label": "offerdetailpage"
+      "norm_label": "offerdetailpage",
+      "id": "src_app_offerdetailpage"
     },
     {
       "label": "JobExplorer",
@@ -309,9 +599,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L95",
       "_origin": "ast",
-      "id": "src_app_jobexplorer",
       "community": 0,
-      "norm_label": "jobexplorer"
+      "norm_label": "jobexplorer",
+      "id": "src_app_jobexplorer"
     },
     {
       "label": "DashboardPage",
@@ -319,9 +609,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L96",
       "_origin": "ast",
-      "id": "src_app_dashboardpage",
       "community": 0,
-      "norm_label": "dashboardpage"
+      "norm_label": "dashboardpage",
+      "id": "src_app_dashboardpage"
     },
     {
       "label": "ProfileResultsPage",
@@ -329,9 +619,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L97",
       "_origin": "ast",
-      "id": "src_app_profileresultspage",
       "community": 0,
-      "norm_label": "profileresultspage"
+      "norm_label": "profileresultspage",
+      "id": "src_app_profileresultspage"
     },
     {
       "label": "RecommendationsPage",
@@ -339,9 +629,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L98",
       "_origin": "ast",
-      "id": "src_app_recommendationspage",
       "community": 0,
-      "norm_label": "recommendationspage"
+      "norm_label": "recommendationspage",
+      "id": "src_app_recommendationspage"
     },
     {
       "label": "OffersFormationsPage",
@@ -349,9 +639,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L99",
       "_origin": "ast",
-      "id": "src_app_offersformationspage",
       "community": 0,
-      "norm_label": "offersformationspage"
+      "norm_label": "offersformationspage",
+      "id": "src_app_offersformationspage"
     },
     {
       "label": "AccountPage",
@@ -359,9 +649,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L100",
       "_origin": "ast",
-      "id": "src_app_accountpage",
       "community": 0,
-      "norm_label": "accountpage"
+      "norm_label": "accountpage",
+      "id": "src_app_accountpage"
     },
     {
       "label": "SettingsPage",
@@ -369,9 +659,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L101",
       "_origin": "ast",
-      "id": "src_app_settingspage",
       "community": 0,
-      "norm_label": "settingspage"
+      "norm_label": "settingspage",
+      "id": "src_app_settingspage"
     },
     {
       "label": "TestHistoryPage",
@@ -379,9 +669,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L102",
       "_origin": "ast",
-      "id": "src_app_testhistorypage",
       "community": 0,
-      "norm_label": "testhistorypage"
+      "norm_label": "testhistorypage",
+      "id": "src_app_testhistorypage"
     },
     {
       "label": "InterviewPage",
@@ -389,9 +679,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L103",
       "_origin": "ast",
-      "id": "src_app_interviewpage",
       "community": 0,
-      "norm_label": "interviewpage"
+      "norm_label": "interviewpage",
+      "id": "src_app_interviewpage"
     },
     {
       "label": "CleoPage",
@@ -399,9 +689,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L104",
       "_origin": "ast",
-      "id": "src_app_cleopage",
       "community": 0,
-      "norm_label": "cleopage"
+      "norm_label": "cleopage",
+      "id": "src_app_cleopage"
     },
     {
       "label": "CVBuilderPage",
@@ -409,9 +699,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L105",
       "_origin": "ast",
-      "id": "src_app_cvbuilderpage",
       "community": 0,
-      "norm_label": "cvbuilderpage"
+      "norm_label": "cvbuilderpage",
+      "id": "src_app_cvbuilderpage"
     },
     {
       "label": "CoverLetterBuilderPage",
@@ -419,9 +709,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L106",
       "_origin": "ast",
-      "id": "src_app_coverletterbuilderpage",
       "community": 0,
-      "norm_label": "coverletterbuilderpage"
+      "norm_label": "coverletterbuilderpage",
+      "id": "src_app_coverletterbuilderpage"
     },
     {
       "label": "MyDocumentsPage",
@@ -429,9 +719,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L107",
       "_origin": "ast",
-      "id": "src_app_mydocumentspage",
       "community": 0,
-      "norm_label": "mydocumentspage"
+      "norm_label": "mydocumentspage",
+      "id": "src_app_mydocumentspage"
     },
     {
       "label": "ManageSubscriptionPage",
@@ -439,9 +729,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L108",
       "_origin": "ast",
-      "id": "src_app_managesubscriptionpage",
       "community": 0,
-      "norm_label": "managesubscriptionpage"
+      "norm_label": "managesubscriptionpage",
+      "id": "src_app_managesubscriptionpage"
     },
     {
       "label": "UpgradePlan",
@@ -449,9 +739,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L109",
       "_origin": "ast",
-      "id": "src_app_upgradeplan",
       "community": 0,
-      "norm_label": "upgradeplan"
+      "norm_label": "upgradeplan",
+      "id": "src_app_upgradeplan"
     },
     {
       "label": "PlansPage",
@@ -459,9 +749,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L110",
       "_origin": "ast",
-      "id": "src_app_planspage",
       "community": 0,
-      "norm_label": "planspage"
+      "norm_label": "planspage",
+      "id": "src_app_planspage"
     },
     {
       "label": "HowItWorksPage",
@@ -469,9 +759,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L111",
       "_origin": "ast",
-      "id": "src_app_howitworkspage",
       "community": 0,
-      "norm_label": "howitworkspage"
+      "norm_label": "howitworkspage",
+      "id": "src_app_howitworkspage"
     },
     {
       "label": "FAQPage",
@@ -479,9 +769,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L112",
       "_origin": "ast",
-      "id": "src_app_faqpage",
       "community": 0,
-      "norm_label": "faqpage"
+      "norm_label": "faqpage",
+      "id": "src_app_faqpage"
     },
     {
       "label": "AboutPage",
@@ -489,9 +779,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L113",
       "_origin": "ast",
-      "id": "src_app_aboutpage",
       "community": 0,
-      "norm_label": "aboutpage"
+      "norm_label": "aboutpage",
+      "id": "src_app_aboutpage"
     },
     {
       "label": "ContactPage",
@@ -499,9 +789,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L114",
       "_origin": "ast",
-      "id": "src_app_contactpage",
       "community": 0,
-      "norm_label": "contactpage"
+      "norm_label": "contactpage",
+      "id": "src_app_contactpage"
     },
     {
       "label": "BlogPage",
@@ -509,9 +799,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L115",
       "_origin": "ast",
-      "id": "src_app_blogpage",
       "community": 0,
-      "norm_label": "blogpage"
+      "norm_label": "blogpage",
+      "id": "src_app_blogpage"
     },
     {
       "label": "BlogArticlePage",
@@ -519,9 +809,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L116",
       "_origin": "ast",
-      "id": "src_app_blogarticlepage",
       "community": 0,
-      "norm_label": "blogarticlepage"
+      "norm_label": "blogarticlepage",
+      "id": "src_app_blogarticlepage"
     },
     {
       "label": "ActualitesPage",
@@ -529,9 +819,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L117",
       "_origin": "ast",
-      "id": "src_app_actualitespage",
       "community": 0,
-      "norm_label": "actualitespage"
+      "norm_label": "actualitespage",
+      "id": "src_app_actualitespage"
     },
     {
       "label": "ActualitesDetailPage",
@@ -539,9 +829,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L118",
       "_origin": "ast",
-      "id": "src_app_actualitesdetailpage",
       "community": 0,
-      "norm_label": "actualitesdetailpage"
+      "norm_label": "actualitesdetailpage",
+      "id": "src_app_actualitesdetailpage"
     },
     {
       "label": "DocumentationPage",
@@ -549,9 +839,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L119",
       "_origin": "ast",
-      "id": "src_app_documentationpage",
       "community": 0,
-      "norm_label": "documentationpage"
+      "norm_label": "documentationpage",
+      "id": "src_app_documentationpage"
     },
     {
       "label": "StatusPage",
@@ -559,9 +849,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L120",
       "_origin": "ast",
-      "id": "src_app_statuspage",
       "community": 0,
-      "norm_label": "statuspage"
+      "norm_label": "statuspage",
+      "id": "src_app_statuspage"
     },
     {
       "label": "RoadmapPage",
@@ -569,9 +859,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L121",
       "_origin": "ast",
-      "id": "src_app_roadmappage",
       "community": 0,
-      "norm_label": "roadmappage"
+      "norm_label": "roadmappage",
+      "id": "src_app_roadmappage"
     },
     {
       "label": "EdgeFunctionDiagnostics",
@@ -579,9 +869,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L122",
       "_origin": "ast",
-      "id": "src_app_edgefunctiondiagnostics",
       "community": 0,
-      "norm_label": "edgefunctiondiagnostics"
+      "norm_label": "edgefunctiondiagnostics",
+      "id": "src_app_edgefunctiondiagnostics"
     },
     {
       "label": "NotificationsPage",
@@ -589,9 +879,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L123",
       "_origin": "ast",
-      "id": "src_app_notificationspage",
       "community": 0,
-      "norm_label": "notificationspage"
+      "norm_label": "notificationspage",
+      "id": "src_app_notificationspage"
     },
     {
       "label": "PersonalizedPlanPage",
@@ -599,9 +889,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L126",
       "_origin": "ast",
-      "id": "src_app_personalizedplanpage",
       "community": 0,
-      "norm_label": "personalizedplanpage"
+      "norm_label": "personalizedplanpage",
+      "id": "src_app_personalizedplanpage"
     },
     {
       "label": "LearningPathPage",
@@ -609,9 +899,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L129",
       "_origin": "ast",
-      "id": "src_app_learningpathpage",
       "community": 0,
-      "norm_label": "learningpathpage"
+      "norm_label": "learningpathpage",
+      "id": "src_app_learningpathpage"
     },
     {
       "label": "PrivacyPage",
@@ -619,9 +909,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L132",
       "_origin": "ast",
-      "id": "src_app_privacypage",
       "community": 0,
-      "norm_label": "privacypage"
+      "norm_label": "privacypage",
+      "id": "src_app_privacypage"
     },
     {
       "label": "TermsPage",
@@ -629,9 +919,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L133",
       "_origin": "ast",
-      "id": "src_app_termspage",
       "community": 0,
-      "norm_label": "termspage"
+      "norm_label": "termspage",
+      "id": "src_app_termspage"
     },
     {
       "label": "LegalPage",
@@ -639,9 +929,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L134",
       "_origin": "ast",
-      "id": "src_app_legalpage",
       "community": 0,
-      "norm_label": "legalpage"
+      "norm_label": "legalpage",
+      "id": "src_app_legalpage"
     },
     {
       "label": "CookiePolicyPage",
@@ -649,9 +939,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L137",
       "_origin": "ast",
-      "id": "src_app_cookiepolicypage",
       "community": 0,
-      "norm_label": "cookiepolicypage"
+      "norm_label": "cookiepolicypage",
+      "id": "src_app_cookiepolicypage"
     },
     {
       "label": "GestionCookiesPage",
@@ -659,9 +949,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L138",
       "_origin": "ast",
-      "id": "src_app_gestioncookiespage",
       "community": 0,
-      "norm_label": "gestioncookiespage"
+      "norm_label": "gestioncookiespage",
+      "id": "src_app_gestioncookiespage"
     },
     {
       "label": "PreferencesRGPDPage",
@@ -669,9 +959,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L139",
       "_origin": "ast",
-      "id": "src_app_preferencesrgpdpage",
       "community": 0,
-      "norm_label": "preferencesrgpdpage"
+      "norm_label": "preferencesrgpdpage",
+      "id": "src_app_preferencesrgpdpage"
     },
     {
       "label": "RgpdPage",
@@ -679,9 +969,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L142",
       "_origin": "ast",
-      "id": "src_app_rgpdpage",
       "community": 0,
-      "norm_label": "rgpdpage"
+      "norm_label": "rgpdpage",
+      "id": "src_app_rgpdpage"
     },
     {
       "label": "CookiesPreferencesPage",
@@ -689,9 +979,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L143",
       "_origin": "ast",
-      "id": "src_app_cookiespreferencespage",
       "community": 0,
-      "norm_label": "cookiespreferencespage"
+      "norm_label": "cookiespreferencespage",
+      "id": "src_app_cookiespreferencespage"
     },
     {
       "label": "EstablishmentLoginPage",
@@ -699,9 +989,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L146",
       "_origin": "ast",
-      "id": "src_app_establishmentloginpage",
       "community": 0,
-      "norm_label": "establishmentloginpage"
+      "norm_label": "establishmentloginpage",
+      "id": "src_app_establishmentloginpage"
     },
     {
       "label": "EstablishmentForgotPasswordPage",
@@ -709,9 +999,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L147",
       "_origin": "ast",
-      "id": "src_app_establishmentforgotpasswordpage",
       "community": 0,
-      "norm_label": "establishmentforgotpasswordpage"
+      "norm_label": "establishmentforgotpasswordpage",
+      "id": "src_app_establishmentforgotpasswordpage"
     },
     {
       "label": "EstablishmentDashboard",
@@ -719,9 +1009,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L148",
       "_origin": "ast",
-      "id": "src_app_establishmentdashboard",
       "community": 0,
-      "norm_label": "establishmentdashboard"
+      "norm_label": "establishmentdashboard",
+      "id": "src_app_establishmentdashboard"
     },
     {
       "label": "InstitutionStaffLogin",
@@ -729,9 +1019,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L149",
       "_origin": "ast",
-      "id": "src_app_institutionstafflogin",
       "community": 0,
-      "norm_label": "institutionstafflogin"
+      "norm_label": "institutionstafflogin",
+      "id": "src_app_institutionstafflogin"
     },
     {
       "label": "InstitutionDashboard",
@@ -739,9 +1029,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L150",
       "_origin": "ast",
-      "id": "src_app_institutiondashboard",
       "community": 0,
-      "norm_label": "institutiondashboard"
+      "norm_label": "institutiondashboard",
+      "id": "src_app_institutiondashboard"
     },
     {
       "label": "UserManagement",
@@ -749,9 +1039,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L151",
       "_origin": "ast",
-      "id": "src_app_usermanagement",
       "community": 0,
-      "norm_label": "usermanagement"
+      "norm_label": "usermanagement",
+      "id": "src_app_usermanagement"
     },
     {
       "label": "AdminPage",
@@ -759,9 +1049,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L154",
       "_origin": "ast",
-      "id": "src_app_adminpage",
       "community": 0,
-      "norm_label": "adminpage"
+      "norm_label": "adminpage",
+      "id": "src_app_adminpage"
     },
     {
       "label": "AdminDashboardPage",
@@ -769,9 +1059,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L155",
       "_origin": "ast",
-      "id": "src_app_admindashboardpage",
       "community": 0,
-      "norm_label": "admindashboardpage"
+      "norm_label": "admindashboardpage",
+      "id": "src_app_admindashboardpage"
     },
     {
       "label": "AdminInstitutionsPage",
@@ -779,9 +1069,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L156",
       "_origin": "ast",
-      "id": "src_app_admininstitutionspage",
       "community": 0,
-      "norm_label": "admininstitutionspage"
+      "norm_label": "admininstitutionspage",
+      "id": "src_app_admininstitutionspage"
     },
     {
       "label": "AdminInstitutionCodesPage",
@@ -789,9 +1079,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L157",
       "_origin": "ast",
-      "id": "src_app_admininstitutioncodespage",
       "community": 0,
-      "norm_label": "admininstitutioncodespage"
+      "norm_label": "admininstitutioncodespage",
+      "id": "src_app_admininstitutioncodespage"
     },
     {
       "label": "AdminInstitutionStaffPage",
@@ -799,9 +1089,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L158",
       "_origin": "ast",
-      "id": "src_app_admininstitutionstaffpage",
       "community": 0,
-      "norm_label": "admininstitutionstaffpage"
+      "norm_label": "admininstitutionstaffpage",
+      "id": "src_app_admininstitutionstaffpage"
     },
     {
       "label": "AdminAnalyticsDashboard",
@@ -809,9 +1099,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L159",
       "_origin": "ast",
-      "id": "src_app_adminanalyticsdashboard",
       "community": 0,
-      "norm_label": "adminanalyticsdashboard"
+      "norm_label": "adminanalyticsdashboard",
+      "id": "src_app_adminanalyticsdashboard"
     },
     {
       "label": "AdminWeightAuditPage",
@@ -819,9 +1109,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L160",
       "_origin": "ast",
-      "id": "src_app_adminweightauditpage",
       "community": 0,
-      "norm_label": "adminweightauditpage"
+      "norm_label": "adminweightauditpage",
+      "id": "src_app_adminweightauditpage"
     },
     {
       "label": "EstablishmentDashboardPage",
@@ -829,9 +1119,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L161",
       "_origin": "ast",
-      "id": "src_app_establishmentdashboardpage",
       "community": 0,
-      "norm_label": "establishmentdashboardpage"
+      "norm_label": "establishmentdashboardpage",
+      "id": "src_app_establishmentdashboardpage"
     },
     {
       "label": "RgpdCompliancePage",
@@ -839,9 +1129,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L162",
       "_origin": "ast",
-      "id": "src_app_rgpdcompliancepage",
       "community": 0,
-      "norm_label": "rgpdcompliancepage"
+      "norm_label": "rgpdcompliancepage",
+      "id": "src_app_rgpdcompliancepage"
     },
     {
       "label": "LegalVersionsPage",
@@ -849,9 +1139,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L163",
       "_origin": "ast",
-      "id": "src_app_legalversionspage",
       "community": 0,
-      "norm_label": "legalversionspage"
+      "norm_label": "legalversionspage",
+      "id": "src_app_legalversionspage"
     },
     {
       "label": "SecurityAuditPage",
@@ -859,9 +1149,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L164",
       "_origin": "ast",
-      "id": "src_app_securityauditpage",
       "community": 0,
-      "norm_label": "securityauditpage"
+      "norm_label": "securityauditpage",
+      "id": "src_app_securityauditpage"
     },
     {
       "label": "AdminMetiers",
@@ -869,9 +1159,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L165",
       "_origin": "ast",
-      "id": "src_app_adminmetiers",
       "community": 0,
-      "norm_label": "adminmetiers"
+      "norm_label": "adminmetiers",
+      "id": "src_app_adminmetiers"
     },
     {
       "label": "AdminSettingsPage",
@@ -879,9 +1169,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L166",
       "_origin": "ast",
-      "id": "src_app_adminsettingspage",
       "community": 0,
-      "norm_label": "adminsettingspage"
+      "norm_label": "adminsettingspage",
+      "id": "src_app_adminsettingspage"
     },
     {
       "label": "ContentManagementPage",
@@ -889,9 +1179,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L167",
       "_origin": "ast",
-      "id": "src_app_contentmanagementpage",
       "community": 0,
-      "norm_label": "contentmanagementpage"
+      "norm_label": "contentmanagementpage",
+      "id": "src_app_contentmanagementpage"
     },
     {
       "label": "NotFoundPage",
@@ -899,9 +1189,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L169",
       "_origin": "ast",
-      "id": "src_app_notfoundpage",
       "community": 0,
-      "norm_label": "notfoundpage"
+      "norm_label": "notfoundpage",
+      "id": "src_app_notfoundpage"
     },
     {
       "label": "RedirectWithParam()",
@@ -909,9 +1199,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L171",
       "_origin": "ast",
-      "id": "src_app_redirectwithparam",
       "community": 0,
-      "norm_label": "redirectwithparam()"
+      "norm_label": "redirectwithparam()",
+      "id": "src_app_redirectwithparam"
     },
     {
       "label": "AppRouteErrorBoundary",
@@ -919,9 +1209,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L177",
       "_origin": "ast",
-      "id": "src_app_approuteerrorboundary",
       "community": 159,
-      "norm_label": "approuteerrorboundary"
+      "norm_label": "approuteerrorboundary",
+      "id": "src_app_approuteerrorboundary"
     },
     {
       "label": ".constructor()",
@@ -929,9 +1219,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L178",
       "_origin": "ast",
-      "id": "src_app_approuteerrorboundary_constructor",
       "community": 159,
-      "norm_label": ".constructor()"
+      "norm_label": ".constructor()",
+      "id": "src_app_approuteerrorboundary_constructor"
     },
     {
       "label": ".getDerivedStateFromError()",
@@ -939,9 +1229,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L183",
       "_origin": "ast",
-      "id": "src_app_approuteerrorboundary_getderivedstatefromerror",
       "community": 159,
-      "norm_label": ".getderivedstatefromerror()"
+      "norm_label": ".getderivedstatefromerror()",
+      "id": "src_app_approuteerrorboundary_getderivedstatefromerror"
     },
     {
       "label": ".componentDidCatch()",
@@ -949,9 +1239,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L187",
       "_origin": "ast",
-      "id": "src_app_approuteerrorboundary_componentdidcatch",
       "community": 159,
-      "norm_label": ".componentdidcatch()"
+      "norm_label": ".componentdidcatch()",
+      "id": "src_app_approuteerrorboundary_componentdidcatch"
     },
     {
       "label": ".render()",
@@ -959,9 +1249,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L191",
       "_origin": "ast",
-      "id": "src_app_approuteerrorboundary_render",
       "community": 159,
-      "norm_label": ".render()"
+      "norm_label": ".render()",
+      "id": "src_app_approuteerrorboundary_render"
     },
     {
       "label": "PageContent()",
@@ -969,9 +1259,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L210",
       "_origin": "ast",
-      "id": "src_app_pagecontent",
       "community": 107,
-      "norm_label": "pagecontent()"
+      "norm_label": "pagecontent()",
+      "id": "src_app_pagecontent"
     },
     {
       "label": "App()",
@@ -979,9 +1269,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L461",
       "_origin": "ast",
-      "id": "src_app_app",
       "community": 107,
-      "norm_label": "app()"
+      "norm_label": "app()",
+      "id": "src_app_app"
     },
     {
       "label": "TestPage.jsx",
@@ -989,9 +1279,9 @@
       "source_file": "src/pages/TestPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "pages_testpage",
       "community": 110,
-      "norm_label": "testpage.jsx"
+      "norm_label": "testpage.jsx",
+      "id": "pages_testpage"
     },
     {
       "label": "computeProfile()",
@@ -999,9 +1289,9 @@
       "source_file": "src/pages/TestPage.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "id": "pages_testpage_computeprofile",
       "community": 110,
-      "norm_label": "computeprofile()"
+      "norm_label": "computeprofile()",
+      "id": "pages_testpage_computeprofile"
     },
     {
       "label": "computeProfileCode()",
@@ -1009,9 +1299,9 @@
       "source_file": "src/pages/TestPage.jsx",
       "source_location": "L38",
       "_origin": "ast",
-      "id": "pages_testpage_computeprofilecode",
       "community": 110,
-      "norm_label": "computeprofilecode()"
+      "norm_label": "computeprofilecode()",
+      "id": "pages_testpage_computeprofilecode"
     },
     {
       "label": "computeProfileMeta()",
@@ -1019,9 +1309,9 @@
       "source_file": "src/pages/TestPage.jsx",
       "source_location": "L52",
       "_origin": "ast",
-      "id": "pages_testpage_computeprofilemeta",
       "community": 110,
-      "norm_label": "computeprofilemeta()"
+      "norm_label": "computeprofilemeta()",
+      "id": "pages_testpage_computeprofilemeta"
     },
     {
       "label": "ResultsPreview()",
@@ -1029,9 +1319,9 @@
       "source_file": "src/pages/TestPage.jsx",
       "source_location": "L64",
       "_origin": "ast",
-      "id": "pages_testpage_resultspreview",
       "community": 110,
-      "norm_label": "resultspreview()"
+      "norm_label": "resultspreview()",
+      "id": "pages_testpage_resultspreview"
     },
     {
       "label": "QuestionDots()",
@@ -1039,9 +1329,9 @@
       "source_file": "src/pages/TestPage.jsx",
       "source_location": "L153",
       "_origin": "ast",
-      "id": "pages_testpage_questiondots",
       "community": 110,
-      "norm_label": "questiondots()"
+      "norm_label": "questiondots()",
+      "id": "pages_testpage_questiondots"
     },
     {
       "label": "TestPage()",
@@ -1049,9 +1339,9 @@
       "source_file": "src/pages/TestPage.jsx",
       "source_location": "L179",
       "_origin": "ast",
-      "id": "pages_testpage_testpage",
       "community": 110,
-      "norm_label": "testpage()"
+      "norm_label": "testpage()",
+      "id": "pages_testpage_testpage"
     },
     {
       "label": "MetierCard.jsx",
@@ -1132,186 +1422,6 @@
       "community": 160,
       "norm_label": "metiercard()",
       "id": "test_results_metiercard_metiercard"
-    },
-    {
-      "label": "TestResultsPage.jsx",
-      "file_type": "code",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 83,
-      "norm_label": "testresultspage.jsx",
-      "id": "pages_testresultspage"
-    },
-    {
-      "label": "DIMENSION_LABELS",
-      "file_type": "code",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L29",
-      "_origin": "ast",
-      "community": 83,
-      "norm_label": "dimension_labels",
-      "id": "pages_testresultspage_dimension_labels"
-    },
-    {
-      "label": "TestResultsPage()",
-      "file_type": "code",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L33",
-      "_origin": "ast",
-      "community": 83,
-      "norm_label": "testresultspage()",
-      "id": "pages_testresultspage_testresultspage"
-    },
-    {
-      "label": "matchingAlgorithm.js",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "matchingalgorithm.js",
-      "id": "services_matchingalgorithm"
-    },
-    {
-      "label": "generateRiasecWeights()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "generateriasecweights()",
-      "id": "services_matchingalgorithm_generateriasecweights"
-    },
-    {
-      "label": "extractMetierWeights()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L21",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "extractmetierweights()",
-      "id": "services_matchingalgorithm_extractmetierweights"
-    },
-    {
-      "label": "calculateRIASECScore()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L34",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "calculateriasecscore()",
-      "id": "services_matchingalgorithm_calculateriasecscore"
-    },
-    {
-      "label": "getHybridProfile()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L59",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "gethybridprofile()",
-      "id": "services_matchingalgorithm_gethybridprofile"
-    },
-    {
-      "label": "calculateHybridScore()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L67",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "calculatehybridscore()",
-      "id": "services_matchingalgorithm_calculatehybridscore"
-    },
-    {
-      "label": "calculateStabilityScore()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L81",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "calculatestabilityscore()",
-      "id": "services_matchingalgorithm_calculatestabilityscore"
-    },
-    {
-      "label": "calculateGrowthScore()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L89",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "calculategrowthscore()",
-      "id": "services_matchingalgorithm_calculategrowthscore"
-    },
-    {
-      "label": "calculateDemandScore()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L97",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "calculatedemandscore()",
-      "id": "services_matchingalgorithm_calculatedemandscore"
-    },
-    {
-      "label": "calculateConfidence()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L106",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "calculateconfidence()",
-      "id": "services_matchingalgorithm_calculateconfidence"
-    },
-    {
-      "label": "getRecommendation()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L118",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "getrecommendation()",
-      "id": "services_matchingalgorithm_getrecommendation"
-    },
-    {
-      "label": "generateAdvice()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L125",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "generateadvice()",
-      "id": "services_matchingalgorithm_generateadvice"
-    },
-    {
-      "label": "generateNextSteps()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L138",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "generatenextsteps()",
-      "id": "services_matchingalgorithm_generatenextsteps"
-    },
-    {
-      "label": "getPersonalizedRecommendations()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L156",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "getpersonalizedrecommendations()",
-      "id": "services_matchingalgorithm_getpersonalizedrecommendations"
-    },
-    {
-      "label": "calculateAdvancedMatching()",
-      "file_type": "code",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L166",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "calculateadvancedmatching()",
-      "id": "services_matchingalgorithm_calculateadvancedmatching"
     },
     {
       "label": "components.json",
@@ -1589,7 +1699,7 @@
       "source_file": "package.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 31,
+      "community": 47,
       "norm_label": "package.json",
       "id": "package"
     },
@@ -1599,7 +1709,7 @@
       "source_file": "package.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 31,
+      "community": 47,
       "norm_label": "name",
       "id": "package_name"
     },
@@ -1609,7 +1719,7 @@
       "source_file": "package.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 31,
+      "community": 47,
       "norm_label": "type",
       "id": "package_type"
     },
@@ -1619,7 +1729,7 @@
       "source_file": "package.json",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 31,
+      "community": 47,
       "norm_label": "version",
       "id": "package_version"
     },
@@ -1629,7 +1739,7 @@
       "source_file": "package.json",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 31,
+      "community": 47,
       "norm_label": "private",
       "id": "package_private"
     },
@@ -1639,7 +1749,7 @@
       "source_file": "package.json",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 31,
+      "community": 47,
       "norm_label": "scripts",
       "id": "package_scripts"
     },
@@ -1649,7 +1759,7 @@
       "source_file": "package.json",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 31,
+      "community": 47,
       "norm_label": "dev",
       "id": "package_scripts_dev"
     },
@@ -1659,7 +1769,7 @@
       "source_file": "package.json",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 31,
+      "community": 47,
       "norm_label": "build",
       "id": "package_scripts_build"
     },
@@ -1669,7 +1779,7 @@
       "source_file": "package.json",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 31,
+      "community": 47,
       "norm_label": "preview",
       "id": "package_scripts_preview"
     },
@@ -1679,7 +1789,7 @@
       "source_file": "package.json",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 31,
+      "community": 47,
       "norm_label": "eslint",
       "id": "package_scripts_eslint"
     },
@@ -1689,7 +1799,7 @@
       "source_file": "package.json",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 31,
+      "community": 47,
       "norm_label": "lint",
       "id": "package_scripts_lint"
     },
@@ -1699,7 +1809,7 @@
       "source_file": "package.json",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 31,
+      "community": 47,
       "norm_label": "seo:audit",
       "id": "package_scripts_seo_audit"
     },
@@ -3789,7 +3899,7 @@
       "source_file": "src/components/BugReportDialog.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 603,
       "norm_label": "bugreportdialog.jsx",
       "id": "components_bugreportdialog"
     },
@@ -3799,7 +3909,7 @@
       "source_file": "src/components/BugReportDialog.jsx",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 2,
+      "community": 603,
       "norm_label": "bugreportdialog()",
       "id": "components_bugreportdialog_bugreportdialog"
     },
@@ -3949,7 +4059,7 @@
       "source_file": "src/components/DataDeletionRequest.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 218,
+      "community": 2,
       "norm_label": "datadeletionrequest.jsx",
       "id": "components_datadeletionrequest"
     },
@@ -3959,7 +4069,7 @@
       "source_file": "src/components/DataDeletionRequest.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 218,
+      "community": 2,
       "norm_label": "datadeletionrequest()",
       "id": "components_datadeletionrequest_datadeletionrequest"
     },
@@ -4419,7 +4529,7 @@
       "source_file": "src/components/InstitutionDashboard.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 218,
       "norm_label": "institutiondashboard.jsx",
       "id": "components_institutiondashboard"
     },
@@ -4429,7 +4539,7 @@
       "source_file": "src/components/InstitutionDashboard.jsx",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 1,
+      "community": 218,
       "norm_label": "colors",
       "id": "components_institutiondashboard_colors"
     },
@@ -4439,7 +4549,7 @@
       "source_file": "src/components/InstitutionDashboard.jsx",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 1,
+      "community": 218,
       "norm_label": "institutiondashboard()",
       "id": "components_institutiondashboard_institutiondashboard"
     },
@@ -5039,7 +5149,7 @@
       "source_file": "src/components/ProfileTest.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 69,
+      "community": 2,
       "norm_label": "profiletest.jsx",
       "id": "components_profiletest"
     },
@@ -5049,7 +5159,7 @@
       "source_file": "src/components/ProfileTest.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 69,
+      "community": 2,
       "norm_label": "questionicons",
       "id": "components_profiletest_questionicons"
     },
@@ -5059,7 +5169,7 @@
       "source_file": "src/components/ProfileTest.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 69,
+      "community": 2,
       "norm_label": "profiletest()",
       "id": "components_profiletest_profiletest"
     },
@@ -6059,7 +6169,7 @@
       "source_file": "src/components/adaptive-test/QuestionChoice.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 438,
       "norm_label": "questionchoice.jsx",
       "id": "adaptive_test_questionchoice"
     },
@@ -6069,7 +6179,7 @@
       "source_file": "src/components/adaptive-test/QuestionChoice.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 6,
+      "community": 438,
       "norm_label": "questionchoice()",
       "id": "adaptive_test_questionchoice_questionchoice"
     },
@@ -6299,7 +6409,7 @@
       "source_file": "src/components/admin/EtablissementsTab.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 69,
       "norm_label": "etablissementstab.jsx",
       "id": "admin_etablissementstab"
     },
@@ -6309,7 +6419,7 @@
       "source_file": "src/components/admin/EtablissementsTab.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 23,
+      "community": 69,
       "norm_label": "etablissementstab()",
       "id": "admin_etablissementstab_etablissementstab"
     },
@@ -6549,7 +6659,7 @@
       "source_file": "src/components/admin/sections/AdminEstablishments.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 69,
       "norm_label": "adminestablishments.jsx",
       "id": "sections_adminestablishments"
     },
@@ -6559,7 +6669,7 @@
       "source_file": "src/components/admin/sections/AdminEstablishments.jsx",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 23,
+      "community": 69,
       "norm_label": "adminestablishments()",
       "id": "sections_adminestablishments_adminestablishments"
     },
@@ -6869,7 +6979,7 @@
       "source_file": "src/components/admin/sections/AdminWiki.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 250,
       "norm_label": "adminwiki.jsx",
       "id": "sections_adminwiki"
     },
@@ -6879,7 +6989,7 @@
       "source_file": "src/components/admin/sections/AdminWiki.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 250,
       "norm_label": "adminwiki()",
       "id": "sections_adminwiki_adminwiki"
     },
@@ -6889,7 +6999,7 @@
       "source_file": "src/components/admin/sections/AdminWiki.jsx",
       "source_location": "L124",
       "_origin": "ast",
-      "community": 1,
+      "community": 250,
       "norm_label": "plusicon()",
       "id": "sections_adminwiki_plusicon"
     },
@@ -7069,7 +7179,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentFilters.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 20,
+      "community": 69,
       "norm_label": "establishmentfilters.jsx",
       "id": "establishments_establishmentfilters"
     },
@@ -7079,7 +7189,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentFilters.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 20,
+      "community": 69,
       "norm_label": "establishmentfilters()",
       "id": "establishments_establishmentfilters_establishmentfilters"
     },
@@ -7149,7 +7259,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentStats.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 69,
       "norm_label": "establishmentstats.jsx",
       "id": "establishments_establishmentstats"
     },
@@ -7159,7 +7269,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentStats.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 23,
+      "community": 69,
       "norm_label": "establishmentstats()",
       "id": "establishments_establishmentstats_establishmentstats"
     },
@@ -7169,7 +7279,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentsTable.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 69,
       "norm_label": "establishmentstable.jsx",
       "id": "establishments_establishmentstable"
     },
@@ -7179,7 +7289,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentsTable.jsx",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 23,
+      "community": 69,
       "norm_label": "establishmentstable()",
       "id": "establishments_establishmentstable_establishmentstable"
     },
@@ -7399,7 +7509,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 249,
+      "community": 1,
       "norm_label": "establishmentlogs.jsx",
       "id": "dashboard_establishmentlogs"
     },
@@ -7409,7 +7519,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 249,
+      "community": 1,
       "norm_label": "log_filters",
       "id": "dashboard_establishmentlogs_log_filters"
     },
@@ -7419,7 +7529,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 249,
+      "community": 1,
       "norm_label": "establishmentlogs()",
       "id": "dashboard_establishmentlogs_establishmentlogs"
     },
@@ -7959,7 +8069,7 @@
       "source_file": "src/components/auth/AuthTabs.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 575,
       "norm_label": "authtabs.jsx",
       "id": "auth_authtabs"
     },
@@ -7969,7 +8079,7 @@
       "source_file": "src/components/auth/AuthTabs.jsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 6,
+      "community": 575,
       "norm_label": "authtabs()",
       "id": "auth_authtabs_authtabs"
     },
@@ -9339,7 +9449,7 @@
       "source_file": "src/components/cv/CVFormDataManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 438,
+      "community": 2,
       "norm_label": "cvformdatamanager.jsx",
       "id": "cv_cvformdatamanager"
     },
@@ -9349,7 +9459,7 @@
       "source_file": "src/components/cv/CVFormDataManager.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 438,
+      "community": 2,
       "norm_label": "cvformdatamanager()",
       "id": "cv_cvformdatamanager_cvformdatamanager"
     },
@@ -12589,7 +12699,7 @@
       "source_file": "src/components/job-explorer/filters/ContractTypeFilter.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 250,
+      "community": 34,
       "norm_label": "contracttypefilter.jsx",
       "id": "filters_contracttypefilter"
     },
@@ -12599,7 +12709,7 @@
       "source_file": "src/components/job-explorer/filters/ContractTypeFilter.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 250,
+      "community": 34,
       "norm_label": "contract_types",
       "id": "filters_contracttypefilter_contract_types"
     },
@@ -12609,7 +12719,7 @@
       "source_file": "src/components/job-explorer/filters/ContractTypeFilter.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 250,
+      "community": 34,
       "norm_label": "contracttypefilter()",
       "id": "filters_contracttypefilter_contracttypefilter"
     },
@@ -12619,7 +12729,7 @@
       "source_file": "src/components/job-explorer/filters/ExperienceFilter.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 34,
+      "community": 249,
       "norm_label": "experiencefilter.jsx",
       "id": "filters_experiencefilter"
     },
@@ -12629,7 +12739,7 @@
       "source_file": "src/components/job-explorer/filters/ExperienceFilter.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 34,
+      "community": 249,
       "norm_label": "experience_levels",
       "id": "filters_experiencefilter_experience_levels"
     },
@@ -12639,7 +12749,7 @@
       "source_file": "src/components/job-explorer/filters/ExperienceFilter.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 34,
+      "community": 249,
       "norm_label": "experiencefilter()",
       "id": "filters_experiencefilter_experiencefilter"
     },
@@ -12819,7 +12929,7 @@
       "source_file": "src/components/legal/RGPDPreferences.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 604,
       "norm_label": "rgpdpreferences.jsx",
       "id": "legal_rgpdpreferences"
     },
@@ -12829,7 +12939,7 @@
       "source_file": "src/components/legal/RGPDPreferences.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 2,
+      "community": 604,
       "norm_label": "rgpdpreferences()",
       "id": "legal_rgpdpreferences_rgpdpreferences"
     },
@@ -13472,46 +13582,6 @@
       "community": 35,
       "norm_label": "progressionsection()",
       "id": "personalized_plan_progressionsection_progressionsection"
-    },
-    {
-      "label": "RecommendedActionsSection.jsx",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "recommendedactionssection.jsx",
-      "id": "personalized_plan_recommendedactionssection"
-    },
-    {
-      "label": "ACTION_DEFS",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L14",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "action_defs",
-      "id": "personalized_plan_recommendedactionssection_action_defs"
-    },
-    {
-      "label": "getActionsForStatus()",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L77",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "getactionsforstatus()",
-      "id": "personalized_plan_recommendedactionssection_getactionsforstatus"
-    },
-    {
-      "label": "RecommendedActionsSection()",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L94",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "recommendedactionssection()",
-      "id": "personalized_plan_recommendedactionssection_recommendedactionssection"
     },
     {
       "label": "RecommendedMetiersSection.jsx",
@@ -14789,7 +14859,7 @@
       "source_file": "src/components/ui/ImageOptimizer.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 605,
       "norm_label": "imageoptimizer.jsx",
       "id": "ui_imageoptimizer"
     },
@@ -14799,7 +14869,7 @@
       "source_file": "src/components/ui/ImageOptimizer.jsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 6,
+      "community": 605,
       "norm_label": "imageoptimizer()",
       "id": "ui_imageoptimizer_imageoptimizer"
     },
@@ -16559,7 +16629,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "item.jsx",
       "id": "ui_item"
     },
@@ -16569,7 +16639,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemgroup()",
       "id": "ui_item_itemgroup"
     },
@@ -16579,7 +16649,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemseparator()",
       "id": "ui_item_itemseparator"
     },
@@ -16589,7 +16659,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemvariants",
       "id": "ui_item_itemvariants"
     },
@@ -16599,7 +16669,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L55",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "item()",
       "id": "ui_item_item"
     },
@@ -16609,7 +16679,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L73",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemmediavariants",
       "id": "ui_item_itemmediavariants"
     },
@@ -16619,7 +16689,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L90",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemmedia()",
       "id": "ui_item_itemmedia"
     },
@@ -16629,7 +16699,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L104",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemcontent()",
       "id": "ui_item_itemcontent"
     },
@@ -16639,7 +16709,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L119",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemtitle()",
       "id": "ui_item_itemtitle"
     },
@@ -16649,7 +16719,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L134",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemdescription()",
       "id": "ui_item_itemdescription"
     },
@@ -16659,7 +16729,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L150",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemactions()",
       "id": "ui_item_itemactions"
     },
@@ -16669,7 +16739,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L162",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemheader()",
       "id": "ui_item_itemheader"
     },
@@ -16679,7 +16749,7 @@
       "source_file": "src/components/ui/item.jsx",
       "source_location": "L174",
       "_origin": "ast",
-      "community": 47,
+      "community": 6,
       "norm_label": "itemfooter()",
       "id": "ui_item_itemfooter"
     },
@@ -16689,7 +16759,7 @@
       "source_file": "src/components/ui/kbd.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 432,
       "norm_label": "kbd.jsx",
       "id": "ui_kbd"
     },
@@ -16699,7 +16769,7 @@
       "source_file": "src/components/ui/kbd.jsx",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 6,
+      "community": 432,
       "norm_label": "kbd()",
       "id": "ui_kbd_kbd"
     },
@@ -16709,7 +16779,7 @@
       "source_file": "src/components/ui/kbd.jsx",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 6,
+      "community": 432,
       "norm_label": "kbdgroup()",
       "id": "ui_kbd_kbdgroup"
     },
@@ -20049,7 +20119,7 @@
       "source_file": "src/hooks/useUserSubscription.js",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 2,
+      "community": 186,
       "norm_label": "useusersubscription()",
       "id": "hooks_useusersubscription_useusersubscription"
     },
@@ -21979,7 +22049,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 432,
+      "community": 1,
       "norm_label": "loginpage.jsx",
       "id": "pages_loginpage"
     },
@@ -21989,7 +22059,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 432,
+      "community": 1,
       "norm_label": "googleicon()",
       "id": "pages_loginpage_googleicon"
     },
@@ -21999,7 +22069,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 432,
+      "community": 1,
       "norm_label": "loginpage()",
       "id": "pages_loginpage_loginpage"
     },
@@ -22219,7 +22289,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 186,
       "norm_label": "managesubscriptionpage.jsx",
       "id": "pages_managesubscriptionpage"
     },
@@ -22229,7 +22299,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 2,
+      "community": 186,
       "norm_label": "plans",
       "id": "pages_managesubscriptionpage_plans"
     },
@@ -22239,7 +22309,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 2,
+      "community": 186,
       "norm_label": "freeplanview()",
       "id": "pages_managesubscriptionpage_freeplanview"
     },
@@ -22249,7 +22319,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L138",
       "_origin": "ast",
-      "community": 2,
+      "community": 186,
       "norm_label": "paidplanview()",
       "id": "pages_managesubscriptionpage_paidplanview"
     },
@@ -22259,7 +22329,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L235",
       "_origin": "ast",
-      "community": 2,
+      "community": 186,
       "norm_label": "managesubscriptionpage()",
       "id": "pages_managesubscriptionpage_managesubscriptionpage"
     },
@@ -22542,26 +22612,6 @@
       "community": 1,
       "norm_label": "partnershippage()",
       "id": "pages_partnershippage_partnershippage"
-    },
-    {
-      "label": "PersonalizedPlanPage.jsx",
-      "file_type": "code",
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 50,
-      "norm_label": "personalizedplanpage.jsx",
-      "id": "pages_personalizedplanpage"
-    },
-    {
-      "label": "PersonalizedPlanPage()",
-      "file_type": "code",
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 50,
-      "norm_label": "personalizedplanpage()",
-      "id": "pages_personalizedplanpage_personalizedplanpage"
     },
     {
       "label": "PlansPage.jsx",
@@ -23459,7 +23509,7 @@
       "source_file": "src/pages/user/CookiesPreferencesPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 606,
       "norm_label": "cookiespreferencespage.jsx",
       "id": "user_cookiespreferencespage"
     },
@@ -23469,7 +23519,7 @@
       "source_file": "src/pages/user/CookiesPreferencesPage.jsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 2,
+      "community": 606,
       "norm_label": "cookiespreferencespage()",
       "id": "user_cookiespreferencespage_cookiespreferencespage"
     },
@@ -32348,6 +32398,564 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "personalized_plan_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_action_base",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "personalized_plan_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_buildsublabel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L77",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_getactionsforstatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L94",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_recommendedactionssection"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "personalized_plan_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_riasec_trait",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "personalized_plan_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_status_label",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L99",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_recommendedactionssection_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_getactionsforstatus"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "personalized_plan_recommendedactionssection_recommendedactionssection",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_personalizedplanpage",
+      "target": "pages_personalizedplanpage_personalizedplanpage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "hooks_useuserprofile_useuserprofile"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "utils_metierdatafetcher_usemetierdatafetcher"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_testresultspage",
+      "target": "pages_testresultspage_dimension_labels"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_testresultspage",
+      "target": "pages_testresultspage_testresultspage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "pages_testresultspage_testresultspage",
+      "target": "contexts_planlimitationcontext_useplanlimitation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "pages_testresultspage_testresultspage",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L182",
+      "weight": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_applycriteriamultiplier",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L177",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_calculateadvancedmatching"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L121",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_calculateconfidence"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L112",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_calculatedemandscore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L104",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_calculategrowthscore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L67",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_calculatehybridscore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L34",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_calculateriasecscore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L96",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_calculatestabilityscore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_extractmetierweights"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L136",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_generateadvice"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L149",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_generatenextsteps"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_generateriasecweights"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_gethybridprofile"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L167",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_getpersonalizedrecommendations"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L129",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_getrecommendation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L167",
+      "weight": 1.0,
+      "source": "services_matchingalgorithm",
+      "target": "services_matchingalgorithm_normalizeeducationlevel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierRecommendationService.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierrecommendationservice",
+      "target": "services_matchingalgorithm"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/testMatchingVerification.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_testmatchingverification",
+      "target": "services_matchingalgorithm"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_extractmetierweights",
+      "target": "services_matchingalgorithm_generateriasecweights"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierRecommendationService.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierrecommendationservice",
+      "target": "services_matchingalgorithm_generateriasecweights"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L181",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_calculateadvancedmatching",
+      "target": "services_matchingalgorithm_extractmetierweights"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L184",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_calculateadvancedmatching",
+      "target": "services_matchingalgorithm_calculateriasecscore"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L186",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_calculateadvancedmatching",
+      "target": "services_matchingalgorithm_gethybridprofile"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L187",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_calculateadvancedmatching",
+      "target": "services_matchingalgorithm_calculatehybridscore"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L189",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_calculateadvancedmatching",
+      "target": "services_matchingalgorithm_calculatestabilityscore"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L190",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_calculateadvancedmatching",
+      "target": "services_matchingalgorithm_calculategrowthscore"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L191",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_calculateadvancedmatching",
+      "target": "services_matchingalgorithm_calculatedemandscore"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L202",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_calculateadvancedmatching",
+      "target": "services_matchingalgorithm_calculateconfidence"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L203",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_calculateadvancedmatching",
+      "target": "services_matchingalgorithm_getrecommendation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L169",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_getpersonalizedrecommendations",
+      "target": "services_matchingalgorithm_generateadvice"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L170",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_getpersonalizedrecommendations",
+      "target": "services_matchingalgorithm_generatenextsteps"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L231",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_matchingalgorithm_calculateadvancedmatching",
+      "target": "services_matchingalgorithm_getpersonalizedrecommendations"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L189",
+      "weight": 1.0,
+      "source": "services_matchingalgorithm_applycriteriamultiplier",
+      "target": "services_matchingalgorithm_normalizeeducationlevel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/matchingAlgorithm.js",
+      "source_location": "L267",
+      "weight": 1.0,
+      "source": "services_matchingalgorithm_calculateadvancedmatching",
+      "target": "services_matchingalgorithm_applycriteriamultiplier",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierRecommendationService.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierrecommendationservice",
+      "target": "services_matchingalgorithm_calculateadvancedmatching"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/testMatchingVerification.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_testmatchingverification",
+      "target": "services_matchingalgorithm_calculateadvancedmatching"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/App.jsx",
       "source_location": "L114",
       "weight": 1.0,
@@ -33543,386 +34151,6 @@
       "confidence_score": 1.0,
       "source": "test_results_metiercard_metiercard",
       "target": "test_results_metiercard_generatematchexplanation"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_testresultspage",
-      "target": "pages_testresultspage_dimension_labels"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L33",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_testresultspage",
-      "target": "pages_testresultspage_testresultspage"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L36",
-      "weight": 1.0,
-      "source": "pages_testresultspage_testresultspage",
-      "target": "contexts_planlimitationcontext_useplanlimitation"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "pages_testresultspage_testresultspage",
-      "target": "ui_use_toast_usetoast"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L177",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_calculateadvancedmatching"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L121",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_calculateconfidence"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L112",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_calculatedemandscore"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L104",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_calculategrowthscore"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L67",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_calculatehybridscore"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L34",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_calculateriasecscore"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L96",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_calculatestabilityscore"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_extractmetierweights"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L136",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_generateadvice"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L149",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_generatenextsteps"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_generateriasecweights"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L59",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_gethybridprofile"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L167",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_getpersonalizedrecommendations"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L129",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm",
-      "target": "services_matchingalgorithm_getrecommendation"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metierRecommendationService.js",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierrecommendationservice",
-      "target": "services_matchingalgorithm"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/testMatchingVerification.js",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_testmatchingverification",
-      "target": "services_matchingalgorithm"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_extractmetierweights",
-      "target": "services_matchingalgorithm_generateriasecweights"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metierRecommendationService.js",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierrecommendationservice",
-      "target": "services_matchingalgorithm_generateriasecweights"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L181",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_calculateadvancedmatching",
-      "target": "services_matchingalgorithm_extractmetierweights"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L184",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_calculateadvancedmatching",
-      "target": "services_matchingalgorithm_calculateriasecscore"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L186",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_calculateadvancedmatching",
-      "target": "services_matchingalgorithm_gethybridprofile"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L187",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_calculateadvancedmatching",
-      "target": "services_matchingalgorithm_calculatehybridscore"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L189",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_calculateadvancedmatching",
-      "target": "services_matchingalgorithm_calculatestabilityscore"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L190",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_calculateadvancedmatching",
-      "target": "services_matchingalgorithm_calculategrowthscore"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L191",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_calculateadvancedmatching",
-      "target": "services_matchingalgorithm_calculatedemandscore"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L202",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_calculateadvancedmatching",
-      "target": "services_matchingalgorithm_calculateconfidence"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L203",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_calculateadvancedmatching",
-      "target": "services_matchingalgorithm_getrecommendation"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L169",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_getpersonalizedrecommendations",
-      "target": "services_matchingalgorithm_generateadvice"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L170",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_getpersonalizedrecommendations",
-      "target": "services_matchingalgorithm_generatenextsteps"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/matchingAlgorithm.js",
-      "source_location": "L231",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_matchingalgorithm_calculateadvancedmatching",
-      "target": "services_matchingalgorithm_getpersonalizedrecommendations"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metierRecommendationService.js",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierrecommendationservice",
-      "target": "services_matchingalgorithm_calculateadvancedmatching"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/testMatchingVerification.js",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_testmatchingverification",
-      "target": "services_matchingalgorithm_calculateadvancedmatching"
     },
     {
       "relation": "contains",
@@ -47105,58 +47333,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedactionssection",
-      "target": "personalized_plan_recommendedactionssection_action_defs"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L77",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedactionssection",
-      "target": "personalized_plan_recommendedactionssection_getactionsforstatus"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L94",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedactionssection",
-      "target": "personalized_plan_recommendedactionssection_recommendedactionssection"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L99",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedactionssection_recommendedactionssection",
-      "target": "personalized_plan_recommendedactionssection_getactionsforstatus"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L96",
-      "weight": 1.0,
-      "source": "personalized_plan_recommendedactionssection_recommendedactionssection",
-      "target": "ui_use_toast_usetoast"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
       "source_location": "L18",
       "weight": 1.0,
@@ -52446,17 +52622,6 @@
       "context": "call",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L32",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
-      "target": "ui_use_toast_usetoast"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
       "source_file": "src/pages/PlansPage.jsx",
       "source_location": "L33",
       "weight": 1.0,
@@ -53351,17 +53516,6 @@
       "source_location": "L150",
       "weight": 1.0,
       "source": "pages_offersformationspage_offersformationspage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
       "target": "contexts_supabaseauthcontext_useauth"
     },
     {
@@ -54609,17 +54763,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "hooks_useuserprofile",
-      "target": "hooks_useuserprofile_useuserprofile"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
       "target": "hooks_useuserprofile_useuserprofile"
     },
     {
@@ -56877,27 +57020,6 @@
       "confidence_score": 1.0,
       "source": "pages_partnershippage",
       "target": "pages_partnershippage_partnershippage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_personalizedplanpage",
-      "target": "pages_personalizedplanpage_personalizedplanpage"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L49",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
-      "target": "utils_metierdatafetcher_usemetierdatafetcher"
     },
     {
       "relation": "contains",
@@ -67255,5 +67377,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e66c6193d628ed7b5848ad9d0ab2c8d470c58b3a"
+  "built_at_commit": "150e4d7efe1ddd603125ff5c4a6668cef9067eb4"
 }
