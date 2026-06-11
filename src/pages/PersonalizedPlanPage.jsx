@@ -74,16 +74,31 @@ const PersonalizedPlanPage = () => {
           selected_metiers:    testData.selectedMetiers || [],
         });
         toast({ title: 'Plan initialisé', description: 'Votre espace a été configuré avec vos résultats.' });
-      } else if (plan && testData.selectedMetiers?.length > 0) {
-        const existingSelected = plan.selected_metiers || [];
-        const newSelections = testData.selectedMetiers.filter(
-          newM => !existingSelected.some(exM => exM.code === newM.code || exM.metierCode === newM.code)
-        );
-        if (newSelections.length > 0) {
-          plan = await planService.updatePlan(user.id, {
-            selected_metiers: [...existingSelected, ...newSelections],
-          });
-          toast({ title: 'Métier ajouté', description: 'Vos cibles ont été mises à jour.' });
+      } else if (plan && testData.hasValidData) {
+        const updatePayload = {};
+
+        // Toujours rafraîchir recommended_metiers avec les nouveaux résultats de test
+        if (testData.recommendedMetiers?.length > 0) {
+          updatePayload.recommended_metiers = testData.recommendedMetiers.slice(0, 5);
+          updatePayload.riasec_profile = testData.profile;
+        }
+
+        // Fusionner les nouveaux selected_metiers sans doublon
+        if (testData.selectedMetiers?.length > 0) {
+          const existingSelected = plan.selected_metiers || [];
+          const newSelections = testData.selectedMetiers.filter(
+            newM => !existingSelected.some(exM => exM.code === newM.code || exM.metierCode === newM.code)
+          );
+          if (newSelections.length > 0) {
+            updatePayload.selected_metiers = [...existingSelected, ...newSelections];
+          }
+        }
+
+        if (Object.keys(updatePayload).length > 0) {
+          plan = await planService.updatePlan(user.id, updatePayload);
+          if (updatePayload.recommended_metiers) {
+            toast({ title: 'Plan mis à jour', description: 'Vos résultats de test ont été synchronisés.' });
+          }
         }
       }
 
