@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { usePlanLimitation } from '@/contexts/PlanLimitationContext';
 import { cleoService } from '@/services/cleoService';
 import { gamificationService } from '@/services/gamificationService';
 import { cleoResponseService } from '@/services/cleoResponseService';
-import { MessageSquare, X, Send, User, Trash2, Bot, Sparkles, Trophy, Star, Loader2, Volume2, VolumeX, CheckCircle2 } from 'lucide-react';
+import { MessageSquare, X, Send, User, Trash2, Bot, Sparkles, Trophy, Star, Loader2, Volume2, VolumeX, CheckCircle2, Lock, Zap } from 'lucide-react';
 import { textToSpeechService } from '@/services/textToSpeechService';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -52,6 +53,7 @@ const InteractiveResponse = ({ components, onAction }) => (
 const Cleo = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { isPremium, cleoCreditsRemaining, cleoFreeLimit, hasCleoCredits, consumeCleoCredit } = usePlanLimitation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -147,6 +149,8 @@ const Cleo = () => {
   };
 
   const processUserMessage = async (text) => {
+    if (!hasCleoCredits()) return; // blocked — UI shows the wall
+    consumeCleoCredit();
     const newMessage = { id: Date.now(), role: 'user', content: text };
     setMessages(prev => [...prev, newMessage]);
     setIsLoading(true);
@@ -225,7 +229,7 @@ const Cleo = () => {
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    if (!inputMessage.trim()) return;
+    if (!inputMessage.trim() || !hasCleoCredits()) return;
     processUserMessage(inputMessage);
   };
 
@@ -306,7 +310,7 @@ const Cleo = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-sm">Cléo Assistant</h3>
-                  {user ? (
+                  {user && isPremium ? (
                     <div className="flex items-center gap-2 text-xs text-indigo-100">
                       <span className="flex items-center gap-1">
                         <Star size={10} className="fill-yellow-300 text-yellow-300" />
@@ -317,7 +321,17 @@ const Cleo = () => {
                       )}
                     </div>
                   ) : (
-                    <p className="text-xs text-indigo-200">Mode visiteur</p>
+                    <div className="flex items-center gap-1.5 text-xs">
+                      {cleoCreditsRemaining > 0 ? (
+                        <span className="bg-white/20 px-2 py-0.5 rounded-full text-white font-semibold">
+                          {cleoCreditsRemaining}/{cleoFreeLimit} messages gratuits
+                        </span>
+                      ) : (
+                        <span className="bg-rose-500/80 px-2 py-0.5 rounded-full text-white font-semibold flex items-center gap-1">
+                          <Lock size={9} /> Crédits épuisés
+                        </span>
+                      )}
+                    </div>
                   )}
                 </div>
               </div>
@@ -437,6 +451,21 @@ const Cleo = () => {
               <div ref={messagesEndRef} />
             </div>
 
+            {/* Credit exhaustion wall */}
+            {!hasCleoCredits() && (
+              <div className="p-4 bg-gradient-to-r from-violet-50 to-indigo-50 border-t border-indigo-100 text-center">
+                <Lock className="w-5 h-5 text-indigo-400 mx-auto mb-1.5" />
+                <p className="text-xs font-bold text-slate-700 mb-0.5">Tes {cleoFreeLimit} messages découverte sont utilisés</p>
+                <p className="text-xs text-slate-500 mb-2">Passe à Premium pour continuer avec Cléo sans limite.</p>
+                <button
+                  onClick={() => { setIsOpen(false); navigate('/plans'); }}
+                  className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-xs font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-1.5 hover:opacity-90 transition"
+                >
+                  <Zap size={13} /> Débloquer Cléo Premium
+                </button>
+              </div>
+            )}
+
             {/* Input Area */}
             <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-slate-200 z-10">
               <div className="relative flex items-center">
@@ -444,7 +473,8 @@ const Cleo = () => {
                   type="text"
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  placeholder="Pose ta question..."
+                  disabled={!hasCleoCredits()}
+                  placeholder={hasCleoCredits() ? "Pose ta question..." : "Crédits épuisés — passe à Premium"}
                   className="w-full pl-4 pr-12 py-3 bg-slate-100 border-none rounded-full focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all text-sm text-slate-800 placeholder:text-slate-400"
                 />
                 <Button

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   ArrowRight, CheckCircle2, Sparkles, Target, Zap, Search,
   GraduationCap, Users, BookOpen, Clock, ChevronRight, Briefcase, Wand2,
+  Lock, MessageSquare, BarChart3, Star,
 } from 'lucide-react';
 import { motion, useScroll, useTransform, useReducedMotion, useInView } from 'framer-motion';
 import PageHelmet from '@/components/SEO/PageHelmet';
@@ -520,6 +521,112 @@ const HomePage = ({ onNavigate }) => {
 
       {/* ══ VIDEO ═══════════════════════════════════════════════════════════ */}
       <VideoSection />
+
+      {/* ══ FREEMIUM TEASER ═════════════════════════════════════════════════ */}
+      <section className="py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <AnimatedSection className="text-center mb-12">
+            <AnimatedItem>
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-sm font-semibold mb-4">
+                <Sparkles className="w-4 h-4" /> Essaie gratuitement, évolue à ton rythme
+              </span>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3 tracking-tight">
+                Commence sans carte bancaire
+              </h2>
+              <p className="text-slate-500 text-lg max-w-xl mx-auto">
+                Découvre tes 3 meilleurs métiers et teste Cléo — puis débloque tout avec Premium.
+              </p>
+            </AnimatedItem>
+          </AnimatedSection>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Gratuit */}
+            <AnimatedSection>
+              <AnimatedItem>
+                <div className="rounded-2xl border-2 border-slate-200 bg-slate-50 p-8 h-full">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-slate-200 flex items-center justify-center">
+                      <Star className="w-5 h-5 text-slate-500" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-800 text-lg">Plan Découverte</p>
+                      <p className="text-slate-400 text-sm font-semibold">Gratuit · Sans engagement</p>
+                    </div>
+                  </div>
+                  <ul className="space-y-3">
+                    {[
+                      { icon: BarChart3, text: 'Top 3 métiers compatibles avec ton profil', ok: true },
+                      { icon: MessageSquare, text: '5 messages avec Cléo pour explorer tes options', ok: true },
+                      { icon: GraduationCap, text: 'Recherche de formations et d\'offres', ok: true },
+                      { icon: Lock, text: 'Résultats complets (4 à 15 métiers)', ok: false },
+                      { icon: Lock, text: 'Plans d\'action illimités', ok: false },
+                      { icon: Lock, text: 'Cléo sans limite de messages', ok: false },
+                    ].map(({ icon: Icon, text, ok }, i) => (
+                      <li key={i} className={`flex items-start gap-3 text-sm ${ok ? 'text-slate-700' : 'text-slate-400'}`}>
+                        {ok
+                          ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                          : <Lock className="w-4 h-4 shrink-0 mt-0.5" />
+                        }
+                        {text}
+                      </li>
+                    ))}
+                  </ul>
+                  <MagneticButton className="w-full mt-8">
+                    <button
+                      onClick={() => onNavigate('/test-orientation')}
+                      className="w-full py-3 rounded-xl bg-slate-800 text-white font-bold text-sm hover:bg-slate-700 transition"
+                    >
+                      Commencer gratuitement →
+                    </button>
+                  </MagneticButton>
+                </div>
+              </AnimatedItem>
+            </AnimatedSection>
+
+            {/* Premium */}
+            <AnimatedSection>
+              <AnimatedItem>
+                <div className="rounded-2xl border-2 border-indigo-400 bg-gradient-to-br from-indigo-600 to-violet-700 p-8 h-full text-white relative overflow-hidden">
+                  <div className="absolute top-4 right-4 bg-amber-400 text-slate-900 text-xs font-extrabold px-3 py-1 rounded-full">
+                    POPULAIRE
+                  </div>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+                      <Sparkles className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-white text-lg">Plan Premium</p>
+                      <p className="text-indigo-200 text-sm font-semibold">Tout débloquer · Sans limite</p>
+                    </div>
+                  </div>
+                  <ul className="space-y-3">
+                    {[
+                      'Top 3 métiers + tous les résultats compatibles',
+                      'Cléo illimitée — coach IA disponible 24/7',
+                      'Plans d\'action personnalisés sans limite',
+                      'Suivi de progression et alertes métiers',
+                      'Accès prioritaire aux nouvelles fonctionnalités',
+                    ].map((text, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm text-white">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0 mt-0.5" />
+                        {text}
+                      </li>
+                    ))}
+                  </ul>
+                  <MagneticButton className="w-full mt-8">
+                    <button
+                      onClick={() => onNavigate('/plans')}
+                      className="w-full py-3 rounded-xl bg-white text-indigo-700 font-bold text-sm hover:bg-indigo-50 transition flex items-center justify-center gap-2"
+                    >
+                      <Zap className="w-4 h-4" /> Passer à Premium
+                    </button>
+                  </MagneticButton>
+                </div>
+              </AnimatedItem>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
 
       {/* ══ FEATURES ════════════════════════════════════════════════════════ */}
       <section className="py-28 bg-slate-50/80">
