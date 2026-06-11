@@ -210,12 +210,21 @@ class AppRouteErrorBoundary extends React.Component {
 
 const PageContent = () => {
   checkHookRules('PageContent');
-  
+
   const navigate = useNavigate();
   const location = useLocation();
   const [isCartOpen, setIsCartOpen] = useState(false);
-  
+
   useTheme();
+
+  // Redirect OAuth codes to /auth/callback regardless of which page Supabase lands on
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    if (code && location.pathname !== '/auth/callback') {
+      navigate('/auth/callback?' + params.toString(), { replace: true });
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const authContext = useAuth();
   const authLoading = authContext?.loading || false;

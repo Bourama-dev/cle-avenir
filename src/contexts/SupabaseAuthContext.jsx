@@ -152,37 +152,25 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     let mounted = true;
 
+    // Safety valve: never stay stuck in loading forever
     const safetyTimer = setTimeout(() => {
       if (mounted) setLoading(false);
     }, 15000);
 
-    const initAuth = async () => {
-      try {
-        const { data: { session: initialSession }, error } = await supabase.auth.getSession();
-        if (error) throw error;
-        if (mounted) await handleSession(initialSession);
-      } catch (error) {
-        console.error('[AuthContext] Init error:', error);
-        if (mounted) setLoading(false);
-      } finally {
-        clearTimeout(safetyTimer);
-      }
-    };
-
-    initAuth();
-
-    // Listen for Auth Changes
+    // Single source of truth — onAuthStateChange fires INITIAL_SESSION on mount,
+    // so we do NOT call getSession() separately (would cause double handleSession).
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        if (mounted) {
-          if (event === 'SIGNED_OUT') {
-             setUser(null);
-             setSession(null);
-             setUserProfile(null);
-             setLoading(false);
-          } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') {
-             await handleSession(session);
-          }
+        if (!mounted) return;
+        clearTimeout(safetyTimer);
+
+        if (event === 'SIGNED_OUT') {
+          setUser(null);
+          setSession(null);
+          setUserProfile(null);
+          setLoading(false);
+        } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') {
+          await handleSession(session);
         }
       }
     );
