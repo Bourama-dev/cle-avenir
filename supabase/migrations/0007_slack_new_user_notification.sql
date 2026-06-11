@@ -24,12 +24,24 @@ BEGIN
   payload := jsonb_build_object(
     'text', format(
       '*Nouvel utilisateur inscrit sur CléAvenir* :tada:' || chr(10) || chr(10) ||
-      '*Nom :* %s %s' || chr(10) ||
-      '*Email :* %s' || chr(10) ||
-      '*Inscrit le :* %s',
-      COALESCE(NEW.first_name, ''),
-      COALESCE(NEW.last_name, ''),
-      COALESCE(NEW.email, ''),
+      ':bust_in_silhouette: *Nom :* %s %s' || chr(10) ||
+      ':email: *Email :* %s' || chr(10) ||
+      ':birthday: *Âge :* %s' || chr(10) ||
+      ':briefcase: *Statut :* %s' || chr(10) ||
+      ':mortar_board: *Niveau d''études :* %s' || chr(10) ||
+      ':round_pushpin: *Localisation :* %s' || chr(10) ||
+      ':dart: *Objectif :* %s' || chr(10) ||
+      ':star: *Abonnement :* %s' || chr(10) ||
+      ':calendar: *Inscrit le :* %s',
+      COALESCE(NEW.first_name, '—'),
+      COALESCE(NEW.last_name, '—'),
+      COALESCE(NEW.email, '—'),
+      COALESCE(NEW.age_range, '—'),
+      COALESCE(NEW.professional_status, '—'),
+      COALESCE(NEW.education_level, '—'),
+      COALESCE(NEW.location, '—'),
+      COALESCE(NEW.main_goal, '—'),
+      COALESCE(NEW.subscription_tier, 'free'),
       COALESCE(to_char(NEW.created_at, 'DD/MM/YYYY à HH24:MI'), to_char(now(), 'DD/MM/YYYY à HH24:MI'))
     )
   );
