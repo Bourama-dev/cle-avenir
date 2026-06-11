@@ -106,7 +106,7 @@ export const planService = {
         .update(updatePayload)
         .eq('user_id', userId)
         .select()
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.warn('[planService] Supabase update failed, using localStorage:', error.message);

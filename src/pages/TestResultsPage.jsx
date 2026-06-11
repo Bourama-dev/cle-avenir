@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { supabase } from '@/lib/customSupabaseClient';
 import { metierService } from '@/services/metierService';
 import { calculateAdvancedMatching } from '@/services/matchingAlgorithm';
 import { contextualRecommendationService } from '@/services/contextualRecommendationService';
@@ -33,6 +35,7 @@ const DIMENSION_LABELS = Object.fromEntries(
 const TestResultsPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user } = useAuth();
   const { canViewAllResults, getVisibleMetierCount } = usePlanLimitation();
   
   const [profile, setProfile] = useState(null);
@@ -119,18 +122,29 @@ const TestResultsPage = () => {
       const allMatches = [...goodMatches];
 
       // Sauvegarder les résultats pour PersonalizedPlanPage (getTestDataFromSource)
+      const top10 = allMatches.slice(0, 10).map(m => ({
+        code:        m.metierCode,
+        libelle:     m.name,
+        name:        m.name,
+        match_score: m.finalScore,
+        score:       m.finalScore,
+        sector:      m.sector,
+        emoji:       m.emoji,
+      }));
       localStorage.setItem('latest_test_results', JSON.stringify({
         riasecProfile: loadedProfile,
-        topCareers: allMatches.slice(0, 10).map(m => ({
-          code:        m.metierCode,
-          libelle:     m.name,
-          name:        m.name,
-          match_score: m.finalScore,
-          score:       m.finalScore,
-          sector:      m.sector,
-          emoji:       m.emoji,
-        })),
+        topCareers: top10,
       }));
+
+      // Persister top_3_careers en Supabase pour metierRecommendationService (Path A)
+      if (user?.id) {
+        supabase.from('test_results')
+          .update({ top_3_careers: top10.slice(0, 3) })
+          .eq('user_id', user.id)
+          .then(({ error }) => {
+            if (error) console.warn('[TestResultsPage] top_3_careers update non critique:', error.message);
+          });
+      }
 
       // Store contextual info in state for display
       localStorage.setItem('test_riasec_context', JSON.stringify({

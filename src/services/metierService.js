@@ -58,7 +58,10 @@ export const metierService = {
       }
 
       if (!riasec || Object.keys(riasec).length === 0 || riasec === '0') {
-        riasec = metierService.generateRiasecWeights(rawMetier.riasecMajeur, rawMetier.riasecMineur);
+        riasec = metierService.generateRiasecWeights(
+          rawMetier.riasecmajeur || rawMetier.riasecMajeur,
+          rawMetier.riasecmineur || rawMetier.riasecMineur
+        );
       }
 
       // Normalize RIASEC weights to ensure consistent scale (0-100)
@@ -81,10 +84,12 @@ export const metierService = {
         }
       }
 
+      const majeur = rawMetier.riasecmajeur || rawMetier.riasecMajeur;
+      const mineur = rawMetier.riasecmineur || rawMetier.riasecMineur;
       const hybridProfile = [];
-      if (rawMetier.riasecMajeur) hybridProfile.push(rawMetier.riasecMajeur.charAt(0).toUpperCase());
-      if (rawMetier.riasecMineur && rawMetier.riasecMineur.charAt(0).toUpperCase() !== rawMetier.riasecMajeur?.charAt(0).toUpperCase()) {
-        hybridProfile.push(rawMetier.riasecMineur.charAt(0).toUpperCase());
+      if (majeur) hybridProfile.push(majeur.charAt(0).toUpperCase());
+      if (mineur && mineur.charAt(0).toUpperCase() !== majeur?.charAt(0).toUpperCase()) {
+        hybridProfile.push(mineur.charAt(0).toUpperCase());
       }
 
       const debouchesLower = (rawMetier.debouches || '').toLowerCase();
