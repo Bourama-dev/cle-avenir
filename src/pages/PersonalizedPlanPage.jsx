@@ -477,7 +477,7 @@ const PersonalizedPlanPage = () => {
                 <h3 className="font-bold text-slate-900 mb-4 text-lg flex items-center gap-2">
                   ⚡ Actions Rapides
                 </h3>
-                <RecommendedActionsSection userProfile={userProfile} />
+                <RecommendedActionsSection userProfile={userProfile} riasecProfile={profileData} />
               </div>
 
               <MagneticButton className="w-full">

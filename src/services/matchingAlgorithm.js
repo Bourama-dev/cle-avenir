@@ -161,9 +161,75 @@ export const getPersonalizedRecommendations = (matchResult) => {
 };
 
 /**
- * Calculates advanced matching score between a user profile and a metier object
+ * Normalise education level to a comparable integer (1–5).
+ * Kept here to avoid circular imports with userProfileService.
  */
-export const calculateAdvancedMatching = (userProfile, metier) => {
+const _normalizeEducationLevel = (level) => {
+  if (!level) return 0;
+  const n = level.toLowerCase();
+  if (n.includes('bac+5') || n.includes('master') || n.includes('ingénieur')) return 4;
+  if (n.includes('bac+3') || n.includes('licence') || n.includes('bac+4')) return 3;
+  if (n.includes('bac+2') || n.includes('bts') || n.includes('dut') || n.includes('bac+1')) return 2;
+  if (n.includes('doctorat') || n.includes('phd')) return 5;
+  if (n.includes('bac') || n.includes('cap') || n.includes('bep')) return 1;
+  return 0;
+};
+
+/**
+ * Applies user profile criteria (education, salary, status) as a score multiplier.
+ * Returns a multiplier between 0.5 and 1.0 and an array of mismatch notes.
+ */
+const applyCriteriaMultiplier = (metier, userCriteria) => {
+  if (!userCriteria || !userCriteria.found) return { multiplier: 1.0, notes: [] };
+
+  let multiplier = 1.0;
+  const notes = [];
+
+  // --- Education level check ---
+  const userEd  = _normalizeEducationLevel(userCriteria.education_level);
+  const metierEd = _normalizeEducationLevel(metier.details?.niveau_etudes || metier.educationLevel);
+  if (userEd > 0 && metierEd > 0 && userEd < metierEd) {
+    const gap = metierEd - userEd;
+    const penalty = gap >= 2 ? 0.65 : 0.82; // large gap = bigger penalty
+    multiplier *= penalty;
+    notes.push(`Niveau d'études insuffisant (tu as ${userCriteria.education_level}, requis ~Bac+${metierEd * 1.5 | 0})`);
+  }
+
+  // --- Salary range check ---
+  if (userCriteria.salary_min && userCriteria.salary_max && metier.details?.salaryRange) {
+    const match = metier.details.salaryRange.match(/(\d[\d\s]*)\s*[-–]\s*(\d[\d\s]*)/);
+    if (match) {
+      const mMin = parseInt(match[1].replace(/\s/g, '')) / 1000;
+      const mMax = parseInt(match[2].replace(/\s/g, '')) / 1000;
+      if (mMax < userCriteria.salary_min * 0.8) {
+        multiplier *= 0.80;
+        notes.push(`Salaire trop bas (max ~${mMax}k€ vs ton min ${userCriteria.salary_min}k€)`);
+      }
+    }
+  }
+
+  // --- Status-based accessibility ---
+  if (userCriteria.current_status) {
+    const status = userCriteria.current_status;
+    if (status === 'lyceen' && metierEd >= 4) {
+      multiplier *= 0.85; // long path ahead, but not impossible
+      notes.push('Parcours long depuis le lycée');
+    }
+    if ((status === 'reconversion' || status === 'en_recherche') && metierEd > 0 && userEd > 0 && userEd >= metierEd) {
+      multiplier = Math.min(1.05, multiplier * 1.05); // slight boost for reachable jobs
+    }
+  }
+
+  return { multiplier: Math.max(0.50, Math.min(1.05, multiplier)), notes };
+};
+
+/**
+ * Calculates advanced matching score between a user profile and a metier object.
+ * @param {Object} userProfile - RIASEC scores { R, I, A, S, E, C }
+ * @param {Object} metier      - Metier data from DB
+ * @param {Object} [userCriteria] - Optional user profile criteria (education, salary, status)
+ */
+export const calculateAdvancedMatching = (userProfile, metier, userCriteria = null) => {
   if (!metier || !userProfile) return null;
 
   try {
@@ -189,13 +255,17 @@ export const calculateAdvancedMatching = (userProfile, metier) => {
     const hybridW  = 0.70 - riasecW; // complément pour que riasec + hybrid = 70 %
     const marketW  = 0.10;           // stabilité, croissance, demande = 30 %
 
-    const finalScore = Math.round(
+    const baseScore = Math.round(
       (riasecScore  * riasecW) +
       (hybridScore  * hybridW) +
       (stabilityScore * marketW) +
       (growthScore    * marketW) +
       (demandScore    * marketW)
     );
+
+    // Appliquer le multiplicateur profil utilisateur (éducation, salaire, statut)
+    const { multiplier, notes: criteriaNotes } = applyCriteriaMultiplier(metier, userCriteria);
+    const finalScore = Math.round(Math.min(100, baseScore * multiplier));
 
     const confidence   = calculateConfidence(finalScore, profileClarity);
     const recommendation = getRecommendation(finalScore);
@@ -206,6 +276,9 @@ export const calculateAdvancedMatching = (userProfile, metier) => {
       emoji: metier.emoji || '💼',
       sector: metier.sector || 'Général',
       finalScore,
+      baseScore,
+      criteriaMultiplier: multiplier,
+      criteriaNotes,
       riasecScore,
       hybridScore,
       stabilityScore,

@@ -73,9 +73,12 @@ const TestResultsPage = () => {
         throw new Error("Aucun métier trouvé dans la base de données.");
       }
 
-      // Apply RIASEC matching
+      // Fetch user profile criteria for personalized score adjustments (education, salary, status)
+      const userCriteria = await userProfileService.getUserRecommendationCriteria();
+
+      // Apply RIASEC matching with user criteria
       const advancedMatches = dbMetiers
-        .map(metier => calculateAdvancedMatching(loadedProfile, metier))
+        .map(metier => calculateAdvancedMatching(loadedProfile, metier, userCriteria))
         .filter(m => m !== null);
 
       // Retrieve test context data for contextual recommendations
@@ -99,10 +102,6 @@ const TestResultsPage = () => {
         dominantAxis,
         primarySector
       );
-
-      // Get user profile criteria for intelligent filtering
-      const userCriteria = await userProfileService.getUserRecommendationCriteria();
-
 
       // Rank métiers by contextual relevance + user criteria
       const contextualMatches = contextualRecommendationService.rankMetiersByContext(
