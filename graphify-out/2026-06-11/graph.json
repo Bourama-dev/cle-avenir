@@ -4,14 +4,114 @@
   "graph": {},
   "nodes": [
     {
+      "label": "TestResultsPage.jsx",
+      "file_type": "code",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pages_testresultspage",
+      "community": 41,
+      "norm_label": "testresultspage.jsx"
+    },
+    {
+      "label": "DIMENSION_LABELS",
+      "file_type": "code",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "pages_testresultspage_dimension_labels",
+      "community": 41,
+      "norm_label": "dimension_labels"
+    },
+    {
+      "label": "TestResultsPage()",
+      "file_type": "code",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "pages_testresultspage_testresultspage",
+      "community": 41,
+      "norm_label": "testresultspage()"
+    },
+    {
+      "label": "metierService.js",
+      "file_type": "code",
+      "source_file": "src/services/metierService.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "services_metierservice",
+      "community": 4,
+      "norm_label": "metierservice.js"
+    },
+    {
+      "label": "metierService",
+      "file_type": "code",
+      "source_file": "src/services/metierService.js",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "services_metierservice_metierservice",
+      "community": 4,
+      "norm_label": "metierservice"
+    },
+    {
+      "label": "planService.js",
+      "file_type": "code",
+      "source_file": "src/services/planService.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "services_planservice",
+      "community": 157,
+      "norm_label": "planservice.js"
+    },
+    {
+      "label": "lsGet()",
+      "file_type": "code",
+      "source_file": "src/services/planService.js",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "services_planservice_lsget",
+      "community": 157,
+      "norm_label": "lsget()"
+    },
+    {
+      "label": "lsSet()",
+      "file_type": "code",
+      "source_file": "src/services/planService.js",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "services_planservice_lsset",
+      "community": 157,
+      "norm_label": "lsset()"
+    },
+    {
+      "label": "lsDel()",
+      "file_type": "code",
+      "source_file": "src/services/planService.js",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "services_planservice_lsdel",
+      "community": 157,
+      "norm_label": "lsdel()"
+    },
+    {
+      "label": "planService",
+      "file_type": "code",
+      "source_file": "src/services/planService.js",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "services_planservice_planservice",
+      "community": 157,
+      "norm_label": "planservice"
+    },
+    {
       "label": "HomePage.jsx",
       "file_type": "code",
       "source_file": "src/components/HomePage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_homepage",
       "community": 59,
-      "norm_label": "homepage.jsx"
+      "norm_label": "homepage.jsx",
+      "id": "components_homepage"
     },
     {
       "label": "NewsPreview",
@@ -19,9 +119,9 @@
       "source_file": "src/components/HomePage.jsx",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "components_homepage_newspreview",
       "community": 59,
-      "norm_label": "newspreview"
+      "norm_label": "newspreview",
+      "id": "components_homepage_newspreview"
     },
     {
       "label": "FEATURES",
@@ -29,9 +129,9 @@
       "source_file": "src/components/HomePage.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "id": "components_homepage_features",
       "community": 59,
-      "norm_label": "features"
+      "norm_label": "features",
+      "id": "components_homepage_features"
     },
     {
       "label": "STATS",
@@ -39,9 +139,9 @@
       "source_file": "src/components/HomePage.jsx",
       "source_location": "L48",
       "_origin": "ast",
-      "id": "components_homepage_stats",
       "community": 59,
-      "norm_label": "stats"
+      "norm_label": "stats",
+      "id": "components_homepage_stats"
     },
     {
       "label": "STEPS",
@@ -49,9 +149,9 @@
       "source_file": "src/components/HomePage.jsx",
       "source_location": "L55",
       "_origin": "ast",
-      "id": "components_homepage_steps",
       "community": 59,
-      "norm_label": "steps"
+      "norm_label": "steps",
+      "id": "components_homepage_steps"
     },
     {
       "label": "RAIN_EMOJIS",
@@ -59,9 +159,9 @@
       "source_file": "src/components/HomePage.jsx",
       "source_location": "L86",
       "_origin": "ast",
-      "id": "components_homepage_rain_emojis",
       "community": 59,
-      "norm_label": "rain_emojis"
+      "norm_label": "rain_emojis",
+      "id": "components_homepage_rain_emojis"
     },
     {
       "label": "LOGO_INDICES",
@@ -69,9 +169,9 @@
       "source_file": "src/components/HomePage.jsx",
       "source_location": "L88",
       "_origin": "ast",
-      "id": "components_homepage_logo_indices",
       "community": 59,
-      "norm_label": "logo_indices"
+      "norm_label": "logo_indices",
+      "id": "components_homepage_logo_indices"
     },
     {
       "label": "EmojiRain()",
@@ -79,9 +179,9 @@
       "source_file": "src/components/HomePage.jsx",
       "source_location": "L90",
       "_origin": "ast",
-      "id": "components_homepage_emojirain",
       "community": 59,
-      "norm_label": "emojirain()"
+      "norm_label": "emojirain()",
+      "id": "components_homepage_emojirain"
     },
     {
       "label": "CountUp()",
@@ -89,9 +189,9 @@
       "source_file": "src/components/HomePage.jsx",
       "source_location": "L144",
       "_origin": "ast",
-      "id": "components_homepage_countup",
       "community": 59,
-      "norm_label": "countup()"
+      "norm_label": "countup()",
+      "id": "components_homepage_countup"
     },
     {
       "label": "generateRandomRiasecProfile()",
@@ -99,9 +199,9 @@
       "source_file": "src/components/HomePage.jsx",
       "source_location": "L165",
       "_origin": "ast",
-      "id": "components_homepage_generaterandomriasecprofile",
       "community": 59,
-      "norm_label": "generaterandomriasecprofile()"
+      "norm_label": "generaterandomriasecprofile()",
+      "id": "components_homepage_generaterandomriasecprofile"
     },
     {
       "label": "HomePage()",
@@ -109,9 +209,9 @@
       "source_file": "src/components/HomePage.jsx",
       "source_location": "L177",
       "_origin": "ast",
-      "id": "components_homepage_homepage",
       "community": 59,
-      "norm_label": "homepage()"
+      "norm_label": "homepage()",
+      "id": "components_homepage_homepage"
     },
     {
       "label": "Cleo.jsx",
@@ -119,9 +219,9 @@
       "source_file": "src/components/cleo/Cleo.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "cleo_cleo",
       "community": 41,
-      "norm_label": "cleo.jsx"
+      "norm_label": "cleo.jsx",
+      "id": "cleo_cleo"
     },
     {
       "label": "FIELD_LABELS",
@@ -129,9 +229,9 @@
       "source_file": "src/components/cleo/Cleo.jsx",
       "source_location": "L22",
       "_origin": "ast",
-      "id": "cleo_cleo_field_labels",
       "community": 41,
-      "norm_label": "field_labels"
+      "norm_label": "field_labels",
+      "id": "cleo_cleo_field_labels"
     },
     {
       "label": "InteractiveResponse()",
@@ -139,9 +239,9 @@
       "source_file": "src/components/cleo/Cleo.jsx",
       "source_location": "L31",
       "_origin": "ast",
-      "id": "cleo_cleo_interactiveresponse",
       "community": 41,
-      "norm_label": "interactiveresponse()"
+      "norm_label": "interactiveresponse()",
+      "id": "cleo_cleo_interactiveresponse"
     },
     {
       "label": "Cleo()",
@@ -149,9 +249,9 @@
       "source_file": "src/components/cleo/Cleo.jsx",
       "source_location": "L53",
       "_origin": "ast",
-      "id": "cleo_cleo_cleo",
       "community": 41,
-      "norm_label": "cleo()"
+      "norm_label": "cleo()",
+      "id": "cleo_cleo_cleo"
     },
     {
       "label": "PlanLimitationContext.jsx",
@@ -159,9 +259,9 @@
       "source_file": "src/contexts/PlanLimitationContext.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "contexts_planlimitationcontext",
       "community": 41,
-      "norm_label": "planlimitationcontext.jsx"
+      "norm_label": "planlimitationcontext.jsx",
+      "id": "contexts_planlimitationcontext"
     },
     {
       "label": "PlanLimitationContext",
@@ -169,9 +269,9 @@
       "source_file": "src/contexts/PlanLimitationContext.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "contexts_planlimitationcontext_planlimitationcontext",
       "community": 41,
-      "norm_label": "planlimitationcontext"
+      "norm_label": "planlimitationcontext",
+      "id": "contexts_planlimitationcontext_planlimitationcontext"
     },
     {
       "label": "PlanLimitationProvider()",
@@ -179,9 +279,9 @@
       "source_file": "src/contexts/PlanLimitationContext.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "contexts_planlimitationcontext_planlimitationprovider",
       "community": 41,
-      "norm_label": "planlimitationprovider()"
+      "norm_label": "planlimitationprovider()",
+      "id": "contexts_planlimitationcontext_planlimitationprovider"
     },
     {
       "label": "usePlanLimitation()",
@@ -189,39 +289,9 @@
       "source_file": "src/contexts/PlanLimitationContext.jsx",
       "source_location": "L68",
       "_origin": "ast",
-      "id": "contexts_planlimitationcontext_useplanlimitation",
       "community": 41,
-      "norm_label": "useplanlimitation()"
-    },
-    {
-      "label": "TestResultsPage.jsx",
-      "file_type": "code",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "testresultspage.jsx",
-      "id": "pages_testresultspage"
-    },
-    {
-      "label": "DIMENSION_LABELS",
-      "file_type": "code",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L29",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "dimension_labels",
-      "id": "pages_testresultspage_dimension_labels"
-    },
-    {
-      "label": "TestResultsPage()",
-      "file_type": "code",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L33",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "testresultspage()",
-      "id": "pages_testresultspage_testresultspage"
+      "norm_label": "useplanlimitation()",
+      "id": "contexts_planlimitationcontext_useplanlimitation"
     },
     {
       "label": "matchingAlgorithm.js",
@@ -27364,26 +27434,6 @@
       "id": "services_metierscoringservice_matchmetierstoanswers"
     },
     {
-      "label": "metierService.js",
-      "file_type": "code",
-      "source_file": "src/services/metierService.js",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "metierservice.js",
-      "id": "services_metierservice"
-    },
-    {
-      "label": "metierService",
-      "file_type": "code",
-      "source_file": "src/services/metierService.js",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "metierservice",
-      "id": "services_metierservice_metierservice"
-    },
-    {
       "label": "metierSyncService.js",
       "file_type": "code",
       "source_file": "src/services/metierSyncService.js",
@@ -27812,56 +27862,6 @@
       "community": 200,
       "norm_label": "planmanagementservice",
       "id": "services_planmanagementservice_planmanagementservice"
-    },
-    {
-      "label": "planService.js",
-      "file_type": "code",
-      "source_file": "src/services/planService.js",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 157,
-      "norm_label": "planservice.js",
-      "id": "services_planservice"
-    },
-    {
-      "label": "lsGet()",
-      "file_type": "code",
-      "source_file": "src/services/planService.js",
-      "source_location": "L12",
-      "_origin": "ast",
-      "community": 157,
-      "norm_label": "lsget()",
-      "id": "services_planservice_lsget"
-    },
-    {
-      "label": "lsSet()",
-      "file_type": "code",
-      "source_file": "src/services/planService.js",
-      "source_location": "L19",
-      "_origin": "ast",
-      "community": 157,
-      "norm_label": "lsset()",
-      "id": "services_planservice_lsset"
-    },
-    {
-      "label": "lsDel()",
-      "file_type": "code",
-      "source_file": "src/services/planService.js",
-      "source_location": "L27",
-      "_origin": "ast",
-      "community": 157,
-      "norm_label": "lsdel()",
-      "id": "services_planservice_lsdel"
-    },
-    {
-      "label": "planService",
-      "file_type": "code",
-      "source_file": "src/services/planService.js",
-      "source_location": "L35",
-      "_origin": "ast",
-      "community": 157,
-      "norm_label": "planservice",
-      "id": "services_planservice_planservice"
     },
     {
       "label": "privacyExportService.js",
@@ -32408,6 +32408,219 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_testresultspage",
+      "target": "pages_testresultspage_dimension_labels"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_testresultspage",
+      "target": "pages_testresultspage_testresultspage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "pages_testresultspage_testresultspage",
+      "target": "contexts_planlimitationcontext_useplanlimitation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/TestResultsPage.jsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "pages_testresultspage_testresultspage",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierService.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierservice",
+      "target": "lib_customsupabaseclient"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierService.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierservice",
+      "target": "lib_customsupabaseclient_customsupabaseclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierService.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierservice",
+      "target": "services_metiercacheservice"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierService.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierservice",
+      "target": "services_metiercacheservice_getcachedmetier"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierService.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierservice",
+      "target": "services_metiercacheservice_setcachedmetier"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierService.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierservice",
+      "target": "services_metierservice_metierservice"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierService.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierservice",
+      "target": "services_requestqueueservice"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierService.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierservice",
+      "target": "services_requestqueueservice_queuerequest"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierService.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierservice",
+      "target": "services_romeapiservice"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/metierService.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_metierservice",
+      "target": "services_romeapiservice_romeapiservice"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/testMatchingVerification.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_testmatchingverification",
+      "target": "services_metierservice"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/testMatchingVerification.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_testmatchingverification",
+      "target": "services_metierservice_metierservice"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/planService.js",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_planservice",
+      "target": "services_planservice_lsdel"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/planService.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_planservice",
+      "target": "services_planservice_lsget"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/planService.js",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_planservice",
+      "target": "services_planservice_lsset"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/planService.js",
+      "source_location": "L35",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_planservice",
+      "target": "services_planservice_planservice"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/components/HomePage.jsx",
       "source_location": "L143",
       "weight": 1.0,
@@ -32669,53 +32882,11 @@
       "context": "call",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L36",
-      "weight": 1.0,
-      "source": "pages_testresultspage_testresultspage",
-      "target": "contexts_planlimitationcontext_useplanlimitation"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
       "source_file": "src/components/test-results/PlanAccessMessage.jsx",
       "source_location": "L8",
       "weight": 1.0,
       "source": "test_results_planaccessmessage_planaccessmessage",
       "target": "contexts_planlimitationcontext_useplanlimitation"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_testresultspage",
-      "target": "pages_testresultspage_dimension_labels"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L33",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_testresultspage",
-      "target": "pages_testresultspage_testresultspage"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/TestResultsPage.jsx",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "pages_testresultspage_testresultspage",
-      "target": "ui_use_toast_usetoast"
     },
     {
       "relation": "contains",
@@ -54912,17 +55083,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/services/metierService.js",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierservice",
-      "target": "lib_customsupabaseclient"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/tests/educationApi.test.js",
       "source_location": "L9",
       "weight": 1.0,
@@ -54940,17 +55100,6 @@
       "confidence_score": 1.0,
       "source": "utils_testmatchingverification",
       "target": "lib_customsupabaseclient"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metierService.js",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierservice",
-      "target": "lib_customsupabaseclient_customsupabaseclient"
     },
     {
       "relation": "imports",
@@ -62218,17 +62367,6 @@
       "target": "services_metiercacheservice_setcachedmetier"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metierService.js",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierservice",
-      "target": "services_metiercacheservice"
-    },
-    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -62238,28 +62376,6 @@
       "confidence_score": 1.0,
       "source": "services_metiercacheservice_getcachedmetier",
       "target": "services_metiercacheservice_iscacheexpired"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metierService.js",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierservice",
-      "target": "services_metiercacheservice_getcachedmetier"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metierService.js",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierservice",
-      "target": "services_metiercacheservice_setcachedmetier"
     },
     {
       "relation": "contains",
@@ -62353,82 +62469,6 @@
       "weight": 1.0,
       "source": "utils_matchingtesthelper_testmatchingconsistency",
       "target": "services_metierscoringservice_matchmetierstoanswers"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metierService.js",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierservice",
-      "target": "services_metierservice_metierservice"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metierService.js",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierservice",
-      "target": "services_requestqueueservice"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metierService.js",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierservice",
-      "target": "services_requestqueueservice_queuerequest"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metierService.js",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierservice",
-      "target": "services_romeapiservice"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/metierService.js",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_metierservice",
-      "target": "services_romeapiservice_romeapiservice"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/testMatchingVerification.js",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_testmatchingverification",
-      "target": "services_metierservice"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/testMatchingVerification.js",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_testmatchingverification",
-      "target": "services_metierservice_metierservice"
     },
     {
       "relation": "contains",
@@ -62774,46 +62814,6 @@
       "confidence_score": 1.0,
       "source": "services_planmanagementservice",
       "target": "services_planmanagementservice_planmanagementservice"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/planService.js",
-      "source_location": "L27",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_planservice",
-      "target": "services_planservice_lsdel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/planService.js",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_planservice",
-      "target": "services_planservice_lsget"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/planService.js",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_planservice",
-      "target": "services_planservice_lsset"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/services/planService.js",
-      "source_location": "L35",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_planservice",
-      "target": "services_planservice_planservice"
     },
     {
       "relation": "contains",
@@ -67408,5 +67408,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "fdaf174382855509d6e084cb4c422c67b1a03f69"
+  "built_at_commit": "275703744af18350e66f0f4aa2d22536ab6a66c1"
 }
