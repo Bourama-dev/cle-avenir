@@ -118,6 +118,20 @@ const TestResultsPage = () => {
 
       const allMatches = [...goodMatches];
 
+      // Sauvegarder les résultats pour PersonalizedPlanPage (getTestDataFromSource)
+      localStorage.setItem('latest_test_results', JSON.stringify({
+        riasecProfile: loadedProfile,
+        topCareers: allMatches.slice(0, 10).map(m => ({
+          code:        m.metierCode,
+          libelle:     m.name,
+          name:        m.name,
+          match_score: m.finalScore,
+          score:       m.finalScore,
+          sector:      m.sector,
+          emoji:       m.emoji,
+        })),
+      }));
+
       // Store contextual info in state for display
       localStorage.setItem('test_riasec_context', JSON.stringify({
         dominantAxis,

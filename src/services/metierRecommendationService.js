@@ -9,7 +9,7 @@ import { userProfileService } from './userProfileService';
 // adjusted_weights and riasec_vector are omitted — riasec_profile covers all 6 dimensions.
 const METIER_FIELDS = [
   'code', 'libelle', 'description', 'salaire', 'debouches', 'niveau_etudes',
-  'riasecMajeur', 'riasecMineur', 'riasec_profile',
+  'riasecmajeur', 'riasecmineur', 'riasec_profile',
   'growth_rate', 'job_market_demand', 'salary_range',
 ].join(', ');
 
