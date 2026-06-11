@@ -215,7 +215,7 @@ const HomePage = ({ onNavigate }) => {
       localStorage.setItem('test_riasec_profile', JSON.stringify(profile));
 
       // Navigate to results page
-      onNavigate('/results');
+      onNavigate('/test-results');
     } catch (err) {
       console.error('Error simulating test:', err);
     } finally {
