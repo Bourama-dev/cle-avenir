@@ -34,26 +34,26 @@ export const extractMetierWeights = (metier) => {
 export const calculateRIASECScore = (userProfile, metierRiasec) => {
   if (!userProfile || !metierRiasec) return 0;
 
-  const CATEGORIES = ['R', 'I', 'A', 'S', 'E', 'C'];
-  const weightedMatches = [];
-  let totalWeight = 0;
+  const DIMS = ['R', 'I', 'A', 'S', 'E', 'C'];
+  let dot = 0, normU = 0, normM = 0;
 
-  for (const dim of CATEGORIES) {
-    const metierWeight = Number(metierRiasec[dim]) || 0;
-    const userScore = Number(userProfile[dim]) || 0;
-
-    if (metierWeight === 0) continue;
-
-    // Calculate how well user matches this dimension
-    // Perfect match = user score equals or exceeds metier requirement
-    // Partial match = some alignment
-    const dimensionMatch = Math.max(0, 100 - Math.abs(userScore - (metierWeight / 100) * 100));
-
-    weightedMatches.push(dimensionMatch * metierWeight);
-    totalWeight += metierWeight;
+  for (const d of DIMS) {
+    const u = Number(userProfile[d]) || 0;
+    const m = Number(metierRiasec[d]) || 0;
+    dot += u * m;
+    normU += u * u;
+    normM += m * m;
   }
 
-  return totalWeight > 0 ? Math.round(weightedMatches.reduce((a, b) => a + b, 0) / totalWeight) : 0;
+  if (normU === 0 || normM === 0) return 0;
+  const cosine = dot / (Math.sqrt(normU) * Math.sqrt(normM));
+
+  // Bonus quand la dimension dominante de l'utilisateur correspond exactement au métier
+  const userTopDim  = DIMS.reduce((best, d) => (userProfile[d]  || 0) > (userProfile[best]  || 0) ? d : best, DIMS[0]);
+  const metierTopDim = DIMS.reduce((best, d) => (metierRiasec[d] || 0) > (metierRiasec[best] || 0) ? d : best, DIMS[0]);
+  const dominantBonus = userTopDim === metierTopDim ? 0.06 : 0;
+
+  return Math.round(Math.min(1, cosine + dominantBonus) * 100);
 };
 
 export const getHybridProfile = (userProfile) => {
@@ -65,32 +65,17 @@ export const getHybridProfile = (userProfile) => {
 };
 
 export const calculateHybridScore = (userTop2, metierHybrid) => {
-  if (!metierHybrid || metierHybrid.length === 0) return 60;
+  if (!metierHybrid || metierHybrid.length === 0) return 50;
 
-  let matches = 0;
-  let penalty = 0;
+  const metierSet = new Set(metierHybrid);
+  // Part de chevauchement : combien de dimensions top de l'utilisateur sont dans le profil métier
+  const overlap = userTop2.filter(d => metierSet.has(d)).length;
+  const overlapRatio = overlap / Math.max(metierHybrid.length, 1);
 
-  // Primary dimension match (highest weight)
-  if (metierHybrid[0] && userTop2.includes(metierHybrid[0])) {
-    matches += 1.5;
-  } else if (metierHybrid[0]) {
-    penalty += 0.3;
-  }
+  // Bonus si la dimension primaire correspond exactement
+  const primaryBonus = userTop2[0] === metierHybrid[0] ? 20 : 0;
 
-  // Secondary dimension match
-  if (metierHybrid[1] && userTop2.includes(metierHybrid[1])) {
-    matches += 1.0;
-  } else if (metierHybrid[1]) {
-    penalty += 0.2;
-  }
-
-  // Check if user dimensions are orthogonal to metier needs
-  if (userTop2.length > 0 && !metierHybrid.includes(userTop2[0])) {
-    penalty += 0.15;
-  }
-
-  const finalScore = Math.max(20, matches * 25 - penalty * 10);
-  return Math.min(100, Math.round(finalScore));
+  return Math.round(Math.min(100, overlapRatio * 80 + primaryBonus));
 };
 
 export const calculateStabilityScore = (growthTrend) => {
@@ -118,12 +103,16 @@ export const calculateDemandScore = (demandLevel) => {
   return 50;
 };
 
-export const calculateConfidence = (finalScore) => {
-  if (finalScore >= 85) return { level: 'très_élevée', label: 'Très Élevée', color: 'bg-green-500' };
-  if (finalScore >= 75) return { level: 'élevée', label: 'Élevée', color: 'bg-blue-500' };
-  if (finalScore >= 60) return { level: 'modérée', label: 'Modérée', color: 'bg-yellow-500' };
-  if (finalScore >= 45) return { level: 'faible', label: 'Faible', color: 'bg-orange-500' };
-  return { level: 'très_faible', label: 'Très Faible', color: 'bg-red-500' };
+export const calculateConfidence = (finalScore, profileClarity = 'modérée') => {
+  // La clarté du profil pondère légèrement la confiance affichée
+  const clarityBonus = profileClarity === 'élevée' ? 3 : profileClarity === 'diffuse' ? -3 : 0;
+  const adjusted = finalScore + clarityBonus;
+
+  if (adjusted >= 88) return { level: 'très_élevée', label: 'Très Élevée', color: 'bg-green-500' };
+  if (adjusted >= 75) return { level: 'élevée',      label: 'Élevée',      color: 'bg-blue-500'  };
+  if (adjusted >= 60) return { level: 'modérée',     label: 'Modérée',     color: 'bg-yellow-500'};
+  if (adjusted >= 45) return { level: 'faible',      label: 'Faible',      color: 'bg-orange-500'};
+  return                     { level: 'très_faible', label: 'Très Faible', color: 'bg-red-500'   };
 };
 
 export const getRecommendation = (finalScore) => {
@@ -179,27 +168,36 @@ export const calculateAdvancedMatching = (userProfile, metier) => {
 
   try {
     const metierRiasec = metier.riasec || extractMetierWeights(metier.rawMetier || metier);
-    
-    // Calculate individual component scores (0-100)
+
+    // Scores individuels (0-100)
     const riasecScore = calculateRIASECScore(userProfile, metierRiasec);
-    
+
     const userHybrid = getHybridProfile(userProfile);
     const hybridScore = calculateHybridScore(userHybrid, metier.hybridProfile);
-    
-    const stabilityScore = calculateStabilityScore(metier.growthTrend);
-    const growthScore = calculateGrowthScore(metier.growthTrend);
-    const demandScore = calculateDemandScore(metier.demandLevel);
 
-    // Apply weightings: RIASEC(50%), Hybrid(20%), Stability(10%), Growth(10%), Demand(10%)
+    const stabilityScore = calculateStabilityScore(metier.growthTrend);
+    const growthScore    = calculateGrowthScore(metier.growthTrend);
+    const demandScore    = calculateDemandScore(metier.demandLevel);
+
+    // Poids dynamiques selon la clarté du profil utilisateur
+    // Profil clair → RIASEC plus fiable → on lui donne plus de poids
+    const sortedScores = Object.values(userProfile).sort((a, b) => b - a);
+    const profileGap = (sortedScores[0] || 0) - (sortedScores[1] || 0);
+    const profileClarity = profileGap >= 25 ? 'élevée' : profileGap >= 12 ? 'modérée' : 'diffuse';
+
+    const riasecW  = profileGap >= 25 ? 0.60 : profileGap >= 12 ? 0.55 : 0.50;
+    const hybridW  = 0.70 - riasecW; // complément pour que riasec + hybrid = 70 %
+    const marketW  = 0.10;           // stabilité, croissance, demande = 30 %
+
     const finalScore = Math.round(
-      (riasecScore * 0.50) +
-      (hybridScore * 0.20) +
-      (stabilityScore * 0.10) +
-      (growthScore * 0.10) +
-      (demandScore * 0.10)
+      (riasecScore  * riasecW) +
+      (hybridScore  * hybridW) +
+      (stabilityScore * marketW) +
+      (growthScore    * marketW) +
+      (demandScore    * marketW)
     );
 
-    const confidence = calculateConfidence(finalScore);
+    const confidence   = calculateConfidence(finalScore, profileClarity);
     const recommendation = getRecommendation(finalScore);
     
     const baseResult = {
