@@ -113,7 +113,11 @@ export const AuthProvider = ({ children }) => {
           // FK violation (23503) means the session references a user that no
           // longer exists in auth.users — purge it so the user can log in fresh.
           if (upsertError.code === '23503') {
-            await supabase.auth.signOut();
+            // Do NOT call supabase.auth.signOut() here — it would wipe the
+            // PKCE code_verifier from localStorage, breaking exchangeCodeForSession
+            // if this INITIAL_SESSION fired while a fresh OAuth code is in the URL.
+            // Just reset React state; the stale session will be overwritten when
+            // the code exchange fires SIGNED_IN.
             setUser(null);
             setSession(null);
             setUserProfile(null);
