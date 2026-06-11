@@ -46,16 +46,13 @@ export const AuthService = {
 
           interests: profileData.interests || [],
 
-          // User preferences for job recommendations
-          salary_range_min: profileData.salaryRange?.[0] || null,
-          salary_range_max: profileData.salaryRange?.[1] || null,
-
           constraints: {
             selected: profileData.constraints || []
           },
 
           answers: {
-            wants_long_studies: wantsLongStudiesBool
+            wants_long_studies: wantsLongStudiesBool,
+            salary_range: profileData.salaryRange || null
           },
 
           updated_at: new Date().toISOString()
@@ -185,16 +182,26 @@ export const AuthService = {
     return data;
   },
 
-  async completeGoogleProfile(userId, profileData) {
+  async completeGoogleProfile(userId, profileData, user = null) {
     try {
       let wantsLongStudiesBool = null;
       if (profileData.wants_long_studies === 'Oui' || profileData.wants_long_studies === true) wantsLongStudiesBool = true;
       else if (profileData.wants_long_studies === 'Non' || profileData.wants_long_studies === false) wantsLongStudiesBool = false;
 
+      // Include identity fields so the upsert succeeds even if the profile stub
+      // was never created (e.g. hard reload before it was saved).
+      const meta = user?.user_metadata || {};
+      const nameParts = (meta.full_name || '').split(' ');
+
       const { error } = await supabase
         .from('profiles')
         .upsert({
           id: userId,
+          email: user?.email || profileData.email || null,
+          first_name: meta.given_name || nameParts[0] || profileData.first_name || '',
+          last_name: meta.family_name || nameParts.slice(1).join(' ') || profileData.last_name || '',
+          avatar_url: meta.avatar_url || null,
+          role: 'user',
           region: profileData.region,
           city: profileData.city,
           education_level: profileData.education_level,
@@ -202,10 +209,11 @@ export const AuthService = {
           user_status: profileData.current_status,
           age_range: profileData.age ? `${profileData.age}-${profileData.age}` : null,
           interests: profileData.interests || [],
-          salary_range_min: profileData.salaryRange?.[0] || null,
-          salary_range_max: profileData.salaryRange?.[1] || null,
           constraints: { selected: profileData.constraints || [] },
-          answers: { wants_long_studies: wantsLongStudiesBool },
+          answers: {
+            wants_long_studies: wantsLongStudiesBool,
+            salary_range: profileData.salaryRange || null
+          },
           updated_at: new Date().toISOString()
         }, { onConflict: 'id' });
 

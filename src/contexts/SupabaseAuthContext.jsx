@@ -94,7 +94,9 @@ export const AuthProvider = ({ children }) => {
       let profile = await fetchUserProfile(currentSession.user.id);
 
       // New Google/OAuth user — no profile row yet: create it
-      if (!profile && currentSession.user.app_metadata?.provider === 'google') {
+      const isGoogle = currentSession.user.app_metadata?.provider === 'google' ||
+        currentSession.user.app_metadata?.providers?.includes('google');
+      if (!profile && isGoogle) {
         const meta = currentSession.user.user_metadata || {};
         const nameParts = (meta.full_name || '').split(' ');
         const { error: upsertError } = await supabase.from('profiles').upsert({
@@ -138,6 +140,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     let mounted = true;
 
+    const safetyTimer = setTimeout(() => {
+      if (mounted) setLoading(false);
+    }, 15000);
+
     const initAuth = async () => {
       try {
         const { data: { session: initialSession }, error } = await supabase.auth.getSession();
@@ -146,6 +152,8 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.error('[AuthContext] Init error:', error);
         if (mounted) setLoading(false);
+      } finally {
+        clearTimeout(safetyTimer);
       }
     };
 

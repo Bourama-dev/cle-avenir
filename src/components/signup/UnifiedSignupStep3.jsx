@@ -6,45 +6,77 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import CityAutocomplete from '@/components/ui/CityAutocomplete';
 
-const UnifiedSignupStep3 = ({ formData, handleFieldChange, errors, onNext, onPrev }) => {
+const UnifiedSignupStep3 = ({ formData, handleFieldChange, errors, onNext, onPrev, isGoogleFlow }) => {
   const countries = ["France", "Belgique", "Suisse", "Canada", "Luxembourg", "Autre"];
   const regions = [
-    "Auvergne-Rhône-Alpes", "Bourgogne-Franche-Comté", "Bretagne", 
-    "Centre-Val de Loire", "Corse", "Grand Est", "Hauts-de-France", 
-    "Île-de-France", "Normandie", "Nouvelle-Aquitaine", "Occitanie", 
+    "Auvergne-Rhône-Alpes", "Bourgogne-Franche-Comté", "Bretagne",
+    "Centre-Val de Loire", "Corse", "Grand Est", "Hauts-de-France",
+    "Île-de-France", "Normandie", "Nouvelle-Aquitaine", "Occitanie",
     "Pays de la Loire", "Provence-Alpes-Côte d'Azur", "Outre-mer"
   ];
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-right-8 duration-500">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-slate-900">Où habitez-vous ?</h2>
-        <p className="text-slate-500">Pour vous proposer des opportunités locales.</p>
+        <h2 className="text-2xl font-bold text-slate-900">
+          {isGoogleFlow ? 'Vos informations personnelles' : 'Où habitez-vous ?'}
+        </h2>
+        <p className="text-slate-500">
+          {isGoogleFlow ? 'Vérifiez vos informations et indiquez votre localisation.' : 'Pour vous proposer des opportunités locales.'}
+        </p>
       </div>
 
       <div className="space-y-5">
-        <div className="space-y-2">
-          <Label htmlFor="address">Adresse</Label>
-          <Input
-            id="address"
-            value={formData.address}
-            onChange={(e) => handleFieldChange('address', e.target.value)}
-            className={errors.address ? "border-red-500 bg-red-50" : ""}
-            placeholder="123 Rue de la Paix"
-          />
-           {errors.address && <p className="text-xs text-red-500 font-medium">{errors.address}</p>}
-        </div>
+        {isGoogleFlow && (
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="first_name">Prénom</Label>
+              <Input
+                id="first_name"
+                value={formData.first_name}
+                onChange={(e) => handleFieldChange('first_name', e.target.value)}
+                className={errors.first_name ? "border-red-500 bg-red-50" : ""}
+                placeholder="Prénom"
+              />
+              {errors.first_name && <p className="text-xs text-red-500 font-medium">{errors.first_name}</p>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="last_name">Nom</Label>
+              <Input
+                id="last_name"
+                value={formData.last_name}
+                onChange={(e) => handleFieldChange('last_name', e.target.value)}
+                className={errors.last_name ? "border-red-500 bg-red-50" : ""}
+                placeholder="Nom de famille"
+              />
+              {errors.last_name && <p className="text-xs text-red-500 font-medium">{errors.last_name}</p>}
+            </div>
+          </div>
+        )}
+
+        {!isGoogleFlow && (
+          <div className="space-y-2">
+            <Label htmlFor="address">Adresse</Label>
+            <Input
+              id="address"
+              value={formData.address}
+              onChange={(e) => handleFieldChange('address', e.target.value)}
+              className={errors.address ? "border-red-500 bg-red-50" : ""}
+              placeholder="123 Rue de la Paix"
+            />
+            {errors.address && <p className="text-xs text-red-500 font-medium">{errors.address}</p>}
+          </div>
+        )}
 
         <div className="grid grid-cols-2 gap-4">
            <div className="space-y-2">
              <Label>Ville</Label>
-             <CityAutocomplete 
+             <CityAutocomplete
                  value={formData.city}
                  onCitySelect={(cityName, cityData) => {
                      handleFieldChange('city', cityName);
                      if (cityData) {
                          handleFieldChange('postalCode', cityData['Code Postal']);
-                         // Try to map region if possible or leave for manual select
                          if (cityData.région) handleFieldChange('region', cityData.région);
                      }
                  }}
@@ -66,8 +98,8 @@ const UnifiedSignupStep3 = ({ formData, handleFieldChange, errors, onNext, onPre
         <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
             <Label>Région</Label>
-            <Select 
-                value={formData.region} 
+            <Select
+                value={formData.region}
                 onValueChange={(val) => handleFieldChange('region', val)}
             >
                 <SelectTrigger className={errors.region ? "border-red-500" : ""}>
@@ -84,8 +116,8 @@ const UnifiedSignupStep3 = ({ formData, handleFieldChange, errors, onNext, onPre
 
             <div className="space-y-2">
             <Label>Pays</Label>
-            <Select 
-                value={formData.country} 
+            <Select
+                value={formData.country}
                 onValueChange={(val) => handleFieldChange('country', val)}
             >
                 <SelectTrigger className={errors.country ? "border-red-500" : ""}>
