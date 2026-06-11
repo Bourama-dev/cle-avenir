@@ -59,7 +59,6 @@ const OAuthConsentPage = lazy(() => import('@/pages/OAuthConsentPage'));
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
 const SignupPage = lazy(() => import('@/pages/SignupPage'));
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
-const ResultsPage = lazy(() => import('@/pages/ResultsPage'));
 const ActionPlanPage = lazy(() => import('@/pages/ActionPlanPage'));
 const TestPage = lazy(() => import('@/pages/TestPage'));
 
@@ -258,7 +257,7 @@ const PageContent = () => {
   const isAuthPage = ['/auth', '/login', '/signup', '/forgot-password', '/reset-password', '/email-confirmation-pending', '/auth/callback', '/institution/staff/login', '/oauth/consent', '/parental-consent'].some(p => location.pathname.startsWith(p));
   const isCVBuilder = location.pathname.startsWith('/cv-builder') || location.pathname.startsWith('/cover-letter-builder');
   const isAdminPage = location.pathname.startsWith('/admin');
-  const isDashboard = ['/dashboard', '/settings', '/profil', '/profile', '/account', '/recommendations', '/offers-formations', '/my-documents', '/user/rgpd', '/user/cookies-preferences', '/personalized-plan', '/notifications', '/results', '/action-plan', '/apprentissage'].some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
+  const isDashboard = ['/dashboard', '/settings', '/profil', '/profile', '/account', '/recommendations', '/offers-formations', '/my-documents', '/user/rgpd', '/user/cookies-preferences', '/personalized-plan', '/notifications', '/action-plan', '/apprentissage'].some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
   const isEstablishmentPortal = location.pathname.startsWith('/establishment') || location.pathname.startsWith('/institution/');
   const isTestPage = ['/test', '/test-orientation', '/interview', '/test-gate'].some(p => location.pathname.startsWith(p));
   const isErrorPage = location.pathname === '/404';
@@ -332,7 +331,6 @@ const PageContent = () => {
                   
                   {/* Protected Flow Pages */}
                   <Route path="/profile" element={<ProtectedRoute><PageTransition><ProfileResultsPage /></PageTransition></ProtectedRoute>} />
-                  <Route path="/results" element={<PageTransition><ResultsPage /></PageTransition>} />
                   <Route path="/action-plan" element={<ProtectedRoute><PageTransition><ActionPlanPage /></PageTransition></ProtectedRoute>} />
                   
                   {/* OAuth Consent */}
