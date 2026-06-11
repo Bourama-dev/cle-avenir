@@ -251,6 +251,7 @@ const TestPage = () => {
     // Persist to localStorage for TestResultsPage and ProfilePage
     localStorage.setItem('test_riasec_profile',      JSON.stringify(profile));
     localStorage.setItem('test_riasec_profile_code', code);
+    localStorage.setItem('test_riasec_profile_meta', JSON.stringify(computeProfileMeta(profile)));
     localStorage.setItem('temp_test_answers',        JSON.stringify(answers));
     localStorage.setItem('temp_test_scores',         JSON.stringify(profile));
 

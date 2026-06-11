@@ -103,7 +103,6 @@ const TestResultsPage = () => {
       // Get user profile criteria for intelligent filtering
       const userCriteria = await userProfileService.getUserRecommendationCriteria();
 
-      console.log('📊 User criteria:', userCriteria);
 
       // Rank métiers by contextual relevance + user criteria
       const contextualMatches = contextualRecommendationService.rankMetiersByContext(
@@ -238,6 +237,17 @@ const TestResultsPage = () => {
     profileEntries.slice(0, 3).map(([l]) => l).join('');
   const visibleCount = getVisibleMetierCount();
 
+  // Métadonnées de clarté calculées à l'étape du test
+  const profileMeta = (() => {
+    try { return JSON.parse(localStorage.getItem('test_riasec_profile_meta') || '{}'); }
+    catch { return {}; }
+  })();
+  const clarityConfig = {
+    élevée:  { label: 'Profil clair',   badge: 'bg-green-100 text-green-800 border-green-200',  tip: 'Tes dimensions dominantes se distinguent nettement — les recommandations sont très fiables.' },
+    modérée: { label: 'Profil équilibré', badge: 'bg-blue-100 text-blue-800 border-blue-200',   tip: 'Ton profil montre plusieurs dimensions fortes — tu as de la polyvalence.' },
+    diffuse: { label: 'Profil polyvalent', badge: 'bg-amber-100 text-amber-800 border-amber-200', tip: 'Tes intérêts sont variés — explore plusieurs pistes pour affiner ton orientation.' },
+  }[profileMeta.clarity || 'modérée'];
+
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -257,31 +267,41 @@ const TestResultsPage = () => {
     <div className="min-h-screen bg-slate-50 pb-20">
       
       {/* Hero Section */}
-      <div className="bg-slate-900 text-white pt-16 pb-32 px-4 relative overflow-hidden">
-         <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-         <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto text-center relative z-10"
-          >
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
-              Vos Résultats d'Orientation
-            </h1>
-            <p className="text-slate-300 max-w-2xl mx-auto text-lg mb-6">
-              Découvrez les métiers qui correspondent parfaitement à votre ADN professionnel.
-            </p>
-            {/* Profile code badge */}
-            <div className="inline-flex flex-col items-center bg-white/10 border border-white/20 backdrop-blur rounded-2xl px-8 py-4">
-              <span className="text-slate-300 text-xs font-semibold uppercase tracking-widest mb-1">
-                Code RIASEC
+      <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white pt-16 pb-36 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(circle_at_30%_50%,#6366f1,transparent_60%),radial-gradient(circle_at_70%_50%,#ec4899,transparent_60%)]" />
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto text-center relative z-10"
+        >
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-3 tracking-tight">
+            Tes Résultats d'Orientation
+          </h1>
+          <p className="text-slate-300 max-w-xl mx-auto text-base mb-8">
+            Voici les métiers qui résonnent avec ton profil naturel.
+          </p>
+
+          {/* Badge code + clarté */}
+          <div className="inline-flex flex-col items-center bg-white/10 border border-white/20 backdrop-blur-sm rounded-2xl px-8 py-5 gap-2">
+            <span className="text-slate-300 text-xs font-semibold uppercase tracking-widest">
+              Code RIASEC
+            </span>
+            <span className="text-5xl font-black tracking-widest text-white">{profileCode}</span>
+            <span className="text-slate-300 text-sm font-medium">
+              Dominant · {DIMENSION_LABELS[topType]?.name}
+            </span>
+            {clarityConfig && (
+              <span className={`text-xs font-semibold px-3 py-1 rounded-full border mt-1 ${clarityConfig.badge}`}>
+                {clarityConfig.label}
+                {profileMeta.engagement != null && ` · Engagement ${profileMeta.engagement}%`}
               </span>
-              <span className="text-4xl font-black tracking-widest text-white">{profileCode}</span>
-              <span className="text-slate-400 text-xs mt-1">
-                Profil dominant : {DIMENSION_LABELS[topType]?.name}
-              </span>
-            </div>
-         </motion.div>
+            )}
+          </div>
+          {clarityConfig && (
+            <p className="text-slate-400 text-xs mt-4 max-w-sm mx-auto">{clarityConfig.tip}</p>
+          )}
+        </motion.div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 -mt-20 relative z-20 space-y-12">
@@ -296,34 +316,48 @@ const TestResultsPage = () => {
           <CardContent className="p-8 space-y-8 bg-white">
 
             {/* Main Scores Grid */}
-            <div className="space-y-5">
+            <div className="space-y-3">
               <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider">Scores par dimension</h3>
-              {profileEntries.map(([dim, score]) => {
+              {profileEntries.map(([dim, score], idx) => {
                 const info = DIMENSION_LABELS[dim] || { name: dim, color: 'bg-slate-500' };
-                const isTop = profileEntries.slice(0, 3).some(([d]) => d === dim);
+                const meta = RIASEC_META[dim];
+                const isTop = idx < 3;
                 return (
-                  <div key={dim} className={`p-3 rounded-lg transition-all ${isTop ? 'bg-indigo-50 border border-indigo-100' : 'bg-slate-50'}`}>
-                    <div className="flex justify-between text-sm mb-3 font-bold text-slate-700">
-                      <span className="uppercase tracking-wider">{info.name} {isTop && '⭐'}</span>
-                      <span className="text-lg text-indigo-600 font-black">{score}%</span>
+                  <div key={dim} className={`p-3 rounded-xl transition-all ${isTop ? 'bg-indigo-50 border border-indigo-100' : 'bg-slate-50'}`}>
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className={`text-sm font-bold ${isTop ? 'text-indigo-800' : 'text-slate-500'}`}>
+                          {info.name}
+                        </span>
+                        {idx === 0 && <span className="text-[10px] font-bold bg-indigo-600 text-white px-2 py-0.5 rounded-full">Dominant</span>}
+                        {idx > 0 && idx < 3 && <span className="text-[10px] font-semibold text-indigo-500">Top {idx + 1}</span>}
+                      </div>
+                      <span className={`text-base font-black ${isTop ? 'text-indigo-600' : 'text-slate-400'}`}>{score}%</span>
                     </div>
-                    <Progress value={score} className="h-2.5 rounded-full" indicatorClassName={info.color} />
+                    <Progress value={score} className="h-2 rounded-full" indicatorClassName={isTop ? info.color : 'bg-slate-300'} />
+                    {isTop && meta?.description && (
+                      <p className="text-xs text-slate-500 mt-1.5 leading-relaxed line-clamp-2">{meta.description}</p>
+                    )}
                   </div>
                 );
               })}
             </div>
 
-            {/* Profile Insights */}
-            <div className="border-t border-slate-200 pt-6">
-              <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Vos Forces</h3>
-              <div className="grid md:grid-cols-3 gap-4">
-                {profileEntries.slice(0, 3).map(([dim, score]) => {
-                  const info = DIMENSION_LABELS[dim] || { name: dim, color: 'bg-slate-500' };
+            {/* Top 3 Forces */}
+            <div className="border-t border-slate-200 pt-5">
+              <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">Tes 3 forces</h3>
+              <div className="grid md:grid-cols-3 gap-3">
+                {profileEntries.slice(0, 3).map(([dim, score], idx) => {
+                  const meta = RIASEC_META[dim];
+                  const medals = ['🥇', '🥈', '🥉'];
                   return (
-                    <div key={dim} className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg border border-indigo-100 text-center">
-                      <div className="text-2xl mb-2">⭐</div>
-                      <p className="text-sm font-bold text-indigo-900 mb-1">{info.name}</p>
-                      <p className="text-2xl font-black text-indigo-600">{score}%</p>
+                    <div key={dim} className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100">
+                      <div className="text-2xl mb-1">{medals[idx]}</div>
+                      <p className="text-sm font-bold text-indigo-900">{DIMENSION_LABELS[dim]?.name}</p>
+                      <p className="text-2xl font-black text-indigo-600 mb-1">{score}%</p>
+                      {meta?.description && (
+                        <p className="text-[11px] text-slate-500 leading-snug line-clamp-3">{meta.description}</p>
+                      )}
                     </div>
                   );
                 })}
