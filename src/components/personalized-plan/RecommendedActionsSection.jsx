@@ -183,16 +183,31 @@ const RecommendedActionsSection = ({ userProfile, riasecProfile }) => {
       <div className="grid grid-cols-2 gap-3 pt-1">
         <Button
           variant="outline"
-          onClick={() => toast({ title: 'PDF', description: 'La génération du PDF est en cours de développement.' })}
+          onClick={() => {
+            toast({ title: 'Impression en cours…', description: 'Utilisez « Enregistrer en PDF » dans la boîte d\'impression.' });
+            setTimeout(() => window.print(), 300);
+          }}
           className="w-full text-slate-600 border-slate-200 hover:bg-slate-50"
         >
           <Download className="w-4 h-4 mr-2" /> PDF
         </Button>
         <Button
           variant="outline"
-          onClick={() => {
-            navigator.clipboard.writeText(window.location.href);
-            toast({ title: 'Lien copié', description: 'Le lien de votre plan a été copié.' });
+          onClick={async () => {
+            const url = window.location.href;
+            const shareData = {
+              title: 'Mon Plan Personnalisé — Clé Avenir',
+              text: 'Découvrez mon plan d\'orientation personnalisé sur Clé Avenir.',
+              url,
+            };
+            if (navigator.share && navigator.canShare?.(shareData)) {
+              try {
+                await navigator.share(shareData);
+                return;
+              } catch (_) { /* fallback to clipboard */ }
+            }
+            await navigator.clipboard.writeText(url);
+            toast({ title: 'Lien copié !', description: 'Partagez ce lien pour accéder à votre plan.' });
           }}
           className="w-full text-slate-600 border-slate-200 hover:bg-slate-50"
         >

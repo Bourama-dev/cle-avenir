@@ -31,7 +31,7 @@ const RiasecProfileSection = ({ riasecProfile }) => {
     .filter(([k]) => ['R','I','A','S','E','C'].includes(k))
     .map(([letter, score]) => ({
       letter,
-      score: Math.round(Number(score) || 0),
+      score: Math.min(100, Math.round(Number(score) || 0)),
       ...DIMENSION_LABELS[letter]
     }))
     .sort((a, b) => b.score - a.score);
