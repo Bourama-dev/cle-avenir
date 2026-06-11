@@ -124,6 +124,8 @@ const SignupPage = () => {
       }
     }
     if (step === 3) {
+      if (isGoogleFlow && !formData.first_name?.trim()) newErrors.first_name = "Prénom requis";
+      if (isGoogleFlow && !formData.last_name?.trim()) newErrors.last_name = "Nom requis";
       if (!formData.region) newErrors.region = "Région requise";
       if (!formData.city?.trim()) newErrors.city = "Ville requise";
     }
@@ -235,7 +237,7 @@ const SignupPage = () => {
     switch (currentStep) {
       case 1: return <UnifiedSignupStep1 {...props} />;
       case 2: return <UnifiedSignupStep2 {...props} />;
-      case 3: return <UnifiedSignupStep3 {...props} />;
+      case 3: return <UnifiedSignupStep3 {...props} isGoogleFlow={isGoogleFlow} />;
       case 4: return <UnifiedSignupStep4 {...props} />;
       case 5: return <UnifiedSignupStep5 {...props} />;
       case 6: return <UnifiedSignupStep6 {...props} />;

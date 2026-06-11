@@ -9,40 +9,83 @@ import { useAuth } from '@/contexts/SupabaseAuthContext';
 /**
  * AuthCallback Component
  *
- * With detectSessionInUrl: true + flowType: 'pkce' in the Supabase client,
- * Supabase auto-exchanges the OAuth code on init and fires SIGNED_IN before
- * this component even mounts. We therefore rely on the auth context (which
- * has already processed the session) instead of calling exchangeCodeForSession
- * manually — that would fail with "code already used".
+ * detectSessionInUrl is now FALSE in the Supabase client so the client no longer
+ * blocks on the PKCE exchange at initialisation time (which caused the infinite
+ * loading screen). We handle the exchange ourselves here with a hard timeout.
  *
  * Flow:
- * 1. App.jsx shows <LoadingFallback> while authLoading is true
- * 2. Once authLoading is false, AuthCallback mounts and the effect runs
- * 3. If the user is a new Google user (no region in profile) → /signup?google=true
- * 4. Otherwise → /dashboard
+ * 1. Component mounts immediately (auth context resolves in milliseconds from localStorage).
+ * 2. If there is a ?code= in the URL we exchange it manually (10s timeout).
+ * 3. On success, SIGNED_IN fires → auth context sets user.
+ * 4. Once exchange is done AND user is available → redirect.
  */
+
+const EXCHANGE_TIMEOUT_MS = 10000;
+
 const AuthCallback = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const [error, setError] = useState(null);
-  const [processed, setProcessed] = useState(false);
+  const [exchangeDone, setExchangeDone] = useState(false);
+  const [redirectDone, setRedirectDone] = useState(false);
 
-  // If auth finished loading but there's still no user after a short grace period,
-  // show a real error. This handles genuinely invalid / expired links while avoiding
-  // a false "invalid link" message when the SIGNED_IN event arrives slightly after
-  // authLoading flips to false (PKCE timing race).
+  // Step 1 — Exchange the PKCE code once on mount.
   useEffect(() => {
-    if (authLoading || user || error) return;
-    const timer = setTimeout(() => {
-      setError("Lien de validation invalide ou expiré.");
-    }, 4000);
-    return () => clearTimeout(timer);
-  }, [authLoading, user, error]);
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get('code');
 
+    if (!code) {
+      // No code to exchange (e.g. already cleaned after a previous exchange).
+      setExchangeDone(true);
+      return;
+    }
+
+    let cancelled = false;
+
+    const timeout = setTimeout(() => {
+      if (!cancelled) {
+        cancelled = true;
+        setError('La connexion avec Google a pris trop de temps. Veuillez réessayer.');
+      }
+    }, EXCHANGE_TIMEOUT_MS);
+
+    supabase.auth.exchangeCodeForSession(code)
+      .then(({ error: exchangeError }) => {
+        if (cancelled) return;
+        clearTimeout(timeout);
+        if (exchangeError) {
+          // "code verifier" missing means the code was already exchanged (hard reload).
+          // The session should still be in localStorage — proceed and let Step 2 handle it.
+          console.warn('[AuthCallback] Code exchange warning (may be a hard reload):', exchangeError.message);
+        }
+        // Clean the code from the URL so a page refresh won't trigger a second attempt.
+        window.history.replaceState({}, document.title, url.pathname);
+        setExchangeDone(true);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        clearTimeout(timeout);
+        console.error('[AuthCallback] Exchange error:', err);
+        window.history.replaceState({}, document.title, url.pathname);
+        setExchangeDone(true);
+      });
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Step 2 — Once exchange is done and auth context has settled, redirect.
   useEffect(() => {
-    // Wait for auth to settle AND for a user to be available before proceeding.
-    if (authLoading || processed || !user) return;
-    setProcessed(true);
+    if (!exchangeDone || authLoading || redirectDone || error) return;
+
+    if (!user) {
+      setError('Lien de connexion invalide ou expiré. Veuillez recommencer.');
+      return;
+    }
+
+    setRedirectDone(true);
 
     const redirect = async () => {
       try {
@@ -66,13 +109,14 @@ const AuthCallback = () => {
         EventLogger.logEvent('auth_callback', user.id);
         navigate('/dashboard', { replace: true });
       } catch (err) {
-        console.error("Auth callback error:", err);
-        setError(err.message || "Erreur lors de la validation.");
+        console.error('[AuthCallback] Redirect error:', err);
+        setRedirectDone(false);
+        setError(err.message || 'Erreur lors de la validation.');
       }
     };
 
     redirect();
-  }, [authLoading, user, navigate, processed]);
+  }, [exchangeDone, authLoading, user, navigate, redirectDone, error]);
 
   if (error) {
     return (
@@ -81,7 +125,7 @@ const AuthCallback = () => {
           <div className="mx-auto w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4">
             <XCircle className="h-6 w-6 text-red-600" />
           </div>
-          <h2 className="text-2xl font-bold text-slate-900 mb-2">Erreur de validation</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">Erreur de connexion</h2>
           <p className="text-slate-600 mb-6">{error}</p>
           <div className="flex gap-4 justify-center">
             <Button onClick={() => navigate('/login')} variant="outline">

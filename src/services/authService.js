@@ -46,16 +46,13 @@ export const AuthService = {
 
           interests: profileData.interests || [],
 
-          // User preferences for job recommendations
-          salary_range_min: profileData.salaryRange?.[0] || null,
-          salary_range_max: profileData.salaryRange?.[1] || null,
-
           constraints: {
             selected: profileData.constraints || []
           },
 
           answers: {
-            wants_long_studies: wantsLongStudiesBool
+            wants_long_studies: wantsLongStudiesBool,
+            salary_range: profileData.salaryRange || null
           },
 
           updated_at: new Date().toISOString()
@@ -212,10 +209,11 @@ export const AuthService = {
           user_status: profileData.current_status,
           age_range: profileData.age ? `${profileData.age}-${profileData.age}` : null,
           interests: profileData.interests || [],
-          salary_range_min: profileData.salaryRange?.[0] || null,
-          salary_range_max: profileData.salaryRange?.[1] || null,
           constraints: { selected: profileData.constraints || [] },
-          answers: { wants_long_studies: wantsLongStudiesBool },
+          answers: {
+            wants_long_studies: wantsLongStudiesBool,
+            salary_range: profileData.salaryRange || null
+          },
           updated_at: new Date().toISOString()
         }, { onConflict: 'id' });
 
