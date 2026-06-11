@@ -4,14 +4,204 @@
   "graph": {},
   "nodes": [
     {
+      "label": "RecommendedActionsSection.jsx",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection",
+      "community": 190,
+      "norm_label": "recommendedactionssection.jsx"
+    },
+    {
+      "label": "RIASEC_TRAIT",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_riasec_trait",
+      "community": 190,
+      "norm_label": "riasec_trait"
+    },
+    {
+      "label": "STATUS_LABEL",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_status_label",
+      "community": 190,
+      "norm_label": "status_label"
+    },
+    {
+      "label": "buildSublabel()",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_buildsublabel",
+      "community": 190,
+      "norm_label": "buildsublabel()"
+    },
+    {
+      "label": "ACTION_BASE",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_action_base",
+      "community": 190,
+      "norm_label": "action_base"
+    },
+    {
+      "label": "getActionsForStatus()",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L127",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_getactionsforstatus",
+      "community": 190,
+      "norm_label": "getactionsforstatus()"
+    },
+    {
+      "label": "RecommendedActionsSection()",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L138",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_recommendedactionssection",
+      "community": 190,
+      "norm_label": "recommendedactionssection()"
+    },
+    {
+      "label": "RiasecProfileSection.jsx",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "personalized_plan_riasecprofilesection",
+      "community": 252,
+      "norm_label": "riasecprofilesection.jsx"
+    },
+    {
+      "label": "DIMENSION_LABELS",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "personalized_plan_riasecprofilesection_dimension_labels",
+      "community": 252,
+      "norm_label": "dimension_labels"
+    },
+    {
+      "label": "RiasecProfileSection()",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "personalized_plan_riasecprofilesection_riasecprofilesection",
+      "community": 252,
+      "norm_label": "riasecprofilesection()"
+    },
+    {
+      "label": "educationUtils.js",
+      "file_type": "code",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "utils_educationutils",
+      "community": 35,
+      "norm_label": "educationutils.js"
+    },
+    {
+      "label": "EDUCATION_ORDER",
+      "file_type": "code",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "utils_educationutils_education_order",
+      "community": 35,
+      "norm_label": "education_order"
+    },
+    {
+      "label": "EDUCATION_LABELS",
+      "file_type": "code",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "utils_educationutils_education_labels",
+      "community": 35,
+      "norm_label": "education_labels"
+    },
+    {
+      "label": "getUserEducationLevel()",
+      "file_type": "code",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "utils_educationutils_getusereducationlevel",
+      "community": 35,
+      "norm_label": "getusereducationlevel()"
+    },
+    {
+      "label": "getFormationLevel()",
+      "file_type": "code",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "utils_educationutils_getformationlevel",
+      "community": 35,
+      "norm_label": "getformationlevel()"
+    },
+    {
+      "label": "isFormationAccessible()",
+      "file_type": "code",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L63",
+      "_origin": "ast",
+      "id": "utils_educationutils_isformationaccessible",
+      "community": 35,
+      "norm_label": "isformationaccessible()"
+    },
+    {
+      "label": "getAccessibilityLabel()",
+      "file_type": "code",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L69",
+      "_origin": "ast",
+      "id": "utils_educationutils_getaccessibilitylabel",
+      "community": 35,
+      "norm_label": "getaccessibilitylabel()"
+    },
+    {
+      "label": "USER_STATUS_LABELS",
+      "file_type": "code",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "utils_educationutils_user_status_labels",
+      "community": 35,
+      "norm_label": "user_status_labels"
+    },
+    {
+      "label": "getStatusContext()",
+      "file_type": "code",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L93",
+      "_origin": "ast",
+      "id": "utils_educationutils_getstatuscontext",
+      "community": 35,
+      "norm_label": "getstatuscontext()"
+    },
+    {
       "label": "MetierCardBadges.jsx",
       "file_type": "code",
       "source_file": "src/components/metiers/MetierCardBadges.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "metiers_metiercardbadges",
       "community": 16,
-      "norm_label": "metiercardbadges.jsx"
+      "norm_label": "metiercardbadges.jsx",
+      "id": "metiers_metiercardbadges"
     },
     {
       "label": "SectorBadge()",
@@ -19,9 +209,9 @@
       "source_file": "src/components/metiers/MetierCardBadges.jsx",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "metiers_metiercardbadges_sectorbadge",
       "community": 16,
-      "norm_label": "sectorbadge()"
+      "norm_label": "sectorbadge()",
+      "id": "metiers_metiercardbadges_sectorbadge"
     },
     {
       "label": "formatSalaryLabel()",
@@ -29,9 +219,9 @@
       "source_file": "src/components/metiers/MetierCardBadges.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "metiers_metiercardbadges_formatsalarylabel",
       "community": 16,
-      "norm_label": "formatsalarylabel()"
+      "norm_label": "formatsalarylabel()",
+      "id": "metiers_metiercardbadges_formatsalarylabel"
     },
     {
       "label": "SalaryBadge()",
@@ -39,9 +229,9 @@
       "source_file": "src/components/metiers/MetierCardBadges.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "id": "metiers_metiercardbadges_salarybadge",
       "community": 16,
-      "norm_label": "salarybadge()"
+      "norm_label": "salarybadge()",
+      "id": "metiers_metiercardbadges_salarybadge"
     },
     {
       "label": "RomeBadge()",
@@ -49,9 +239,9 @@
       "source_file": "src/components/metiers/MetierCardBadges.jsx",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "metiers_metiercardbadges_romebadge",
       "community": 16,
-      "norm_label": "romebadge()"
+      "norm_label": "romebadge()",
+      "id": "metiers_metiercardbadges_romebadge"
     },
     {
       "label": "PersonalizedPlanPage.jsx",
@@ -59,9 +249,9 @@
       "source_file": "src/pages/PersonalizedPlanPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "pages_personalizedplanpage",
       "community": 50,
-      "norm_label": "personalizedplanpage.jsx"
+      "norm_label": "personalizedplanpage.jsx",
+      "id": "pages_personalizedplanpage"
     },
     {
       "label": "PersonalizedPlanPage()",
@@ -69,9 +259,9 @@
       "source_file": "src/pages/PersonalizedPlanPage.jsx",
       "source_location": "L28",
       "_origin": "ast",
-      "id": "pages_personalizedplanpage_personalizedplanpage",
       "community": 50,
-      "norm_label": "personalizedplanpage()"
+      "norm_label": "personalizedplanpage()",
+      "id": "pages_personalizedplanpage_personalizedplanpage"
     },
     {
       "label": "jobFormatters.js",
@@ -79,9 +269,9 @@
       "source_file": "src/utils/jobFormatters.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "utils_jobformatters",
       "community": 108,
-      "norm_label": "jobformatters.js"
+      "norm_label": "jobformatters.js",
+      "id": "utils_jobformatters"
     },
     {
       "label": "formatSalary()",
@@ -89,9 +279,9 @@
       "source_file": "src/utils/jobFormatters.js",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "utils_jobformatters_formatsalary",
       "community": 108,
-      "norm_label": "formatsalary()"
+      "norm_label": "formatsalary()",
+      "id": "utils_jobformatters_formatsalary"
     },
     {
       "label": "formatPublicationDate()",
@@ -99,9 +289,9 @@
       "source_file": "src/utils/jobFormatters.js",
       "source_location": "L31",
       "_origin": "ast",
-      "id": "utils_jobformatters_formatpublicationdate",
       "community": 108,
-      "norm_label": "formatpublicationdate()"
+      "norm_label": "formatpublicationdate()",
+      "id": "utils_jobformatters_formatpublicationdate"
     },
     {
       "label": "formatContractType()",
@@ -109,9 +299,9 @@
       "source_file": "src/utils/jobFormatters.js",
       "source_location": "L43",
       "_origin": "ast",
-      "id": "utils_jobformatters_formatcontracttype",
       "community": 108,
-      "norm_label": "formatcontracttype()"
+      "norm_label": "formatcontracttype()",
+      "id": "utils_jobformatters_formatcontracttype"
     },
     {
       "label": "getContractColor()",
@@ -119,9 +309,9 @@
       "source_file": "src/utils/jobFormatters.js",
       "source_location": "L58",
       "_origin": "ast",
-      "id": "utils_jobformatters_getcontractcolor",
       "community": 108,
-      "norm_label": "getcontractcolor()"
+      "norm_label": "getcontractcolor()",
+      "id": "utils_jobformatters_getcontractcolor"
     },
     {
       "label": "TestResultsPage.jsx",
@@ -592,76 +782,6 @@
       "community": 4,
       "norm_label": "calculateadvancedmatching()",
       "id": "services_matchingalgorithm_calculateadvancedmatching"
-    },
-    {
-      "label": "RecommendedActionsSection.jsx",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "recommendedactionssection.jsx",
-      "id": "personalized_plan_recommendedactionssection"
-    },
-    {
-      "label": "RIASEC_TRAIT",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "riasec_trait",
-      "id": "personalized_plan_recommendedactionssection_riasec_trait"
-    },
-    {
-      "label": "STATUS_LABEL",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L19",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "status_label",
-      "id": "personalized_plan_recommendedactionssection_status_label"
-    },
-    {
-      "label": "buildSublabel()",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "buildsublabel()",
-      "id": "personalized_plan_recommendedactionssection_buildsublabel"
-    },
-    {
-      "label": "ACTION_BASE",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L75",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "action_base",
-      "id": "personalized_plan_recommendedactionssection_action_base"
-    },
-    {
-      "label": "getActionsForStatus()",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L127",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "getactionsforstatus()",
-      "id": "personalized_plan_recommendedactionssection_getactionsforstatus"
-    },
-    {
-      "label": "RecommendedActionsSection()",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L138",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "recommendedactionssection()",
-      "id": "personalized_plan_recommendedactionssection_recommendedactionssection"
     },
     {
       "label": "App.jsx",
@@ -13792,36 +13912,6 @@
       "community": 35,
       "norm_label": "recommendedmetierssection()",
       "id": "personalized_plan_recommendedmetierssection_recommendedmetierssection"
-    },
-    {
-      "label": "RiasecProfileSection.jsx",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 252,
-      "norm_label": "riasecprofilesection.jsx",
-      "id": "personalized_plan_riasecprofilesection"
-    },
-    {
-      "label": "DIMENSION_LABELS",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 252,
-      "norm_label": "dimension_labels",
-      "id": "personalized_plan_riasecprofilesection_dimension_labels"
-    },
-    {
-      "label": "RiasecProfileSection()",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
-      "source_location": "L16",
-      "_origin": "ast",
-      "community": 252,
-      "norm_label": "riasecprofilesection()",
-      "id": "personalized_plan_riasecprofilesection_riasecprofilesection"
     },
     {
       "label": "CreatePlanModal.jsx",
@@ -29694,96 +29784,6 @@
       "id": "utils_domainmappings_getdomainbyid"
     },
     {
-      "label": "educationUtils.js",
-      "file_type": "code",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "educationutils.js",
-      "id": "utils_educationutils"
-    },
-    {
-      "label": "EDUCATION_ORDER",
-      "file_type": "code",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "education_order",
-      "id": "utils_educationutils_education_order"
-    },
-    {
-      "label": "EDUCATION_LABELS",
-      "file_type": "code",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L18",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "education_labels",
-      "id": "utils_educationutils_education_labels"
-    },
-    {
-      "label": "getUserEducationLevel()",
-      "file_type": "code",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L32",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "getusereducationlevel()",
-      "id": "utils_educationutils_getusereducationlevel"
-    },
-    {
-      "label": "getFormationLevel()",
-      "file_type": "code",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L39",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "getformationlevel()",
-      "id": "utils_educationutils_getformationlevel"
-    },
-    {
-      "label": "isFormationAccessible()",
-      "file_type": "code",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L58",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "isformationaccessible()",
-      "id": "utils_educationutils_isformationaccessible"
-    },
-    {
-      "label": "getAccessibilityLabel()",
-      "file_type": "code",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L64",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "getaccessibilitylabel()",
-      "id": "utils_educationutils_getaccessibilitylabel"
-    },
-    {
-      "label": "USER_STATUS_LABELS",
-      "file_type": "code",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L74",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "user_status_labels",
-      "id": "utils_educationutils_user_status_labels"
-    },
-    {
-      "label": "getStatusContext()",
-      "file_type": "code",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L88",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "getstatuscontext()",
-      "id": "utils_educationutils_getstatuscontext"
-    },
-    {
       "label": "envValidator.js",
       "file_type": "code",
       "source_file": "src/utils/envValidator.js",
@@ -32416,6 +32416,265 @@
   ],
   "links": [
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L75",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_action_base"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_buildsublabel"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L77",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_getactionsforstatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L94",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_recommendedactionssection"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_riasec_trait"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_status_label"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L99",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_recommendedactionssection_recommendedactionssection",
+      "target": "personalized_plan_recommendedactionssection_getactionsforstatus"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "personalized_plan_recommendedactionssection_recommendedactionssection",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_riasecprofilesection",
+      "target": "personalized_plan_riasecprofilesection_dimension_labels"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_riasecprofilesection",
+      "target": "personalized_plan_riasecprofilesection_riasecprofilesection"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_educationutils",
+      "target": "utils_educationutils_education_labels"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_educationutils",
+      "target": "utils_educationutils_education_order"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L64",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_educationutils",
+      "target": "utils_educationutils_getaccessibilitylabel"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L39",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_educationutils",
+      "target": "utils_educationutils_getformationlevel"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L88",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_educationutils",
+      "target": "utils_educationutils_getstatuscontext"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_educationutils",
+      "target": "utils_educationutils_getusereducationlevel"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_educationutils",
+      "target": "utils_educationutils_isformationaccessible"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L74",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_educationutils",
+      "target": "utils_educationutils_user_status_labels"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "personalized_plan_recommendedmetierssection_geteducationgap",
+      "target": "utils_educationutils_getusereducationlevel"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L65",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_educationutils_getaccessibilitylabel",
+      "target": "utils_educationutils_getusereducationlevel"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_educationutils_isformationaccessible",
+      "target": "utils_educationutils_getusereducationlevel"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_educationutils_getaccessibilitylabel",
+      "target": "utils_educationutils_getformationlevel"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/educationUtils.js",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_educationutils_isformationaccessible",
+      "target": "utils_educationutils_getformationlevel"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/personalized-plan/FormationPathSection.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "personalized_plan_formationpathsection_formationpathsection",
+      "target": "utils_educationutils_getstatuscontext"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/personalized-plan/ProgressionSection.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "personalized_plan_progressionsection_progressionsection",
+      "target": "utils_educationutils_getstatuscontext"
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -32432,9 +32691,9 @@
       "source_file": "src/components/metiers/MetierCardBadges.jsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "metiers_metiercardbadges",
-      "target": "metiers_metiercardbadges_formatsalarylabel",
-      "confidence_score": 1.0
+      "target": "metiers_metiercardbadges_formatsalarylabel"
     },
     {
       "relation": "contains",
@@ -32484,9 +32743,9 @@
       "source_file": "src/components/metiers/MetierCardBadges.jsx",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "metiers_metiercardbadges_salarybadge",
-      "target": "metiers_metiercardbadges_formatsalarylabel",
-      "confidence_score": 1.0
+      "target": "metiers_metiercardbadges_formatsalarylabel"
     },
     {
       "relation": "imports",
@@ -33509,88 +33768,6 @@
       "confidence_score": 1.0,
       "source": "utils_testmatchingverification",
       "target": "services_matchingalgorithm_calculateadvancedmatching"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L75",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedactionssection",
-      "target": "personalized_plan_recommendedactionssection_action_base"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedactionssection",
-      "target": "personalized_plan_recommendedactionssection_buildsublabel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L77",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedactionssection",
-      "target": "personalized_plan_recommendedactionssection_getactionsforstatus"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L94",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedactionssection",
-      "target": "personalized_plan_recommendedactionssection_recommendedactionssection"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedactionssection",
-      "target": "personalized_plan_recommendedactionssection_riasec_trait"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedactionssection",
-      "target": "personalized_plan_recommendedactionssection_status_label"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L99",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedactionssection_recommendedactionssection",
-      "target": "personalized_plan_recommendedactionssection_getactionsforstatus"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
-      "source_location": "L96",
-      "weight": 1.0,
-      "source": "personalized_plan_recommendedactionssection_recommendedactionssection",
-      "target": "ui_use_toast_usetoast"
     },
     {
       "relation": "contains",
@@ -47614,17 +47791,6 @@
       "target": "personalized_plan_formationpathsection_formationpathsection"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/personalized-plan/FormationPathSection.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "source": "personalized_plan_formationpathsection_formationpathsection",
-      "target": "utils_educationutils_getstatuscontext"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/personalized-plan/NextStepsSection.jsx",
@@ -47645,17 +47811,6 @@
       "target": "personalized_plan_progressionsection_progressionsection"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/personalized-plan/ProgressionSection.jsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "personalized_plan_progressionsection_progressionsection",
-      "target": "utils_educationutils_getstatuscontext"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
@@ -47674,37 +47829,6 @@
       "confidence_score": 1.0,
       "source": "personalized_plan_recommendedmetierssection",
       "target": "personalized_plan_recommendedmetierssection_recommendedmetierssection"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "personalized_plan_recommendedmetierssection_geteducationgap",
-      "target": "utils_educationutils_getusereducationlevel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_riasecprofilesection",
-      "target": "personalized_plan_riasecprofilesection_dimension_labels"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_riasecprofilesection",
-      "target": "personalized_plan_riasecprofilesection_riasecprofilesection"
     },
     {
       "relation": "contains",
@@ -64553,130 +64677,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_educationutils",
-      "target": "utils_educationutils_education_labels"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_educationutils",
-      "target": "utils_educationutils_education_order"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L64",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_educationutils",
-      "target": "utils_educationutils_getaccessibilitylabel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L39",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_educationutils",
-      "target": "utils_educationutils_getformationlevel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L88",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_educationutils",
-      "target": "utils_educationutils_getstatuscontext"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L32",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_educationutils",
-      "target": "utils_educationutils_getusereducationlevel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_educationutils",
-      "target": "utils_educationutils_isformationaccessible"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L74",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_educationutils",
-      "target": "utils_educationutils_user_status_labels"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L65",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_educationutils_getaccessibilitylabel",
-      "target": "utils_educationutils_getusereducationlevel"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L59",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_educationutils_isformationaccessible",
-      "target": "utils_educationutils_getusereducationlevel"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L66",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_educationutils_getaccessibilitylabel",
-      "target": "utils_educationutils_getformationlevel"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/educationUtils.js",
-      "source_location": "L59",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_educationutils_isformationaccessible",
-      "target": "utils_educationutils_getformationlevel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/utils/envValidator.js",
       "source_location": "L1",
       "weight": 1.0,
@@ -67439,5 +67439,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0002f9280b2c5b365bd3c60a37b38b56f468dd28"
+  "built_at_commit": "a78fc4e67f519eef36c39c923089a4af07e48484"
 }

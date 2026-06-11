@@ -4,14 +4,134 @@
   "graph": {},
   "nodes": [
     {
+      "label": "MetierCardBadges.jsx",
+      "file_type": "code",
+      "source_file": "src/components/metiers/MetierCardBadges.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "metiers_metiercardbadges",
+      "community": 16,
+      "norm_label": "metiercardbadges.jsx"
+    },
+    {
+      "label": "SectorBadge()",
+      "file_type": "code",
+      "source_file": "src/components/metiers/MetierCardBadges.jsx",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "metiers_metiercardbadges_sectorbadge",
+      "community": 16,
+      "norm_label": "sectorbadge()"
+    },
+    {
+      "label": "formatSalaryLabel()",
+      "file_type": "code",
+      "source_file": "src/components/metiers/MetierCardBadges.jsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "metiers_metiercardbadges_formatsalarylabel",
+      "community": 16,
+      "norm_label": "formatsalarylabel()"
+    },
+    {
+      "label": "SalaryBadge()",
+      "file_type": "code",
+      "source_file": "src/components/metiers/MetierCardBadges.jsx",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "metiers_metiercardbadges_salarybadge",
+      "community": 16,
+      "norm_label": "salarybadge()"
+    },
+    {
+      "label": "RomeBadge()",
+      "file_type": "code",
+      "source_file": "src/components/metiers/MetierCardBadges.jsx",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "metiers_metiercardbadges_romebadge",
+      "community": 16,
+      "norm_label": "romebadge()"
+    },
+    {
+      "label": "PersonalizedPlanPage.jsx",
+      "file_type": "code",
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pages_personalizedplanpage",
+      "community": 50,
+      "norm_label": "personalizedplanpage.jsx"
+    },
+    {
+      "label": "PersonalizedPlanPage()",
+      "file_type": "code",
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "pages_personalizedplanpage_personalizedplanpage",
+      "community": 50,
+      "norm_label": "personalizedplanpage()"
+    },
+    {
+      "label": "jobFormatters.js",
+      "file_type": "code",
+      "source_file": "src/utils/jobFormatters.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "utils_jobformatters",
+      "community": 108,
+      "norm_label": "jobformatters.js"
+    },
+    {
+      "label": "formatSalary()",
+      "file_type": "code",
+      "source_file": "src/utils/jobFormatters.js",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "utils_jobformatters_formatsalary",
+      "community": 108,
+      "norm_label": "formatsalary()"
+    },
+    {
+      "label": "formatPublicationDate()",
+      "file_type": "code",
+      "source_file": "src/utils/jobFormatters.js",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "utils_jobformatters_formatpublicationdate",
+      "community": 108,
+      "norm_label": "formatpublicationdate()"
+    },
+    {
+      "label": "formatContractType()",
+      "file_type": "code",
+      "source_file": "src/utils/jobFormatters.js",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "utils_jobformatters_formatcontracttype",
+      "community": 108,
+      "norm_label": "formatcontracttype()"
+    },
+    {
+      "label": "getContractColor()",
+      "file_type": "code",
+      "source_file": "src/utils/jobFormatters.js",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "utils_jobformatters_getcontractcolor",
+      "community": 108,
+      "norm_label": "getcontractcolor()"
+    },
+    {
       "label": "TestResultsPage.jsx",
       "file_type": "code",
       "source_file": "src/pages/TestResultsPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "pages_testresultspage",
       "community": 41,
-      "norm_label": "testresultspage.jsx"
+      "norm_label": "testresultspage.jsx",
+      "id": "pages_testresultspage"
     },
     {
       "label": "DIMENSION_LABELS",
@@ -19,9 +139,9 @@
       "source_file": "src/pages/TestResultsPage.jsx",
       "source_location": "L31",
       "_origin": "ast",
-      "id": "pages_testresultspage_dimension_labels",
       "community": 41,
-      "norm_label": "dimension_labels"
+      "norm_label": "dimension_labels",
+      "id": "pages_testresultspage_dimension_labels"
     },
     {
       "label": "TestResultsPage()",
@@ -29,9 +149,9 @@
       "source_file": "src/pages/TestResultsPage.jsx",
       "source_location": "L35",
       "_origin": "ast",
-      "id": "pages_testresultspage_testresultspage",
       "community": 41,
-      "norm_label": "testresultspage()"
+      "norm_label": "testresultspage()",
+      "id": "pages_testresultspage_testresultspage"
     },
     {
       "label": "metierService.js",
@@ -39,9 +159,9 @@
       "source_file": "src/services/metierService.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "services_metierservice",
       "community": 4,
-      "norm_label": "metierservice.js"
+      "norm_label": "metierservice.js",
+      "id": "services_metierservice"
     },
     {
       "label": "metierService",
@@ -49,9 +169,9 @@
       "source_file": "src/services/metierService.js",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "services_metierservice_metierservice",
       "community": 4,
-      "norm_label": "metierservice"
+      "norm_label": "metierservice",
+      "id": "services_metierservice_metierservice"
     },
     {
       "label": "planService.js",
@@ -59,9 +179,9 @@
       "source_file": "src/services/planService.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "services_planservice",
       "community": 157,
-      "norm_label": "planservice.js"
+      "norm_label": "planservice.js",
+      "id": "services_planservice"
     },
     {
       "label": "lsGet()",
@@ -69,9 +189,9 @@
       "source_file": "src/services/planService.js",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "services_planservice_lsget",
       "community": 157,
-      "norm_label": "lsget()"
+      "norm_label": "lsget()",
+      "id": "services_planservice_lsget"
     },
     {
       "label": "lsSet()",
@@ -79,9 +199,9 @@
       "source_file": "src/services/planService.js",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "services_planservice_lsset",
       "community": 157,
-      "norm_label": "lsset()"
+      "norm_label": "lsset()",
+      "id": "services_planservice_lsset"
     },
     {
       "label": "lsDel()",
@@ -89,9 +209,9 @@
       "source_file": "src/services/planService.js",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "services_planservice_lsdel",
       "community": 157,
-      "norm_label": "lsdel()"
+      "norm_label": "lsdel()",
+      "id": "services_planservice_lsdel"
     },
     {
       "label": "planService",
@@ -99,9 +219,9 @@
       "source_file": "src/services/planService.js",
       "source_location": "L35",
       "_origin": "ast",
-      "id": "services_planservice_planservice",
       "community": 157,
-      "norm_label": "planservice"
+      "norm_label": "planservice",
+      "id": "services_planservice_planservice"
     },
     {
       "label": "HomePage.jsx",
@@ -542,26 +662,6 @@
       "community": 190,
       "norm_label": "recommendedactionssection()",
       "id": "personalized_plan_recommendedactionssection_recommendedactionssection"
-    },
-    {
-      "label": "PersonalizedPlanPage.jsx",
-      "file_type": "code",
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 50,
-      "norm_label": "personalizedplanpage.jsx",
-      "id": "pages_personalizedplanpage"
-    },
-    {
-      "label": "PersonalizedPlanPage()",
-      "file_type": "code",
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 50,
-      "norm_label": "personalizedplanpage()",
-      "id": "pages_personalizedplanpage_personalizedplanpage"
     },
     {
       "label": "App.jsx",
@@ -4149,7 +4249,7 @@
       "source_file": "src/components/BugReportButton.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 223,
+      "community": 2,
       "norm_label": "bugreportbutton.jsx",
       "id": "components_bugreportbutton"
     },
@@ -4159,7 +4259,7 @@
       "source_file": "src/components/BugReportButton.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 223,
+      "community": 2,
       "norm_label": "bugreportbutton()",
       "id": "components_bugreportbutton_bugreportbutton"
     },
@@ -5309,7 +5409,7 @@
       "source_file": "src/components/ProfileTest.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 152,
       "norm_label": "profiletest.jsx",
       "id": "components_profiletest"
     },
@@ -5319,7 +5419,7 @@
       "source_file": "src/components/ProfileTest.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 2,
+      "community": 152,
       "norm_label": "questionicons",
       "id": "components_profiletest_questionicons"
     },
@@ -5329,7 +5429,7 @@
       "source_file": "src/components/ProfileTest.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 2,
+      "community": 152,
       "norm_label": "profiletest()",
       "id": "components_profiletest_profiletest"
     },
@@ -6489,7 +6589,7 @@
       "source_file": "src/components/admin/AdminFormationManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 69,
       "norm_label": "adminformationmanager.jsx",
       "id": "admin_adminformationmanager"
     },
@@ -6499,7 +6599,7 @@
       "source_file": "src/components/admin/AdminFormationManager.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 69,
       "norm_label": "adminformationmanager()",
       "id": "admin_adminformationmanager_adminformationmanager"
     },
@@ -6569,7 +6669,7 @@
       "source_file": "src/components/admin/EtablissementsTab.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 83,
       "norm_label": "etablissementstab.jsx",
       "id": "admin_etablissementstab"
     },
@@ -6579,7 +6679,7 @@
       "source_file": "src/components/admin/EtablissementsTab.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 23,
+      "community": 83,
       "norm_label": "etablissementstab()",
       "id": "admin_etablissementstab_etablissementstab"
     },
@@ -6639,7 +6739,7 @@
       "source_file": "src/components/admin/forms/FormationForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 69,
       "norm_label": "formationform.jsx",
       "id": "forms_formationform"
     },
@@ -6649,7 +6749,7 @@
       "source_file": "src/components/admin/forms/FormationForm.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 69,
       "norm_label": "formationform()",
       "id": "forms_formationform_formationform"
     },
@@ -6819,7 +6919,7 @@
       "source_file": "src/components/admin/sections/AdminEstablishments.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 83,
       "norm_label": "adminestablishments.jsx",
       "id": "sections_adminestablishments"
     },
@@ -6829,7 +6929,7 @@
       "source_file": "src/components/admin/sections/AdminEstablishments.jsx",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 23,
+      "community": 83,
       "norm_label": "adminestablishments()",
       "id": "sections_adminestablishments_adminestablishments"
     },
@@ -7339,7 +7439,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentFilters.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 20,
       "norm_label": "establishmentfilters.jsx",
       "id": "establishments_establishmentfilters"
     },
@@ -7349,7 +7449,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentFilters.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 23,
+      "community": 20,
       "norm_label": "establishmentfilters()",
       "id": "establishments_establishmentfilters_establishmentfilters"
     },
@@ -7419,7 +7519,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentStats.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 83,
       "norm_label": "establishmentstats.jsx",
       "id": "establishments_establishmentstats"
     },
@@ -7429,7 +7529,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentStats.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 23,
+      "community": 83,
       "norm_label": "establishmentstats()",
       "id": "establishments_establishmentstats_establishmentstats"
     },
@@ -7439,7 +7539,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentsTable.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 83,
       "norm_label": "establishmentstable.jsx",
       "id": "establishments_establishmentstable"
     },
@@ -7449,7 +7549,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentsTable.jsx",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 23,
+      "community": 83,
       "norm_label": "establishmentstable()",
       "id": "establishments_establishmentstable_establishmentstable"
     },
@@ -7619,7 +7719,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentEditForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 186,
       "norm_label": "establishmenteditform.jsx",
       "id": "dashboard_establishmenteditform"
     },
@@ -7629,7 +7729,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentEditForm.jsx",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 2,
+      "community": 186,
       "norm_label": "establishmenteditform()",
       "id": "dashboard_establishmenteditform_establishmenteditform"
     },
@@ -7669,7 +7769,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 152,
+      "community": 1,
       "norm_label": "establishmentlogs.jsx",
       "id": "dashboard_establishmentlogs"
     },
@@ -7679,7 +7779,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 152,
+      "community": 1,
       "norm_label": "log_filters",
       "id": "dashboard_establishmentlogs_log_filters"
     },
@@ -7689,7 +7789,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 152,
+      "community": 1,
       "norm_label": "establishmentlogs()",
       "id": "dashboard_establishmentlogs_establishmentlogs"
     },
@@ -8249,7 +8349,7 @@
       "source_file": "src/components/auth/EnhancedSignupForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 69,
+      "community": 2,
       "norm_label": "enhancedsignupform.jsx",
       "id": "auth_enhancedsignupform"
     },
@@ -8259,7 +8359,7 @@
       "source_file": "src/components/auth/EnhancedSignupForm.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 69,
+      "community": 2,
       "norm_label": "interests_list",
       "id": "auth_enhancedsignupform_interests_list"
     },
@@ -8269,7 +8369,7 @@
       "source_file": "src/components/auth/EnhancedSignupForm.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 69,
+      "community": 2,
       "norm_label": "enhancedsignupform()",
       "id": "auth_enhancedsignupform_enhancedsignupform"
     },
@@ -10629,7 +10729,7 @@
       "source_file": "src/components/dashboard/sections/CoverLettersSection.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 419,
+      "community": 2,
       "norm_label": "coverletterssection.jsx",
       "id": "sections_coverletterssection"
     },
@@ -10639,7 +10739,7 @@
       "source_file": "src/components/dashboard/sections/CoverLettersSection.jsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 419,
+      "community": 2,
       "norm_label": "coverletterssection()",
       "id": "sections_coverletterssection_coverletterssection"
     },
@@ -12819,7 +12919,7 @@
       "source_file": "src/components/job-explorer/filters/ContractTypeFilter.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 34,
+      "community": 185,
       "norm_label": "contracttypefilter.jsx",
       "id": "filters_contracttypefilter"
     },
@@ -12829,7 +12929,7 @@
       "source_file": "src/components/job-explorer/filters/ContractTypeFilter.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 34,
+      "community": 185,
       "norm_label": "contract_types",
       "id": "filters_contracttypefilter_contract_types"
     },
@@ -12839,7 +12939,7 @@
       "source_file": "src/components/job-explorer/filters/ContractTypeFilter.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 34,
+      "community": 185,
       "norm_label": "contracttypefilter()",
       "id": "filters_contracttypefilter_contracttypefilter"
     },
@@ -12849,7 +12949,7 @@
       "source_file": "src/components/job-explorer/filters/ExperienceFilter.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 249,
+      "community": 34,
       "norm_label": "experiencefilter.jsx",
       "id": "filters_experiencefilter"
     },
@@ -12859,7 +12959,7 @@
       "source_file": "src/components/job-explorer/filters/ExperienceFilter.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 249,
+      "community": 34,
       "norm_label": "experience_levels",
       "id": "filters_experiencefilter_experience_levels"
     },
@@ -12869,7 +12969,7 @@
       "source_file": "src/components/job-explorer/filters/ExperienceFilter.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 249,
+      "community": 34,
       "norm_label": "experiencefilter()",
       "id": "filters_experiencefilter_experiencefilter"
     },
@@ -13049,7 +13149,7 @@
       "source_file": "src/components/legal/RGPDPreferences.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 223,
       "norm_label": "rgpdpreferences.jsx",
       "id": "legal_rgpdpreferences"
     },
@@ -13059,7 +13159,7 @@
       "source_file": "src/components/legal/RGPDPreferences.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 2,
+      "community": 223,
       "norm_label": "rgpdpreferences()",
       "id": "legal_rgpdpreferences_rgpdpreferences"
     },
@@ -13252,46 +13352,6 @@
       "community": 424,
       "norm_label": "matchingcontextpanel()",
       "id": "metiers_matchingcontextpanel_matchingcontextpanel"
-    },
-    {
-      "label": "MetierCardBadges.jsx",
-      "file_type": "code",
-      "source_file": "src/components/metiers/MetierCardBadges.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 16,
-      "norm_label": "metiercardbadges.jsx",
-      "id": "metiers_metiercardbadges"
-    },
-    {
-      "label": "SectorBadge()",
-      "file_type": "code",
-      "source_file": "src/components/metiers/MetierCardBadges.jsx",
-      "source_location": "L4",
-      "_origin": "ast",
-      "community": 16,
-      "norm_label": "sectorbadge()",
-      "id": "metiers_metiercardbadges_sectorbadge"
-    },
-    {
-      "label": "SalaryBadge()",
-      "file_type": "code",
-      "source_file": "src/components/metiers/MetierCardBadges.jsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 16,
-      "norm_label": "salarybadge()",
-      "id": "metiers_metiercardbadges_salarybadge"
-    },
-    {
-      "label": "RomeBadge()",
-      "file_type": "code",
-      "source_file": "src/components/metiers/MetierCardBadges.jsx",
-      "source_location": "L14",
-      "_origin": "ast",
-      "community": 16,
-      "norm_label": "romebadge()",
-      "id": "metiers_metiercardbadges_romebadge"
     },
     {
       "label": "MetierCardIcon.jsx",
@@ -13769,7 +13829,7 @@
       "source_file": "src/components/plans/CreatePlanModal.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 447,
+      "community": 2,
       "norm_label": "createplanmodal.jsx",
       "id": "plans_createplanmodal"
     },
@@ -13779,7 +13839,7 @@
       "source_file": "src/components/plans/CreatePlanModal.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 447,
+      "community": 2,
       "norm_label": "createplanmodal()",
       "id": "plans_createplanmodal_createplanmodal"
     },
@@ -15569,7 +15629,7 @@
       "source_file": "src/components/ui/button-group.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 23,
       "norm_label": "button-group.jsx",
       "id": "ui_button_group"
     },
@@ -15579,7 +15639,7 @@
       "source_file": "src/components/ui/button-group.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 6,
+      "community": 23,
       "norm_label": "buttongroupvariants",
       "id": "ui_button_group_buttongroupvariants"
     },
@@ -15589,7 +15649,7 @@
       "source_file": "src/components/ui/button-group.jsx",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 6,
+      "community": 23,
       "norm_label": "buttongroup()",
       "id": "ui_button_group_buttongroup"
     },
@@ -15599,7 +15659,7 @@
       "source_file": "src/components/ui/button-group.jsx",
       "source_location": "L39",
       "_origin": "ast",
-      "community": 6,
+      "community": 23,
       "norm_label": "buttongrouptext()",
       "id": "ui_button_group_buttongrouptext"
     },
@@ -15609,7 +15669,7 @@
       "source_file": "src/components/ui/button-group.jsx",
       "source_location": "L56",
       "_origin": "ast",
-      "community": 6,
+      "community": 23,
       "norm_label": "buttongroupseparator()",
       "id": "ui_button_group_buttongroupseparator"
     },
@@ -18409,7 +18469,7 @@
       "source_file": "src/components/v1-placeholders/TrackingPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 238,
       "norm_label": "trackingpage.jsx",
       "id": "v1_placeholders_trackingpage"
     },
@@ -18419,7 +18479,7 @@
       "source_file": "src/components/v1-placeholders/TrackingPage.jsx",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 2,
+      "community": 238,
       "norm_label": "trackingpage()",
       "id": "v1_placeholders_trackingpage_trackingpage"
     },
@@ -20199,7 +20259,7 @@
       "source_file": "src/hooks/useUserSubscription.js",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 2,
+      "community": 187,
       "norm_label": "useusersubscription()",
       "id": "hooks_useusersubscription_useusersubscription"
     },
@@ -20759,7 +20819,7 @@
       "source_file": "src/pages/ActionPlanPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 2,
       "norm_label": "actionplanpage.jsx",
       "id": "pages_actionplanpage"
     },
@@ -20769,7 +20829,7 @@
       "source_file": "src/pages/ActionPlanPage.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 1,
+      "community": 2,
       "norm_label": "actionplanpage()",
       "id": "pages_actionplanpage_actionplanpage"
     },
@@ -21059,7 +21119,7 @@
       "source_file": "src/pages/AdminAnalyticsDashboard.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 185,
+      "community": 1,
       "norm_label": "adminanalyticsdashboard.jsx",
       "id": "pages_adminanalyticsdashboard"
     },
@@ -21069,7 +21129,7 @@
       "source_file": "src/pages/AdminAnalyticsDashboard.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 185,
+      "community": 1,
       "norm_label": "mockfeedbacktrend",
       "id": "pages_adminanalyticsdashboard_mockfeedbacktrend"
     },
@@ -21079,7 +21139,7 @@
       "source_file": "src/pages/AdminAnalyticsDashboard.jsx",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 185,
+      "community": 1,
       "norm_label": "mocktopmetiers",
       "id": "pages_adminanalyticsdashboard_mocktopmetiers"
     },
@@ -21089,7 +21149,7 @@
       "source_file": "src/pages/AdminAnalyticsDashboard.jsx",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 185,
+      "community": 1,
       "norm_label": "adminanalyticsdashboard()",
       "id": "pages_adminanalyticsdashboard_adminanalyticsdashboard"
     },
@@ -21489,7 +21549,7 @@
       "source_file": "src/pages/CoverLetterBuilderPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 238,
+      "community": 2,
       "norm_label": "coverletterbuilderpage.jsx",
       "id": "pages_coverletterbuilderpage"
     },
@@ -21499,7 +21559,7 @@
       "source_file": "src/pages/CoverLetterBuilderPage.jsx",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 238,
+      "community": 2,
       "norm_label": "coverletterbuilderpage()",
       "id": "pages_coverletterbuilderpage_coverletterbuilderpage"
     },
@@ -22129,7 +22189,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 186,
+      "community": 1,
       "norm_label": "loginpage.jsx",
       "id": "pages_loginpage"
     },
@@ -22139,7 +22199,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 186,
+      "community": 1,
       "norm_label": "googleicon()",
       "id": "pages_loginpage_googleicon"
     },
@@ -22149,7 +22209,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 186,
+      "community": 1,
       "norm_label": "loginpage()",
       "id": "pages_loginpage_loginpage"
     },
@@ -22369,7 +22429,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 187,
       "norm_label": "managesubscriptionpage.jsx",
       "id": "pages_managesubscriptionpage"
     },
@@ -22379,7 +22439,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 2,
+      "community": 187,
       "norm_label": "plans",
       "id": "pages_managesubscriptionpage_plans"
     },
@@ -22389,7 +22449,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 2,
+      "community": 187,
       "norm_label": "freeplanview()",
       "id": "pages_managesubscriptionpage_freeplanview"
     },
@@ -22399,7 +22459,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L138",
       "_origin": "ast",
-      "community": 2,
+      "community": 187,
       "norm_label": "paidplanview()",
       "id": "pages_managesubscriptionpage_paidplanview"
     },
@@ -22409,7 +22469,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L235",
       "_origin": "ast",
-      "community": 2,
+      "community": 187,
       "norm_label": "managesubscriptionpage()",
       "id": "pages_managesubscriptionpage_managesubscriptionpage"
     },
@@ -29954,56 +30014,6 @@
       "id": "utils_hooksvalidator_checkhookrules"
     },
     {
-      "label": "jobFormatters.js",
-      "file_type": "code",
-      "source_file": "src/utils/jobFormatters.js",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 108,
-      "norm_label": "jobformatters.js",
-      "id": "utils_jobformatters"
-    },
-    {
-      "label": "formatSalary()",
-      "file_type": "code",
-      "source_file": "src/utils/jobFormatters.js",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 108,
-      "norm_label": "formatsalary()",
-      "id": "utils_jobformatters_formatsalary"
-    },
-    {
-      "label": "formatPublicationDate()",
-      "file_type": "code",
-      "source_file": "src/utils/jobFormatters.js",
-      "source_location": "L24",
-      "_origin": "ast",
-      "community": 108,
-      "norm_label": "formatpublicationdate()",
-      "id": "utils_jobformatters_formatpublicationdate"
-    },
-    {
-      "label": "formatContractType()",
-      "file_type": "code",
-      "source_file": "src/utils/jobFormatters.js",
-      "source_location": "L36",
-      "_origin": "ast",
-      "community": 108,
-      "norm_label": "formatcontracttype()",
-      "id": "utils_jobformatters_formatcontracttype"
-    },
-    {
-      "label": "getContractColor()",
-      "file_type": "code",
-      "source_file": "src/utils/jobFormatters.js",
-      "source_location": "L51",
-      "_origin": "ast",
-      "community": 108,
-      "norm_label": "getcontractcolor()",
-      "id": "utils_jobformatters_getcontractcolor"
-    },
-    {
       "label": "markdownUtils.js",
       "file_type": "code",
       "source_file": "src/utils/markdownUtils.js",
@@ -32406,6 +32416,228 @@
   ],
   "links": [
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/metiers/EnhancedMetierCard.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "metiers_enhancedmetiercard",
+      "target": "metiers_metiercardbadges"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/metiers/MetierCardBadges.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "metiers_metiercardbadges",
+      "target": "metiers_metiercardbadges_formatsalarylabel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/metiers/MetierCardBadges.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "metiers_metiercardbadges",
+      "target": "metiers_metiercardbadges_romebadge"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/metiers/MetierCardBadges.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "metiers_metiercardbadges",
+      "target": "metiers_metiercardbadges_salarybadge"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/metiers/MetierCardBadges.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "metiers_metiercardbadges",
+      "target": "metiers_metiercardbadges_sectorbadge"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/metiers/EnhancedMetierCard.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "metiers_enhancedmetiercard",
+      "target": "metiers_metiercardbadges_sectorbadge"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/metiers/MetierCardBadges.jsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "metiers_metiercardbadges_salarybadge",
+      "target": "metiers_metiercardbadges_formatsalarylabel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/metiers/EnhancedMetierCard.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "metiers_enhancedmetiercard",
+      "target": "metiers_metiercardbadges_salarybadge"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/metiers/EnhancedMetierCard.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "metiers_enhancedmetiercard",
+      "target": "metiers_metiercardbadges_romebadge"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_personalizedplanpage",
+      "target": "pages_personalizedplanpage_personalizedplanpage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "hooks_useuserprofile_useuserprofile"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "utils_metierdatafetcher_usemetierdatafetcher"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/jobFormatters.js",
+      "source_location": "L36",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_jobformatters",
+      "target": "utils_jobformatters_formatcontracttype"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/jobFormatters.js",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_jobformatters",
+      "target": "utils_jobformatters_formatpublicationdate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/jobFormatters.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_jobformatters",
+      "target": "utils_jobformatters_formatsalary"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/jobFormatters.js",
+      "source_location": "L51",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_jobformatters",
+      "target": "utils_jobformatters_getcontractcolor"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/job-detail/JobDetailHero.jsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "job_detail_jobdetailhero_jobdetailhero",
+      "target": "utils_jobformatters_formatpublicationdate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/job-detail/JobDetailHero.jsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "job_detail_jobdetailhero_jobdetailhero",
+      "target": "utils_jobformatters_formatcontracttype"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/job-detail/JobDetailHero.jsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "job_detail_jobdetailhero_jobdetailhero",
+      "target": "utils_jobformatters_getcontractcolor"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/pages/TestResultsPage.jsx",
@@ -33359,60 +33591,6 @@
       "weight": 1.0,
       "source": "personalized_plan_recommendedactionssection_recommendedactionssection",
       "target": "ui_use_toast_usetoast"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_personalizedplanpage",
-      "target": "pages_personalizedplanpage_personalizedplanpage"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
-      "target": "hooks_useuserprofile_useuserprofile"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L32",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
-      "target": "ui_use_toast_usetoast"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L49",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
-      "target": "utils_metierdatafetcher_usemetierdatafetcher"
     },
     {
       "relation": "contains",
@@ -46115,39 +46293,6 @@
       "target": "lib_utils_cn"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/job-detail/JobDetailHero.jsx",
-      "source_location": "L36",
-      "weight": 1.0,
-      "source": "job_detail_jobdetailhero_jobdetailhero",
-      "target": "utils_jobformatters_formatcontracttype"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/job-detail/JobDetailHero.jsx",
-      "source_location": "L44",
-      "weight": 1.0,
-      "source": "job_detail_jobdetailhero_jobdetailhero",
-      "target": "utils_jobformatters_formatpublicationdate"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/job-detail/JobDetailHero.jsx",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "job_detail_jobdetailhero_jobdetailhero",
-      "target": "utils_jobformatters_getcontractcolor"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/job-detail/JobDetailSummary.jsx",
@@ -46835,50 +46980,6 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/metiers/EnhancedMetierCard.jsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "metiers_enhancedmetiercard",
-      "target": "metiers_metiercardbadges"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/metiers/EnhancedMetierCard.jsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "metiers_enhancedmetiercard",
-      "target": "metiers_metiercardbadges_romebadge"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/metiers/EnhancedMetierCard.jsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "metiers_enhancedmetiercard",
-      "target": "metiers_metiercardbadges_salarybadge"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/metiers/EnhancedMetierCard.jsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "metiers_enhancedmetiercard",
-      "target": "metiers_metiercardbadges_sectorbadge"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/metiers/EnhancedMetierCard.jsx",
       "source_location": "L6",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -47096,36 +47197,6 @@
       "confidence_score": 1.0,
       "source": "metiers_matchingcontextpanel",
       "target": "metiers_matchingcontextpanel_matchingcontextpanel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/metiers/MetierCardBadges.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "metiers_metiercardbadges",
-      "target": "metiers_metiercardbadges_romebadge"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/metiers/MetierCardBadges.jsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "metiers_metiercardbadges",
-      "target": "metiers_metiercardbadges_salarybadge"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/metiers/MetierCardBadges.jsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "metiers_metiercardbadges",
-      "target": "metiers_metiercardbadges_sectorbadge"
     },
     {
       "relation": "contains",
@@ -64776,46 +64847,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/utils/jobFormatters.js",
-      "source_location": "L36",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_jobformatters",
-      "target": "utils_jobformatters_formatcontracttype"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/jobFormatters.js",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_jobformatters",
-      "target": "utils_jobformatters_formatpublicationdate"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/jobFormatters.js",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_jobformatters",
-      "target": "utils_jobformatters_formatsalary"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/utils/jobFormatters.js",
-      "source_location": "L51",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "utils_jobformatters",
-      "target": "utils_jobformatters_getcontractcolor"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/utils/markdownUtils.js",
       "source_location": "L48",
       "weight": 1.0,
@@ -67408,5 +67439,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "275703744af18350e66f0f4aa2d22536ab6a66c1"
+  "built_at_commit": "0002f9280b2c5b365bd3c60a37b38b56f468dd28"
 }
