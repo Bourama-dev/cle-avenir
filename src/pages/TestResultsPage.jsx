@@ -57,7 +57,11 @@ const TestResultsPage = () => {
         return;
       }
 
-      const loadedProfile = JSON.parse(storedProfileStr);
+      const rawProfile = JSON.parse(storedProfileStr);
+      // Cap each dimension at 100 to handle legacy data from older question pools
+      const loadedProfile = Object.fromEntries(
+        Object.entries(rawProfile).map(([k, v]) => [k, Math.min(100, Math.max(0, Number(v) || 0))])
+      );
       // Recompute profile code if not stored (backward compat)
       const storedCode = localStorage.getItem('test_riasec_profile_code');
       if (!storedCode) {

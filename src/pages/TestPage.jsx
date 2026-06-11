@@ -28,7 +28,7 @@ function computeProfile(answers) {
   const profile = {};
   Object.entries(rawScores).forEach(([cat, raw]) => {
     const max = RIASEC_MAX_POSSIBLE[cat] || 1;
-    profile[cat] = Math.round((raw / max) * 100);
+    profile[cat] = Math.min(100, Math.round((raw / max) * 100));
   });
 
   return profile;
