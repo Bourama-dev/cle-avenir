@@ -49,9 +49,10 @@ import LoadingFallback from '@/components/LoadingFallback';
 import ProgressBar from '@/components/ui/ProgressBar';
 
 // Immediate Load
-import HomePage from '@/components/HomePage';
-import MaintenancePage from '@/components/MaintenancePage';
 import DynamicBackground from '@/components/DynamicBackground';
+
+const HomePage = lazy(() => import('@/components/HomePage'));
+const MaintenancePage = lazy(() => import('@/components/MaintenancePage'));
 
 // --- Lazy Load Pages ---
 // Auth & New Flow Pages
@@ -271,7 +272,7 @@ const PageContent = () => {
   const showFooter = !isAuthPage && !isAdminPage && !isDashboard && !isTestPage && !isErrorPage && !isEstablishmentPortal && !isCleoPage && !isCVBuilder && !isMaintenancePage;
   const showBreadcrumbs = showHeader && !isHomePage;
 
-  if (authLoading || settingsLoading) return <LoadingFallback />;
+  if (authLoading) return <LoadingFallback />;
 
   if (isMaintenanceActive && location.pathname !== '/maintenance' && !location.pathname.startsWith('/auth') && !location.pathname.startsWith('/login')) {
     return <LoadingFallback />; 
