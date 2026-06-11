@@ -142,25 +142,4 @@ export const planService = {
     }
   },
 
-  /* ── Compatibility score ─────────────────────────────────────────────── */
-  /**
-   * Computes a RIASEC-based compatibility score (0-100) between a user
-   * profile and a metier's RIASEC weights.
-   *
-   * Formula: weighted dot-product normalised to 100.
-   */
-  calculateCompatibilityScore(userRiasec, metierRiasec) {
-    if (!userRiasec || !metierRiasec) return 75;
-    let score = 0;
-    let maxPossible = 0;
-
-    for (const [dim, weight] of Object.entries(metierRiasec)) {
-      const w = Number(weight) || 0;
-      const userVal = Number(userRiasec[dim.toUpperCase()]) || 0;
-      score += (userVal / 100) * w;
-      maxPossible += w;
-    }
-
-    return maxPossible > 0 ? Math.round((score / maxPossible) * 100) : 75;
-  },
 };
