@@ -4,14 +4,64 @@
   "graph": {},
   "nodes": [
     {
+      "label": "RecommendedMetiersSection.jsx",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedmetierssection",
+      "community": 35,
+      "norm_label": "recommendedmetierssection.jsx"
+    },
+    {
+      "label": "getEducationGap()",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedmetierssection_geteducationgap",
+      "community": 35,
+      "norm_label": "geteducationgap()"
+    },
+    {
+      "label": "RecommendedMetiersSection()",
+      "file_type": "code",
+      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "personalized_plan_recommendedmetierssection_recommendedmetierssection",
+      "community": 35,
+      "norm_label": "recommendedmetierssection()"
+    },
+    {
+      "label": "PersonalizedPlanPage.jsx",
+      "file_type": "code",
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pages_personalizedplanpage",
+      "community": 50,
+      "norm_label": "personalizedplanpage.jsx"
+    },
+    {
+      "label": "PersonalizedPlanPage()",
+      "file_type": "code",
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "pages_personalizedplanpage_personalizedplanpage",
+      "community": 50,
+      "norm_label": "personalizedplanpage()"
+    },
+    {
       "label": "CleoAvatar.jsx",
       "file_type": "code",
       "source_file": "src/components/cleo/CleoAvatar.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "cleo_cleoavatar",
       "community": 163,
-      "norm_label": "cleoavatar.jsx"
+      "norm_label": "cleoavatar.jsx",
+      "id": "cleo_cleoavatar"
     },
     {
       "label": "CleoAvatar()",
@@ -19,9 +69,9 @@
       "source_file": "src/components/cleo/CleoAvatar.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "cleo_cleoavatar_cleoavatar",
       "community": 163,
-      "norm_label": "cleoavatar()"
+      "norm_label": "cleoavatar()",
+      "id": "cleo_cleoavatar_cleoavatar"
     },
     {
       "label": "CleoStateVisualizer.jsx",
@@ -29,9 +79,9 @@
       "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "cleo_cleostatevisualizer",
       "community": 223,
-      "norm_label": "cleostatevisualizer.jsx"
+      "norm_label": "cleostatevisualizer.jsx",
+      "id": "cleo_cleostatevisualizer"
     },
     {
       "label": "MODES",
@@ -39,9 +89,9 @@
       "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "cleo_cleostatevisualizer_modes",
       "community": 223,
-      "norm_label": "modes"
+      "norm_label": "modes",
+      "id": "cleo_cleostatevisualizer_modes"
     },
     {
       "label": "CleoStateVisualizer()",
@@ -49,9 +99,9 @@
       "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "cleo_cleostatevisualizer_cleostatevisualizer",
       "community": 223,
-      "norm_label": "cleostatevisualizer()"
+      "norm_label": "cleostatevisualizer()",
+      "id": "cleo_cleostatevisualizer_cleostatevisualizer"
     },
     {
       "label": "MetierCards.jsx",
@@ -59,9 +109,9 @@
       "source_file": "src/components/cleo/responses/MetierCards.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "responses_metiercards",
       "community": 41,
-      "norm_label": "metiercards.jsx"
+      "norm_label": "metiercards.jsx",
+      "id": "responses_metiercards"
     },
     {
       "label": "MetierCards()",
@@ -69,9 +119,9 @@
       "source_file": "src/components/cleo/responses/MetierCards.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "responses_metiercards_metiercards",
       "community": 41,
-      "norm_label": "metiercards()"
+      "norm_label": "metiercards()",
+      "id": "responses_metiercards_metiercards"
     },
     {
       "label": "QuickActions.jsx",
@@ -79,9 +129,9 @@
       "source_file": "src/components/cleo/responses/QuickActions.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "responses_quickactions",
       "community": 41,
-      "norm_label": "quickactions.jsx"
+      "norm_label": "quickactions.jsx",
+      "id": "responses_quickactions"
     },
     {
       "label": "QuickActions()",
@@ -89,9 +139,9 @@
       "source_file": "src/components/cleo/responses/QuickActions.jsx",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "responses_quickactions_quickactions",
       "community": 41,
-      "norm_label": "quickactions()"
+      "norm_label": "quickactions()",
+      "id": "responses_quickactions_quickactions"
     },
     {
       "label": "ChatInterface.jsx",
@@ -2222,26 +2272,6 @@
       "community": 16,
       "norm_label": "romebadge()",
       "id": "metiers_metiercardbadges_romebadge"
-    },
-    {
-      "label": "PersonalizedPlanPage.jsx",
-      "file_type": "code",
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 50,
-      "norm_label": "personalizedplanpage.jsx",
-      "id": "pages_personalizedplanpage"
-    },
-    {
-      "label": "PersonalizedPlanPage()",
-      "file_type": "code",
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 50,
-      "norm_label": "personalizedplanpage()",
-      "id": "pages_personalizedplanpage_personalizedplanpage"
     },
     {
       "label": "jobFormatters.js",
@@ -14082,36 +14112,6 @@
       "community": 35,
       "norm_label": "progressionsection()",
       "id": "personalized_plan_progressionsection_progressionsection"
-    },
-    {
-      "label": "RecommendedMetiersSection.jsx",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "recommendedmetierssection.jsx",
-      "id": "personalized_plan_recommendedmetierssection"
-    },
-    {
-      "label": "getEducationGap()",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
-      "source_location": "L18",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "geteducationgap()",
-      "id": "personalized_plan_recommendedmetierssection_geteducationgap"
-    },
-    {
-      "label": "RecommendedMetiersSection()",
-      "file_type": "code",
-      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
-      "source_location": "L44",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "recommendedmetierssection()",
-      "id": "personalized_plan_recommendedmetierssection_recommendedmetierssection"
     },
     {
       "label": "CreatePlanModal.jsx",
@@ -32336,6 +32336,91 @@
   ],
   "links": [
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_recommendedmetierssection",
+      "target": "personalized_plan_recommendedmetierssection_geteducationgap"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "personalized_plan_recommendedmetierssection",
+      "target": "personalized_plan_recommendedmetierssection_recommendedmetierssection"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "personalized_plan_recommendedmetierssection_geteducationgap",
+      "target": "utils_educationutils_getusereducationlevel"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_personalizedplanpage",
+      "target": "pages_personalizedplanpage_personalizedplanpage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "hooks_useuserprofile_useuserprofile"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "utils_metierdatafetcher_usemetierdatafetcher"
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -34377,17 +34462,6 @@
       "context": "call",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
       "source_file": "src/pages/PlansPage.jsx",
       "source_location": "L31",
       "weight": 1.0,
@@ -35709,17 +35783,6 @@
     {
       "relation": "calls",
       "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "personalized_plan_recommendedmetierssection_geteducationgap",
-      "target": "utils_educationutils_getusereducationlevel"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/utils/educationUtils.js",
       "source_location": "L65",
@@ -35877,49 +35940,6 @@
       "confidence_score": 1.0,
       "source": "metiers_enhancedmetiercard",
       "target": "metiers_metiercardbadges_romebadge"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pages_personalizedplanpage",
-      "target": "pages_personalizedplanpage_personalizedplanpage"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
-      "target": "hooks_useuserprofile_useuserprofile"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L32",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
-      "target": "ui_use_toast_usetoast"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L49",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
-      "target": "utils_metierdatafetcher_usemetierdatafetcher"
     },
     {
       "relation": "contains",
@@ -48516,26 +48536,6 @@
       "confidence_score": 1.0,
       "source": "personalized_plan_progressionsection",
       "target": "personalized_plan_progressionsection_progressionsection"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedmetierssection",
-      "target": "personalized_plan_recommendedmetierssection_geteducationgap"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
-      "source_location": "L44",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "personalized_plan_recommendedmetierssection",
-      "target": "personalized_plan_recommendedmetierssection_recommendedmetierssection"
     },
     {
       "relation": "contains",
@@ -67295,5 +67295,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "167b7ab3066d1a35ef56cfb86c04eb520473c940"
+  "built_at_commit": "14629875a91b15a8dc123e25fe283bb8fc9d91b1"
 }

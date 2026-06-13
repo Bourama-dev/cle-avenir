@@ -4,14 +4,104 @@
   "graph": {},
   "nodes": [
     {
+      "label": "CleoAvatar.jsx",
+      "file_type": "code",
+      "source_file": "src/components/cleo/CleoAvatar.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "cleo_cleoavatar",
+      "community": 163,
+      "norm_label": "cleoavatar.jsx"
+    },
+    {
+      "label": "CleoAvatar()",
+      "file_type": "code",
+      "source_file": "src/components/cleo/CleoAvatar.jsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "cleo_cleoavatar_cleoavatar",
+      "community": 163,
+      "norm_label": "cleoavatar()"
+    },
+    {
+      "label": "CleoStateVisualizer.jsx",
+      "file_type": "code",
+      "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "cleo_cleostatevisualizer",
+      "community": 223,
+      "norm_label": "cleostatevisualizer.jsx"
+    },
+    {
+      "label": "MODES",
+      "file_type": "code",
+      "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "cleo_cleostatevisualizer_modes",
+      "community": 223,
+      "norm_label": "modes"
+    },
+    {
+      "label": "CleoStateVisualizer()",
+      "file_type": "code",
+      "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "cleo_cleostatevisualizer_cleostatevisualizer",
+      "community": 223,
+      "norm_label": "cleostatevisualizer()"
+    },
+    {
+      "label": "MetierCards.jsx",
+      "file_type": "code",
+      "source_file": "src/components/cleo/responses/MetierCards.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "responses_metiercards",
+      "community": 41,
+      "norm_label": "metiercards.jsx"
+    },
+    {
+      "label": "MetierCards()",
+      "file_type": "code",
+      "source_file": "src/components/cleo/responses/MetierCards.jsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "responses_metiercards_metiercards",
+      "community": 41,
+      "norm_label": "metiercards()"
+    },
+    {
+      "label": "QuickActions.jsx",
+      "file_type": "code",
+      "source_file": "src/components/cleo/responses/QuickActions.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "responses_quickactions",
+      "community": 41,
+      "norm_label": "quickactions.jsx"
+    },
+    {
+      "label": "QuickActions()",
+      "file_type": "code",
+      "source_file": "src/components/cleo/responses/QuickActions.jsx",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "responses_quickactions_quickactions",
+      "community": 41,
+      "norm_label": "quickactions()"
+    },
+    {
       "label": "ChatInterface.jsx",
       "file_type": "code",
       "source_file": "src/components/cleo/ChatInterface.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "cleo_chatinterface",
       "community": 13,
-      "norm_label": "chatinterface.jsx"
+      "norm_label": "chatinterface.jsx",
+      "id": "cleo_chatinterface"
     },
     {
       "label": "MessageBubble()",
@@ -19,9 +109,9 @@
       "source_file": "src/components/cleo/ChatInterface.jsx",
       "source_location": "L22",
       "_origin": "ast",
-      "id": "cleo_chatinterface_messagebubble",
       "community": 13,
-      "norm_label": "messagebubble()"
+      "norm_label": "messagebubble()",
+      "id": "cleo_chatinterface_messagebubble"
     },
     {
       "label": "ChatInterface()",
@@ -29,9 +119,9 @@
       "source_file": "src/components/cleo/ChatInterface.jsx",
       "source_location": "L107",
       "_origin": "ast",
-      "id": "cleo_chatinterface_chatinterface",
       "community": 13,
-      "norm_label": "chatinterface()"
+      "norm_label": "chatinterface()",
+      "id": "cleo_chatinterface_chatinterface"
     },
     {
       "label": "Cleo.jsx",
@@ -39,9 +129,9 @@
       "source_file": "src/components/cleo/Cleo.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "cleo_cleo",
       "community": 41,
-      "norm_label": "cleo.jsx"
+      "norm_label": "cleo.jsx",
+      "id": "cleo_cleo"
     },
     {
       "label": "FIELD_LABELS",
@@ -49,9 +139,9 @@
       "source_file": "src/components/cleo/Cleo.jsx",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "cleo_cleo_field_labels",
       "community": 41,
-      "norm_label": "field_labels"
+      "norm_label": "field_labels",
+      "id": "cleo_cleo_field_labels"
     },
     {
       "label": "renderSimpleMarkdown()",
@@ -59,9 +149,9 @@
       "source_file": "src/components/cleo/Cleo.jsx",
       "source_location": "L32",
       "_origin": "ast",
-      "id": "cleo_cleo_rendersimplemarkdown",
       "community": 41,
-      "norm_label": "rendersimplemarkdown()"
+      "norm_label": "rendersimplemarkdown()",
+      "id": "cleo_cleo_rendersimplemarkdown"
     },
     {
       "label": "InteractiveResponse()",
@@ -69,9 +159,9 @@
       "source_file": "src/components/cleo/Cleo.jsx",
       "source_location": "L81",
       "_origin": "ast",
-      "id": "cleo_cleo_interactiveresponse",
       "community": 41,
-      "norm_label": "interactiveresponse()"
+      "norm_label": "interactiveresponse()",
+      "id": "cleo_cleo_interactiveresponse"
     },
     {
       "label": "Cleo()",
@@ -79,9 +169,9 @@
       "source_file": "src/components/cleo/Cleo.jsx",
       "source_location": "L103",
       "_origin": "ast",
-      "id": "cleo_cleo_cleo",
       "community": 125,
-      "norm_label": "cleo()"
+      "norm_label": "cleo()",
+      "id": "cleo_cleo_cleo"
     },
     {
       "label": "FormationCards.jsx",
@@ -102,26 +192,6 @@
       "community": 41,
       "norm_label": "formationcards()",
       "id": "responses_formationcards_formationcards"
-    },
-    {
-      "label": "MetierCards.jsx",
-      "file_type": "code",
-      "source_file": "src/components/cleo/responses/MetierCards.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "metiercards.jsx",
-      "id": "responses_metiercards"
-    },
-    {
-      "label": "MetierCards()",
-      "file_type": "code",
-      "source_file": "src/components/cleo/responses/MetierCards.jsx",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "metiercards()",
-      "id": "responses_metiercards_metiercards"
     },
     {
       "label": "DashboardSidebar.jsx",
@@ -9084,26 +9154,6 @@
       "id": "cleo_cleoanalytics_cleoanalytics"
     },
     {
-      "label": "CleoAvatar.jsx",
-      "file_type": "code",
-      "source_file": "src/components/cleo/CleoAvatar.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 163,
-      "norm_label": "cleoavatar.jsx",
-      "id": "cleo_cleoavatar"
-    },
-    {
-      "label": "CleoAvatar()",
-      "file_type": "code",
-      "source_file": "src/components/cleo/CleoAvatar.jsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "community": 163,
-      "norm_label": "cleoavatar()",
-      "id": "cleo_cleoavatar_cleoavatar"
-    },
-    {
       "label": "CleoInteractives.jsx",
       "file_type": "code",
       "source_file": "src/components/cleo/CleoInteractives.jsx",
@@ -9362,36 +9412,6 @@
       "community": 56,
       "norm_label": "cleosidebar()",
       "id": "cleo_cleosidebar_cleosidebar"
-    },
-    {
-      "label": "CleoStateVisualizer.jsx",
-      "file_type": "code",
-      "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 223,
-      "norm_label": "cleostatevisualizer.jsx",
-      "id": "cleo_cleostatevisualizer"
-    },
-    {
-      "label": "MODES",
-      "file_type": "code",
-      "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "community": 223,
-      "norm_label": "modes",
-      "id": "cleo_cleostatevisualizer_modes"
-    },
-    {
-      "label": "CleoStateVisualizer()",
-      "file_type": "code",
-      "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
-      "source_location": "L13",
-      "_origin": "ast",
-      "community": 223,
-      "norm_label": "cleostatevisualizer()",
-      "id": "cleo_cleostatevisualizer_cleostatevisualizer"
     },
     {
       "label": "ContextPanel.jsx",
@@ -9682,26 +9702,6 @@
       "community": 41,
       "norm_label": "ctacard()",
       "id": "responses_ctacard_ctacard"
-    },
-    {
-      "label": "QuickActions.jsx",
-      "file_type": "code",
-      "source_file": "src/components/cleo/responses/QuickActions.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "quickactions.jsx",
-      "id": "responses_quickactions"
-    },
-    {
-      "label": "QuickActions()",
-      "file_type": "code",
-      "source_file": "src/components/cleo/responses/QuickActions.jsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "quickactions()",
-      "id": "responses_quickactions_quickactions"
     },
     {
       "label": "Timeline.jsx",
@@ -32336,6 +32336,144 @@
   ],
   "links": [
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_cleoavatar"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/CleoAvatar.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleoavatar",
+      "target": "cleo_cleoavatar_cleoavatar"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/CleoProfileBuilder.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleoprofilebuilder",
+      "target": "cleo_cleoavatar"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/InterviewSimulation.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_interviewsimulation",
+      "target": "cleo_cleoavatar"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cleo/CleoAvatar.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "cleo_cleoavatar_cleoavatar",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_cleostatevisualizer"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleostatevisualizer",
+      "target": "cleo_cleostatevisualizer_cleostatevisualizer"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleostatevisualizer",
+      "target": "cleo_cleostatevisualizer_modes"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "responses_metiercards"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleo",
+      "target": "responses_metiercards"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/responses/MetierCards.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "responses_metiercards",
+      "target": "responses_metiercards_metiercards"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleo",
+      "target": "responses_quickactions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/responses/QuickActions.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "responses_quickactions",
+      "target": "responses_quickactions_quickactions"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/cleo/ChatInterface.jsx",
@@ -32354,17 +32492,6 @@
       "confidence_score": 1.0,
       "source": "cleo_chatinterface",
       "target": "cleo_chatinterface_messagebubble"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_cleoavatar"
     },
     {
       "relation": "imports_from",
@@ -32459,33 +32586,11 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_cleostatevisualizer"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
       "source_location": "L15",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "cleo_chatinterface",
       "target": "responses_formationcards"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "responses_metiercards"
     },
     {
       "relation": "calls",
@@ -32587,28 +32692,6 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleo",
-      "target": "responses_metiercards"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleo",
-      "target": "responses_quickactions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/Cleo.jsx",
       "source_location": "L18",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -32657,16 +32740,6 @@
       "confidence_score": 1.0,
       "source": "responses_formationcards",
       "target": "responses_formationcards_formationcards"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/responses/MetierCards.jsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "responses_metiercards",
-      "target": "responses_metiercards_metiercards"
     },
     {
       "relation": "contains",
@@ -43462,49 +43535,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/CleoAvatar.jsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleoavatar",
-      "target": "cleo_cleoavatar_cleoavatar"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/CleoProfileBuilder.jsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleoprofilebuilder",
-      "target": "cleo_cleoavatar"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/InterviewSimulation.jsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_interviewsimulation",
-      "target": "cleo_cleoavatar"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cleo/CleoAvatar.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "cleo_cleoavatar_cleoavatar",
-      "target": "lib_utils_cn"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/components/cleo/CleoInteractives.jsx",
       "source_location": "L5",
       "weight": 1.0,
@@ -43735,26 +43765,6 @@
       "confidence_score": 1.0,
       "source": "cleo_cleosidebar",
       "target": "cleo_cleosidebar_relativedate"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleostatevisualizer",
-      "target": "cleo_cleostatevisualizer_cleostatevisualizer"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleostatevisualizer",
-      "target": "cleo_cleostatevisualizer_modes"
     },
     {
       "relation": "contains",
@@ -44009,16 +44019,6 @@
       "confidence_score": 1.0,
       "source": "responses_ctacard",
       "target": "responses_ctacard_ctacard"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/responses/QuickActions.jsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "responses_quickactions",
-      "target": "responses_quickactions_quickactions"
     },
     {
       "relation": "contains",
@@ -67295,5 +67295,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "dc6ae45cffd17a3b3faacfea49a6a771018d9043"
+  "built_at_commit": "167b7ab3066d1a35ef56cfb86c04eb520473c940"
 }
