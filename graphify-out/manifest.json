@@ -155,9 +155,9 @@
     "semantic_hash": "5c1b309d5bb71de2addee2081a874162"
   },
   "src/components/Dashboard.jsx": {
-    "mtime": 1780647208.497332,
-    "ast_hash": "7416050e734dda8457ecd23702adaf12",
-    "semantic_hash": "7416050e734dda8457ecd23702adaf12"
+    "mtime": 1781315213.664138,
+    "ast_hash": "c8149dcf6fd9a69c50a18be816ed221b",
+    "semantic_hash": ""
   },
   "src/components/DataDeletionRequest.jsx": {
     "mtime": 1780647208.497332,
@@ -3355,8 +3355,8 @@
     "semantic_hash": "601e1e102f6dade8fee23bd9f9f2e500"
   },
   "src/pages/RecommendationsPage.jsx": {
-    "mtime": 1781315144.3281338,
-    "ast_hash": "1c2299a421d312ea3be7f5ca2c094e92",
+    "mtime": 1781315218.6801383,
+    "ast_hash": "aa7ee735695f2f8999c5faf1e90800ff",
     "semantic_hash": ""
   },
   "src/pages/ResetPasswordPage.jsx": {
