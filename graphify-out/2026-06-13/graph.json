@@ -4,934 +4,14 @@
   "graph": {},
   "nodes": [
     {
-      "label": "App.jsx",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "src_app",
-      "community": 0,
-      "norm_label": "app.jsx"
-    },
-    {
-      "label": "OAuthConsentPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L58",
-      "_origin": "ast",
-      "id": "src_app_oauthconsentpage",
-      "community": 0,
-      "norm_label": "oauthconsentpage"
-    },
-    {
-      "label": "LoginPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L59",
-      "_origin": "ast",
-      "id": "src_app_loginpage",
-      "community": 0,
-      "norm_label": "loginpage"
-    },
-    {
-      "label": "SignupPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L60",
-      "_origin": "ast",
-      "id": "src_app_signuppage",
-      "community": 0,
-      "norm_label": "signuppage"
-    },
-    {
-      "label": "ProfilePage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L61",
-      "_origin": "ast",
-      "id": "src_app_profilepage",
-      "community": 0,
-      "norm_label": "profilepage"
-    },
-    {
-      "label": "ActionPlanPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L62",
-      "_origin": "ast",
-      "id": "src_app_actionplanpage",
-      "community": 0,
-      "norm_label": "actionplanpage"
-    },
-    {
-      "label": "TestPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L63",
-      "_origin": "ast",
-      "id": "src_app_testpage",
-      "community": 0,
-      "norm_label": "testpage"
-    },
-    {
-      "label": "ParentalConsentPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L66",
-      "_origin": "ast",
-      "id": "src_app_parentalconsentpage",
-      "community": 0,
-      "norm_label": "parentalconsentpage"
-    },
-    {
-      "label": "AuthPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L69",
-      "_origin": "ast",
-      "id": "src_app_authpage",
-      "community": 0,
-      "norm_label": "authpage"
-    },
-    {
-      "label": "ForgotPasswordPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L70",
-      "_origin": "ast",
-      "id": "src_app_forgotpasswordpage",
-      "community": 0,
-      "norm_label": "forgotpasswordpage"
-    },
-    {
-      "label": "ResetPasswordPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L71",
-      "_origin": "ast",
-      "id": "src_app_resetpasswordpage",
-      "community": 0,
-      "norm_label": "resetpasswordpage"
-    },
-    {
-      "label": "EmailConfirmationPending",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L72",
-      "_origin": "ast",
-      "id": "src_app_emailconfirmationpending",
-      "community": 0,
-      "norm_label": "emailconfirmationpending"
-    },
-    {
-      "label": "AuthCallback",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L73",
-      "_origin": "ast",
-      "id": "src_app_authcallback",
-      "community": 0,
-      "norm_label": "authcallback"
-    },
-    {
-      "label": "UpdatePasswordPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L74",
-      "_origin": "ast",
-      "id": "src_app_updatepasswordpage",
-      "community": 0,
-      "norm_label": "updatepasswordpage"
-    },
-    {
-      "label": "EnhancedTestPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L77",
-      "_origin": "ast",
-      "id": "src_app_enhancedtestpage",
-      "community": 0,
-      "norm_label": "enhancedtestpage"
-    },
-    {
-      "label": "TestGatePage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L78",
-      "_origin": "ast",
-      "id": "src_app_testgatepage",
-      "community": 0,
-      "norm_label": "testgatepage"
-    },
-    {
-      "label": "TestResultsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L79",
-      "_origin": "ast",
-      "id": "src_app_testresultspage",
-      "community": 0,
-      "norm_label": "testresultspage"
-    },
-    {
-      "label": "TestFormationsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L80",
-      "_origin": "ast",
-      "id": "src_app_testformationspage",
-      "community": 0,
-      "norm_label": "testformationspage"
-    },
-    {
-      "label": "TestPlanPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L81",
-      "_origin": "ast",
-      "id": "src_app_testplanpage",
-      "community": 0,
-      "norm_label": "testplanpage"
-    },
-    {
-      "label": "AllCareersPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L82",
-      "_origin": "ast",
-      "id": "src_app_allcareerspage",
-      "community": 0,
-      "norm_label": "allcareerspage"
-    },
-    {
-      "label": "ExploreMetiersPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L85",
-      "_origin": "ast",
-      "id": "src_app_exploremetierspage",
-      "community": 0,
-      "norm_label": "exploremetierspage"
-    },
-    {
-      "label": "MetierDetailPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L86",
-      "_origin": "ast",
-      "id": "src_app_metierdetailpage",
-      "community": 0,
-      "norm_label": "metierdetailpage"
-    },
-    {
-      "label": "FormationsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L87",
-      "_origin": "ast",
-      "id": "src_app_formationspage",
-      "community": 0,
-      "norm_label": "formationspage"
-    },
-    {
-      "label": "FormationDetailPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L88",
-      "_origin": "ast",
-      "id": "src_app_formationdetailpage",
-      "community": 0,
-      "norm_label": "formationdetailpage"
-    },
-    {
-      "label": "LyceesPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L89",
-      "_origin": "ast",
-      "id": "src_app_lyceespage",
-      "community": 0,
-      "norm_label": "lyceespage"
-    },
-    {
-      "label": "LyceeDetailPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L90",
-      "_origin": "ast",
-      "id": "src_app_lyceedetailpage",
-      "community": 0,
-      "norm_label": "lyceedetailpage"
-    },
-    {
-      "label": "JobDetailPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L91",
-      "_origin": "ast",
-      "id": "src_app_jobdetailpage",
-      "community": 0,
-      "norm_label": "jobdetailpage"
-    },
-    {
-      "label": "JobExplorer",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L92",
-      "_origin": "ast",
-      "id": "src_app_jobexplorer",
-      "community": 0,
-      "norm_label": "jobexplorer"
-    },
-    {
-      "label": "DashboardPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L93",
-      "_origin": "ast",
-      "id": "src_app_dashboardpage",
-      "community": 0,
-      "norm_label": "dashboardpage"
-    },
-    {
-      "label": "ProfileResultsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L94",
-      "_origin": "ast",
-      "id": "src_app_profileresultspage",
-      "community": 0,
-      "norm_label": "profileresultspage"
-    },
-    {
-      "label": "RecommendationsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L95",
-      "_origin": "ast",
-      "id": "src_app_recommendationspage",
-      "community": 0,
-      "norm_label": "recommendationspage"
-    },
-    {
-      "label": "OffersFormationsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L96",
-      "_origin": "ast",
-      "id": "src_app_offersformationspage",
-      "community": 0,
-      "norm_label": "offersformationspage"
-    },
-    {
-      "label": "AccountPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L97",
-      "_origin": "ast",
-      "id": "src_app_accountpage",
-      "community": 0,
-      "norm_label": "accountpage"
-    },
-    {
-      "label": "SettingsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L98",
-      "_origin": "ast",
-      "id": "src_app_settingspage",
-      "community": 0,
-      "norm_label": "settingspage"
-    },
-    {
-      "label": "TestHistoryPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L99",
-      "_origin": "ast",
-      "id": "src_app_testhistorypage",
-      "community": 0,
-      "norm_label": "testhistorypage"
-    },
-    {
-      "label": "InterviewPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L100",
-      "_origin": "ast",
-      "id": "src_app_interviewpage",
-      "community": 0,
-      "norm_label": "interviewpage"
-    },
-    {
-      "label": "CleoPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L101",
-      "_origin": "ast",
-      "id": "src_app_cleopage",
-      "community": 0,
-      "norm_label": "cleopage"
-    },
-    {
-      "label": "CVBuilderPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L102",
-      "_origin": "ast",
-      "id": "src_app_cvbuilderpage",
-      "community": 0,
-      "norm_label": "cvbuilderpage"
-    },
-    {
-      "label": "CoverLetterBuilderPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L103",
-      "_origin": "ast",
-      "id": "src_app_coverletterbuilderpage",
-      "community": 0,
-      "norm_label": "coverletterbuilderpage"
-    },
-    {
-      "label": "MyDocumentsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L104",
-      "_origin": "ast",
-      "id": "src_app_mydocumentspage",
-      "community": 0,
-      "norm_label": "mydocumentspage"
-    },
-    {
-      "label": "ManageSubscriptionPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L105",
-      "_origin": "ast",
-      "id": "src_app_managesubscriptionpage",
-      "community": 0,
-      "norm_label": "managesubscriptionpage"
-    },
-    {
-      "label": "UpgradePlan",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L106",
-      "_origin": "ast",
-      "id": "src_app_upgradeplan",
-      "community": 0,
-      "norm_label": "upgradeplan"
-    },
-    {
-      "label": "PlansPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L107",
-      "_origin": "ast",
-      "id": "src_app_planspage",
-      "community": 0,
-      "norm_label": "planspage"
-    },
-    {
-      "label": "HowItWorksPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L108",
-      "_origin": "ast",
-      "id": "src_app_howitworkspage",
-      "community": 0,
-      "norm_label": "howitworkspage"
-    },
-    {
-      "label": "FAQPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L109",
-      "_origin": "ast",
-      "id": "src_app_faqpage",
-      "community": 0,
-      "norm_label": "faqpage"
-    },
-    {
-      "label": "AboutPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L110",
-      "_origin": "ast",
-      "id": "src_app_aboutpage",
-      "community": 0,
-      "norm_label": "aboutpage"
-    },
-    {
-      "label": "ContactPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L111",
-      "_origin": "ast",
-      "id": "src_app_contactpage",
-      "community": 0,
-      "norm_label": "contactpage"
-    },
-    {
-      "label": "ActualitesPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L112",
-      "_origin": "ast",
-      "id": "src_app_actualitespage",
-      "community": 0,
-      "norm_label": "actualitespage"
-    },
-    {
-      "label": "ActualitesDetailPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L113",
-      "_origin": "ast",
-      "id": "src_app_actualitesdetailpage",
-      "community": 0,
-      "norm_label": "actualitesdetailpage"
-    },
-    {
-      "label": "DocumentationPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L114",
-      "_origin": "ast",
-      "id": "src_app_documentationpage",
-      "community": 0,
-      "norm_label": "documentationpage"
-    },
-    {
-      "label": "StatusPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L115",
-      "_origin": "ast",
-      "id": "src_app_statuspage",
-      "community": 0,
-      "norm_label": "statuspage"
-    },
-    {
-      "label": "RoadmapPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L116",
-      "_origin": "ast",
-      "id": "src_app_roadmappage",
-      "community": 0,
-      "norm_label": "roadmappage"
-    },
-    {
-      "label": "EdgeFunctionDiagnostics",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L117",
-      "_origin": "ast",
-      "id": "src_app_edgefunctiondiagnostics",
-      "community": 0,
-      "norm_label": "edgefunctiondiagnostics"
-    },
-    {
-      "label": "NotificationsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L118",
-      "_origin": "ast",
-      "id": "src_app_notificationspage",
-      "community": 0,
-      "norm_label": "notificationspage"
-    },
-    {
-      "label": "PersonalizedPlanPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L121",
-      "_origin": "ast",
-      "id": "src_app_personalizedplanpage",
-      "community": 0,
-      "norm_label": "personalizedplanpage"
-    },
-    {
-      "label": "LearningPathPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L124",
-      "_origin": "ast",
-      "id": "src_app_learningpathpage",
-      "community": 0,
-      "norm_label": "learningpathpage"
-    },
-    {
-      "label": "PrivacyPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L127",
-      "_origin": "ast",
-      "id": "src_app_privacypage",
-      "community": 0,
-      "norm_label": "privacypage"
-    },
-    {
-      "label": "TermsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L128",
-      "_origin": "ast",
-      "id": "src_app_termspage",
-      "community": 0,
-      "norm_label": "termspage"
-    },
-    {
-      "label": "LegalPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L129",
-      "_origin": "ast",
-      "id": "src_app_legalpage",
-      "community": 0,
-      "norm_label": "legalpage"
-    },
-    {
-      "label": "CookiePolicyPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L132",
-      "_origin": "ast",
-      "id": "src_app_cookiepolicypage",
-      "community": 0,
-      "norm_label": "cookiepolicypage"
-    },
-    {
-      "label": "GestionCookiesPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L133",
-      "_origin": "ast",
-      "id": "src_app_gestioncookiespage",
-      "community": 0,
-      "norm_label": "gestioncookiespage"
-    },
-    {
-      "label": "PreferencesRGPDPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L134",
-      "_origin": "ast",
-      "id": "src_app_preferencesrgpdpage",
-      "community": 0,
-      "norm_label": "preferencesrgpdpage"
-    },
-    {
-      "label": "RgpdPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L137",
-      "_origin": "ast",
-      "id": "src_app_rgpdpage",
-      "community": 0,
-      "norm_label": "rgpdpage"
-    },
-    {
-      "label": "CookiesPreferencesPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L138",
-      "_origin": "ast",
-      "id": "src_app_cookiespreferencespage",
-      "community": 0,
-      "norm_label": "cookiespreferencespage"
-    },
-    {
-      "label": "EstablishmentLoginPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L141",
-      "_origin": "ast",
-      "id": "src_app_establishmentloginpage",
-      "community": 0,
-      "norm_label": "establishmentloginpage"
-    },
-    {
-      "label": "EstablishmentForgotPasswordPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L142",
-      "_origin": "ast",
-      "id": "src_app_establishmentforgotpasswordpage",
-      "community": 0,
-      "norm_label": "establishmentforgotpasswordpage"
-    },
-    {
-      "label": "EstablishmentDashboard",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L143",
-      "_origin": "ast",
-      "id": "src_app_establishmentdashboard",
-      "community": 0,
-      "norm_label": "establishmentdashboard"
-    },
-    {
-      "label": "InstitutionStaffLogin",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L144",
-      "_origin": "ast",
-      "id": "src_app_institutionstafflogin",
-      "community": 0,
-      "norm_label": "institutionstafflogin"
-    },
-    {
-      "label": "InstitutionDashboard",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L145",
-      "_origin": "ast",
-      "id": "src_app_institutiondashboard",
-      "community": 0,
-      "norm_label": "institutiondashboard"
-    },
-    {
-      "label": "UserManagement",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L146",
-      "_origin": "ast",
-      "id": "src_app_usermanagement",
-      "community": 0,
-      "norm_label": "usermanagement"
-    },
-    {
-      "label": "AdminDashboardPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L150",
-      "_origin": "ast",
-      "id": "src_app_admindashboardpage",
-      "community": 0,
-      "norm_label": "admindashboardpage"
-    },
-    {
-      "label": "AdminInstitutionsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L151",
-      "_origin": "ast",
-      "id": "src_app_admininstitutionspage",
-      "community": 0,
-      "norm_label": "admininstitutionspage"
-    },
-    {
-      "label": "AdminInstitutionCodesPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L152",
-      "_origin": "ast",
-      "id": "src_app_admininstitutioncodespage",
-      "community": 0,
-      "norm_label": "admininstitutioncodespage"
-    },
-    {
-      "label": "AdminInstitutionStaffPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L153",
-      "_origin": "ast",
-      "id": "src_app_admininstitutionstaffpage",
-      "community": 0,
-      "norm_label": "admininstitutionstaffpage"
-    },
-    {
-      "label": "AdminAnalyticsDashboard",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L154",
-      "_origin": "ast",
-      "id": "src_app_adminanalyticsdashboard",
-      "community": 0,
-      "norm_label": "adminanalyticsdashboard"
-    },
-    {
-      "label": "AdminWeightAuditPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L155",
-      "_origin": "ast",
-      "id": "src_app_adminweightauditpage",
-      "community": 0,
-      "norm_label": "adminweightauditpage"
-    },
-    {
-      "label": "EstablishmentDashboardPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L156",
-      "_origin": "ast",
-      "id": "src_app_establishmentdashboardpage",
-      "community": 0,
-      "norm_label": "establishmentdashboardpage"
-    },
-    {
-      "label": "RgpdCompliancePage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L157",
-      "_origin": "ast",
-      "id": "src_app_rgpdcompliancepage",
-      "community": 0,
-      "norm_label": "rgpdcompliancepage"
-    },
-    {
-      "label": "LegalVersionsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L158",
-      "_origin": "ast",
-      "id": "src_app_legalversionspage",
-      "community": 0,
-      "norm_label": "legalversionspage"
-    },
-    {
-      "label": "SecurityAuditPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L159",
-      "_origin": "ast",
-      "id": "src_app_securityauditpage",
-      "community": 0,
-      "norm_label": "securityauditpage"
-    },
-    {
-      "label": "AdminMetiers",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L160",
-      "_origin": "ast",
-      "id": "src_app_adminmetiers",
-      "community": 0,
-      "norm_label": "adminmetiers"
-    },
-    {
-      "label": "AdminSettingsPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L161",
-      "_origin": "ast",
-      "id": "src_app_adminsettingspage",
-      "community": 0,
-      "norm_label": "adminsettingspage"
-    },
-    {
-      "label": "ContentManagementPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L162",
-      "_origin": "ast",
-      "id": "src_app_contentmanagementpage",
-      "community": 0,
-      "norm_label": "contentmanagementpage"
-    },
-    {
-      "label": "NotFoundPage",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L164",
-      "_origin": "ast",
-      "id": "src_app_notfoundpage",
-      "community": 0,
-      "norm_label": "notfoundpage"
-    },
-    {
-      "label": "RedirectWithParam()",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L166",
-      "_origin": "ast",
-      "id": "src_app_redirectwithparam",
-      "community": 0,
-      "norm_label": "redirectwithparam()"
-    },
-    {
-      "label": "AppRouteErrorBoundary",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L172",
-      "_origin": "ast",
-      "id": "src_app_approuteerrorboundary",
-      "community": 159,
-      "norm_label": "approuteerrorboundary"
-    },
-    {
-      "label": ".constructor()",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L173",
-      "_origin": "ast",
-      "id": "src_app_approuteerrorboundary_constructor",
-      "community": 159,
-      "norm_label": ".constructor()"
-    },
-    {
-      "label": ".getDerivedStateFromError()",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L178",
-      "_origin": "ast",
-      "id": "src_app_approuteerrorboundary_getderivedstatefromerror",
-      "community": 159,
-      "norm_label": ".getderivedstatefromerror()"
-    },
-    {
-      "label": ".componentDidCatch()",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L182",
-      "_origin": "ast",
-      "id": "src_app_approuteerrorboundary_componentdidcatch",
-      "community": 159,
-      "norm_label": ".componentdidcatch()"
-    },
-    {
-      "label": ".render()",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L186",
-      "_origin": "ast",
-      "id": "src_app_approuteerrorboundary_render",
-      "community": 159,
-      "norm_label": ".render()"
-    },
-    {
-      "label": "PageContent()",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L205",
-      "_origin": "ast",
-      "id": "src_app_pagecontent",
-      "community": 107,
-      "norm_label": "pagecontent()"
-    },
-    {
-      "label": "App()",
-      "file_type": "code",
-      "source_file": "src/App.jsx",
-      "source_location": "L456",
-      "_origin": "ast",
-      "id": "src_app_app",
-      "community": 107,
-      "norm_label": "app()"
-    },
-    {
       "label": "RecommendedActionsSection.jsx",
       "file_type": "code",
       "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection",
       "community": 190,
-      "norm_label": "recommendedactionssection.jsx",
-      "id": "personalized_plan_recommendedactionssection"
+      "norm_label": "recommendedactionssection.jsx"
     },
     {
       "label": "RIASEC_TRAIT",
@@ -939,9 +19,9 @@
       "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
       "source_location": "L10",
       "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_riasec_trait",
       "community": 190,
-      "norm_label": "riasec_trait",
-      "id": "personalized_plan_recommendedactionssection_riasec_trait"
+      "norm_label": "riasec_trait"
     },
     {
       "label": "STATUS_LABEL",
@@ -949,9 +29,9 @@
       "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
       "source_location": "L19",
       "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_status_label",
       "community": 190,
-      "norm_label": "status_label",
-      "id": "personalized_plan_recommendedactionssection_status_label"
+      "norm_label": "status_label"
     },
     {
       "label": "buildSublabel()",
@@ -959,9 +39,9 @@
       "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
       "source_location": "L28",
       "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_buildsublabel",
       "community": 190,
-      "norm_label": "buildsublabel()",
-      "id": "personalized_plan_recommendedactionssection_buildsublabel"
+      "norm_label": "buildsublabel()"
     },
     {
       "label": "ACTION_BASE",
@@ -969,9 +49,9 @@
       "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
       "source_location": "L75",
       "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_action_base",
       "community": 190,
-      "norm_label": "action_base",
-      "id": "personalized_plan_recommendedactionssection_action_base"
+      "norm_label": "action_base"
     },
     {
       "label": "getActionsForStatus()",
@@ -979,9 +59,9 @@
       "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
       "source_location": "L127",
       "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_getactionsforstatus",
       "community": 190,
-      "norm_label": "getactionsforstatus()",
-      "id": "personalized_plan_recommendedactionssection_getactionsforstatus"
+      "norm_label": "getactionsforstatus()"
     },
     {
       "label": "RecommendedActionsSection()",
@@ -989,9 +69,9 @@
       "source_file": "src/components/personalized-plan/RecommendedActionsSection.jsx",
       "source_location": "L138",
       "_origin": "ast",
+      "id": "personalized_plan_recommendedactionssection_recommendedactionssection",
       "community": 190,
-      "norm_label": "recommendedactionssection()",
-      "id": "personalized_plan_recommendedactionssection_recommendedactionssection"
+      "norm_label": "recommendedactionssection()"
     },
     {
       "label": "RiasecProfileSection.jsx",
@@ -999,9 +79,9 @@
       "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "personalized_plan_riasecprofilesection",
       "community": 252,
-      "norm_label": "riasecprofilesection.jsx",
-      "id": "personalized_plan_riasecprofilesection"
+      "norm_label": "riasecprofilesection.jsx"
     },
     {
       "label": "DIMENSION_LABELS",
@@ -1009,9 +89,9 @@
       "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
       "source_location": "L7",
       "_origin": "ast",
+      "id": "personalized_plan_riasecprofilesection_dimension_labels",
       "community": 252,
-      "norm_label": "dimension_labels",
-      "id": "personalized_plan_riasecprofilesection_dimension_labels"
+      "norm_label": "dimension_labels"
     },
     {
       "label": "RiasecProfileSection()",
@@ -1019,9 +99,9 @@
       "source_file": "src/components/personalized-plan/RiasecProfileSection.jsx",
       "source_location": "L16",
       "_origin": "ast",
+      "id": "personalized_plan_riasecprofilesection_riasecprofilesection",
       "community": 252,
-      "norm_label": "riasecprofilesection()",
-      "id": "personalized_plan_riasecprofilesection_riasecprofilesection"
+      "norm_label": "riasecprofilesection()"
     },
     {
       "label": "educationUtils.js",
@@ -1029,9 +109,9 @@
       "source_file": "src/utils/educationUtils.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "utils_educationutils",
       "community": 35,
-      "norm_label": "educationutils.js",
-      "id": "utils_educationutils"
+      "norm_label": "educationutils.js"
     },
     {
       "label": "EDUCATION_ORDER",
@@ -1039,9 +119,9 @@
       "source_file": "src/utils/educationUtils.js",
       "source_location": "L7",
       "_origin": "ast",
+      "id": "utils_educationutils_education_order",
       "community": 35,
-      "norm_label": "education_order",
-      "id": "utils_educationutils_education_order"
+      "norm_label": "education_order"
     },
     {
       "label": "EDUCATION_LABELS",
@@ -1049,9 +129,9 @@
       "source_file": "src/utils/educationUtils.js",
       "source_location": "L18",
       "_origin": "ast",
+      "id": "utils_educationutils_education_labels",
       "community": 35,
-      "norm_label": "education_labels",
-      "id": "utils_educationutils_education_labels"
+      "norm_label": "education_labels"
     },
     {
       "label": "getUserEducationLevel()",
@@ -1059,9 +139,9 @@
       "source_file": "src/utils/educationUtils.js",
       "source_location": "L32",
       "_origin": "ast",
+      "id": "utils_educationutils_getusereducationlevel",
       "community": 35,
-      "norm_label": "getusereducationlevel()",
-      "id": "utils_educationutils_getusereducationlevel"
+      "norm_label": "getusereducationlevel()"
     },
     {
       "label": "getFormationLevel()",
@@ -1069,9 +149,9 @@
       "source_file": "src/utils/educationUtils.js",
       "source_location": "L44",
       "_origin": "ast",
+      "id": "utils_educationutils_getformationlevel",
       "community": 35,
-      "norm_label": "getformationlevel()",
-      "id": "utils_educationutils_getformationlevel"
+      "norm_label": "getformationlevel()"
     },
     {
       "label": "isFormationAccessible()",
@@ -1079,9 +159,9 @@
       "source_file": "src/utils/educationUtils.js",
       "source_location": "L63",
       "_origin": "ast",
+      "id": "utils_educationutils_isformationaccessible",
       "community": 35,
-      "norm_label": "isformationaccessible()",
-      "id": "utils_educationutils_isformationaccessible"
+      "norm_label": "isformationaccessible()"
     },
     {
       "label": "getAccessibilityLabel()",
@@ -1089,9 +169,9 @@
       "source_file": "src/utils/educationUtils.js",
       "source_location": "L69",
       "_origin": "ast",
+      "id": "utils_educationutils_getaccessibilitylabel",
       "community": 35,
-      "norm_label": "getaccessibilitylabel()",
-      "id": "utils_educationutils_getaccessibilitylabel"
+      "norm_label": "getaccessibilitylabel()"
     },
     {
       "label": "USER_STATUS_LABELS",
@@ -1099,9 +179,9 @@
       "source_file": "src/utils/educationUtils.js",
       "source_location": "L79",
       "_origin": "ast",
+      "id": "utils_educationutils_user_status_labels",
       "community": 35,
-      "norm_label": "user_status_labels",
-      "id": "utils_educationutils_user_status_labels"
+      "norm_label": "user_status_labels"
     },
     {
       "label": "getStatusContext()",
@@ -1109,9 +189,9 @@
       "source_file": "src/utils/educationUtils.js",
       "source_location": "L93",
       "_origin": "ast",
+      "id": "utils_educationutils_getstatuscontext",
       "community": 35,
-      "norm_label": "getstatuscontext()",
-      "id": "utils_educationutils_getstatuscontext"
+      "norm_label": "getstatuscontext()"
     },
     {
       "label": "MetierCardBadges.jsx",
@@ -1704,6 +784,986 @@
       "id": "services_matchingalgorithm_calculateadvancedmatching"
     },
     {
+      "label": "App.jsx",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "app.jsx",
+      "id": "src_app"
+    },
+    {
+      "label": "OAuthConsentPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L58",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "oauthconsentpage",
+      "id": "src_app_oauthconsentpage"
+    },
+    {
+      "label": "LoginPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L59",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "loginpage",
+      "id": "src_app_loginpage"
+    },
+    {
+      "label": "SignupPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L60",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "signuppage",
+      "id": "src_app_signuppage"
+    },
+    {
+      "label": "ProfilePage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L61",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "profilepage",
+      "id": "src_app_profilepage"
+    },
+    {
+      "label": "ActionPlanPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L62",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "actionplanpage",
+      "id": "src_app_actionplanpage"
+    },
+    {
+      "label": "TestPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L63",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "testpage",
+      "id": "src_app_testpage"
+    },
+    {
+      "label": "ParentalConsentPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L66",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "parentalconsentpage",
+      "id": "src_app_parentalconsentpage"
+    },
+    {
+      "label": "AuthPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L69",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "authpage",
+      "id": "src_app_authpage"
+    },
+    {
+      "label": "ForgotPasswordPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L70",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "forgotpasswordpage",
+      "id": "src_app_forgotpasswordpage"
+    },
+    {
+      "label": "ResetPasswordPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L71",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "resetpasswordpage",
+      "id": "src_app_resetpasswordpage"
+    },
+    {
+      "label": "EmailConfirmationPending",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L72",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "emailconfirmationpending",
+      "id": "src_app_emailconfirmationpending"
+    },
+    {
+      "label": "AuthCallback",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L73",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "authcallback",
+      "id": "src_app_authcallback"
+    },
+    {
+      "label": "UpdatePasswordPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L74",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "updatepasswordpage",
+      "id": "src_app_updatepasswordpage"
+    },
+    {
+      "label": "TestResults",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L77",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "testresults",
+      "id": "src_app_testresults"
+    },
+    {
+      "label": "EnhancedTestPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L78",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "enhancedtestpage",
+      "id": "src_app_enhancedtestpage"
+    },
+    {
+      "label": "TestGatePage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L79",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "testgatepage",
+      "id": "src_app_testgatepage"
+    },
+    {
+      "label": "TestResultsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L80",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "testresultspage",
+      "id": "src_app_testresultspage"
+    },
+    {
+      "label": "TestFormationsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L81",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "testformationspage",
+      "id": "src_app_testformationspage"
+    },
+    {
+      "label": "TestPlanPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L82",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "testplanpage",
+      "id": "src_app_testplanpage"
+    },
+    {
+      "label": "AllCareersPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L83",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "allcareerspage",
+      "id": "src_app_allcareerspage"
+    },
+    {
+      "label": "ExploreMetiersPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L86",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "exploremetierspage",
+      "id": "src_app_exploremetierspage"
+    },
+    {
+      "label": "MetierDetailPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L87",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "metierdetailpage",
+      "id": "src_app_metierdetailpage"
+    },
+    {
+      "label": "FormationsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L88",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "formationspage",
+      "id": "src_app_formationspage"
+    },
+    {
+      "label": "FormationDetailPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L89",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "formationdetailpage",
+      "id": "src_app_formationdetailpage"
+    },
+    {
+      "label": "LyceesPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L90",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "lyceespage",
+      "id": "src_app_lyceespage"
+    },
+    {
+      "label": "LyceeDetailPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L91",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "lyceedetailpage",
+      "id": "src_app_lyceedetailpage"
+    },
+    {
+      "label": "JobOffersPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L92",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "jobofferspage",
+      "id": "src_app_jobofferspage"
+    },
+    {
+      "label": "JobDetailPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L93",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "jobdetailpage",
+      "id": "src_app_jobdetailpage"
+    },
+    {
+      "label": "OfferDetailPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L94",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "offerdetailpage",
+      "id": "src_app_offerdetailpage"
+    },
+    {
+      "label": "JobExplorer",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L95",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "jobexplorer",
+      "id": "src_app_jobexplorer"
+    },
+    {
+      "label": "DashboardPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L96",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "dashboardpage",
+      "id": "src_app_dashboardpage"
+    },
+    {
+      "label": "ProfileResultsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L97",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "profileresultspage",
+      "id": "src_app_profileresultspage"
+    },
+    {
+      "label": "RecommendationsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L98",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "recommendationspage",
+      "id": "src_app_recommendationspage"
+    },
+    {
+      "label": "OffersFormationsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L99",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "offersformationspage",
+      "id": "src_app_offersformationspage"
+    },
+    {
+      "label": "AccountPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L100",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "accountpage",
+      "id": "src_app_accountpage"
+    },
+    {
+      "label": "SettingsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L101",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "settingspage",
+      "id": "src_app_settingspage"
+    },
+    {
+      "label": "TestHistoryPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L102",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "testhistorypage",
+      "id": "src_app_testhistorypage"
+    },
+    {
+      "label": "InterviewPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L103",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "interviewpage",
+      "id": "src_app_interviewpage"
+    },
+    {
+      "label": "CleoPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L104",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "cleopage",
+      "id": "src_app_cleopage"
+    },
+    {
+      "label": "CVBuilderPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L105",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "cvbuilderpage",
+      "id": "src_app_cvbuilderpage"
+    },
+    {
+      "label": "CoverLetterBuilderPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L106",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "coverletterbuilderpage",
+      "id": "src_app_coverletterbuilderpage"
+    },
+    {
+      "label": "MyDocumentsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L107",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "mydocumentspage",
+      "id": "src_app_mydocumentspage"
+    },
+    {
+      "label": "ManageSubscriptionPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L108",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "managesubscriptionpage",
+      "id": "src_app_managesubscriptionpage"
+    },
+    {
+      "label": "UpgradePlan",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L109",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "upgradeplan",
+      "id": "src_app_upgradeplan"
+    },
+    {
+      "label": "PlansPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L110",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "planspage",
+      "id": "src_app_planspage"
+    },
+    {
+      "label": "HowItWorksPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L111",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "howitworkspage",
+      "id": "src_app_howitworkspage"
+    },
+    {
+      "label": "FAQPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L112",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "faqpage",
+      "id": "src_app_faqpage"
+    },
+    {
+      "label": "AboutPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L113",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "aboutpage",
+      "id": "src_app_aboutpage"
+    },
+    {
+      "label": "ContactPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L114",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "contactpage",
+      "id": "src_app_contactpage"
+    },
+    {
+      "label": "BlogPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L115",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "blogpage",
+      "id": "src_app_blogpage"
+    },
+    {
+      "label": "BlogArticlePage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L116",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "blogarticlepage",
+      "id": "src_app_blogarticlepage"
+    },
+    {
+      "label": "ActualitesPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L117",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "actualitespage",
+      "id": "src_app_actualitespage"
+    },
+    {
+      "label": "ActualitesDetailPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L118",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "actualitesdetailpage",
+      "id": "src_app_actualitesdetailpage"
+    },
+    {
+      "label": "DocumentationPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L119",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "documentationpage",
+      "id": "src_app_documentationpage"
+    },
+    {
+      "label": "StatusPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L120",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "statuspage",
+      "id": "src_app_statuspage"
+    },
+    {
+      "label": "RoadmapPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L121",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "roadmappage",
+      "id": "src_app_roadmappage"
+    },
+    {
+      "label": "EdgeFunctionDiagnostics",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L122",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "edgefunctiondiagnostics",
+      "id": "src_app_edgefunctiondiagnostics"
+    },
+    {
+      "label": "NotificationsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L123",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "notificationspage",
+      "id": "src_app_notificationspage"
+    },
+    {
+      "label": "PersonalizedPlanPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L126",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "personalizedplanpage",
+      "id": "src_app_personalizedplanpage"
+    },
+    {
+      "label": "LearningPathPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L129",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "learningpathpage",
+      "id": "src_app_learningpathpage"
+    },
+    {
+      "label": "PrivacyPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L132",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "privacypage",
+      "id": "src_app_privacypage"
+    },
+    {
+      "label": "TermsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L133",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "termspage",
+      "id": "src_app_termspage"
+    },
+    {
+      "label": "LegalPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L134",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "legalpage",
+      "id": "src_app_legalpage"
+    },
+    {
+      "label": "CookiePolicyPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L137",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "cookiepolicypage",
+      "id": "src_app_cookiepolicypage"
+    },
+    {
+      "label": "GestionCookiesPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L138",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "gestioncookiespage",
+      "id": "src_app_gestioncookiespage"
+    },
+    {
+      "label": "PreferencesRGPDPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L139",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "preferencesrgpdpage",
+      "id": "src_app_preferencesrgpdpage"
+    },
+    {
+      "label": "RgpdPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L142",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "rgpdpage",
+      "id": "src_app_rgpdpage"
+    },
+    {
+      "label": "CookiesPreferencesPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L143",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "cookiespreferencespage",
+      "id": "src_app_cookiespreferencespage"
+    },
+    {
+      "label": "EstablishmentLoginPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L146",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "establishmentloginpage",
+      "id": "src_app_establishmentloginpage"
+    },
+    {
+      "label": "EstablishmentForgotPasswordPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L147",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "establishmentforgotpasswordpage",
+      "id": "src_app_establishmentforgotpasswordpage"
+    },
+    {
+      "label": "EstablishmentDashboard",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L148",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "establishmentdashboard",
+      "id": "src_app_establishmentdashboard"
+    },
+    {
+      "label": "InstitutionStaffLogin",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L149",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "institutionstafflogin",
+      "id": "src_app_institutionstafflogin"
+    },
+    {
+      "label": "InstitutionDashboard",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L150",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "institutiondashboard",
+      "id": "src_app_institutiondashboard"
+    },
+    {
+      "label": "UserManagement",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L151",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "usermanagement",
+      "id": "src_app_usermanagement"
+    },
+    {
+      "label": "AdminPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L154",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "adminpage",
+      "id": "src_app_adminpage"
+    },
+    {
+      "label": "AdminDashboardPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L155",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "admindashboardpage",
+      "id": "src_app_admindashboardpage"
+    },
+    {
+      "label": "AdminInstitutionsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L156",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "admininstitutionspage",
+      "id": "src_app_admininstitutionspage"
+    },
+    {
+      "label": "AdminInstitutionCodesPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L157",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "admininstitutioncodespage",
+      "id": "src_app_admininstitutioncodespage"
+    },
+    {
+      "label": "AdminInstitutionStaffPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L158",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "admininstitutionstaffpage",
+      "id": "src_app_admininstitutionstaffpage"
+    },
+    {
+      "label": "AdminAnalyticsDashboard",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L159",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "adminanalyticsdashboard",
+      "id": "src_app_adminanalyticsdashboard"
+    },
+    {
+      "label": "AdminWeightAuditPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L160",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "adminweightauditpage",
+      "id": "src_app_adminweightauditpage"
+    },
+    {
+      "label": "EstablishmentDashboardPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L161",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "establishmentdashboardpage",
+      "id": "src_app_establishmentdashboardpage"
+    },
+    {
+      "label": "RgpdCompliancePage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L162",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "rgpdcompliancepage",
+      "id": "src_app_rgpdcompliancepage"
+    },
+    {
+      "label": "LegalVersionsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L163",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "legalversionspage",
+      "id": "src_app_legalversionspage"
+    },
+    {
+      "label": "SecurityAuditPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L164",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "securityauditpage",
+      "id": "src_app_securityauditpage"
+    },
+    {
+      "label": "AdminMetiers",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L165",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "adminmetiers",
+      "id": "src_app_adminmetiers"
+    },
+    {
+      "label": "AdminSettingsPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L166",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "adminsettingspage",
+      "id": "src_app_adminsettingspage"
+    },
+    {
+      "label": "ContentManagementPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L167",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "contentmanagementpage",
+      "id": "src_app_contentmanagementpage"
+    },
+    {
+      "label": "NotFoundPage",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L169",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "notfoundpage",
+      "id": "src_app_notfoundpage"
+    },
+    {
+      "label": "RedirectWithParam()",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L171",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "redirectwithparam()",
+      "id": "src_app_redirectwithparam"
+    },
+    {
+      "label": "AppRouteErrorBoundary",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L177",
+      "_origin": "ast",
+      "community": 159,
+      "norm_label": "approuteerrorboundary",
+      "id": "src_app_approuteerrorboundary"
+    },
+    {
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L178",
+      "_origin": "ast",
+      "community": 159,
+      "norm_label": ".constructor()",
+      "id": "src_app_approuteerrorboundary_constructor"
+    },
+    {
+      "label": ".getDerivedStateFromError()",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L183",
+      "_origin": "ast",
+      "community": 159,
+      "norm_label": ".getderivedstatefromerror()",
+      "id": "src_app_approuteerrorboundary_getderivedstatefromerror"
+    },
+    {
+      "label": ".componentDidCatch()",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L187",
+      "_origin": "ast",
+      "community": 159,
+      "norm_label": ".componentdidcatch()",
+      "id": "src_app_approuteerrorboundary_componentdidcatch"
+    },
+    {
+      "label": ".render()",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L191",
+      "_origin": "ast",
+      "community": 159,
+      "norm_label": ".render()",
+      "id": "src_app_approuteerrorboundary_render"
+    },
+    {
+      "label": "PageContent()",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L210",
+      "_origin": "ast",
+      "community": 107,
+      "norm_label": "pagecontent()",
+      "id": "src_app_pagecontent"
+    },
+    {
+      "label": "App()",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L461",
+      "_origin": "ast",
+      "community": 107,
+      "norm_label": "app()",
+      "id": "src_app_app"
+    },
+    {
       "label": "TestPage.jsx",
       "file_type": "code",
       "source_file": "src/pages/TestPage.jsx",
@@ -2129,7 +2189,7 @@
       "source_file": "package.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 142,
+      "community": 31,
       "norm_label": "package.json",
       "id": "package"
     },
@@ -2139,7 +2199,7 @@
       "source_file": "package.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 142,
+      "community": 31,
       "norm_label": "name",
       "id": "package_name"
     },
@@ -2149,7 +2209,7 @@
       "source_file": "package.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 142,
+      "community": 31,
       "norm_label": "type",
       "id": "package_type"
     },
@@ -2159,7 +2219,7 @@
       "source_file": "package.json",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 142,
+      "community": 31,
       "norm_label": "version",
       "id": "package_version"
     },
@@ -2169,7 +2229,7 @@
       "source_file": "package.json",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 142,
+      "community": 31,
       "norm_label": "private",
       "id": "package_private"
     },
@@ -2179,7 +2239,7 @@
       "source_file": "package.json",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 142,
+      "community": 31,
       "norm_label": "scripts",
       "id": "package_scripts"
     },
@@ -2189,7 +2249,7 @@
       "source_file": "package.json",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 142,
+      "community": 31,
       "norm_label": "dev",
       "id": "package_scripts_dev"
     },
@@ -2199,7 +2259,7 @@
       "source_file": "package.json",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 142,
+      "community": 31,
       "norm_label": "build",
       "id": "package_scripts_build"
     },
@@ -2209,7 +2269,7 @@
       "source_file": "package.json",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 142,
+      "community": 31,
       "norm_label": "preview",
       "id": "package_scripts_preview"
     },
@@ -2219,7 +2279,7 @@
       "source_file": "package.json",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 142,
+      "community": 31,
       "norm_label": "eslint",
       "id": "package_scripts_eslint"
     },
@@ -2229,7 +2289,7 @@
       "source_file": "package.json",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 142,
+      "community": 31,
       "norm_label": "lint",
       "id": "package_scripts_lint"
     },
@@ -2239,7 +2299,7 @@
       "source_file": "package.json",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 142,
+      "community": 31,
       "norm_label": "seo:audit",
       "id": "package_scripts_seo_audit"
     },
@@ -4169,7 +4229,7 @@
       "source_file": "src/components/AlternanceFinder.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 246,
+      "community": 2,
       "norm_label": "alternancefinder.jsx",
       "id": "components_alternancefinder"
     },
@@ -4179,7 +4239,7 @@
       "source_file": "src/components/AlternanceFinder.jsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 246,
+      "community": 2,
       "norm_label": "alternancefinder()",
       "id": "components_alternancefinder_alternancefinder"
     },
@@ -4229,7 +4289,7 @@
       "source_file": "src/components/BlogPost.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 142,
       "norm_label": "blogpost.jsx",
       "id": "components_blogpost"
     },
@@ -4239,7 +4299,7 @@
       "source_file": "src/components/BlogPost.jsx",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 19,
+      "community": 142,
       "norm_label": "striphtml()",
       "id": "components_blogpost_striphtml"
     },
@@ -4249,7 +4309,7 @@
       "source_file": "src/components/BlogPost.jsx",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 19,
+      "community": 142,
       "norm_label": "estimatereadtime()",
       "id": "components_blogpost_estimatereadtime"
     },
@@ -4259,7 +4319,7 @@
       "source_file": "src/components/BlogPost.jsx",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 19,
+      "community": 142,
       "norm_label": "buildshareurls()",
       "id": "components_blogpost_buildshareurls"
     },
@@ -4269,7 +4329,7 @@
       "source_file": "src/components/BlogPost.jsx",
       "source_location": "L50",
       "_origin": "ast",
-      "community": 19,
+      "community": 142,
       "norm_label": "blogpost()",
       "id": "components_blogpost_blogpost"
     },
@@ -4309,7 +4369,7 @@
       "source_file": "src/components/BugReportButton.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 249,
+      "community": 2,
       "norm_label": "bugreportbutton.jsx",
       "id": "components_bugreportbutton"
     },
@@ -4319,7 +4379,7 @@
       "source_file": "src/components/BugReportButton.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 249,
+      "community": 2,
       "norm_label": "bugreportbutton()",
       "id": "components_bugreportbutton_bugreportbutton"
     },
@@ -5469,7 +5529,7 @@
       "source_file": "src/components/ProfileTest.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 152,
       "norm_label": "profiletest.jsx",
       "id": "components_profiletest"
     },
@@ -5479,7 +5539,7 @@
       "source_file": "src/components/ProfileTest.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 2,
+      "community": 152,
       "norm_label": "questionicons",
       "id": "components_profiletest_questionicons"
     },
@@ -5489,7 +5549,7 @@
       "source_file": "src/components/ProfileTest.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 2,
+      "community": 152,
       "norm_label": "profiletest()",
       "id": "components_profiletest_profiletest"
     },
@@ -5699,7 +5759,7 @@
       "source_file": "src/components/RgpdDataExport.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 251,
+      "community": 2,
       "norm_label": "rgpddataexport.jsx",
       "id": "components_rgpddataexport"
     },
@@ -5709,7 +5769,7 @@
       "source_file": "src/components/RgpdDataExport.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 251,
+      "community": 2,
       "norm_label": "rgpddataexport()",
       "id": "components_rgpddataexport_rgpddataexport"
     },
@@ -6009,7 +6069,7 @@
       "source_file": "src/components/SpontaneousApplicationFinder.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 169,
       "norm_label": "spontaneousapplicationfinder.jsx",
       "id": "components_spontaneousapplicationfinder"
     },
@@ -6019,7 +6079,7 @@
       "source_file": "src/components/SpontaneousApplicationFinder.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 2,
+      "community": 169,
       "norm_label": "companycard()",
       "id": "components_spontaneousapplicationfinder_companycard"
     },
@@ -6029,7 +6089,7 @@
       "source_file": "src/components/SpontaneousApplicationFinder.jsx",
       "source_location": "L55",
       "_origin": "ast",
-      "community": 2,
+      "community": 169,
       "norm_label": "spontaneousapplicationfinder()",
       "id": "components_spontaneousapplicationfinder_spontaneousapplicationfinder"
     },
@@ -6669,7 +6729,7 @@
       "source_file": "src/components/admin/AdminMetierManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 163,
       "norm_label": "adminmetiermanager.jsx",
       "id": "admin_adminmetiermanager"
     },
@@ -6679,7 +6739,7 @@
       "source_file": "src/components/admin/AdminMetierManager.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 163,
       "norm_label": "adminmetiermanager()",
       "id": "admin_adminmetiermanager_adminmetiermanager"
     },
@@ -6689,7 +6749,7 @@
       "source_file": "src/components/admin/AdminOffreManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 168,
       "norm_label": "adminoffremanager.jsx",
       "id": "admin_adminoffremanager"
     },
@@ -6699,7 +6759,7 @@
       "source_file": "src/components/admin/AdminOffreManager.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 168,
       "norm_label": "adminoffremanager()",
       "id": "admin_adminoffremanager_adminoffremanager"
     },
@@ -6729,7 +6789,7 @@
       "source_file": "src/components/admin/EtablissementsTab.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 152,
+      "community": 83,
       "norm_label": "etablissementstab.jsx",
       "id": "admin_etablissementstab"
     },
@@ -6739,7 +6799,7 @@
       "source_file": "src/components/admin/EtablissementsTab.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 152,
+      "community": 83,
       "norm_label": "etablissementstab()",
       "id": "admin_etablissementstab_etablissementstab"
     },
@@ -6819,7 +6879,7 @@
       "source_file": "src/components/admin/forms/MetierForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 163,
       "norm_label": "metierform.jsx",
       "id": "forms_metierform"
     },
@@ -6829,7 +6889,7 @@
       "source_file": "src/components/admin/forms/MetierForm.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 163,
       "norm_label": "metierform()",
       "id": "forms_metierform_metierform"
     },
@@ -6839,7 +6899,7 @@
       "source_file": "src/components/admin/forms/OffreForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 168,
       "norm_label": "offreform.jsx",
       "id": "forms_offreform"
     },
@@ -6849,7 +6909,7 @@
       "source_file": "src/components/admin/forms/OffreForm.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 168,
       "norm_label": "offreform()",
       "id": "forms_offreform_offreform"
     },
@@ -6979,7 +7039,7 @@
       "source_file": "src/components/admin/sections/AdminEstablishments.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 152,
+      "community": 83,
       "norm_label": "adminestablishments.jsx",
       "id": "sections_adminestablishments"
     },
@@ -6989,7 +7049,7 @@
       "source_file": "src/components/admin/sections/AdminEstablishments.jsx",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 152,
+      "community": 83,
       "norm_label": "adminestablishments()",
       "id": "sections_adminestablishments_adminestablishments"
     },
@@ -7499,7 +7559,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentFilters.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 152,
+      "community": 20,
       "norm_label": "establishmentfilters.jsx",
       "id": "establishments_establishmentfilters"
     },
@@ -7509,7 +7569,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentFilters.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 152,
+      "community": 20,
       "norm_label": "establishmentfilters()",
       "id": "establishments_establishmentfilters_establishmentfilters"
     },
@@ -7579,7 +7639,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentStats.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 152,
+      "community": 83,
       "norm_label": "establishmentstats.jsx",
       "id": "establishments_establishmentstats"
     },
@@ -7589,7 +7649,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentStats.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 152,
+      "community": 83,
       "norm_label": "establishmentstats()",
       "id": "establishments_establishmentstats_establishmentstats"
     },
@@ -7599,7 +7659,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentsTable.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 152,
+      "community": 83,
       "norm_label": "establishmentstable.jsx",
       "id": "establishments_establishmentstable"
     },
@@ -7609,7 +7669,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentsTable.jsx",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 152,
+      "community": 83,
       "norm_label": "establishmentstable()",
       "id": "establishments_establishmentstable_establishmentstable"
     },
@@ -7779,7 +7839,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentEditForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 186,
       "norm_label": "establishmenteditform.jsx",
       "id": "dashboard_establishmenteditform"
     },
@@ -7789,7 +7849,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentEditForm.jsx",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 2,
+      "community": 186,
       "norm_label": "establishmenteditform()",
       "id": "dashboard_establishmenteditform_establishmenteditform"
     },
@@ -7829,7 +7889,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 218,
+      "community": 1,
       "norm_label": "establishmentlogs.jsx",
       "id": "dashboard_establishmentlogs"
     },
@@ -7839,7 +7899,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 218,
+      "community": 1,
       "norm_label": "log_filters",
       "id": "dashboard_establishmentlogs_log_filters"
     },
@@ -7849,7 +7909,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 218,
+      "community": 1,
       "norm_label": "establishmentlogs()",
       "id": "dashboard_establishmentlogs_establishmentlogs"
     },
@@ -8409,7 +8469,7 @@
       "source_file": "src/components/auth/EnhancedSignupForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 186,
+      "community": 2,
       "norm_label": "enhancedsignupform.jsx",
       "id": "auth_enhancedsignupform"
     },
@@ -8419,7 +8479,7 @@
       "source_file": "src/components/auth/EnhancedSignupForm.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 186,
+      "community": 2,
       "norm_label": "interests_list",
       "id": "auth_enhancedsignupform_interests_list"
     },
@@ -8429,7 +8489,7 @@
       "source_file": "src/components/auth/EnhancedSignupForm.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 186,
+      "community": 2,
       "norm_label": "enhancedsignupform()",
       "id": "auth_enhancedsignupform_enhancedsignupform"
     },
@@ -11799,7 +11859,7 @@
       "source_file": "src/components/feedback/FeedbackWidget.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 345,
+      "community": 2,
       "norm_label": "feedbackwidget.jsx",
       "id": "feedback_feedbackwidget"
     },
@@ -11809,7 +11869,7 @@
       "source_file": "src/components/feedback/FeedbackWidget.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 345,
+      "community": 2,
       "norm_label": "feedbackwidget()",
       "id": "feedback_feedbackwidget_feedbackwidget"
     },
@@ -12979,7 +13039,7 @@
       "source_file": "src/components/job-explorer/filters/ContractTypeFilter.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 34,
+      "community": 185,
       "norm_label": "contracttypefilter.jsx",
       "id": "filters_contracttypefilter"
     },
@@ -12989,7 +13049,7 @@
       "source_file": "src/components/job-explorer/filters/ContractTypeFilter.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 34,
+      "community": 185,
       "norm_label": "contract_types",
       "id": "filters_contracttypefilter_contract_types"
     },
@@ -12999,7 +13059,7 @@
       "source_file": "src/components/job-explorer/filters/ContractTypeFilter.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 34,
+      "community": 185,
       "norm_label": "contracttypefilter()",
       "id": "filters_contracttypefilter_contracttypefilter"
     },
@@ -13009,7 +13069,7 @@
       "source_file": "src/components/job-explorer/filters/ExperienceFilter.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 223,
+      "community": 34,
       "norm_label": "experiencefilter.jsx",
       "id": "filters_experiencefilter"
     },
@@ -13019,7 +13079,7 @@
       "source_file": "src/components/job-explorer/filters/ExperienceFilter.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 223,
+      "community": 34,
       "norm_label": "experience_levels",
       "id": "filters_experiencefilter_experience_levels"
     },
@@ -13029,7 +13089,7 @@
       "source_file": "src/components/job-explorer/filters/ExperienceFilter.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 223,
+      "community": 34,
       "norm_label": "experiencefilter()",
       "id": "filters_experiencefilter_experiencefilter"
     },
@@ -13179,7 +13239,7 @@
       "source_file": "src/components/legal/LegalLayout.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 246,
       "norm_label": "legallayout.jsx",
       "id": "legal_legallayout"
     },
@@ -13189,7 +13249,7 @@
       "source_file": "src/components/legal/LegalLayout.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 19,
+      "community": 246,
       "norm_label": "navitems",
       "id": "legal_legallayout_navitems"
     },
@@ -13199,7 +13259,7 @@
       "source_file": "src/components/legal/LegalLayout.jsx",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 19,
+      "community": 246,
       "norm_label": "legallayout()",
       "id": "legal_legallayout_legallayout"
     },
@@ -13209,7 +13269,7 @@
       "source_file": "src/components/legal/RGPDPreferences.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 223,
       "norm_label": "rgpdpreferences.jsx",
       "id": "legal_rgpdpreferences"
     },
@@ -13219,7 +13279,7 @@
       "source_file": "src/components/legal/RGPDPreferences.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 2,
+      "community": 223,
       "norm_label": "rgpdpreferences()",
       "id": "legal_rgpdpreferences_rgpdpreferences"
     },
@@ -13319,7 +13379,7 @@
       "source_file": "src/components/metiers/MarcheTravailCard.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 153,
+      "community": 7,
       "norm_label": "marchetravailcard.jsx",
       "id": "metiers_marchetravailcard"
     },
@@ -13329,7 +13389,7 @@
       "source_file": "src/components/metiers/MarcheTravailCard.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 153,
+      "community": 7,
       "norm_label": "tensiondisplay()",
       "id": "metiers_marchetravailcard_tensiondisplay"
     },
@@ -13339,7 +13399,7 @@
       "source_file": "src/components/metiers/MarcheTravailCard.jsx",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 153,
+      "community": 7,
       "norm_label": "fmt()",
       "id": "metiers_marchetravailcard_fmt"
     },
@@ -13349,7 +13409,7 @@
       "source_file": "src/components/metiers/MarcheTravailCard.jsx",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 153,
+      "community": 7,
       "norm_label": "colorbar",
       "id": "metiers_marchetravailcard_colorbar"
     },
@@ -13359,7 +13419,7 @@
       "source_file": "src/components/metiers/MarcheTravailCard.jsx",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 153,
+      "community": 7,
       "norm_label": "colortext",
       "id": "metiers_marchetravailcard_colortext"
     },
@@ -13369,7 +13429,7 @@
       "source_file": "src/components/metiers/MarcheTravailCard.jsx",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 153,
+      "community": 7,
       "norm_label": "colorbg",
       "id": "metiers_marchetravailcard_colorbg"
     },
@@ -13379,7 +13439,7 @@
       "source_file": "src/components/metiers/MarcheTravailCard.jsx",
       "source_location": "L48",
       "_origin": "ast",
-      "community": 153,
+      "community": 7,
       "norm_label": "marchetravailcard()",
       "id": "metiers_marchetravailcard_marchetravailcard"
     },
@@ -13389,7 +13449,7 @@
       "source_file": "src/components/metiers/MarcheTravailCard.jsx",
       "source_location": "L143",
       "_origin": "ast",
-      "community": 153,
+      "community": 7,
       "norm_label": "stat()",
       "id": "metiers_marchetravailcard_stat"
     },
@@ -18499,7 +18559,7 @@
       "source_file": "src/components/v1-placeholders/TrackingPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 238,
       "norm_label": "trackingpage.jsx",
       "id": "v1_placeholders_trackingpage"
     },
@@ -18509,7 +18569,7 @@
       "source_file": "src/components/v1-placeholders/TrackingPage.jsx",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 2,
+      "community": 238,
       "norm_label": "trackingpage()",
       "id": "v1_placeholders_trackingpage_trackingpage"
     },
@@ -21149,7 +21209,7 @@
       "source_file": "src/pages/AdminAnalyticsDashboard.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 169,
+      "community": 1,
       "norm_label": "adminanalyticsdashboard.jsx",
       "id": "pages_adminanalyticsdashboard"
     },
@@ -21159,7 +21219,7 @@
       "source_file": "src/pages/AdminAnalyticsDashboard.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 169,
+      "community": 1,
       "norm_label": "mockfeedbacktrend",
       "id": "pages_adminanalyticsdashboard_mockfeedbacktrend"
     },
@@ -21169,7 +21229,7 @@
       "source_file": "src/pages/AdminAnalyticsDashboard.jsx",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 169,
+      "community": 1,
       "norm_label": "mocktopmetiers",
       "id": "pages_adminanalyticsdashboard_mocktopmetiers"
     },
@@ -21179,7 +21239,7 @@
       "source_file": "src/pages/AdminAnalyticsDashboard.jsx",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 169,
+      "community": 1,
       "norm_label": "adminanalyticsdashboard()",
       "id": "pages_adminanalyticsdashboard_adminanalyticsdashboard"
     },
@@ -21269,7 +21329,7 @@
       "source_file": "src/pages/AdminMetiers.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 218,
       "norm_label": "adminmetiers.jsx",
       "id": "pages_adminmetiers"
     },
@@ -21279,7 +21339,7 @@
       "source_file": "src/pages/AdminMetiers.jsx",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 1,
+      "community": 218,
       "norm_label": "initialformstate",
       "id": "pages_adminmetiers_initialformstate"
     },
@@ -21289,9 +21349,29 @@
       "source_file": "src/pages/AdminMetiers.jsx",
       "source_location": "L45",
       "_origin": "ast",
-      "community": 1,
+      "community": 218,
       "norm_label": "adminmetiers()",
       "id": "pages_adminmetiers_adminmetiers"
+    },
+    {
+      "label": "AdminPage.jsx",
+      "file_type": "code",
+      "source_file": "src/pages/AdminPage.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "adminpage.jsx",
+      "id": "pages_adminpage"
+    },
+    {
+      "label": "AdminPage()",
+      "file_type": "code",
+      "source_file": "src/pages/AdminPage.jsx",
+      "source_location": "L12",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "adminpage()",
+      "id": "pages_adminpage_adminpage"
     },
     {
       "label": "AdminSettingsPage.jsx",
@@ -21392,6 +21472,56 @@
       "community": 19,
       "norm_label": "authpage()",
       "id": "pages_authpage_authpage"
+    },
+    {
+      "label": "BlogArticlePage.jsx",
+      "file_type": "code",
+      "source_file": "src/pages/BlogArticlePage.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 43,
+      "norm_label": "blogarticlepage.jsx",
+      "id": "pages_blogarticlepage"
+    },
+    {
+      "label": "useReadingProgress()",
+      "file_type": "code",
+      "source_file": "src/pages/BlogArticlePage.jsx",
+      "source_location": "L17",
+      "_origin": "ast",
+      "community": 43,
+      "norm_label": "usereadingprogress()",
+      "id": "pages_blogarticlepage_usereadingprogress"
+    },
+    {
+      "label": "BlogArticlePage()",
+      "file_type": "code",
+      "source_file": "src/pages/BlogArticlePage.jsx",
+      "source_location": "L32",
+      "_origin": "ast",
+      "community": 43,
+      "norm_label": "blogarticlepage()",
+      "id": "pages_blogarticlepage_blogarticlepage"
+    },
+    {
+      "label": "BlogPage.jsx",
+      "file_type": "code",
+      "source_file": "src/pages/BlogPage.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 430,
+      "norm_label": "blogpage.jsx",
+      "id": "pages_blogpage"
+    },
+    {
+      "label": "BlogPage()",
+      "file_type": "code",
+      "source_file": "src/pages/BlogPage.jsx",
+      "source_location": "L20",
+      "_origin": "ast",
+      "community": 430,
+      "norm_label": "blogpage()",
+      "id": "pages_blogpage_blogpage"
     },
     {
       "label": "CVBuilderPage.jsx",
@@ -21689,7 +21819,7 @@
       "source_file": "src/pages/ExploreMetiersPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 345,
       "norm_label": "exploremetierspage.jsx",
       "id": "pages_exploremetierspage"
     },
@@ -21699,7 +21829,7 @@
       "source_file": "src/pages/ExploreMetiersPage.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 19,
+      "community": 345,
       "norm_label": "exploremetierspage()",
       "id": "pages_exploremetierspage_exploremetierspage"
     },
@@ -21879,7 +22009,7 @@
       "source_file": "src/pages/HowItWorksPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 153,
       "norm_label": "howitworkspage.jsx",
       "id": "pages_howitworkspage"
     },
@@ -21889,7 +22019,7 @@
       "source_file": "src/pages/HowItWorksPage.jsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 19,
+      "community": 153,
       "norm_label": "comparisonsection",
       "id": "pages_howitworkspage_comparisonsection"
     },
@@ -21899,7 +22029,7 @@
       "source_file": "src/pages/HowItWorksPage.jsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 19,
+      "community": 153,
       "norm_label": "resultssection",
       "id": "pages_howitworkspage_resultssection"
     },
@@ -21909,7 +22039,7 @@
       "source_file": "src/pages/HowItWorksPage.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 19,
+      "community": 153,
       "norm_label": "faq",
       "id": "pages_howitworkspage_faq"
     },
@@ -21919,7 +22049,7 @@
       "source_file": "src/pages/HowItWorksPage.jsx",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 19,
+      "community": 153,
       "norm_label": "howitworkspage()",
       "id": "pages_howitworkspage_howitworkspage"
     },
@@ -21982,6 +22112,26 @@
       "community": 52,
       "norm_label": "jobdetailpage()",
       "id": "pages_jobdetailpage_jobdetailpage"
+    },
+    {
+      "label": "JobOffersPage.jsx",
+      "file_type": "code",
+      "source_file": "src/pages/JobOffersPage.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 441,
+      "norm_label": "jobofferspage.jsx",
+      "id": "pages_jobofferspage"
+    },
+    {
+      "label": "JobOffersPage()",
+      "file_type": "code",
+      "source_file": "src/pages/JobOffersPage.jsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "community": 441,
+      "norm_label": "jobofferspage()",
+      "id": "pages_jobofferspage_jobofferspage"
     },
     {
       "label": "LearningPathPage.jsx",
@@ -22129,7 +22279,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 238,
+      "community": 1,
       "norm_label": "loginpage.jsx",
       "id": "pages_loginpage"
     },
@@ -22139,7 +22289,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 238,
+      "community": 1,
       "norm_label": "googleicon()",
       "id": "pages_loginpage_googleicon"
     },
@@ -22149,7 +22299,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 238,
+      "community": 1,
       "norm_label": "loginpage()",
       "id": "pages_loginpage_loginpage"
     },
@@ -22419,7 +22569,7 @@
       "source_file": "src/pages/MetierDetailPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 163,
+      "community": 7,
       "norm_label": "metierdetailpage.jsx",
       "id": "pages_metierdetailpage"
     },
@@ -22429,7 +22579,7 @@
       "source_file": "src/pages/MetierDetailPage.jsx",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 163,
+      "community": 7,
       "norm_label": "formattedtext()",
       "id": "pages_metierdetailpage_formattedtext"
     },
@@ -22439,7 +22589,7 @@
       "source_file": "src/pages/MetierDetailPage.jsx",
       "source_location": "L61",
       "_origin": "ast",
-      "community": 163,
+      "community": 7,
       "norm_label": "expandablelist()",
       "id": "pages_metierdetailpage_expandablelist"
     },
@@ -22449,7 +22599,7 @@
       "source_file": "src/pages/MetierDetailPage.jsx",
       "source_location": "L95",
       "_origin": "ast",
-      "community": 163,
+      "community": 7,
       "norm_label": "tosafearray()",
       "id": "pages_metierdetailpage_tosafearray"
     },
@@ -22459,7 +22609,7 @@
       "source_file": "src/pages/MetierDetailPage.jsx",
       "source_location": "L97",
       "_origin": "ast",
-      "community": 163,
+      "community": 7,
       "norm_label": "getriasecdata()",
       "id": "pages_metierdetailpage_getriasecdata"
     },
@@ -22469,7 +22619,7 @@
       "source_file": "src/pages/MetierDetailPage.jsx",
       "source_location": "L132",
       "_origin": "ast",
-      "community": 163,
+      "community": 7,
       "norm_label": "metierdetailpage()",
       "id": "pages_metierdetailpage_metierdetailpage"
     },
@@ -22572,6 +22722,26 @@
       "community": 230,
       "norm_label": "oauthconsentpage()",
       "id": "pages_oauthconsentpage_oauthconsentpage"
+    },
+    {
+      "label": "OfferDetailPage.jsx",
+      "file_type": "code",
+      "source_file": "src/pages/OfferDetailPage.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 52,
+      "norm_label": "offerdetailpage.jsx",
+      "id": "pages_offerdetailpage"
+    },
+    {
+      "label": "OfferDetailPage()",
+      "file_type": "code",
+      "source_file": "src/pages/OfferDetailPage.jsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "community": 52,
+      "norm_label": "offerdetailpage()",
+      "id": "pages_offerdetailpage_offerdetailpage"
     },
     {
       "label": "OffersFormationsPage.jsx",
@@ -23049,7 +23219,7 @@
       "source_file": "src/pages/SignupPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 419,
+      "community": 2,
       "norm_label": "signuppage.jsx",
       "id": "pages_signuppage"
     },
@@ -23059,7 +23229,7 @@
       "source_file": "src/pages/SignupPage.jsx",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 419,
+      "community": 2,
       "norm_label": "signuppage()",
       "id": "pages_signuppage_signuppage"
     },
@@ -23222,6 +23392,36 @@
       "community": 1,
       "norm_label": "testplanpage()",
       "id": "pages_testplanpage_testplanpage"
+    },
+    {
+      "label": "TestResults.jsx",
+      "file_type": "code",
+      "source_file": "src/pages/TestResults.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 251,
+      "norm_label": "testresults.jsx",
+      "id": "pages_testresults"
+    },
+    {
+      "label": "DIMENSION_LABELS",
+      "file_type": "code",
+      "source_file": "src/pages/TestResults.jsx",
+      "source_location": "L12",
+      "_origin": "ast",
+      "community": 251,
+      "norm_label": "dimension_labels",
+      "id": "pages_testresults_dimension_labels"
+    },
+    {
+      "label": "TestResults()",
+      "file_type": "code",
+      "source_file": "src/pages/TestResults.jsx",
+      "source_location": "L21",
+      "_origin": "ast",
+      "community": 251,
+      "norm_label": "testresults()",
+      "id": "pages_testresults_testresults"
     },
     {
       "label": "UpdatePasswordPage.jsx",
@@ -23539,7 +23739,7 @@
       "source_file": "src/pages/user/CookiesPreferencesPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 432,
       "norm_label": "cookiespreferencespage.jsx",
       "id": "user_cookiespreferencespage"
     },
@@ -23549,7 +23749,7 @@
       "source_file": "src/pages/user/CookiesPreferencesPage.jsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 2,
+      "community": 432,
       "norm_label": "cookiespreferencespage()",
       "id": "user_cookiespreferencespage_cookiespreferencespage"
     },
@@ -30209,7 +30409,7 @@
       "source_file": "src/utils/metierDataFetcher.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 163,
+      "community": 7,
       "norm_label": "metierdatafetcher.js",
       "id": "utils_metierdatafetcher"
     },
@@ -30219,7 +30419,7 @@
       "source_file": "src/utils/metierDataFetcher.js",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 163,
+      "community": 7,
       "norm_label": "usemetierdatafetcher()",
       "id": "utils_metierdatafetcher_usemetierdatafetcher"
     },
@@ -30889,7 +31089,7 @@
       "source_file": "src/utils/slugUtils.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 168,
+      "community": 7,
       "norm_label": "slugutils.js",
       "id": "utils_slugutils"
     },
@@ -30899,7 +31099,7 @@
       "source_file": "src/utils/slugUtils.js",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 168,
+      "community": 7,
       "norm_label": "slugify()",
       "id": "utils_slugutils_slugify"
     },
@@ -30909,7 +31109,7 @@
       "source_file": "src/utils/slugUtils.js",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 168,
+      "community": 7,
       "norm_label": "metiertoslug()",
       "id": "utils_slugutils_metiertoslug"
     },
@@ -30919,7 +31119,7 @@
       "source_file": "src/utils/slugUtils.js",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 168,
+      "community": 7,
       "norm_label": "slugtometiercode()",
       "id": "utils_slugutils_slugtometiercode"
     },
@@ -30929,7 +31129,7 @@
       "source_file": "src/utils/slugUtils.js",
       "source_location": "L56",
       "_origin": "ast",
-      "community": 168,
+      "community": 7,
       "norm_label": "formationtoslug()",
       "id": "utils_slugutils_formationtoslug"
     },
@@ -30939,7 +31139,7 @@
       "source_file": "src/utils/slugUtils.js",
       "source_location": "L74",
       "_origin": "ast",
-      "community": 168,
+      "community": 7,
       "norm_label": "slugtoformationid()",
       "id": "utils_slugutils_slugtoformationid"
     },
@@ -30949,7 +31149,7 @@
       "source_file": "src/utils/stringUtils.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 185,
+      "community": 7,
       "norm_label": "stringutils.js",
       "id": "utils_stringutils"
     },
@@ -30959,7 +31159,7 @@
       "source_file": "src/utils/stringUtils.js",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 185,
+      "community": 7,
       "norm_label": "normalizestr()",
       "id": "utils_stringutils_normalizestr"
     },
@@ -30969,7 +31169,7 @@
       "source_file": "src/utils/stringUtils.js",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 185,
+      "community": 7,
       "norm_label": "normalizedincludes()",
       "id": "utils_stringutils_normalizedincludes"
     },
@@ -30979,7 +31179,7 @@
       "source_file": "src/utils/stringUtils.js",
       "source_location": "L36",
       "_origin": "ast",
-      "community": 185,
+      "community": 7,
       "norm_label": "normalizedequals()",
       "id": "utils_stringutils_normalizedequals"
     },
@@ -32215,971 +32415,6 @@
     }
   ],
   "links": [
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L114",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_aboutpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L101",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_accountpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L63",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_actionplanpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L119",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_actualitesdetailpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L118",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_actualitespage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L160",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_adminanalyticsdashboard"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L156",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_admindashboardpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L158",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_admininstitutioncodespage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L157",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_admininstitutionspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L159",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_admininstitutionstaffpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L166",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_adminmetiers"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L167",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_adminsettingspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L161",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_adminweightauditpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L84",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_allcareerspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L463",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_app"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L178",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_approuteerrorboundary"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L74",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_authcallback"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L70",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_authpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L105",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_cleopage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L115",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_contactpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L168",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_contentmanagementpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L138",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_cookiepolicypage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L144",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_cookiespreferencespage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L107",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_coverletterbuilderpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L106",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_cvbuilderpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L97",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_dashboardpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L120",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_documentationpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L123",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_edgefunctiondiagnostics"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L73",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_emailconfirmationpending"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L79",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_enhancedtestpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L149",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_establishmentdashboard"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L162",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_establishmentdashboardpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L148",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_establishmentforgotpasswordpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L147",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_establishmentloginpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L87",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_exploremetierspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L113",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_faqpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L71",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_forgotpasswordpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L90",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_formationdetailpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L89",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_formationspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L139",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_gestioncookiespage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L112",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_howitworkspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L151",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_institutiondashboard"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L150",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_institutionstafflogin"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L104",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_interviewpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L94",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_jobdetailpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L96",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_jobexplorer"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L130",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_learningpathpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L135",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_legalpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L164",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_legalversionspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L59",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_loginpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L92",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_lyceedetailpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L91",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_lyceespage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L109",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_managesubscriptionpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L88",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_metierdetailpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L108",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_mydocumentspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L170",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_notfoundpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L124",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_notificationspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_oauthconsentpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L100",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_offersformationspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L211",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_pagecontent"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L67",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_parentalconsentpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L127",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_personalizedplanpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L111",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_planspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L140",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_preferencesrgpdpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L133",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_privacypage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L61",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_profilepage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L98",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_profileresultspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L99",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_recommendationspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L172",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_redirectwithparam"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L72",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_resetpasswordpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L163",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_rgpdcompliancepage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L143",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_rgpdpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L122",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_roadmappage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L165",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_securityauditpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L102",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_settingspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L60",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_signuppage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L121",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_statuspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L134",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_termspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L82",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_testformationspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L80",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_testgatepage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L103",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_testhistorypage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L64",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_testpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L83",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_testplanpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L81",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_testresultspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L75",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_updatepasswordpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L110",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_upgradeplan"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L152",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app",
-      "target": "src_app_usermanagement"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L188",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_approuteerrorboundary",
-      "target": "src_app_approuteerrorboundary_componentdidcatch"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L179",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_approuteerrorboundary",
-      "target": "src_app_approuteerrorboundary_constructor"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L184",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_approuteerrorboundary",
-      "target": "src_app_approuteerrorboundary_getderivedstatefromerror"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "src/App.jsx",
-      "source_location": "L192",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_approuteerrorboundary",
-      "target": "src_app_approuteerrorboundary_render"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/App.jsx",
-      "source_location": "L220",
-      "weight": 1.0,
-      "source": "src_app_pagecontent",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/App.jsx",
-      "source_location": "L224",
-      "weight": 1.0,
-      "source": "src_app_pagecontent",
-      "target": "contexts_systemsettingscontext_usesystemsettings"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/App.jsx",
-      "source_location": "L218",
-      "weight": 1.0,
-      "source": "src_app_pagecontent",
-      "target": "hooks_usetheme_usetheme"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/App.jsx",
-      "source_location": "L212",
-      "weight": 1.0,
-      "source": "src_app_pagecontent",
-      "target": "utils_hooksvalidator_checkhookrules"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/App.jsx",
-      "source_location": "L464",
-      "weight": 1.0,
-      "source": "src_app_app",
-      "target": "utils_hooksvalidator_checkhookrules"
-    },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
@@ -34533,6 +33768,1031 @@
       "confidence_score": 1.0,
       "source": "utils_testmatchingverification",
       "target": "services_matchingalgorithm_calculateadvancedmatching"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L114",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_aboutpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L101",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_accountpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L63",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_actionplanpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L119",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_actualitesdetailpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L118",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_actualitespage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L160",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_adminanalyticsdashboard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L156",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_admindashboardpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L158",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_admininstitutioncodespage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L157",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_admininstitutionspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L159",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_admininstitutionstaffpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L166",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_adminmetiers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L155",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_adminpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L167",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_adminsettingspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L161",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_adminweightauditpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L84",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_allcareerspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L463",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_app"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L178",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_approuteerrorboundary"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L74",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_authcallback"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L70",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_authpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L117",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_blogarticlepage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L116",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_blogpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L105",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_cleopage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L115",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_contactpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L168",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_contentmanagementpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L138",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_cookiepolicypage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L144",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_cookiespreferencespage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L107",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_coverletterbuilderpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L106",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_cvbuilderpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L97",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_dashboardpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L120",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_documentationpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L123",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_edgefunctiondiagnostics"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L73",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_emailconfirmationpending"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L79",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_enhancedtestpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L149",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_establishmentdashboard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L162",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_establishmentdashboardpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L148",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_establishmentforgotpasswordpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L147",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_establishmentloginpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L87",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_exploremetierspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L113",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_faqpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L71",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_forgotpasswordpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L90",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_formationdetailpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L89",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_formationspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L139",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_gestioncookiespage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L112",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_howitworkspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L151",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_institutiondashboard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L150",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_institutionstafflogin"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L104",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_interviewpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L94",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_jobdetailpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L96",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_jobexplorer"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L93",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_jobofferspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L130",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_learningpathpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L135",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_legalpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L164",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_legalversionspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_loginpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L92",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_lyceedetailpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L91",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_lyceespage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L109",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_managesubscriptionpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L88",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_metierdetailpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L108",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_mydocumentspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L170",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_notfoundpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L124",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_notificationspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_oauthconsentpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L95",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_offerdetailpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L100",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_offersformationspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L211",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_pagecontent"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L67",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_parentalconsentpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L127",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_personalizedplanpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L111",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_planspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L140",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_preferencesrgpdpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L133",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_privacypage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L61",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_profilepage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L98",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_profileresultspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L99",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_recommendationspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L172",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_redirectwithparam"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L72",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_resetpasswordpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L163",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_rgpdcompliancepage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L143",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_rgpdpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L122",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_roadmappage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L165",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_securityauditpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L102",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_settingspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L60",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_signuppage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L121",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_statuspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L134",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_termspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L82",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_testformationspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L80",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_testgatepage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L103",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_testhistorypage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L64",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_testpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L83",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_testplanpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L78",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_testresults"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L81",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_testresultspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L75",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_updatepasswordpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L110",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_upgradeplan"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L152",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app",
+      "target": "src_app_usermanagement"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L188",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_approuteerrorboundary",
+      "target": "src_app_approuteerrorboundary_componentdidcatch"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L179",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_approuteerrorboundary",
+      "target": "src_app_approuteerrorboundary_constructor"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L184",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_approuteerrorboundary",
+      "target": "src_app_approuteerrorboundary_getderivedstatefromerror"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L192",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_approuteerrorboundary",
+      "target": "src_app_approuteerrorboundary_render"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/App.jsx",
+      "source_location": "L220",
+      "weight": 1.0,
+      "source": "src_app_pagecontent",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/App.jsx",
+      "source_location": "L224",
+      "weight": 1.0,
+      "source": "src_app_pagecontent",
+      "target": "contexts_systemsettingscontext_usesystemsettings"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/App.jsx",
+      "source_location": "L218",
+      "weight": 1.0,
+      "source": "src_app_pagecontent",
+      "target": "hooks_usetheme_usetheme"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/App.jsx",
+      "source_location": "L212",
+      "weight": 1.0,
+      "source": "src_app_pagecontent",
+      "target": "utils_hooksvalidator_checkhookrules"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/App.jsx",
+      "source_location": "L464",
+      "weight": 1.0,
+      "source": "src_app_app",
+      "target": "utils_hooksvalidator_checkhookrules"
     },
     {
       "relation": "contains",
@@ -39252,6 +39512,17 @@
       "source_location": "L20",
       "weight": 1.0,
       "source": "pages_howitworkspage_howitworkspage",
+      "target": "seo_seopresets_categorypageseo"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/JobOffersPage.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "pages_jobofferspage_jobofferspage",
       "target": "seo_seopresets_categorypageseo"
     },
     {
@@ -52558,6 +52829,17 @@
       "context": "call",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
+      "source_file": "src/pages/BlogArticlePage.jsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "pages_blogarticlepage_blogarticlepage",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
       "source_file": "src/pages/CleoPage.jsx",
       "source_location": "L26",
       "weight": 1.0,
@@ -53455,6 +53737,17 @@
       "source_location": "L14",
       "weight": 1.0,
       "source": "pages_admindashboardpage_admindashboardpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/AdminPage.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "pages_adminpage_adminpage",
       "target": "contexts_supabaseauthcontext_useauth"
     },
     {
@@ -55954,6 +56247,16 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/pages/AdminPage.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_adminpage",
+      "target": "pages_adminpage_adminpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/pages/AdminSettingsPage.jsx",
       "source_location": "L16",
       "weight": 1.0,
@@ -56000,6 +56303,58 @@
       "confidence_score": 1.0,
       "source": "pages_authpage",
       "target": "pages_authpage_authpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/BlogArticlePage.jsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_blogarticlepage",
+      "target": "pages_blogarticlepage_blogarticlepage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/BlogArticlePage.jsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_blogarticlepage",
+      "target": "pages_blogarticlepage_usereadingprogress"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/BlogArticlePage.jsx",
+      "source_location": "L40",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_blogarticlepage_blogarticlepage",
+      "target": "pages_blogarticlepage_usereadingprogress"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/BlogArticlePage.jsx",
+      "source_location": "L143",
+      "weight": 1.0,
+      "source": "pages_blogarticlepage_blogarticlepage",
+      "target": "utils_blogimages_getpublicblogimageurl"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/BlogPage.jsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_blogpage",
+      "target": "pages_blogpage_blogpage"
     },
     {
       "relation": "contains",
@@ -56360,6 +56715,27 @@
       "confidence_score": 1.0,
       "source": "pages_jobdetailpage",
       "target": "pages_jobdetailpage_jobdetailpage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/OfferDetailPage.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_offerdetailpage",
+      "target": "pages_jobdetailpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/JobOffersPage.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_jobofferspage",
+      "target": "pages_jobofferspage_jobofferspage"
     },
     {
       "relation": "contains",
@@ -56921,6 +57297,16 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/pages/OfferDetailPage.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_offerdetailpage",
+      "target": "pages_offerdetailpage_offerdetailpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/pages/OffersFormationsPage.jsx",
       "source_location": "L31",
       "weight": 1.0,
@@ -57411,6 +57797,26 @@
       "confidence_score": 1.0,
       "source": "pages_testplanpage",
       "target": "pages_testplanpage_testplanpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/TestResults.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_testresults",
+      "target": "pages_testresults_dimension_labels"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/TestResults.jsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_testresults",
+      "target": "pages_testresults_testresults"
     },
     {
       "relation": "contains",
@@ -67033,5 +67439,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "501b046becf5e17aeee39b4bf4d1e2196e271c75"
+  "built_at_commit": "a78fc4e67f519eef36c39c923089a4af07e48484"
 }
