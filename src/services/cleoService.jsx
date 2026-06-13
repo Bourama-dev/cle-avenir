@@ -209,19 +209,51 @@ export const cleoService = {
 
     if (error) throw error;
 
-    // 4. Handle profile updates from AI extraction
-    let finalReply = data.reply;
+    // 4. Parse interview XML and handle profile updates
+    let finalReply = data.reply || '';
+    let interviewData = null;
     let didUpdateProfile = false;
     let updatedFields = [];
 
+    if (mode === 'interview_coach' && finalReply) {
+      const extract = (tag) => {
+        const m = finalReply.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`, 'i'));
+        return m ? m[1].trim() : null;
+      };
+      const analysis = extract('ANALYSIS');
+      const scoreRaw = extract('SCORE');
+      const question = extract('QUESTION');
+      const score = scoreRaw !== null ? Math.min(100, Math.max(0, parseInt(scoreRaw, 10) || 0)) : null;
+
+      if (question) {
+        interviewData = { analysis, score, question };
+        // Build a clean human-readable reply from the parsed parts
+        const parts = [];
+        if (analysis && analysis !== 'Prêt à commencer') parts.push(`*${analysis}*`);
+        if (score !== null && score > 0) parts.push(`Score : ${score}/100`);
+        parts.push(question);
+        finalReply = parts.join('\n\n');
+      }
+    }
+
+    const ALLOWED_PROFILE_FIELDS = new Set([
+      'first_name', 'last_name', 'job_title', 'main_goal', 'education_level',
+      'location', 'skills', 'interests', 'constraints',
+    ]);
+
     if (data.profileUpdates && userId) {
-      console.log('🧠 Cléo extracted profile data:', data.profileUpdates);
-      try {
-        await profilingService.updateProfile(userId, data.profileUpdates, "Extrait de la conversation Cléo");
-        didUpdateProfile = true;
-        updatedFields = Object.keys(data.profileUpdates);
-      } catch (err) {
-        console.error('Failed to auto-update profile:', err);
+      const safe = Object.fromEntries(
+        Object.entries(data.profileUpdates).filter(([k]) => ALLOWED_PROFILE_FIELDS.has(k))
+      );
+      if (Object.keys(safe).length > 0) {
+        console.log('🧠 Cléo extracted profile data:', safe);
+        try {
+          await profilingService.updateProfile(userId, safe, "Extrait de la conversation Cléo");
+          didUpdateProfile = true;
+          updatedFields = Object.keys(safe);
+        } catch (err) {
+          console.error('Failed to auto-update profile:', err);
+        }
       }
     }
 
@@ -236,8 +268,10 @@ export const cleoService = {
 
     return {
       ...data,
+      reply: finalReply,
       didUpdateProfile,
       updatedFields,
+      interviewData,
       suggestions: data.suggestions || ['Approfondir ce point', 'Donner un exemple', 'Passer à la suite']
     };
   },
