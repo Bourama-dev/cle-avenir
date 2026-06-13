@@ -30,8 +30,13 @@ const RecommendationsPage = () => {
     setLoading(true);
     setError(null);
     try {
-      const recommendations = await metierRecommendationService.getRecommendationsForUser(user.id);
-      setCareers(recommendations || []);
+      const raw = await metierRecommendationService.getRecommendationsForUser(user.id);
+      // Normalize score field so all consumers use matchScore
+      const recommendations = (raw || []).map(c => ({
+        ...c,
+        matchScore: c.matchScore ?? c.match_score ?? 0,
+      }));
+      setCareers(recommendations);
     } catch (err) {
       console.error('Error fetching recommendations:', err);
       setError(err.message || 'Impossible de charger les recommandations.');
@@ -93,13 +98,13 @@ const RecommendationsPage = () => {
             },
             {
               label: 'Match moyen',
-              value: `${Math.round(careers.reduce((sum, c) => sum + (c.matchScore || c.match_score || 0), 0) / careers.length)}%`,
+              value: `${Math.round(careers.reduce((sum, c) => sum + (c.matchScore || 0), 0) / careers.length)}%`,
               trend: 'neutral',
               subtitle: 'avec vos compétences'
             },
             {
               label: 'Meilleur match',
-              value: `${Math.max(...careers.map(c => c.matchScore || c.match_score || 0))}%`,
+              value: `${Math.max(...careers.map(c => c.matchScore || 0))}%`,
               trend: 'up',
               subtitle: careers[0]?.libelle?.split(' ').slice(0, 2).join(' ') || 'Top recommandation'
             },
@@ -164,7 +169,7 @@ const RecommendationsPage = () => {
                   <CardHeader>
                     <div className="flex justify-between items-start">
                        <Badge className={index < 3 ? "bg-purple-100 text-purple-700 hover:bg-purple-100" : "bg-slate-100 text-slate-700 hover:bg-slate-100"}>
-                          {career.matchScore || career.match_score || 85}% Match
+                          {career.matchScore || 85}% Match
                        </Badge>
                        <Button variant="ghost" size="icon" disabled title="Fonctionnalité à venir">
                           <Heart className="h-5 w-5 text-slate-300" />
