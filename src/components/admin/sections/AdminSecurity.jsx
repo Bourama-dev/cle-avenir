@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/lib/customSupabaseClient';
 import { auditService } from '@/services/auditService';
-import { Loader2, Shield, AlertTriangle, Bug, Activity, CheckCircle, XCircle, RefreshCw } from 'lucide-react';
+import { Loader2, Shield, AlertTriangle, Bug, Activity, CheckCircle, XCircle, RefreshCw, Database } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
 const SEVERITY_CONFIG = {
@@ -27,6 +27,7 @@ const AdminSecurity = () => {
   const [auditLogs, setAuditLogs] = useState([]);
   const [incidents, setIncidents] = useState([]);
   const [errorLogs, setErrorLogs] = useState([]);
+  const [apiLogs, setApiLogs] = useState([]);
   const [health, setHealth] = useState(null);
   const [loading, setLoading] = useState(true);
   const [healthLoading, setHealthLoading] = useState(false);
@@ -36,10 +37,11 @@ const AdminSecurity = () => {
   const fetchAll = async () => {
     setLoading(true);
     try {
-      const [auditRes, incidentRes, errorRes] = await Promise.all([
+      const [auditRes, incidentRes, errorRes, apiRes] = await Promise.all([
         supabase.from('audit_logs').select('id, user_id, action, details, created_at').order('created_at', { ascending: false }).limit(50),
         supabase.from('compliance_incidents').select('id, title, description, severity, status, created_at').order('created_at', { ascending: false }).limit(20),
         supabase.from('error_logs').select('id, message, severity, resolved, url, created_at').order('created_at', { ascending: false }).limit(30),
+        supabase.from('api_logs').select('id, endpoint, status, ip_address, response_time_ms, created_at').order('created_at', { ascending: false }).limit(100),
       ]);
 
       if (auditRes.error) throw auditRes.error;
@@ -49,6 +51,7 @@ const AdminSecurity = () => {
       setAuditLogs(auditRes.data || []);
       setIncidents(incidentRes.data || []);
       setErrorLogs(errorRes.data || []);
+      setApiLogs(apiRes.data || []);
     } catch (error) {
       console.error(error);
       toast({ variant: 'destructive', title: 'Erreur', description: 'Impossible de charger les logs de sécurité.' });
@@ -172,6 +175,9 @@ const AdminSecurity = () => {
             </TabsTrigger>
             <TabsTrigger value="audit" className="gap-2">
               <Activity className="w-4 h-4" /> Journal d'audit
+            </TabsTrigger>
+            <TabsTrigger value="api" className="gap-2">
+              <Database className="w-4 h-4" /> Logs API
             </TabsTrigger>
           </TabsList>
 
@@ -304,6 +310,44 @@ const AdminSecurity = () => {
                       ))}
                     </TableBody>
                   </Table>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+          {/* API logs */}
+          <TabsContent value="api">
+            <Card>
+              <CardHeader><CardTitle className="text-base flex items-center gap-2"><Database className="w-4 h-4 text-slate-500" /> Logs API (100 dernières requêtes)</CardTitle></CardHeader>
+              <CardContent className="p-0 overflow-x-auto">
+                {apiLogs.length === 0 ? (
+                  <div className="text-center py-8 text-slate-500 p-4">Aucun log API.</div>
+                ) : (
+                  <table className="w-full text-xs font-mono text-left">
+                    <thead className="bg-slate-900 text-slate-300">
+                      <tr>
+                        <th className="p-3">Timestamp</th>
+                        <th className="p-3">Endpoint</th>
+                        <th className="p-3">Status</th>
+                        <th className="p-3">IP</th>
+                        <th className="p-3">Latence</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 bg-white">
+                      {apiLogs.map(log => (
+                        <tr key={log.id} className="hover:bg-slate-50">
+                          <td className="p-3 text-slate-500">{new Date(log.created_at).toLocaleString('fr-FR')}</td>
+                          <td className="p-3 font-semibold text-slate-700 truncate max-w-[200px]">{log.endpoint}</td>
+                          <td className="p-3">
+                            <Badge variant="outline" className={log.status >= 400 ? 'bg-red-50 text-red-700 border-red-200' : 'bg-green-50 text-green-700 border-green-200'}>
+                              {log.status}
+                            </Badge>
+                          </td>
+                          <td className="p-3 text-slate-500">{log.ip_address || '—'}</td>
+                          <td className="p-3 text-slate-500">{log.response_time_ms != null ? `${log.response_time_ms}ms` : '—'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 )}
               </CardContent>
             </Card>

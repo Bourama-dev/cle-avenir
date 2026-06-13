@@ -20,7 +20,9 @@ import {
   Shield,
   Menu,
   X,
-  Briefcase
+  BarChart2,
+  ClipboardList,
+  Database,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Button } from '@/components/ui/button';
@@ -35,35 +37,40 @@ const AdminSidebar = ({ currentPath }) => {
 
   const menuItems = [
     { icon: <LayoutDashboard size={20} />, label: 'Vue d\'ensemble', path: '/admin/dashboard' },
-    
-    // Core Management Group (Priority)
-    { icon: <Users size={20} />, label: '👥 Utilisateurs', path: '/admin/users' },
+
+    // Core Management
+    { icon: <Users size={20} />, label: 'Utilisateurs', path: '/admin/users' },
     { icon: <Building2 size={20} />, label: 'Établissements', path: '/admin/establishments' },
     { icon: <CreditCard size={20} />, label: 'Abonnements', path: '/admin/subscriptions' },
-    
-    // Launch & Quality Group
+
+    // Analyse
+    { icon: <BarChart2 size={20} />, label: 'Analytiques', path: '/admin/analytics' },
+
+    // Launch & Quality
     { icon: <Rocket size={20} />, label: 'Launch Control', path: '/admin/launch' },
     { icon: <Shield size={20} />, label: 'Assurance Qualité', path: '/admin/qa' },
-    
-    // Ops & Monitoring Group
+
+    // Ops & Monitoring
     { icon: <Activity size={20} />, label: 'Monitoring', path: '/admin/monitoring' },
     { icon: <PlayCircle size={20} />, label: 'Opérations', path: '/admin/ops' },
-    
-    // Compliance & Legal Group
+    { icon: <Database size={20} />, label: 'Logs Système', path: '/admin/logs' },
+
+    // Compliance & Legal
     { icon: <ShieldAlert size={20} />, label: 'Conformité RGPD', path: '/admin/compliance' },
+    { icon: <ClipboardList size={20} />, label: 'Demandes RGPD', path: '/admin/gdpr' },
+    { icon: <PlayCircle size={20} />, label: 'Opérations RGPD', path: '/admin/gdpr-ops' },
     { icon: <Scale size={20} />, label: 'Légal & Versions', path: '/admin/legal-versions' },
     { icon: <Lock size={20} />, label: 'Sécurité & Audit', path: '/admin/security' },
-    
+
     // Content
-    { icon: <Briefcase size={20} />, label: 'Gestion des Métiers', path: '/admin/metiers' },
     { icon: <FileText size={20} />, label: 'Tests & Résultats', path: '/admin/tests' },
     { icon: <BookOpen size={20} />, label: 'Contenu', path: '/admin/content' },
-    
+
     // Support & Docs
     { icon: <MessageSquare size={20} />, label: 'Support & Feedback', path: '/admin/support' },
     { icon: <Library size={20} />, label: 'Wiki Équipe', path: '/admin/wiki' },
     { icon: <FileCheck size={20} />, label: 'Docs & Checklists', path: '/admin/docs' },
-    
+
     { icon: <Settings size={20} />, label: 'Paramètres', path: '/admin/settings' },
   ];
 
