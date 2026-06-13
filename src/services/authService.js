@@ -29,6 +29,7 @@ export const AuthService = {
         .upsert({
           id: authData.user.id,
 
+          email,
           first_name: profileData.first_name,
           last_name: profileData.last_name,
 
@@ -68,6 +69,11 @@ export const AuthService = {
         // We throw here to ensure the caller knows the profile failed, even if auth succeeded
         throw new Error(`Account created, but profile save failed: ${profileError.message}`);
       }
+
+      // Slack notification (non-blocking — failure must not break signup)
+      supabase.functions.invoke('notify-slack-new-user', {
+        body: { user_id: authData.user.id }
+      }).catch(err => console.warn('[authService] Slack notification failed:', err));
 
       return { data: authData, error: null };
     } catch (error) {
@@ -207,10 +213,17 @@ export const AuthService = {
           salary_range_max: profileData.salaryRange?.[1] || null,
           constraints: { selected: profileData.constraints || [] },
           answers: { wants_long_studies: wantsLongStudiesBool },
+          completed_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         }, { onConflict: 'id' });
 
       if (error) throw error;
+
+      // Slack notification (non-blocking)
+      supabase.functions.invoke('notify-slack-new-user', {
+        body: { user_id: userId }
+      }).catch(err => console.warn('[authService] Slack notification failed:', err));
+
       return { error: null };
     } catch (error) {
       console.error('Complete Google profile error:', error.message);
