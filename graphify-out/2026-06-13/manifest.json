@@ -595,9 +595,9 @@
     "semantic_hash": "fb8894a474258e1381bbfa504a86fb71"
   },
   "src/components/admin/UserManagement.jsx": {
-    "mtime": 1780647208.5152874,
-    "ast_hash": "4d537d9c2411b0ea3e78d4ba8575b322",
-    "semantic_hash": "4d537d9c2411b0ea3e78d4ba8575b322"
+    "mtime": 1781312751.5307994,
+    "ast_hash": "4e050d42df49f9eb76f403b06ac6615e",
+    "semantic_hash": ""
   },
   "src/components/admin/forms/BlogForm.jsx": {
     "mtime": 1780647208.5152874,
@@ -690,14 +690,14 @@
     "semantic_hash": "fae702670ec61d52afa3c065eaa45415"
   },
   "src/components/admin/sections/AdminOverview.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "9bead7a66958d9de93c1c6b1ecbc70b1",
-    "semantic_hash": "9bead7a66958d9de93c1c6b1ecbc70b1"
+    "mtime": 1781312733.4067984,
+    "ast_hash": "a422059ea319dca85ae2b458178646bc",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminQA.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "72d8b9d2d24661a099d42220c588164f",
-    "semantic_hash": "72d8b9d2d24661a099d42220c588164f"
+    "mtime": 1781312741.846799,
+    "ast_hash": "ca25caa7018ec17a7ad76c6a130a9394",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminSecurity.jsx": {
     "mtime": 1780647208.517856,
@@ -2685,9 +2685,9 @@
     "semantic_hash": ""
   },
   "src/contexts/SupabaseAuthContext.jsx": {
-    "mtime": 1780647208.5838976,
-    "ast_hash": "c8e01a68e68220768348363b3cf484fa",
-    "semantic_hash": "c8e01a68e68220768348363b3cf484fa"
+    "mtime": 1781312767.7028005,
+    "ast_hash": "c7ae74fd8ff6a531f86421deb1ca2a16",
+    "semantic_hash": ""
   },
   "src/contexts/SystemSettingsContext.jsx": {
     "mtime": 1780647208.5838976,
