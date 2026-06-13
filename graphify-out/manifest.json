@@ -95,9 +95,9 @@
     "semantic_hash": "91a3f1f694b5c262af4c7fdfb088dae7"
   },
   "src/components/AdminDashboard.jsx": {
-    "mtime": 1780647208.497332,
-    "ast_hash": "43a63270d13b76c32a4d71e85a9e4533",
-    "semantic_hash": "43a63270d13b76c32a4d71e85a9e4533"
+    "mtime": 1781314112.6068804,
+    "ast_hash": "a121916f709c4c3d681a8bc0e5ab73de",
+    "semantic_hash": ""
   },
   "src/components/AlternanceFinder.jsx": {
     "mtime": 1780647208.497332,
@@ -585,9 +585,9 @@
     "semantic_hash": "bc87c2bf2d9b17d59e8d0828cc47dbb7"
   },
   "src/components/admin/AdminSidebar.jsx": {
-    "mtime": 1780647208.5152874,
-    "ast_hash": "8b44f074cadac45aba140758a097096f",
-    "semantic_hash": "8b44f074cadac45aba140758a097096f"
+    "mtime": 1781314169.4068837,
+    "ast_hash": "ca5d14d4394e55f6f212f2cfc00e1b4b",
+    "semantic_hash": ""
   },
   "src/components/admin/EtablissementsTab.jsx": {
     "mtime": 1780647208.5152874,
@@ -700,8 +700,8 @@
     "semantic_hash": ""
   },
   "src/components/admin/sections/AdminSecurity.jsx": {
-    "mtime": 1781313862.6428654,
-    "ast_hash": "82311fac391bb28b5bcc94c14ce4869f",
+    "mtime": 1781314160.0188832,
+    "ast_hash": "4529b7ba4c4e10680d45616ccd5aa1a4",
     "semantic_hash": ""
   },
   "src/components/admin/sections/AdminSettings.jsx": {
