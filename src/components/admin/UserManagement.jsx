@@ -163,20 +163,21 @@ const UserManagement = () => {
     setIsUpdating(true);
     
     try {
-      // Note: This only deletes from profiles. 
-      // In a real Supabase setup, you'd likely use an Edge Function to delete from auth.users too,
-      // or rely on a "soft delete" (setting status to deleted).
-      // Here we assume deleting profile is the administrative action requested.
+      // Soft delete: mark as deleted rather than hard-deleting.
+      // Removing the auth.users row requires a service-role Edge Function —
+      // the client key cannot call auth.admin.deleteUser(). The account will
+      // be blocked from the app because is_deleted=true is checked on sign-in.
       const { error } = await supabase
         .from('profiles')
-        .delete()
+        .update({ is_deleted: true, deleted_at: new Date().toISOString(), updated_at: new Date().toISOString() })
         .eq('id', selectedUser.id);
 
       if (error) throw error;
 
       toast({
-        title: "Utilisateur supprimé",
-        description: "Le profil a été supprimé définitivement.",
+        title: "Utilisateur désactivé",
+        description: "Le profil est marqué comme supprimé. Le compte d'authentification Supabase reste actif — supprimez-le manuellement dans la console Supabase si nécessaire.",
+        duration: 8000,
       });
 
       setUsers(users.filter(u => u.id !== selectedUser.id));

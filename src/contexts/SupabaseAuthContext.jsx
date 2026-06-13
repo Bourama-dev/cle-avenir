@@ -27,6 +27,13 @@ export const AuthProvider = ({ children }) => {
         .maybeSingle();
 
       if (error) throw error;
+
+      // Soft-deleted users are blocked from the app
+      if (data?.is_deleted) {
+        await supabase.auth.signOut();
+        return null;
+      }
+
       return data;
     } catch (error) {
       console.error('[AuthContext] Error fetching profile:', error);
