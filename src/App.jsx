@@ -74,7 +74,6 @@ const AuthCallback = lazy(() => import('@/pages/AuthCallback'));
 const UpdatePasswordPage = lazy(() => import('@/pages/UpdatePasswordPage'));
 
 // Core Test Flow Components & Pages
-const TestResults = lazy(() => import('@/pages/TestResults'));
 const EnhancedTestPage = lazy(() => import('@/pages/AdaptiveTestPage'));
 const TestGatePage = lazy(() => import('@/pages/TestGatePage'));
 const TestResultsPage = lazy(() => import('@/pages/TestResultsPage')); 
@@ -89,9 +88,7 @@ const FormationsPage = lazy(() => import('@/pages/FormationsPage'));
 const FormationDetailPage = lazy(() => import('@/pages/FormationDetailPage'));
 const LyceesPage = lazy(() => import('@/pages/LyceesPage'));
 const LyceeDetailPage = lazy(() => import('@/pages/LyceeDetailPage'));
-const JobOffersPage = lazy(() => import('@/pages/JobOffersPage')); 
 const JobDetailPage = lazy(() => import('@/pages/JobDetailPage'));
-const OfferDetailPage = lazy(() => import('@/pages/OfferDetailPage'));
 const JobExplorer = lazy(() => import('@/components/JobExplorer'));
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'));
 const ProfileResultsPage = lazy(() => import('@/pages/ProfileResultsPage'));
@@ -112,8 +109,6 @@ const HowItWorksPage = lazy(() => import('@/pages/HowItWorksPage'));
 const FAQPage = lazy(() => import('@/pages/FAQPage'));
 const AboutPage = lazy(() => import('@/components/AboutPage'));
 const ContactPage = lazy(() => import('@/pages/ContactPage'));
-const BlogPage = lazy(() => import('@/pages/BlogPage'));
-const BlogArticlePage = lazy(() => import('@/pages/BlogArticlePage'));
 const ActualitesPage = lazy(() => import('@/pages/ActualitesPage'));
 const ActualitesDetailPage = lazy(() => import('@/pages/ActualitesDetailPage'));
 const DocumentationPage = lazy(() => import('@/pages/DocumentationPage'));
@@ -151,7 +146,7 @@ const InstitutionDashboard = lazy(() => import('@/components/InstitutionDashboar
 const UserManagement = lazy(() => import('@/components/establishment/UserManagement'));
 
 // Admin Pages
-const AdminPage = lazy(() => import('@/pages/AdminPage'));
+
 const AdminDashboardPage = lazy(() => import('@/pages/AdminDashboardPage')); 
 const AdminInstitutionsPage = lazy(() => import('@/pages/AdminInstitutionsPage'));
 const AdminInstitutionCodesPage = lazy(() => import('@/pages/AdminInstitutionCodesPage'));
