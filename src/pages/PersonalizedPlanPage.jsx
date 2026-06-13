@@ -23,7 +23,7 @@ import RecommendedActionsSection from '@/components/personalized-plan/Recommende
 
 import MetierLoadingSpinner from '@/components/MetierLoadingSpinner';
 import MetierErrorState from '@/components/MetierErrorState';
-import { useMetierDataFetcher } from '@/utils/metierDataFetcher';
+import { metierService } from '@/services/metierService';
 
 const PersonalizedPlanPage = () => {
   const { user, loading: authLoading } = useAuth();
@@ -46,7 +46,6 @@ const PersonalizedPlanPage = () => {
   const [error, setError] = useState(null);
   const [retryCount, setRetryCount] = useState(0);
 
-  const { fetchMetierWithErrorHandling } = useMetierDataFetcher();
   const isMounted = useRef(true);
 
   useEffect(() => {
@@ -149,14 +148,14 @@ const PersonalizedPlanPage = () => {
       const enrichedPromises = metiersToFetch.map(async (baseMetier) => {
         const code = baseMetier.code || baseMetier.metierCode;
         try {
-          const details = await fetchMetierWithErrorHandling(code);
+          const details = await metierService.getMetierByRomeCode(code);
           return {
             ...baseMetier,
             ...details,
             description: details?.description || details?.definition || baseMetier.description,
           };
         } catch (e) {
-          if (e.status === 429) throw e;
+          if (e?.status === 429) throw e;
           return baseMetier;
         }
       });
@@ -165,8 +164,8 @@ const PersonalizedPlanPage = () => {
 
       if (isMounted.current) {
         setEnrichedMetiers(results);
-        // Pass userProfile so formations can be filtered by education level
-        fetchFormationsForMetiers(results, userProfile);
+        // formations are fetched by the dedicated useEffect below,
+        // which fires when both enrichedMetiers and userProfile are ready
       }
     } catch (err) {
       console.error('Error enriching metiers:', err);
@@ -349,13 +348,13 @@ const PersonalizedPlanPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, authLoading, navigate, retryCount, location.search]);
 
-  /* ── Re-fetch formations when profile loads (initial render may be async) ── */
+  /* ── Fetch formations once both enrichedMetiers and userProfile are ready ── */
   useEffect(() => {
-    if (!profileLoading && userProfile && enrichedMetiers.length > 0) {
+    if (!profileLoading && enrichedMetiers.length > 0) {
       fetchFormationsForMetiers(enrichedMetiers, userProfile);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profileLoading, userProfile]);
+  }, [profileLoading, userProfile, enrichedMetiers]);
 
   /* ── Render states ──────────────────────────────────────────────────────── */
   if (authLoading || loading) {

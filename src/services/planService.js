@@ -116,6 +116,13 @@ export const planService = {
         return updated;
       }
 
+      if (!data) {
+        // maybeSingle() found no matching row — fall back to localStorage
+        const cached = lsGet(userId);
+        if (cached) return cached;
+        console.warn('[planService] updatePlan: no row found and no localStorage fallback');
+        return null;
+      }
       lsSet(userId, data);
       return data;
     } catch (err) {
