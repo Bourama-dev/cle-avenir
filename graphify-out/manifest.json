@@ -1030,8 +1030,8 @@
     "semantic_hash": "79ada37f60de09041e615eb8728b0ded"
   },
   "src/components/cleo/Cleo.jsx": {
-    "mtime": 1781165147.7873578,
-    "ast_hash": "908150932b2e0af5e50bf23f6a391e17",
+    "mtime": 1781315646.900164,
+    "ast_hash": "721e326e7f54a7176cfd8ed29da3fcc7",
     "semantic_hash": ""
   },
   "src/components/cleo/CleoActivitySystem.jsx": {
@@ -3855,9 +3855,9 @@
     "semantic_hash": "e02ba42e97e8bbc7ba08faa8209f3c06"
   },
   "src/services/cleoService.jsx": {
-    "mtime": 1780647208.6332831,
-    "ast_hash": "0c4667f7ee62514e709a7b3b3d4016d9",
-    "semantic_hash": "0c4667f7ee62514e709a7b3b3d4016d9"
+    "mtime": 1781315641.4441636,
+    "ast_hash": "329dc951e15e89053dd673631ac0e7d2",
+    "semantic_hash": ""
   },
   "src/services/competenciesService.js": {
     "mtime": 1780647208.6332831,
