@@ -272,4 +272,47 @@ export const cleoService = {
     const context = userId ? await this.buildContext(userId) : {};
     return this.sendMessage(userId, sessionId, message, history, context, mode);
   },
+
+  async searchMetiers(query) {
+    try {
+      const { data, error } = await supabase
+        .from('rome_metiers')
+        .select('code, libelle, description')
+        .ilike('libelle', `%${query}%`)
+        .limit(5);
+      if (error) throw error;
+      return data || [];
+    } catch {
+      return [];
+    }
+  },
+
+  async searchFormations(query) {
+    try {
+      const { data, error } = await supabase
+        .from('formations')
+        .select('id, titre, etablissement, niveau')
+        .ilike('titre', `%${query}%`)
+        .limit(5);
+      if (error) throw error;
+      return data || [];
+    } catch {
+      return [];
+    }
+  },
+
+  async getBlogArticles() {
+    try {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('id, title, slug, excerpt')
+        .eq('published', true)
+        .order('created_at', { ascending: false })
+        .limit(5);
+      if (error) throw error;
+      return data || [];
+    } catch {
+      return [];
+    }
+  },
 };

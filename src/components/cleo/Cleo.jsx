@@ -402,10 +402,11 @@ const Cleo = () => {
                           ? 'bg-indigo-600 text-white rounded-br-none'
                           : 'bg-white text-slate-800 border border-slate-200 rounded-bl-none'
                       )}>
-                        <div
-                          className="prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0 text-inherit"
-                          dangerouslySetInnerHTML={{ __html: msg.content }}
-                        />
+                        <div className="prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0 text-inherit">
+                          {String(msg.content || '').split('\n').map((line, i) => (
+                            <p key={i} className="my-0.5 last:mb-0">{line}</p>
+                          ))}
+                        </div>
                       </div>
 
                       {/* Suggestions (quick reply chips) */}
