@@ -23,6 +23,7 @@ import {
   BarChart2,
   ClipboardList,
   Database,
+  ShieldCheck,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Button } from '@/components/ui/button';
@@ -58,7 +59,7 @@ const AdminSidebar = ({ currentPath }) => {
     // Compliance & Legal
     { icon: <ShieldAlert size={20} />, label: 'Conformité RGPD', path: '/admin/compliance' },
     { icon: <ClipboardList size={20} />, label: 'Demandes RGPD', path: '/admin/gdpr' },
-    { icon: <PlayCircle size={20} />, label: 'Opérations RGPD', path: '/admin/gdpr-ops' },
+    { icon: <ShieldCheck size={20} />, label: 'Opérations RGPD', path: '/admin/gdpr-ops' },
     { icon: <Scale size={20} />, label: 'Légal & Versions', path: '/admin/legal-versions' },
     { icon: <Lock size={20} />, label: 'Sécurité & Audit', path: '/admin/security' },
 
@@ -146,7 +147,7 @@ const AdminSidebar = ({ currentPath }) => {
       </div>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex flex-col w-[var(--sidebar-width)] bg-slate-900 text-white shrink-0 h-screen sticky top-0 border-r border-slate-800">
+      <aside className="hidden md:flex flex-col w-64 bg-slate-900 text-white shrink-0 h-screen sticky top-0 border-r border-slate-800">
         <SidebarContent />
       </aside>
     </>
