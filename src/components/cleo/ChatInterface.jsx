@@ -6,7 +6,7 @@ import {
   PanelRightClose, PanelRightOpen
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import CleoAvatar from './CleoAvatar';
 import CleoStateVisualizer from './CleoStateVisualizer';
 import { CleoChart, CleoActionPlan } from './CleoRichContent';
@@ -22,12 +22,13 @@ import { useAuth } from '@/contexts/SupabaseAuthContext';
 const MessageBubble = ({ message, isLast, onInteraction, widgets }) => {
   const isUser = message.role === 'user';
   const { userProfile } = useAuth();
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
+    <motion.div
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: isUser ? 60 : -60, y: 10 }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
+      transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
       className={cn(
         "flex gap-4 mb-8 group w-full max-w-4xl mx-auto px-4 md:px-0",
         isUser ? "flex-row-reverse" : "flex-row"
@@ -116,6 +117,7 @@ const ChatInterface = ({
 }) => {
   const scrollRef = useRef(null);
   const inputRef = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -178,15 +180,20 @@ const ChatInterface = ({
                    { icon: '🎓', label: 'Trouver une formation', query: 'Je cherche une formation adaptée à mon projet.' },
                    { icon: '💼', label: 'Préparer un entretien', query: "Aide-moi à préparer un entretien d'embauche." },
                    { icon: '💰', label: 'Comprendre les salaires', query: 'Quels sont les salaires dans mon domaine ?' },
-                 ].map((s) => (
-                   <button
+                 ].map((s, index) => (
+                   <motion.button
                      key={s.label}
+                     initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     transition={shouldReduceMotion ? { duration: 0 } : { delay: index * 0.1, type: "spring", stiffness: 300, damping: 25 }}
+                     whileHover={shouldReduceMotion ? {} : { y: -4, boxShadow: "0 8px 30px rgba(139, 92, 246, 0.15)" }}
+                     whileTap={shouldReduceMotion ? {} : { scale: 0.97 }}
                      onClick={() => onSendMessage(s.query)}
-                     className="flex flex-col items-start gap-2 p-4 bg-white border border-slate-200 rounded-xl text-left hover:border-violet-300 hover:shadow-md transition-all group"
+                     className="flex flex-col items-start gap-2 p-4 bg-white border border-slate-200 rounded-xl text-left hover:border-violet-300 transition-all group"
                    >
                      <span className="text-2xl">{s.icon}</span>
                      <span className="text-sm font-medium text-slate-700 group-hover:text-violet-700 leading-tight">{s.label}</span>
-                   </button>
+                   </motion.button>
                  ))}
                </div>
              </div>
@@ -203,17 +210,28 @@ const ChatInterface = ({
           )}
 
           {isLoading && (
-             <motion.div 
-               initial={{ opacity: 0, y: 10 }}
-               animate={{ opacity: 1, y: 0 }}
+             <motion.div
+               initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -60, y: 10 }}
+               animate={{ opacity: 1, x: 0, y: 0 }}
+               exit={{ opacity: 0 }}
+               transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
                className="flex gap-4 mb-6 w-full max-w-4xl mx-auto px-4 md:px-0"
              >
                 <div className="shrink-0 flex flex-col items-center mt-1">
-                   <CleoAvatar size="md" />
+                   <CleoAvatar size="md" thinking={true} />
                 </div>
-                <div className="bg-white border border-slate-100 px-6 py-4 rounded-2xl rounded-tl-sm shadow-sm flex items-center gap-3">
-                   <Loader2 size={16} className="text-violet-500 animate-spin" />
-                   <span className="text-xs font-medium text-slate-500">Analyse en cours...</span>
+                <div className="bg-white border border-slate-100 px-6 py-4 rounded-2xl rounded-tl-sm shadow-sm flex items-center gap-2">
+                   <div className="flex items-center gap-1">
+                     {[0, 1, 2].map(i => (
+                       <motion.div
+                         key={i}
+                         className="w-2 h-2 rounded-full bg-violet-400"
+                         animate={shouldReduceMotion ? {} : { y: [0, -6, 0] }}
+                         transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15, ease: "easeInOut" }}
+                       />
+                     ))}
+                   </div>
+                   <span className="text-xs font-medium text-slate-500 ml-1">Analyse en cours...</span>
                 </div>
              </motion.div>
           )}
@@ -236,17 +254,41 @@ const ChatInterface = ({
                  rows={1}
                  disabled={isLoading}
                />
-               <Button
-                 onClick={() => onSendMessage()}
-                 disabled={!inputValue.trim() || isLoading}
-                 size="icon"
-                 className={cn(
-                   "rounded-xl transition-all w-10 h-10 shrink-0",
-                   inputValue.trim() ? "bg-violet-600 hover:bg-violet-700 text-white shadow-md shadow-violet-200" : "bg-slate-200 text-slate-400"
+               <AnimatePresence mode="wait">
+                 {inputValue.trim() ? (
+                   <motion.div
+                     key="send-active"
+                     initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7 }}
+                     animate={{ opacity: 1, scale: 1 }}
+                     exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7 }}
+                     transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                   >
+                     <Button
+                       onClick={() => onSendMessage()}
+                       disabled={isLoading}
+                       size="icon"
+                       className="rounded-xl w-10 h-10 shrink-0 bg-violet-600 hover:bg-violet-700 text-white shadow-md shadow-violet-200"
+                     >
+                       {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={18} />}
+                     </Button>
+                   </motion.div>
+                 ) : (
+                   <motion.div
+                     key="send-inactive"
+                     initial={{ opacity: 0 }}
+                     animate={{ opacity: 1 }}
+                     exit={{ opacity: 0 }}
+                   >
+                     <Button
+                       disabled
+                       size="icon"
+                       className="rounded-xl w-10 h-10 shrink-0 bg-slate-200 text-slate-400"
+                     >
+                       <Send size={18} />
+                     </Button>
+                   </motion.div>
                  )}
-               >
-                 {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={18} />}
-               </Button>
+               </AnimatePresence>
             </div>
             <p className="text-center text-[10px] text-slate-400 mt-2">
               Entrée pour envoyer · Maj+Entrée pour sauter une ligne
