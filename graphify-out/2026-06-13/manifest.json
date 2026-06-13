@@ -65,8 +65,8 @@
     "semantic_hash": "1855359d9a83fd37c550042899198c99"
   },
   "src/App.jsx": {
-    "mtime": 1781137669.2217588,
-    "ast_hash": "cceac4b5ba1fbd6ce2f5d8ceb4aeebc8",
+    "mtime": 1781311485.0889142,
+    "ast_hash": "bf6c711f84d3574ad040b8e80a78f4fd",
     "semantic_hash": ""
   },
   "src/components/AboutPage.jsx": {
@@ -3114,11 +3114,6 @@
     "ast_hash": "20b2f7fbf7aabc0b61632701acac1faf",
     "semantic_hash": "20b2f7fbf7aabc0b61632701acac1faf"
   },
-  "src/pages/AdminPage.jsx": {
-    "mtime": 1780647208.601283,
-    "ast_hash": "acbf265d7f90a0f7709c9219906040b2",
-    "semantic_hash": "acbf265d7f90a0f7709c9219906040b2"
-  },
   "src/pages/AdminSettingsPage.jsx": {
     "mtime": 1780647208.601283,
     "ast_hash": "a1418d77f395c883890c8f78883afb1a",
@@ -3143,16 +3138,6 @@
     "mtime": 1780647208.601283,
     "ast_hash": "6a1eaa449a500436ae6bee6357ebfa4d",
     "semantic_hash": "6a1eaa449a500436ae6bee6357ebfa4d"
-  },
-  "src/pages/BlogArticlePage.jsx": {
-    "mtime": 1780647208.601283,
-    "ast_hash": "2f7dc4d3788ce856f42d284e90bb3c7d",
-    "semantic_hash": "2f7dc4d3788ce856f42d284e90bb3c7d"
-  },
-  "src/pages/BlogPage.jsx": {
-    "mtime": 1780647208.605283,
-    "ast_hash": "2d9824ab2b2bbfb6f1948195077f5e1b",
-    "semantic_hash": "2d9824ab2b2bbfb6f1948195077f5e1b"
   },
   "src/pages/CVBuilderPage.jsx": {
     "mtime": 1780647208.605283,
@@ -3269,11 +3254,6 @@
     "ast_hash": "da209b53396aae675af4a0a9f7bf2d4b",
     "semantic_hash": "da209b53396aae675af4a0a9f7bf2d4b"
   },
-  "src/pages/JobOffersPage.jsx": {
-    "mtime": 1780647208.6092832,
-    "ast_hash": "c3c8f6ff2ee0a9328224fa183f618127",
-    "semantic_hash": "c3c8f6ff2ee0a9328224fa183f618127"
-  },
   "src/pages/LearningPathPage.jsx": {
     "mtime": 1780647208.6092832,
     "ast_hash": "d7a59dba5f9525be6f7679f029c8ab68",
@@ -3328,11 +3308,6 @@
     "mtime": 1780647208.6132832,
     "ast_hash": "479f5e936f03a0dfa3006b562831492f",
     "semantic_hash": "479f5e936f03a0dfa3006b562831492f"
-  },
-  "src/pages/OfferDetailPage.jsx": {
-    "mtime": 1780647208.6132832,
-    "ast_hash": "56e0cc093e6cbc9939fe8dc68ae302b2",
-    "semantic_hash": "56e0cc093e6cbc9939fe8dc68ae302b2"
   },
   "src/pages/OffersFormationsPage.jsx": {
     "mtime": 1780647208.6132832,
@@ -3443,11 +3418,6 @@
     "mtime": 1780647208.617283,
     "ast_hash": "f193de6e054fcf62f8e65b6ed22c1c4b",
     "semantic_hash": "f193de6e054fcf62f8e65b6ed22c1c4b"
-  },
-  "src/pages/TestResults.jsx": {
-    "mtime": 1780647208.617283,
-    "ast_hash": "cc62d93d515db863f175ede0a8e579f8",
-    "semantic_hash": "cc62d93d515db863f175ede0a8e579f8"
   },
   "src/pages/TestResultsPage.jsx": {
     "mtime": 1781194230.2261517,

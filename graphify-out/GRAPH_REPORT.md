@@ -1,7 +1,7 @@
 # Graph Report - cle-avenir  (2026-06-13)
 
 ## Corpus Check
-- 953 files · ~444,301 words
+- 953 files · ~444,309 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `501b046b`
+- Built from commit: `7b6a0db4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -393,16 +393,16 @@
 10. `useSubscriptionAccess()` - 10 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `PlanLimitationProvider()` --calls--> `useAuth()`  [INFERRED]
-  src/contexts/PlanLimitationContext.jsx → src/contexts/SupabaseAuthContext.jsx
-- `Breadcrumbs()` --calls--> `cn()`  [INFERRED]
-  src/components/Breadcrumbs.jsx → src/lib/utils.js
-- `MetierDetailPage()` --calls--> `metierDetailSEO()`  [INFERRED]
-  src/pages/MetierDetailPage.jsx → src/components/SEO/seoPresets.js
-- `AdminBlogManager()` --calls--> `useToast()`  [INFERRED]
-  src/components/admin/AdminBlogManager.jsx → src/components/ui/use-toast.js
-- `AdminFormationManager()` --calls--> `useToast()`  [INFERRED]
-  src/components/admin/AdminFormationManager.jsx → src/components/ui/use-toast.js
+- `EnhancedSignupForm()` --calls--> `useAuth()`  [INFERRED]
+  src/components/auth/EnhancedSignupForm.jsx → src/contexts/SupabaseAuthContext.jsx
+- `LoginForm()` --calls--> `useAuth()`  [INFERRED]
+  src/components/auth/LoginForm.jsx → src/contexts/SupabaseAuthContext.jsx
+- `InterviewSimulation()` --calls--> `useAuth()`  [INFERRED]
+  src/components/cleo/InterviewSimulation.jsx → src/contexts/SupabaseAuthContext.jsx
+- `NotificationProvider()` --calls--> `useAuth()`  [INFERRED]
+  src/context/NotificationContext.jsx → src/contexts/SupabaseAuthContext.jsx
+- `EstablishmentProvider()` --calls--> `useAuth()`  [INFERRED]
+  src/contexts/EstablishmentContext.jsx → src/contexts/SupabaseAuthContext.jsx
 
 ## Import Cycles
 - None detected.
@@ -1046,7 +1046,7 @@ Cohesion: 0.83
 Nodes (3): getConsentRequirements(), isEUUser(), validateConsent()
 
 ## Knowledge Gaps
-- **807 isolated node(s):** `OAuthConsentPage`, `LoginPage`, `SignupPage`, `ProfilePage`, `ActionPlanPage` (+802 more)
+- **807 isolated node(s):** `AuthContext`, `OAuthConsentPage`, `LoginPage`, `SignupPage`, `ProfilePage` (+802 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **205 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -1054,16 +1054,16 @@ Nodes (3): getConsentRequirements(), isEUUser(), validateConsent()
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `useToast()` connect `adaptive_test_enhancedquestioncard` to `admin_adminsidebar`, `components_metiersexplorer`, `contexts_establishmentauthcontext`, `cv_cverrorboundary`, `analytics_analyticsdashboard`, `cleo_chatinterface`, `signup_enhancedsignupform`, `hooks_usemetierfeedback`, `components_aboutpage`, `pages_cleopage`, `sections_admintests`, `components_dashboard`, `ui_button_group`, `Community 419`, `dashboard_connectionactivitychart`, `admin_adminmetiermanager`, `cleo_cleo`, `admin_adminblogmanager`, `cleo_contextpanel`, `cleo_cleoactivitysystem`, `hooks_usetestresults`, `package`, `formation_finder_locationfilter`, `pages_jobdetailpage`, `components_cleowidget`, `pages_oauthconsentpage`, `components_maintenancecountdown`, `components_subscriptiondebugpanel`, `pages_upgradeplan`, `personalized_plan_recommendedactionssect`, `sections_adminsettings`, `components_subscriptionstatus`, `pages_learningpathpage`, `pages_profilepage`, `ui_toaster`, `admin_contentmanagementpage`, `contexts_planlimitationcontext`, `pages_formationdetailpage`, `components_upgradebutton`, `auth_enhancedsignupform`, `ui_use_toast`, `dashboard_establishmentlogs`, `notifications_notificationcenter`, `hooks_useusersubscription`, `legal_legallayout`, `Community 249`, `pages_resultspage`, `pages_testresults`?**
-  _High betweenness centrality (0.078) - this node is a cross-community bridge._
+  _High betweenness centrality (0.072) - this node is a cross-community bridge._
 - **Why does `cn()` connect `adaptive_test_questionchoice` to `adaptive_test_enhancedquestioncard`, `admin_adminsidebar`, `ui_badge`, `ui_helpbutton`, `contexts_establishmentauthcontext`, `analytics_analyticsdashboard`, `cleo_chatinterface`, `metiers_blurredmetiercard`, `signup_enhancedsignupform`, `filters_locationfilter`, `admin_etablissementstab`, `ui_menubar`, `components_dashboard`, `filters_contracttypefilter`, `ui_button_group`, `cleo_cleo`, `ui_button`, `ui_item`, `cleo_cleoactivitysystem`, `cleo_cleopreferencesmodal`, `components_cleowidget`, `pages_learningpathpage`, `pages_profilepage`, `ui_command`, `ui_context_menu`, `ui_dropdown_menu`, `admin_contentmanagementpage`, `contexts_planlimitationcontext`, `pages_formationdetailpage`, `ui_alert_dialog`, `ui_input_group`, `ui_sheet`, `pages_adminmetiers`, `components_breadcrumbs`, `contexts_establishmentcontext`, `cv_mobileformlayout`, `ui_breadcrumb`, `dashboard_establishmentactions`, `ui_empty`, `dashboard_establishmentmenu`, `dashboard_establishmentstats`, `job_detail_jobdetailhero`, `ui_dialog`, `auth_forminput`, `dashboard_widgeterrorboundary`?**
   _High betweenness centrality (0.056) - this node is a cross-community bridge._
 - **Why does `useAuth()` connect `admin_adminsidebar` to `contexts_establishmentauthcontext`, `cleo_chatinterface`, `hooks_usemetierfeedback`, `components_aboutpage`, `hooks_uselegaldocument`, `components_dashboard`, `ui_button_group`, `Community 419`, `cleo_cleo`, `cleo_contextpanel`, `cleo_cleoactivitysystem`, `hooks_usetestresults`, `pages_jobdetailpage`, `components_adminbadge`, `components_cleowidget`, `pages_managesubscriptionpage`, `pages_oauthconsentpage`, `components_subscriptiondebugpanel`, `pages_upgradeplan`, `pages_learningpathpage`, `pages_profilepage`, `pages_formationdetailpage`, `components_upgradebutton`, `contexts_establishmentcontext`, `hooks_usetheme`, `notifications_notificationcenter`, `pages_testpage`, `legal_legallayout`, `auth_forminput`, `Community 249`, `components_notificationbell`, `pages_testresults`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+  _High betweenness centrality (0.043) - this node is a cross-community bridge._
 - **Are the 135 inferred relationships involving `useToast()` (e.g. with `EnhancedQuestionCard()` and `AdminBlogManager()`) actually correct?**
   _`useToast()` has 135 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 118 inferred relationships involving `cn()` (e.g. with `EnhancedQuestionCard()` and `QuestionChoice()`) actually correct?**
   _`cn()` has 118 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 92 inferred relationships involving `useAuth()` (e.g. with `AdminSidebar()` and `RgpdCompliancePage()`) actually correct?**
   _`useAuth()` has 92 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `OAuthConsentPage`, `LoginPage`, `SignupPage` to the rest of the system?**
+- **What connects `AuthContext`, `OAuthConsentPage`, `LoginPage` to the rest of the system?**
   _807 weakly-connected nodes found - possible documentation gaps or missing edges._

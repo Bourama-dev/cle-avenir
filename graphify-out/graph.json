@@ -4,14 +4,114 @@
   "graph": {},
   "nodes": [
     {
+      "label": "UserManagement.jsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/UserManagement.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "admin_usermanagement",
+      "community": 1,
+      "norm_label": "usermanagement.jsx"
+    },
+    {
+      "label": "UserManagement()",
+      "file_type": "code",
+      "source_file": "src/components/admin/UserManagement.jsx",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "admin_usermanagement_usermanagement",
+      "community": 1,
+      "norm_label": "usermanagement()"
+    },
+    {
+      "label": "AdminOverview.jsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminOverview.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "sections_adminoverview",
+      "community": 463,
+      "norm_label": "adminoverview.jsx"
+    },
+    {
+      "label": "AdminOverview()",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminOverview.jsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "sections_adminoverview_adminoverview",
+      "community": 463,
+      "norm_label": "adminoverview()"
+    },
+    {
+      "label": "AdminQA.jsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminQA.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "sections_adminqa",
+      "community": 1,
+      "norm_label": "adminqa.jsx"
+    },
+    {
+      "label": "AdminQA()",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminQA.jsx",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "sections_adminqa_adminqa",
+      "community": 1,
+      "norm_label": "adminqa()"
+    },
+    {
+      "label": "SupabaseAuthContext.jsx",
+      "file_type": "code",
+      "source_file": "src/contexts/SupabaseAuthContext.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "contexts_supabaseauthcontext",
+      "community": 9,
+      "norm_label": "supabaseauthcontext.jsx"
+    },
+    {
+      "label": "AuthContext",
+      "file_type": "code",
+      "source_file": "src/contexts/SupabaseAuthContext.jsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "contexts_supabaseauthcontext_authcontext",
+      "community": 9,
+      "norm_label": "authcontext"
+    },
+    {
+      "label": "AuthProvider()",
+      "file_type": "code",
+      "source_file": "src/contexts/SupabaseAuthContext.jsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "contexts_supabaseauthcontext_authprovider",
+      "community": 9,
+      "norm_label": "authprovider()"
+    },
+    {
+      "label": "useAuth()",
+      "file_type": "code",
+      "source_file": "src/contexts/SupabaseAuthContext.jsx",
+      "source_location": "L279",
+      "_origin": "ast",
+      "id": "contexts_supabaseauthcontext_useauth",
+      "community": 2,
+      "norm_label": "useauth()"
+    },
+    {
       "label": "App.jsx",
       "file_type": "code",
       "source_file": "src/App.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_app",
       "community": 0,
-      "norm_label": "app.jsx"
+      "norm_label": "app.jsx",
+      "id": "src_app"
     },
     {
       "label": "OAuthConsentPage",
@@ -19,9 +119,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L58",
       "_origin": "ast",
-      "id": "src_app_oauthconsentpage",
       "community": 0,
-      "norm_label": "oauthconsentpage"
+      "norm_label": "oauthconsentpage",
+      "id": "src_app_oauthconsentpage"
     },
     {
       "label": "LoginPage",
@@ -29,9 +129,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L59",
       "_origin": "ast",
-      "id": "src_app_loginpage",
       "community": 0,
-      "norm_label": "loginpage"
+      "norm_label": "loginpage",
+      "id": "src_app_loginpage"
     },
     {
       "label": "SignupPage",
@@ -39,9 +139,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L60",
       "_origin": "ast",
-      "id": "src_app_signuppage",
       "community": 0,
-      "norm_label": "signuppage"
+      "norm_label": "signuppage",
+      "id": "src_app_signuppage"
     },
     {
       "label": "ProfilePage",
@@ -49,9 +149,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L61",
       "_origin": "ast",
-      "id": "src_app_profilepage",
       "community": 0,
-      "norm_label": "profilepage"
+      "norm_label": "profilepage",
+      "id": "src_app_profilepage"
     },
     {
       "label": "ActionPlanPage",
@@ -59,9 +159,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L62",
       "_origin": "ast",
-      "id": "src_app_actionplanpage",
       "community": 0,
-      "norm_label": "actionplanpage"
+      "norm_label": "actionplanpage",
+      "id": "src_app_actionplanpage"
     },
     {
       "label": "TestPage",
@@ -69,9 +169,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L63",
       "_origin": "ast",
-      "id": "src_app_testpage",
       "community": 0,
-      "norm_label": "testpage"
+      "norm_label": "testpage",
+      "id": "src_app_testpage"
     },
     {
       "label": "ParentalConsentPage",
@@ -79,9 +179,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L66",
       "_origin": "ast",
-      "id": "src_app_parentalconsentpage",
       "community": 0,
-      "norm_label": "parentalconsentpage"
+      "norm_label": "parentalconsentpage",
+      "id": "src_app_parentalconsentpage"
     },
     {
       "label": "AuthPage",
@@ -89,9 +189,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L69",
       "_origin": "ast",
-      "id": "src_app_authpage",
       "community": 0,
-      "norm_label": "authpage"
+      "norm_label": "authpage",
+      "id": "src_app_authpage"
     },
     {
       "label": "ForgotPasswordPage",
@@ -99,9 +199,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L70",
       "_origin": "ast",
-      "id": "src_app_forgotpasswordpage",
       "community": 0,
-      "norm_label": "forgotpasswordpage"
+      "norm_label": "forgotpasswordpage",
+      "id": "src_app_forgotpasswordpage"
     },
     {
       "label": "ResetPasswordPage",
@@ -109,9 +209,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L71",
       "_origin": "ast",
-      "id": "src_app_resetpasswordpage",
       "community": 0,
-      "norm_label": "resetpasswordpage"
+      "norm_label": "resetpasswordpage",
+      "id": "src_app_resetpasswordpage"
     },
     {
       "label": "EmailConfirmationPending",
@@ -119,9 +219,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L72",
       "_origin": "ast",
-      "id": "src_app_emailconfirmationpending",
       "community": 0,
-      "norm_label": "emailconfirmationpending"
+      "norm_label": "emailconfirmationpending",
+      "id": "src_app_emailconfirmationpending"
     },
     {
       "label": "AuthCallback",
@@ -129,9 +229,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L73",
       "_origin": "ast",
-      "id": "src_app_authcallback",
       "community": 0,
-      "norm_label": "authcallback"
+      "norm_label": "authcallback",
+      "id": "src_app_authcallback"
     },
     {
       "label": "UpdatePasswordPage",
@@ -139,9 +239,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L74",
       "_origin": "ast",
-      "id": "src_app_updatepasswordpage",
       "community": 0,
-      "norm_label": "updatepasswordpage"
+      "norm_label": "updatepasswordpage",
+      "id": "src_app_updatepasswordpage"
     },
     {
       "label": "EnhancedTestPage",
@@ -149,9 +249,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L77",
       "_origin": "ast",
-      "id": "src_app_enhancedtestpage",
       "community": 0,
-      "norm_label": "enhancedtestpage"
+      "norm_label": "enhancedtestpage",
+      "id": "src_app_enhancedtestpage"
     },
     {
       "label": "TestGatePage",
@@ -159,9 +259,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L78",
       "_origin": "ast",
-      "id": "src_app_testgatepage",
       "community": 0,
-      "norm_label": "testgatepage"
+      "norm_label": "testgatepage",
+      "id": "src_app_testgatepage"
     },
     {
       "label": "TestResultsPage",
@@ -169,9 +269,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L79",
       "_origin": "ast",
-      "id": "src_app_testresultspage",
       "community": 0,
-      "norm_label": "testresultspage"
+      "norm_label": "testresultspage",
+      "id": "src_app_testresultspage"
     },
     {
       "label": "TestFormationsPage",
@@ -179,9 +279,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L80",
       "_origin": "ast",
-      "id": "src_app_testformationspage",
       "community": 0,
-      "norm_label": "testformationspage"
+      "norm_label": "testformationspage",
+      "id": "src_app_testformationspage"
     },
     {
       "label": "TestPlanPage",
@@ -189,9 +289,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L81",
       "_origin": "ast",
-      "id": "src_app_testplanpage",
       "community": 0,
-      "norm_label": "testplanpage"
+      "norm_label": "testplanpage",
+      "id": "src_app_testplanpage"
     },
     {
       "label": "AllCareersPage",
@@ -199,9 +299,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L82",
       "_origin": "ast",
-      "id": "src_app_allcareerspage",
       "community": 0,
-      "norm_label": "allcareerspage"
+      "norm_label": "allcareerspage",
+      "id": "src_app_allcareerspage"
     },
     {
       "label": "ExploreMetiersPage",
@@ -209,9 +309,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L85",
       "_origin": "ast",
-      "id": "src_app_exploremetierspage",
       "community": 0,
-      "norm_label": "exploremetierspage"
+      "norm_label": "exploremetierspage",
+      "id": "src_app_exploremetierspage"
     },
     {
       "label": "MetierDetailPage",
@@ -219,9 +319,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L86",
       "_origin": "ast",
-      "id": "src_app_metierdetailpage",
       "community": 0,
-      "norm_label": "metierdetailpage"
+      "norm_label": "metierdetailpage",
+      "id": "src_app_metierdetailpage"
     },
     {
       "label": "FormationsPage",
@@ -229,9 +329,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L87",
       "_origin": "ast",
-      "id": "src_app_formationspage",
       "community": 0,
-      "norm_label": "formationspage"
+      "norm_label": "formationspage",
+      "id": "src_app_formationspage"
     },
     {
       "label": "FormationDetailPage",
@@ -239,9 +339,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L88",
       "_origin": "ast",
-      "id": "src_app_formationdetailpage",
       "community": 0,
-      "norm_label": "formationdetailpage"
+      "norm_label": "formationdetailpage",
+      "id": "src_app_formationdetailpage"
     },
     {
       "label": "LyceesPage",
@@ -249,9 +349,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L89",
       "_origin": "ast",
-      "id": "src_app_lyceespage",
       "community": 0,
-      "norm_label": "lyceespage"
+      "norm_label": "lyceespage",
+      "id": "src_app_lyceespage"
     },
     {
       "label": "LyceeDetailPage",
@@ -259,9 +359,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L90",
       "_origin": "ast",
-      "id": "src_app_lyceedetailpage",
       "community": 0,
-      "norm_label": "lyceedetailpage"
+      "norm_label": "lyceedetailpage",
+      "id": "src_app_lyceedetailpage"
     },
     {
       "label": "JobDetailPage",
@@ -269,9 +369,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L91",
       "_origin": "ast",
-      "id": "src_app_jobdetailpage",
       "community": 0,
-      "norm_label": "jobdetailpage"
+      "norm_label": "jobdetailpage",
+      "id": "src_app_jobdetailpage"
     },
     {
       "label": "JobExplorer",
@@ -279,9 +379,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L92",
       "_origin": "ast",
-      "id": "src_app_jobexplorer",
       "community": 0,
-      "norm_label": "jobexplorer"
+      "norm_label": "jobexplorer",
+      "id": "src_app_jobexplorer"
     },
     {
       "label": "DashboardPage",
@@ -289,9 +389,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L93",
       "_origin": "ast",
-      "id": "src_app_dashboardpage",
       "community": 0,
-      "norm_label": "dashboardpage"
+      "norm_label": "dashboardpage",
+      "id": "src_app_dashboardpage"
     },
     {
       "label": "ProfileResultsPage",
@@ -299,9 +399,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L94",
       "_origin": "ast",
-      "id": "src_app_profileresultspage",
       "community": 0,
-      "norm_label": "profileresultspage"
+      "norm_label": "profileresultspage",
+      "id": "src_app_profileresultspage"
     },
     {
       "label": "RecommendationsPage",
@@ -309,9 +409,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L95",
       "_origin": "ast",
-      "id": "src_app_recommendationspage",
       "community": 0,
-      "norm_label": "recommendationspage"
+      "norm_label": "recommendationspage",
+      "id": "src_app_recommendationspage"
     },
     {
       "label": "OffersFormationsPage",
@@ -319,9 +419,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L96",
       "_origin": "ast",
-      "id": "src_app_offersformationspage",
       "community": 0,
-      "norm_label": "offersformationspage"
+      "norm_label": "offersformationspage",
+      "id": "src_app_offersformationspage"
     },
     {
       "label": "AccountPage",
@@ -329,9 +429,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L97",
       "_origin": "ast",
-      "id": "src_app_accountpage",
       "community": 0,
-      "norm_label": "accountpage"
+      "norm_label": "accountpage",
+      "id": "src_app_accountpage"
     },
     {
       "label": "SettingsPage",
@@ -339,9 +439,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L98",
       "_origin": "ast",
-      "id": "src_app_settingspage",
       "community": 0,
-      "norm_label": "settingspage"
+      "norm_label": "settingspage",
+      "id": "src_app_settingspage"
     },
     {
       "label": "TestHistoryPage",
@@ -349,9 +449,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L99",
       "_origin": "ast",
-      "id": "src_app_testhistorypage",
       "community": 0,
-      "norm_label": "testhistorypage"
+      "norm_label": "testhistorypage",
+      "id": "src_app_testhistorypage"
     },
     {
       "label": "InterviewPage",
@@ -359,9 +459,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L100",
       "_origin": "ast",
-      "id": "src_app_interviewpage",
       "community": 0,
-      "norm_label": "interviewpage"
+      "norm_label": "interviewpage",
+      "id": "src_app_interviewpage"
     },
     {
       "label": "CleoPage",
@@ -369,9 +469,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L101",
       "_origin": "ast",
-      "id": "src_app_cleopage",
       "community": 0,
-      "norm_label": "cleopage"
+      "norm_label": "cleopage",
+      "id": "src_app_cleopage"
     },
     {
       "label": "CVBuilderPage",
@@ -379,9 +479,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L102",
       "_origin": "ast",
-      "id": "src_app_cvbuilderpage",
       "community": 0,
-      "norm_label": "cvbuilderpage"
+      "norm_label": "cvbuilderpage",
+      "id": "src_app_cvbuilderpage"
     },
     {
       "label": "CoverLetterBuilderPage",
@@ -389,9 +489,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L103",
       "_origin": "ast",
-      "id": "src_app_coverletterbuilderpage",
       "community": 0,
-      "norm_label": "coverletterbuilderpage"
+      "norm_label": "coverletterbuilderpage",
+      "id": "src_app_coverletterbuilderpage"
     },
     {
       "label": "MyDocumentsPage",
@@ -399,9 +499,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L104",
       "_origin": "ast",
-      "id": "src_app_mydocumentspage",
       "community": 0,
-      "norm_label": "mydocumentspage"
+      "norm_label": "mydocumentspage",
+      "id": "src_app_mydocumentspage"
     },
     {
       "label": "ManageSubscriptionPage",
@@ -409,9 +509,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L105",
       "_origin": "ast",
-      "id": "src_app_managesubscriptionpage",
       "community": 0,
-      "norm_label": "managesubscriptionpage"
+      "norm_label": "managesubscriptionpage",
+      "id": "src_app_managesubscriptionpage"
     },
     {
       "label": "UpgradePlan",
@@ -419,9 +519,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L106",
       "_origin": "ast",
-      "id": "src_app_upgradeplan",
       "community": 0,
-      "norm_label": "upgradeplan"
+      "norm_label": "upgradeplan",
+      "id": "src_app_upgradeplan"
     },
     {
       "label": "PlansPage",
@@ -429,9 +529,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L107",
       "_origin": "ast",
-      "id": "src_app_planspage",
       "community": 0,
-      "norm_label": "planspage"
+      "norm_label": "planspage",
+      "id": "src_app_planspage"
     },
     {
       "label": "HowItWorksPage",
@@ -439,9 +539,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L108",
       "_origin": "ast",
-      "id": "src_app_howitworkspage",
       "community": 0,
-      "norm_label": "howitworkspage"
+      "norm_label": "howitworkspage",
+      "id": "src_app_howitworkspage"
     },
     {
       "label": "FAQPage",
@@ -449,9 +549,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L109",
       "_origin": "ast",
-      "id": "src_app_faqpage",
       "community": 0,
-      "norm_label": "faqpage"
+      "norm_label": "faqpage",
+      "id": "src_app_faqpage"
     },
     {
       "label": "AboutPage",
@@ -459,9 +559,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L110",
       "_origin": "ast",
-      "id": "src_app_aboutpage",
       "community": 0,
-      "norm_label": "aboutpage"
+      "norm_label": "aboutpage",
+      "id": "src_app_aboutpage"
     },
     {
       "label": "ContactPage",
@@ -469,9 +569,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L111",
       "_origin": "ast",
-      "id": "src_app_contactpage",
       "community": 0,
-      "norm_label": "contactpage"
+      "norm_label": "contactpage",
+      "id": "src_app_contactpage"
     },
     {
       "label": "ActualitesPage",
@@ -479,9 +579,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L112",
       "_origin": "ast",
-      "id": "src_app_actualitespage",
       "community": 0,
-      "norm_label": "actualitespage"
+      "norm_label": "actualitespage",
+      "id": "src_app_actualitespage"
     },
     {
       "label": "ActualitesDetailPage",
@@ -489,9 +589,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L113",
       "_origin": "ast",
-      "id": "src_app_actualitesdetailpage",
       "community": 0,
-      "norm_label": "actualitesdetailpage"
+      "norm_label": "actualitesdetailpage",
+      "id": "src_app_actualitesdetailpage"
     },
     {
       "label": "DocumentationPage",
@@ -499,9 +599,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L114",
       "_origin": "ast",
-      "id": "src_app_documentationpage",
       "community": 0,
-      "norm_label": "documentationpage"
+      "norm_label": "documentationpage",
+      "id": "src_app_documentationpage"
     },
     {
       "label": "StatusPage",
@@ -509,9 +609,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L115",
       "_origin": "ast",
-      "id": "src_app_statuspage",
       "community": 0,
-      "norm_label": "statuspage"
+      "norm_label": "statuspage",
+      "id": "src_app_statuspage"
     },
     {
       "label": "RoadmapPage",
@@ -519,9 +619,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L116",
       "_origin": "ast",
-      "id": "src_app_roadmappage",
       "community": 0,
-      "norm_label": "roadmappage"
+      "norm_label": "roadmappage",
+      "id": "src_app_roadmappage"
     },
     {
       "label": "EdgeFunctionDiagnostics",
@@ -529,9 +629,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L117",
       "_origin": "ast",
-      "id": "src_app_edgefunctiondiagnostics",
       "community": 0,
-      "norm_label": "edgefunctiondiagnostics"
+      "norm_label": "edgefunctiondiagnostics",
+      "id": "src_app_edgefunctiondiagnostics"
     },
     {
       "label": "NotificationsPage",
@@ -539,9 +639,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L118",
       "_origin": "ast",
-      "id": "src_app_notificationspage",
       "community": 0,
-      "norm_label": "notificationspage"
+      "norm_label": "notificationspage",
+      "id": "src_app_notificationspage"
     },
     {
       "label": "PersonalizedPlanPage",
@@ -549,9 +649,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L121",
       "_origin": "ast",
-      "id": "src_app_personalizedplanpage",
       "community": 0,
-      "norm_label": "personalizedplanpage"
+      "norm_label": "personalizedplanpage",
+      "id": "src_app_personalizedplanpage"
     },
     {
       "label": "LearningPathPage",
@@ -559,9 +659,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L124",
       "_origin": "ast",
-      "id": "src_app_learningpathpage",
       "community": 0,
-      "norm_label": "learningpathpage"
+      "norm_label": "learningpathpage",
+      "id": "src_app_learningpathpage"
     },
     {
       "label": "PrivacyPage",
@@ -569,9 +669,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L127",
       "_origin": "ast",
-      "id": "src_app_privacypage",
       "community": 0,
-      "norm_label": "privacypage"
+      "norm_label": "privacypage",
+      "id": "src_app_privacypage"
     },
     {
       "label": "TermsPage",
@@ -579,9 +679,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L128",
       "_origin": "ast",
-      "id": "src_app_termspage",
       "community": 0,
-      "norm_label": "termspage"
+      "norm_label": "termspage",
+      "id": "src_app_termspage"
     },
     {
       "label": "LegalPage",
@@ -589,9 +689,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L129",
       "_origin": "ast",
-      "id": "src_app_legalpage",
       "community": 0,
-      "norm_label": "legalpage"
+      "norm_label": "legalpage",
+      "id": "src_app_legalpage"
     },
     {
       "label": "CookiePolicyPage",
@@ -599,9 +699,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L132",
       "_origin": "ast",
-      "id": "src_app_cookiepolicypage",
       "community": 0,
-      "norm_label": "cookiepolicypage"
+      "norm_label": "cookiepolicypage",
+      "id": "src_app_cookiepolicypage"
     },
     {
       "label": "GestionCookiesPage",
@@ -609,9 +709,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L133",
       "_origin": "ast",
-      "id": "src_app_gestioncookiespage",
       "community": 0,
-      "norm_label": "gestioncookiespage"
+      "norm_label": "gestioncookiespage",
+      "id": "src_app_gestioncookiespage"
     },
     {
       "label": "PreferencesRGPDPage",
@@ -619,9 +719,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L134",
       "_origin": "ast",
-      "id": "src_app_preferencesrgpdpage",
       "community": 0,
-      "norm_label": "preferencesrgpdpage"
+      "norm_label": "preferencesrgpdpage",
+      "id": "src_app_preferencesrgpdpage"
     },
     {
       "label": "RgpdPage",
@@ -629,9 +729,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L137",
       "_origin": "ast",
-      "id": "src_app_rgpdpage",
       "community": 0,
-      "norm_label": "rgpdpage"
+      "norm_label": "rgpdpage",
+      "id": "src_app_rgpdpage"
     },
     {
       "label": "CookiesPreferencesPage",
@@ -639,9 +739,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L138",
       "_origin": "ast",
-      "id": "src_app_cookiespreferencespage",
       "community": 0,
-      "norm_label": "cookiespreferencespage"
+      "norm_label": "cookiespreferencespage",
+      "id": "src_app_cookiespreferencespage"
     },
     {
       "label": "EstablishmentLoginPage",
@@ -649,9 +749,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L141",
       "_origin": "ast",
-      "id": "src_app_establishmentloginpage",
       "community": 0,
-      "norm_label": "establishmentloginpage"
+      "norm_label": "establishmentloginpage",
+      "id": "src_app_establishmentloginpage"
     },
     {
       "label": "EstablishmentForgotPasswordPage",
@@ -659,9 +759,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L142",
       "_origin": "ast",
-      "id": "src_app_establishmentforgotpasswordpage",
       "community": 0,
-      "norm_label": "establishmentforgotpasswordpage"
+      "norm_label": "establishmentforgotpasswordpage",
+      "id": "src_app_establishmentforgotpasswordpage"
     },
     {
       "label": "EstablishmentDashboard",
@@ -669,9 +769,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L143",
       "_origin": "ast",
-      "id": "src_app_establishmentdashboard",
       "community": 0,
-      "norm_label": "establishmentdashboard"
+      "norm_label": "establishmentdashboard",
+      "id": "src_app_establishmentdashboard"
     },
     {
       "label": "InstitutionStaffLogin",
@@ -679,9 +779,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L144",
       "_origin": "ast",
-      "id": "src_app_institutionstafflogin",
       "community": 0,
-      "norm_label": "institutionstafflogin"
+      "norm_label": "institutionstafflogin",
+      "id": "src_app_institutionstafflogin"
     },
     {
       "label": "InstitutionDashboard",
@@ -689,9 +789,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L145",
       "_origin": "ast",
-      "id": "src_app_institutiondashboard",
       "community": 0,
-      "norm_label": "institutiondashboard"
+      "norm_label": "institutiondashboard",
+      "id": "src_app_institutiondashboard"
     },
     {
       "label": "UserManagement",
@@ -699,9 +799,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L146",
       "_origin": "ast",
-      "id": "src_app_usermanagement",
       "community": 0,
-      "norm_label": "usermanagement"
+      "norm_label": "usermanagement",
+      "id": "src_app_usermanagement"
     },
     {
       "label": "AdminDashboardPage",
@@ -709,9 +809,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L150",
       "_origin": "ast",
-      "id": "src_app_admindashboardpage",
       "community": 0,
-      "norm_label": "admindashboardpage"
+      "norm_label": "admindashboardpage",
+      "id": "src_app_admindashboardpage"
     },
     {
       "label": "AdminInstitutionsPage",
@@ -719,9 +819,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L151",
       "_origin": "ast",
-      "id": "src_app_admininstitutionspage",
       "community": 0,
-      "norm_label": "admininstitutionspage"
+      "norm_label": "admininstitutionspage",
+      "id": "src_app_admininstitutionspage"
     },
     {
       "label": "AdminInstitutionCodesPage",
@@ -729,9 +829,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L152",
       "_origin": "ast",
-      "id": "src_app_admininstitutioncodespage",
       "community": 0,
-      "norm_label": "admininstitutioncodespage"
+      "norm_label": "admininstitutioncodespage",
+      "id": "src_app_admininstitutioncodespage"
     },
     {
       "label": "AdminInstitutionStaffPage",
@@ -739,9 +839,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L153",
       "_origin": "ast",
-      "id": "src_app_admininstitutionstaffpage",
       "community": 0,
-      "norm_label": "admininstitutionstaffpage"
+      "norm_label": "admininstitutionstaffpage",
+      "id": "src_app_admininstitutionstaffpage"
     },
     {
       "label": "AdminAnalyticsDashboard",
@@ -749,9 +849,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L154",
       "_origin": "ast",
-      "id": "src_app_adminanalyticsdashboard",
       "community": 0,
-      "norm_label": "adminanalyticsdashboard"
+      "norm_label": "adminanalyticsdashboard",
+      "id": "src_app_adminanalyticsdashboard"
     },
     {
       "label": "AdminWeightAuditPage",
@@ -759,9 +859,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L155",
       "_origin": "ast",
-      "id": "src_app_adminweightauditpage",
       "community": 0,
-      "norm_label": "adminweightauditpage"
+      "norm_label": "adminweightauditpage",
+      "id": "src_app_adminweightauditpage"
     },
     {
       "label": "EstablishmentDashboardPage",
@@ -769,9 +869,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L156",
       "_origin": "ast",
-      "id": "src_app_establishmentdashboardpage",
       "community": 0,
-      "norm_label": "establishmentdashboardpage"
+      "norm_label": "establishmentdashboardpage",
+      "id": "src_app_establishmentdashboardpage"
     },
     {
       "label": "RgpdCompliancePage",
@@ -779,9 +879,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L157",
       "_origin": "ast",
-      "id": "src_app_rgpdcompliancepage",
       "community": 0,
-      "norm_label": "rgpdcompliancepage"
+      "norm_label": "rgpdcompliancepage",
+      "id": "src_app_rgpdcompliancepage"
     },
     {
       "label": "LegalVersionsPage",
@@ -789,9 +889,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L158",
       "_origin": "ast",
-      "id": "src_app_legalversionspage",
       "community": 0,
-      "norm_label": "legalversionspage"
+      "norm_label": "legalversionspage",
+      "id": "src_app_legalversionspage"
     },
     {
       "label": "SecurityAuditPage",
@@ -799,9 +899,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L159",
       "_origin": "ast",
-      "id": "src_app_securityauditpage",
       "community": 0,
-      "norm_label": "securityauditpage"
+      "norm_label": "securityauditpage",
+      "id": "src_app_securityauditpage"
     },
     {
       "label": "AdminMetiers",
@@ -809,9 +909,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L160",
       "_origin": "ast",
-      "id": "src_app_adminmetiers",
       "community": 0,
-      "norm_label": "adminmetiers"
+      "norm_label": "adminmetiers",
+      "id": "src_app_adminmetiers"
     },
     {
       "label": "AdminSettingsPage",
@@ -819,9 +919,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L161",
       "_origin": "ast",
-      "id": "src_app_adminsettingspage",
       "community": 0,
-      "norm_label": "adminsettingspage"
+      "norm_label": "adminsettingspage",
+      "id": "src_app_adminsettingspage"
     },
     {
       "label": "ContentManagementPage",
@@ -829,9 +929,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L162",
       "_origin": "ast",
-      "id": "src_app_contentmanagementpage",
       "community": 0,
-      "norm_label": "contentmanagementpage"
+      "norm_label": "contentmanagementpage",
+      "id": "src_app_contentmanagementpage"
     },
     {
       "label": "NotFoundPage",
@@ -839,9 +939,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L164",
       "_origin": "ast",
-      "id": "src_app_notfoundpage",
       "community": 0,
-      "norm_label": "notfoundpage"
+      "norm_label": "notfoundpage",
+      "id": "src_app_notfoundpage"
     },
     {
       "label": "RedirectWithParam()",
@@ -849,9 +949,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L166",
       "_origin": "ast",
-      "id": "src_app_redirectwithparam",
       "community": 0,
-      "norm_label": "redirectwithparam()"
+      "norm_label": "redirectwithparam()",
+      "id": "src_app_redirectwithparam"
     },
     {
       "label": "AppRouteErrorBoundary",
@@ -859,9 +959,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L172",
       "_origin": "ast",
-      "id": "src_app_approuteerrorboundary",
       "community": 159,
-      "norm_label": "approuteerrorboundary"
+      "norm_label": "approuteerrorboundary",
+      "id": "src_app_approuteerrorboundary"
     },
     {
       "label": ".constructor()",
@@ -869,9 +969,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L173",
       "_origin": "ast",
-      "id": "src_app_approuteerrorboundary_constructor",
       "community": 159,
-      "norm_label": ".constructor()"
+      "norm_label": ".constructor()",
+      "id": "src_app_approuteerrorboundary_constructor"
     },
     {
       "label": ".getDerivedStateFromError()",
@@ -879,9 +979,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L178",
       "_origin": "ast",
-      "id": "src_app_approuteerrorboundary_getderivedstatefromerror",
       "community": 159,
-      "norm_label": ".getderivedstatefromerror()"
+      "norm_label": ".getderivedstatefromerror()",
+      "id": "src_app_approuteerrorboundary_getderivedstatefromerror"
     },
     {
       "label": ".componentDidCatch()",
@@ -889,9 +989,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L182",
       "_origin": "ast",
-      "id": "src_app_approuteerrorboundary_componentdidcatch",
       "community": 159,
-      "norm_label": ".componentdidcatch()"
+      "norm_label": ".componentdidcatch()",
+      "id": "src_app_approuteerrorboundary_componentdidcatch"
     },
     {
       "label": ".render()",
@@ -899,9 +999,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L186",
       "_origin": "ast",
-      "id": "src_app_approuteerrorboundary_render",
       "community": 159,
-      "norm_label": ".render()"
+      "norm_label": ".render()",
+      "id": "src_app_approuteerrorboundary_render"
     },
     {
       "label": "PageContent()",
@@ -909,9 +1009,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L205",
       "_origin": "ast",
-      "id": "src_app_pagecontent",
       "community": 107,
-      "norm_label": "pagecontent()"
+      "norm_label": "pagecontent()",
+      "id": "src_app_pagecontent"
     },
     {
       "label": "App()",
@@ -919,9 +1019,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L456",
       "_origin": "ast",
-      "id": "src_app_app",
       "community": 107,
-      "norm_label": "app()"
+      "norm_label": "app()",
+      "id": "src_app_app"
     },
     {
       "label": "RecommendedActionsSection.jsx",
@@ -6744,26 +6844,6 @@
       "id": "admin_etablissementstab_etablissementstab"
     },
     {
-      "label": "UserManagement.jsx",
-      "file_type": "code",
-      "source_file": "src/components/admin/UserManagement.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 1,
-      "norm_label": "usermanagement.jsx",
-      "id": "admin_usermanagement"
-    },
-    {
-      "label": "UserManagement()",
-      "file_type": "code",
-      "source_file": "src/components/admin/UserManagement.jsx",
-      "source_location": "L41",
-      "_origin": "ast",
-      "community": 1,
-      "norm_label": "usermanagement()",
-      "id": "admin_usermanagement_usermanagement"
-    },
-    {
       "label": "BlogForm.jsx",
       "file_type": "code",
       "source_file": "src/components/admin/forms/BlogForm.jsx",
@@ -7132,46 +7212,6 @@
       "community": 1,
       "norm_label": "adminopscenter()",
       "id": "sections_adminopscenter_adminopscenter"
-    },
-    {
-      "label": "AdminOverview.jsx",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminOverview.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 463,
-      "norm_label": "adminoverview.jsx",
-      "id": "sections_adminoverview"
-    },
-    {
-      "label": "AdminOverview()",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminOverview.jsx",
-      "source_location": "L8",
-      "_origin": "ast",
-      "community": 463,
-      "norm_label": "adminoverview()",
-      "id": "sections_adminoverview_adminoverview"
-    },
-    {
-      "label": "AdminQA.jsx",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminQA.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 1,
-      "norm_label": "adminqa.jsx",
-      "id": "sections_adminqa"
-    },
-    {
-      "label": "AdminQA()",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminQA.jsx",
-      "source_location": "L14",
-      "_origin": "ast",
-      "community": 1,
-      "norm_label": "adminqa()",
-      "id": "sections_adminqa_adminqa"
     },
     {
       "label": "AdminSecurity.jsx",
@@ -18832,46 +18872,6 @@
       "community": 95,
       "norm_label": "useestablishment()",
       "id": "contexts_establishmentcontext_useestablishment"
-    },
-    {
-      "label": "SupabaseAuthContext.jsx",
-      "file_type": "code",
-      "source_file": "src/contexts/SupabaseAuthContext.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "supabaseauthcontext.jsx",
-      "id": "contexts_supabaseauthcontext"
-    },
-    {
-      "label": "AuthContext",
-      "file_type": "code",
-      "source_file": "src/contexts/SupabaseAuthContext.jsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "authcontext",
-      "id": "contexts_supabaseauthcontext_authcontext"
-    },
-    {
-      "label": "AuthProvider()",
-      "file_type": "code",
-      "source_file": "src/contexts/SupabaseAuthContext.jsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "authprovider()",
-      "id": "contexts_supabaseauthcontext_authprovider"
-    },
-    {
-      "label": "useAuth()",
-      "file_type": "code",
-      "source_file": "src/contexts/SupabaseAuthContext.jsx",
-      "source_location": "L272",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "useauth()",
-      "id": "contexts_supabaseauthcontext_useauth"
     },
     {
       "label": "SystemSettingsContext.jsx",
@@ -32218,6 +32218,1111 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/UserManagement.jsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_usermanagement",
+      "target": "admin_usermanagement_usermanagement"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/admin/UserManagement.jsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "admin_usermanagement_usermanagement",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/sections/AdminOverview.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_adminoverview",
+      "target": "sections_adminoverview_adminoverview"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/sections/AdminQA.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_adminqa",
+      "target": "sections_adminqa_adminqa"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/admin/sections/AdminQA.jsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "sections_adminqa_adminqa",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/contexts/SupabaseAuthContext.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "contexts_supabaseauthcontext",
+      "target": "contexts_supabaseauthcontext_authcontext"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/contexts/SupabaseAuthContext.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "contexts_supabaseauthcontext",
+      "target": "contexts_supabaseauthcontext_authprovider"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/contexts/SupabaseAuthContext.jsx",
+      "source_location": "L272",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "contexts_supabaseauthcontext",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/contexts/SupabaseAuthContext.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "contexts_supabaseauthcontext_authprovider",
+      "target": "hooks_usesafetoast_usesafetoast"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/admin/AdminSidebar.jsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "admin_adminsidebar_adminsidebar",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/admin/RgpdCompliancePage.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "admin_rgpdcompliancepage_rgpdcompliancepage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/admin/SecurityAuditPage.jsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "admin_securityauditpage_securityauditpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/auth/AuthModal.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "auth_authmodal_authmodal",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/auth/EnhancedSignupForm.jsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "auth_enhancedsignupform_enhancedsignupform",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/auth/LoginForm.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "auth_loginform_loginform",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/auth/TestGateModal.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "auth_testgatemodal_testgatemodal",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/blog/BlogCommentForm.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "blog_blogcommentform_blogcommentform",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "cleo_chatinterface_messagebubble",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "cleo_cleo_cleo",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cleo/CleoActivitySystem.jsx",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "cleo_cleoactivitysystem_cleoactivitysystem",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cleo/GoalEditor.jsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "cleo_goaleditor_goaleditor",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cleo/InterviewSimulation.jsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "cleo_interviewsimulation_interviewsimulation",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/AdminButton.jsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "components_adminbutton_adminbutton",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/AlternanceFinder.jsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "components_alternancefinder_alternancefinder",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/BugReportButton.jsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "components_bugreportbutton_bugreportbutton",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/BugReportDialog.jsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "components_bugreportdialog_bugreportdialog",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/CleoWidget.jsx",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "components_cleowidget_cleowidget",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/CookieConsentBanner.jsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "components_cookieconsentbanner_cookieconsentbanner",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/Dashboard.jsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "components_dashboard_dashboard",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/DataDeletionRequest.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "components_datadeletionrequest_datadeletionrequest",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/Header.jsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "components_header_header",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/MessagingSystem.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "components_messagingsystem_messagingsystem",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/NotificationsSystem.jsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "components_notificationssystem_notificationssystem",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/ProfileTest.jsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "components_profiletest_profiletest",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/RgpdDataExport.jsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "components_rgpddataexport_rgpddataexport",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/SpontaneousApplicationFinder.jsx",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "components_spontaneousapplicationfinder_spontaneousapplicationfinder",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/SubscriptionDebugPanel.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "components_subscriptiondebugpanel_subscriptiondebugpanel",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/TestAuthFlow.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "components_testauthflow_testauthflow",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/UpgradeButton.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "components_upgradebutton_upgradebutton",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/context/NotificationContext.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "context_notificationcontext_notificationprovider",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/contexts/EstablishmentContext.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "contexts_establishmentcontext_establishmentprovider",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/contexts/PlanLimitationContext.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "contexts_planlimitationcontext_planlimitationprovider",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cv/CVFormDataManager.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "cv_cvformdatamanager_cvformdatamanager",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/dashboard/AICoachWidget.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "dashboard_aicoachwidget_aicoachwidget",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/dashboard/ClusterAnalysisComponent.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "dashboard_clusteranalysiscomponent_clusteranalysiscomponent",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentEditForm.jsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "dashboard_establishmenteditform_establishmenteditform",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/establishment/EstablishmentSidebar.jsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "establishment_establishmentsidebar_establishmentsidebar",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/feedback/FeedbackWidget.jsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "feedback_feedbackwidget_feedbackwidget",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/hooks/useAdminNavigation.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "hooks_useadminnavigation_useadminnavigation",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/hooks/useMetierFeedback.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "hooks_usemetierfeedback_usemetierfeedback",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/hooks/useSubscriptionAccess.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "hooks_usesubscriptionaccess_usesubscriptionaccess",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/hooks/useTestResults.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "hooks_usetestresults_usetestresults",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/hooks/useUserProfile.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "hooks_useuserprofile_useuserprofile",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/hooks/useUserSubscription.js",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "hooks_useusersubscription_useusersubscription",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/legal/PreferencesRGPDPage.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "legal_preferencesrgpdpage_preferencesrgpdpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/legal/RGPDPreferences.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "legal_rgpdpreferences_rgpdpreferences",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/lib/AdminRoute.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "lib_adminroute_adminroute",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/lib/EstablishmentProtectedRoute.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "lib_establishmentprotectedroute_establishmentprotectedroute",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/lib/ProtectedAdminRoute.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "lib_protectedadminroute_protectedadminroute",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/lib/ProtectedRoute.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "lib_protectedroute_protectedroute",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/metiers/MetierRatingComponent.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "metiers_metierratingcomponent_metierratingcomponent",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/notifications/NotificationBell.jsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "notifications_notificationbell_notificationbell",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/notifications/NotificationCenter.jsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "notifications_notificationcenter_notificationcenter",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/notifications/NotificationPreferences.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "notifications_notificationpreferences_notificationpreferences",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/AccountPage.jsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "pages_accountpage_accountpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/ActionPlanPage.jsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "pages_actionplanpage_actionplanpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/AdminDashboardPage.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "pages_admindashboardpage_admindashboardpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/AuthCallback.jsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "pages_authcallback_authcallback",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/AuthPage.jsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "pages_authpage_authpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/CleoPage.jsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "pages_cleopage_cleopage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/CoverLetterBuilderPage.jsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "pages_coverletterbuilderpage_coverletterbuilderpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/CVBuilderPage.jsx",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "pages_cvbuilderpage_cvbuilderpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/EmailConfirmationPending.jsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "pages_emailconfirmationpending_emailconfirmationpending",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/EstablishmentDashboardPage.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "pages_establishmentdashboardpage_establishmentdashboardpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/FormationDetailPage.jsx",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "pages_formationdetailpage_formationdetailpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/InterviewPage.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "pages_interviewpage_interviewpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/JobDetailPage.jsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "pages_jobdetailpage_jobdetailpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/LearningPathPage.jsx",
+      "source_location": "L977",
+      "weight": 1.0,
+      "source": "pages_learningpathpage_learningpathpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/ManageSubscriptionPage.jsx",
+      "source_location": "L237",
+      "weight": 1.0,
+      "source": "pages_managesubscriptionpage_managesubscriptionpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/MetierDetailPage.jsx",
+      "source_location": "L137",
+      "weight": 1.0,
+      "source": "pages_metierdetailpage_metierdetailpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/MyDocumentsPage.jsx",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "pages_mydocumentspage_mydocumentspage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/OffersFormationsPage.jsx",
+      "source_location": "L150",
+      "weight": 1.0,
+      "source": "pages_offersformationspage_offersformationspage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PersonalizedPlanPage.jsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "pages_personalizedplanpage_personalizedplanpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/PlansPage.jsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "pages_planspage_planspage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/ProfilePage.jsx",
+      "source_location": "L150",
+      "weight": 1.0,
+      "source": "pages_profilepage_profilepage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/ProfileResultsPage.jsx",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "pages_profileresultspage_profileresultspage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/RecommendationsPage.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "pages_recommendationspage_recommendationspage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/SettingsPage.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "pages_settingspage_settingspage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/SignupPage.jsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "pages_signuppage_signuppage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/TestHistoryPage.jsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "pages_testhistorypage_testhistorypage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/TestPage.jsx",
+      "source_location": "L165",
+      "weight": 1.0,
+      "source": "pages_testpage_testpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/UpgradePlan.jsx",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "pages_upgradeplan_upgradeplan",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/plans/CreatePlanModal.jsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "plans_createplanmodal_createplanmodal",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/plans/PlanHistory.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "plans_planhistory_planhistory",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/dashboard/sections/CoverLettersSection.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "sections_coverletterssection_coverletterssection",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/dashboard/sections/CurrentPlanSection.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "sections_currentplansection_currentplancontent",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/dashboard/settings/BugReportToggle.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "settings_bugreporttoggle_bugreporttoggle",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/App.jsx",
+      "source_location": "L220",
+      "weight": 1.0,
+      "source": "src_app_pagecontent",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/user/CookiesPreferencesPage.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "user_cookiespreferencespage_cookiespreferencespage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/user/RgpdPage.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "user_rgpdpage_rgpdpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/v1-placeholders/TrackingPage.jsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "v1_placeholders_trackingpage_trackingpage",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/App.jsx",
       "source_location": "L114",
       "weight": 1.0,
@@ -33131,17 +34236,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/App.jsx",
-      "source_location": "L220",
-      "weight": 1.0,
-      "source": "src_app_pagecontent",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/App.jsx",
       "source_location": "L224",
       "weight": 1.0,
       "source": "src_app_pagecontent",
@@ -33543,17 +34637,6 @@
       "confidence_score": 1.0,
       "source": "pages_personalizedplanpage",
       "target": "pages_personalizedplanpage_personalizedplanpage"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/PersonalizedPlanPage.jsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "source": "pages_personalizedplanpage_personalizedplanpage",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -34076,17 +35159,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L53",
-      "weight": 1.0,
-      "source": "cleo_cleo_cleo",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cleo/Cleo.jsx",
       "source_location": "L454",
       "weight": 1.0,
       "source": "cleo_cleo_cleo",
@@ -34121,17 +35193,6 @@
       "confidence_score": 1.0,
       "source": "contexts_planlimitationcontext",
       "target": "contexts_planlimitationcontext_useplanlimitation"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/contexts/PlanLimitationContext.jsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "contexts_planlimitationcontext_planlimitationprovider",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -34593,17 +35654,6 @@
       "confidence_score": 1.0,
       "source": "pages_testpage",
       "target": "pages_testpage_testpage"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/TestPage.jsx",
-      "source_location": "L165",
-      "weight": 1.0,
-      "source": "pages_testpage_testpage",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -37175,17 +38225,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/AdminButton.jsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "source": "components_adminbutton_adminbutton",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/AdminButton.jsx",
       "source_location": "L20",
       "weight": 1.0,
       "source": "components_adminbutton_adminbutton",
@@ -37427,17 +38466,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/AlternanceFinder.jsx",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "components_alternancefinder_alternancefinder",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/AlternanceFinder.jsx",
       "source_location": "L19",
       "weight": 1.0,
       "source": "components_alternancefinder_alternancefinder",
@@ -37583,17 +38611,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/BugReportButton.jsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "source": "components_bugreportbutton_bugreportbutton",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/BugReportButton.jsx",
       "source_location": "L17",
       "weight": 1.0,
       "source": "components_bugreportbutton_bugreportbutton",
@@ -37608,17 +38625,6 @@
       "confidence_score": 1.0,
       "source": "components_bugreportdialog",
       "target": "components_bugreportdialog_bugreportdialog"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/BugReportDialog.jsx",
-      "source_location": "L23",
-      "weight": 1.0,
-      "source": "components_bugreportdialog_bugreportdialog",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -37697,17 +38703,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/CleoWidget.jsx",
-      "source_location": "L112",
-      "weight": 1.0,
-      "source": "components_cleowidget_cleowidget",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/CleoWidget.jsx",
       "source_location": "L114",
       "weight": 1.0,
       "source": "components_cleowidget_cleowidget",
@@ -37756,17 +38751,6 @@
       "target": "components_cookieconsentbanner_cookieconsentbanner"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/CookieConsentBanner.jsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "components_cookieconsentbanner_cookieconsentbanner",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/Dashboard.jsx",
@@ -37775,17 +38759,6 @@
       "confidence_score": 1.0,
       "source": "components_dashboard",
       "target": "components_dashboard_dashboard"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/Dashboard.jsx",
-      "source_location": "L21",
-      "weight": 1.0,
-      "source": "components_dashboard_dashboard",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -37807,17 +38780,6 @@
       "confidence_score": 1.0,
       "source": "components_datadeletionrequest",
       "target": "components_datadeletionrequest_datadeletionrequest"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/DataDeletionRequest.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "components_datadeletionrequest_datadeletionrequest",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -38093,17 +39055,6 @@
       "confidence_score": 1.0,
       "source": "components_header",
       "target": "components_header_header"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/Header.jsx",
-      "source_location": "L28",
-      "weight": 1.0,
-      "source": "components_header_header",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -38481,17 +39432,6 @@
       "target": "components_messagingsystem_messagingsystem"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/MessagingSystem.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "components_messagingsystem_messagingsystem",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/MetierErrorState.jsx",
@@ -38667,17 +39607,6 @@
       "target": "components_notificationssystem_notificationssystem"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/NotificationsSystem.jsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "components_notificationssystem_notificationssystem",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/OrganizationDashboard.jsx",
@@ -38808,17 +39737,6 @@
       "confidence_score": 1.0,
       "source": "components_profiletest",
       "target": "components_profiletest_questionicons"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/ProfileTest.jsx",
-      "source_location": "L26",
-      "weight": 1.0,
-      "source": "components_profiletest_profiletest",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "contains",
@@ -38981,17 +39899,6 @@
       "confidence_score": 1.0,
       "source": "components_rgpddataexport",
       "target": "components_rgpddataexport_rgpddataexport"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/RgpdDataExport.jsx",
-      "source_location": "L22",
-      "weight": 1.0,
-      "source": "components_rgpddataexport_rgpddataexport",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -39396,17 +40303,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/SpontaneousApplicationFinder.jsx",
-      "source_location": "L61",
-      "weight": 1.0,
-      "source": "components_spontaneousapplicationfinder_spontaneousapplicationfinder",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/SpontaneousApplicationFinder.jsx",
       "source_location": "L60",
       "weight": 1.0,
       "source": "components_spontaneousapplicationfinder_spontaneousapplicationfinder",
@@ -39431,17 +40327,6 @@
       "confidence_score": 1.0,
       "source": "components_subscriptiondebugpanel",
       "target": "components_subscriptiondebugpanel_subscriptiondebugpanel"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/SubscriptionDebugPanel.jsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "components_subscriptiondebugpanel_subscriptiondebugpanel",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -39557,17 +40442,6 @@
       "target": "components_testauthflow_testauthflow"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/TestAuthFlow.jsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "components_testauthflow_testauthflow",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/TestAuthModal.jsx",
@@ -39596,17 +40470,6 @@
       "confidence_score": 1.0,
       "source": "components_upgradebutton",
       "target": "components_upgradebutton_upgradebutton"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/UpgradeButton.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "source": "components_upgradebutton_upgradebutton",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -40025,17 +40888,6 @@
       "target": "admin_adminsidebar_adminsidebar"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/admin/AdminSidebar.jsx",
-      "source_location": "L32",
-      "weight": 1.0,
-      "source": "admin_adminsidebar_adminsidebar",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/admin/EtablissementsTab.jsx",
@@ -40055,27 +40907,6 @@
       "confidence_score": 1.0,
       "source": "admin_etablissementstab",
       "target": "sections_adminestablishments"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/UserManagement.jsx",
-      "source_location": "L41",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "admin_usermanagement",
-      "target": "admin_usermanagement_usermanagement"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/admin/UserManagement.jsx",
-      "source_location": "L51",
-      "weight": 1.0,
-      "source": "admin_usermanagement_usermanagement",
-      "target": "ui_use_toast_usetoast"
     },
     {
       "relation": "contains",
@@ -40408,37 +41239,6 @@
       "source_location": "L14",
       "weight": 1.0,
       "source": "sections_adminopscenter_adminopscenter",
-      "target": "ui_use_toast_usetoast"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/sections/AdminOverview.jsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_adminoverview",
-      "target": "sections_adminoverview_adminoverview"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/sections/AdminQA.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_adminqa",
-      "target": "sections_adminqa_adminqa"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/admin/sections/AdminQA.jsx",
-      "source_location": "L18",
-      "weight": 1.0,
-      "source": "sections_adminqa_adminqa",
       "target": "ui_use_toast_usetoast"
     },
     {
@@ -41259,17 +42059,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentEditForm.jsx",
-      "source_location": "L22",
-      "weight": 1.0,
-      "source": "dashboard_establishmenteditform_establishmenteditform",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentEditForm.jsx",
       "source_location": "L21",
       "weight": 1.0,
       "source": "dashboard_establishmenteditform_establishmenteditform",
@@ -41703,17 +42492,6 @@
       "target": "auth_authmodal_authmodal"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/auth/AuthModal.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "auth_authmodal_authmodal",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/auth/AuthTabs.jsx",
@@ -41753,17 +42531,6 @@
       "confidence_score": 1.0,
       "source": "auth_enhancedsignupform",
       "target": "auth_enhancedsignupform_interests_list"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/auth/EnhancedSignupForm.jsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "auth_enhancedsignupform_enhancedsignupform",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "contains",
@@ -41819,17 +42586,6 @@
       "target": "auth_passwordinput"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/auth/LoginForm.jsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "auth_loginform_loginform",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/auth/PasswordInput.jsx",
@@ -41881,17 +42637,6 @@
       "target": "auth_testgatemodal_testgatemodal"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/auth/TestGateModal.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "source": "auth_testgatemodal_testgatemodal",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/blog/BlogCard.jsx",
@@ -41910,17 +42655,6 @@
       "confidence_score": 1.0,
       "source": "blog_blogcommentform",
       "target": "blog_blogcommentform_blogcommentform"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/blog/BlogCommentForm.jsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "blog_blogcommentform_blogcommentform",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -42120,17 +42854,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L19",
-      "weight": 1.0,
-      "source": "cleo_chatinterface_messagebubble",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cleo/ChatInterface.jsx",
       "source_location": "L26",
       "weight": 1.0,
       "source": "cleo_chatinterface_messagebubble",
@@ -42199,17 +42922,6 @@
       "weight": 1.0,
       "source": "cleo_cleoactivitysystem_activitycard",
       "target": "lib_utils_cn"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cleo/CleoActivitySystem.jsx",
-      "source_location": "L72",
-      "weight": 1.0,
-      "source": "cleo_cleoactivitysystem_cleoactivitysystem",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -42576,17 +43288,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/cleo/GoalEditor.jsx",
-      "source_location": "L21",
-      "weight": 1.0,
-      "source": "cleo_goaleditor_goaleditor",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cleo/GoalEditor.jsx",
       "source_location": "L22",
       "weight": 1.0,
       "source": "cleo_goaleditor_goaleditor",
@@ -42622,17 +43323,6 @@
       "confidence_score": 1.0,
       "source": "cleo_interviewsimulation",
       "target": "cleo_interviewsimulation_interviewsimulation"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cleo/InterviewSimulation.jsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "source": "cleo_interviewsimulation_interviewsimulation",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "contains",
@@ -43251,17 +43941,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/cv/CVFormDataManager.jsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "cv_cvformdatamanager_cvformdatamanager",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cv/CVFormDataManager.jsx",
       "source_location": "L9",
       "weight": 1.0,
       "source": "cv_cvformdatamanager_cvformdatamanager",
@@ -43833,17 +44512,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/dashboard/AICoachWidget.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "dashboard_aicoachwidget_aicoachwidget",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/dashboard/AICoachWidget.jsx",
       "source_location": "L82",
       "weight": 1.0,
       "source": "dashboard_aicoachwidget_aicoachwidget",
@@ -43909,17 +44577,6 @@
       "confidence_score": 1.0,
       "source": "dashboard_clusteranalysiscomponent",
       "target": "dashboard_clusteranalysiscomponent_clusteranalysiscomponent"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/dashboard/ClusterAnalysisComponent.jsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "dashboard_clusteranalysiscomponent_clusteranalysiscomponent",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "contains",
@@ -44369,17 +45026,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/dashboard/sections/CoverLettersSection.jsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "sections_coverletterssection_coverletterssection",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/dashboard/sections/CoverLettersSection.jsx",
       "source_location": "L14",
       "weight": 1.0,
       "source": "sections_coverletterssection_coverletterssection",
@@ -44404,17 +45050,6 @@
       "confidence_score": 1.0,
       "source": "sections_currentplansection",
       "target": "sections_currentplansection_currentplansection"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/dashboard/sections/CurrentPlanSection.jsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "sections_currentplansection_currentplancontent",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -44537,17 +45172,6 @@
       "confidence_score": 1.0,
       "source": "settings_bugreporttoggle",
       "target": "settings_bugreporttoggle_bugreporttoggle"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/dashboard/settings/BugReportToggle.jsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "settings_bugreporttoggle_bugreporttoggle",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "contains",
@@ -44696,17 +45320,6 @@
       "weight": 1.0,
       "source": "establishment_establishmentsidebar_establishmentsidebar",
       "target": "contexts_establishmentcontext_useestablishment"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/establishment/EstablishmentSidebar.jsx",
-      "source_location": "L23",
-      "weight": 1.0,
-      "source": "establishment_establishmentsidebar_establishmentsidebar",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -45545,17 +46158,6 @@
       "confidence_score": 1.0,
       "source": "feedback_feedbackwidget",
       "target": "feedback_feedbackwidget_feedbackwidget"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/feedback/FeedbackWidget.jsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "feedback_feedbackwidget_feedbackwidget",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -46783,17 +47385,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/legal/RGPDPreferences.jsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "legal_rgpdpreferences_rgpdpreferences",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/legal/RGPDPreferences.jsx",
       "source_location": "L11",
       "weight": 1.0,
       "source": "legal_rgpdpreferences_rgpdpreferences",
@@ -47223,17 +47814,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/metiers/MetierRatingComponent.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "source": "metiers_metierratingcomponent_metierratingcomponent",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/metiers/MetierRatingComponent.jsx",
       "source_location": "L22",
       "weight": 1.0,
       "source": "metiers_metierratingcomponent_metierratingcomponent",
@@ -47384,17 +47964,6 @@
       "target": "notifications_notificationbell_notificationbell"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/notifications/NotificationBell.jsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "source": "notifications_notificationbell_notificationbell",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/notifications/NotificationCenter.jsx",
@@ -47451,17 +48020,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/notifications/NotificationCenter.jsx",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "notifications_notificationcenter_notificationcenter",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/notifications/NotificationCenter.jsx",
       "source_location": "L36",
       "weight": 1.0,
       "source": "notifications_notificationcenter_notificationcenter",
@@ -47476,17 +48034,6 @@
       "confidence_score": 1.0,
       "source": "notifications_notificationpreferences",
       "target": "notifications_notificationpreferences_notificationpreferences"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/notifications/NotificationPreferences.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "source": "notifications_notificationpreferences_notificationpreferences",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -47575,17 +48122,6 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/plans/CreatePlanModal.jsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "plans_createplanmodal_createplanmodal",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/plans/CreatePlanModal.jsx",
       "source_location": "L12",
       "weight": 1.0,
       "source": "plans_createplanmodal_createplanmodal",
@@ -47600,17 +48136,6 @@
       "confidence_score": 1.0,
       "source": "plans_planhistory",
       "target": "plans_planhistory_planhistory"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/plans/PlanHistory.jsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "plans_planhistory_planhistory",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "calls",
@@ -52935,17 +53460,6 @@
       "target": "v1_placeholders_trackingpage_trackingpage"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/v1-placeholders/TrackingPage.jsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "source": "v1_placeholders_trackingpage_trackingpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/config/matchingAlgorithmConfig.js",
@@ -53096,17 +53610,6 @@
       "target": "context_notificationcontext_usenotifications"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/context/NotificationContext.jsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "context_notificationcontext_notificationprovider",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/context/PersistenceContext.jsx",
@@ -53228,509 +53731,6 @@
       "confidence_score": 1.0,
       "source": "contexts_establishmentcontext",
       "target": "contexts_establishmentcontext_useestablishment"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/contexts/EstablishmentContext.jsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "contexts_establishmentcontext_establishmentprovider",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/contexts/SupabaseAuthContext.jsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "contexts_supabaseauthcontext",
-      "target": "contexts_supabaseauthcontext_authcontext"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/contexts/SupabaseAuthContext.jsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "contexts_supabaseauthcontext",
-      "target": "contexts_supabaseauthcontext_authprovider"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/contexts/SupabaseAuthContext.jsx",
-      "source_location": "L272",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "contexts_supabaseauthcontext",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/contexts/SupabaseAuthContext.jsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "contexts_supabaseauthcontext_authprovider",
-      "target": "hooks_usesafetoast_usesafetoast"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/admin/RgpdCompliancePage.jsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "admin_rgpdcompliancepage_rgpdcompliancepage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/admin/SecurityAuditPage.jsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "admin_securityauditpage_securityauditpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/hooks/useAdminNavigation.js",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "hooks_useadminnavigation_useadminnavigation",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/hooks/useMetierFeedback.js",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "hooks_usemetierfeedback_usemetierfeedback",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/hooks/useSubscriptionAccess.js",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "hooks_usesubscriptionaccess_usesubscriptionaccess",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/hooks/useTestResults.js",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "hooks_usetestresults_usetestresults",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/hooks/useUserProfile.js",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "hooks_useuserprofile_useuserprofile",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/hooks/useUserSubscription.js",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "hooks_useusersubscription_useusersubscription",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/legal/PreferencesRGPDPage.jsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "legal_preferencesrgpdpage_preferencesrgpdpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/lib/AdminRoute.jsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "lib_adminroute_adminroute",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/lib/EstablishmentProtectedRoute.jsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "lib_establishmentprotectedroute_establishmentprotectedroute",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/lib/ProtectedAdminRoute.jsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "lib_protectedadminroute_protectedadminroute",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/lib/ProtectedRoute.jsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "lib_protectedroute_protectedroute",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/AccountPage.jsx",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "pages_accountpage_accountpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/ActionPlanPage.jsx",
-      "source_location": "L17",
-      "weight": 1.0,
-      "source": "pages_actionplanpage_actionplanpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/AdminDashboardPage.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "pages_admindashboardpage_admindashboardpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/AuthCallback.jsx",
-      "source_location": "L26",
-      "weight": 1.0,
-      "source": "pages_authcallback_authcallback",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/AuthPage.jsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "source": "pages_authpage_authpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/CleoPage.jsx",
-      "source_location": "L25",
-      "weight": 1.0,
-      "source": "pages_cleopage_cleopage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/CoverLetterBuilderPage.jsx",
-      "source_location": "L25",
-      "weight": 1.0,
-      "source": "pages_coverletterbuilderpage_coverletterbuilderpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/CVBuilderPage.jsx",
-      "source_location": "L45",
-      "weight": 1.0,
-      "source": "pages_cvbuilderpage_cvbuilderpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/EmailConfirmationPending.jsx",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "pages_emailconfirmationpending_emailconfirmationpending",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/EstablishmentDashboardPage.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "pages_establishmentdashboardpage_establishmentdashboardpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/FormationDetailPage.jsx",
-      "source_location": "L40",
-      "weight": 1.0,
-      "source": "pages_formationdetailpage_formationdetailpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/InterviewPage.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "pages_interviewpage_interviewpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/JobDetailPage.jsx",
-      "source_location": "L37",
-      "weight": 1.0,
-      "source": "pages_jobdetailpage_jobdetailpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/LearningPathPage.jsx",
-      "source_location": "L977",
-      "weight": 1.0,
-      "source": "pages_learningpathpage_learningpathpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/ManageSubscriptionPage.jsx",
-      "source_location": "L237",
-      "weight": 1.0,
-      "source": "pages_managesubscriptionpage_managesubscriptionpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/MetierDetailPage.jsx",
-      "source_location": "L137",
-      "weight": 1.0,
-      "source": "pages_metierdetailpage_metierdetailpage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/MyDocumentsPage.jsx",
-      "source_location": "L42",
-      "weight": 1.0,
-      "source": "pages_mydocumentspage_mydocumentspage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/OffersFormationsPage.jsx",
-      "source_location": "L150",
-      "weight": 1.0,
-      "source": "pages_offersformationspage_offersformationspage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/PlansPage.jsx",
-      "source_location": "L31",
-      "weight": 1.0,
-      "source": "pages_planspage_planspage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/ProfilePage.jsx",
-      "source_location": "L150",
-      "weight": 1.0,
-      "source": "pages_profilepage_profilepage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/ProfileResultsPage.jsx",
-      "source_location": "L93",
-      "weight": 1.0,
-      "source": "pages_profileresultspage_profileresultspage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/RecommendationsPage.jsx",
-      "source_location": "L19",
-      "weight": 1.0,
-      "source": "pages_recommendationspage_recommendationspage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/SettingsPage.jsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "pages_settingspage_settingspage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/SignupPage.jsx",
-      "source_location": "L26",
-      "weight": 1.0,
-      "source": "pages_signuppage_signuppage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/TestHistoryPage.jsx",
-      "source_location": "L17",
-      "weight": 1.0,
-      "source": "pages_testhistorypage_testhistorypage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/UpgradePlan.jsx",
-      "source_location": "L53",
-      "weight": 1.0,
-      "source": "pages_upgradeplan_upgradeplan",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/user/CookiesPreferencesPage.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "source": "user_cookiespreferencespage_cookiespreferencespage",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/pages/user/RgpdPage.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "source": "user_rgpdpage_rgpdpage",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "contains",
@@ -67033,5 +67033,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "501b046becf5e17aeee39b4bf4d1e2196e271c75"
+  "built_at_commit": "7b6a0db4ce37f9bea5e6cf98dc122deaee20af8e"
 }
