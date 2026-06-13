@@ -28,6 +28,55 @@ const FIELD_LABELS = {
   constraints: 'contraintes salariales',
 };
 
+const renderSimpleMarkdown = (text) => {
+  const lines = String(text || '').split('\n');
+  const elements = [];
+  let listItems = [];
+
+  const flushList = (key) => {
+    if (listItems.length > 0) {
+      elements.push(
+        <ul key={`list-${key}`} className="list-disc list-inside my-1 space-y-0.5">
+          {listItems}
+        </ul>
+      );
+      listItems = [];
+    }
+  };
+
+  const parseInline = (str, keyPrefix) => {
+    const parts = [];
+    const re = /(\*\*(.+?)\*\*|\*(.+?)\*)/g;
+    let last = 0, m, i = 0;
+    while ((m = re.exec(str)) !== null) {
+      if (m.index > last) parts.push(str.slice(last, m.index));
+      if (m[2] !== undefined) parts.push(<strong key={`${keyPrefix}-b${i}`}>{m[2]}</strong>);
+      else if (m[3] !== undefined) parts.push(<em key={`${keyPrefix}-e${i}`}>{m[3]}</em>);
+      last = re.lastIndex;
+      i++;
+    }
+    if (last < str.length) parts.push(str.slice(last));
+    return parts;
+  };
+
+  lines.forEach((line, idx) => {
+    if (/^[-•]\s/.test(line)) {
+      listItems.push(
+        <li key={`li-${idx}`} className="text-inherit">{parseInline(line.replace(/^[-•]\s/, ''), `li-${idx}`)}</li>
+      );
+    } else {
+      flushList(idx);
+      if (line.trim() !== '') {
+        elements.push(
+          <p key={`p-${idx}`} className="my-0.5 last:mb-0">{parseInline(line, `p-${idx}`)}</p>
+        );
+      }
+    }
+  });
+  flushList('end');
+  return elements;
+};
+
 const InteractiveResponse = ({ components, onAction }) => (
   <div className="space-y-3 mt-2 w-full max-w-full overflow-hidden">
     {components.map((comp, idx) => {
@@ -170,11 +219,21 @@ const Cleo = () => {
           showProfileNotification(result.updatedFields);
         }
 
+        // Generate rich components based on detected intent
+        let richComponents = [];
+        try {
+          const intent = cleoService.analyzeIntent(text);
+          const richResponse = await cleoResponseService.generateResponse(intent, text, {});
+          richComponents = richResponse.components || [];
+        } catch (e) {
+          console.warn('Rich response generation failed, using empty components', e);
+        }
+
         setMessages(prev => [...prev, {
           id: Date.now() + 1,
           role: 'assistant',
           content: result.reply || 'Désolé, je n\'ai pas pu répondre.',
-          components: [],
+          components: richComponents,
           suggestions: result.suggestions || [],
         }]);
 
@@ -403,9 +462,7 @@ const Cleo = () => {
                           : 'bg-white text-slate-800 border border-slate-200 rounded-bl-none'
                       )}>
                         <div className="prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0 text-inherit">
-                          {String(msg.content || '').split('\n').map((line, i) => (
-                            <p key={i} className="my-0.5 last:mb-0">{line}</p>
-                          ))}
+                          {renderSimpleMarkdown(msg.content)}
                         </div>
                       </div>
 

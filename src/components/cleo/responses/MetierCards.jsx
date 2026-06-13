@@ -17,12 +17,12 @@ const MetierCards = ({ data }) => {
           <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mb-3 text-indigo-600">
             <Briefcase size={20} />
           </div>
-          <h4 className="font-bold text-slate-800 text-sm mb-1 line-clamp-1">{metier.title}</h4>
+          <h4 className="font-bold text-slate-800 text-sm mb-1 line-clamp-1">{metier.libelle}</h4>
           <p className="text-xs text-slate-500 mb-3 line-clamp-2">{metier.description}</p>
           
           <div className="mt-auto pt-2 border-t border-slate-100">
             <Button variant="ghost" size="sm" className="w-full text-xs h-8 justify-between hover:bg-indigo-50 hover:text-indigo-600 p-0 px-2" asChild>
-              <a href={`/metier/${metier.slug}`}>
+              <a href={`/metier/${metier.code}`}>
                 En savoir plus <ArrowRight size={12} />
               </a>
             </Button>

@@ -11,6 +11,11 @@ import CleoAvatar from './CleoAvatar';
 import CleoStateVisualizer from './CleoStateVisualizer';
 import { CleoChart, CleoActionPlan } from './CleoRichContent';
 import { ChoiceGroup, ComparisonCard, RealityCheck, RiskAlert } from './CleoInteractives';
+import MetierCards from './responses/MetierCards';
+import FormationCards from './responses/FormationCards';
+import CTACard from './responses/CTACard';
+import QuickActions from './responses/QuickActions';
+import Timeline from './responses/Timeline';
 import { renderMarkdown } from '@/utils/markdownUtils';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 
@@ -75,6 +80,11 @@ const MessageBubble = ({ message, isLast, onInteraction, widgets }) => {
                       {widget.type === 'comparison' && <ComparisonCard {...widget.data} />}
                       {widget.type === 'reality_check' && <RealityCheck {...widget.data} />}
                       {widget.type === 'risk' && <RiskAlert risk={widget.data} />}
+                      {widget.type === 'metier_cards' && <MetierCards data={widget.data} />}
+                      {widget.type === 'formation_cards' && <FormationCards data={widget.data} />}
+                      {widget.type === 'cta_card' && <CTACard data={widget.data} onAction={() => onInteraction('action', widget.data.action)} />}
+                      {widget.type === 'quick_actions' && <QuickActions data={widget.data} onAction={(payload, type) => onInteraction(type || 'choice', payload)} />}
+                      {widget.type === 'timeline' && <Timeline data={widget.data} />}
                    </div>
                 ))}
              </div>
@@ -154,14 +164,31 @@ const ChatInterface = ({
       <ScrollArea className="flex-1 bg-slate-50/30">
         <div className="py-8 min-h-full max-w-5xl mx-auto w-full">
           {messages.length === 0 && !isLoading ? (
-             <div className="h-full flex flex-col items-center justify-center mt-20 gap-3 px-6 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-violet-50 border border-violet-100 flex items-center justify-center">
-                  <Sparkles size={28} className="text-violet-400" />
-                </div>
-                <p className="font-semibold text-slate-700">Bonjour, je suis Cléo !</p>
-                <p className="text-sm text-slate-400 max-w-xs leading-relaxed">
-                  Coach IA spécialisée en orientation professionnelle. Pose-moi une question pour commencer.
-                </p>
+             <div className="h-full flex flex-col items-center justify-center mt-16 gap-6 px-6 text-center">
+               <CleoAvatar size="lg" />
+               <div>
+                 <p className="font-semibold text-slate-700 text-lg">Bonjour, je suis Cléo !</p>
+                 <p className="text-sm text-slate-400 max-w-xs leading-relaxed mt-1">
+                   Votre coach IA spécialisée en orientation professionnelle.
+                 </p>
+               </div>
+               <div className="grid grid-cols-2 gap-3 w-full max-w-md mt-2">
+                 {[
+                   { icon: '🎯', label: 'Explorer des métiers', query: 'Quels métiers correspondent à mon profil ?' },
+                   { icon: '🎓', label: 'Trouver une formation', query: 'Je cherche une formation adaptée à mon projet.' },
+                   { icon: '💼', label: 'Préparer un entretien', query: "Aide-moi à préparer un entretien d'embauche." },
+                   { icon: '💰', label: 'Comprendre les salaires', query: 'Quels sont les salaires dans mon domaine ?' },
+                 ].map((s) => (
+                   <button
+                     key={s.label}
+                     onClick={() => onSendMessage(s.query)}
+                     className="flex flex-col items-start gap-2 p-4 bg-white border border-slate-200 rounded-xl text-left hover:border-violet-300 hover:shadow-md transition-all group"
+                   >
+                     <span className="text-2xl">{s.icon}</span>
+                     <span className="text-sm font-medium text-slate-700 group-hover:text-violet-700 leading-tight">{s.label}</span>
+                   </button>
+                 ))}
+               </div>
              </div>
           ) : (
             messages.map((msg, i) => (
