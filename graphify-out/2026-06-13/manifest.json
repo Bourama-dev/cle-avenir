@@ -585,8 +585,8 @@
     "semantic_hash": "bc87c2bf2d9b17d59e8d0828cc47dbb7"
   },
   "src/components/admin/AdminSidebar.jsx": {
-    "mtime": 1781314169.4068837,
-    "ast_hash": "ca5d14d4394e55f6f212f2cfc00e1b4b",
+    "mtime": 1781314361.3108952,
+    "ast_hash": "9a91bb3e906f6e56b154ed0d54376ced",
     "semantic_hash": ""
   },
   "src/components/admin/EtablissementsTab.jsx": {
