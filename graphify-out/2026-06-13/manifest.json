@@ -625,9 +625,9 @@
     "semantic_hash": "f428456931960f252abc4d4ee55c9534"
   },
   "src/components/admin/sections/AdminAnalytics.jsx": {
-    "mtime": 1780647208.5172832,
-    "ast_hash": "12a169392d3ba0eac34abe5f83027c88",
-    "semantic_hash": "12a169392d3ba0eac34abe5f83027c88"
+    "mtime": 1781312892.5428078,
+    "ast_hash": "5b4f7d2197307ff8120218b948991d20",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminBlog.jsx": {
     "mtime": 1780647208.517856,
@@ -665,9 +665,9 @@
     "semantic_hash": "d2832a6a49e3d8877729e3215507212a"
   },
   "src/components/admin/sections/AdminLaunchControl.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "0454a69ffb0fc8f30c60a8ed371ef7d3",
-    "semantic_hash": "0454a69ffb0fc8f30c60a8ed371ef7d3"
+    "mtime": 1781312966.9908123,
+    "ast_hash": "b38e53dbd8ce0c2417d1bf65a14b0483",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminLegalVersions.jsx": {
     "mtime": 1780647208.517856,
@@ -675,19 +675,19 @@
     "semantic_hash": "e2b632cf3d5ef2ea2b610dde951a7ea3"
   },
   "src/components/admin/sections/AdminLogs.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "995b028d2dbd769016987dd18713f77b",
-    "semantic_hash": "995b028d2dbd769016987dd18713f77b"
+    "mtime": 1781312941.0228107,
+    "ast_hash": "73e3c953adc0cd8dc02b1480d73bda78",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminMonitoring.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "9e9b4fcd65219a78c7a8b31a0fab27a1",
-    "semantic_hash": "9e9b4fcd65219a78c7a8b31a0fab27a1"
+    "mtime": 1781312930.8628101,
+    "ast_hash": "8d2fefa3047cd5339d10bdab1da53fef",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminOpsCenter.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "fae702670ec61d52afa3c065eaa45415",
-    "semantic_hash": "fae702670ec61d52afa3c065eaa45415"
+    "mtime": 1781312951.1708114,
+    "ast_hash": "404b2bc8447aa88ce54ce87917f0f968",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminOverview.jsx": {
     "mtime": 1781312733.4067984,
@@ -710,14 +710,14 @@
     "semantic_hash": "39c63fb5e323c4e058a7455d39964a5b"
   },
   "src/components/admin/sections/AdminSubscriptions.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "acc58ffa520580c577f090bdbce286f3",
-    "semantic_hash": "acc58ffa520580c577f090bdbce286f3"
+    "mtime": 1781312905.0708086,
+    "ast_hash": "1a69222f23e39907c8c59144aee01fb9",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminSupport.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "db7cd43cb349b7c9094afdbb5f714174",
-    "semantic_hash": "db7cd43cb349b7c9094afdbb5f714174"
+    "mtime": 1781312915.9188092,
+    "ast_hash": "bd1d81e0fd38a94d77ca035c8b446853",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminTests.jsx": {
     "mtime": 1780647208.517856,
@@ -730,9 +730,9 @@
     "semantic_hash": "a39881d11835382a33b7bd92ca9c03ac"
   },
   "src/components/admin/sections/AdminWiki.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "8fc4ce41f963caf8e8ce96550e906bdd",
-    "semantic_hash": "8fc4ce41f963caf8e8ce96550e906bdd"
+    "mtime": 1781312960.9148118,
+    "ast_hash": "ef6ea48c76e5189e20d64438304ea055",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AuthorizedEmails.jsx": {
     "mtime": 1780647208.5212831,

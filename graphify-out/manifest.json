@@ -635,9 +635,9 @@
     "semantic_hash": "0c9496665aca3b721b8036df6d981db0"
   },
   "src/components/admin/sections/AdminCompliance.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "520be8a2438341e4fa57b6572c52d6e4",
-    "semantic_hash": "520be8a2438341e4fa57b6572c52d6e4"
+    "mtime": 1781313560.2028475,
+    "ast_hash": "27e5751bdaa115a28a889de931de3c8e",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminContent.jsx": {
     "mtime": 1780647208.517856,
@@ -645,9 +645,9 @@
     "semantic_hash": "13e78386d33581f7a96005750673c00e"
   },
   "src/components/admin/sections/AdminDataRequests.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "ffbb7ddc514ea75ac7fad3dd4a834224",
-    "semantic_hash": "ffbb7ddc514ea75ac7fad3dd4a834224"
+    "mtime": 1781313537.550846,
+    "ast_hash": "c02b0cb92113d580253b79424f4881f5",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminEstablishments.jsx": {
     "mtime": 1780647208.517856,
@@ -655,14 +655,14 @@
     "semantic_hash": "2363b81faf410af7ce8c8a57ce381b83"
   },
   "src/components/admin/sections/AdminGdprDocs.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "2f63470852d5c2c4c4c5918598e221bc",
-    "semantic_hash": "2f63470852d5c2c4c4c5918598e221bc"
+    "mtime": 1781313609.9508505,
+    "ast_hash": "05382bf22618456b407cf444a3a8c424",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminGdprOps.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "d2832a6a49e3d8877729e3215507212a",
-    "semantic_hash": "d2832a6a49e3d8877729e3215507212a"
+    "mtime": 1781313589.7428493,
+    "ast_hash": "42e000a01e8d77198c622acdc980fecc",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminLaunchControl.jsx": {
     "mtime": 1781312966.9908123,
@@ -670,9 +670,9 @@
     "semantic_hash": ""
   },
   "src/components/admin/sections/AdminLegalVersions.jsx": {
-    "mtime": 1780647208.517856,
-    "ast_hash": "e2b632cf3d5ef2ea2b610dde951a7ea3",
-    "semantic_hash": "e2b632cf3d5ef2ea2b610dde951a7ea3"
+    "mtime": 1781313514.9708447,
+    "ast_hash": "a7c1a753aae16038c34f02eab5b1387b",
+    "semantic_hash": ""
   },
   "src/components/admin/sections/AdminLogs.jsx": {
     "mtime": 1781312941.0228107,

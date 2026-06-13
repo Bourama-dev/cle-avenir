@@ -4,14 +4,184 @@
   "graph": {},
   "nodes": [
     {
+      "label": "AdminAnalytics.jsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminAnalytics.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "sections_adminanalytics",
+      "community": 454,
+      "norm_label": "adminanalytics.jsx"
+    },
+    {
+      "label": "AdminAnalytics()",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminAnalytics.jsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "sections_adminanalytics_adminanalytics",
+      "community": 454,
+      "norm_label": "adminanalytics()"
+    },
+    {
+      "label": "AdminLaunchControl.jsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminLaunchControl.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "sections_adminlaunchcontrol",
+      "community": 1,
+      "norm_label": "adminlaunchcontrol.jsx"
+    },
+    {
+      "label": "AdminLaunchControl()",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminLaunchControl.jsx",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "sections_adminlaunchcontrol_adminlaunchcontrol",
+      "community": 1,
+      "norm_label": "adminlaunchcontrol()"
+    },
+    {
+      "label": "AdminLogs.jsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminLogs.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "sections_adminlogs",
+      "community": 461,
+      "norm_label": "adminlogs.jsx"
+    },
+    {
+      "label": "AdminLogs()",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminLogs.jsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "sections_adminlogs_adminlogs",
+      "community": 461,
+      "norm_label": "adminlogs()"
+    },
+    {
+      "label": "AdminMonitoring.jsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminMonitoring.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "sections_adminmonitoring",
+      "community": 462,
+      "norm_label": "adminmonitoring.jsx"
+    },
+    {
+      "label": "AdminMonitoring()",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminMonitoring.jsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "sections_adminmonitoring_adminmonitoring",
+      "community": 462,
+      "norm_label": "adminmonitoring()"
+    },
+    {
+      "label": "AdminOpsCenter.jsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminOpsCenter.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "sections_adminopscenter",
+      "community": 1,
+      "norm_label": "adminopscenter.jsx"
+    },
+    {
+      "label": "AdminOpsCenter()",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminOpsCenter.jsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "sections_adminopscenter_adminopscenter",
+      "community": 1,
+      "norm_label": "adminopscenter()"
+    },
+    {
+      "label": "AdminSubscriptions.jsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminSubscriptions.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "sections_adminsubscriptions",
+      "community": 465,
+      "norm_label": "adminsubscriptions.jsx"
+    },
+    {
+      "label": "AdminSubscriptions()",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminSubscriptions.jsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "sections_adminsubscriptions_adminsubscriptions",
+      "community": 465,
+      "norm_label": "adminsubscriptions()"
+    },
+    {
+      "label": "AdminSupport.jsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminSupport.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "sections_adminsupport",
+      "community": 466,
+      "norm_label": "adminsupport.jsx"
+    },
+    {
+      "label": "AdminSupport()",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminSupport.jsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "sections_adminsupport_adminsupport",
+      "community": 466,
+      "norm_label": "adminsupport()"
+    },
+    {
+      "label": "AdminWiki.jsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminWiki.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "sections_adminwiki",
+      "community": 250,
+      "norm_label": "adminwiki.jsx"
+    },
+    {
+      "label": "AdminWiki()",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminWiki.jsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "sections_adminwiki_adminwiki",
+      "community": 250,
+      "norm_label": "adminwiki()"
+    },
+    {
+      "label": "PlusIcon()",
+      "file_type": "code",
+      "source_file": "src/components/admin/sections/AdminWiki.jsx",
+      "source_location": "L137",
+      "_origin": "ast",
+      "id": "sections_adminwiki_plusicon",
+      "community": 250,
+      "norm_label": "plusicon()"
+    },
+    {
       "label": "UserManagement.jsx",
       "file_type": "code",
       "source_file": "src/components/admin/UserManagement.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "admin_usermanagement",
       "community": 1,
-      "norm_label": "usermanagement.jsx"
+      "norm_label": "usermanagement.jsx",
+      "id": "admin_usermanagement"
     },
     {
       "label": "UserManagement()",
@@ -19,9 +189,9 @@
       "source_file": "src/components/admin/UserManagement.jsx",
       "source_location": "L41",
       "_origin": "ast",
-      "id": "admin_usermanagement_usermanagement",
       "community": 1,
-      "norm_label": "usermanagement()"
+      "norm_label": "usermanagement()",
+      "id": "admin_usermanagement_usermanagement"
     },
     {
       "label": "AdminOverview.jsx",
@@ -29,9 +199,9 @@
       "source_file": "src/components/admin/sections/AdminOverview.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "sections_adminoverview",
       "community": 463,
-      "norm_label": "adminoverview.jsx"
+      "norm_label": "adminoverview.jsx",
+      "id": "sections_adminoverview"
     },
     {
       "label": "AdminOverview()",
@@ -39,9 +209,9 @@
       "source_file": "src/components/admin/sections/AdminOverview.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "sections_adminoverview_adminoverview",
       "community": 463,
-      "norm_label": "adminoverview()"
+      "norm_label": "adminoverview()",
+      "id": "sections_adminoverview_adminoverview"
     },
     {
       "label": "AdminQA.jsx",
@@ -49,9 +219,9 @@
       "source_file": "src/components/admin/sections/AdminQA.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "sections_adminqa",
       "community": 1,
-      "norm_label": "adminqa.jsx"
+      "norm_label": "adminqa.jsx",
+      "id": "sections_adminqa"
     },
     {
       "label": "AdminQA()",
@@ -59,9 +229,9 @@
       "source_file": "src/components/admin/sections/AdminQA.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "sections_adminqa_adminqa",
       "community": 1,
-      "norm_label": "adminqa()"
+      "norm_label": "adminqa()",
+      "id": "sections_adminqa_adminqa"
     },
     {
       "label": "SupabaseAuthContext.jsx",
@@ -69,9 +239,9 @@
       "source_file": "src/contexts/SupabaseAuthContext.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "contexts_supabaseauthcontext",
       "community": 9,
-      "norm_label": "supabaseauthcontext.jsx"
+      "norm_label": "supabaseauthcontext.jsx",
+      "id": "contexts_supabaseauthcontext"
     },
     {
       "label": "AuthContext",
@@ -79,9 +249,9 @@
       "source_file": "src/contexts/SupabaseAuthContext.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "contexts_supabaseauthcontext_authcontext",
       "community": 9,
-      "norm_label": "authcontext"
+      "norm_label": "authcontext",
+      "id": "contexts_supabaseauthcontext_authcontext"
     },
     {
       "label": "AuthProvider()",
@@ -89,9 +259,9 @@
       "source_file": "src/contexts/SupabaseAuthContext.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "contexts_supabaseauthcontext_authprovider",
       "community": 9,
-      "norm_label": "authprovider()"
+      "norm_label": "authprovider()",
+      "id": "contexts_supabaseauthcontext_authprovider"
     },
     {
       "label": "useAuth()",
@@ -99,9 +269,9 @@
       "source_file": "src/contexts/SupabaseAuthContext.jsx",
       "source_location": "L279",
       "_origin": "ast",
-      "id": "contexts_supabaseauthcontext_useauth",
       "community": 2,
-      "norm_label": "useauth()"
+      "norm_label": "useauth()",
+      "id": "contexts_supabaseauthcontext_useauth"
     },
     {
       "label": "App.jsx",
@@ -6954,26 +7124,6 @@
       "id": "help_helpcontent_help_sections"
     },
     {
-      "label": "AdminAnalytics.jsx",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminAnalytics.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 454,
-      "norm_label": "adminanalytics.jsx",
-      "id": "sections_adminanalytics"
-    },
-    {
-      "label": "AdminAnalytics()",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminAnalytics.jsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 454,
-      "norm_label": "adminanalytics()",
-      "id": "sections_adminanalytics_adminanalytics"
-    },
-    {
       "label": "AdminBlog.jsx",
       "file_type": "code",
       "source_file": "src/components/admin/sections/AdminBlog.jsx",
@@ -7114,26 +7264,6 @@
       "id": "sections_admingdprops_admingdprops"
     },
     {
-      "label": "AdminLaunchControl.jsx",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminLaunchControl.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 1,
-      "norm_label": "adminlaunchcontrol.jsx",
-      "id": "sections_adminlaunchcontrol"
-    },
-    {
-      "label": "AdminLaunchControl()",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminLaunchControl.jsx",
-      "source_location": "L13",
-      "_origin": "ast",
-      "community": 1,
-      "norm_label": "adminlaunchcontrol()",
-      "id": "sections_adminlaunchcontrol_adminlaunchcontrol"
-    },
-    {
       "label": "AdminLegalVersions.jsx",
       "file_type": "code",
       "source_file": "src/components/admin/sections/AdminLegalVersions.jsx",
@@ -7152,66 +7282,6 @@
       "community": 460,
       "norm_label": "adminlegalversions()",
       "id": "sections_adminlegalversions_adminlegalversions"
-    },
-    {
-      "label": "AdminLogs.jsx",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminLogs.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 461,
-      "norm_label": "adminlogs.jsx",
-      "id": "sections_adminlogs"
-    },
-    {
-      "label": "AdminLogs()",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminLogs.jsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 461,
-      "norm_label": "adminlogs()",
-      "id": "sections_adminlogs_adminlogs"
-    },
-    {
-      "label": "AdminMonitoring.jsx",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminMonitoring.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 462,
-      "norm_label": "adminmonitoring.jsx",
-      "id": "sections_adminmonitoring"
-    },
-    {
-      "label": "AdminMonitoring()",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminMonitoring.jsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 462,
-      "norm_label": "adminmonitoring()",
-      "id": "sections_adminmonitoring_adminmonitoring"
-    },
-    {
-      "label": "AdminOpsCenter.jsx",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminOpsCenter.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 1,
-      "norm_label": "adminopscenter.jsx",
-      "id": "sections_adminopscenter"
-    },
-    {
-      "label": "AdminOpsCenter()",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminOpsCenter.jsx",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 1,
-      "norm_label": "adminopscenter()",
-      "id": "sections_adminopscenter_adminopscenter"
     },
     {
       "label": "AdminSecurity.jsx",
@@ -7254,46 +7324,6 @@
       "id": "sections_adminsettings_adminsettings"
     },
     {
-      "label": "AdminSubscriptions.jsx",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminSubscriptions.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 465,
-      "norm_label": "adminsubscriptions.jsx",
-      "id": "sections_adminsubscriptions"
-    },
-    {
-      "label": "AdminSubscriptions()",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminSubscriptions.jsx",
-      "source_location": "L8",
-      "_origin": "ast",
-      "community": 465,
-      "norm_label": "adminsubscriptions()",
-      "id": "sections_adminsubscriptions_adminsubscriptions"
-    },
-    {
-      "label": "AdminSupport.jsx",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminSupport.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 466,
-      "norm_label": "adminsupport.jsx",
-      "id": "sections_adminsupport"
-    },
-    {
-      "label": "AdminSupport()",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminSupport.jsx",
-      "source_location": "L8",
-      "_origin": "ast",
-      "community": 466,
-      "norm_label": "adminsupport()",
-      "id": "sections_adminsupport_adminsupport"
-    },
-    {
       "label": "AdminTests.jsx",
       "file_type": "code",
       "source_file": "src/components/admin/sections/AdminTests.jsx",
@@ -7332,36 +7362,6 @@
       "community": 1,
       "norm_label": "adminusers()",
       "id": "sections_adminusers_adminusers"
-    },
-    {
-      "label": "AdminWiki.jsx",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminWiki.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 250,
-      "norm_label": "adminwiki.jsx",
-      "id": "sections_adminwiki"
-    },
-    {
-      "label": "AdminWiki()",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminWiki.jsx",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 250,
-      "norm_label": "adminwiki()",
-      "id": "sections_adminwiki_adminwiki"
-    },
-    {
-      "label": "PlusIcon()",
-      "file_type": "code",
-      "source_file": "src/components/admin/sections/AdminWiki.jsx",
-      "source_location": "L124",
-      "_origin": "ast",
-      "community": 250,
-      "norm_label": "plusicon()",
-      "id": "sections_adminwiki_plusicon"
     },
     {
       "label": "AuthorizedEmails.jsx",
@@ -32218,6 +32218,129 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/sections/AdminAnalytics.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_adminanalytics",
+      "target": "sections_adminanalytics_adminanalytics"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/sections/AdminLaunchControl.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_adminlaunchcontrol",
+      "target": "sections_adminlaunchcontrol_adminlaunchcontrol"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/admin/sections/AdminLaunchControl.jsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "sections_adminlaunchcontrol_adminlaunchcontrol",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/sections/AdminLogs.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_adminlogs",
+      "target": "sections_adminlogs_adminlogs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/sections/AdminMonitoring.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_adminmonitoring",
+      "target": "sections_adminmonitoring_adminmonitoring"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/sections/AdminOpsCenter.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_adminopscenter",
+      "target": "sections_adminopscenter_adminopscenter"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/admin/sections/AdminOpsCenter.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "sections_adminopscenter_adminopscenter",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/sections/AdminSubscriptions.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_adminsubscriptions",
+      "target": "sections_adminsubscriptions_adminsubscriptions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/sections/AdminSupport.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_adminsupport",
+      "target": "sections_adminsupport_adminsupport"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/sections/AdminWiki.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_adminwiki",
+      "target": "sections_adminwiki_adminwiki"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/sections/AdminWiki.jsx",
+      "source_location": "L124",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sections_adminwiki",
+      "target": "sections_adminwiki_plusicon"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/admin/sections/AdminWiki.jsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "sections_adminwiki_adminwiki",
+      "target": "ui_use_toast_usetoast"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/components/admin/UserManagement.jsx",
       "source_location": "L41",
       "weight": 1.0,
@@ -41026,16 +41149,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/sections/AdminAnalytics.jsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_adminanalytics",
-      "target": "sections_adminanalytics_adminanalytics"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/components/admin/sections/AdminBlog.jsx",
       "source_location": "L20",
       "weight": 1.0,
@@ -41172,74 +41285,12 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/sections/AdminLaunchControl.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_adminlaunchcontrol",
-      "target": "sections_adminlaunchcontrol_adminlaunchcontrol"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/admin/sections/AdminLaunchControl.jsx",
-      "source_location": "L18",
-      "weight": 1.0,
-      "source": "sections_adminlaunchcontrol_adminlaunchcontrol",
-      "target": "ui_use_toast_usetoast"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/components/admin/sections/AdminLegalVersions.jsx",
       "source_location": "L4",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "sections_adminlegalversions",
       "target": "sections_adminlegalversions_adminlegalversions"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/sections/AdminLogs.jsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_adminlogs",
-      "target": "sections_adminlogs_adminlogs"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/sections/AdminMonitoring.jsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_adminmonitoring",
-      "target": "sections_adminmonitoring_adminmonitoring"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/sections/AdminOpsCenter.jsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_adminopscenter",
-      "target": "sections_adminopscenter_adminopscenter"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/admin/sections/AdminOpsCenter.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "sections_adminopscenter_adminopscenter",
-      "target": "ui_use_toast_usetoast"
     },
     {
       "relation": "contains",
@@ -41326,26 +41377,6 @@
       "confidence_score": 1.0,
       "source": "sections_adminsettings_adminsettings",
       "target": "sections_settingsnotifications_usesettingsnotifications"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/sections/AdminSubscriptions.jsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_adminsubscriptions",
-      "target": "sections_adminsubscriptions_adminsubscriptions"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/sections/AdminSupport.jsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_adminsupport",
-      "target": "sections_adminsupport_adminsupport"
     },
     {
       "relation": "contains",
@@ -41453,37 +41484,6 @@
       "source_location": "L29",
       "weight": 1.0,
       "source": "sections_adminusers_adminusers",
-      "target": "ui_use_toast_usetoast"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/sections/AdminWiki.jsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_adminwiki",
-      "target": "sections_adminwiki_adminwiki"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/sections/AdminWiki.jsx",
-      "source_location": "L124",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sections_adminwiki",
-      "target": "sections_adminwiki_plusicon"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/admin/sections/AdminWiki.jsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "sections_adminwiki_adminwiki",
       "target": "ui_use_toast_usetoast"
     },
     {
@@ -67033,5 +67033,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "7b6a0db4ce37f9bea5e6cf98dc122deaee20af8e"
+  "built_at_commit": "cbfc6d9909765c5d1e766e93bcf68d36c97d71a5"
 }
