@@ -5,7 +5,7 @@ import {
   GraduationCap, Briefcase, Download, Share2, Compass,
   FileText, TrendingUp, RefreshCw, Users,
 } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
 const RIASEC_TRAIT = {
   R: 'manuel et technique',

@@ -24,7 +24,9 @@ const ProgressionSection = ({ planData, hasTestData, userProfile }) => {
   });
 
   const completedSteps = steps.filter(s => s.completed).length;
-  const progressPercentage = Math.max(0, Math.min(100, ((completedSteps - 1) / (steps.length - 1)) * 100));
+  const progressPercentage = steps.length > 0
+    ? Math.round((completedSteps / steps.length) * 100)
+    : 0;
 
   return (
     <Card className="border-0 shadow-lg bg-gradient-to-br from-indigo-900 via-slate-800 to-slate-900 text-white mb-10 overflow-hidden relative animate-fade-in">

@@ -187,7 +187,11 @@ const PersonalizedPlanPage = () => {
     if (title.includes('CAP') || title.includes('BEP'))                         reqLevel = 'cap_bep';
     else if (title.includes('BTS') || (title.includes('BUT') && !title.includes('BUT3'))) reqLevel = 'bac+2';
     else if (title.includes('BUT') || title.includes('LICENCE') || title.includes('BACHELOR')) reqLevel = 'bac+3';
-    else if (title.includes('MASTER') || title.includes('INGÉNIEUR') || title.includes('INGENIEUR')) reqLevel = 'bac+5';
+    else if (
+      title.includes('MASTER') || title.includes('MASTERE') || title.includes('MASTÈRE') ||
+      title.includes('INGÉNIEUR') || title.includes('INGENIEUR') ||
+      title.includes('M2') || /\bM2\b/.test(title)
+    ) reqLevel = 'bac+5';
     else if (title.includes('DOCTORAT')) reqLevel = 'doctorat';
 
     const durationMap = { 'cap_bep': '2 ans', 'bac': '3 ans', 'bac+2': '2 ans', 'bac+3': '3 ans', 'bac+5': '2 ans', 'doctorat': '3 ans' };
@@ -221,8 +225,16 @@ const PersonalizedPlanPage = () => {
         return;
       }
 
-      // Use user's region as location hint if available
-      const ville = profile?.region || undefined;
+      // Use user's city/location as location hint, avoid administrative region names
+      const ADMIN_REGIONS = new Set([
+        'île-de-france', 'bretagne', 'normandie', 'occitanie', 'nouvelle-aquitaine',
+        'auvergne-rhône-alpes', 'grand est', 'hauts-de-france', 'pays de la loire',
+        'provence-alpes-côte d\'azur', 'centre-val de loire', 'bourgogne-franche-comté',
+        'corse', 'guadeloupe', 'martinique', 'guyane', 'la réunion', 'mayotte',
+      ]);
+      const rawLocation = profile?.city || profile?.location || profile?.region || '';
+      const isAdminRegion = ADMIN_REGIONS.has(rawLocation.toLowerCase().trim());
+      const ville = rawLocation && !isAdminRegion ? rawLocation : undefined;
 
       // Fetch in parallel for each keyword, then merge
       const responses = await Promise.all(
@@ -489,6 +501,7 @@ const PersonalizedPlanPage = () => {
                   onAddMetier={handleAddMetier}
                   isLoading={false}
                   userProfile={userProfile}
+                  plan={planData}
                 />
               )}
             </AnimatedItem>

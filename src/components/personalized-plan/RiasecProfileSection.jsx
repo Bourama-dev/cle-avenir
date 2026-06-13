@@ -27,11 +27,18 @@ const RiasecProfileSection = ({ riasecProfile }) => {
   }
 
   // Normalize and sort data
+  const rawScores = Object.entries(riasecProfile)
+    .filter(([k]) => ['R','I','A','S','E','C'].includes(k))
+    .map(([, v]) => Number(v) || 0);
+  const maxScore = Math.max(...rawScores, 1); // avoid division by zero
+
   const entries = Object.entries(riasecProfile)
     .filter(([k]) => ['R','I','A','S','E','C'].includes(k))
     .map(([letter, score]) => ({
       letter,
-      score: Math.min(100, Math.round(Number(score) || 0)),
+      score: maxScore <= 100
+        ? Math.min(100, Math.round(Number(score) || 0))
+        : Math.round((Number(score) || 0) / maxScore * 100),
       ...DIMENSION_LABELS[letter]
     }))
     .sort((a, b) => b.score - a.score);

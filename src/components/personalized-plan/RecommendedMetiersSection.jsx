@@ -41,7 +41,7 @@ const getEducationGap = (metier, userProfile) => {
   };
 };
 
-const RecommendedMetiersSection = ({ metiers, onAddMetier, isLoading, userProfile }) => {
+const RecommendedMetiersSection = ({ metiers, onAddMetier, isLoading, userProfile, plan }) => {
   const navigate = useNavigate();
 
   /* ── Loading ────────────────────────────────────────────────────────── */
@@ -98,13 +98,11 @@ const RecommendedMetiersSection = ({ metiers, onAddMetier, isLoading, userProfil
   }
 
   /* ── Metier cards ───────────────────────────────────────────────────── */
-  const riasecTop = userProfile
-    ? Object.entries(
-        // Filter to only RIASEC keys
-        Object.fromEntries(
-          Object.entries(userProfile).filter(([k]) => ['R','I','A','S','E','C'].includes(k))
-        )
-      ).sort(([, a], [, b]) => b - a)[0]?.[0]
+  const riasecProfile = plan?.riasec_profile || null;
+  const riasecTop = riasecProfile
+    ? Object.entries(riasecProfile)
+        .filter(([k]) => ['R','I','A','S','E','C'].includes(k))
+        .sort(([, a], [, b]) => b - a)[0]?.[0]
     : null;
 
   const RIASEC_LABEL = { R:'manuel', I:'analytique', A:'créatif', S:'social', E:'entrepreneurial', C:'rigoureux' };
