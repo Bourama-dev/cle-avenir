@@ -4,246 +4,6 @@
   "graph": {},
   "nodes": [
     {
-      "label": "AdminDashboard.jsx",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_admindashboard",
-      "community": 15,
-      "norm_label": "admindashboard.jsx"
-    },
-    {
-      "label": "AdminOverview",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminoverview",
-      "community": 15,
-      "norm_label": "adminoverview"
-    },
-    {
-      "label": "UserManagement",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L10",
-      "_origin": "ast",
-      "id": "components_admindashboard_usermanagement",
-      "community": 15,
-      "norm_label": "usermanagement"
-    },
-    {
-      "label": "AdminTests",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L11",
-      "_origin": "ast",
-      "id": "components_admindashboard_admintests",
-      "community": 15,
-      "norm_label": "admintests"
-    },
-    {
-      "label": "AdminContent",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L12",
-      "_origin": "ast",
-      "id": "components_admindashboard_admincontent",
-      "community": 15,
-      "norm_label": "admincontent"
-    },
-    {
-      "label": "AdminAnalytics",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L13",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminanalytics",
-      "community": 15,
-      "norm_label": "adminanalytics"
-    },
-    {
-      "label": "AdminSettings",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L14",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminsettings",
-      "community": 15,
-      "norm_label": "adminsettings"
-    },
-    {
-      "label": "AdminSubscriptions",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L15",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminsubscriptions",
-      "community": 15,
-      "norm_label": "adminsubscriptions"
-    },
-    {
-      "label": "AdminEstablishments",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L16",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminestablishments",
-      "community": 15,
-      "norm_label": "adminestablishments"
-    },
-    {
-      "label": "AdminSupport",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L17",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminsupport",
-      "community": 15,
-      "norm_label": "adminsupport"
-    },
-    {
-      "label": "AdminDataRequests",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L18",
-      "_origin": "ast",
-      "id": "components_admindashboard_admindatarequests",
-      "community": 15,
-      "norm_label": "admindatarequests"
-    },
-    {
-      "label": "AdminCompliance",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L19",
-      "_origin": "ast",
-      "id": "components_admindashboard_admincompliance",
-      "community": 15,
-      "norm_label": "admincompliance"
-    },
-    {
-      "label": "AdminSecurity",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L20",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminsecurity",
-      "community": 15,
-      "norm_label": "adminsecurity"
-    },
-    {
-      "label": "AdminGdprDocs",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L21",
-      "_origin": "ast",
-      "id": "components_admindashboard_admingdprdocs",
-      "community": 15,
-      "norm_label": "admingdprdocs"
-    },
-    {
-      "label": "AdminGdprOps",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L22",
-      "_origin": "ast",
-      "id": "components_admindashboard_admingdprops",
-      "community": 15,
-      "norm_label": "admingdprops"
-    },
-    {
-      "label": "AdminLegalVersions",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L23",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminlegalversions",
-      "community": 15,
-      "norm_label": "adminlegalversions"
-    },
-    {
-      "label": "AdminOpsCenter",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L24",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminopscenter",
-      "community": 15,
-      "norm_label": "adminopscenter"
-    },
-    {
-      "label": "AdminMonitoring",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L25",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminmonitoring",
-      "community": 15,
-      "norm_label": "adminmonitoring"
-    },
-    {
-      "label": "AdminWiki",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L26",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminwiki",
-      "community": 15,
-      "norm_label": "adminwiki"
-    },
-    {
-      "label": "AdminLaunchControl",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L27",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminlaunchcontrol",
-      "community": 15,
-      "norm_label": "adminlaunchcontrol"
-    },
-    {
-      "label": "AdminQA",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L28",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminqa",
-      "community": 15,
-      "norm_label": "adminqa"
-    },
-    {
-      "label": "AdminLogs",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L29",
-      "_origin": "ast",
-      "id": "components_admindashboard_adminlogs",
-      "community": 15,
-      "norm_label": "adminlogs"
-    },
-    {
-      "label": "AdminDashboardLoader()",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L31",
-      "_origin": "ast",
-      "id": "components_admindashboard_admindashboardloader",
-      "community": 15,
-      "norm_label": "admindashboardloader()"
-    },
-    {
-      "label": "AdminDashboard()",
-      "file_type": "code",
-      "source_file": "src/components/AdminDashboard.jsx",
-      "source_location": "L37",
-      "_origin": "ast",
-      "id": "components_admindashboard_admindashboard",
-      "community": 15,
-      "norm_label": "admindashboard()"
-    },
-    {
       "label": "AdminSidebar.jsx",
       "file_type": "code",
       "source_file": "src/components/admin/AdminSidebar.jsx",
@@ -257,11 +17,251 @@
       "label": "AdminSidebar()",
       "file_type": "code",
       "source_file": "src/components/admin/AdminSidebar.jsx",
-      "source_location": "L33",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "admin_adminsidebar_adminsidebar",
       "community": 2,
       "norm_label": "adminsidebar()"
+    },
+    {
+      "label": "AdminDashboard.jsx",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "admindashboard.jsx",
+      "id": "components_admindashboard"
+    },
+    {
+      "label": "AdminOverview",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminoverview",
+      "id": "components_admindashboard_adminoverview"
+    },
+    {
+      "label": "UserManagement",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "usermanagement",
+      "id": "components_admindashboard_usermanagement"
+    },
+    {
+      "label": "AdminTests",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "admintests",
+      "id": "components_admindashboard_admintests"
+    },
+    {
+      "label": "AdminContent",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L12",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "admincontent",
+      "id": "components_admindashboard_admincontent"
+    },
+    {
+      "label": "AdminAnalytics",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L13",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminanalytics",
+      "id": "components_admindashboard_adminanalytics"
+    },
+    {
+      "label": "AdminSettings",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L14",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminsettings",
+      "id": "components_admindashboard_adminsettings"
+    },
+    {
+      "label": "AdminSubscriptions",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L15",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminsubscriptions",
+      "id": "components_admindashboard_adminsubscriptions"
+    },
+    {
+      "label": "AdminEstablishments",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminestablishments",
+      "id": "components_admindashboard_adminestablishments"
+    },
+    {
+      "label": "AdminSupport",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L17",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminsupport",
+      "id": "components_admindashboard_adminsupport"
+    },
+    {
+      "label": "AdminDataRequests",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L18",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "admindatarequests",
+      "id": "components_admindashboard_admindatarequests"
+    },
+    {
+      "label": "AdminCompliance",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "admincompliance",
+      "id": "components_admindashboard_admincompliance"
+    },
+    {
+      "label": "AdminSecurity",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L20",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminsecurity",
+      "id": "components_admindashboard_adminsecurity"
+    },
+    {
+      "label": "AdminGdprDocs",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L21",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "admingdprdocs",
+      "id": "components_admindashboard_admingdprdocs"
+    },
+    {
+      "label": "AdminGdprOps",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L22",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "admingdprops",
+      "id": "components_admindashboard_admingdprops"
+    },
+    {
+      "label": "AdminLegalVersions",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L23",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminlegalversions",
+      "id": "components_admindashboard_adminlegalversions"
+    },
+    {
+      "label": "AdminOpsCenter",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L24",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminopscenter",
+      "id": "components_admindashboard_adminopscenter"
+    },
+    {
+      "label": "AdminMonitoring",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L25",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminmonitoring",
+      "id": "components_admindashboard_adminmonitoring"
+    },
+    {
+      "label": "AdminWiki",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L26",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminwiki",
+      "id": "components_admindashboard_adminwiki"
+    },
+    {
+      "label": "AdminLaunchControl",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L27",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminlaunchcontrol",
+      "id": "components_admindashboard_adminlaunchcontrol"
+    },
+    {
+      "label": "AdminQA",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L28",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminqa",
+      "id": "components_admindashboard_adminqa"
+    },
+    {
+      "label": "AdminLogs",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L29",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "adminlogs",
+      "id": "components_admindashboard_adminlogs"
+    },
+    {
+      "label": "AdminDashboardLoader()",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L31",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "admindashboardloader()",
+      "id": "components_admindashboard_admindashboardloader"
+    },
+    {
+      "label": "AdminDashboard()",
+      "file_type": "code",
+      "source_file": "src/components/AdminDashboard.jsx",
+      "source_location": "L37",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "admindashboard()",
+      "id": "components_admindashboard_admindashboard"
     },
     {
       "label": "AdminSecurity.jsx",
@@ -269,9 +269,9 @@
       "source_file": "src/components/admin/sections/AdminSecurity.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "sections_adminsecurity",
       "community": 464,
-      "norm_label": "adminsecurity.jsx"
+      "norm_label": "adminsecurity.jsx",
+      "id": "sections_adminsecurity"
     },
     {
       "label": "SEVERITY_CONFIG",
@@ -279,9 +279,9 @@
       "source_file": "src/components/admin/sections/AdminSecurity.jsx",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "sections_adminsecurity_severity_config",
       "community": 464,
-      "norm_label": "severity_config"
+      "norm_label": "severity_config",
+      "id": "sections_adminsecurity_severity_config"
     },
     {
       "label": "STATUS_CONFIG",
@@ -289,9 +289,9 @@
       "source_file": "src/components/admin/sections/AdminSecurity.jsx",
       "source_location": "L20",
       "_origin": "ast",
-      "id": "sections_adminsecurity_status_config",
       "community": 464,
-      "norm_label": "status_config"
+      "norm_label": "status_config",
+      "id": "sections_adminsecurity_status_config"
     },
     {
       "label": "AdminSecurity()",
@@ -299,9 +299,9 @@
       "source_file": "src/components/admin/sections/AdminSecurity.jsx",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "sections_adminsecurity_adminsecurity",
       "community": 464,
-      "norm_label": "adminsecurity()"
+      "norm_label": "adminsecurity()",
+      "id": "sections_adminsecurity_adminsecurity"
     },
     {
       "label": "AdminCompliance.jsx",
@@ -32328,6 +32328,27 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/AdminSidebar.jsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_adminsidebar",
+      "target": "admin_adminsidebar_adminsidebar"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/admin/AdminSidebar.jsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "admin_adminsidebar_adminsidebar",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/components/AdminDashboard.jsx",
       "source_location": "L13",
       "weight": 1.0,
@@ -32441,9 +32462,9 @@
       "source_file": "src/components/AdminDashboard.jsx",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_admindashboard",
-      "target": "components_admindashboard_adminlogs",
-      "confidence_score": 1.0
+      "target": "components_admindashboard_adminlogs"
     },
     {
       "relation": "contains",
@@ -32554,27 +32575,6 @@
       "confidence_score": 1.0,
       "source": "components_admindashboard",
       "target": "components_admindashboard_usermanagement"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/admin/AdminSidebar.jsx",
-      "source_location": "L31",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "admin_adminsidebar",
-      "target": "admin_adminsidebar_adminsidebar"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/admin/AdminSidebar.jsx",
-      "source_location": "L32",
-      "weight": 1.0,
-      "source": "admin_adminsidebar_adminsidebar",
-      "target": "contexts_supabaseauthcontext_useauth"
     },
     {
       "relation": "contains",
@@ -67253,5 +67253,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "f6d87470148721a8f0ecddf502a40532b407a715"
+  "built_at_commit": "96ae4c73cb001d6214b7664e135657ace94e7f05"
 }
