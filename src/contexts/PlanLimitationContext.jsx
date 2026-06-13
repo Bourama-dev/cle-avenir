@@ -40,7 +40,7 @@ export const PlanLimitationProvider = ({ children }) => {
     const next = cleoCreditsUsed + 1;
     setCleoCreditsUsed(next);
     try { localStorage.setItem(CLEO_CREDITS_KEY, String(next)); } catch {}
-  }, [isPremium, cleoCreditsUsed]);
+  }, [isPremiumPlus, cleoCreditsUsed]);
 
   const canViewAllResults  = useCallback(() => isPremium, [isPremium]);
   const getVisibleMetierCount = useCallback(() => isPremium ? Infinity : 3, [isPremium]);
