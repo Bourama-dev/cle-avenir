@@ -585,8 +585,8 @@
     "semantic_hash": "bc87c2bf2d9b17d59e8d0828cc47dbb7"
   },
   "src/components/admin/AdminSidebar.jsx": {
-    "mtime": 1781314361.3108952,
-    "ast_hash": "9a91bb3e906f6e56b154ed0d54376ced",
+    "mtime": 1781314442.0469,
+    "ast_hash": "00dd5a66ee0fb410157e1679729bc8f8",
     "semantic_hash": ""
   },
   "src/components/admin/EtablissementsTab.jsx": {
@@ -1345,9 +1345,9 @@
     "semantic_hash": "d17d9f49be9e64718381a718497b2957"
   },
   "src/components/dashboard/DashboardRightSidebar.jsx": {
-    "mtime": 1780647208.5412831,
-    "ast_hash": "e2d605f1246a3969e8274018364b72bb",
-    "semantic_hash": "e2d605f1246a3969e8274018364b72bb"
+    "mtime": 1781315039.9881277,
+    "ast_hash": "48b5128cebf0b317b120276dfb37eaa3",
+    "semantic_hash": ""
   },
   "src/components/dashboard/DashboardSidebar.jsx": {
     "mtime": 1780647208.5412831,
@@ -3310,9 +3310,9 @@
     "semantic_hash": "479f5e936f03a0dfa3006b562831492f"
   },
   "src/pages/OffersFormationsPage.jsx": {
-    "mtime": 1780647208.6132832,
-    "ast_hash": "038046101e5ea1df342d0cc353828ec1",
-    "semantic_hash": "038046101e5ea1df342d0cc353828ec1"
+    "mtime": 1781315036.6641276,
+    "ast_hash": "946da0d4049061352bb9d8fd3b450aa0",
+    "semantic_hash": ""
   },
   "src/pages/ParentalConsentPage.jsx": {
     "mtime": 1780647208.6132832,
@@ -3355,9 +3355,9 @@
     "semantic_hash": "601e1e102f6dade8fee23bd9f9f2e500"
   },
   "src/pages/RecommendationsPage.jsx": {
-    "mtime": 1780647208.6132832,
-    "ast_hash": "9dde820c36b4a2b5dffa39d1bb3d2ca2",
-    "semantic_hash": "9dde820c36b4a2b5dffa39d1bb3d2ca2"
+    "mtime": 1781315046.924128,
+    "ast_hash": "25a5f5f4579b2f354760e2490fa41357",
+    "semantic_hash": ""
   },
   "src/pages/ResetPasswordPage.jsx": {
     "mtime": 1780647208.6132832,

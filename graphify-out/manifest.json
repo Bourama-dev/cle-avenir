@@ -1350,9 +1350,9 @@
     "semantic_hash": ""
   },
   "src/components/dashboard/DashboardSidebar.jsx": {
-    "mtime": 1780647208.5412831,
-    "ast_hash": "67e108fd6f7a11cc924cbfc1899b90c8",
-    "semantic_hash": "67e108fd6f7a11cc924cbfc1899b90c8"
+    "mtime": 1781315133.7361333,
+    "ast_hash": "2f346e8fc15dc0538aa8b76518847343",
+    "semantic_hash": ""
   },
   "src/components/dashboard/Goals.jsx": {
     "mtime": 1780647208.5412831,
@@ -3060,9 +3060,9 @@
     "semantic_hash": "6ec331e81bef5f18e0b2a0110b9bdf22"
   },
   "src/pages/AccountPage.jsx": {
-    "mtime": 1780647208.6009204,
-    "ast_hash": "0a4e9f0a5165cf74b21f5883a5a2be96",
-    "semantic_hash": "0a4e9f0a5165cf74b21f5883a5a2be96"
+    "mtime": 1781315125.364133,
+    "ast_hash": "9d45ccdd655537b9bccd14584dc23a6f",
+    "semantic_hash": ""
   },
   "src/pages/ActionPlanPage.jsx": {
     "mtime": 1780647208.6009204,
@@ -3310,8 +3310,8 @@
     "semantic_hash": "479f5e936f03a0dfa3006b562831492f"
   },
   "src/pages/OffersFormationsPage.jsx": {
-    "mtime": 1781315036.6641276,
-    "ast_hash": "946da0d4049061352bb9d8fd3b450aa0",
+    "mtime": 1781315120.7081325,
+    "ast_hash": "6947d2bf1d6a30dca8d70e85050e85f2",
     "semantic_hash": ""
   },
   "src/pages/ParentalConsentPage.jsx": {
@@ -3355,8 +3355,8 @@
     "semantic_hash": "601e1e102f6dade8fee23bd9f9f2e500"
   },
   "src/pages/RecommendationsPage.jsx": {
-    "mtime": 1781315046.924128,
-    "ast_hash": "25a5f5f4579b2f354760e2490fa41357",
+    "mtime": 1781315144.3281338,
+    "ast_hash": "1c2299a421d312ea3be7f5ca2c094e92",
     "semantic_hash": ""
   },
   "src/pages/ResetPasswordPage.jsx": {
