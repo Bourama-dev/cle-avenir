@@ -2680,8 +2680,8 @@
     "semantic_hash": "b05564b9618a19167bd775afe7349ab2"
   },
   "src/contexts/PlanLimitationContext.jsx": {
-    "mtime": 1781165128.1033583,
-    "ast_hash": "e63479e8f4ea465f1f832b0db94f8a3d",
+    "mtime": 1781315825.2241745,
+    "ast_hash": "c1a7e8fcc60a2d25c10e3ee14ca33655",
     "semantic_hash": ""
   },
   "src/contexts/SupabaseAuthContext.jsx": {
