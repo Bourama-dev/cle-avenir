@@ -51,6 +51,10 @@ const AccountPage = () => {
   };
 
   const handleDownloadData = async () => {
+    if (!user?.id) {
+      toast({ variant: 'destructive', title: 'Erreur', description: 'Utilisateur non identifié.' });
+      return;
+    }
     setDownloadLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('export-user-data', {

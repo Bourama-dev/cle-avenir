@@ -49,12 +49,6 @@ const RecommendationsPage = () => {
     fetchRecommendations();
   }, [fetchRecommendations]);
 
-  const toggleFavorite = (career) => {
-    toast({
-      title: "Action non disponible",
-      description: `La sauvegarde de ${career.libelle || 'ce métier'} n'est pas encore implémentée sur cette page.`,
-    });
-  };
 
   return (
     <div className="container mx-auto py-8 px-4 max-w-7xl space-y-6">
@@ -172,8 +166,8 @@ const RecommendationsPage = () => {
                        <Badge className={index < 3 ? "bg-purple-100 text-purple-700 hover:bg-purple-100" : "bg-slate-100 text-slate-700 hover:bg-slate-100"}>
                           {career.matchScore || career.match_score || 85}% Match
                        </Badge>
-                       <Button variant="ghost" size="icon" onClick={() => toggleFavorite(career)}>
-                          <Heart className="h-5 w-5 text-slate-400 hover:text-red-500 hover:fill-red-500" />
+                       <Button variant="ghost" size="icon" disabled title="Fonctionnalité à venir">
+                          <Heart className="h-5 w-5 text-slate-300" />
                        </Button>
                     </div>
                     <CardTitle className="mt-2 text-xl line-clamp-2">{career.libelle || "Métier Inconnu"}</CardTitle>

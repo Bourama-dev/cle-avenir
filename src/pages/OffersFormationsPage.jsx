@@ -195,6 +195,7 @@ const OffersFormationsPage = () => {
         if (payload && Array.isArray(payload.data)) return payload.data;
         if (payload && Array.isArray(payload.resultats)) return payload.resultats;
         if (payload && Array.isArray(payload.offres)) return payload.offres;
+        if (payload != null) console.warn('[OffersFormations] Unexpected payload structure:', payload);
         return [];
       };
 
@@ -205,9 +206,12 @@ const OffersFormationsPage = () => {
           )
         );
         jobFetches.forEach(result => {
-          if (result.status === 'fulfilled' && !result.value.error) {
-            const items = extractArray(result.value.data);
-            allJobs.push(...items);
+          if (result.status === 'rejected') {
+            console.warn('[OffersFormations] Edge function rejected:', result.reason);
+          } else if (result.value.error) {
+            console.warn('[OffersFormations] Edge function error:', result.value.error);
+          } else {
+            allJobs.push(...extractArray(result.value.data));
           }
         });
       }
@@ -247,7 +251,14 @@ const OffersFormationsPage = () => {
           try {
             const keyword = metierData.libelle.split('/')[0].trim().split(' ').slice(0, 2).join(' ');
             const parcoursupUrl = `https://data.enseignementsup-recherche.gouv.fr/api/explore/v2.1/catalog/datasets/fr-esr-parcoursup/records?where=libelle_formation%20like%20%22${encodeURIComponent(keyword)}%22&limit=15&select=id_formation,libelle_formation,g_ea_lib_vx,dep_lib,ville,capa_fin`;
-            const pRes = await fetch(parcoursupUrl);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            let pRes;
+            try {
+              pRes = await fetch(parcoursupUrl, { signal: controller.signal });
+            } finally {
+              clearTimeout(timeoutId);
+            }
             if (pRes.ok) {
               const pData = await pRes.json();
               allFormations = (pData.results || []).map(f => ({
