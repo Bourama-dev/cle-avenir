@@ -8,6 +8,7 @@ import { getTestDataFromSource } from '@/utils/testDataExtractor';
 import { getUserEducationLevel, EDUCATION_ORDER } from '@/utils/educationUtils';
 import { fetchFormations } from '@/services/parcoursup';
 
+import { Helmet } from 'react-helmet-async';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { LayoutDashboard, Target } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -385,12 +386,38 @@ const PersonalizedPlanPage = () => {
     );
   }
 
+  if (!loading && !error && !planData) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-8 text-center">
+        <div className="max-w-md">
+          <div className="w-20 h-20 bg-violet-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <Target className="w-10 h-10 text-violet-500" />
+          </div>
+          <h2 className="text-2xl font-bold text-slate-900 mb-3">Votre plan personnalisé</h2>
+          <p className="text-slate-500 mb-8 leading-relaxed">
+            Passez le test d'orientation pour que nous puissions créer votre plan de carrière sur mesure.
+          </p>
+          <button
+            onClick={() => navigate('/test-orientation')}
+            className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+          >
+            Passer le test d'orientation
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const profileData = planData?.riasec_profile || rawTestData?.profile;
   const hasTestData = !!profileData && Object.keys(profileData).length > 0;
 
   /* ── Main render ────────────────────────────────────────────────────────── */
   return (
     <div className="min-h-screen bg-slate-50/50 pb-20 font-sans">
+      <Helmet>
+        <title>Mon Plan Personnalisé — CléAvenir</title>
+        <meta name="description" content="Votre plan de carrière personnalisé basé sur vos résultats d'orientation." />
+      </Helmet>
       {/* Sticky breadcrumb */}
       <div className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
         <div className="container mx-auto px-4 max-w-7xl py-3 flex items-center justify-between gap-4">
@@ -448,7 +475,7 @@ const PersonalizedPlanPage = () => {
               <div className="flex flex-wrap gap-2 mt-5">
                 {userProfile.education_level && (
                   <span className="text-xs bg-white border border-indigo-100 text-indigo-700 font-medium px-3 py-1.5 rounded-full shadow-sm">
-                    🎓 {
+                    <span role="img" aria-label="diplôme">🎓</span> {
                       { sans_diplome: 'Sans diplôme', cap_bep: 'CAP/BEP', bac: 'Bac',
                         'bac+2': 'Bac+2', 'bac+3': 'Bac+3', 'bac+5': 'Bac+5', doctorat: 'Doctorat' }
                       [userProfile.education_level] || userProfile.education_level
@@ -457,12 +484,12 @@ const PersonalizedPlanPage = () => {
                 )}
                 {userProfile.region && (
                   <span className="text-xs bg-white border border-green-100 text-green-700 font-medium px-3 py-1.5 rounded-full shadow-sm">
-                    📍 {userProfile.region}
+                    <span role="img" aria-label="localisation">📍</span> {userProfile.region}
                   </span>
                 )}
                 {userProfile.user_status && (
                   <span className="text-xs bg-white border border-amber-100 text-amber-700 font-medium px-3 py-1.5 rounded-full shadow-sm">
-                    💼 {
+                    <span role="img" aria-label="emploi">💼</span> {
                       { lyceen: 'Lycéen·ne', etudiant: 'Étudiant·e', en_emploi: 'En emploi',
                         en_recherche: 'En recherche', reconversion: 'En reconversion' }
                       [userProfile.user_status] || userProfile.user_status
@@ -506,7 +533,7 @@ const PersonalizedPlanPage = () => {
               )}
             </AnimatedItem>
 
-            <AnimatedItem>
+            <AnimatedItem transition={{ delay: 0.1 }}>
               <FormationPathSection
                 formations={formations}
                 isLoading={formationsLoading}
@@ -540,10 +567,10 @@ const PersonalizedPlanPage = () => {
 
           {/* Right column — sidebar */}
           <div className="lg:col-span-4">
-            <div className="sticky top-24 space-y-6">
+            <div className="lg:sticky lg:top-24 space-y-6">
               <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 animate-fade-in">
                 <h3 className="font-bold text-slate-900 mb-4 text-lg flex items-center gap-2">
-                  ⚡ Actions Rapides
+                  <span role="img" aria-label="éclair">⚡</span> Actions Rapides
                 </h3>
                 <RecommendedActionsSection userProfile={userProfile} riasecProfile={profileData} />
               </div>

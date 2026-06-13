@@ -128,7 +128,7 @@ const RecommendedMetiersSection = ({ metiers, onAddMetier, isLoading, userProfil
           const educationGap = getEducationGap(metier, userProfile);
 
           return (
-            <Card key={metier.code || idx} className="flex flex-col h-full hover-lift border-slate-200 bg-white">
+            <Card key={metier.code || idx} className="flex flex-col h-full hover-lift border-slate-200 bg-white overflow-visible">
               <CardContent className="p-6 flex flex-col flex-1 relative">
                 {idx === 0 && (
                   <div className="absolute -top-3 -right-3 bg-gradient-to-r from-amber-400 to-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">
