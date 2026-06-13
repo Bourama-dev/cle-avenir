@@ -44,8 +44,14 @@ const AdminLaunchControl = () => {
   };
 
   const toggleChecklistItem = async (id, currentStatus) => {
-    const { error } = await supabase.from('launch_checklist').update({ is_completed: !currentStatus }).eq('id', id);
-    if (!error) fetchLaunchData();
+    try {
+      const { error } = await supabase.from('launch_checklist').update({ is_completed: !currentStatus }).eq('id', id);
+      if (error) throw error;
+      fetchLaunchData();
+    } catch (e) {
+      console.error(e);
+      toast({ variant: 'destructive', title: 'Erreur', description: 'Impossible de mettre à jour la checklist.' });
+    }
   };
 
   const addChecklistItem = async () => {

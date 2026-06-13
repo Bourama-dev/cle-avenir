@@ -20,10 +20,12 @@ const AdminOpsCenter = () => {
   const fetchTasks = async () => {
     setLoading(true);
     try {
-      const { data } = await supabase.from('operational_tasks').select('*').order('created_at', { ascending: false });
+      const { data, error } = await supabase.from('operational_tasks').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
       if (data) setTasks(data);
     } catch (e) {
       console.error(e);
+      toast({ variant: 'destructive', title: 'Erreur de chargement', description: 'Impossible de charger les données.' });
     } finally {
       setLoading(false);
     }
@@ -41,8 +43,14 @@ const AdminOpsCenter = () => {
 
   const toggleTask = async (task) => {
     const newStatus = task.status === 'done' ? 'pending' : 'done';
-    await supabase.from('operational_tasks').update({ status: newStatus }).eq('id', task.id);
-    fetchTasks();
+    try {
+      const { error } = await supabase.from('operational_tasks').update({ status: newStatus }).eq('id', task.id);
+      if (error) throw error;
+      fetchTasks();
+    } catch (e) {
+      console.error(e);
+      toast({ variant: 'destructive', title: 'Erreur', description: 'Impossible de mettre à jour la tâche.' });
+    }
   };
 
   if (loading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;

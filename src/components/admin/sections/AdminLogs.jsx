@@ -5,22 +5,30 @@ import { Badge } from '@/components/ui/badge';
 import { Loader2, RefreshCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import HelpButton from '@/components/ui/HelpButton';
+import { useToast } from '@/components/ui/use-toast';
 
 const AdminLogs = () => {
     const [logs, setLogs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { toast } = useToast();
 
     const fetchLogs = async () => {
         setLoading(true);
-        // Using api_logs table from schema
-        const { data } = await supabase
-            .from('api_logs')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .limit(100);
-        
-        if (data) setLogs(data);
-        setLoading(false);
+        try {
+            // Using api_logs table from schema
+            const { data, error } = await supabase
+                .from('api_logs')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(100);
+            if (error) throw error;
+            if (data) setLogs(data);
+        } catch (e) {
+            console.error(e);
+            toast({ variant: 'destructive', title: 'Erreur de chargement', description: 'Impossible de charger les données.' });
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
