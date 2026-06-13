@@ -1025,13 +1025,13 @@
     "semantic_hash": "bb0bdfe4e732ea8f80651412bcf20eaf"
   },
   "src/components/cleo/ChatInterface.jsx": {
-    "mtime": 1780647208.5306087,
-    "ast_hash": "79ada37f60de09041e615eb8728b0ded",
-    "semantic_hash": "79ada37f60de09041e615eb8728b0ded"
+    "mtime": 1781316509.0682151,
+    "ast_hash": "4461cd5d61a71d6af9a0ee49901d423c",
+    "semantic_hash": ""
   },
   "src/components/cleo/Cleo.jsx": {
-    "mtime": 1781315646.900164,
-    "ast_hash": "721e326e7f54a7176cfd8ed29da3fcc7",
+    "mtime": 1781316462.2642124,
+    "ast_hash": "7471f950599520882a78ed4dff7c9304",
     "semantic_hash": ""
   },
   "src/components/cleo/CleoActivitySystem.jsx": {
@@ -1130,14 +1130,14 @@
     "semantic_hash": "f982786ff13b25a9d3056325c082260f"
   },
   "src/components/cleo/responses/FormationCards.jsx": {
-    "mtime": 1780647208.5353563,
-    "ast_hash": "d94dac7a26223ff08dae0bb0992bf1c3",
-    "semantic_hash": "d94dac7a26223ff08dae0bb0992bf1c3"
+    "mtime": 1781316163.6361945,
+    "ast_hash": "5c53b21de4fc6ca6d46f3044391165f1",
+    "semantic_hash": ""
   },
   "src/components/cleo/responses/MetierCards.jsx": {
-    "mtime": 1780647208.5353563,
-    "ast_hash": "de015d95f43d5c6e64a67cd8a262fc36",
-    "semantic_hash": "de015d95f43d5c6e64a67cd8a262fc36"
+    "mtime": 1781316149.5241938,
+    "ast_hash": "074ed184045aaf55de42cbcdca8f7007",
+    "semantic_hash": ""
   },
   "src/components/cleo/responses/QuickActions.jsx": {
     "mtime": 1780647208.5353563,

@@ -1,7 +1,7 @@
 # Graph Report - cle-avenir  (2026-06-13)
 
 ## Corpus Check
-- 953 files · ~449,308 words
+- 953 files · ~450,201 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `719758d4`
+- Built from commit: `167b7ab3`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -403,6 +403,8 @@
 10. `useSubscriptionAccess()` - 10 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `CleoAvatar()` --calls--> `cn()`  [INFERRED]
+  src/components/cleo/CleoAvatar.jsx → src/lib/utils.js
 - `ChatInterface()` --calls--> `cn()`  [INFERRED]
   src/components/cleo/ChatInterface.jsx → src/lib/utils.js
 - `AdminWiki()` --calls--> `useToast()`  [INFERRED]
@@ -411,8 +413,6 @@
   src/components/auth/EnhancedSignupForm.jsx → src/contexts/SupabaseAuthContext.jsx
 - `LoginForm()` --calls--> `useAuth()`  [INFERRED]
   src/components/auth/LoginForm.jsx → src/contexts/SupabaseAuthContext.jsx
-- `InterviewSimulation()` --calls--> `useAuth()`  [INFERRED]
-  src/components/cleo/InterviewSimulation.jsx → src/contexts/SupabaseAuthContext.jsx
 
 ## Import Cycles
 - None detected.
@@ -1044,7 +1044,7 @@ Cohesion: 0.33
 Nodes (3): CATEGORY_COLORS, GDPR_DOCS, INTERNAL_DOCS
 
 ## Knowledge Gaps
-- **817 isolated node(s):** `FIELD_LABELS`, `AdminOverview`, `UserManagement`, `AdminTests`, `AdminContent` (+812 more)
+- **817 isolated node(s):** `MODES`, `FIELD_LABELS`, `AdminOverview`, `UserManagement`, `AdminTests` (+812 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **218 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -1054,14 +1054,14 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `useToast()` connect `adaptive_test_enhancedquestioncard` to `admin_adminsidebar`, `components_metiersexplorer`, `contexts_establishmentauthcontext`, `cv_cverrorboundary`, `analytics_analyticsdashboard`, `signup_enhancedsignupform`, `hooks_usemetierfeedback`, `components_aboutpage`, `pages_cleopage`, `sections_admintests`, `components_dashboard`, `ui_button_group`, `Community 419`, `components_jobexplorer`, `dashboard_connectionactivitychart`, `admin_adminformationmanager`, `admin_adminmetiermanager`, `admin_adminblogmanager`, `cleo_contextpanel`, `Community 430`, `Community 432`, `cleo_cleoactivitysystem`, `hooks_usetestresults`, `package`, `formation_finder_locationfilter`, `pages_jobdetailpage`, `Community 438`, `Community 440`, `pages_adminanalyticsdashboard`, `components_cleowidget`, `pages_oauthconsentpage`, `components_maintenancecountdown`, `pages_upgradeplan`, `personalized_plan_recommendedactionssect`, `sections_adminsettings`, `Community 441`, `components_subscriptionstatus`, `pages_learningpathpage`, `pages_profilepage`, `ui_toaster`, `admin_contentmanagementpage`, `contexts_planlimitationcontext`, `pages_formationdetailpage`, `Community 345`, `ui_use_toast`, `dashboard_establishmentlogs`, `components_notificationbell`, `notifications_notificationcenter`, `Community 246`, `pages_adminmetiers`, `Community 249`, `Community 250`, `dashboard_widgeterrorboundary`?**
   _High betweenness centrality (0.074) - this node is a cross-community bridge._
 - **Why does `useAuth()` connect `admin_adminsidebar` to `adaptive_test_enhancedquestioncard`, `components_metiersexplorer`, `contexts_establishmentauthcontext`, `cleo_chatinterface`, `hooks_usemetierfeedback`, `components_aboutpage`, `hooks_uselegaldocument`, `components_dashboard`, `ui_button_group`, `Community 419`, `cleo_contextpanel`, `Community 430`, `Community 432`, `cleo_cleoactivitysystem`, `hooks_usetestresults`, `package`, `pages_jobdetailpage`, `Community 438`, `Community 440`, `components_adminbadge`, `components_cleowidget`, `Community 441`, `pages_learningpathpage`, `pages_profilepage`, `pages_formationdetailpage`, `Community 345`, `auth_enhancedsignupform`, `contexts_establishmentcontext`, `dashboard_establishmentlogs`, `components_notificationbell`, `dashboard_dashboardoverview`, `hooks_usetheme`, `notifications_notificationcenter`, `pages_testpage`, `auth_forminput`, `Community 250`, `dashboard_widgeterrorboundary`?**
-  _High betweenness centrality (0.062) - this node is a cross-community bridge._
+  _High betweenness centrality (0.067) - this node is a cross-community bridge._
 - **Why does `cn()` connect `adaptive_test_questionchoice` to `adaptive_test_enhancedquestioncard`, `ui_badge`, `components_metiersexplorer`, `ui_helpbutton`, `contexts_establishmentauthcontext`, `analytics_analyticsdashboard`, `cleo_chatinterface`, `metiers_blurredmetiercard`, `signup_enhancedsignupform`, `filters_locationfilter`, `admin_etablissementstab`, `ui_menubar`, `components_dashboard`, `filters_contracttypefilter`, `ui_button_group`, `ui_button`, `Community 430`, `ui_item`, `cleo_cleoactivitysystem`, `cleo_cleopreferencesmodal`, `components_cleowidget`, `components_subscriptiondebugpanel`, `pages_learningpathpage`, `pages_profilepage`, `ui_command`, `ui_context_menu`, `ui_dropdown_menu`, `admin_contentmanagementpage`, `contexts_planlimitationcontext`, `pages_formationdetailpage`, `ui_alert_dialog`, `ui_input_group`, `ui_sheet`, `components_breadcrumbs`, `contexts_establishmentcontext`, `cv_mobileformlayout`, `ui_breadcrumb`, `dashboard_establishmentactions`, `dashboard_establishmentmenu`, `dashboard_establishmentstats`, `job_detail_jobdetailhero`, `ui_dialog`, `auth_forminput`, `dashboard_widgeterrorboundary`?**
-  _High betweenness centrality (0.052) - this node is a cross-community bridge._
+  _High betweenness centrality (0.055) - this node is a cross-community bridge._
 - **Are the 135 inferred relationships involving `useToast()` (e.g. with `EnhancedQuestionCard()` and `AdminBlogManager()`) actually correct?**
   _`useToast()` has 135 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 118 inferred relationships involving `cn()` (e.g. with `EnhancedQuestionCard()` and `QuestionChoice()`) actually correct?**
   _`cn()` has 118 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 92 inferred relationships involving `useAuth()` (e.g. with `AdminSidebar()` and `RgpdCompliancePage()`) actually correct?**
   _`useAuth()` has 92 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `FIELD_LABELS`, `AdminOverview`, `UserManagement` to the rest of the system?**
+- **What connects `MODES`, `FIELD_LABELS`, `AdminOverview` to the rest of the system?**
   _817 weakly-connected nodes found - possible documentation gaps or missing edges._

@@ -4,14 +4,134 @@
   "graph": {},
   "nodes": [
     {
+      "label": "ChatInterface.jsx",
+      "file_type": "code",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "cleo_chatinterface",
+      "community": 13,
+      "norm_label": "chatinterface.jsx"
+    },
+    {
+      "label": "MessageBubble()",
+      "file_type": "code",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "cleo_chatinterface_messagebubble",
+      "community": 13,
+      "norm_label": "messagebubble()"
+    },
+    {
+      "label": "ChatInterface()",
+      "file_type": "code",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L107",
+      "_origin": "ast",
+      "id": "cleo_chatinterface_chatinterface",
+      "community": 13,
+      "norm_label": "chatinterface()"
+    },
+    {
+      "label": "Cleo.jsx",
+      "file_type": "code",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "cleo_cleo",
+      "community": 41,
+      "norm_label": "cleo.jsx"
+    },
+    {
+      "label": "FIELD_LABELS",
+      "file_type": "code",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "cleo_cleo_field_labels",
+      "community": 41,
+      "norm_label": "field_labels"
+    },
+    {
+      "label": "renderSimpleMarkdown()",
+      "file_type": "code",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "cleo_cleo_rendersimplemarkdown",
+      "community": 41,
+      "norm_label": "rendersimplemarkdown()"
+    },
+    {
+      "label": "InteractiveResponse()",
+      "file_type": "code",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L81",
+      "_origin": "ast",
+      "id": "cleo_cleo_interactiveresponse",
+      "community": 41,
+      "norm_label": "interactiveresponse()"
+    },
+    {
+      "label": "Cleo()",
+      "file_type": "code",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L103",
+      "_origin": "ast",
+      "id": "cleo_cleo_cleo",
+      "community": 125,
+      "norm_label": "cleo()"
+    },
+    {
+      "label": "FormationCards.jsx",
+      "file_type": "code",
+      "source_file": "src/components/cleo/responses/FormationCards.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 41,
+      "norm_label": "formationcards.jsx",
+      "id": "responses_formationcards"
+    },
+    {
+      "label": "FormationCards()",
+      "file_type": "code",
+      "source_file": "src/components/cleo/responses/FormationCards.jsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "community": 41,
+      "norm_label": "formationcards()",
+      "id": "responses_formationcards_formationcards"
+    },
+    {
+      "label": "MetierCards.jsx",
+      "file_type": "code",
+      "source_file": "src/components/cleo/responses/MetierCards.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 41,
+      "norm_label": "metiercards.jsx",
+      "id": "responses_metiercards"
+    },
+    {
+      "label": "MetierCards()",
+      "file_type": "code",
+      "source_file": "src/components/cleo/responses/MetierCards.jsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 41,
+      "norm_label": "metiercards()",
+      "id": "responses_metiercards_metiercards"
+    },
+    {
       "label": "DashboardSidebar.jsx",
       "file_type": "code",
       "source_file": "src/components/dashboard/DashboardSidebar.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "dashboard_dashboardsidebar",
       "community": 58,
-      "norm_label": "dashboardsidebar.jsx"
+      "norm_label": "dashboardsidebar.jsx",
+      "id": "dashboard_dashboardsidebar"
     },
     {
       "label": "DashboardSidebar()",
@@ -19,9 +139,9 @@
       "source_file": "src/components/dashboard/DashboardSidebar.jsx",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "dashboard_dashboardsidebar_dashboardsidebar",
       "community": 58,
-      "norm_label": "dashboardsidebar()"
+      "norm_label": "dashboardsidebar()",
+      "id": "dashboard_dashboardsidebar_dashboardsidebar"
     },
     {
       "label": "AccountPage.jsx",
@@ -29,9 +149,9 @@
       "source_file": "src/pages/AccountPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "pages_accountpage",
-      "community": 33,
-      "norm_label": "accountpage.jsx"
+      "community": 51,
+      "norm_label": "accountpage.jsx",
+      "id": "pages_accountpage"
     },
     {
       "label": "AccountPage()",
@@ -39,9 +159,9 @@
       "source_file": "src/pages/AccountPage.jsx",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "pages_accountpage_accountpage",
-      "community": 33,
-      "norm_label": "accountpage()"
+      "community": 51,
+      "norm_label": "accountpage()",
+      "id": "pages_accountpage_accountpage"
     },
     {
       "label": "OffersFormationsPage.jsx",
@@ -49,9 +169,9 @@
       "source_file": "src/pages/OffersFormationsPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "pages_offersformationspage",
       "community": 33,
-      "norm_label": "offersformationspage.jsx"
+      "norm_label": "offersformationspage.jsx",
+      "id": "pages_offersformationspage"
     },
     {
       "label": "formatDate()",
@@ -59,9 +179,9 @@
       "source_file": "src/pages/OffersFormationsPage.jsx",
       "source_location": "L25",
       "_origin": "ast",
-      "id": "pages_offersformationspage_formatdate",
       "community": 33,
-      "norm_label": "formatdate()"
+      "norm_label": "formatdate()",
+      "id": "pages_offersformationspage_formatdate"
     },
     {
       "label": "contractLabel()",
@@ -69,9 +189,9 @@
       "source_file": "src/pages/OffersFormationsPage.jsx",
       "source_location": "L31",
       "_origin": "ast",
-      "id": "pages_offersformationspage_contractlabel",
       "community": 33,
-      "norm_label": "contractlabel()"
+      "norm_label": "contractlabel()",
+      "id": "pages_offersformationspage_contractlabel"
     },
     {
       "label": "JobCard()",
@@ -79,9 +199,9 @@
       "source_file": "src/pages/OffersFormationsPage.jsx",
       "source_location": "L39",
       "_origin": "ast",
-      "id": "pages_offersformationspage_jobcard",
       "community": 33,
-      "norm_label": "jobcard()"
+      "norm_label": "jobcard()",
+      "id": "pages_offersformationspage_jobcard"
     },
     {
       "label": "FormationCard()",
@@ -89,9 +209,9 @@
       "source_file": "src/pages/OffersFormationsPage.jsx",
       "source_location": "L95",
       "_origin": "ast",
-      "id": "pages_offersformationspage_formationcard",
       "community": 33,
-      "norm_label": "formationcard()"
+      "norm_label": "formationcard()",
+      "id": "pages_offersformationspage_formationcard"
     },
     {
       "label": "OffersFormationsPage()",
@@ -99,9 +219,9 @@
       "source_file": "src/pages/OffersFormationsPage.jsx",
       "source_location": "L149",
       "_origin": "ast",
-      "id": "pages_offersformationspage_offersformationspage",
       "community": 33,
-      "norm_label": "offersformationspage()"
+      "norm_label": "offersformationspage()",
+      "id": "pages_offersformationspage_offersformationspage"
     },
     {
       "label": "RecommendationsPage.jsx",
@@ -109,9 +229,9 @@
       "source_file": "src/pages/RecommendationsPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "pages_recommendationspage",
       "community": 33,
-      "norm_label": "recommendationspage.jsx"
+      "norm_label": "recommendationspage.jsx",
+      "id": "pages_recommendationspage"
     },
     {
       "label": "RecommendationsPage()",
@@ -119,9 +239,9 @@
       "source_file": "src/pages/RecommendationsPage.jsx",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "pages_recommendationspage_recommendationspage",
       "community": 33,
-      "norm_label": "recommendationspage()"
+      "norm_label": "recommendationspage()",
+      "id": "pages_recommendationspage_recommendationspage"
     },
     {
       "label": "AdminSidebar.jsx",
@@ -2109,7 +2229,7 @@
       "source_file": "src/pages/TestResultsPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 41,
+      "community": 125,
       "norm_label": "testresultspage.jsx",
       "id": "pages_testresultspage"
     },
@@ -2119,7 +2239,7 @@
       "source_file": "src/pages/TestResultsPage.jsx",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 41,
+      "community": 125,
       "norm_label": "dimension_labels",
       "id": "pages_testresultspage_dimension_labels"
     },
@@ -2129,7 +2249,7 @@
       "source_file": "src/pages/TestResultsPage.jsx",
       "source_location": "L35",
       "_origin": "ast",
-      "community": 41,
+      "community": 125,
       "norm_label": "testresultspage()",
       "id": "pages_testresultspage_testresultspage"
     },
@@ -2314,52 +2434,12 @@
       "id": "components_homepage_homepage"
     },
     {
-      "label": "Cleo.jsx",
-      "file_type": "code",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "cleo.jsx",
-      "id": "cleo_cleo"
-    },
-    {
-      "label": "FIELD_LABELS",
-      "file_type": "code",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L22",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "field_labels",
-      "id": "cleo_cleo_field_labels"
-    },
-    {
-      "label": "InteractiveResponse()",
-      "file_type": "code",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L31",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "interactiveresponse()",
-      "id": "cleo_cleo_interactiveresponse"
-    },
-    {
-      "label": "Cleo()",
-      "file_type": "code",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L53",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "cleo()",
-      "id": "cleo_cleo_cleo"
-    },
-    {
       "label": "PlanLimitationContext.jsx",
       "file_type": "code",
       "source_file": "src/contexts/PlanLimitationContext.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 41,
+      "community": 125,
       "norm_label": "planlimitationcontext.jsx",
       "id": "contexts_planlimitationcontext"
     },
@@ -2369,7 +2449,7 @@
       "source_file": "src/contexts/PlanLimitationContext.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 41,
+      "community": 125,
       "norm_label": "planlimitationcontext",
       "id": "contexts_planlimitationcontext_planlimitationcontext"
     },
@@ -2379,7 +2459,7 @@
       "source_file": "src/contexts/PlanLimitationContext.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 41,
+      "community": 125,
       "norm_label": "planlimitationprovider()",
       "id": "contexts_planlimitationcontext_planlimitationprovider"
     },
@@ -2389,7 +2469,7 @@
       "source_file": "src/contexts/PlanLimitationContext.jsx",
       "source_location": "L68",
       "_origin": "ast",
-      "community": 41,
+      "community": 125,
       "norm_label": "useplanlimitation()",
       "id": "contexts_planlimitationcontext_useplanlimitation"
     },
@@ -4809,7 +4889,7 @@
       "source_file": "src/components/AlternanceFinder.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 345,
       "norm_label": "alternancefinder.jsx",
       "id": "components_alternancefinder"
     },
@@ -4819,7 +4899,7 @@
       "source_file": "src/components/AlternanceFinder.jsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 2,
+      "community": 345,
       "norm_label": "alternancefinder()",
       "id": "components_alternancefinder_alternancefinder"
     },
@@ -4949,7 +5029,7 @@
       "source_file": "src/components/BugReportButton.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 1,
       "norm_label": "bugreportbutton.jsx",
       "id": "components_bugreportbutton"
     },
@@ -4959,7 +5039,7 @@
       "source_file": "src/components/BugReportButton.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 2,
+      "community": 1,
       "norm_label": "bugreportbutton()",
       "id": "components_bugreportbutton_bugreportbutton"
     },
@@ -5629,7 +5709,7 @@
       "source_file": "src/components/JobExplorer.jsx",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 51,
+      "community": 38,
       "norm_label": "jobexplorer()",
       "id": "components_jobexplorer_jobexplorer"
     },
@@ -6209,7 +6289,7 @@
       "source_file": "src/components/ResultsDisplay.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 13,
+      "community": 186,
       "norm_label": "resultsdisplay.jsx",
       "id": "components_resultsdisplay"
     },
@@ -6219,7 +6299,7 @@
       "source_file": "src/components/ResultsDisplay.jsx",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 13,
+      "community": 186,
       "norm_label": "scorecard()",
       "id": "components_resultsdisplay_scorecard"
     },
@@ -6229,7 +6309,7 @@
       "source_file": "src/components/ResultsDisplay.jsx",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 13,
+      "community": 186,
       "norm_label": "infocard()",
       "id": "components_resultsdisplay_infocard"
     },
@@ -6239,7 +6319,7 @@
       "source_file": "src/components/ResultsDisplay.jsx",
       "source_location": "L37",
       "_origin": "ast",
-      "community": 13,
+      "community": 186,
       "norm_label": "getscorecolor()",
       "id": "components_resultsdisplay_getscorecolor"
     },
@@ -6249,7 +6329,7 @@
       "source_file": "src/components/ResultsDisplay.jsx",
       "source_location": "L44",
       "_origin": "ast",
-      "community": 13,
+      "community": 186,
       "norm_label": "getscorebg()",
       "id": "components_resultsdisplay_getscorebg"
     },
@@ -6259,7 +6339,7 @@
       "source_file": "src/components/ResultsDisplay.jsx",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 13,
+      "community": 186,
       "norm_label": "resultsdisplay()",
       "id": "components_resultsdisplay_resultsdisplay"
     },
@@ -6649,7 +6729,7 @@
       "source_file": "src/components/SpontaneousApplicationFinder.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 230,
       "norm_label": "spontaneousapplicationfinder.jsx",
       "id": "components_spontaneousapplicationfinder"
     },
@@ -6659,7 +6739,7 @@
       "source_file": "src/components/SpontaneousApplicationFinder.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 2,
+      "community": 230,
       "norm_label": "companycard()",
       "id": "components_spontaneousapplicationfinder_companycard"
     },
@@ -6669,7 +6749,7 @@
       "source_file": "src/components/SpontaneousApplicationFinder.jsx",
       "source_location": "L55",
       "_origin": "ast",
-      "community": 2,
+      "community": 230,
       "norm_label": "spontaneousapplicationfinder()",
       "id": "components_spontaneousapplicationfinder_spontaneousapplicationfinder"
     },
@@ -6699,7 +6779,7 @@
       "source_file": "src/components/SubscriptionDebugPanel.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 33,
+      "community": 51,
       "norm_label": "subscriptiondebugpanel.jsx",
       "id": "components_subscriptiondebugpanel"
     },
@@ -6709,7 +6789,7 @@
       "source_file": "src/components/SubscriptionDebugPanel.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 33,
+      "community": 51,
       "norm_label": "subscriptiondebugpanel()",
       "id": "components_subscriptiondebugpanel_subscriptiondebugpanel"
     },
@@ -6879,7 +6959,7 @@
       "source_file": "src/components/UpgradeButton.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 186,
+      "community": 2,
       "norm_label": "upgradebutton.jsx",
       "id": "components_upgradebutton"
     },
@@ -6889,7 +6969,7 @@
       "source_file": "src/components/UpgradeButton.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 186,
+      "community": 2,
       "norm_label": "upgradebutton()",
       "id": "components_upgradebutton_upgradebutton"
     },
@@ -7309,7 +7389,7 @@
       "source_file": "src/components/admin/AdminMetierManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 187,
       "norm_label": "adminmetiermanager.jsx",
       "id": "admin_adminmetiermanager"
     },
@@ -7319,7 +7399,7 @@
       "source_file": "src/components/admin/AdminMetierManager.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 187,
       "norm_label": "adminmetiermanager()",
       "id": "admin_adminmetiermanager_adminmetiermanager"
     },
@@ -7329,7 +7409,7 @@
       "source_file": "src/components/admin/AdminOffreManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 189,
       "norm_label": "adminoffremanager.jsx",
       "id": "admin_adminoffremanager"
     },
@@ -7339,7 +7419,7 @@
       "source_file": "src/components/admin/AdminOffreManager.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 189,
       "norm_label": "adminoffremanager()",
       "id": "admin_adminoffremanager_adminoffremanager"
     },
@@ -7419,7 +7499,7 @@
       "source_file": "src/components/admin/forms/MetierForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 187,
       "norm_label": "metierform.jsx",
       "id": "forms_metierform"
     },
@@ -7429,7 +7509,7 @@
       "source_file": "src/components/admin/forms/MetierForm.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 187,
       "norm_label": "metierform()",
       "id": "forms_metierform_metierform"
     },
@@ -7439,7 +7519,7 @@
       "source_file": "src/components/admin/forms/OffreForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 189,
       "norm_label": "offreform.jsx",
       "id": "forms_offreform"
     },
@@ -7449,7 +7529,7 @@
       "source_file": "src/components/admin/forms/OffreForm.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 189,
       "norm_label": "offreform()",
       "id": "forms_offreform_offreform"
     },
@@ -7769,7 +7849,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentFilters.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 20,
+      "community": 83,
       "norm_label": "establishmentfilters.jsx",
       "id": "establishments_establishmentfilters"
     },
@@ -7779,7 +7859,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentFilters.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 20,
+      "community": 83,
       "norm_label": "establishmentfilters()",
       "id": "establishments_establishmentfilters_establishmentfilters"
     },
@@ -8049,7 +8129,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentEditForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 432,
       "norm_label": "establishmenteditform.jsx",
       "id": "dashboard_establishmenteditform"
     },
@@ -8059,7 +8139,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentEditForm.jsx",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 2,
+      "community": 432,
       "norm_label": "establishmenteditform()",
       "id": "dashboard_establishmenteditform_establishmenteditform"
     },
@@ -8099,7 +8179,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 246,
       "norm_label": "establishmentlogs.jsx",
       "id": "dashboard_establishmentlogs"
     },
@@ -8109,7 +8189,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 1,
+      "community": 246,
       "norm_label": "log_filters",
       "id": "dashboard_establishmentlogs_log_filters"
     },
@@ -8119,7 +8199,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentLogs.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 1,
+      "community": 246,
       "norm_label": "establishmentlogs()",
       "id": "dashboard_establishmentlogs_establishmentlogs"
     },
@@ -8679,7 +8759,7 @@
       "source_file": "src/components/auth/EnhancedSignupForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 218,
       "norm_label": "enhancedsignupform.jsx",
       "id": "auth_enhancedsignupform"
     },
@@ -8689,7 +8769,7 @@
       "source_file": "src/components/auth/EnhancedSignupForm.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 2,
+      "community": 218,
       "norm_label": "interests_list",
       "id": "auth_enhancedsignupform_interests_list"
     },
@@ -8699,7 +8779,7 @@
       "source_file": "src/components/auth/EnhancedSignupForm.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 2,
+      "community": 218,
       "norm_label": "enhancedsignupform()",
       "id": "auth_enhancedsignupform_enhancedsignupform"
     },
@@ -8849,7 +8929,7 @@
       "source_file": "src/components/blog/BlogCommentForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 250,
       "norm_label": "blogcommentform.jsx",
       "id": "blog_blogcommentform"
     },
@@ -8859,7 +8939,7 @@
       "source_file": "src/components/blog/BlogCommentForm.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 2,
+      "community": 250,
       "norm_label": "blogcommentform()",
       "id": "blog_blogcommentform_blogcommentform"
     },
@@ -8944,36 +9024,6 @@
       "id": "blog_skeletonblogcard_skeletonblogcard"
     },
     {
-      "label": "ChatInterface.jsx",
-      "file_type": "code",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 13,
-      "norm_label": "chatinterface.jsx",
-      "id": "cleo_chatinterface"
-    },
-    {
-      "label": "MessageBubble()",
-      "file_type": "code",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L17",
-      "_origin": "ast",
-      "community": 13,
-      "norm_label": "messagebubble()",
-      "id": "cleo_chatinterface_messagebubble"
-    },
-    {
-      "label": "ChatInterface()",
-      "file_type": "code",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L96",
-      "_origin": "ast",
-      "community": 13,
-      "norm_label": "chatinterface()",
-      "id": "cleo_chatinterface_chatinterface"
-    },
-    {
       "label": "CleoActivitySystem.jsx",
       "file_type": "code",
       "source_file": "src/components/cleo/CleoActivitySystem.jsx",
@@ -9039,7 +9089,7 @@
       "source_file": "src/components/cleo/CleoAvatar.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 13,
+      "community": 163,
       "norm_label": "cleoavatar.jsx",
       "id": "cleo_cleoavatar"
     },
@@ -9049,7 +9099,7 @@
       "source_file": "src/components/cleo/CleoAvatar.jsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 13,
+      "community": 163,
       "norm_label": "cleoavatar()",
       "id": "cleo_cleoavatar_cleoavatar"
     },
@@ -9219,7 +9269,7 @@
       "source_file": "src/components/cleo/CleoProfileBuilder.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 13,
+      "community": 163,
       "norm_label": "cleoprofilebuilder.jsx",
       "id": "cleo_cleoprofilebuilder"
     },
@@ -9229,7 +9279,7 @@
       "source_file": "src/components/cleo/CleoProfileBuilder.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 13,
+      "community": 163,
       "norm_label": "cleoprofilebuilder()",
       "id": "cleo_cleoprofilebuilder_cleoprofilebuilder"
     },
@@ -9319,7 +9369,7 @@
       "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 13,
+      "community": 223,
       "norm_label": "cleostatevisualizer.jsx",
       "id": "cleo_cleostatevisualizer"
     },
@@ -9329,7 +9379,7 @@
       "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 13,
+      "community": 223,
       "norm_label": "modes",
       "id": "cleo_cleostatevisualizer_modes"
     },
@@ -9339,7 +9389,7 @@
       "source_file": "src/components/cleo/CleoStateVisualizer.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 13,
+      "community": 223,
       "norm_label": "cleostatevisualizer()",
       "id": "cleo_cleostatevisualizer_cleostatevisualizer"
     },
@@ -9389,7 +9439,7 @@
       "source_file": "src/components/cleo/InterviewFeedback.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 13,
+      "community": 163,
       "norm_label": "interviewfeedback.jsx",
       "id": "cleo_interviewfeedback"
     },
@@ -9399,7 +9449,7 @@
       "source_file": "src/components/cleo/InterviewFeedback.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 13,
+      "community": 186,
       "norm_label": "interviewfeedback()",
       "id": "cleo_interviewfeedback_interviewfeedback"
     },
@@ -9409,7 +9459,7 @@
       "source_file": "src/components/cleo/InterviewSimulation.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 13,
+      "community": 163,
       "norm_label": "interviewsimulation.jsx",
       "id": "cleo_interviewsimulation"
     },
@@ -9419,7 +9469,7 @@
       "source_file": "src/components/cleo/InterviewSimulation.jsx",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 13,
+      "community": 163,
       "norm_label": "interviewsimulation()",
       "id": "cleo_interviewsimulation_interviewsimulation"
     },
@@ -9632,46 +9682,6 @@
       "community": 41,
       "norm_label": "ctacard()",
       "id": "responses_ctacard_ctacard"
-    },
-    {
-      "label": "FormationCards.jsx",
-      "file_type": "code",
-      "source_file": "src/components/cleo/responses/FormationCards.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "formationcards.jsx",
-      "id": "responses_formationcards"
-    },
-    {
-      "label": "FormationCards()",
-      "file_type": "code",
-      "source_file": "src/components/cleo/responses/FormationCards.jsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "formationcards()",
-      "id": "responses_formationcards_formationcards"
-    },
-    {
-      "label": "MetierCards.jsx",
-      "file_type": "code",
-      "source_file": "src/components/cleo/responses/MetierCards.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "metiercards.jsx",
-      "id": "responses_metiercards"
-    },
-    {
-      "label": "MetierCards()",
-      "file_type": "code",
-      "source_file": "src/components/cleo/responses/MetierCards.jsx",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 41,
-      "norm_label": "metiercards()",
-      "id": "responses_metiercards_metiercards"
     },
     {
       "label": "QuickActions.jsx",
@@ -9999,7 +10009,7 @@
       "source_file": "src/components/cv/CVFormDataManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 419,
       "norm_label": "cvformdatamanager.jsx",
       "id": "cv_cvformdatamanager"
     },
@@ -10009,7 +10019,7 @@
       "source_file": "src/components/cv/CVFormDataManager.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 2,
+      "community": 419,
       "norm_label": "cvformdatamanager()",
       "id": "cv_cvformdatamanager_cvformdatamanager"
     },
@@ -10429,7 +10439,7 @@
       "source_file": "src/components/dashboard/AICoachWidget.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 430,
       "norm_label": "aicoachwidget.jsx",
       "id": "dashboard_aicoachwidget"
     },
@@ -10439,7 +10449,7 @@
       "source_file": "src/components/dashboard/AICoachWidget.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 2,
+      "community": 430,
       "norm_label": "aicoachwidget()",
       "id": "dashboard_aicoachwidget_aicoachwidget"
     },
@@ -11059,7 +11069,7 @@
       "source_file": "src/components/dashboard/sections/CurrentPlanSection.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 33,
+      "community": 51,
       "norm_label": "currentplansection.jsx",
       "id": "sections_currentplansection"
     },
@@ -11069,7 +11079,7 @@
       "source_file": "src/components/dashboard/sections/CurrentPlanSection.jsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 33,
+      "community": 51,
       "norm_label": "currentplancontent()",
       "id": "sections_currentplansection_currentplancontent"
     },
@@ -11079,7 +11089,7 @@
       "source_file": "src/components/dashboard/sections/CurrentPlanSection.jsx",
       "source_location": "L102",
       "_origin": "ast",
-      "community": 33,
+      "community": 51,
       "norm_label": "currentplansection()",
       "id": "sections_currentplansection_currentplansection"
     },
@@ -12049,7 +12059,7 @@
       "source_file": "src/components/feedback/FeedbackWidget.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 189,
+      "community": 2,
       "norm_label": "feedbackwidget.jsx",
       "id": "feedback_feedbackwidget"
     },
@@ -12059,7 +12069,7 @@
       "source_file": "src/components/feedback/FeedbackWidget.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 189,
+      "community": 2,
       "norm_label": "feedbackwidget()",
       "id": "feedback_feedbackwidget_feedbackwidget"
     },
@@ -13229,7 +13239,7 @@
       "source_file": "src/components/job-explorer/filters/ContractTypeFilter.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 163,
+      "community": 34,
       "norm_label": "contracttypefilter.jsx",
       "id": "filters_contracttypefilter"
     },
@@ -13239,7 +13249,7 @@
       "source_file": "src/components/job-explorer/filters/ContractTypeFilter.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 163,
+      "community": 34,
       "norm_label": "contract_types",
       "id": "filters_contracttypefilter_contract_types"
     },
@@ -13249,7 +13259,7 @@
       "source_file": "src/components/job-explorer/filters/ContractTypeFilter.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 163,
+      "community": 34,
       "norm_label": "contracttypefilter()",
       "id": "filters_contracttypefilter_contracttypefilter"
     },
@@ -14109,7 +14119,7 @@
       "source_file": "src/components/plans/CreatePlanModal.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 223,
+      "community": 2,
       "norm_label": "createplanmodal.jsx",
       "id": "plans_createplanmodal"
     },
@@ -14119,7 +14129,7 @@
       "source_file": "src/components/plans/CreatePlanModal.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 223,
+      "community": 2,
       "norm_label": "createplanmodal()",
       "id": "plans_createplanmodal_createplanmodal"
     },
@@ -14129,7 +14139,7 @@
       "source_file": "src/components/plans/PlanHistory.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 440,
       "norm_label": "planhistory.jsx",
       "id": "plans_planhistory"
     },
@@ -14139,7 +14149,7 @@
       "source_file": "src/components/plans/PlanHistory.jsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 2,
+      "community": 440,
       "norm_label": "planhistory()",
       "id": "plans_planhistory_planhistory"
     },
@@ -14819,7 +14829,7 @@
       "source_file": "src/components/test-results/PlanAccessMessage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 41,
+      "community": 125,
       "norm_label": "planaccessmessage.jsx",
       "id": "test_results_planaccessmessage"
     },
@@ -14829,7 +14839,7 @@
       "source_file": "src/components/test-results/PlanAccessMessage.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 41,
+      "community": 125,
       "norm_label": "planaccessmessage()",
       "id": "test_results_planaccessmessage_planaccessmessage"
     },
@@ -15139,7 +15149,7 @@
       "source_file": "src/components/ui/DiplomaGoals.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 125,
+      "community": 20,
       "norm_label": "diplomagoals.jsx",
       "id": "ui_diplomagoals"
     },
@@ -15149,7 +15159,7 @@
       "source_file": "src/components/ui/DiplomaGoals.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 125,
+      "community": 20,
       "norm_label": "diplomagoals()",
       "id": "ui_diplomagoals_diplomagoals"
     },
@@ -15159,7 +15169,7 @@
       "source_file": "src/components/ui/DiplomaSearch.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 125,
+      "community": 20,
       "norm_label": "diplomasearch.jsx",
       "id": "ui_diplomasearch"
     },
@@ -15169,7 +15179,7 @@
       "source_file": "src/components/ui/DiplomaSearch.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 125,
+      "community": 20,
       "norm_label": "diplomasearch()",
       "id": "ui_diplomasearch_diplomasearch"
     },
@@ -15179,7 +15189,7 @@
       "source_file": "src/components/ui/DiplomaSelector.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 125,
+      "community": 20,
       "norm_label": "diplomaselector.jsx",
       "id": "ui_diplomaselector"
     },
@@ -15189,7 +15199,7 @@
       "source_file": "src/components/ui/DiplomaSelector.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 125,
+      "community": 20,
       "norm_label": "diplomaselector()",
       "id": "ui_diplomaselector_diplomaselector"
     },
@@ -15339,7 +15349,7 @@
       "source_file": "src/components/ui/InstitutionSearch.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 247,
+      "community": 20,
       "norm_label": "institutionsearch.jsx",
       "id": "ui_institutionsearch"
     },
@@ -15349,7 +15359,7 @@
       "source_file": "src/components/ui/InstitutionSearch.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 247,
+      "community": 20,
       "norm_label": "institutionsearch()",
       "id": "ui_institutionsearch_institutionsearch"
     },
@@ -15379,7 +15389,7 @@
       "source_file": "src/components/ui/InstitutionSelector.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 247,
+      "community": 20,
       "norm_label": "institutionselector.jsx",
       "id": "ui_institutionselector"
     },
@@ -15389,7 +15399,7 @@
       "source_file": "src/components/ui/InstitutionSelector.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 247,
+      "community": 20,
       "norm_label": "institutionselector()",
       "id": "ui_institutionselector_institutionselector"
     },
@@ -18749,7 +18759,7 @@
       "source_file": "src/components/v1-placeholders/TrackingPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 230,
+      "community": 2,
       "norm_label": "trackingpage.jsx",
       "id": "v1_placeholders_trackingpage"
     },
@@ -18759,7 +18769,7 @@
       "source_file": "src/components/v1-placeholders/TrackingPage.jsx",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 230,
+      "community": 2,
       "norm_label": "trackingpage()",
       "id": "v1_placeholders_trackingpage_trackingpage"
     },
@@ -19969,7 +19979,7 @@
       "source_file": "src/hooks/useAlternanceSearch.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 51,
+      "community": 38,
       "norm_label": "usealternancesearch.js",
       "id": "hooks_usealternancesearch"
     },
@@ -19979,7 +19989,7 @@
       "source_file": "src/hooks/useAlternanceSearch.js",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 51,
+      "community": 38,
       "norm_label": "usealternancesearch()",
       "id": "hooks_usealternancesearch_usealternancesearch"
     },
@@ -20089,7 +20099,7 @@
       "source_file": "src/hooks/useCompanySearch.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 51,
+      "community": 38,
       "norm_label": "usecompanysearch.js",
       "id": "hooks_usecompanysearch"
     },
@@ -20099,7 +20109,7 @@
       "source_file": "src/hooks/useCompanySearch.js",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 51,
+      "community": 38,
       "norm_label": "usecompanysearch()",
       "id": "hooks_usecompanysearch_usecompanysearch"
     },
@@ -20269,7 +20279,7 @@
       "source_file": "src/hooks/useJobFilters.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 51,
+      "community": 38,
       "norm_label": "usejobfilters.js",
       "id": "hooks_usejobfilters"
     },
@@ -20279,7 +20289,7 @@
       "source_file": "src/hooks/useJobFilters.js",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 51,
+      "community": 38,
       "norm_label": "usejobfilters()",
       "id": "hooks_usejobfilters_usejobfilters"
     },
@@ -20469,7 +20479,7 @@
       "source_file": "src/hooks/useUserSubscription.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 187,
+      "community": 2,
       "norm_label": "useusersubscription.js",
       "id": "hooks_useusersubscription"
     },
@@ -20479,7 +20489,7 @@
       "source_file": "src/hooks/useUserSubscription.js",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 187,
+      "community": 2,
       "norm_label": "tier_prices",
       "id": "hooks_useusersubscription_tier_prices"
     },
@@ -20489,7 +20499,7 @@
       "source_file": "src/hooks/useUserSubscription.js",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 187,
+      "community": 2,
       "norm_label": "tier_features",
       "id": "hooks_useusersubscription_tier_features"
     },
@@ -20879,7 +20889,7 @@
       "source_file": "src/lib/subscriptionUtils.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 33,
+      "community": 51,
       "norm_label": "subscriptionutils.js",
       "id": "lib_subscriptionutils"
     },
@@ -20889,7 +20899,7 @@
       "source_file": "src/lib/subscriptionUtils.js",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 33,
+      "community": 51,
       "norm_label": "plan_types",
       "id": "lib_subscriptionutils_plan_types"
     },
@@ -20899,7 +20909,7 @@
       "source_file": "src/lib/subscriptionUtils.js",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 33,
+      "community": 51,
       "norm_label": "plan_display_names",
       "id": "lib_subscriptionutils_plan_display_names"
     },
@@ -20909,7 +20919,7 @@
       "source_file": "src/lib/subscriptionUtils.js",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 33,
+      "community": 51,
       "norm_label": "getdisplayplanname()",
       "id": "lib_subscriptionutils_getdisplayplanname"
     },
@@ -21039,7 +21049,7 @@
       "source_file": "src/pages/ActionPlanPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 438,
       "norm_label": "actionplanpage.jsx",
       "id": "pages_actionplanpage"
     },
@@ -21049,7 +21059,7 @@
       "source_file": "src/pages/ActionPlanPage.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 2,
+      "community": 438,
       "norm_label": "actionplanpage()",
       "id": "pages_actionplanpage_actionplanpage"
     },
@@ -21819,7 +21829,7 @@
       "source_file": "src/pages/EstablishmentDashboardPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 218,
+      "community": 2,
       "norm_label": "establishmentdashboardpage.jsx",
       "id": "pages_establishmentdashboardpage"
     },
@@ -21829,7 +21839,7 @@
       "source_file": "src/pages/EstablishmentDashboardPage.jsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 218,
+      "community": 2,
       "norm_label": "establishmentdashboardpage()",
       "id": "pages_establishmentdashboardpage_establishmentdashboardpage"
     },
@@ -22319,7 +22329,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 247,
       "norm_label": "loginpage.jsx",
       "id": "pages_loginpage"
     },
@@ -22329,7 +22339,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 1,
+      "community": 247,
       "norm_label": "googleicon()",
       "id": "pages_loginpage_googleicon"
     },
@@ -22339,7 +22349,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 1,
+      "community": 247,
       "norm_label": "loginpage()",
       "id": "pages_loginpage_loginpage"
     },
@@ -23479,7 +23489,7 @@
       "source_file": "src/pages/admin/ContentManagementPage.jsx",
       "source_location": "L809",
       "_origin": "ast",
-      "community": 82,
+      "community": 6,
       "norm_label": "contentmanagementpage()",
       "id": "admin_contentmanagementpage_contentmanagementpage"
     },
@@ -23649,7 +23659,7 @@
       "source_file": "src/pages/user/CookiesPreferencesPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 441,
       "norm_label": "cookiespreferencespage.jsx",
       "id": "user_cookiespreferencespage"
     },
@@ -23659,7 +23669,7 @@
       "source_file": "src/pages/user/CookiesPreferencesPage.jsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 2,
+      "community": 441,
       "norm_label": "cookiespreferencespage()",
       "id": "user_cookiespreferencespage_cookiespreferencespage"
     },
@@ -32328,6 +32338,339 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L96",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_chatinterface_chatinterface"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_chatinterface_messagebubble"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_cleoavatar"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_cleointeractives"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_cleointeractives_choicegroup"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_cleointeractives_comparisoncard"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_cleointeractives_realitycheck"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_cleointeractives_riskalert"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_cleorichcontent"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_cleorichcontent_cleoactionplan"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_cleorichcontent_cleochart"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "cleo_cleostatevisualizer"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "responses_formationcards"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_chatinterface",
+      "target": "responses_metiercards"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "cleo_chatinterface_messagebubble",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "cleo_chatinterface_messagebubble",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cleo/ChatInterface.jsx",
+      "source_location": "L216",
+      "weight": 1.0,
+      "source": "cleo_chatinterface_chatinterface",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L52",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleo",
+      "target": "cleo_cleo_cleo"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleo",
+      "target": "cleo_cleo_field_labels"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleo",
+      "target": "cleo_cleo_interactiveresponse"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleo",
+      "target": "cleo_cleo_rendersimplemarkdown"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleo",
+      "target": "responses_ctacard"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleo",
+      "target": "responses_formationcards"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleo",
+      "target": "responses_metiercards"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleo",
+      "target": "responses_quickactions"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleo_cleo",
+      "target": "responses_timeline"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "cleo_cleo_cleo",
+      "target": "contexts_planlimitationcontext_useplanlimitation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "cleo_cleo_cleo",
+      "target": "contexts_supabaseauthcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/cleo/Cleo.jsx",
+      "source_location": "L454",
+      "weight": 1.0,
+      "source": "cleo_cleo_cleo",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/responses/FormationCards.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "responses_formationcards",
+      "target": "responses_formationcards_formationcards"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/cleo/responses/MetierCards.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "responses_metiercards",
+      "target": "responses_metiercards_metiercards"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/components/dashboard/DashboardSidebar.jsx",
       "source_location": "L25",
       "weight": 1.0,
@@ -33283,28 +33626,6 @@
       "source_location": "L12",
       "weight": 1.0,
       "source": "blog_blogcommentform_blogcommentform",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L19",
-      "weight": 1.0,
-      "source": "cleo_chatinterface_messagebubble",
-      "target": "contexts_supabaseauthcontext_useauth"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L53",
-      "weight": 1.0,
-      "source": "cleo_cleo_cleo",
       "target": "contexts_supabaseauthcontext_useauth"
     },
     {
@@ -35912,113 +36233,6 @@
       "confidence_score": 1.0,
       "source": "components_homepage",
       "target": "components_homepage_steps"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L52",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleo",
-      "target": "cleo_cleo_cleo"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleo",
-      "target": "cleo_cleo_field_labels"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L30",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleo",
-      "target": "cleo_cleo_interactiveresponse"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleo",
-      "target": "responses_ctacard"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleo",
-      "target": "responses_formationcards"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleo",
-      "target": "responses_metiercards"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleo",
-      "target": "responses_quickactions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_cleo",
-      "target": "responses_timeline"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L56",
-      "weight": 1.0,
-      "source": "cleo_cleo_cleo",
-      "target": "contexts_planlimitationcontext_useplanlimitation"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cleo/Cleo.jsx",
-      "source_location": "L454",
-      "weight": 1.0,
-      "source": "cleo_cleo_cleo",
-      "target": "lib_utils_cn"
     },
     {
       "relation": "contains",
@@ -43164,158 +43378,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L96",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_chatinterface_chatinterface"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_chatinterface_messagebubble"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_cleoavatar"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_cleointeractives"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_cleointeractives_choicegroup"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_cleointeractives_comparisoncard"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_cleointeractives_realitycheck"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_cleointeractives_riskalert"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_cleorichcontent"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_cleorichcontent_cleoactionplan"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_cleorichcontent_cleochart"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleo_chatinterface",
-      "target": "cleo_cleostatevisualizer"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L26",
-      "weight": 1.0,
-      "source": "cleo_chatinterface_messagebubble",
-      "target": "lib_utils_cn"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/components/cleo/ChatInterface.jsx",
-      "source_location": "L216",
-      "weight": 1.0,
-      "source": "cleo_chatinterface_chatinterface",
-      "target": "lib_utils_cn"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/components/cleo/CleoActivitySystem.jsx",
       "source_location": "L17",
       "weight": 1.0,
@@ -43947,26 +44009,6 @@
       "confidence_score": 1.0,
       "source": "responses_ctacard",
       "target": "responses_ctacard_ctacard"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/responses/FormationCards.jsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "responses_formationcards",
-      "target": "responses_formationcards_formationcards"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/cleo/responses/MetierCards.jsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "responses_metiercards",
-      "target": "responses_metiercards_metiercards"
     },
     {
       "relation": "contains",
@@ -67253,5 +67295,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c6be5e6579f2a5507509208c7aa4dc69e635f151"
+  "built_at_commit": "dc6ae45cffd17a3b3faacfea49a6a771018d9043"
 }
