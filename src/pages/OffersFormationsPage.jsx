@@ -295,24 +295,38 @@ const OffersFormationsPage = () => {
   const toggleSaveJob = async (job) => {
     if (!user) { toast({ title: 'Connectez-vous pour sauvegarder', variant: 'destructive' }); return; }
     const jobId = job.id;
-    if (savedJobIds.has(jobId)) {
-      await supabase.from('saved_jobs').delete().eq('user_id', user.id).eq('job_id', jobId);
-      setSavedJobIds(prev => { const s = new Set(prev); s.delete(jobId); return s; });
-    } else {
-      await supabase.from('saved_jobs').upsert({ user_id: user.id, job_id: jobId, job_data: job });
-      setSavedJobIds(prev => new Set([...(prev instanceof Set ? prev : []), jobId]));
+    try {
+      if (savedJobIds.has(jobId)) {
+        const { error } = await supabase.from('saved_jobs').delete().eq('user_id', user.id).eq('job_id', jobId);
+        if (error) throw error;
+        setSavedJobIds(prev => { const s = new Set(prev); s.delete(jobId); return s; });
+      } else {
+        const { error } = await supabase.from('saved_jobs').upsert({ user_id: user.id, job_id: jobId, job_data: job });
+        if (error) throw error;
+        setSavedJobIds(prev => new Set([...prev, jobId]));
+      }
+    } catch (err) {
+      console.error('[toggleSaveJob]', err);
+      toast({ variant: 'destructive', title: 'Erreur', description: 'Impossible de sauvegarder l\'offre.' });
     }
   };
 
   const toggleSaveFormation = async (formation) => {
     if (!user) { toast({ title: 'Connectez-vous pour sauvegarder', variant: 'destructive' }); return; }
     const fId = formation.id_formation || formation.id;
-    if (savedFormationIds.has(fId)) {
-      await supabase.from('saved_formations').delete().eq('user_id', user.id).eq('formation_id', fId);
-      setSavedFormationIds(prev => { const s = new Set(prev); s.delete(fId); return s; });
-    } else {
-      await supabase.from('saved_formations').upsert({ user_id: user.id, formation_id: fId, formation_data: formation });
-      setSavedFormationIds(prev => new Set([...(prev instanceof Set ? prev : []), fId]));
+    try {
+      if (savedFormationIds.has(fId)) {
+        const { error } = await supabase.from('saved_formations').delete().eq('user_id', user.id).eq('formation_id', fId);
+        if (error) throw error;
+        setSavedFormationIds(prev => { const s = new Set(prev); s.delete(fId); return s; });
+      } else {
+        const { error } = await supabase.from('saved_formations').upsert({ user_id: user.id, formation_id: fId, formation_data: formation });
+        if (error) throw error;
+        setSavedFormationIds(prev => new Set([...prev, fId]));
+      }
+    } catch (err) {
+      console.error('[toggleSaveFormation]', err);
+      toast({ variant: 'destructive', title: 'Erreur', description: 'Impossible de sauvegarder la formation.' });
     }
   };
 

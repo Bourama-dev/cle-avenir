@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getMetierSalary } from '@/utils/salaryUtils';
 import { Button } from '@/components/ui/button';
@@ -25,7 +25,7 @@ const RecommendationsPage = () => {
   const [error, setError] = useState(null);
   const [careers, setCareers] = useState([]);
   
-  const fetchRecommendations = async () => {
+  const fetchRecommendations = useCallback(async () => {
     if (!user) return;
     setLoading(true);
     setError(null);
@@ -43,11 +43,11 @@ const RecommendationsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchRecommendations();
-  }, [user]);
+  }, [fetchRecommendations]);
 
   const toggleFavorite = (career) => {
     toast({

@@ -70,14 +70,14 @@ const DashboardRightSidebar = ({ userProfile, user, onOpenProfile }) => {
 
       if (dbError) throw dbError;
 
-      // 3. Send email notification (fire and forget to not block UI if slow)
+      // 3. Send email notification (non-blocking but errors are logged)
       EmailService.sendSupportNotification({
         id: ticket.id,
         name,
         email,
         subject: formData.subject,
         message: formData.message
-      });
+      }).catch(err => console.error('[Support] Email notification failed:', err));
 
       // 4. Success feedback
       toast({
