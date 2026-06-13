@@ -90,8 +90,11 @@ export const AuthProvider = ({ children }) => {
       setSession(currentSession);
       setUser(currentSession.user);
 
-      // Fetch additional data
-      let profile = await fetchUserProfile(currentSession.user.id);
+      // Fetch profile and subscription in parallel — independent DB queries
+      let [profile, subResult] = await Promise.all([
+        fetchUserProfile(currentSession.user.id),
+        fetchSubscriptionData(currentSession.user.id)
+      ]);
 
       // New Google/OAuth user — no profile row yet: create it
       const isGoogle = currentSession.user.app_metadata?.provider === 'google' ||
@@ -140,7 +143,13 @@ export const AuthProvider = ({ children }) => {
 
       setUserProfile(effectiveProfile);
 
-      const { tier, plan } = await fetchSubscriptionData(currentSession.user.id, effectiveProfile);
+      // Apply profile-based subscription fallback if no subscription record found
+      let { tier, plan } = subResult;
+      if (!plan && effectiveProfile?.subscription_tier) {
+        tier = effectiveProfile.subscription_tier;
+        plan = { plan_type: tier, status: 'active_legacy', source: 'profile' };
+      }
+
       setSubscriptionTier(tier);
       setSubscriptionPlan(plan);
 

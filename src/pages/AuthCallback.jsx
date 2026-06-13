@@ -23,6 +23,23 @@ const AuthCallback = () => {
   const [redirected, setRedirected] = useState(false);
   const [error, setError] = useState(null);
 
+  // Check for OAuth error params in the URL (e.g. ?error=access_denied)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const oauthError = params.get('error');
+    const oauthDesc  = params.get('error_description');
+    if (oauthError) {
+      setError(oauthDesc?.replace(/\+/g, ' ') || "Connexion refusée. Veuillez réessayer.");
+    }
+  }, []);
+
+  // Auto-redirect to login after 5 s if an error is displayed
+  useEffect(() => {
+    if (!error) return;
+    const t = setTimeout(() => navigate('/login', { replace: true }), 5000);
+    return () => clearTimeout(t);
+  }, [error, navigate]);
+
   useEffect(() => {
     if (authLoading || redirected) return;
     setRedirected(true);
@@ -68,13 +85,14 @@ const AuthCallback = () => {
             <XCircle className="h-6 w-6 text-red-600" />
           </div>
           <h2 className="text-2xl font-bold text-slate-900 mb-2">Erreur de connexion</h2>
-          <p className="text-slate-600 mb-6">{error}</p>
+          <p className="text-slate-600 mb-2">{error}</p>
+          <p className="text-sm text-slate-400 mb-6">Redirection automatique dans 5 secondes…</p>
           <div className="flex gap-4 justify-center">
-            <Button onClick={() => navigate('/login')} variant="outline">
+            <Button onClick={() => navigate('/login', { replace: true })} variant="outline">
               Retour à la connexion
             </Button>
-            <Button onClick={() => navigate('/signup')}>
-              S'inscrire à nouveau
+            <Button onClick={() => navigate('/signup', { replace: true })}>
+              S'inscrire
             </Button>
           </div>
         </div>
