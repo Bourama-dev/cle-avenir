@@ -24,6 +24,7 @@ import {
   ClipboardList,
   Database,
   ShieldCheck,
+  ExternalLink,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Button } from '@/components/ui/button';
@@ -114,8 +115,16 @@ const AdminSidebar = ({ currentPath }) => {
         ))}
       </nav>
 
-      <div className="p-3 md:p-4 border-t border-slate-800 mt-auto shrink-0">
-        <button 
+      <div className="p-3 md:p-4 border-t border-slate-800 mt-auto shrink-0 space-y-1">
+        <NavLink
+          to="/"
+          onClick={() => isMobile && setIsOpen(false)}
+          className="w-full flex items-center gap-3 px-4 py-3 md:py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors min-h-[44px]"
+        >
+          <div className="shrink-0"><ExternalLink size={20} /></div>
+          <span className="font-medium text-sm md:text-base">Retour au site</span>
+        </NavLink>
+        <button
           onClick={handleLogout}
           className="w-full flex items-center gap-3 px-4 py-3 md:py-2.5 rounded-lg text-red-400 hover:bg-red-950/30 transition-colors min-h-[44px]"
         >
