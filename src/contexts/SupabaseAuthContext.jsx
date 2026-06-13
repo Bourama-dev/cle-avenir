@@ -97,7 +97,9 @@ export const AuthProvider = ({ children }) => {
       ]);
 
       // New Google/OAuth user — no profile row yet: create it
-      if (!profile && currentSession.user.app_metadata?.provider === 'google') {
+      const isGoogle = currentSession.user.app_metadata?.provider === 'google' ||
+        currentSession.user.app_metadata?.providers?.includes('google');
+      if (!profile && isGoogle) {
         const meta = currentSession.user.user_metadata || {};
         const nameParts = (meta.full_name || '').split(' ');
         const { error: upsertError } = await supabase.from('profiles').upsert({
@@ -111,6 +113,22 @@ export const AuthProvider = ({ children }) => {
         }, { onConflict: 'id' });
         if (upsertError) {
           console.error('[AuthContext] Google profile creation failed:', upsertError);
+          // FK violation (23503) means the session references a user that no
+          // longer exists in auth.users — purge it so the user can log in fresh.
+          if (upsertError.code === '23503') {
+            // Do NOT call supabase.auth.signOut() here — it would wipe the
+            // PKCE code_verifier from localStorage, breaking exchangeCodeForSession
+            // if this INITIAL_SESSION fired while a fresh OAuth code is in the URL.
+            // Just reset React state; the stale session will be overwritten when
+            // the code exchange fires SIGNED_IN.
+            setUser(null);
+            setSession(null);
+            setUserProfile(null);
+            setSubscriptionPlan(null);
+            setSubscriptionTier(PLAN_TYPES.FREE);
+            setLoading(false);
+            return;
+          }
         } else {
           profile = await fetchUserProfile(currentSession.user.id);
         }
@@ -147,31 +165,25 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     let mounted = true;
 
-    const initAuth = async () => {
-      try {
-        const { data: { session: initialSession }, error } = await supabase.auth.getSession();
-        if (error) throw error;
-        if (mounted) await handleSession(initialSession);
-      } catch (error) {
-        console.error('[AuthContext] Init error:', error);
-        if (mounted) setLoading(false);
-      }
-    };
+    // Safety valve: never stay stuck in loading forever
+    const safetyTimer = setTimeout(() => {
+      if (mounted) setLoading(false);
+    }, 15000);
 
-    initAuth();
-
-    // Listen for Auth Changes
+    // Single source of truth — onAuthStateChange fires INITIAL_SESSION on mount,
+    // so we do NOT call getSession() separately (would cause double handleSession).
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        if (mounted) {
-          if (event === 'SIGNED_OUT') {
-             setUser(null);
-             setSession(null);
-             setUserProfile(null);
-             setLoading(false);
-          } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') {
-             await handleSession(session);
-          }
+        if (!mounted) return;
+        clearTimeout(safetyTimer);
+
+        if (event === 'SIGNED_OUT') {
+          setUser(null);
+          setSession(null);
+          setUserProfile(null);
+          setLoading(false);
+        } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') {
+          await handleSession(session);
         }
       }
     );

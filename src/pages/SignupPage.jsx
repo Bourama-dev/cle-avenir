@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation, Link } from 'react-router-dom';
 import { AuthService } from '@/services/authService';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -22,10 +22,12 @@ const TOTAL_STEPS = 7;
 const SignupPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const { toast } = useToast();
   const { user, loading: authLoading } = useAuth();
 
   const isGoogleFlow = searchParams.get('google') === 'true';
+  const redirectTo = location.state?.from || '/dashboard';
   const FIRST_STEP = isGoogleFlow ? 3 : 1;
 
   const [currentStep, setCurrentStep] = useState(isGoogleFlow ? 3 : 1);
@@ -124,6 +126,8 @@ const SignupPage = () => {
       }
     }
     if (step === 3) {
+      if (isGoogleFlow && !formData.first_name?.trim()) newErrors.first_name = "Prénom requis";
+      if (isGoogleFlow && !formData.last_name?.trim()) newErrors.last_name = "Nom requis";
       if (!formData.region) newErrors.region = "Région requise";
       if (!formData.city?.trim()) newErrors.city = "Ville requise";
     }
@@ -183,7 +187,7 @@ const SignupPage = () => {
         navigate('/login');
         return;
       }
-      const { error } = await AuthService.completeGoogleProfile(user.id, formData);
+      const { error } = await AuthService.completeGoogleProfile(user.id, formData, user);
       setIsSubmitting(false);
       if (error) {
         toast({
@@ -194,7 +198,7 @@ const SignupPage = () => {
         return;
       }
       toast({ title: 'Profil complété !', description: 'Bienvenue sur CléAvenir !' });
-      navigate('/results');
+      navigate(redirectTo, { replace: true });
       return;
     }
 
@@ -235,7 +239,7 @@ const SignupPage = () => {
     switch (currentStep) {
       case 1: return <UnifiedSignupStep1 {...props} />;
       case 2: return <UnifiedSignupStep2 {...props} />;
-      case 3: return <UnifiedSignupStep3 {...props} />;
+      case 3: return <UnifiedSignupStep3 {...props} isGoogleFlow={isGoogleFlow} />;
       case 4: return <UnifiedSignupStep4 {...props} />;
       case 5: return <UnifiedSignupStep5 {...props} />;
       case 6: return <UnifiedSignupStep6 {...props} />;

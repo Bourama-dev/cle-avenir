@@ -7,25 +7,21 @@ import { EventLogger } from '@/services/eventLoggerService';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 
 /**
- * AuthCallback Component
+ * AuthCallback — post-OAuth redirect handler.
  *
- * With detectSessionInUrl: true + flowType: 'pkce' in the Supabase client,
- * Supabase auto-exchanges the OAuth code on init and fires SIGNED_IN before
- * this component even mounts. We therefore rely on the auth context (which
- * has already processed the session) instead of calling exchangeCodeForSession
- * manually — that would fail with "code already used".
+ * detectSessionInUrl: true in the Supabase client means the JS SDK exchanges
+ * the PKCE code automatically during initialization, before INITIAL_SESSION
+ * fires. By the time this component runs its effect, the auth context has
+ * already processed the session (authLoading is false and user is set).
  *
- * Flow:
- * 1. App.jsx shows <LoadingFallback> while authLoading is true
- * 2. Once authLoading is false, AuthCallback mounts and the effect runs
- * 3. If the user is a new Google user (no region in profile) → /signup?google=true
- * 4. Otherwise → /dashboard
+ * We therefore do NOT call exchangeCodeForSession here — doing so would
+ * either race with the SDK's own exchange or fail with "code already used".
  */
 const AuthCallback = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
+  const [redirected, setRedirected] = useState(false);
   const [error, setError] = useState(null);
-  const [processed, setProcessed] = useState(false);
 
   // Check for OAuth error params in the URL (e.g. ?error=access_denied)
   useEffect(() => {
@@ -45,47 +41,41 @@ const AuthCallback = () => {
   }, [error, navigate]);
 
   useEffect(() => {
-    if (authLoading || processed) return;
-    setProcessed(true);
+    if (authLoading || redirected) return;
+    setRedirected(true);
+
+    if (!user) {
+      setError('La connexion a échoué ou le lien a expiré. Veuillez réessayer.');
+      return;
+    }
 
     const redirect = async () => {
-      try {
-        if (!user) {
-          // PKCE failure: code_verifier missing (Safari ITP, private mode, cross-tab)
-          const params = new URLSearchParams(window.location.search);
-          if (params.get('code')) {
-            throw new Error("La session a expiré pendant la connexion. Veuillez réessayer depuis le même onglet et navigateur.");
-          }
-          throw new Error("Lien de validation invalide ou expiré.");
+      const isGoogleUser =
+        user.app_metadata?.provider === 'google' ||
+        user.app_metadata?.providers?.includes('google');
+
+      if (isGoogleUser) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('region')
+          .eq('id', user.id)
+          .maybeSingle();
+
+        if (!profile?.region) {
+          navigate('/signup?google=true', { replace: true });
+          return;
         }
-
-        const isGoogleUser =
-          user.app_metadata?.provider === 'google' ||
-          user.app_metadata?.providers?.includes('google');
-
-        if (isGoogleUser) {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('region')
-            .eq('id', user.id)
-            .maybeSingle();
-
-          if (!profile?.region) {
-            navigate('/signup?google=true', { replace: true });
-            return;
-          }
-        }
-
-        EventLogger.logEvent('auth_callback', user.id);
-        navigate('/dashboard', { replace: true });
-      } catch (err) {
-        console.error("Auth callback error:", err);
-        setError(err.message || "Erreur lors de la validation.");
       }
+
+      EventLogger.logEvent('auth_callback', user.id);
+      navigate('/dashboard', { replace: true });
     };
 
-    redirect();
-  }, [authLoading, user, navigate, processed]);
+    redirect().catch((err) => {
+      console.error('[AuthCallback] Redirect error:', err);
+      setError(err.message || 'Erreur lors de la validation.');
+    });
+  }, [authLoading, user, navigate, redirected]);
 
   if (error) {
     return (
@@ -113,7 +103,7 @@ const AuthCallback = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
       <Loader2 className="h-10 w-10 text-primary animate-spin mb-4" />
-      <h2 className="text-lg font-medium text-slate-700">Validation de votre compte...</h2>
+      <h2 className="text-lg font-medium text-slate-700">Connexion en cours...</h2>
       <p className="text-slate-500">Veuillez patienter un instant.</p>
     </div>
   );
