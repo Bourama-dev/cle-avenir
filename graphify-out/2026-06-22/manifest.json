@@ -190,9 +190,9 @@
     "semantic_hash": "5f4201e17deac9e3dc6d8bf06920facd"
   },
   "src/components/Footer.jsx": {
-    "mtime": 1782112033.1244931,
-    "ast_hash": "17e5205b250f7a7489ceaa8bd6197a1b",
-    "semantic_hash": ""
+    "mtime": 1780647208.5012832,
+    "ast_hash": "0c68a05fbb6082817f854fd0a205e8bc",
+    "semantic_hash": "0c68a05fbb6082817f854fd0a205e8bc"
   },
   "src/components/FormationDetailsPanel.jsx": {
     "mtime": 1780647208.5012832,
@@ -4768,10 +4768,5 @@
     "mtime": 1780647208.4865713,
     "ast_hash": "b2d2d4a13aa9c698b84c820778281bdc",
     "semantic_hash": "b2d2d4a13aa9c698b84c820778281bdc"
-  },
-  "src/components/ui/hover-footer.jsx": {
-    "mtime": 1782112014.324493,
-    "ast_hash": "bc691d85a700f6ca289293f57557a19d",
-    "semantic_hash": ""
   }
 }

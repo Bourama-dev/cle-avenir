@@ -446,7 +446,6 @@
   "444": "pages_roadmappage",
   "445": "pages_testgatepage",
   "446": "personalized_plan_nextstepssection",
-  "447": "Community 447",
   "448": "profile_educationsection",
   "449": "profile_experiencesection",
   "450": "profile_personalsection",
@@ -574,7 +573,6 @@
   "572": "ui_textreveal",
   "573": "ui_tiltcard",
   "574": "ui_tooltip",
-  "575": "Community 575",
   "576": "utils_coverletterpdfexporter",
   "577": "utils_cvdataextractor",
   "578": "utils_cvdatavalidator",
@@ -601,8 +599,5 @@
   "599": "tailwind_config",
   "600": "tests_etablissements_route_test",
   "601": "three_heroscene3d",
-  "602": "ui_collapsible",
-  "603": "Community 603",
-  "604": "Community 604",
-  "605": "Community 605"
+  "602": "ui_collapsible"
 }

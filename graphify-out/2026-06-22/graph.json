@@ -4,64 +4,14 @@
   "graph": {},
   "nodes": [
     {
-      "label": "Footer.jsx",
-      "file_type": "code",
-      "source_file": "src/components/Footer.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_footer",
-      "community": 324,
-      "norm_label": "footer.jsx"
-    },
-    {
-      "label": "Footer()",
-      "file_type": "code",
-      "source_file": "src/components/Footer.jsx",
-      "source_location": "L16",
-      "_origin": "ast",
-      "id": "components_footer_footer",
-      "community": 324,
-      "norm_label": "footer()"
-    },
-    {
-      "label": "hover-footer.jsx",
-      "file_type": "code",
-      "source_file": "src/components/ui/hover-footer.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_hover_footer",
-      "community": 441,
-      "norm_label": "hover-footer.jsx"
-    },
-    {
-      "label": "TextHoverEffect()",
-      "file_type": "code",
-      "source_file": "src/components/ui/hover-footer.jsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "ui_hover_footer_texthovereffect",
-      "community": 441,
-      "norm_label": "texthovereffect()"
-    },
-    {
-      "label": "FooterBackgroundGradient()",
-      "file_type": "code",
-      "source_file": "src/components/ui/hover-footer.jsx",
-      "source_location": "L116",
-      "_origin": "ast",
-      "id": "ui_hover_footer_footerbackgroundgradient",
-      "community": 441,
-      "norm_label": "footerbackgroundgradient()"
-    },
-    {
       "label": "RecommendedMetiersSection.jsx",
       "file_type": "code",
       "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "personalized_plan_recommendedmetierssection",
       "community": 35,
-      "norm_label": "recommendedmetierssection.jsx",
-      "id": "personalized_plan_recommendedmetierssection"
+      "norm_label": "recommendedmetierssection.jsx"
     },
     {
       "label": "getEducationGap()",
@@ -69,9 +19,9 @@
       "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
       "source_location": "L18",
       "_origin": "ast",
+      "id": "personalized_plan_recommendedmetierssection_geteducationgap",
       "community": 35,
-      "norm_label": "geteducationgap()",
-      "id": "personalized_plan_recommendedmetierssection_geteducationgap"
+      "norm_label": "geteducationgap()"
     },
     {
       "label": "RecommendedMetiersSection()",
@@ -79,9 +29,9 @@
       "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
       "source_location": "L44",
       "_origin": "ast",
+      "id": "personalized_plan_recommendedmetierssection_recommendedmetierssection",
       "community": 35,
-      "norm_label": "recommendedmetierssection()",
-      "id": "personalized_plan_recommendedmetierssection_recommendedmetierssection"
+      "norm_label": "recommendedmetierssection()"
     },
     {
       "label": "PersonalizedPlanPage.jsx",
@@ -89,9 +39,9 @@
       "source_file": "src/pages/PersonalizedPlanPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "pages_personalizedplanpage",
       "community": 50,
-      "norm_label": "personalizedplanpage.jsx",
-      "id": "pages_personalizedplanpage"
+      "norm_label": "personalizedplanpage.jsx"
     },
     {
       "label": "PersonalizedPlanPage()",
@@ -99,9 +49,9 @@
       "source_file": "src/pages/PersonalizedPlanPage.jsx",
       "source_location": "L29",
       "_origin": "ast",
+      "id": "pages_personalizedplanpage_personalizedplanpage",
       "community": 50,
-      "norm_label": "personalizedplanpage()",
-      "id": "pages_personalizedplanpage_personalizedplanpage"
+      "norm_label": "personalizedplanpage()"
     },
     {
       "label": "CleoAvatar.jsx",
@@ -5179,7 +5129,7 @@
       "source_file": "src/components/BugReportButton.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 1,
       "norm_label": "bugreportbutton.jsx",
       "id": "components_bugreportbutton"
     },
@@ -5189,7 +5139,7 @@
       "source_file": "src/components/BugReportButton.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 2,
+      "community": 1,
       "norm_label": "bugreportbutton()",
       "id": "components_bugreportbutton_bugreportbutton"
     },
@@ -5199,7 +5149,7 @@
       "source_file": "src/components/BugReportDialog.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 447,
+      "community": 2,
       "norm_label": "bugreportdialog.jsx",
       "id": "components_bugreportdialog"
     },
@@ -5209,7 +5159,7 @@
       "source_file": "src/components/BugReportDialog.jsx",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 447,
+      "community": 2,
       "norm_label": "bugreportdialog()",
       "id": "components_bugreportdialog_bugreportdialog"
     },
@@ -5534,6 +5484,26 @@
       "id": "components_featuregate_featuregate"
     },
     {
+      "label": "Footer.jsx",
+      "file_type": "code",
+      "source_file": "src/components/Footer.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 324,
+      "norm_label": "footer.jsx",
+      "id": "components_footer"
+    },
+    {
+      "label": "Footer()",
+      "file_type": "code",
+      "source_file": "src/components/Footer.jsx",
+      "source_location": "L15",
+      "_origin": "ast",
+      "community": 324,
+      "norm_label": "footer()",
+      "id": "components_footer_footer"
+    },
+    {
       "label": "FormationDetailsPanel.jsx",
       "file_type": "code",
       "source_file": "src/components/FormationDetailsPanel.jsx",
@@ -5839,7 +5809,7 @@
       "source_file": "src/components/JobExplorer.jsx",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 218,
+      "community": 38,
       "norm_label": "jobexplorer()",
       "id": "components_jobexplorer_jobexplorer"
     },
@@ -6129,7 +6099,7 @@
       "source_file": "src/components/NotificationBell.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 247,
+      "community": 105,
       "norm_label": "notificationbell.jsx",
       "id": "components_notificationbell"
     },
@@ -6139,7 +6109,7 @@
       "source_file": "src/components/NotificationBell.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 247,
+      "community": 105,
       "norm_label": "notificationbell()",
       "id": "components_notificationbell_notificationbell"
     },
@@ -6549,7 +6519,7 @@
       "source_file": "src/components/RgpdDataExport.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 575,
+      "community": 2,
       "norm_label": "rgpddataexport.jsx",
       "id": "components_rgpddataexport"
     },
@@ -6559,7 +6529,7 @@
       "source_file": "src/components/RgpdDataExport.jsx",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 575,
+      "community": 2,
       "norm_label": "rgpddataexport()",
       "id": "components_rgpddataexport_rgpddataexport"
     },
@@ -7539,7 +7509,7 @@
       "source_file": "src/components/admin/AdminOffreManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 189,
       "norm_label": "adminoffremanager.jsx",
       "id": "admin_adminoffremanager"
     },
@@ -7549,7 +7519,7 @@
       "source_file": "src/components/admin/AdminOffreManager.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 189,
       "norm_label": "adminoffremanager()",
       "id": "admin_adminoffremanager_adminoffremanager"
     },
@@ -7649,7 +7619,7 @@
       "source_file": "src/components/admin/forms/OffreForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 189,
       "norm_label": "offreform.jsx",
       "id": "forms_offreform"
     },
@@ -7659,7 +7629,7 @@
       "source_file": "src/components/admin/forms/OffreForm.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 189,
       "norm_label": "offreform()",
       "id": "forms_offreform_offreform"
     },
@@ -7939,7 +7909,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentCodeManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 189,
+      "community": 83,
       "norm_label": "establishmentcodemanager.jsx",
       "id": "establishments_establishmentcodemanager"
     },
@@ -7949,7 +7919,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentCodeManager.jsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 189,
+      "community": 83,
       "norm_label": "establishmentcodemanager()",
       "id": "establishments_establishmentcodemanager_establishmentcodemanager"
     },
@@ -7959,7 +7929,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentEmailsManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 189,
+      "community": 83,
       "norm_label": "establishmentemailsmanager.jsx",
       "id": "establishments_establishmentemailsmanager"
     },
@@ -7969,7 +7939,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentEmailsManager.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 189,
+      "community": 83,
       "norm_label": "establishmentemailsmanager()",
       "id": "establishments_establishmentemailsmanager_establishmentemailsmanager"
     },
@@ -7999,7 +7969,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 189,
+      "community": 83,
       "norm_label": "establishmentform.jsx",
       "id": "establishments_establishmentform"
     },
@@ -8009,7 +7979,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentForm.jsx",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 189,
+      "community": 83,
       "norm_label": "establishmentform()",
       "id": "establishments_establishmentform_establishmentform"
     },
@@ -8019,7 +7989,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentModal.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 189,
+      "community": 83,
       "norm_label": "establishmentmodal.jsx",
       "id": "establishments_establishmentmodal"
     },
@@ -8029,7 +7999,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentModal.jsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 189,
+      "community": 83,
       "norm_label": "establishmentmodal()",
       "id": "establishments_establishmentmodal_establishmentmodal"
     },
@@ -8039,7 +8009,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentPasswordManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 189,
+      "community": 83,
       "norm_label": "establishmentpasswordmanager.jsx",
       "id": "establishments_establishmentpasswordmanager"
     },
@@ -8049,7 +8019,7 @@
       "source_file": "src/components/admin/sections/establishments/EstablishmentPasswordManager.jsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 189,
+      "community": 83,
       "norm_label": "establishmentpasswordmanager()",
       "id": "establishments_establishmentpasswordmanager_establishmentpasswordmanager"
     },
@@ -8259,7 +8229,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentEditForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 432,
       "norm_label": "establishmenteditform.jsx",
       "id": "dashboard_establishmenteditform"
     },
@@ -8269,7 +8239,7 @@
       "source_file": "src/components/admin/sections/establishments/dashboard/EstablishmentEditForm.jsx",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 2,
+      "community": 432,
       "norm_label": "establishmenteditform()",
       "id": "dashboard_establishmenteditform_establishmenteditform"
     },
@@ -8889,7 +8859,7 @@
       "source_file": "src/components/auth/EnhancedSignupForm.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 218,
       "norm_label": "enhancedsignupform.jsx",
       "id": "auth_enhancedsignupform"
     },
@@ -8899,7 +8869,7 @@
       "source_file": "src/components/auth/EnhancedSignupForm.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 2,
+      "community": 218,
       "norm_label": "interests_list",
       "id": "auth_enhancedsignupform_interests_list"
     },
@@ -8909,7 +8879,7 @@
       "source_file": "src/components/auth/EnhancedSignupForm.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 2,
+      "community": 218,
       "norm_label": "enhancedsignupform()",
       "id": "auth_enhancedsignupform_enhancedsignupform"
     },
@@ -10069,7 +10039,7 @@
       "source_file": "src/components/cv/CVFormDataManager.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 419,
       "norm_label": "cvformdatamanager.jsx",
       "id": "cv_cvformdatamanager"
     },
@@ -10079,7 +10049,7 @@
       "source_file": "src/components/cv/CVFormDataManager.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 2,
+      "community": 419,
       "norm_label": "cvformdatamanager()",
       "id": "cv_cvformdatamanager_cvformdatamanager"
     },
@@ -10499,7 +10469,7 @@
       "source_file": "src/components/dashboard/AICoachWidget.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 430,
       "norm_label": "aicoachwidget.jsx",
       "id": "dashboard_aicoachwidget"
     },
@@ -10509,7 +10479,7 @@
       "source_file": "src/components/dashboard/AICoachWidget.jsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 2,
+      "community": 430,
       "norm_label": "aicoachwidget()",
       "id": "dashboard_aicoachwidget_aicoachwidget"
     },
@@ -13329,7 +13299,7 @@
       "source_file": "src/components/job-explorer/filters/ExperienceFilter.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 438,
+      "community": 34,
       "norm_label": "experiencefilter.jsx",
       "id": "filters_experiencefilter"
     },
@@ -13339,7 +13309,7 @@
       "source_file": "src/components/job-explorer/filters/ExperienceFilter.jsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 438,
+      "community": 34,
       "norm_label": "experience_levels",
       "id": "filters_experiencefilter_experience_levels"
     },
@@ -13349,7 +13319,7 @@
       "source_file": "src/components/job-explorer/filters/ExperienceFilter.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 438,
+      "community": 34,
       "norm_label": "experiencefilter()",
       "id": "filters_experiencefilter_experiencefilter"
     },
@@ -14169,7 +14139,7 @@
       "source_file": "src/components/plans/PlanHistory.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 440,
       "norm_label": "planhistory.jsx",
       "id": "plans_planhistory"
     },
@@ -14179,7 +14149,7 @@
       "source_file": "src/components/plans/PlanHistory.jsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 2,
+      "community": 440,
       "norm_label": "planhistory()",
       "id": "plans_planhistory_planhistory"
     },
@@ -15179,7 +15149,7 @@
       "source_file": "src/components/ui/DiplomaGoals.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 419,
+      "community": 20,
       "norm_label": "diplomagoals.jsx",
       "id": "ui_diplomagoals"
     },
@@ -15189,7 +15159,7 @@
       "source_file": "src/components/ui/DiplomaGoals.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 419,
+      "community": 20,
       "norm_label": "diplomagoals()",
       "id": "ui_diplomagoals_diplomagoals"
     },
@@ -15199,7 +15169,7 @@
       "source_file": "src/components/ui/DiplomaSearch.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 419,
+      "community": 20,
       "norm_label": "diplomasearch.jsx",
       "id": "ui_diplomasearch"
     },
@@ -15209,7 +15179,7 @@
       "source_file": "src/components/ui/DiplomaSearch.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 419,
+      "community": 20,
       "norm_label": "diplomasearch()",
       "id": "ui_diplomasearch_diplomasearch"
     },
@@ -15219,7 +15189,7 @@
       "source_file": "src/components/ui/DiplomaSelector.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 419,
+      "community": 20,
       "norm_label": "diplomaselector.jsx",
       "id": "ui_diplomaselector"
     },
@@ -15229,7 +15199,7 @@
       "source_file": "src/components/ui/DiplomaSelector.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 419,
+      "community": 20,
       "norm_label": "diplomaselector()",
       "id": "ui_diplomaselector_diplomaselector"
     },
@@ -15379,7 +15349,7 @@
       "source_file": "src/components/ui/InstitutionSearch.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 432,
+      "community": 20,
       "norm_label": "institutionsearch.jsx",
       "id": "ui_institutionsearch"
     },
@@ -15389,7 +15359,7 @@
       "source_file": "src/components/ui/InstitutionSearch.jsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 432,
+      "community": 20,
       "norm_label": "institutionsearch()",
       "id": "ui_institutionsearch_institutionsearch"
     },
@@ -15419,7 +15389,7 @@
       "source_file": "src/components/ui/InstitutionSelector.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 432,
+      "community": 20,
       "norm_label": "institutionselector.jsx",
       "id": "ui_institutionselector"
     },
@@ -15429,7 +15399,7 @@
       "source_file": "src/components/ui/InstitutionSelector.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 432,
+      "community": 20,
       "norm_label": "institutionselector()",
       "id": "ui_institutionselector_institutionselector"
     },
@@ -18789,7 +18759,7 @@
       "source_file": "src/components/v1-placeholders/TrackingPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 605,
+      "community": 2,
       "norm_label": "trackingpage.jsx",
       "id": "v1_placeholders_trackingpage"
     },
@@ -18799,7 +18769,7 @@
       "source_file": "src/components/v1-placeholders/TrackingPage.jsx",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 605,
+      "community": 2,
       "norm_label": "trackingpage()",
       "id": "v1_placeholders_trackingpage_trackingpage"
     },
@@ -18969,7 +18939,7 @@
       "source_file": "src/context/NotificationContext.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 247,
+      "community": 105,
       "norm_label": "notificationcontext.jsx",
       "id": "context_notificationcontext"
     },
@@ -18979,7 +18949,7 @@
       "source_file": "src/context/NotificationContext.jsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 247,
+      "community": 105,
       "norm_label": "notificationcontext",
       "id": "context_notificationcontext_notificationcontext"
     },
@@ -18989,7 +18959,7 @@
       "source_file": "src/context/NotificationContext.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 247,
+      "community": 105,
       "norm_label": "notificationprovider()",
       "id": "context_notificationcontext_notificationprovider"
     },
@@ -18999,7 +18969,7 @@
       "source_file": "src/context/NotificationContext.jsx",
       "source_location": "L93",
       "_origin": "ast",
-      "community": 247,
+      "community": 105,
       "norm_label": "usenotifications()",
       "id": "context_notificationcontext_usenotifications"
     },
@@ -20009,7 +19979,7 @@
       "source_file": "src/hooks/useAlternanceSearch.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 218,
+      "community": 38,
       "norm_label": "usealternancesearch.js",
       "id": "hooks_usealternancesearch"
     },
@@ -20019,7 +19989,7 @@
       "source_file": "src/hooks/useAlternanceSearch.js",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 218,
+      "community": 38,
       "norm_label": "usealternancesearch()",
       "id": "hooks_usealternancesearch_usealternancesearch"
     },
@@ -20129,7 +20099,7 @@
       "source_file": "src/hooks/useCompanySearch.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 218,
+      "community": 38,
       "norm_label": "usecompanysearch.js",
       "id": "hooks_usecompanysearch"
     },
@@ -20139,7 +20109,7 @@
       "source_file": "src/hooks/useCompanySearch.js",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 218,
+      "community": 38,
       "norm_label": "usecompanysearch()",
       "id": "hooks_usecompanysearch_usecompanysearch"
     },
@@ -20309,7 +20279,7 @@
       "source_file": "src/hooks/useJobFilters.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 218,
+      "community": 38,
       "norm_label": "usejobfilters.js",
       "id": "hooks_usejobfilters"
     },
@@ -20319,7 +20289,7 @@
       "source_file": "src/hooks/useJobFilters.js",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 218,
+      "community": 38,
       "norm_label": "usejobfilters()",
       "id": "hooks_usejobfilters_usejobfilters"
     },
@@ -20509,7 +20479,7 @@
       "source_file": "src/hooks/useUserSubscription.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 440,
+      "community": 2,
       "norm_label": "useusersubscription.js",
       "id": "hooks_useusersubscription"
     },
@@ -20519,7 +20489,7 @@
       "source_file": "src/hooks/useUserSubscription.js",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 440,
+      "community": 2,
       "norm_label": "tier_prices",
       "id": "hooks_useusersubscription_tier_prices"
     },
@@ -20529,7 +20499,7 @@
       "source_file": "src/hooks/useUserSubscription.js",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 440,
+      "community": 2,
       "norm_label": "tier_features",
       "id": "hooks_useusersubscription_tier_features"
     },
@@ -20549,7 +20519,7 @@
       "source_file": "src/lib/AdminRoute.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 603,
+      "community": 2,
       "norm_label": "adminroute.jsx",
       "id": "lib_adminroute"
     },
@@ -20559,7 +20529,7 @@
       "source_file": "src/lib/AdminRoute.jsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 603,
+      "community": 2,
       "norm_label": "adminroute()",
       "id": "lib_adminroute_adminroute"
     },
@@ -21079,7 +21049,7 @@
       "source_file": "src/pages/ActionPlanPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 438,
       "norm_label": "actionplanpage.jsx",
       "id": "pages_actionplanpage"
     },
@@ -21089,7 +21059,7 @@
       "source_file": "src/pages/ActionPlanPage.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 2,
+      "community": 438,
       "norm_label": "actionplanpage()",
       "id": "pages_actionplanpage_actionplanpage"
     },
@@ -21859,7 +21829,7 @@
       "source_file": "src/pages/EstablishmentDashboardPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 604,
+      "community": 2,
       "norm_label": "establishmentdashboardpage.jsx",
       "id": "pages_establishmentdashboardpage"
     },
@@ -21869,7 +21839,7 @@
       "source_file": "src/pages/EstablishmentDashboardPage.jsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 604,
+      "community": 2,
       "norm_label": "establishmentdashboardpage()",
       "id": "pages_establishmentdashboardpage_establishmentdashboardpage"
     },
@@ -22359,7 +22329,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 247,
       "norm_label": "loginpage.jsx",
       "id": "pages_loginpage"
     },
@@ -22369,7 +22339,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 1,
+      "community": 247,
       "norm_label": "googleicon()",
       "id": "pages_loginpage_googleicon"
     },
@@ -22379,7 +22349,7 @@
       "source_file": "src/pages/LoginPage.jsx",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 1,
+      "community": 247,
       "norm_label": "loginpage()",
       "id": "pages_loginpage_loginpage"
     },
@@ -22599,7 +22569,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 430,
+      "community": 2,
       "norm_label": "managesubscriptionpage.jsx",
       "id": "pages_managesubscriptionpage"
     },
@@ -22609,7 +22579,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 430,
+      "community": 2,
       "norm_label": "plans",
       "id": "pages_managesubscriptionpage_plans"
     },
@@ -22619,7 +22589,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 430,
+      "community": 2,
       "norm_label": "freeplanview()",
       "id": "pages_managesubscriptionpage_freeplanview"
     },
@@ -22629,7 +22599,7 @@
       "source_file": "src/pages/ManageSubscriptionPage.jsx",
       "source_location": "L138",
       "_origin": "ast",
-      "community": 430,
+      "community": 2,
       "norm_label": "paidplanview()",
       "id": "pages_managesubscriptionpage_paidplanview"
     },
@@ -23689,7 +23659,7 @@
       "source_file": "src/pages/user/CookiesPreferencesPage.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 441,
       "norm_label": "cookiespreferencespage.jsx",
       "id": "user_cookiespreferencespage"
     },
@@ -23699,7 +23669,7 @@
       "source_file": "src/pages/user/CookiesPreferencesPage.jsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 2,
+      "community": 441,
       "norm_label": "cookiespreferencespage()",
       "id": "user_cookiespreferencespage_cookiespreferencespage"
     },
@@ -32368,36 +32338,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/Footer.jsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_footer",
-      "target": "components_footer_footer"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/ui/hover-footer.jsx",
-      "source_location": "L116",
-      "weight": 1.0,
-      "source": "ui_hover_footer",
-      "target": "ui_hover_footer_footerbackgroundgradient",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/ui/hover-footer.jsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "ui_hover_footer",
-      "target": "ui_hover_footer_texthovereffect",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/components/personalized-plan/RecommendedMetiersSection.jsx",
       "source_location": "L18",
       "weight": 1.0,
@@ -39926,6 +39866,16 @@
       "weight": 1.0,
       "source": "components_featuregate_featuregate",
       "target": "lib_subscriptionutils_hasaccess"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Footer.jsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_footer",
+      "target": "components_footer_footer"
     },
     {
       "relation": "contains",
@@ -67345,5 +67295,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "119139c6a1bf0818c13c7b71875b9bc1f26bd96f"
+  "built_at_commit": "14629875a91b15a8dc123e25fe283bb8fc9d91b1"
 }
