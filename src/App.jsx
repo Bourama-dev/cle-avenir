@@ -41,6 +41,7 @@ import MetaTags from '@/components/SEO/MetaTags';
 import StructuredData from '@/components/SEO/StructuredData';
 
 // Analytics
+import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { slugToMetierCode } from '@/utils/slugUtils';
 
@@ -464,6 +465,7 @@ const PageContent = () => {
       {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isMaintenancePage && <BugReportButton />}
       
       {showFooter && <Footer onNavigate={handleNavigate} />}
+      <Analytics />
       <SpeedInsights />
     </div>
     </DynamicBackground>
