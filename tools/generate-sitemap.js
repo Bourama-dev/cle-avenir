@@ -18,41 +18,36 @@ const STATIC_ROUTES = [
   // Accueil et navigation principale
   { url: '/',              changefreq: 'weekly',  priority: '1.0' },
 
+  // Test et orientation (priorité maximale : conversion principale)
+  { url: '/test',          changefreq: 'daily',   priority: '0.95' },
+
   // Explorateurs (haute priorité)
   { url: '/metiers',       changefreq: 'weekly',  priority: '0.95' },
   { url: '/formations',    changefreq: 'weekly',  priority: '0.95' },
   { url: '/offres-emploi', changefreq: 'daily',   priority: '0.95' },
   { url: '/careers',       changefreq: 'weekly',  priority: '0.9' },
 
-  // Test et orientation
-  { url: '/test',          changefreq: 'daily',   priority: '0.92' },
-  { url: '/how-it-works',  changefreq: 'monthly', priority: '0.8' },
-
   // Contenu éditorial
-  { url: '/blog',          changefreq: 'weekly',  priority: '0.85' },
+  { url: '/how-it-works',  changefreq: 'monthly', priority: '0.85' },
   { url: '/actualites',    changefreq: 'weekly',  priority: '0.85' },
-  { url: '/documentation', changefreq: 'monthly', priority: '0.7' },
+  { url: '/lycees',        changefreq: 'weekly',  priority: '0.8' },
 
   // Pages commerciales
   { url: '/plans',         changefreq: 'monthly', priority: '0.8' },
-  { url: '/about',         changefreq: 'monthly', priority: '0.75' },
-  { url: '/contact',       changefreq: 'monthly', priority: '0.7' },
-  { url: '/faq',           changefreq: 'monthly', priority: '0.7' },
+  { url: '/documentation', changefreq: 'monthly', priority: '0.7' },
+  { url: '/about',         changefreq: 'monthly', priority: '0.7' },
+  { url: '/contact',       changefreq: 'monthly', priority: '0.65' },
+  { url: '/faq',           changefreq: 'monthly', priority: '0.6' },
 
   // Pages de statut
-  { url: '/status',        changefreq: 'weekly',  priority: '0.5' },
-  { url: '/roadmap',       changefreq: 'monthly', priority: '0.6' },
+  { url: '/roadmap',       changefreq: 'monthly', priority: '0.5' },
+  { url: '/status',        changefreq: 'weekly',  priority: '0.4' },
 
   // Pages légales
-  { url: '/privacy',       changefreq: 'yearly',  priority: '0.4' },
-  { url: '/terms',         changefreq: 'yearly',  priority: '0.4' },
-  { url: '/legal',         changefreq: 'yearly',  priority: '0.4' },
-  { url: '/legal/cookies', changefreq: 'yearly',  priority: '0.3' },
-
-  // Anciennes URLs avec redirects (les crawlers les suivront)
-  { url: '/test-orientation', changefreq: 'monthly', priority: '0.1' },
-  { url: '/all-careers',      changefreq: 'monthly', priority: '0.1' },
-  { url: '/tarifs',           changefreq: 'monthly', priority: '0.1' },
+  { url: '/privacy',       changefreq: 'yearly',  priority: '0.3' },
+  { url: '/terms',         changefreq: 'yearly',  priority: '0.3' },
+  { url: '/legal',         changefreq: 'yearly',  priority: '0.3' },
+  { url: '/legal/cookies', changefreq: 'yearly',  priority: '0.25' },
 ];
 
 function buildSitemapXml(routes) {
