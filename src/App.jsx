@@ -53,6 +53,7 @@ import DynamicBackground from '@/components/DynamicBackground';
 
 const HomePage = lazy(() => import('@/components/HomePage'));
 const MaintenancePage = lazy(() => import('@/components/MaintenancePage'));
+const LandingPreview = lazy(() => import('@/components/LandingPreview')); // TEMP: feat/landing-cartographie preview, remove before merge
 
 // --- Lazy Load Pages ---
 // Auth & New Flow Pages
@@ -317,6 +318,7 @@ const PageContent = () => {
                   {/* Home & General */}
                   <Route path="/" element={<PageTransition><HomePage onNavigate={handleNavigate} /></PageTransition>} />
                   <Route path="/accueil" element={<Navigate to="/" replace />} />
+                  <Route path="/landing-preview" element={<PageTransition><LandingPreview /></PageTransition>} />
                   <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
                   <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
                   <Route path="/blog" element={<Navigate to="/actualites" replace />} />
