@@ -79,7 +79,7 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "terser": "^5.37.0",
-    "uuid": "^9.0.0",
+    "uuid": "^14.0.1",
     "vaul": "^1.1.2",
     "web-vitals": "^4.2.4"
   },
