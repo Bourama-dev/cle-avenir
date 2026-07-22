@@ -64,7 +64,7 @@ function buildRoute(laidOut) {
   return route;
 }
 
-export default function StarMapCanvas({ className = '', onNodeSelect }) {
+export default function StarMapCanvas({ className = '', onNodeSelect, foggy = false, interactive = true }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
   const { theme } = useTheme();
@@ -88,9 +88,10 @@ export default function StarMapCanvas({ className = '', onNodeSelect }) {
 
       ctx.clearRect(0, 0, w, h);
 
-      const maxDist = Math.max(w, h) * 0.18;
+      const maxDist = Math.max(w, h) * (foggy ? 0.1 : 0.18);
       ctx.lineWidth = 1;
       ctx.strokeStyle = colors.goldLine;
+      ctx.globalAlpha = foggy ? 0.45 : 1;
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
@@ -102,21 +103,24 @@ export default function StarMapCanvas({ className = '', onNodeSelect }) {
           }
         }
       }
-
-      ctx.strokeStyle = colors.route;
-      ctx.lineWidth = 2;
-      ctx.globalAlpha = 0.85;
-      ctx.beginPath();
-      route.forEach((p, i) => (i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y)));
-      ctx.stroke();
       ctx.globalAlpha = 1;
 
+      if (!foggy) {
+        ctx.strokeStyle = colors.route;
+        ctx.lineWidth = 2;
+        ctx.globalAlpha = 0.85;
+        ctx.beginPath();
+        route.forEach((p, i) => (i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y)));
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+
       nodes.forEach((n) => {
-        const isActive = active && active.id === n.id;
+        const isActive = !foggy && active && active.id === n.id;
         const twinkle = reducedMotionRef.current
           ? 1
           : 0.55 + 0.45 * Math.sin((t / 1000) * n.speed + n.phase);
-        ctx.globalAlpha = isActive ? 1 : twinkle;
+        ctx.globalAlpha = isActive ? 1 : foggy ? twinkle * 0.4 : twinkle;
         ctx.fillStyle = n.type === 'metier' ? colors.metier : colors.formation;
         ctx.beginPath();
         ctx.arc(n.x, n.y, isActive ? n.r + 2.5 : n.r, 0, Math.PI * 2);
@@ -136,7 +140,7 @@ export default function StarMapCanvas({ className = '', onNodeSelect }) {
         rafRef.current = requestAnimationFrame(draw);
       }
     },
-    [isDark, active]
+    [isDark, active, foggy]
   );
 
   useEffect(() => {
@@ -218,10 +222,10 @@ export default function StarMapCanvas({ className = '', onNodeSelect }) {
       <canvas
         ref={canvasRef}
         aria-hidden="true"
-        onPointerMove={handlePointerMove}
-        onPointerLeave={() => setHovered(null)}
-        onClick={handleClick}
-        className="block w-full h-full cursor-crosshair"
+        onPointerMove={interactive ? handlePointerMove : undefined}
+        onPointerLeave={interactive ? () => setHovered(null) : undefined}
+        onClick={interactive ? handleClick : undefined}
+        className={`block w-full h-full ${interactive ? 'cursor-crosshair' : 'pointer-events-none'}`}
       />
 
       {active && (
@@ -241,7 +245,10 @@ export default function StarMapCanvas({ className = '', onNodeSelect }) {
       {/* Accessible fallback: every node is also a real, focusable, keyboard-
           activatable button, invisibly positioned over the canvas — screen
           reader and keyboard users get the same content without depending
-          on canvas rendering or pointer events. */}
+          on canvas rendering or pointer events. Skipped on decorative
+          (non-interactive) instances to avoid repeating the same list on
+          every section that uses a foggy background canvas. */}
+      {interactive && (
       <div className="sr-only">
         <h2>Métiers et formations représentés sur la carte</h2>
         <ul>
@@ -255,6 +262,7 @@ export default function StarMapCanvas({ className = '', onNodeSelect }) {
           ))}
         </ul>
       </div>
+      )}
     </div>
   );
 }
