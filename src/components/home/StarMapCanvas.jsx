@@ -64,7 +64,13 @@ function buildRoute(laidOut) {
   return route;
 }
 
-export default function StarMapCanvas({ className = '', onNodeSelect, foggy = false, interactive = true }) {
+export default function StarMapCanvas({
+  className = '',
+  onNodeSelect,
+  foggy = false,
+  interactive = true,
+  emphasizedIds = null,
+}) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
   const { theme } = useTheme();
@@ -116,11 +122,14 @@ export default function StarMapCanvas({ className = '', onNodeSelect, foggy = fa
       }
 
       nodes.forEach((n) => {
-        const isActive = !foggy && active && active.id === n.id;
+        const isHoverActive = !foggy && active && active.id === n.id;
+        const isEmphasized = emphasizedIds && emphasizedIds.has(n.id);
+        const isActive = isHoverActive || isEmphasized;
+        const isDimmed = emphasizedIds && !isEmphasized && !isHoverActive;
         const twinkle = reducedMotionRef.current
           ? 1
           : 0.55 + 0.45 * Math.sin((t / 1000) * n.speed + n.phase);
-        ctx.globalAlpha = isActive ? 1 : foggy ? twinkle * 0.4 : twinkle;
+        ctx.globalAlpha = isActive ? 1 : isDimmed ? 0.15 : foggy ? twinkle * 0.4 : twinkle;
         ctx.fillStyle = n.type === 'metier' ? colors.metier : colors.formation;
         ctx.beginPath();
         ctx.arc(n.x, n.y, isActive ? n.r + 2.5 : n.r, 0, Math.PI * 2);
@@ -140,7 +149,7 @@ export default function StarMapCanvas({ className = '', onNodeSelect, foggy = fa
         rafRef.current = requestAnimationFrame(draw);
       }
     },
-    [isDark, active, foggy]
+    [isDark, active, foggy, emphasizedIds]
   );
 
   useEffect(() => {
@@ -161,27 +170,33 @@ export default function StarMapCanvas({ className = '', onNodeSelect, foggy = fa
 
       const laidOut = layoutNodes(constellationNodes, rect.width, rect.height);
       layoutRef.current = { nodes: laidOut, route: buildRoute(laidOut), w: rect.width, h: rect.height };
+      draw(performance.now());
     }
 
     resize();
     window.addEventListener('resize', resize);
 
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(draw);
-
     return () => {
       window.removeEventListener('resize', resize);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDark]);
 
   useEffect(() => {
-    // redraw once immediately when hover/pin changes, in case rAF loop is
-    // paused (reduced motion) or between frames.
-    const canvas = canvasRef.current;
-    if (canvas && reducedMotionRef.current) draw(performance.now());
-  }, [active, draw]);
+    // (re)start the draw loop whenever `draw`'s identity changes — i.e.
+    // whenever active/foggy/emphasizedIds/isDark change — so a running
+    // rAF loop doesn't keep looping with a stale closure. When reduced
+    // motion is on, `draw` doesn't self-schedule, so just paint once.
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    if (reducedMotionRef.current) {
+      draw(performance.now());
+    } else {
+      rafRef.current = requestAnimationFrame(draw);
+    }
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [draw]);
 
   const handlePointerMove = (e) => {
     const canvas = canvasRef.current;

@@ -1,4 +1,5 @@
 import HeroMapSection from '@/components/home/HeroMapSection';
+import AudienceSection from '@/components/home/AudienceSection';
 import ProblemSection from '@/components/home/ProblemSection';
 import HowItWorksSection from '@/components/home/HowItWorksSection';
 import SolutionFeaturesSection from '@/components/home/SolutionFeaturesSection';
@@ -15,6 +16,7 @@ export default function LandingPreview({ onNavigate }) {
   return (
     <div>
       <HeroMapSection onNavigate={onNavigate} />
+      <AudienceSection />
       <ProblemSection />
       <HowItWorksSection />
       <SolutionFeaturesSection onNavigate={onNavigate} />
