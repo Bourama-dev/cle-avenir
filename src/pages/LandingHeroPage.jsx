@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useSystemSettings } from '@/contexts/SystemSettingsContext';
 import {
   Play,
   ChevronDown,
@@ -23,23 +24,33 @@ import {
 } from 'lucide-react';
 import '@/styles/landingHero.css';
 
-const NAV_LINKS = ['Accueil', 'Tarifs', 'À propos', 'Contact'];
+const NAV_LINKS = [
+  { label: 'Accueil', to: '/' },
+  { label: 'Tarifs', to: '/plans' },
+  { label: 'À propos', to: '/about' },
+  { label: 'Contact', to: '/contact' },
+];
 
 function Navbar() {
+  const { settings } = useSystemSettings();
+  const siteName = settings?.general?.siteName || 'Cléavenir';
+  const logoUrl = settings?.general?.logo_url || '/favicon.svg';
+
   return (
     <nav className="flex items-center justify-between px-6 md:px-12 lg:px-20 py-5 font-body">
-      <span className="text-xl font-semibold tracking-tight text-foreground">
-        ✦ Cléavenir
-      </span>
+      <Link to="/" className="flex items-center gap-2 text-xl font-semibold tracking-tight text-foreground">
+        <img src={logoUrl} alt={`Logo ${siteName}`} width="24" height="24" className="object-contain shrink-0" />
+        {siteName}
+      </Link>
       <div className="hidden md:flex items-center gap-8">
-        {NAV_LINKS.map((link) => (
-          <a
-            key={link}
-            href="#"
+        {NAV_LINKS.map(({ label, to }) => (
+          <Link
+            key={label}
+            to={to}
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            {link}
-          </a>
+            {label}
+          </Link>
         ))}
       </div>
       <Link
