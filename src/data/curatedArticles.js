@@ -1,5 +1,6 @@
 // Curated editorial articles — Rapport Annuel CléAvenir 2026
 // Source: Mutations Conjoncturelles, Réformes de l'Orientation et Gouvernance de l'Emploi en France
+// Categories: marche-travail | emploi | formation | orientation | economie | alternance
 
 export const CURATED_ARTICLES = [
   {
@@ -502,6 +503,105 @@ export const CURATED_ARTICLES = [
 <p>Pour 2026, Parcoursup enrichit les fiches de formation d'une rubrique <strong>« Visualiser les chiffres d'accès »</strong> permettant de comparer son profil scolaire aux candidats admis les années précédentes. Les candidats en réorientation accèdent au portail dédié <strong>Parcours+</strong>.</p>
 
 <p>L'emploi public recrute également de manière importante : la Ville de Paris déploie en 2026 d'importantes campagnes de recrutement par concours pour des postes de jardiniers, arboristes-élagueurs et infirmiers municipaux.</p>
+`,
+  },
+  {
+    id: 'curated_alternance_2026_bilan',
+    title: 'Alternance 2026 : 980 000 contrats signés, le cap du million en vue',
+    excerpt: 'Le bilan de l\'alternance confirme son dynamisme malgré un léger fléchissement. L\'apprentissage représente désormais 7 % des diplômes de l\'enseignement supérieur. Décryptage des secteurs porteurs et des aides maintenues.',
+    link: '/actualites/curated_alternance_2026_bilan',
+    is_internal: true,
+    source: 'Rapport CléAvenir 2026',
+    source_logo: '🎓',
+    category: 'alternance',
+    published_at: '2026-06-15T08:00:00.000Z',
+    keywords: ['alternance', 'apprentissage', 'contrat de professionnalisation', 'CFA', 'aide employeur', 'OPCO'],
+    publisher: 'CléAvenir — Rapport Annuel 2026',
+    kpis: [
+      { label: 'Contrats signés en 2025', value: '980 000', trend: -1, trendLabel: '−3 % vs 2024' },
+      { label: 'Part dans l\'enseignement supérieur', value: '7 %', trend: 1, trendLabel: '+1 pt en deux ans' },
+      { label: 'Taux d\'insertion à 6 mois', value: '70 %', trend: 1, trendLabel: 'stable, supérieur voie scolaire' },
+      { label: 'Aide employeur (< 250 sal.)', value: '6 000 €', trend: null, trendLabel: 'maintenue en 2026' },
+    ],
+    full_description: `
+<h2>Un marché en légère correction après les records de 2022–2023</h2>
+
+<p>Après le pic historique de <strong>1,05 million de contrats</strong> signé en 2023, l'alternance connaît un léger repli qui s'explique par le recentrage des aides gouvernementales et la prudence des entreprises dans un contexte économique incertain. Avec <strong>980 000 contrats</strong> signés en 2025, dont environ 850 000 contrats d'apprentissage et 130 000 contrats de professionnalisation, le dispositif reste largement au-dessus de son niveau d'avant la réforme 2018.</p>
+
+<h3>Répartition par niveau de diplôme préparé</h3>
+
+<ul>
+  <li><strong>CAP / BEP</strong> : 18 % des contrats — stable, portés par l'hôtellerie-restauration, le BTP et les métiers de bouche.</li>
+  <li><strong>Bac Pro / Bac Tech</strong> : 12 % — en légère hausse grâce au plan « 1 jeune, 1 solution ».</li>
+  <li><strong>BTS / BUT</strong> : 24 % — premier niveau en volume absolu, avec une forte demande en commerce, gestion et numérique.</li>
+  <li><strong>Licence Pro / Bac +3</strong> : 11 % — en croissance, notamment dans les filières santé-social et ingénierie.</li>
+  <li><strong>Master / Bac +4 et +5</strong> : 29 % — progression continue, portée par les grandes écoles et les universités qui développent leurs CFA internes.</li>
+  <li><strong>Doctorat / CIFRE</strong> : 6 % — niche mais en hausse de 18 % sur deux ans.</li>
+</ul>
+
+<h2>Secteurs porteurs en 2026</h2>
+
+<p>L'analyse des offres en alternance sur les principales plateformes (Indeed, Welcome to the Jungle, Alternance.gouv) fait ressortir cinq secteurs en forte tension :</p>
+
+<ol>
+  <li><strong>Numérique et Tech</strong> : développement logiciel, cybersécurité, data science — taux de vacance des postes supérieur à 35 %.</li>
+  <li><strong>Transition énergétique</strong> : installateurs de panneaux photovoltaïques, techniciens en réseaux électriques, auditeurs énergétiques.</li>
+  <li><strong>Santé et Grand âge</strong> : aides-soignants, auxiliaires de vie, infirmiers — forte demande due au vieillissement de la population.</li>
+  <li><strong>Commerce et Vente</strong> : secteur historiquement premier en volume, reste dynamique malgré la montée du e-commerce.</li>
+  <li><strong>Industrie 4.0</strong> : maintenance des robots industriels, impression 3D, contrôle qualité numérique.</li>
+</ol>
+
+<h2>Aides financières maintenues en 2026</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dispositif</th>
+      <th>Bénéficiaire</th>
+      <th>Montant</th>
+      <th>Conditions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Aide à l'embauche alternance</td>
+      <td>Employeur (< 250 salariés)</td>
+      <td><strong>6 000 €</strong> / an</td>
+      <td>Contrat signé avant le 31/12/2026</td>
+    </tr>
+    <tr>
+      <td>Aide renforcée (grandes entreprises)</td>
+      <td>Employeur (≥ 250 salariés)</td>
+      <td><strong>2 000 €</strong> / an</td>
+      <td>Sous condition de quota de 5 % d'alternants</td>
+    </tr>
+    <tr>
+      <td>Prime équipement CFA</td>
+      <td>Apprenti</td>
+      <td>Jusqu'à <strong>500 €</strong></td>
+      <td>Selon le CFA et la région</td>
+    </tr>
+    <tr>
+      <td>Carte Étudiant des Métiers</td>
+      <td>Apprenti</td>
+      <td>Réductions et avantages</td>
+      <td>Automatique à l'entrée en CFA</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Comment trouver une alternance en 2026 ?</h2>
+
+<p>Le portail officiel <strong>Alternance.gouv.fr</strong> centralise les offres des OPCO (opérateurs de compétences) et des CFA. En parallèle, plusieurs démarches augmentent significativement les chances de trouver un employeur :</p>
+
+<ul>
+  <li><strong>Démarche directe</strong> : contacter les RH des entreprises ciblées sans attendre les offres publiées — 40 % des contrats sont signés hors offres formelles.</li>
+  <li><strong>Réseaux d'alumni</strong> : les anciens étudiants d'un CFA ou d'une école recrutent en priorité dans leur réseau.</li>
+  <li><strong>Salons spécialisés</strong> : Studyrama Alternance, Salon de l'Apprentissage (Paris, Lyon, Bordeaux) en mars–avril 2026.</li>
+  <li><strong>LinkedIn</strong> : hashtag #alternance2026 et activation du filtre « Alternance/Apprentissage » dans la recherche d'emploi.</li>
+</ul>
+
+<p><em>Source : DARES, DGEFP, France Compétences — données compilées par CléAvenir (juin 2026).</em></p>
 `,
   },
 ];

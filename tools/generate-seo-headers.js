@@ -70,7 +70,7 @@ function buildVercelJson() {
   const headers = [
     // ──── Headers par défaut (tout public) ────
     {
-      source: '/:path((?!.*\\.(js|css|gif|png|jpg|jpeg|webp|woff|woff2|svg|ico|eot|ttf)$).*)',
+      source: '/(.*)',
       headers: [
         {
           key: 'Cache-Control',

@@ -8,6 +8,7 @@ const CACHE_KEY_ALL = 'news_feeds_all';
 export const CATEGORIES = [
   { id: 'all',           label: 'Toutes les actualités',  emoji: '🗞️' },
   { id: 'emploi',        label: 'Emploi',                 emoji: '💼' },
+  { id: 'alternance',    label: 'Alternance',             emoji: '🎓' },
   { id: 'formation',     label: 'Formation',              emoji: '📚' },
   { id: 'orientation',   label: 'Orientation',            emoji: '🎯' },
   { id: 'marche-travail',label: 'Marché du travail',      emoji: '📊' },

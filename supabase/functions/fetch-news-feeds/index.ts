@@ -1,4 +1,4 @@
-// fetch-news-feeds v1.2
+// fetch-news-feeds v1.3
 // Aggregates news from French employment/career public sources (RSS + JSON APIs).
 // No API keys needed — all sources are freely accessible.
 // Items from structured APIs (DARES, data.gouv.fr, Parcoursup) are marked
@@ -61,6 +61,24 @@ const RSS_SOURCES = [
     name: "Centre Inffo",
     category: "formation",
     logo: "📚",
+  },
+  {
+    url: "https://www.apec.fr/actualites.rss",
+    name: "APEC",
+    category: "emploi",
+    logo: "💼",
+  },
+  {
+    url: "https://www.cereq.fr/rss.xml",
+    name: "CEREQ",
+    category: "formation",
+    logo: "🔬",
+  },
+  {
+    url: "https://travail-emploi.gouv.fr/formation-professionnelle/apprentissage/rss",
+    name: "Apprentissage — Min. Travail",
+    category: "alternance",
+    logo: "🎓",
   },
 ];
 
