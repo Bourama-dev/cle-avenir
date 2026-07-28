@@ -157,31 +157,53 @@ const Header = ({ onNavigate }) => {
       <div className="container-responsive flex h-14 md:h-16 lg:h-20 items-center justify-between">
         
         {/* Left: Logo & Brand Name */}
-        <Link 
-          to="/" 
+        <Link
+          to="/"
           onClick={(e) => {
             e.preventDefault();
             goHome();
           }}
-          className="flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] rounded-lg p-1 cursor-pointer min-w-0"
+          className="flex items-center gap-2.5 group focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] rounded-lg p-1 cursor-pointer min-w-0 shrink-0"
           aria-label="Retour à l'accueil"
         >
-           <img 
-             src={logoUrl} 
-             alt={`Logo ${siteName}`} 
-             className="object-contain transition-transform group-hover:scale-105 shrink-0"
-             width="32"
-             height="32"
-             style={{ width: '32px', height: '32px' }}
-           />
-           <span className="text-lg md:text-xl lg:text-2xl font-bold truncate" style={{ backgroundImage: `linear-gradient(to right, ${primaryColor}, #818cf8)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          <svg
+            viewBox="0 0 512 512"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="shrink-0 transition-transform group-hover:scale-105"
+            style={{ width: '38px', height: '38px' }}
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="hdr-grad-main" x1="256" y1="480" x2="256" y2="380" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#FF4757"/>
+                <stop offset="1" stopColor="#FF6B7A"/>
+              </linearGradient>
+              <linearGradient id="hdr-grad-trunk" x1="256" y1="450" x2="256" y2="100" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#FF4757"/>
+                <stop offset="1" stopColor="#A020F0"/>
+              </linearGradient>
+            </defs>
+            <path d="M256 430V180" stroke="url(#hdr-grad-trunk)" strokeWidth="40" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="256" cy="430" r="45" fill="url(#hdr-grad-main)"/>
+            <path d="M256 330L150 240" stroke="url(#hdr-grad-trunk)" strokeWidth="40" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="150" cy="240" r="40" fill="#1DD1A1"/>
+            <path d="M256 280L380 200" stroke="url(#hdr-grad-trunk)" strokeWidth="40" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="380" cy="200" r="40" fill="#1DD1A1"/>
+            <path d="M256 230L200 130" stroke="url(#hdr-grad-trunk)" strokeWidth="40" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="200" cy="130" r="40" fill="#2ED573"/>
+            <path d="M256 180L350 100" stroke="url(#hdr-grad-trunk)" strokeWidth="40" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="350" cy="100" r="40" fill="#2ED573"/>
+          </svg>
+          <span className="text-lg md:text-xl lg:text-2xl font-bold tracking-tight truncate" style={{ backgroundImage: `linear-gradient(to right, ${primaryColor}, #818cf8)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             {siteName}
-           </span>
+          </span>
         </Link>
 
         {/* Center: Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-medium" role="navigation">
            {[
+             ...(!user ? [{ path: '/', label: 'Accueil', exact: true }] : []),
              { path: '/test-orientation', label: '🎯 Test' },
              { path: '/offres-emploi', label: 'Offres' },
              { path: '/formations', label: 'Formations' },
@@ -189,9 +211,10 @@ const Header = ({ onNavigate }) => {
              { path: '/actualites', label: '🗞️ Actualités' },
              ...(user ? [{ path: '/personalized-plan', label: 'Mon Plan' }] : [])
            ].map((link) => (
-             <NavLink 
+             <NavLink
                key={link.path}
-               to={link.path} 
+               to={link.path}
+               end={link.exact}
                className={({ isActive }) => cn(
                  "relative py-2 transition-colors focus:outline-none whitespace-nowrap flex items-center gap-2 min-h-[44px]",
                  isActive ? "font-semibold" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -391,7 +414,29 @@ const Header = ({ onNavigate }) => {
               </SheetTrigger>
               <SheetContent side="right" className="w-[85vw] sm:w-[350px] max-w-sm p-0 flex flex-col h-full bg-[var(--bg-primary)] border-l border-[var(--border-color)] z-[60]">
                  <div className="p-4 border-b border-[var(--border-color)] flex items-center justify-between h-14 md:h-16 shrink-0">
-                    <span className="font-bold text-lg" style={{ color: primaryColor }}>{siteName}</span>
+                    <div className="flex items-center gap-2">
+                      <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '28px', height: '28px' }} aria-hidden="true">
+                        <defs>
+                          <linearGradient id="mob-grad-main" x1="256" y1="480" x2="256" y2="380" gradientUnits="userSpaceOnUse">
+                            <stop stopColor="#FF4757"/><stop offset="1" stopColor="#FF6B7A"/>
+                          </linearGradient>
+                          <linearGradient id="mob-grad-trunk" x1="256" y1="450" x2="256" y2="100" gradientUnits="userSpaceOnUse">
+                            <stop stopColor="#FF4757"/><stop offset="1" stopColor="#A020F0"/>
+                          </linearGradient>
+                        </defs>
+                        <path d="M256 430V180" stroke="url(#mob-grad-trunk)" strokeWidth="40" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="256" cy="430" r="45" fill="url(#mob-grad-main)"/>
+                        <path d="M256 330L150 240" stroke="url(#mob-grad-trunk)" strokeWidth="40" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="150" cy="240" r="40" fill="#1DD1A1"/>
+                        <path d="M256 280L380 200" stroke="url(#mob-grad-trunk)" strokeWidth="40" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="380" cy="200" r="40" fill="#1DD1A1"/>
+                        <path d="M256 230L200 130" stroke="url(#mob-grad-trunk)" strokeWidth="40" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="200" cy="130" r="40" fill="#2ED573"/>
+                        <path d="M256 180L350 100" stroke="url(#mob-grad-trunk)" strokeWidth="40" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="350" cy="100" r="40" fill="#2ED573"/>
+                      </svg>
+                      <span className="font-bold text-lg" style={{ color: primaryColor }}>{siteName}</span>
+                    </div>
                     <SheetClose className="rounded-full p-2 hover:bg-[var(--bg-secondary)] transition-colors text-[var(--text-primary)]" aria-label="Fermer le menu">
                       <X className="h-5 w-5" />
                     </SheetClose>
