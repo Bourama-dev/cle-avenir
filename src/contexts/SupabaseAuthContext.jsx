@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
   const [subscriptionPlan, setSubscriptionPlan] = useState(null);
-  const [subscriptionTier, setSubscriptionTier] = useState(PLAN_TYPES.FREE);
+  const [subscriptionTier, setSubscriptionTier] = useState(PLAN_TYPES.PREMIUM_PLUS);
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +27,8 @@ export const AuthProvider = ({ children }) => {
         .maybeSingle();
 
       if (error) throw error;
-      return data;
+      // CléAvenir is fully free — force full access regardless of stored tier.
+      return data ? { ...data, subscription_tier: PLAN_TYPES.PREMIUM_PLUS } : data;
     } catch (error) {
       console.error('[AuthContext] Error fetching profile:', error);
       return null;
@@ -36,7 +37,8 @@ export const AuthProvider = ({ children }) => {
 
   const fetchSubscriptionData = async (userId, profileData = null) => {
     try {
-      // 1. Try to get active subscription from user_subscriptions
+      // 1. Try to get active subscription from user_subscriptions (kept for
+      //    historical/display purposes only — access is never gated on it)
       const { data: subData } = await supabase
         .from('user_subscriptions')
         .select('*')
@@ -46,29 +48,20 @@ export const AuthProvider = ({ children }) => {
         .limit(1)
         .maybeSingle();
 
-      // 2. Fallback to profile data if no subscription record
-      let effectiveTier = PLAN_TYPES.FREE;
-      let effectivePlanObject = null;
+      const effectivePlanObject = subData
+        ? subData
+        : profileData?.subscription_tier
+          ? { plan_type: profileData.subscription_tier, status: 'active_legacy', source: 'profile' }
+          : null;
 
-      if (subData) {
-        effectiveTier = subData.plan_type || PLAN_TYPES.FREE;
-        effectivePlanObject = subData;
-      } else if (profileData?.subscription_tier) {
-        effectiveTier = profileData.subscription_tier;
-        effectivePlanObject = {
-          plan_type: effectiveTier,
-          status: 'active_legacy',
-          source: 'profile'
-        };
-      }
-
+      // CléAvenir is fully free — force full access regardless of stored tier.
       return {
-        tier: effectiveTier,
+        tier: PLAN_TYPES.PREMIUM_PLUS,
         plan: effectivePlanObject
       };
     } catch (err) {
       console.error('[AuthContext] Error in fetchSubscriptionData:', err);
-      return { tier: PLAN_TYPES.FREE, plan: null };
+      return { tier: PLAN_TYPES.PREMIUM_PLUS, plan: null };
     }
   };
 
@@ -82,7 +75,7 @@ export const AuthProvider = ({ children }) => {
         setSession(null);
         setUserProfile(null);
         setSubscriptionPlan(null);
-        setSubscriptionTier(PLAN_TYPES.FREE);
+        setSubscriptionTier(PLAN_TYPES.PREMIUM_PLUS);
         setLoading(false);
         return;
       }
@@ -125,7 +118,7 @@ export const AuthProvider = ({ children }) => {
             setSession(null);
             setUserProfile(null);
             setSubscriptionPlan(null);
-            setSubscriptionTier(PLAN_TYPES.FREE);
+            setSubscriptionTier(PLAN_TYPES.PREMIUM_PLUS);
             setLoading(false);
             return;
           }

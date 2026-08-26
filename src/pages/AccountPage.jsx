@@ -9,7 +9,6 @@ import { Label } from '@/components/ui/label';
 import { User, Mail, Phone, Calendar, Shield, CreditCard, Download, Trash2, Edit, Home, ArrowLeft, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
-import { getDisplayPlanName } from '@/lib/subscriptionUtils';
 import { notificationService } from '@/services/notificationService';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { useNavigation } from '@/hooks/useNavigation';
@@ -17,7 +16,7 @@ import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 import { motion } from 'framer-motion';
 
 const AccountPage = () => {
-  const { user, userProfile, subscriptionTier } = useAuth();
+  const { user, userProfile } = useAuth();
   const navigate = useNavigate();
   const { goBack, goHome } = useNavigation();
   const { toast } = useToast();
@@ -172,24 +171,21 @@ const AccountPage = () => {
           </Card>
         </AnimatedItem>
 
-        {/* Subscription */}
+        {/* Access */}
         <AnimatedItem>
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-slate-500" /> Abonnement
+                <CreditCard className="h-5 w-5 text-slate-500" /> Accès
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div>
-                <p className="font-semibold text-lg">{getDisplayPlanName(subscriptionTier)}</p>
+                <p className="font-semibold text-lg">100% Gratuit</p>
                 <p className="text-sm text-slate-500">
-                  Statut: <Badge variant="outline" className="text-green-600 border-green-200 bg-green-50">Actif</Badge>
+                  Statut: <Badge variant="outline" className="text-green-600 border-green-200 bg-green-50">Accès complet</Badge>
                 </p>
               </div>
-              <Button variant="secondary" onClick={() => navigate('/manage-subscription')}>
-                Gérer mon abonnement
-              </Button>
             </CardContent>
           </Card>
         </AnimatedItem>
