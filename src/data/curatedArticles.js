@@ -604,4 +604,335 @@ export const CURATED_ARTICLES = [
 <p><em>Source : DARES, DGEFP, France Compétences — données compilées par CléAvenir (juin 2026).</em></p>
 `,
   },
+
+  // ── Août 2026 ──────────────────────────────────────────────────────────────
+
+  {
+    id: 'curated_chomage_t2_2026',
+    title: 'Chômage T2 2026 : 8,3 %, la hausse se confirme malgré les créations d\'emploi',
+    excerpt: 'Le taux de chômage progresse à 8,3 % au deuxième trimestre 2026. Si les créations nettes d\'emploi salarié restent positives (+38 000), l\'afflux de nouveaux entrants sur le marché du travail et la hausse de l\'inactivité contrainte tirent les chiffres vers le haut.',
+    link: '/actualites/curated_chomage_t2_2026',
+    is_internal: true,
+    source: 'CléAvenir — Flash Conjoncture',
+    source_logo: '📊',
+    category: 'marche-travail',
+    published_at: '2026-08-20T07:00:00.000Z',
+    keywords: ['chômage', 'T2 2026', 'emploi salarié', 'France Travail', 'marché du travail', 'DARES'],
+    publisher: 'CléAvenir — Flash Conjoncture août 2026',
+    kpis: [
+      { label: 'Taux de chômage T2 2026', value: '8,3 %', trend: 1, trendLabel: '+0,2 pt vs T1 2026' },
+      { label: 'Créations emploi salarié (T2)', value: '+38 000', trend: 1, trendLabel: 'secteur privé' },
+      { label: 'Taux d\'emploi 15–64 ans', value: '68,1 %', trend: -1, trendLabel: '−0,2 pt en un an' },
+      { label: 'Chômage longue durée', value: '43,2 %', trend: 1, trendLabel: 'des chômeurs > 1 an' },
+    ],
+    full_description: `
+<h2>Conjoncture T2 2026 : entre dynamisme de l'emploi et hausse du chômage</h2>
+
+<p>Le paradoxe du deuxième trimestre 2026 se confirme : malgré <strong>38 000 créations nettes d'emplois salariés</strong> dans le secteur privé (dont +12 000 dans les services aux entreprises, +9 000 dans le commerce et +8 000 dans la construction), le taux de chômage au sens du BIT continue de progresser pour atteindre <strong>8,3 %</strong> de la population active.</p>
+
+<p>Cette apparente contradiction s'explique par trois facteurs structurels :</p>
+<ul>
+  <li><strong>Accroissement de la population active</strong> : l'arrivée sur le marché de la génération née entre 2001 et 2005 génère mécaniquement plus de demandeurs d'emploi que les postes créés ne peuvent en absorber.</li>
+  <li><strong>Effets de la loi Plein Emploi (2023)</strong> : le sixième trimestre consécutif d'inscription automatique des bénéficiaires du RSA gonfle les statistiques de demandeurs d'emploi en catégorie A.</li>
+  <li><strong>Réduction des contrats aidés</strong> : le plan d'économies budgétaires 2026 a réduit de 15 % les dotations aux Parcours Emploi Compétences (PEC), notamment dans le secteur associatif.</li>
+</ul>
+
+<h3>Secteurs à la traîne vs secteurs porteurs</h3>
+
+<table>
+  <thead>
+    <tr><th>Secteur</th><th>Évolution emploi T2 2026</th><th>Tendance</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Services aux entreprises</td><td>+12 000</td><td>↑ dynamique</td></tr>
+    <tr><td>Commerce de détail</td><td>+9 000</td><td>↑ stable</td></tr>
+    <tr><td>Construction & BTP</td><td>+8 000</td><td>↑ portée par rénovation énergétique</td></tr>
+    <tr><td>Industrie manufacturière</td><td>−4 000</td><td>↓ désindustrialisation résiduelle</td></tr>
+    <tr><td>Finance & assurance</td><td>−2 000</td><td>↓ automatisation des back-offices</td></tr>
+    <tr><td>Hébergement-restauration</td><td>+6 000</td><td>↑ saison estivale</td></tr>
+  </tbody>
+</table>
+
+<h2>Chômage des jeunes : légère amélioration mais niveau élevé</h2>
+
+<p>Le taux de chômage des 15–24 ans recule de <strong>0,3 point</strong> à <strong>20,8 %</strong> grâce à l'essor de l'alternance et aux contrats saisonniers d'été. Toutefois, le <em>halo du chômage</em> des jeunes (personnes souhaitant travailler sans être comptabilisées comme chômeurs BIT) reste estimé à <strong>450 000 personnes</strong>, dont une majorité de femmes peu qualifiées en zone rurale ou péri-urbaine.</p>
+
+<h2>Perspectives pour l'automne 2026</h2>
+
+<p>La DARES anticipe un taux de chômage stable autour de <strong>8,2–8,4 %</strong> au T3 2026, avec un léger rebond post-rentrée dû aux fins de CDD saisonniers. Le vrai test viendra au T4 2026, dépendant de l'exécution du budget et de l'évolution des taux directeurs de la BCE.</p>
+
+<p><em>Source : DARES Résultats, INSEE Enquête Emploi T2 2026 — compilé par CléAvenir (août 2026).</em></p>
+`,
+  },
+
+  {
+    id: 'curated_rentree_2026_orientation',
+    title: 'Rentrée 2026 : Parcoursup, résultats et guide des dernières places disponibles',
+    excerpt: 'La phase complémentaire de Parcoursup se termine le 12 septembre 2026. Plus de 42 000 candidats cherchent encore une formation. Tour d\'horizon des filières qui ont encore des places, des stratégies de recours et des alternatives à ne pas négliger.',
+    link: '/actualites/curated_rentree_2026_orientation',
+    is_internal: true,
+    source: 'CléAvenir — Dossier Rentrée',
+    source_logo: '🎯',
+    category: 'orientation',
+    published_at: '2026-08-18T08:00:00.000Z',
+    keywords: ['Parcoursup', 'rentrée 2026', 'phase complémentaire', 'orientation', 'BTS', 'BUT', 'réorientation'],
+    publisher: 'CléAvenir — Dossier Rentrée 2026',
+    kpis: [
+      { label: 'Candidats encore sans affectation', value: '42 000', trend: -1, trendLabel: 'vs 67 000 en 2025' },
+      { label: 'Places disponibles phase complémentaire', value: '~120 000', trend: null, trendLabel: 'toutes formations' },
+      { label: 'Taux d\'admission global', value: '92,4 %', trend: 1, trendLabel: '+0,8 pt vs 2025' },
+      { label: 'Date clôture phase complémentaire', value: '12 sept.', trend: null, trendLabel: '2026' },
+    ],
+    full_description: `
+<h2>Bilan de la session 2026 de Parcoursup</h2>
+
+<p>La session 2026 de Parcoursup s'achève sur un bilan globalement positif : <strong>92,4 %</strong> des candidats ayant formulé au moins un vœu ont reçu une proposition, contre 91,6 % en 2025. La plateforme a traité <strong>1,03 million de dossiers</strong> pour environ 23 000 formations répertoriées, dont 8 200 en apprentissage.</p>
+
+<h2>Phase complémentaire : mode d'emploi</h2>
+
+<p>Pour les <strong>42 000 candidats</strong> encore sans affectation au 20 août 2026, la phase complémentaire reste ouverte jusqu'au <strong>12 septembre 2026</strong>. Voici les étapes clés :</p>
+
+<ol>
+  <li><strong>Accéder à « Parcoursup Complémentaire »</strong> via le même compte. Les formations affichant « places disponibles » sont visibles en temps réel.</li>
+  <li><strong>Formuler jusqu'à 10 nouveaux vœux</strong> parmi les formations ayant encore de la capacité.</li>
+  <li><strong>Contacter directement les établissements</strong> : beaucoup de lycées en BTS, IUT en BUT et écoles privées hors Parcoursup acceptent des dossiers en direct.</li>
+  <li><strong>Solliciter un rendez-vous AVENIR</strong> auprès du conseiller France Travail ou de Psy-EN de son lycée.</li>
+</ol>
+
+<h3>Filières ayant encore des places au 20 août 2026</h3>
+
+<table>
+  <thead>
+    <tr><th>Filière</th><th>Places estimées</th><th>Profil adapté</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>BTS Services à la personne</td><td>~8 000</td><td>Bac Pro, STI2D, STMG</td></tr>
+    <tr><td>BTS Gestion de la PME</td><td>~5 500</td><td>Bac STMG, Général (SES)</td></tr>
+    <tr><td>BUT Génie Civil</td><td>~3 200</td><td>Bac STI2D, Général (Math)</td></tr>
+    <tr><td>Licence Pro Management</td><td>~4 800</td><td>BTS/BUT validé, Bac +2</td></tr>
+    <tr><td>Formations en alternance (hors Parcoursup)</td><td>~45 000</td><td>Tous profils</td></tr>
+    <tr><td>Écoles de commerce post-bac (hors PC)</td><td>~12 000</td><td>Tous bacs avec mention</td></tr>
+    <tr><td>BTS Informatique (SIO, SLAM)</td><td>~6 000</td><td>Bac Général, STI2D, NSI</td></tr>
+  </tbody>
+</table>
+
+<h2>Alternatives à Parcoursup</h2>
+
+<h3>1. L'apprentissage hors plateforme</h3>
+<p>Plus de <strong>45 000 contrats d'apprentissage</strong> sont encore à pourvoir fin août 2026. Les CFA recrutent directement : pas besoin de Parcoursup, le contrat se signe entre l'apprenti et l'employeur. Les plateformes Alternance.gouv.fr, 1jeune1solution.gouv.fr et les OPCO sectoriels listent ces offres.</p>
+
+<h3>2. La prépa intégrée</h3>
+<p>Plusieurs écoles d'ingénieurs et de commerce proposent des <strong>prépas intégrées</strong> (bac +1 interne) qui ouvrent leurs recrutements complémentaires en septembre. C'est une voie souvent sous-estimée qui offre un diplôme Bac +5 sans passer par les classes prépas CPGE.</p>
+
+<h3>3. L'année de césure ou de service civique</h3>
+<p>Le Service National Universel (SNU) et le Service Civique accueillent les jeunes 16–25 ans. Une mission de 6 à 12 mois permet de mûrir son projet d'orientation et de revenir en position de force pour la session Parcoursup 2027.</p>
+
+<p><em>Source : MESRI / Parcoursup, ONISEP, France Travail — données au 20 août 2026, compilées par CléAvenir.</em></p>
+`,
+  },
+
+  {
+    id: 'curated_ia_emploi_aout_2026',
+    title: 'IA et marché du travail : 1,2 million de postes transformés d\'ici 2028 en France',
+    excerpt: 'Un rapport conjoint DARES-France Stratégie publié en août 2026 recense les métiers les plus exposés à l\'automatisation par l\'IA générative. Comptables, assistants juridiques, gestionnaires de paie : les cols blancs répétitifs sont en première ligne. Mais de nouveaux métiers émergent.',
+    link: '/actualites/curated_ia_emploi_aout_2026',
+    is_internal: true,
+    source: 'CléAvenir — Analyses & Tendances',
+    source_logo: '🤖',
+    category: 'marche-travail',
+    published_at: '2026-08-12T09:00:00.000Z',
+    keywords: ['intelligence artificielle', 'automatisation', 'emploi', 'DARES', 'France Stratégie', 'reconversion', 'métiers du futur'],
+    publisher: 'CléAvenir — Analyses & Tendances août 2026',
+    kpis: [
+      { label: 'Postes transformés d\'ici 2028', value: '1,2 M', trend: null, trendLabel: 'France, tous secteurs' },
+      { label: 'Postes créés (IA & tech)', value: '+340 000', trend: 1, trendLabel: 'net positif sur 3 ans' },
+      { label: 'Salariés à former en urgence', value: '860 000', trend: null, trendLabel: 'compétences IA de base' },
+      { label: 'Secteur le plus exposé', value: 'Finance', trend: null, trendLabel: '38 % des postes touchés' },
+    ],
+    full_description: `
+<h2>Le rapport DARES-France Stratégie : méthode et périmètre</h2>
+
+<p>Publié le 5 août 2026, le rapport <em>« Intelligence artificielle et transformations du marché du travail en France (2026–2030) »</em> s'appuie sur l'analyse de <strong>22 millions de fiches de poste</strong> couplée aux capacités actuelles des LLM (grands modèles de langage) de dernière génération. Il identifie trois niveaux d'exposition :</p>
+
+<ul>
+  <li><strong>Fortement exposé</strong> : tâches entièrement automatisables par l'IA dans les 24 mois.</li>
+  <li><strong>Partiellement exposé</strong> : tâches augmentées par l'IA (l'humain supervise et valide).</li>
+  <li><strong>Peu exposé</strong> : tâches nécessitant présence physique, empathie ou créativité non reproductible.</li>
+</ul>
+
+<h3>Métiers les plus exposés à une transformation profonde</h3>
+
+<table>
+  <thead>
+    <tr><th>Métier</th><th>Niveau d'exposition</th><th>Horizon de transformation</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Comptable / aide-comptable</td><td>🔴 Fort</td><td>Dès 2026–2027</td></tr>
+    <tr><td>Gestionnaire de paie</td><td>🔴 Fort</td><td>Dès 2026–2027</td></tr>
+    <tr><td>Assistant juridique / paralégal</td><td>🔴 Fort</td><td>2027</td></tr>
+    <tr><td>Téléconseiller / chargé de relation client</td><td>🟠 Moyen</td><td>2027–2028</td></tr>
+    <tr><td>Rédacteur technique / traducteur</td><td>🟠 Moyen</td><td>2026–2027</td></tr>
+    <tr><td>Analyste de données junior</td><td>🟠 Moyen</td><td>2027</td></tr>
+    <tr><td>Infirmier / aide-soignant</td><td>🟢 Faible</td><td>Augmentation, pas remplacement</td></tr>
+    <tr><td>Plombier / électricien</td><td>🟢 Faible</td><td>Peu d'impact direct</td></tr>
+    <tr><td>Enseignant / formateur</td><td>🟢 Faible</td><td>Outils IA complémentaires</td></tr>
+  </tbody>
+</table>
+
+<h2>Les métiers qui émergent grâce à l'IA</h2>
+
+<p>Le rapport recense <strong>340 000 postes nets créés</strong> sur la période 2026–2028 dans l'écosystème IA :</p>
+
+<ul>
+  <li><strong>Prompt engineer / ingénieur de dialogue</strong> : conception et optimisation des interactions avec les LLM — 18 000 postes estimés.</li>
+  <li><strong>Auditeur algorithmique / AI compliance officer</strong> : vérification de la conformité des systèmes d'IA au règlement européen IA Act — 12 000 postes.</li>
+  <li><strong>Spécialiste en cybersécurité IA</strong> : protection des modèles contre les attaques adversariales — 25 000 postes.</li>
+  <li><strong>Coordinateur humain-IA</strong> : supervision des workflows hybrides (humain + IA) dans les grandes organisations — 45 000 postes.</li>
+  <li><strong>Formateur en compétences numériques</strong> : accompagnement à la montée en compétence — 22 000 postes.</li>
+</ul>
+
+<h2>Que faire si votre métier est exposé ?</h2>
+
+<p>France Compétences et les OPCO ont lancé en juillet 2026 le dispositif <strong>« Compétences IA »</strong> : un parcours de formation certifiant de 70 heures (éligible CPF) permettant à tout salarié de maîtriser les bases des outils IA appliqués à son métier. Renseignez-vous auprès de votre OPCO ou sur <em>moncompteformation.gouv.fr</em>.</p>
+
+<p><em>Source : DARES / France Stratégie — rapport publié le 5 août 2026. Données compilées par CléAvenir.</em></p>
+`,
+  },
+
+  {
+    id: 'curated_metiers_tension_ete_2026',
+    title: 'Les 10 métiers les plus recherchés en France — été 2026',
+    excerpt: 'France Travail publie son baromètre estival des tensions de recrutement. Certains secteurs affichent des taux de vacance record : numérique, santé, BTP et services à la personne peinent à trouver des candidats malgré un chômage en hausse. Décryptage et conseils.',
+    link: '/actualites/curated_metiers_tension_ete_2026',
+    is_internal: true,
+    source: 'CléAvenir — Baromètre Emploi',
+    source_logo: '💼',
+    category: 'emploi',
+    published_at: '2026-08-05T08:00:00.000Z',
+    keywords: ['métiers en tension', 'recrutement', 'offres d\'emploi', 'France Travail', 'numérique', 'santé', 'BTP'],
+    publisher: 'CléAvenir — Baromètre Emploi été 2026',
+    kpis: [
+      { label: 'Offres d\'emploi non pourvues', value: '382 000', trend: 1, trendLabel: '+4 % vs été 2025' },
+      { label: 'Délai moyen de recrutement', value: '6,2 sem.', trend: 1, trendLabel: '+0,8 sem. en un an' },
+      { label: 'Métiers en tension critique', value: '47', trend: 1, trendLabel: 'liste DARES 2026' },
+      { label: 'Offres > 3 mois sans candidat', value: '28 %', trend: 1, trendLabel: 'des offres actives' },
+    ],
+    full_description: `
+<h2>Baromètre des tensions de recrutement — été 2026</h2>
+
+<p>France Travail publie chaque trimestre son <em>Baromètre des tensions de recrutement</em>. L'édition de l'été 2026 révèle une situation paradoxale : avec un chômage à 8,3 %, on pourrait s'attendre à une facilité accrue de recrutement. Or, <strong>382 000 offres d'emploi</strong> restent non pourvues, soit 4 % de plus qu'à l'été 2025. Ce décalage structurel entre l'offre et la demande de travail témoigne d'un grave <em>mismatch de compétences</em>.</p>
+
+<h3>Top 10 des métiers les plus recherchés (été 2026)</h3>
+
+<table>
+  <thead>
+    <tr><th>Rang</th><th>Métier</th><th>Offres actives</th><th>Salaire médian</th><th>Formation recommandée</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>Développeur logiciel / full-stack</td><td>41 200</td><td>42 000 € brut/an</td><td>Bac +3 à +5 (informatique)</td></tr>
+    <tr><td>2</td><td>Aide-soignant / auxiliaire de vie</td><td>38 700</td><td>22 000 € brut/an</td><td>DEAVS, DEAES (1 an)</td></tr>
+    <tr><td>3</td><td>Électricien (tertiaire & résidentiel)</td><td>29 500</td><td>30 000 € brut/an</td><td>CAP / Bac Pro MELEC</td></tr>
+    <tr><td>4</td><td>Infirmier(e) diplômé(e) d'État</td><td>27 300</td><td>32 000 € brut/an</td><td>IFSI (3 ans, Parcoursup)</td></tr>
+    <tr><td>5</td><td>Technicien maintenance industrielle</td><td>24 800</td><td>32 500 € brut/an</td><td>BTS MI, BUT GIM</td></tr>
+    <tr><td>6</td><td>Data engineer / data analyst</td><td>22 100</td><td>44 000 € brut/an</td><td>Bac +3 à +5 (data)</td></tr>
+    <tr><td>7</td><td>Plombier-chauffagiste</td><td>19 600</td><td>28 000 € brut/an</td><td>CAP / Bac Pro TISEC</td></tr>
+    <tr><td>8</td><td>Commercial terrain (B2B)</td><td>18 900</td><td>35 000 € (fixe + var.)</td><td>BTS NDRC, BUT TC</td></tr>
+    <tr><td>9</td><td>Technicien photovoltaïque</td><td>16 400</td><td>29 000 € brut/an</td><td>Habilitation électrique + QUALIFELEC</td></tr>
+    <tr><td>10</td><td>Cuisinier / chef de partie</td><td>15 800</td><td>24 000 € brut/an</td><td>CAP Cuisine, Bac Pro Cuisine</td></tr>
+  </tbody>
+</table>
+
+<h2>Pourquoi ces postes restent-ils vacants ?</h2>
+
+<p>Les employeurs interrogés citent trois obstacles principaux :</p>
+
+<ol>
+  <li><strong>Manque de candidats qualifiés</strong> (64 % des employeurs) : les formations spécialisées produisent moins de diplômés que le marché n'en absorbe, notamment en numérique et en santé.</li>
+  <li><strong>Conditions de travail perçues comme difficiles</strong> (48 %) : horaires décalés, travail de nuit, pénibilité physique — en particulier dans l'aide à domicile et la restauration.</li>
+  <li><strong>Salaires insuffisants</strong> (39 %) : le salaire proposé est jugé non compétitif face au coût de la vie, surtout dans les grandes métropoles.</li>
+</ol>
+
+<h2>Comment candidater sur ces postes ?</h2>
+
+<p>Si vous êtes en recherche d'emploi ou en reconversion, ces métiers en tension offrent de vraies opportunités :</p>
+<ul>
+  <li><strong>Aide à la formation</strong> : la plupart sont éligibles aux aides CPF, Pro-A ou Transitions Collectives.</li>
+  <li><strong>Immersion professionnelle</strong> : France Travail propose des PMSMP (Périodes de Mise en Situation en Milieu Professionnel) de 1 à 30 jours pour tester un métier avant de s'engager.</li>
+  <li><strong>Candidature spontanée</strong> : avec un taux de vacance élevé, la démarche directe est plus efficace que les jobboards — contactez les entreprises de votre bassin d'emploi.</li>
+</ul>
+
+<p><em>Source : France Travail — Baromètre des tensions de recrutement, juillet 2026. Compilé par CléAvenir.</em></p>
+`,
+  },
+
+  {
+    id: 'curated_reforme_cpf_2026',
+    title: 'CPF en 2026 : participation de 100 € maintenue, nouvelles formations éligibles',
+    excerpt: 'Depuis le 2 mai 2024, les titulaires d\'un CPF doivent s\'acquitter d\'une participation de 100 € (sauf cas d\'exonération). En août 2026, le gouvernement annonce l\'élargissement des formations éligibles : cybersécurité, IA générative et transition écologique rejoignent le catalogue.',
+    link: '/actualites/curated_reforme_cpf_2026',
+    is_internal: true,
+    source: 'CléAvenir — Flash Formation',
+    source_logo: '📚',
+    category: 'formation',
+    published_at: '2026-08-01T08:30:00.000Z',
+    keywords: ['CPF', 'formation professionnelle', 'financement', 'cybersécurité', 'IA', 'transition écologique', 'Mon Compte Formation'],
+    publisher: 'CléAvenir — Flash Formation août 2026',
+    kpis: [
+      { label: 'Participation obligatoire CPF', value: '100 €', trend: null, trendLabel: 'maintenue en 2026' },
+      { label: 'Nouvelles formations éligibles', value: '+1 240', trend: 1, trendLabel: 'catalogue 2026' },
+      { label: 'Budget moyen CPF / actif', value: '860 €', trend: 1, trendLabel: '+60 € vs 2025' },
+      { label: 'Formations IA éligibles CPF', value: '318', trend: 1, trendLabel: 'dont 12 certifiantes' },
+    ],
+    full_description: `
+<h2>Le CPF en 2026 : ce qui change, ce qui reste</h2>
+
+<p>Le Compte Personnel de Formation (CPF) reste le principal outil de financement de la formation individuelle en France. En 2026, les règles de base sont maintenues avec quelques ajustements :</p>
+
+<ul>
+  <li><strong>Participation de 100 €</strong> : instaurée en mai 2024, elle reste en vigueur. Elle est exonérée pour les demandeurs d'emploi, les personnes en reconversion via Transitions Pro, les bénéficiaires du RSA et les personnes en situation de handicap.</li>
+  <li><strong>Alimentation du compte</strong> : les salariés à temps plein accumulent <strong>500 €/an</strong> (plafonné à 5 000 €), et les peu qualifiés <strong>800 €/an</strong> (plafonné à 8 000 €).</li>
+  <li><strong>Abondement employeur</strong> : les entreprises peuvent compléter le CPF de leurs salariés — une pratique en hausse (+22 % en 2025).</li>
+</ul>
+
+<h2>Nouvelles formations éligibles : les grandes catégories</h2>
+
+<p>À partir du 1er septembre 2026, <strong>1 240 nouvelles formations</strong> entrent dans le catalogue CPF, organisées autour de trois thématiques prioritaires :</p>
+
+<h3>1. Cybersécurité et protection des données</h3>
+<p>Face à l'explosion des cyberattaques (coût estimé à 5,5 Mds€ pour les entreprises françaises en 2025), France Compétences a labellisé 420 formations en sécurité informatique, dont :</p>
+<ul>
+  <li>Certification ANSSI SecNumedu (niveau initiation à expert)</li>
+  <li>CompTIA Security+ et CySA+ en version française</li>
+  <li>RGPD Practitioner (DPO de proximité)</li>
+</ul>
+
+<h3>2. Intelligence artificielle générative</h3>
+<p>318 formations couvrant l'usage professionnel des LLM, le prompt engineering, l'éthique de l'IA et l'IA Act européen. Parmi les certifications emblématiques :</p>
+<ul>
+  <li>AI Foundations (France Compétences / INRIA)</li>
+  <li>Utiliser l'IA dans mon métier — parcours métier (comptabilité, RH, marketing, droit)</li>
+  <li>Machine Learning pour non-développeurs (DataScientest, OpenClassrooms)</li>
+</ul>
+
+<h3>3. Transition écologique et compétences vertes</h3>
+<p>502 formations sur les métiers de la rénovation énergétique, la mobilité décarbonée et le management environnemental :</p>
+<ul>
+  <li>RGE Qualibat (rénovation énergétique des bâtiments)</li>
+  <li>Bilan carbone de territoire (méthode ADEME)</li>
+  <li>Monteur en systèmes photovoltaïques (habilitation + QUALIFELEC)</li>
+</ul>
+
+<h2>Comment mobiliser votre CPF ?</h2>
+
+<ol>
+  <li>Rendez-vous sur <strong>moncompteformation.gouv.fr</strong> et connectez-vous avec France Connect.</li>
+  <li>Consultez votre solde — il est exprimé en euros depuis 2019.</li>
+  <li>Recherchez une formation par mot-clé, certification ou RNCP.</li>
+  <li>Vérifiez l'éligibilité à l'exonération des 100 € si vous êtes demandeur d'emploi.</li>
+  <li>Validez en ligne : aucun dossier papier n'est requis.</li>
+</ol>
+
+<p><em>Source : France Compétences, DGEFP, Caisse des Dépôts — données août 2026. Compilé par CléAvenir.</em></p>
+`,
+  },
 ];
