@@ -659,6 +659,90 @@ const HomePage = ({ onNavigate }) => {
         </div>
       </section>
 
+      {/* ══ VIDÉO PRÉSENTATION ══════════════════════════════════════════════ */}
+      <section className="py-24 bg-slate-50/80">
+        <div className="max-w-4xl mx-auto px-6">
+          <AnimatedSection className="text-center max-w-2xl mx-auto mb-12">
+            <AnimatedItem>
+              <span className="inline-block px-4 py-1.5 rounded-full bg-cyan-50 border border-cyan-100 text-cyan-600 text-sm font-semibold mb-5">
+                🎬 Présentation
+              </span>
+            </AnimatedItem>
+            <AnimatedItem>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+                Découvre CléAvenir{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-cyan-500">
+                  en vidéo
+                </span>
+              </h2>
+            </AnimatedItem>
+            <AnimatedItem>
+              <p className="text-slate-500 text-lg leading-relaxed">
+                Deux minutes pour comprendre comment CléAvenir t'aide à trouver ta voie.
+              </p>
+            </AnimatedItem>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <AnimatedItem>
+              <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-slate-300/50 border border-slate-100 bg-slate-900">
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src="https://www.youtube-nocookie.com/embed/z6SXP8BO15M"
+                  title="Présentation de CléAvenir"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+            </AnimatedItem>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ══ VIDÉO FONDATEUR ═════════════════════════════════════════════════ */}
+      <section className="py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-6">
+          <AnimatedSection className="text-center max-w-2xl mx-auto mb-12">
+            <AnimatedItem>
+              <span className="inline-block px-4 py-1.5 rounded-full bg-violet-50 border border-violet-100 text-violet-600 text-sm font-semibold mb-5">
+                👤 L'entrepreneur
+              </span>
+            </AnimatedItem>
+            <AnimatedItem>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+                Rencontre le créateur{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-cyan-500">
+                  de CléAvenir
+                </span>
+              </h2>
+            </AnimatedItem>
+            <AnimatedItem>
+              <p className="text-slate-500 text-lg leading-relaxed">
+                Découvre l'histoire et la vision derrière le projet CléAvenir.
+              </p>
+            </AnimatedItem>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <AnimatedItem>
+              <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-slate-300/50 border border-slate-100 bg-slate-900">
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src="https://www.youtube-nocookie.com/embed/QedCSeYSDe8"
+                  title="L'entrepreneur derrière CléAvenir"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+            </AnimatedItem>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* ══ ACTUALITÉS ══════════════════════════════════════════════════════ */}
       <section className="bg-slate-50/60 pt-6 pb-4">
         <motion.div
