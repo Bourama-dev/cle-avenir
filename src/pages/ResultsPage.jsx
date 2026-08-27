@@ -18,14 +18,14 @@ import { mockMetiers } from '@/data/mockMetiers';
 const generateBasicRiasecProfile = (jobLibelle, jobDescription) => {
   const text = `${jobLibelle} ${jobDescription}`.toLowerCase();
 
-  // Keyword mappings for RIASEC dimensions
+  // Keyword mappings for RIASEC dimensions with expanded keywords
   const keywords = {
-    R: ['manuel', 'main', 'mécanicien', 'construction', 'ouvrier', 'technique', 'réparation', 'électricien', 'plomberie'],
-    I: ['recherche', 'analyse', 'scientifique', 'informatique', 'développeur', 'programmation', 'data', 'ingénieur', 'technique'],
-    A: ['design', 'créatif', 'art', 'dessin', 'graphique', 'musique', 'création', 'artiste', 'animation', 'web'],
-    S: ['social', 'aide', 'soin', 'santé', 'infirmier', 'coach', 'accompagnement', 'éducation', 'travail social', 'communication', 'relation'],
-    E: ['vente', 'commercial', 'entrepreneuriat', 'direction', 'manager', 'leadership', 'négociation', 'business'],
-    C: ['organisation', 'administratif', 'comptabilité', 'gestion', 'réglementation', 'contrôle', 'respect', 'ordre']
+    R: ['manuel', 'main', 'mécanicien', 'construction', 'ouvrier', 'technique', 'réparation', 'électricien', 'plomberie', 'opérateur', 'maintenance', 'machine', 'usine', 'industrie', 'assemblage'],
+    I: ['recherche', 'analyse', 'scientifique', 'informatique', 'développeur', 'programmation', 'data', 'ingénieur', 'technique', 'logiciel', 'système', 'algorithme', 'mathématique', 'calcul', 'code'],
+    A: ['design', 'créatif', 'art', 'dessin', 'graphique', 'musique', 'création', 'artiste', 'animation', 'web', 'esthétique', 'décoration', 'mode', 'cinéma', 'architecture'],
+    S: ['social', 'aide', 'soin', 'santé', 'infirmier', 'coach', 'accompagnement', 'éducation', 'travail social', 'communication', 'relation', 'service', 'accueil', 'conseil', 'dialogue'],
+    E: ['vente', 'commercial', 'entrepreneuriat', 'direction', 'manager', 'leadership', 'négociation', 'business', 'dirigeant', 'chef', 'gestion', 'stratégie', 'projet'],
+    C: ['organisation', 'administratif', 'comptabilité', 'gestion', 'réglementation', 'contrôle', 'respect', 'ordre', 'classement', 'tri', 'bureau', 'secrétariat', 'audit']
   };
 
   const profile = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
@@ -39,8 +39,13 @@ const generateBasicRiasecProfile = (jobLibelle, jobDescription) => {
 
   // Normalize to sum to a reasonable total (around 350 so normalized to 100)
   if (totalMatches === 0) {
-    // Default if no keywords match
-    return { R: 50, I: 50, A: 50, S: 50, E: 50, C: 50 };
+    // Default: create a varied profile instead of uniform, based on job name patterns
+    // This prevents convergence when no keywords match
+    const hasHigh = text.includes('expert') || text.includes('spécialiste') || text.includes('ingénieur');
+    const defaultProfile = hasHigh
+      ? { R: 40, I: 80, A: 30, S: 50, E: 50, C: 60 } // Intellectual bias
+      : { R: 60, I: 50, A: 40, S: 60, E: 50, C: 70 }; // Balanced with practical bias
+    return defaultProfile;
   }
 
   const factor = 350 / totalMatches;
