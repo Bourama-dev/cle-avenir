@@ -1,38 +1,16 @@
-import React, { createContext, useContext, useMemo } from 'react';
-import { useAuth } from '@/contexts/SupabaseAuthContext';
+import React, { createContext, useContext } from 'react';
 
 const PlanLimitationContext = createContext();
 
+// CléAvenir is fully free — every account has unrestricted access.
 export const PlanLimitationProvider = ({ children }) => {
-  const { subscriptionTier } = useAuth(); // Usually 'free', 'premium', 'premium_plus'
+  const canViewAllResults = () => true;
 
-  const userPlan = useMemo(() => {
-    switch (subscriptionTier) {
-      case 'premium':
-        return 'Premium';
-      case 'premium_plus':
-        return 'Premium+';
-      case 'free':
-      default:
-        return 'Découverte';
-    }
-  }, [subscriptionTier]);
-
-  const isPremium = useMemo(() => {
-    return userPlan === 'Premium' || userPlan === 'Premium+';
-  }, [userPlan]);
-
-  const canViewAllResults = () => {
-    return isPremium;
-  };
-
-  const getVisibleMetierCount = () => {
-    return isPremium ? Infinity : 3;
-  };
+  const getVisibleMetierCount = () => Infinity;
 
   const value = {
-    userPlan,
-    isPremium,
+    userPlan: 'Premium+',
+    isPremium: true,
     canViewAllResults,
     getVisibleMetierCount
   };

@@ -31,20 +31,7 @@ export const getDisplayPlanName = (planType) => {
 };
 
 /**
- * Checks if a user has access to a specific feature level
- * @param {string} currentPlan - The user's current plan
- * @param {string} requiredPlan - The minimum required plan
+ * CléAvenir is fully free — every account has access to every feature.
  * @returns {boolean}
  */
-export const hasAccess = (currentPlan, requiredPlan) => {
-  const levels = {
-    [PLAN_TYPES.FREE]: 0,
-    [PLAN_TYPES.PREMIUM]: 1,
-    [PLAN_TYPES.PREMIUM_PLUS]: 2
-  };
-
-  const currentLevel = levels[currentPlan] || 0;
-  const requiredLevel = levels[requiredPlan] || 0;
-
-  return currentLevel >= requiredLevel;
-};
+export const hasAccess = () => true;
