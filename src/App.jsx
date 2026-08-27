@@ -41,6 +41,7 @@ import MetaTags from '@/components/SEO/MetaTags';
 import StructuredData from '@/components/SEO/StructuredData';
 
 // Analytics
+import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { slugToMetierCode } from '@/utils/slugUtils';
 
@@ -53,6 +54,8 @@ import DynamicBackground from '@/components/DynamicBackground';
 
 const HomePage = lazy(() => import('@/components/HomePage'));
 const MaintenancePage = lazy(() => import('@/components/MaintenancePage'));
+const LandingHeroPage = lazy(() => import('@/pages/LandingHeroPage'));
+const LandingPreview = lazy(() => import('@/components/LandingPreview')); // TEMP: feat/landing-cartographie preview, remove before merge
 
 // --- Lazy Load Pages ---
 // Auth & New Flow Pages
@@ -276,9 +279,10 @@ const PageContent = () => {
   const isHomePage = location.pathname === '/' || location.pathname === '/accueil';
   const isTestResults = location.pathname.startsWith('/test-results');
   const isMaintenancePage = location.pathname === '/maintenance';
+  const isBienvenuePage = location.pathname === '/bienvenue';
 
-  const showHeader = !isAuthPage && !isAdminPage && !isDashboard && !isTestPage && !isErrorPage && !isEstablishmentPortal && !isCleoPage && !isCVBuilder && !isTestResults && !isMaintenancePage;
-  const showFooter = !isAuthPage && !isAdminPage && !isDashboard && !isTestPage && !isErrorPage && !isEstablishmentPortal && !isCleoPage && !isCVBuilder && !isMaintenancePage;
+  const showHeader = !isAuthPage && !isAdminPage && !isDashboard && !isTestPage && !isErrorPage && !isEstablishmentPortal && !isCleoPage && !isCVBuilder && !isTestResults && !isMaintenancePage && !isBienvenuePage;
+  const showFooter = !isAuthPage && !isAdminPage && !isDashboard && !isTestPage && !isErrorPage && !isEstablishmentPortal && !isCleoPage && !isCVBuilder && !isMaintenancePage && !isBienvenuePage;
   const showBreadcrumbs = showHeader && !isHomePage;
 
   if (authLoading) return <LoadingFallback />;
@@ -317,6 +321,8 @@ const PageContent = () => {
                   {/* Home & General */}
                   <Route path="/" element={<PageTransition><HomePage onNavigate={handleNavigate} /></PageTransition>} />
                   <Route path="/accueil" element={<Navigate to="/" replace />} />
+                  <Route path="/bienvenue" element={<PageTransition><LandingHeroPage /></PageTransition>} />
+                  <Route path="/landing-preview" element={<PageTransition><LandingPreview /></PageTransition>} />
                   <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
                   <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
                   <Route path="/blog" element={<Navigate to="/actualites" replace />} />
@@ -460,10 +466,11 @@ const PageContent = () => {
         </AppRouteErrorBoundary>
       </main>
 
-      {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isCleoPage && !isTestPage && !isCVBuilder && !isMaintenancePage && <CleoWidget />} 
+      {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isCleoPage && !isTestPage && !isCVBuilder && !isMaintenancePage && !isBienvenuePage && <CleoWidget />} 
       {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isMaintenancePage && <BugReportButton />}
       
       {showFooter && <Footer onNavigate={handleNavigate} />}
+      <Analytics />
       <SpeedInsights />
     </div>
     </DynamicBackground>

@@ -134,7 +134,7 @@ const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
         </h2>
         <nav className="space-y-1">
           <NavItem to="/account" icon={Settings} label="Mon Compte" />
-          <NavItem to="/manage-subscription" icon={CreditCard} label="Gérer l'abonnement" />
+          <NavItem to="/manage-subscription" icon={CreditCard} label="Mon accès" />
 
           {isAdmin && (
             <>

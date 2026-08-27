@@ -3,9 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { MessageCircle, Zap, Briefcase, Loader2, Edit, BarChart2 } from 'lucide-react';
 import { supabase } from '@/lib/customSupabaseClient';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
-import { TIERS } from '@/constants/subscriptionTiers';
+import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,8 +12,6 @@ import { useToast } from '@/components/ui/use-toast';
 import { EmailService } from '@/services/emailService';
 
 const DashboardRightSidebar = ({ userProfile, user, onOpenProfile }) => {
-  const { currentTier } = useSubscriptionAccess();
-  const isFree = currentTier === TIERS.FREE;
   const navigate = useNavigate();
 
   // Real test count
@@ -103,34 +99,19 @@ const DashboardRightSidebar = ({ userProfile, user, onOpenProfile }) => {
 
   return (
     <div className="space-y-6">
-      {/* Current Plan Card */}
+      {/* Access Card */}
       <Card className="bg-gradient-to-br from-violet-600 to-purple-700 text-white border-none shadow-lg overflow-hidden relative">
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-xl" />
         <CardHeader className="pb-2 relative z-10">
           <div className="flex items-center gap-2 text-violet-100 text-sm font-medium mb-1">
             <Zap className="h-4 w-4" />
-            Plan Actuel
+            CléAvenir
           </div>
-          <CardTitle className="text-2xl font-bold">
-            {isFree ? "Freemium" : currentTier === TIERS.PREMIUM ? "Premium" : "Premium+"}
-          </CardTitle>
+          <CardTitle className="text-2xl font-bold">100% Gratuit</CardTitle>
           <p className="text-violet-100 text-sm mt-1 opacity-90">
-            {isFree ? "Accès limité aux résultats." : "Accès complet activé."}
+            Accès complet et illimité à toutes les fonctionnalités.
           </p>
         </CardHeader>
-        <CardContent className="relative z-10">
-          {isFree ? (
-            <Button asChild className="w-full bg-cyan-400 hover:bg-cyan-500 text-cyan-950 font-semibold border-none shadow-md transition-all">
-              <Link to="/plans">Mettre à jour ↗</Link>
-            </Button>
-          ) : (
-             <div className="flex gap-2">
-                <Button variant="secondary" size="sm" className="w-full bg-white/20 hover:bg-white/30 text-white border-none" onClick={() => navigate('/manage-subscription')}>
-                   Gérer
-                </Button>
-             </div>
-          )}
-        </CardContent>
       </Card>
 
       {/* Quick Profile Actions */}
