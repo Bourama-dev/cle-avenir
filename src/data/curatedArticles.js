@@ -935,4 +935,131 @@ export const CURATED_ARTICLES = [
 <p><em>Source : France Compétences, DGEFP, Caisse des Dépôts — données août 2026. Compilé par CléAvenir.</em></p>
 `,
   },
+
+  // ── Aides régionales Île-de-France — août 2026 ──────────────────────────────
+
+  {
+    id: 'curated_ara_idf_2026',
+    title: "Aide Régionale à l'Apprentissage (ARA) : jusqu'à 200 € pour les apprentis franciliens en 1re année",
+    excerpt: "La Région Île-de-France reconduit son aide aux apprentis de niveaux 3 à 5 (CAP, Bac, BTS) en première année de formation : 200 € pour les CAP/Bac Pro, 115 € pour les BTS. La demande est portée par le CFA, pas par l'apprenti.",
+    link: '/actualites/curated_ara_idf_2026',
+    is_internal: true,
+    source: 'CléAvenir — Aides & Dispositifs',
+    source_logo: '🎓',
+    category: 'alternance',
+    published_at: '2026-08-28T08:00:00.000Z',
+    keywords: ['ARA', 'aide apprentissage', 'Île-de-France', 'CFA', 'CAP', 'BTS', 'apprentis'],
+    publisher: 'CléAvenir — Aides & Dispositifs août 2026',
+    kpis: [
+      { label: 'CAP / Bac Pro (niveaux 3-4)', value: '200 €', trend: null, trendLabel: 'versés en 1 fois' },
+      { label: 'BTS (niveau 5)', value: '115 €', trend: null, trendLabel: 'versés en 1 fois' },
+      { label: 'Démarche', value: 'via le CFA', trend: null, trendLabel: 'aucune demande individuelle' },
+      { label: 'Renouvellement', value: 'Non', trend: null, trendLabel: '1 seule fois par apprenti' },
+    ],
+    full_description: `
+<h2>Une aide pour couvrir les premiers frais de l'apprentissage</h2>
+
+<p>La Région Île-de-France reconduit l'<strong>Aide Régionale à l'Apprentissage (ARA)</strong>, destinée aux apprentis débutant leur formation en <strong>première année</strong>, aux niveaux 3 (CAP), 4 (Bac professionnel) et 5 (BTS). Elle vise à financer l'achat de livres, de matériel professionnel, ainsi que les frais de transport, de restauration ou d'hébergement liés à la formation.</p>
+
+<h3>Qui est concerné ?</h3>
+
+<ul>
+  <li>Apprentis en <strong>1re année</strong> de contrat d'apprentissage.</li>
+  <li>Formation suivie dans un <strong>CFA implanté en Île-de-France</strong>, de niveau 3, 4 ou 5.</li>
+  <li>Contrat d'apprentissage en cours de validité.</li>
+  <li>Ne pas avoir déjà bénéficié de cette aide auparavant.</li>
+</ul>
+
+<h3>Montant</h3>
+
+<p><strong>200 €</strong> pour les apprentis de niveaux 3 (CAP) et 4 (Bac), <strong>115 €</strong> pour les apprentis de niveau 5 (BTS). Le versement se fait en une seule fois, indépendamment de la rémunération d'apprentissage.</p>
+
+<h3>Comment en bénéficier ?</h3>
+
+<p>Aucune démarche individuelle à effectuer : c'est le <strong>CFA</strong> qui dépose la demande pour le compte de ses apprentis éligibles, via la plateforme <strong>mesdemarches.iledefrance.fr</strong>, pendant les périodes de dépôt fixées par la Région. Renseignez-vous directement auprès de votre CFA pour savoir si la demande a été effectuée.</p>
+
+<p><em>Source : Région Île-de-France — dispositif ARA. Compilé par CléAvenir.</em></p>
+`,
+  },
+
+  {
+    id: 'curated_recrutup_idf_2026',
+    title: "Recrut'Up : jusqu'à 12 000 € pour former un demandeur d'emploi avant embauche",
+    excerpt: "La Région Île-de-France finance jusqu'à 70 % du coût d'une formation destinée à un demandeur d'emploi recruté par une entreprise sur des compétences prioritaires (secteurs techniques et industriels). Dépôt des dossiers ouvert jusqu'au 31 janvier 2027.",
+    link: '/actualites/curated_recrutup_idf_2026',
+    is_internal: true,
+    source: 'CléAvenir — Aides & Dispositifs',
+    source_logo: '💼',
+    category: 'emploi',
+    published_at: '2026-08-28T08:10:00.000Z',
+    keywords: ["Recrut'Up", 'Île-de-France', "demandeur d'emploi", 'formation', 'recrutement', 'entreprise'],
+    publisher: 'CléAvenir — Aides & Dispositifs août 2026',
+    kpis: [
+      { label: 'Aide maximale', value: '12 000 €', trend: null, trendLabel: "par demandeur d'emploi" },
+      { label: 'Prise en charge régionale', value: '70 %', trend: null, trendLabel: 'max. du coût de formation' },
+      { label: 'Cofinancement entreprise', value: '30 %', trend: null, trendLabel: 'minimum' },
+      { label: 'Clôture des dépôts', value: '31 janv. 2027', trend: null, trendLabel: 'sur mesdemarches.iledefrance.fr' },
+    ],
+    full_description: `
+<h2>Former un demandeur d'emploi avant son embauche</h2>
+
+<p><strong>Recrut'Up</strong> est le dispositif de la Région Île-de-France qui finance la formation d'un demandeur d'emploi sur des compétences identifiées comme prioritaires, notamment dans les secteurs techniques et industriels, en vue d'un recrutement par une entreprise partenaire.</p>
+
+<h3>Montant et financement</h3>
+
+<ul>
+  <li>Aide régionale plafonnée à <strong>12 000 €</strong> par demandeur d'emploi.</li>
+  <li>Prise en charge dans la limite de <strong>70 %</strong> du coût total de la formation.</li>
+  <li>L'entreprise qui recrute cofinance au minimum <strong>30 %</strong> du coût de la formation.</li>
+  <li>L'aide est versée par subrogation à l'organisme de formation.</li>
+</ul>
+
+<h3>Comment déposer un dossier ?</h3>
+
+<p>C'est l'<strong>organisme de formation</strong> qui dépose la demande, accompagnée des pièces justificatives, sur <strong>mesdemarches.iledefrance.fr</strong>, pour le compte du demandeur d'emploi et en lien avec l'entreprise qui recrute. Le dépôt des dossiers est ouvert jusqu'au <strong>31 janvier 2027</strong>.</p>
+
+<p>Pour toute question : <strong>recrutup@iledefrance.fr</strong></p>
+
+<p><em>Source : Région Île-de-France — dispositif Recrut'Up. Compilé par CléAvenir.</em></p>
+`,
+  },
+
+  {
+    id: 'curated_bacheliers_meritants_idf_2026',
+    title: "Aide aux bacheliers méritants : 1 000 € pour les boursiers mention Très Bien",
+    excerpt: "Les bacheliers franciliens boursiers ayant obtenu la mention « Très Bien » au bac 2026 et poursuivant leurs études en Île-de-France perçoivent automatiquement 1 000 € au cours de l'année 2026-2027, sans aucune démarche à effectuer.",
+    link: '/actualites/curated_bacheliers_meritants_idf_2026',
+    is_internal: true,
+    source: 'CléAvenir — Aides & Dispositifs',
+    source_logo: '🏅',
+    category: 'formation',
+    published_at: '2026-08-28T08:20:00.000Z',
+    keywords: ['bacheliers méritants', 'mention très bien', 'Île-de-France', 'bourse', 'Crous', 'aide au mérite'],
+    publisher: 'CléAvenir — Aides & Dispositifs août 2026',
+    kpis: [
+      { label: "Montant de l'aide", value: '1 000 €', trend: null, trendLabel: 'versé en 2026-2027' },
+      { label: 'Démarche à effectuer', value: 'Aucune', trend: null, trendLabel: 'versement automatique' },
+      { label: 'Condition mention', value: 'Très Bien', trend: null, trendLabel: 'au bac 2026' },
+      { label: 'Condition ressources', value: 'Boursier BCS', trend: null, trendLabel: 'bourse sur critères sociaux' },
+    ],
+    full_description: `
+<h2>Une reconnaissance financière pour les meilleurs bacheliers boursiers</h2>
+
+<p>La Région Île-de-France verse une <strong>aide aux bacheliers méritants</strong> d'un montant de <strong>1 000 €</strong> aux lycéens ayant obtenu leur baccalauréat 2026 avec la mention <strong>« Très Bien »</strong>, sous conditions de ressources.</p>
+
+<h3>Conditions d'éligibilité</h3>
+
+<ul>
+  <li>Avoir obtenu le <strong>bac 2026 avec mention Très Bien</strong> dans un établissement d'Île-de-France.</li>
+  <li>Être inscrit à la rentrée <strong>2026-2027</strong> dans un établissement d'enseignement supérieur, ou de formation sanitaire et sociale, situé en Île-de-France.</li>
+  <li>Être bénéficiaire de la <strong>bourse sur critères sociaux (BCS)</strong> versée par les Crous des académies de Paris, Versailles ou Créteil.</li>
+</ul>
+
+<h3>Aucune démarche à effectuer</h3>
+
+<p>Si toutes les conditions sont réunies, l'aide est versée <strong>automatiquement</strong> — par le Crous de Paris pour la majorité des étudiants, ou directement par la Région pour les formations sanitaires et sociales. Il n'y a donc pas de dossier à constituer.</p>
+
+<p><em>Source : Région Île-de-France — Aide aux bacheliers méritants. Compilé par CléAvenir.</em></p>
+`,
+  },
 ];
