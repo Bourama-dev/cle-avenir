@@ -466,7 +466,12 @@ const PageContent = () => {
         </AppRouteErrorBoundary>
       </main>
 
-      {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isCleoPage && !isTestPage && !isCVBuilder && !isMaintenancePage && !isBienvenuePage && <CleoWidget />} 
+      {/* Cléo is available site-wide — excluded only where it duplicates an
+          existing full UI (/cleo itself), doesn't apply (maintenance), or
+          would cross into a different persona/security context (admin
+          back-office, establishment/institution staff portal, pre-auth
+          screens where there's no session yet). */}
+      {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isCleoPage && !isMaintenancePage && <CleoWidget />} 
       {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isMaintenancePage && <BugReportButton />}
       
       {showFooter && <Footer onNavigate={handleNavigate} />}

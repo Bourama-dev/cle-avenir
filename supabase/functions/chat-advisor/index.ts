@@ -13,33 +13,189 @@ function json(body: unknown, status = 200) {
   });
 }
 
-// ── OpenAI client ─────────────────────────────────────────────────────────────
+// ── Site-data tools (function calling) ────────────────────────────────────────
+// Lets Cléo look up real, current site content instead of relying only on the
+// static "SITE CONTEXT" blurb and the user's own profile.
+const TOOLS = [
+  {
+    type: 'function',
+    function: {
+      name: 'search_metiers',
+      description: "Recherche des métiers dans la base ROME de CléAvenir (1500+ métiers officiels) par mot-clé (intitulé, description, secteur). Utilise ceci dès qu'on te demande des infos sur un métier, un secteur, ou des débouchés.",
+      parameters: {
+        type: 'object',
+        properties: {
+          query: { type: 'string', description: 'Mot-clé de recherche (ex: "développeur", "infirmier", "marketing")' },
+        },
+        required: ['query'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'get_metier_detail',
+      description: "Récupère la fiche complète d'un métier ROME à partir de son code (ex: M1810). Utilise ceci après search_metiers pour approfondir un métier précis.",
+      parameters: {
+        type: 'object',
+        properties: {
+          code: { type: 'string', description: 'Code ROME du métier, ex: M1810' },
+        },
+        required: ['code'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'search_formations',
+      description: "Recherche des formations réelles (titre, organisme, ville, coût, niveau requis, débouchés) dans la base CléAvenir. Utilise ceci dès qu'on te demande des formations, écoles, ou comment se former à un métier.",
+      parameters: {
+        type: 'object',
+        properties: {
+          query: { type: 'string', description: 'Mot-clé (intitulé de formation ou métier visé)' },
+          city: { type: 'string', description: 'Ville ou région pour filtrer (optionnel)' },
+        },
+        required: ['query'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'search_articles',
+      description: "Recherche dans les articles de blog/actualités publiés sur CléAvenir (conseils carrière, marché de l'emploi, actualités formation). Utilise ceci si l'utilisateur demande des conseils, actualités, ou du contenu éditorial du site.",
+      parameters: {
+        type: 'object',
+        properties: {
+          query: { type: 'string', description: 'Mot-clé ou thème recherché' },
+        },
+        required: ['query'],
+      },
+    },
+  },
+] as const;
+
+// deno-lint-ignore no-explicit-any
+async function executeTool(sb: any, name: string, args: Record<string, unknown>): Promise<unknown> {
+  if (!sb) return { error: 'Base de données indisponible' };
+
+  try {
+    if (name === 'search_metiers') {
+      const q = String(args.query ?? '').trim();
+      if (!q) return { error: 'query manquant' };
+      const { data, error } = await sb
+        .from('rome_metiers')
+        .select('code, libelle, description, salaire, debouches, niveau_etudes')
+        .or(`libelle.ilike.%${q}%,description.ilike.%${q}%`)
+        .limit(5);
+      if (error) return { error: error.message };
+      return { results: data ?? [] };
+    }
+
+    if (name === 'get_metier_detail') {
+      const code = String(args.code ?? '').trim();
+      if (!code) return { error: 'code manquant' };
+      const { data, error } = await sb
+        .from('rome_metiers')
+        .select('code, libelle, description, definition, salaire, debouches, niveau_etudes, required_skills, domain')
+        .eq('code', code)
+        .maybeSingle();
+      if (error) return { error: error.message };
+      return data ?? { error: 'Métier introuvable' };
+    }
+
+    if (name === 'search_formations') {
+      const q = String(args.query ?? '').trim();
+      if (!q) return { error: 'query manquant' };
+      let query = sb
+        .from('formations_enriched')
+        .select('title, provider_name, description, cost, duration, required_education_level, location_city, region')
+        .eq('is_active', true)
+        .or(`title.ilike.%${q}%,description.ilike.%${q}%`)
+        .limit(5);
+      if (args.city) query = query.ilike('location_city', `%${String(args.city)}%`);
+      const { data, error } = await query;
+      if (error) return { error: error.message };
+      return { results: data ?? [] };
+    }
+
+    if (name === 'search_articles') {
+      const q = String(args.query ?? '').trim();
+      if (!q) return { error: 'query manquant' };
+      const { data, error } = await sb
+        .from('blog_articles')
+        .select('title, excerpt, slug, category, published_at')
+        .eq('published', true)
+        .or(`title.ilike.%${q}%,excerpt.ilike.%${q}%,keywords.ilike.%${q}%`)
+        .order('published_at', { ascending: false })
+        .limit(3);
+      if (error) return { error: error.message };
+      return { results: data ?? [] };
+    }
+
+    return { error: `Outil inconnu: ${name}` };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+}
+
+// ── OpenAI client (with tool-calling loop for site data lookups) ─────────────
+// deno-lint-ignore no-explicit-any
 async function callOpenAI(
   apiKey: string,
   systemPrompt: string,
   messages: { role: string; content: string }[],
+  sb: any = null,
 ): Promise<string> {
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      max_tokens: 1024,
-      messages: [
-        { role: 'system', content: systemPrompt },
-        ...messages.map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
-      ],
-    }),
-  });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`OpenAI ${res.status}: ${err}`);
+  // deno-lint-ignore no-explicit-any
+  const conversation: any[] = [
+    { role: 'system', content: systemPrompt },
+    ...messages.map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
+  ];
+
+  for (let round = 0; round < 3; round++) {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        max_tokens: 1024,
+        messages: conversation,
+        tools: TOOLS,
+        tool_choice: 'auto',
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`OpenAI ${res.status}: ${err}`);
+    }
+    const data = await res.json();
+    const msg = data.choices?.[0]?.message;
+    if (!msg) return '';
+
+    if (msg.tool_calls?.length) {
+      conversation.push(msg);
+      for (const call of msg.tool_calls) {
+        let args: Record<string, unknown> = {};
+        try { args = JSON.parse(call.function.arguments || '{}'); } catch { /* ignore malformed args */ }
+        const result = await executeTool(sb, call.function.name, args);
+        conversation.push({
+          role: 'tool',
+          tool_call_id: call.id,
+          content: JSON.stringify(result).slice(0, 4000),
+        });
+      }
+      continue; // let the model use the tool results
+    }
+
+    return msg.content ?? '';
   }
-  const data = await res.json();
-  return data.choices?.[0]?.message?.content ?? '';
+
+  return "Désolé, je n'ai pas réussi à terminer cette recherche. Peux-tu reformuler ?";
 }
 
 // ── Build rich Cléo system prompt ─────────────────────────────────────────────
@@ -59,6 +215,13 @@ SITE CONTEXT (CléAvenir):
 - Elle propose: tests RIASEC, catalogue de 1584 métiers ROME, offres d'emploi France Travail, formations Parcoursup
 - Elle accompagne les jeunes et adultes dans leur projet professionnel
 - Données réelles: base ROME officielle, API France Travail, Parcoursup
+
+OUTILS DE RECHERCHE (utilise-les activement, ne réponds JAMAIS "je ne sais pas" sans avoir essayé) :
+- search_metiers : recherche des métiers réels par mot-clé
+- get_metier_detail : fiche complète d'un métier (à partir de son code)
+- search_formations : recherche des formations réelles (ville, coût, niveau requis)
+- search_articles : recherche dans les articles/actualités publiés du site
+Dès qu'une question porte sur un métier, une formation, un secteur ou un contenu du site, appelle l'outil correspondant avant de répondre plutôt que de deviner. Cite les informations trouvées (intitulé, code, ville, coût...) pour rester factuel.
 `;
 
   const userContext = `
@@ -271,8 +434,12 @@ Deno.serve(async (req) => {
     // ── Enrich context with user data from DB ──────────────────────────────
     let enrichedContext = { ...context };
 
-    if (userId && supabaseUrl && supabaseKey) {
-      const sb = createClient(supabaseUrl, supabaseKey);
+    // Created whenever the DB is reachable — used both for profile
+    // enrichment (below, when logged in) and for the search_* tool calls
+    // (always, so anonymous visitors can still ask about site content).
+    const sb = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supabaseKey) : null;
+
+    if (userId && sb) {
       try {
         const { data: profile } = await sb
           .from('profiles')
@@ -328,7 +495,7 @@ Deno.serve(async (req) => {
       console.warn('[chat-advisor] OPENAI_API_KEY not set — returning fallback');
       reply = `Bonjour ! Je suis Cléo, votre coach de carrière. Pour activer mes capacités complètes, l'administrateur doit configurer la clé OPENAI_API_KEY dans les variables d'environnement Supabase. En attendant, explorez le catalogue de métiers et passez votre test d'orientation ! 🚀`;
     } else {
-      reply = await callOpenAI(anthropicKey, systemPrompt, allMessages);
+      reply = await callOpenAI(anthropicKey, systemPrompt, allMessages, sb);
     }
 
     // ── Extract profile updates from conversation ──────────────────────────
