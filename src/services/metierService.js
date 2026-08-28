@@ -156,7 +156,7 @@ export const metierService = {
 
       const { data, error } = await supabase
         .from(TABLE_NAME)
-        .select('code, libelle, description, definition, riasecMajeur, riasecMineur, adjusted_weights, riasec_vector, salaire, debouches, niveau_etudes');
+        .select('code, libelle, description, definition, riasecMajeur:riasecmajeur, riasecMineur:riasecmineur, adjusted_weights, riasec_vector, salaire, debouches, niveau_etudes');
 
       if (!error && data && data.length > 0) {
         console.log(`✅ Supabase: Found ${data.length} métiers`);

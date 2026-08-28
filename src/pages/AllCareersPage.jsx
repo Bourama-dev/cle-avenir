@@ -27,7 +27,7 @@ const AllCareersPage = () => {
       
       let query = supabase
         .from('rome_metiers')
-        .select('code, libelle, description, niveau_etudes, riasecMajeur')
+        .select('code, libelle, description, niveau_etudes, riasecMajeur:riasecmajeur')
         .range(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE - 1);
 
       if (searchTerm) {

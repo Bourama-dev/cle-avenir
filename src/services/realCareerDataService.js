@@ -16,7 +16,7 @@ export const realCareerDataService = {
     try {
       const { data, error } = await supabase
         .from('rome_metiers')
-        .select('id, code, libelle, description, riasecMajeur, riasecMineur, riasec_profile, salary_range, job_market_demand, growth_rate, domain')
+        .select('id, code, libelle, description, riasecMajeur:riasecmajeur, riasecMineur:riasecmineur, riasec_profile, salary_range, job_market_demand, growth_rate, domain')
         .eq('status', 'active')
         .order('libelle');
 

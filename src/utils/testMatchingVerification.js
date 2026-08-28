@@ -26,7 +26,7 @@ export const runMatchingVerification = async () => {
     // 2. Fetch 10 random metiers
     const { data: randomMetiersRaw, error } = await supabase
       .from('rome_metiers')
-      .select('code, libelle, description, definition, riasecMajeur, riasecMineur, adjusted_weights, riasec_vector, salaire, debouches, niveau_etudes')
+      .select('code, libelle, description, definition, riasecMajeur:riasecmajeur, riasecMineur:riasecmineur, adjusted_weights, riasec_vector, salaire, debouches, niveau_etudes')
       .limit(10);
 
     if (error) {

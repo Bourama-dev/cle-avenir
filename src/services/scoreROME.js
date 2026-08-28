@@ -32,7 +32,7 @@ export async function scoreROME(userProfileContext) {
 
     const { data: careers, error } = await supabase
       .from('rome_metiers')
-      .select('code, libelle, description, riasecMajeur, riasecMineur, adjusted_weights, niveau_etudes');
+      .select('code, libelle, description, riasecMajeur:riasecmajeur, riasecMineur:riasecmineur, adjusted_weights, niveau_etudes');
 
     if (error) throw error;
     if (!careers || careers.length === 0) {

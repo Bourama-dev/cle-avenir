@@ -5,11 +5,13 @@ import { calculateAdvancedMatching, generateRiasecWeights } from './matchingAlgo
 import { userProfileService } from './userProfileService';
 
 // All fields needed for advanced RIASEC + profile scoring.
-// Uses confirmed column names (riasecMajeur/riasecMineur match realCareerDataService.js).
+// DB columns are lowercase (riasecmajeur/riasecmineur) since they were created
+// unquoted in SQL; alias them back to camelCase so the rest of the app can
+// keep using metier.riasecMajeur / metier.riasecMineur.
 // adjusted_weights and riasec_vector are omitted — riasec_profile covers all 6 dimensions.
 const METIER_FIELDS = [
   'code', 'libelle', 'description', 'salaire', 'debouches', 'niveau_etudes',
-  'riasecMajeur', 'riasecMineur', 'riasec_profile',
+  'riasecMajeur:riasecmajeur', 'riasecMineur:riasecmineur', 'riasec_profile',
   'growth_rate', 'job_market_demand', 'salary_range',
 ].join(', ');
 
