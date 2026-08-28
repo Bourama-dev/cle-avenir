@@ -39,9 +39,13 @@ Deno.serve(async (req) => {
         text,
         model_id: 'eleven_multilingual_v2',
         voice_settings: {
-          stability: 0.5,
-          similarity_boost: 0.8,
-          style: 0.3,
+          // Lower stability + higher style = more natural prosodic variation
+          // (less flat/monotone "AI voice"); ElevenLabs' own guidance is that
+          // stability near 1.0 sounds robotic, while ~0.35-0.45 keeps speech
+          // coherent but expressive.
+          stability: 0.4,
+          similarity_boost: 0.85,
+          style: 0.45,
           use_speaker_boost: true,
         },
       }),
