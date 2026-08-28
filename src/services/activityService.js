@@ -1,5 +1,7 @@
 import { supabase } from '@/lib/customSupabaseClient';
 import { TestHistoryService } from './testHistoryService';
+import { LOCAL_ACTIVITY_CATALOG } from '@/data/activityCatalog';
+import { localActivityProgress } from './localActivityProgress';
 
 const DIMENSION_LABELS = {
   tech: 'Compétences Tech',
@@ -71,7 +73,7 @@ export const activityService = {
 
     if (userError) throw userError;
 
-    return activities.map(act => {
+    const dbActivities = activities.map(act => {
       const userProgress = userActs.find(ua => ua.activity_id === act.id);
       return {
         ...act,
@@ -80,6 +82,22 @@ export const activityService = {
         user_activity_id: userProgress?.id
       };
     });
+
+    // Supplement with the local catalog when the DB catalog is thin, same
+    // rule as learningPathService.generatePersonalizedPath.
+    if (dbActivities.length >= 10) return dbActivities;
+
+    const dbIds = new Set(dbActivities.map(a => a.id));
+    const localProgress = localActivityProgress.getAll(userId);
+    const localActivities = LOCAL_ACTIVITY_CATALOG
+      .filter(a => !dbIds.has(a.id))
+      .map(a => ({
+        ...a,
+        status: localProgress[a.id]?.status || 'available',
+        score: localProgress[a.id]?.score || 0,
+      }));
+
+    return [...dbActivities, ...localActivities];
   },
 
   async getPersonalizedRecommendations(userId) {
@@ -152,6 +170,13 @@ export const activityService = {
   },
 
   async startActivity(userId, activityId) {
+    // Local catalog activities aren't rows in `activities`, so they can't
+    // go through user_activities (FK on activity_id) — track them locally.
+    if (localActivityProgress.isLocalId(activityId)) {
+      localActivityProgress.markStarted(userId, activityId);
+      return { user_id: userId, activity_id: activityId, status: 'started' };
+    }
+
     const { data, error } = await supabase
       .from('user_activities')
       .upsert({
@@ -168,23 +193,34 @@ export const activityService = {
   },
 
   async completeActivity(userId, activityId, score = 100) {
-    const { data: activity } = await supabase
-      .from('activities')
-      .select('xp_reward, skills_rewarded')
-      .eq('id', activityId)
-      .single();
+    const isLocal = localActivityProgress.isLocalId(activityId);
 
-    const { error: updateError } = await supabase
-      .from('user_activities')
-      .update({
-        status: 'completed',
-        score: score,
-        completed_at: new Date()
-      })
-      .eq('user_id', userId)
-      .eq('activity_id', activityId);
+    const activity = isLocal
+      ? LOCAL_ACTIVITY_CATALOG.find(a => a.id === activityId)
+      : (await supabase
+          .from('activities')
+          .select('xp_reward, skills_rewarded')
+          .eq('id', activityId)
+          .maybeSingle()
+        ).data;
 
-    if (updateError) throw updateError;
+    if (!activity) throw new Error('Activité introuvable');
+
+    if (isLocal) {
+      localActivityProgress.markCompleted(userId, activityId, score);
+    } else {
+      const { error: updateError } = await supabase
+        .from('user_activities')
+        .update({
+          status: 'completed',
+          score: score,
+          completed_at: new Date()
+        })
+        .eq('user_id', userId)
+        .eq('activity_id', activityId);
+
+      if (updateError) throw updateError;
+    }
 
     // Award XP
     const stats = await this.getUserStats(userId);

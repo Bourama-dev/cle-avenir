@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/customSupabaseClient';
 import { LOCAL_ACTIVITY_CATALOG } from '@/data/activityCatalog';
+import { localActivityProgress } from './localActivityProgress';
 
 // Map RIASEC letters to skill domains to prioritize
 const RIASEC_SKILL_MAP = {
@@ -183,21 +184,34 @@ export const learningPathService = {
     const path = await this.getSavedPath(userId);
     if (!path || !path.activities_order?.length) return null;
 
-    const { data: activities } = await supabase
-      .from('activities')
-      .select('*, category:activity_categories(name, icon, color)')
-      .in('id', path.activities_order);
+    const dbIds = path.activities_order.filter(id => !localActivityProgress.isLocalId(id));
+    const { data: dbActivities } = dbIds.length
+      ? await supabase
+          .from('activities')
+          .select('*, category:activity_categories(name, icon, color)')
+          .in('id', dbIds)
+      : { data: [] };
+
+    // Local catalog activities (e.g. "local-01") aren't rows in `activities`
+    // — pull them from the bundled catalog instead of dropping them.
+    const localActivities = LOCAL_ACTIVITY_CATALOG.filter(a => path.activities_order.includes(a.id));
+    const allActivities = [...(dbActivities || []), ...localActivities];
 
     // Get progress
     const { data: userActivities } = await supabase
       .from('user_activities')
       .select('*')
       .eq('user_id', userId);
+    const localProgress = localActivityProgress.getAll(userId);
 
     const orderedActivities = path.activities_order
       .map(id => {
-        const act = (activities || []).find(a => a.id === id);
+        const act = allActivities.find(a => a.id === id);
         if (!act) return null;
+        if (localActivityProgress.isLocalId(id)) {
+          const progress = localProgress[id];
+          return { ...act, status: progress?.status || 'available', score: progress?.score || 0 };
+        }
         const progress = (userActivities || []).find(ua => ua.activity_id === id);
         return { ...act, status: progress?.status || 'available', score: progress?.score || 0 };
       })
