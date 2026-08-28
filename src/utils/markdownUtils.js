@@ -46,17 +46,41 @@ export const renderMarkdown = (text) => {
 };
 
 const parseInline = (text) => {
+  // Links first: [texte](url) — so bold/italic below only ever sees plain text
+  const linkParts = text.split(/(\[[^\]]+\]\([^)\s]+\))/g);
+  return linkParts.map((part, index) => {
+    const linkMatch = part.match(/^\[([^\]]+)\]\(([^)\s]+)\)$/);
+    if (linkMatch) {
+      const [, label, href] = linkMatch;
+      const isExternal = /^https?:\/\//.test(href);
+      return (
+        <a
+          key={index}
+          href={href}
+          target={isExternal ? '_blank' : undefined}
+          rel={isExternal ? 'noopener noreferrer' : undefined}
+          className="text-violet-600 underline decoration-violet-300 hover:text-violet-800 font-medium"
+        >
+          {label}
+        </a>
+      );
+    }
+    return parseBoldItalic(part, index);
+  });
+};
+
+const parseBoldItalic = (text, index) => {
   // Regex for bold: **text**
   const parts = text.split(/(\*\*.*?\*\*)/g);
-  return parts.map((part, index) => {
+  return parts.map((part, subIndex) => {
     if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={index} className="font-semibold text-slate-900">{part.slice(2, -2)}</strong>;
+      return <strong key={`${index}-${subIndex}`} className="font-semibold text-slate-900">{part.slice(2, -2)}</strong>;
     }
     // Simple italic: *text* (basic support)
     const italicParts = part.split(/(\*.*?\*)/g);
-    return italicParts.map((subPart, subIndex) => {
+    return italicParts.map((subPart, italicIndex) => {
         if (subPart.startsWith('*') && subPart.endsWith('*') && subPart.length > 2) {
-            return <em key={`${index}-${subIndex}`} className="italic">{subPart.slice(1, -1)}</em>;
+            return <em key={`${index}-${subIndex}-${italicIndex}`} className="italic">{subPart.slice(1, -1)}</em>;
         }
         return subPart;
     });

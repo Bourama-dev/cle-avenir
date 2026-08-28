@@ -8,6 +8,7 @@ import { FEATURES, TIERS } from '@/constants/subscriptionTiers';
 import { supabase } from '@/lib/customSupabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { renderMarkdown } from '@/utils/markdownUtils';
 
 const PREMIUM_PLUS_FEATURES = [
   'Cléo IA — coach illimité 24h/7j',
@@ -249,12 +250,12 @@ const CleoWidget = () => {
                             </div>
                           )}
                           <div className={cn(
-                            'px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed max-w-[82%]',
+                            'px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed max-w-[82%] [&_p]:mb-0 [&_p+p]:mt-2',
                             isUser
                               ? 'bg-slate-900 text-white rounded-tr-sm shadow-sm'
                               : 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm shadow-sm',
                           )}>
-                            {msg.content}
+                            {isUser ? msg.content : renderMarkdown(msg.content)}
                           </div>
                         </div>
 

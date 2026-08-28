@@ -90,7 +90,8 @@ async function executeTool(sb: any, name: string, args: Record<string, unknown>)
         .or(`libelle.ilike.%${q}%,description.ilike.%${q}%`)
         .limit(5);
       if (error) return { error: error.message };
-      return { results: data ?? [] };
+      const results = (data ?? []).map((m: Record<string, unknown>) => ({ ...m, url: `/metier/${m.code}` }));
+      return { results };
     }
 
     if (name === 'get_metier_detail') {
@@ -102,7 +103,7 @@ async function executeTool(sb: any, name: string, args: Record<string, unknown>)
         .eq('code', code)
         .maybeSingle();
       if (error) return { error: error.message };
-      return data ?? { error: 'Métier introuvable' };
+      return data ? { ...data, url: `/metier/${data.code}` } : { error: 'Métier introuvable' };
     }
 
     if (name === 'search_formations') {
@@ -110,14 +111,15 @@ async function executeTool(sb: any, name: string, args: Record<string, unknown>)
       if (!q) return { error: 'query manquant' };
       let query = sb
         .from('formations_enriched')
-        .select('title, provider_name, description, cost, duration, required_education_level, location_city, region')
+        .select('id, title, provider_name, description, cost, duration, required_education_level, location_city, region')
         .eq('is_active', true)
         .or(`title.ilike.%${q}%,description.ilike.%${q}%`)
         .limit(5);
       if (args.city) query = query.ilike('location_city', `%${String(args.city)}%`);
       const { data, error } = await query;
       if (error) return { error: error.message };
-      return { results: data ?? [] };
+      const results = (data ?? []).map((f: Record<string, unknown>) => ({ ...f, url: `/formation/${f.id}` }));
+      return { results };
     }
 
     if (name === 'search_articles') {
@@ -125,12 +127,15 @@ async function executeTool(sb: any, name: string, args: Record<string, unknown>)
       if (!q) return { error: 'query manquant' };
       const { data, error } = await sb
         .from('blog_articles')
-        .select('title, excerpt, slug, category, published_at')
+        .select('title, excerpt, category, published_at')
         .eq('published', true)
         .or(`title.ilike.%${q}%,excerpt.ilike.%${q}%,keywords.ilike.%${q}%`)
         .order('published_at', { ascending: false })
         .limit(3);
       if (error) return { error: error.message };
+      // No stable public route currently serves individual blog_articles rows
+      // (the /blog/:slug route redirects to the unrelated /actualites feed),
+      // so intentionally no `url` here — don't cite a link that would 404.
       return { results: data ?? [] };
     }
 
@@ -234,6 +239,7 @@ OUTILS DE RECHERCHE (utilise-les activement, ne réponds JAMAIS "je ne sais pas"
 - search_formations : recherche des formations réelles (ville, coût, niveau requis)
 - search_articles : recherche dans les articles/actualités publiés du site
 Dès qu'une question porte sur un métier, une formation, un secteur ou un contenu du site, appelle l'outil correspondant avant de répondre plutôt que de deviner. Cite les informations trouvées (intitulé, code, ville, coût...) pour rester factuel.
+Quand un résultat de search_metiers/get_metier_detail/search_formations contient un champ "url", ajoute TOUJOURS un lien Markdown cliquable vers cette page à la fin de l'élément correspondant, ex: [Voir la fiche métier](/metier/M1810). N'invente jamais d'URL toi-même — utilise uniquement celles fournies par les outils.
 `;
 
   const userContext = `

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Bot, Sliders, Zap, User, Volume2, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -103,7 +104,13 @@ const CleoPreferencesModal = ({ isOpen, onClose }) => {
     setPrefs({ ...DEFAULT_PREFERENCES });
   };
 
-  return (
+  // Rendered via a portal to document.body: every page is wrapped in
+  // PageTransition, a motion.div that animates transform/filter. An
+  // ancestor with a non-none transform or filter becomes the containing
+  // block for `position: fixed` descendants, so without a portal this
+  // modal would be positioned relative to that wrapper instead of the
+  // real viewport.
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -255,7 +262,8 @@ const CleoPreferencesModal = ({ isOpen, onClose }) => {
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 
