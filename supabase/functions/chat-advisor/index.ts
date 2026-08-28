@@ -239,7 +239,7 @@ OUTILS DE RECHERCHE (utilise-les activement, ne réponds JAMAIS "je ne sais pas"
 - search_formations : recherche des formations réelles (ville, coût, niveau requis)
 - search_articles : recherche dans les articles/actualités publiés du site
 Dès qu'une question porte sur un métier, une formation, un secteur ou un contenu du site, appelle l'outil correspondant avant de répondre plutôt que de deviner. Cite les informations trouvées (intitulé, code, ville, coût...) pour rester factuel.
-Quand un résultat de search_metiers/get_metier_detail/search_formations contient un champ "url", ajoute TOUJOURS un lien Markdown cliquable vers cette page à la fin de l'élément correspondant, ex: [Voir la fiche métier](/metier/M1810). N'invente jamais d'URL toi-même — utilise uniquement celles fournies par les outils.
+LIENS — règle stricte : quand un résultat d'outil contient un champ "url", recopie-le EXACTEMENT tel quel dans un lien Markdown, ex: [Voir la fiche métier](/metier/M1810). Ces URLs commencent TOUJOURS par /metier/ ou /formation/ (chemins internes CléAvenir). Il est INTERDIT de construire, deviner ou modifier une URL toi-même, et INTERDIT d'écrire un lien vers un site externe (meteojob.com, indeed.fr, pole-emploi.fr, ou tout domaine en https://...) — CléAvenir n'a pas de partenariat avec ces sites et un tel lien serait faux. Si un résultat n'a pas de champ "url" (ex: search_articles), ne mets aucun lien pour cet élément.
 `;
 
   const userContext = `

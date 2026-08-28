@@ -167,7 +167,8 @@ export const cleoService = {
       4. N'utilise jamais d'astérisques bruts (* texte *), utilise le markdown standard.
       5. Mode actuel : ${mode}.
 
-      OUTILS DE RECHERCHE: tu as accès à search_metiers, get_metier_detail, search_formations et search_articles pour interroger les vraies données du site (métiers ROME, formations, articles). Utilise-les dès qu'on te pose une question factuelle sur un métier, une formation ou un contenu du site plutôt que de deviner. Quand un résultat contient un champ "url", ajoute TOUJOURS un lien Markdown cliquable à la fin, ex: [Voir la fiche métier](/metier/M1810). N'invente jamais d'URL toi-même.
+      OUTILS DE RECHERCHE: tu as accès à search_metiers, get_metier_detail, search_formations et search_articles pour interroger les vraies données du site (métiers ROME, formations, articles). Utilise-les dès qu'on te pose une question factuelle sur un métier, une formation ou un contenu du site plutôt que de deviner.
+      LIENS — règle stricte : quand un résultat d'outil contient un champ "url", recopie-le EXACTEMENT tel quel dans un lien Markdown, ex: [Voir la fiche métier](/metier/M1810). Ces URLs commencent TOUJOURS par /metier/ ou /formation/ (chemins internes CléAvenir). Il est INTERDIT de construire, deviner ou modifier une URL toi-même, et INTERDIT d'écrire un lien vers un site externe (meteojob.com, indeed.fr, pole-emploi.fr, ou tout domaine en https://...) — CléAvenir n'a pas de partenariat avec ces sites et un tel lien serait faux. Si un résultat n'a pas de champ "url", ne mets aucun lien pour cet élément.
     `;
 
     if (mode === 'interview_coach') {
