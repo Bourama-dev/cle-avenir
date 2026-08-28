@@ -154,21 +154,33 @@ async function callOpenAI(
     ...messages.map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
   ];
 
-  for (let round = 0; round < 3; round++) {
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        max_tokens: 1024,
-        messages: conversation,
-        tools: TOOLS,
-        tool_choice: 'auto',
-      }),
-    });
+  // Cap rounds and per-call latency so a slow tool round-trip can't run the
+  // edge function past its own execution limit and get killed without ever
+  // sending a response (which the client sees as a bare connection error,
+  // not the graceful "erreur technique" fallback below).
+  for (let round = 0; round < 2; round++) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    let res: Response;
+    try {
+      res = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini',
+          max_tokens: 1024,
+          messages: conversation,
+          tools: TOOLS,
+          tool_choice: 'auto',
+        }),
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
     if (!res.ok) {
       const err = await res.text();
       throw new Error(`OpenAI ${res.status}: ${err}`);
@@ -264,6 +276,7 @@ Tout doit être en français. Aucun texte hors des balises.`;
 ${userContext}
 RÔLE: Tu es Cléo, tutrice pédagogique bienveillante et experte en orientation.
 LANGUE: FRANÇAIS UNIQUEMENT.
+TON: Tutoie TOUJOURS ${firstName} (tu/toi/ton), jamais de vouvoiement. Parle comme une amie proche et complice qui s'y connaît, pas comme un service client. Chaleureuse, enthousiaste, naturelle — évite les formules toutes faites du type "Je vous remercie de votre question".
 STYLE: Encourageant, pédagogique, concret. Maximum 150 mots. Markdown autorisé.
 Aide ${firstName} à comprendre les formations, les métiers, les diplômes et les débouchés.
 Propose des activités d'apprentissage concrètes issues de la plateforme CléAvenir.`;
@@ -274,6 +287,8 @@ Propose des activités d'apprentissage concrètes issues de la plateforme CléAv
 ${userContext}
 RÔLE: Tu es Cléo, coach de carrière experte, bienveillante et directe. Tu travailles pour CléAvenir.
 LANGUE: FRANÇAIS UNIQUEMENT. Ne réponds JAMAIS en anglais.
+
+TON: Tutoie TOUJOURS ${firstName} (tu/toi/ton), jamais de vouvoiement. Parle comme une amie proche qui s'y connaît en carrière, pas comme un service client corporate. Sois chaleureuse et spontanée, pas ampoulée : bannis les formules figées ("Je vous remercie de votre question", "N'hésitez pas à..."). Une salutation informelle suffit ("Salut !", "Hello !", "Ça va bien, et toi ?" si on te le demande) — pas besoin de te présenter à chaque message si la conversation est déjà en cours.
 
 CAPACITÉS (utilise-les selon le besoin):
 - Analyser le profil RIASEC et recommander des métiers adaptés
@@ -286,7 +301,7 @@ STYLE DE RÉPONSE:
 - Utilise **gras** pour les termes clés, listes à puces pour énumérer
 - Personnalise avec le prénom et le contexte du profil
 - Propose toujours une action concrète à la fin
-- Ton chaleureux mais professionnel
+- Chaleureux et complice, jamais froid ni corporate
 
 MÉMOIRE CONVERSATIONNELLE: Tu te souviens de toute la conversation. Utilise le contexte précédent.`;
 }
@@ -493,7 +508,7 @@ Deno.serve(async (req) => {
 
     if (!anthropicKey) {
       console.warn('[chat-advisor] OPENAI_API_KEY not set — returning fallback');
-      reply = `Bonjour ! Je suis Cléo, votre coach de carrière. Pour activer mes capacités complètes, l'administrateur doit configurer la clé OPENAI_API_KEY dans les variables d'environnement Supabase. En attendant, explorez le catalogue de métiers et passez votre test d'orientation ! 🚀`;
+      reply = `Salut ! Je suis Cléo, ton coach de carrière. Pour activer toutes mes capacités, l'administrateur doit configurer la clé OPENAI_API_KEY dans les variables d'environnement Supabase. En attendant, explore le catalogue de métiers et passe ton test d'orientation ! 🚀`;
     } else {
       reply = await callOpenAI(anthropicKey, systemPrompt, allMessages, sb);
     }
@@ -509,7 +524,7 @@ Deno.serve(async (req) => {
   } catch (err) {
     console.error('[chat-advisor] Error:', err);
     return json({
-      reply: 'Désolé, une erreur technique est survenue. Pouvez-vous réessayer dans quelques instants ?',
+      reply: 'Désolée, une erreur technique est survenue. Tu peux réessayer dans quelques instants ?',
       suggestions: ['Réessayer', 'Voir les métiers', 'Passer le test'],
     });
   }

@@ -22,7 +22,7 @@ const CleoProfileBuilder = lazy(() => import('@/components/cleo/CleoProfileBuild
 
 const CleoPage = () => {
   const { hasAccess, loading: subLoading } = useSubscriptionAccess();
-  const { userProfile, refreshProfile } = useAuth(); 
+  const { userProfile, refreshSubscription } = useAuth();
   const { toast } = useToast();
   
   const [activeSessionId, setActiveSessionId] = useState(null);
@@ -40,13 +40,13 @@ const CleoPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Initialize Engine on Load
+  // Note: analyzeCoherence.issues flags routine profile-completeness gaps
+  // (no main_goal, few skills listed) that apply to most fresh profiles —
+  // not an actual risk, so it must not drive the red "Alerte" cleoState.
+  // 'alert' is reserved for genuine risks (see handleSendMessage below).
   useEffect(() => {
     if (userProfile?.id) {
-      cleoEngine.analyzeCoherence(userProfile).then(analysis => {
-        if (analysis.issues.length > 0) {
-          setCleoState('alert');
-        }
-      });
+      cleoEngine.analyzeCoherence(userProfile);
     }
   }, [userProfile]);
 
@@ -105,7 +105,7 @@ const CleoPage = () => {
       );
 
       if (response.didUpdateProfile) {
-        await refreshProfile();
+        await refreshSubscription();
         setCleoState('action'); // Profile updated -> Action state
         setTimeout(() => setCleoState('neutral'), 3000);
       } else {
@@ -218,7 +218,7 @@ const CleoPage = () => {
             
             <Suspense fallback={<LoadingFallback />}>
               {showProfileBuilder ? (
-                <CleoProfileBuilder onComplete={() => setShowProfileBuilder(false)} userProfile={userProfile} onUpdate={refreshProfile} />
+                <CleoProfileBuilder onComplete={() => setShowProfileBuilder(false)} userProfile={userProfile} onUpdate={refreshSubscription} />
               ) : isSimulating ? (
                 <InterviewSimulation onEnd={() => setIsSimulating(false)} onSendMessage={handleSendMessage} isLoading={isLoading} />
               ) : activeTab === 'activities' ? (

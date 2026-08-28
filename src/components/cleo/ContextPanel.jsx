@@ -50,10 +50,14 @@ const ContextPanel = ({ userProfile, context, isOpen, onClose, onRefresh }) => {
               </div>
               <div className="bg-gradient-to-br from-violet-50 to-white p-3 rounded-xl border border-violet-100 shadow-sm">
                  <div className="font-bold text-violet-900 text-sm mb-1">
-                    {userProfile?.job_title || "Poste non défini"}
+                    {userProfile?.job_title || userProfile?.main_goal || "Objectif non défini"}
                  </div>
                  <p className="text-xs text-slate-600 leading-relaxed line-clamp-3">
-                    {userProfile?.main_goal || "Définissez votre objectif pour obtenir des conseils personnalisés."}
+                    {userProfile?.job_title && userProfile?.main_goal
+                       ? userProfile.main_goal
+                       : !userProfile?.job_title && !userProfile?.main_goal
+                       ? "Définissez votre objectif pour obtenir des conseils personnalisés."
+                       : null}
                  </p>
               </div>
            </div>

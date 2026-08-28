@@ -18,7 +18,7 @@ const GoalEditor = ({ currentGoal, currentTitle, onUpdate }) => {
   const [goal, setGoal] = useState(currentGoal || "");
   const [title, setTitle] = useState(currentTitle || "");
   const [horizon, setHorizon] = useState("medium_term");
-  const { userProfile, refreshProfile } = useAuth();
+  const { userProfile, refreshSubscription } = useAuth();
   const { toast } = useToast();
 
   const handleSave = async () => {
@@ -36,7 +36,7 @@ const GoalEditor = ({ currentGoal, currentTitle, onUpdate }) => {
 
       if (error) throw error;
 
-      await refreshProfile();
+      await refreshSubscription();
       if (onUpdate) onUpdate();
       
       toast({
