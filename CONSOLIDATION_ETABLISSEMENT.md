@@ -32,11 +32,11 @@ Fait :
 Découverte au passage : `src/lib/EstablishmentProtectedRoute.jsx` (à ne pas confondre avec `ProtectedEstablishmentRoute.jsx`, celui réellement routé dans `App.jsx`) est une tentative précédente et abandonnée de ce même correctif — utilise déjà `useAuth()` + `establishment_users`, mais n'est importé nulle part. À nettoyer avec `EstablishmentContext.jsx`/`useEstablishment.js`/`EstablishmentSidebar.jsx` (son cluster associé) une fois le nouveau flux validé en prod — pas fait maintenant pour rester scope sur l'auth.
 
 Reste à faire dans cette phase :
-1. Déployer l'edge function `create-establishment-staff` (dashboard ou CLI)
-2. Adapter l'UI admin de création de staff (`EstablishmentPasswordManager.jsx` génère un mot de passe côté client — n'a plus de sens, à remplacer par un simple champ email + appel à la nouvelle edge function)
+1. ~~Déployer l'edge function `create-establishment-staff`~~ — fait, déployée en prod
+2. ~~Adapter l'UI admin de création de staff~~ — fait : `EstablishmentPasswordManager.jsx` (génération de mot de passe côté client, jamais vérifié par aucun flux de login réel — bcrypt tournait dans le navigateur pour rien) supprimé et remplacé par `EstablishmentStaffInvite.jsx` (email + rôle → appelle l'edge function). Branché dans `EstablishmentForm.jsx` et `EstablishmentEditForm.jsx`.
 3. Remplacer `EstablishmentForgotPasswordPage.jsx` (actuellement un `setTimeout` factice) par `supabase.auth.resetPasswordForEmail()`
 4. Créer la page `/establishment/set-password` (lien de redirection après invitation) si elle n'existe pas déjà
-5. Une fois validé : retirer `establishment_staff`, `establishment_password_history`, `establishment_code_history` (0 ligne chacune) et la RPC `verify_establishment_credentials` devenue obsolète
+5. Une fois validé : retirer `establishment_staff`, `establishment_password_history`, `establishment_code_history` (0 ligne chacune) et la RPC `verify_establishment_credentials` devenue obsolète. Vérifier aussi si `educational_institutions.activation_password`/`establishment_code` (système d'activation séparé, jamais vérifié par aucun flux — `getEstablishmentByCode`/`verifyPassword` ne sont appelés nulle part) doit être retiré ou raccordé à quelque chose.
 
 ## Phase 2 (texte original) — Décision d'architecture (nécessite ton arbitrage)
 

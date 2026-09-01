@@ -11,7 +11,7 @@ import { EventLogger } from '@/services/eventLoggerService';
 import { EVENT_TYPES } from '@/constants/eventTypes';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import EstablishmentPasswordManager from '@/components/admin/sections/establishments/EstablishmentPasswordManager';
+import EstablishmentStaffInvite from '@/components/admin/sections/establishments/EstablishmentStaffInvite';
 import AuthorizedEmails from '@/components/admin/sections/AuthorizedEmails';
 import EstablishmentCodeManager from '@/components/admin/sections/establishments/EstablishmentCodeManager';
 
@@ -293,7 +293,7 @@ const EstablishmentEditForm = () => {
           <TabsContent value="access" className="p-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <EstablishmentCodeManager establishmentId={id} />
-                <EstablishmentPasswordManager establishmentId={id} password={formData.activation_password} />
+                <EstablishmentStaffInvite establishmentId={id} />
             </div>
             {id && <AuthorizedEmails establishmentId={id} />}
           </TabsContent>
