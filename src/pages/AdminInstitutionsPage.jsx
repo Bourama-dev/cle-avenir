@@ -167,7 +167,7 @@ const AdminInstitutionsPage = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/admin/institution/${inst.id}/dashboard`)}>
+                        <DropdownMenuItem onClick={() => navigate(`/admin/establishment/${inst.id}/dashboard`)}>
                           <ArrowRight className="mr-2 h-4 w-4" /> Gérer
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => { setCurrentInst(inst); setFormData(inst); setIsDialogOpen(true); }}>

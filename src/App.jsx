@@ -152,7 +152,6 @@ const EstablishmentLoginPage = lazy(() => import('@/pages/EstablishmentLoginPage
 const EstablishmentForgotPasswordPage = lazy(() => import('@/pages/EstablishmentForgotPasswordPage'));
 const EstablishmentSetPasswordPage = lazy(() => import('@/pages/EstablishmentSetPasswordPage'));
 const EstablishmentDashboard = lazy(() => import('@/pages/EstablishmentDashboard'));
-const InstitutionDashboard = lazy(() => import('@/components/InstitutionDashboard'));
 const UserManagement = lazy(() => import('@/components/establishment/UserManagement'));
 
 // Admin Pages
@@ -442,7 +441,6 @@ const PageContent = () => {
                   <Route path="/establishment/forgot-password" element={<EstablishmentForgotPasswordPage />} />
                   <Route path="/establishment/set-password" element={<EstablishmentSetPasswordPage />} />
                   <Route path="/establishment/dashboard/*" element={<ProtectedEstablishmentRoute><EstablishmentDashboard /></ProtectedEstablishmentRoute>} />
-                  <Route path="/institution/:id/dashboard" element={<ProtectedEstablishmentRoute><InstitutionDashboard /></ProtectedEstablishmentRoute>} />
                   <Route path="/institution/:id/users" element={<ProtectedEstablishmentRoute><UserManagement /></ProtectedEstablishmentRoute>} /> 
                   
                   {/* Redirects */}

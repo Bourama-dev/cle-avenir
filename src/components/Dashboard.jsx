@@ -18,7 +18,7 @@ import '@/styles/adminButtons.css';
 import '@/styles/DashboardPage.css';
 
 const Dashboard = () => {
-  const { user, userProfile, isAdmin, isInstitutionManager, loading: authLoading, subscriptionTier } = useAuth();
+  const { user, userProfile, isAdmin, loading: authLoading, subscriptionTier } = useAuth();
   const { goBack, goHome } = useNavigation();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -43,13 +43,6 @@ const Dashboard = () => {
         replace
       />
     );
-  }
-
-  if (isInstitutionManager) {
-    const institutionId = userProfile?.institution_id;
-    if (institutionId) {
-      return <Navigate to={`/institution/${institutionId}/dashboard`} replace />;
-    }
   }
 
   return (

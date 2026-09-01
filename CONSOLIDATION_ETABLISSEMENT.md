@@ -98,6 +98,18 @@ En chemin : `realEstablishmentDataService.js` avait 2 requêtes vers `institutio
 
 Restent 2 mécanismes de login établissement (au lieu de 3) : Establishment (réparé, Phase 2, actif) et le mécanisme RLS `institution_members`/`is_institution_admin()` (jamais alimenté, 0 ligne, mais câblé dans la policy `profiles_select` — pas un login à proprement parler, juste une clause de contrôle d'accès jamais déclenchée).
 
+### `InstitutionDashboard.jsx` — cassée elle aussi, retirée (2026-09-01)
+
+En vérifiant `/institution/:id/dashboard`, trouvé une casse **indépendante** de tout ce qui précède :
+- Le composant vérifie `session.user.user_metadata.isInstitution`/`role==='institution_admin'`/`institution_id` — des champs que **rien dans le code actuel ne renseigne** à l'inscription. Personne ne peut passer cette porte, quel que soit son compte.
+- Même en la contournant, elle appelle `institutionService.getInstitutionMembers()` — **méthode inexistante** dans le service (avalée par le `try/catch`, tableau vide silencieux).
+
+Verdict : comme `InstitutionStaffLogin`, jamais fonctionnelle depuis sa création. **Supprimée** avec sa route (`App.jsx`). `/institution/:id/users` (`UserManagement.jsx`) est conservée — c'est la seule page du cluster Institution qui marche réellement, et seulement parce qu'elle a été réparée plus tôt dans cette session (branchée sur `establishment_users`).
+
+Nettoyage en chaîne :
+- `Dashboard.jsx` avait une redirection morte vers cette route (`isInstitutionManager` + `profiles.institution_id`, jamais peuplé — 0 ligne) — branche retirée.
+- `AdminInstitutionsPage.jsx` avait un bouton "Gérer" pointant vers `/admin/institution/:id/dashboard`, une route qui n'a **jamais existé** dans `App.jsx` (la vraie est `/admin/establishment/:id/dashboard`) — corrigé pour pointer vers la bonne route. **Reste imparfait** : cette page gère la table `institutions`, mais `/admin/establishment/:id/dashboard` affiche des données d'`educational_institutions` — deux espaces d'ID différents. Ne sera vraiment correct qu'après la fusion des catalogues (Phase 4).
+
 ## Phase 3 — Unification des tables de rattachement
 
 Converger vers `establishment_users`/`is_establishment_admin()` (le mécanisme réparé et testé en Phase 2) comme source unique de vérité pour "qui a accès à quel établissement". Retirer `institution_members` de la policy `profiles_select` une fois confirmé qu'aucune fonctionnalité n'en dépend réellement, et supprimer `user_institution_links` (0 ligne, seul `establishmentDashboardService.getStudentsList` la référençait).
