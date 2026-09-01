@@ -1,0 +1,11 @@
+-- institution_staff fed InstitutionStaffLogin.jsx, a third establishment
+-- login system that was a dead end from creation: after a successful login
+-- it navigated to a route gated by a different auth context (Establishment's,
+-- fixed in Phase 2) than the one it authenticated against — no account has
+-- ever been able to log in through it. 0 rows. Removed alongside the page,
+-- its admin management page (AdminInstitutionStaffPage.jsx), and the
+-- institutionService methods that fed them (loginStaff, createStaff).
+-- realEstablishmentDataService.js's two remaining institution_staff queries
+-- were repointed to establishment_users (they were already silently broken —
+-- querying columns that didn't exist on institution_staff in the first place).
+DROP TABLE IF EXISTS public.institution_staff CASCADE;

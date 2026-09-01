@@ -70,22 +70,23 @@ export const realEstablishmentDataService = {
   /**
    * Get actual staff members at an establishment
    */
-  async getEstablishmentStaff(institutionId, limit = 50) {
+  async getEstablishmentStaff(establishmentId, limit = 50) {
     try {
       const { data, error } = await supabase
-        .from('institution_staff')
-        .select('id, first_name, last_name, email, role, created_at')
-        .eq('institution_id', institutionId)
+        .from('establishment_users')
+        .select('id, role, status, profile:profiles(first_name, last_name, email)')
+        .eq('establishment_id', establishmentId)
+        .in('role', ['admin', 'teacher'])
         .limit(limit);
 
       if (error) throw error;
 
       return (data || []).map(staff => ({
         id: staff.id,
-        name: `${staff.first_name || ''} ${staff.last_name || ''}`.trim(),
-        email: staff.email,
+        name: `${staff.profile?.first_name || ''} ${staff.profile?.last_name || ''}`.trim(),
+        email: staff.profile?.email,
         role: staff.role,
-        status: 'Actif',
+        status: staff.status === 'active' ? 'Actif' : 'Inactif',
       }));
     } catch (error) {
       console.error('Error fetching establishment staff:', error);
@@ -144,9 +145,10 @@ export const realEstablishmentDataService = {
           .select('*', { count: 'exact', head: true })
           .eq('institution_id', institutionId),
         supabase
-          .from('institution_staff')
+          .from('establishment_users')
           .select('*', { count: 'exact', head: true })
-          .eq('institution_id', institutionId),
+          .eq('establishment_id', institutionId)
+          .in('role', ['admin', 'teacher']),
         supabase
           .from('user_institution_links')
           .select('user_id')

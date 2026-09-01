@@ -90,9 +90,13 @@ Chiffres à jour, tout est vide sauf 3 lignes au total :
 - **Ce flux est aujourd'hui un cul-de-sac** : après un login "réussi", il redirige vers `/institution/:id/dashboard`, route protégée par `ProtectedEstablishmentRoute` qui vérifie la session `EstablishmentAuthContext` (Supabase Auth réel) — pas la session `institution_staff_session` que ce flux vient de créer. Personne n'a jamais pu se connecter par cette porte : redirection immédiate vers `/establishment/login`.
 - `institution_staff` a 0 ligne — aucun compte n'a jamais été créé par ce flux de toute façon.
 
-### Décision requise avant d'aller plus loin
+### ~~Décision requise~~ — tranché (2026-09-01) : retiré
 
-Il y a maintenant 3 mécanismes de login établissement identifiés au total sur ce projet : Establishment (réparé, Phase 2), `institution_staff`/`InstitutionStaffLogin` (cassé, jamais fonctionnel), et le mécanisme RLS `institution_members`/`is_institution_admin()` (jamais alimenté, mais câblé dans la policy `profiles_select`). Avant de fusionner quoi que ce soit, il faut trancher : retirer `InstitutionStaffLogin.jsx`/`institution_staff` purement et simplement (cul-de-sac mort, 0 ligne, remplacé de facto par Establishment), ou vérifier s'il y a une raison de le garder.
+`InstitutionStaffLogin.jsx`, `AdminInstitutionStaffPage.jsx` (gestion admin du staff pour ce login mort), `institutionService.loginStaff`/`createStaff`, et la table `institution_staff` (migration `20260901220000_drop_dead_institution_staff_login.sql`) — tous supprimés, routes retirées de `App.jsx`.
+
+En chemin : `realEstablishmentDataService.js` avait 2 requêtes vers `institution_staff` — dont une (`getEstablishmentStaff`, alimentant l'onglet "Profs" du dashboard Establishment) interrogeait des colonnes (`first_name`/`last_name`) qui **n'existaient même pas** sur cette table — cassée en silence depuis toujours (erreur avalée, tableau vide affiché). Les deux requêtes ont été repointées vers `establishment_users`/`profiles`, rendant l'onglet "Profs" fonctionnel pour la première fois.
+
+Restent 2 mécanismes de login établissement (au lieu de 3) : Establishment (réparé, Phase 2, actif) et le mécanisme RLS `institution_members`/`is_institution_admin()` (jamais alimenté, 0 ligne, mais câblé dans la policy `profiles_select` — pas un login à proprement parler, juste une clause de contrôle d'accès jamais déclenchée).
 
 ## Phase 3 — Unification des tables de rattachement
 

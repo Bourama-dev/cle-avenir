@@ -1,6 +1,4 @@
 import { supabase } from '@/lib/customSupabaseClient';
-import { generateSecurePassword } from '@/utils/passwordGenerator';
-import bcrypt from 'bcryptjs';
 
 export const institutionService = {
   /**
@@ -97,57 +95,4 @@ export const institutionService = {
     return { success: true, institutionName: validation.institution.name };
   },
 
-  /**
-   * Creates a staff member with encrypted password
-   */
-  createStaff: async (institutionId, email, role = 'manager') => {
-    // Generate temporary password
-    const tempPassword = generateSecurePassword(12);
-    
-    // Encrypt password
-    const salt = await bcrypt.genSalt(10);
-    const encryptedPassword = await bcrypt.hash(tempPassword, salt);
-
-    const { data, error } = await supabase
-      .from('institution_staff')
-      .insert({
-        institution_id: institutionId,
-        email,
-        role,
-        encrypted_password: encryptedPassword,
-        must_change_password: true,
-        status: 'active'
-      })
-      .select()
-      .single();
-
-    if (error) throw error;
-
-    return { staff: data, temporaryPassword: tempPassword };
-  },
-
-  /**
-   * Verifies staff credentials for custom login portal
-   */
-  loginStaff: async (email, password) => {
-    const { data: staff, error } = await supabase
-      .from('institution_staff')
-      .select('*, institutions(*)')
-      .eq('email', email)
-      .single();
-
-    if (error || !staff) throw new Error('Identifiants invalides');
-    if (staff.status !== 'active') throw new Error('Compte désactivé');
-
-    const isValid = await bcrypt.compare(password, staff.encrypted_password);
-    if (!isValid) throw new Error('Identifiants invalides');
-
-    // Update last login
-    await supabase
-      .from('institution_staff')
-      .update({ last_login_at: new Date().toISOString() })
-      .eq('id', staff.id);
-
-    return staff;
-  }
 };
