@@ -26,7 +26,7 @@ Vérification avant suppression : les onglets du dashboard Establishment (`Estab
 
 Fait :
 - `is_establishment_admin()` + policy `profiles_select` étendue (migration `20260901160000_establishment_auth_foundation.sql`) — appliqué en prod
-- Edge function `create-establishment-staff` (invite Supabase Auth réel + lien `establishment_users`) — écrite, **pas encore déployée** (bloquée par le classificateur de sécurité de la session, à déployer manuellement)
+- Edge function `create-establishment-staff` (invite Supabase Auth réel + lien `establishment_users`) — écrite et **déployée en prod** (2026-09-01)
 - `EstablishmentAuthContext.jsx` réécrit : `login()`/`logout()` utilisent maintenant `supabase.auth.signInWithPassword`/`signOut` (vraie session), le contexte (établissement + rôle) est dérivé de `establishment_users` + `establishments` via `onAuthStateChange`, plus de session `localStorage` maison
 
 Découverte au passage : `src/lib/EstablishmentProtectedRoute.jsx` (à ne pas confondre avec `ProtectedEstablishmentRoute.jsx`, celui réellement routé dans `App.jsx`) est une tentative précédente et abandonnée de ce même correctif — utilise déjà `useAuth()` + `establishment_users`, mais n'est importé nulle part. À nettoyer avec `EstablishmentContext.jsx`/`useEstablishment.js`/`EstablishmentSidebar.jsx` (son cluster associé) une fois le nouveau flux validé en prod — pas fait maintenant pour rester scope sur l'auth.
