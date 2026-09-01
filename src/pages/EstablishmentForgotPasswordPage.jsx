@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ArrowLeft, CheckCircle2, Building, Loader2 } from 'lucide-react';
 import { validateEmail } from '@/utils/establishmentValidation';
+import { supabase } from '@/lib/customSupabaseClient';
 import { motion } from 'framer-motion';
 
 const EstablishmentForgotPasswordPage = () => {
@@ -17,19 +18,22 @@ const EstablishmentForgotPasswordPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     if (!validateEmail(email)) {
-      setError("Veuillez entrer une adresse email valide du domaine ac-versailles.fr");
+      setError("Veuillez entrer une adresse email valide.");
       return;
     }
 
     setLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess(true);
-    }, 1500);
+
+    // Always show the success state regardless of outcome — never reveal
+    // whether an email is registered.
+    await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/establishment/set-password`,
+    }).catch((err) => console.error('[EstablishmentForgotPassword] reset error:', err));
+
+    setLoading(false);
+    setSuccess(true);
   };
 
   return (
@@ -65,17 +69,17 @@ const EstablishmentForgotPasswordPage = () => {
                  </div>
                 <h1 className="text-xl font-bold text-slate-900">Réinitialisation mot de passe</h1>
                 <p className="text-sm text-slate-500">
-                  Entrez votre email académique pour recevoir un lien de réinitialisation.
+                  Entrez votre email pour recevoir un lien de réinitialisation.
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email académique</Label>
+                  <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="admin@ac-versailles.fr"
+                    placeholder="prenom.nom@etablissement.fr"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className={error ? "border-red-500" : ""}

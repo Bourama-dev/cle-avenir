@@ -34,8 +34,8 @@ Découverte au passage : `src/lib/EstablishmentProtectedRoute.jsx` (à ne pas co
 Reste à faire dans cette phase :
 1. ~~Déployer l'edge function `create-establishment-staff`~~ — fait, déployée en prod
 2. ~~Adapter l'UI admin de création de staff~~ — fait : `EstablishmentPasswordManager.jsx` (génération de mot de passe côté client, jamais vérifié par aucun flux de login réel — bcrypt tournait dans le navigateur pour rien) supprimé et remplacé par `EstablishmentStaffInvite.jsx` (email + rôle → appelle l'edge function). Branché dans `EstablishmentForm.jsx` et `EstablishmentEditForm.jsx`.
-3. Remplacer `EstablishmentForgotPasswordPage.jsx` (actuellement un `setTimeout` factice) par `supabase.auth.resetPasswordForEmail()`
-4. Créer la page `/establishment/set-password` (lien de redirection après invitation) si elle n'existe pas déjà
+3. ~~Remplacer `EstablishmentForgotPasswordPage.jsx`~~ — fait : appelle `supabase.auth.resetPasswordForEmail()` (redirige vers `/establishment/set-password`), retiré le texte figé "ac-versailles.fr"
+4. ~~Créer la page `/establishment/set-password`~~ — fait : `EstablishmentSetPasswordPage.jsx`, routée dans `App.jsx`. Sert à la fois le lien d'invitation staff et le lien de reset — Supabase échange le token de l'URL en session automatiquement (`detectSessionInUrl: true`), la page ne fait que `supabase.auth.updateUser({ password })`. Calqué sur `UpdatePasswordPage.jsx` déjà utilisé côté utilisateur normal.
 5. Une fois validé : retirer `establishment_staff`, `establishment_password_history`, `establishment_code_history` (0 ligne chacune) et la RPC `verify_establishment_credentials` devenue obsolète. Vérifier aussi si `educational_institutions.activation_password`/`establishment_code` (système d'activation séparé, jamais vérifié par aucun flux — `getEstablishmentByCode`/`verifyPassword` ne sont appelés nulle part) doit être retiré ou raccordé à quelque chose.
 
 ## Phase 2 (texte original) — Décision d'architecture (nécessite ton arbitrage)

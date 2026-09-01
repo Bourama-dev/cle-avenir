@@ -150,6 +150,7 @@ const CookiesPreferencesPage = lazy(() => import('@/pages/user/CookiesPreference
 // Establishment Pages
 const EstablishmentLoginPage = lazy(() => import('@/pages/EstablishmentLoginPage'));
 const EstablishmentForgotPasswordPage = lazy(() => import('@/pages/EstablishmentForgotPasswordPage'));
+const EstablishmentSetPasswordPage = lazy(() => import('@/pages/EstablishmentSetPasswordPage'));
 const EstablishmentDashboard = lazy(() => import('@/pages/EstablishmentDashboard'));
 const InstitutionStaffLogin = lazy(() => import('@/pages/InstitutionStaffLogin'));
 const InstitutionDashboard = lazy(() => import('@/components/InstitutionDashboard'));
@@ -442,6 +443,7 @@ const PageContent = () => {
                   {/* Establishment Routes */}
                   <Route path="/establishment/login" element={<EstablishmentLoginPage />} />
                   <Route path="/establishment/forgot-password" element={<EstablishmentForgotPasswordPage />} />
+                  <Route path="/establishment/set-password" element={<EstablishmentSetPasswordPage />} />
                   <Route path="/establishment/dashboard/*" element={<ProtectedEstablishmentRoute><EstablishmentDashboard /></ProtectedEstablishmentRoute>} />
                   <Route path="/institution/staff/login" element={<InstitutionStaffLogin />} />
                   <Route path="/institution/:id/dashboard" element={<ProtectedEstablishmentRoute><InstitutionDashboard /></ProtectedEstablishmentRoute>} />
