@@ -23,24 +23,7 @@ export const verifyEstablishmentCode = async (code) => {
   }
 
   try {
-    // 2. Check in 'institutions' table (matches profiles.institution_id FK)
-    const { data: institutions, error } = await supabase
-      .from('institutions')
-      .select('id, name, city, uai, code')
-      .or(`uai.eq.${cleanCode},code.eq.${cleanCode}`)
-      .limit(1);
-
-    if (error) throw error;
-
-    if (institutions && institutions.length > 0) {
-      return { 
-        isValid: true, 
-        institution: institutions[0], 
-        message: "Établissement trouvé !" 
-      };
-    }
-
-    // Optional: Fallback check in 'educational_institutions' if distinct
+    // Check in 'educational_institutions' (the single establishment catalog)
     const { data: eduInstitutions, error: eduError } = await supabase
       .from('educational_institutions')
       .select('id, name, city, uai, code')

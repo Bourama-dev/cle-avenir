@@ -157,8 +157,6 @@ const UserManagement = lazy(() => import('@/components/establishment/UserManagem
 // Admin Pages
 const AdminPage = lazy(() => import('@/pages/AdminPage'));
 const AdminDashboardPage = lazy(() => import('@/pages/AdminDashboardPage')); 
-const AdminInstitutionsPage = lazy(() => import('@/pages/AdminInstitutionsPage'));
-const AdminInstitutionCodesPage = lazy(() => import('@/pages/AdminInstitutionCodesPage'));
 const AdminAnalyticsDashboard = lazy(() => import('@/pages/AdminAnalyticsDashboard'));
 const AdminWeightAuditPage = lazy(() => import('@/pages/AdminWeightAuditPage'));
 const EstablishmentDashboardPage = lazy(() => import('@/pages/EstablishmentDashboardPage'));
@@ -424,9 +422,7 @@ const PageContent = () => {
                   <Route path="/admin" element={<Navigate to="/admin/content" replace />} />
                   <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboardPage onNavigate={handleNavigate} /></AdminRoute>} />
                   <Route path="/admin/metiers" element={<AdminRoute><AdminMetiers /></AdminRoute>} />
-                  <Route path="/admin/institutions" element={<AdminRoute><AdminInstitutionsPage /></AdminRoute>} />
                   <Route path="/admin/establishment/:id/dashboard" element={<AdminRoute><EstablishmentDashboardPage /></AdminRoute>} />
-                  <Route path="/admin/institution/:id/codes" element={<AdminRoute><AdminInstitutionCodesPage /></AdminRoute>} />
                   <Route path="/admin/analytics" element={<AdminRoute><AdminAnalyticsDashboard /></AdminRoute>} />
                   <Route path="/admin/weight-audit" element={<AdminRoute><AdminWeightAuditPage /></AdminRoute>} />
                   <Route path="/admin/rgpd-compliance" element={<AdminRoute><RgpdCompliancePage /></AdminRoute>} />

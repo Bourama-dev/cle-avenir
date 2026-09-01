@@ -45,7 +45,7 @@ const EstablishmentSearch = ({
       setLoading(true);
       try {
         const { data, error } = await supabase
-          .from('establishments')
+          .from('educational_institutions')
           .select('id, name, city, region, postal_code')
           .or(`name.ilike.%${debouncedQuery}%,city.ilike.%${debouncedQuery}%`)
           .limit(10);
@@ -75,7 +75,7 @@ const EstablishmentSearch = ({
        // OR we fetch it if it's an ID string.
        const fetchInitial = async () => {
           if (typeof initialValue === 'string') {
-             const { data } = await supabase.from('establishments').select('*').eq('id', initialValue).single();
+             const { data } = await supabase.from('educational_institutions').select('*').eq('id', initialValue).single();
              if (data) {
                 setSelectedItem(data);
                 setQuery(data.name);

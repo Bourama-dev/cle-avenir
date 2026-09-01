@@ -65,8 +65,8 @@ const EstablishmentService = {
       if (!data) return null;
 
       const [emails, students, programs, logs] = await Promise.all([
-        supabase.from('institution_emails').select('email').eq('institution_id', id),
-        supabase.from('institution_members').select('count', { count: 'exact', head: true }).eq('institution_id', id).eq('role', 'student'),
+        supabase.from('establishment_emails').select('email').eq('establishment_id', id),
+        supabase.from('establishment_users').select('count', { count: 'exact', head: true }).eq('establishment_id', id).eq('role', 'student'),
         supabase.from('institution_programs').select('count', { count: 'exact', head: true }).eq('institution_id', id),
         supabase.from('establishment_activity_logs').select('*').eq('establishment_id', id).order('created_at', { ascending: false }).limit(10)
       ]);
@@ -90,8 +90,8 @@ const EstablishmentService = {
       if (error) throw error;
 
       if (emails && emails.length > 0) {
-        const emailInserts = emails.map(email => ({ institution_id: data.id, email: email }));
-        await supabase.from('institution_emails').insert(emailInserts);
+        const emailInserts = emails.map(email => ({ establishment_id: data.id, email: email }));
+        await supabase.from('establishment_emails').insert(emailInserts);
       }
 
       await EventLogger.logSchoolEvent(EVENT_TYPES.SCHOOL_CREATED, data.id, data.name);
@@ -113,10 +113,10 @@ const EstablishmentService = {
       if (error) throw error;
 
       if (emails) {
-         await supabase.from('institution_emails').delete().eq('institution_id', id);
+         await supabase.from('establishment_emails').delete().eq('establishment_id', id);
          if (emails.length > 0) {
-            const emailInserts = emails.map(email => ({ institution_id: id, email: email }));
-            await supabase.from('institution_emails').insert(emailInserts);
+            const emailInserts = emails.map(email => ({ establishment_id: id, email: email }));
+            await supabase.from('establishment_emails').insert(emailInserts);
          }
       }
       return data;
