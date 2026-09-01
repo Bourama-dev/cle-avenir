@@ -13,7 +13,6 @@ import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EstablishmentStaffInvite from '@/components/admin/sections/establishments/EstablishmentStaffInvite';
 import AuthorizedEmails from '@/components/admin/sections/AuthorizedEmails';
-import EstablishmentCodeManager from '@/components/admin/sections/establishments/EstablishmentCodeManager';
 
 const EstablishmentEditForm = () => {
   const { id } = useParams();
@@ -32,8 +31,7 @@ const EstablishmentEditForm = () => {
     website: '',
     contact_email: '',
     phone: '',
-    uai: '',
-    activation_password: ''
+    uai: ''
   });
   const [errors, setErrors] = useState({});
 
@@ -45,7 +43,7 @@ const EstablishmentEditForm = () => {
     try {
       const { data, error } = await supabase
         .from('educational_institutions')
-        .select('id, name, type, address, city, postal_code, region, website, email, contact_email, phone, uai, activation_password')
+        .select('id, name, type, address, city, postal_code, region, website, email, contact_email, phone, uai')
         .eq('id', id)
         .single();
 
@@ -62,8 +60,7 @@ const EstablishmentEditForm = () => {
           website: data.website || '',
           contact_email: data.email || data.contact_email || '', 
           phone: data.phone || '',
-          uai: data.uai || '',
-          activation_password: data.activation_password || ''
+          uai: data.uai || ''
         });
       }
     } catch (error) {
@@ -292,7 +289,6 @@ const EstablishmentEditForm = () => {
           </TabsContent>
           <TabsContent value="access" className="p-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <EstablishmentCodeManager establishmentId={id} />
                 <EstablishmentStaffInvite establishmentId={id} />
             </div>
             {id && <AuthorizedEmails establishmentId={id} />}

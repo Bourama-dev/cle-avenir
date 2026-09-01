@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,9 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2, AlertCircle, Save } from 'lucide-react';
 import { useToast } from "@/components/ui/use-toast";
 import EstablishmentEmailsManager from './EstablishmentEmailsManager';
-import EstablishmentCodeManager from './EstablishmentCodeManager';
 import EstablishmentStaffInvite from './EstablishmentStaffInvite';
-import { EstablishmentCodeGenerator } from '@/utils/EstablishmentCodeGenerator';
 import { cn } from '@/lib/utils';
 
 const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
@@ -31,7 +29,6 @@ const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
     description: '',
     status: 'active',
     sector: 'public',
-    establishment_code: '',
     emails: [],
     ...initialData
   });
@@ -40,19 +37,6 @@ const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState(null);
-
-  // Debug logging for initial data load
-  useEffect(() => {
-    if (initialData) {
-      console.log("EstablishmentForm loaded with initial data:", initialData);
-      // Ensure we map 'uai' or 'code' correctly if they differ in schema
-      if (!formData.establishment_code && initialData.code) {
-          setFormData(prev => ({ ...prev, establishment_code: initialData.code }));
-      }
-    } else {
-      console.log("EstablishmentForm initialized for new entry creation");
-    }
-  }, [initialData]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -93,10 +77,6 @@ const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
     setFormData(prev => ({ ...prev, emails: newEmails }));
   };
 
-  const handleCodeRegenerate = (newCode) => {
-    setFormData(prev => ({ ...prev, establishment_code: newCode }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError(null);
@@ -124,15 +104,9 @@ const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
         website: formData.website?.trim() || null,
         description: formData.description?.trim() || null,
         postal_code: formData.postal_code?.trim() || null,
-        // Ensure standard fields
-        code: formData.establishment_code || null, // Map establishment_code to 'code' column if needed
-        uai: formData.establishment_code || null   // Map to 'uai' as well just in case
       };
-      
-      // Remove temporary UI fields if they exist
-      delete payload.establishment_code;
 
-      console.log("Submitting establishment payload:", { ...payload, activation_password: '***' });
+      console.log("Submitting establishment payload:", payload);
 
       await onSubmit(payload);
       
@@ -316,18 +290,10 @@ const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
           </TabsContent>
 
           <TabsContent value="access" className="space-y-6 animate-in fade-in-50 duration-200">
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <EstablishmentCodeManager 
-                  code={formData.establishment_code} 
-                  onRegenerate={handleCodeRegenerate}
-                  disabled={isSubmitting}
-                />
-                
-                <EstablishmentStaffInvite
-                  establishmentId={initialData?.id}
-                  disabled={isSubmitting}
-                />
-             </div>
+             <EstablishmentStaffInvite
+               establishmentId={initialData?.id}
+               disabled={isSubmitting}
+             />
 
              <div className="pt-2">
                <EstablishmentEmailsManager

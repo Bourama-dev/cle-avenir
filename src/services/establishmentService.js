@@ -2,7 +2,7 @@ import { supabase } from '@/lib/customSupabaseClient';
 import { EventLogger } from '@/services/eventLoggerService';
 import { EVENT_TYPES } from '@/constants/eventTypes';
 
-export const ESTABLISHMENT_COLUMNS = 'id, name, type, address, website, email, phone, code, status, email_count, student_count, created_at, updated_at, last_access, uai, city, postal_code, region, sector, description, logo_url, contact_email, activation_password';
+export const ESTABLISHMENT_COLUMNS = 'id, name, type, address, website, email, phone, code, status, email_count, student_count, created_at, updated_at, last_access, uai, city, postal_code, region, sector, description, logo_url, contact_email';
 
 const EstablishmentService = {
   async getEstablishments({ page = 1, limit = 10, filters = {}, sort = { column: 'created_at', direction: 'desc' } } = {}) {
