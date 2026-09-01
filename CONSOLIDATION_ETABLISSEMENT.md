@@ -12,14 +12,15 @@ Contexte complet dans l'historique de session du 2026-09-01. Résumé des faits 
 
 Avant la Phase 2, il faut trancher une question que je ne peux pas déduire du code : **"établissement" et "institution" désignent-ils le même concept produit**, ou y a-t-il une distinction métier voulue (ex: lycées vs universités, gratuit vs partenaire) ? Tout ce plan suppose que c'est un doublon accidentel (deux constructions successives du même besoin). Si ce n'est pas le cas, arrêter ici et clarifier d'abord.
 
-## Phase 1 — Nettoyage sans risque (exécutable immédiatement)
+## Phase 1 — Nettoyage sans risque — ✅ FAIT (2026-09-01)
 
-Aucun impact utilisateur : code/données jamais fonctionnels.
+Vérification avant suppression : les onglets du dashboard Establishment (`EstablishmentClassesTab`, `EstablishmentStudentsTab`, `EstablishmentTeachersTab`, `EstablishmentRecommendationsTab`, `EstablishmentTestResultsTab`) appellent en réalité `establishmentService.js`, qui délègue à `realEstablishmentDataService.js` — **de vraies requêtes Supabase**, pas les mocks. Seuls les 10 fichiers `src/services/analytics/Establishment*Service.js` étaient du mock pur, et aucun n'était importé nulle part ailleurs dans le code (vérifié par recherche globale) — code mort à 100%, supprimés sans aucune adaptation nécessaire :
 
-1. Supprimer les 10 fichiers `src/services/analytics/Establishment*.js` (mock pur) et les composants d'onglets du dashboard Establishment qui ne consomment que ces mocks (`EstablishmentCareersTab.jsx`, `EstablishmentClassesTab.jsx`, `EstablishmentRecommendationsTab.jsx`, `EstablishmentTrendsTab.jsx`, `EstablishmentTestResultsTab.jsx` — à vérifier un par un lesquels sont 100% mock vs partiellement réels)
-2. Documenter dans ce fichier ce qui a été retiré et pourquoi (pour éviter qu'un futur dev croie qu'une régression a eu lieu)
+- `EstablishmentActivityService.js`, `EstablishmentCareerExplorationService.js`, `EstablishmentCareerRecommendationsService.js`, `EstablishmentEngagementService.js`, `EstablishmentInteractionsService.js`, `EstablishmentProfileAnalyticsService.js`, `EstablishmentProgressionService.js`, `EstablishmentResourcesService.js`, `EstablishmentTestAnalyticsService.js`, `EstablishmentTestPerformanceService.js`
 
-**Risque** : nul — code mort/factice, zéro donnée réelle affectée.
+`EstablishmentCareersTab.jsx` et `EstablishmentTrendsTab.jsx` sont des placeholders honnêtes ("Cette section est en cours de développement") — pas de données inventées, donc **conservés tels quels**.
+
+**Risque** : nul — code mort confirmé, zéro donnée réelle affectée, zéro import cassé.
 
 ## Phase 2 — Décision d'architecture (nécessite ton arbitrage)
 
