@@ -42,6 +42,22 @@ const EstablishmentService = {
     }
   },
 
+  async getEstablishmentUsers(establishmentId) {
+    try {
+      const { data, error } = await supabase
+        .from('establishment_users')
+        .select('id, role, status, joined_at, profile:profiles(first_name, last_name, email)')
+        .eq('establishment_id', establishmentId)
+        .order('joined_at', { ascending: false });
+
+      if (error) throw error;
+      return data || [];
+    } catch (error) {
+      console.error('Error fetching establishment users:', error);
+      return [];
+    }
+  },
+
   async getEstablishmentById(id) {
     try {
       const { data, error } = await supabase.from('educational_institutions').select(ESTABLISHMENT_COLUMNS).eq('id', id).maybeSingle();

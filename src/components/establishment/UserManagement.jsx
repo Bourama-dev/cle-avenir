@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useEstablishment } from '@/contexts/EstablishmentContext';
+import { useParams } from 'react-router-dom';
 import { establishmentService } from '@/services/establishmentService';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,7 +23,7 @@ import { Search, Plus, MoreHorizontal, FileDown } from 'lucide-react';
 import { format } from 'date-fns';
 
 const UserManagement = () => {
-  const { establishmentId } = useEstablishment();
+  const { id: establishmentId } = useParams();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
