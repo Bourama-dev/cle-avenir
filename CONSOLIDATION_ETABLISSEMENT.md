@@ -116,4 +116,18 @@ Converger vers `establishment_users`/`is_establishment_admin()` (le mécanisme r
 
 ## Phase 4 — Fusion des catalogues d'établissements
 
-Migrer la ligne unique d'`institutions` (Lycée Professionnel Les Frères Moreau) vers `educational_institutions`, puis retirer `institutions`, `institution_emails`, `institution_codes`, `institution_staff`, `institution_programs`. `establishments` (0 ligne) peut être retirée directement.
+### Bug critique trouvé et corrigé (2026-09-01)
+
+En creusant les dépendances avant de fusionner, trouvé que **le flux d'invitation staff de la Phase 2 était cassé de bout en bout** : `establishment_users.establishment_id` référence par clé étrangère `establishments` (0 ligne, aucune UI n'y écrit), mais `EstablishmentForm.jsx`/`EstablishmentStaffInvite.jsx` passent un ID `educational_institutions` (la table réellement gérée par l'admin). Toute tentative d'inviter du staff aurait échoué avec une violation de clé étrangère.
+
+**Corrigé** (migration `20260901230000_point_establishment_users_at_educational_institutions.sql`) : la FK pointe maintenant vers `educational_institutions`. `EstablishmentAuthContext.jsx` mis à jour pour charger le contexte établissement depuis `educational_institutions` après login. Testé via transaction annulée (insertion simulant exactement ce que fait l'edge function `create-establishment-staff`) — succès confirmé.
+
+### Périmètre réel, plus large que prévu
+
+`establishments` a 4 autres tables qui en dépendent par clé étrangère, toutes à 0 ligne mais dont certaines sont encore vivantes dans le code : `authorized_emails` (vivante — gate l'éligibilité à l'inscription via `check_registration_eligibility`), `establishment_emails` (vivante — `EstablishmentEmailsManager.jsx`), `establishment_activity_logs` (à vérifier), `profiles.establishment_id`. Migrer chacune vers `educational_institutions` et retirer `establishments` est un chantier à part entière (plusieurs fichiers : `establishmentService.js`, `establishmentDashboardService.js`, `QuickActions.jsx`, `AuthorizedEmails.jsx`) — pas fait dans cette passe, le correctif ci-dessus s'est concentré sur le bug bloquant.
+
+### Reste à faire (non commencé)
+
+- Migrer les 4 tables dépendantes de `establishments` vers `educational_institutions`, puis retirer `establishments`
+- Migrer la ligne unique d'`institutions` (Lycée Professionnel Les Frères Moreau) vers `educational_institutions`, puis retirer `institutions`, `institution_emails`, `institution_codes`, `institution_programs`, `institution_members` — et redistribuer leurs consommateurs vivants (`AdminInstitutionsPage.jsx`, `AdminInstitutionCodesPage.jsx`, `institutionService.js`, `establishmentCodeValidationService.js`, `realFormationDataService.js`, `realEstablishmentDataService.js`) vers `educational_institutions`
+- Retirer la clause `institution_members`/`is_institution_admin()` de la policy RLS `profiles_select` une fois confirmé qu'aucune fonctionnalité ne s'y appuie encore

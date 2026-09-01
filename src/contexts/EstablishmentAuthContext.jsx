@@ -34,7 +34,7 @@ export const EstablishmentAuthProvider = ({ children }) => {
       }
 
       const { data: est, error: estError } = await supabase
-        .from('establishments')
+        .from('educational_institutions')
         .select('*')
         .eq('id', link.establishment_id)
         .maybeSingle();
