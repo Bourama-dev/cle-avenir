@@ -62,16 +62,42 @@ Deux options, à choisir avant d'écrire le moindre code :
 
 **Recommandation** : Option B, sauf si l'UX du dashboard Establishment (sidebar, onglets) a une valeur design que tu veux récupérer — dans ce cas Option A en réutilisant cette UI mais rebranchée sur une vraie auth.
 
-## Phase 3 — Unification des tables de rattachement (après Phase 2)
+## Phase 3-4 — État des lieux (2026-09-01)
 
-Une fois l'option choisie, converger vers une seule table de lien élève/staff↔établissement (candidat : `institution_members`, déjà câblée dans la RLS de `profiles`). Migrer les données de `establishment_users`/`user_institution_links` si elles contiennent quoi que ce soit (aujourd'hui : 0 ligne partout), puis les retirer.
+Chiffres à jour, tout est vide sauf 3 lignes au total :
+
+| Table | Lignes |
+|---|---|
+| `institutions` | 1 |
+| `institution_members` | 0 |
+| `institution_emails` | 1 |
+| `institution_codes` | 0 |
+| `institution_staff` | 0 |
+| `institution_programs` | 0 |
+| `establishments` | 0 |
+| `establishment_users` | 0 |
+| `user_institution_links` | 0 |
+| `educational_institutions` | 2 |
+| `profiles.institution_id` renseigné | 0 |
+| `profiles.establishment_id` renseigné | 0 |
+
+**Aucune donnée réelle ne dépend des tables de rattachement** (`institution_members`, `establishment_users`, `user_institution_links` — toutes à 0). C'est le moment le moins risqué possible pour consolider.
+
+### Découverte en creusant : un 3e système de login établissement, cassé
+
+- `institutions.admin_password` contenait un **mot de passe en clair** (résidu d'un ancien flux, plus aucune référence dans le code) — **corrigé** : mis à `NULL` (migration `20260901210000_clear_plaintext_institution_admin_password.sql`).
+- `InstitutionStaffLogin.jsx` (route `/institution/staff/login`, toujours routée dans `App.jsx`) est un **troisième** système de login, distinct d'Establishment (Phase 2) et de la table `institution_members`/RLS : vérifie `institution_staff.encrypted_password` via `bcrypt.compare()` exécuté **côté navigateur**, stocke une session dans `localStorage` (`institution_staff_session`) — même anti-pattern que l'ancien `EstablishmentAuthContext` avant réparation.
+- **Ce flux est aujourd'hui un cul-de-sac** : après un login "réussi", il redirige vers `/institution/:id/dashboard`, route protégée par `ProtectedEstablishmentRoute` qui vérifie la session `EstablishmentAuthContext` (Supabase Auth réel) — pas la session `institution_staff_session` que ce flux vient de créer. Personne n'a jamais pu se connecter par cette porte : redirection immédiate vers `/establishment/login`.
+- `institution_staff` a 0 ligne — aucun compte n'a jamais été créé par ce flux de toute façon.
+
+### Décision requise avant d'aller plus loin
+
+Il y a maintenant 3 mécanismes de login établissement identifiés au total sur ce projet : Establishment (réparé, Phase 2), `institution_staff`/`InstitutionStaffLogin` (cassé, jamais fonctionnel), et le mécanisme RLS `institution_members`/`is_institution_admin()` (jamais alimenté, mais câblé dans la policy `profiles_select`). Avant de fusionner quoi que ce soit, il faut trancher : retirer `InstitutionStaffLogin.jsx`/`institution_staff` purement et simplement (cul-de-sac mort, 0 ligne, remplacé de facto par Establishment), ou vérifier s'il y a une raison de le garder.
+
+## Phase 3 — Unification des tables de rattachement
+
+Converger vers `establishment_users`/`is_establishment_admin()` (le mécanisme réparé et testé en Phase 2) comme source unique de vérité pour "qui a accès à quel établissement". Retirer `institution_members` de la policy `profiles_select` une fois confirmé qu'aucune fonctionnalité n'en dépend réellement, et supprimer `user_institution_links` (0 ligne, seul `establishmentDashboardService.getStudentsList` la référençait).
 
 ## Phase 4 — Fusion des catalogues d'établissements
 
-Faire converger `institutions` (1 ligne) et `establishments` (0 ligne) vers `educational_institutions` (2 lignes, déjà la table de référence utilisée par l'admin). Migration de données triviale vu le volume actuel (3 lignes au total à vérifier/fusionner à la main).
-
----
-
-## Ce que je propose comme prochaine étape concrète
-
-Lancer la **Phase 1** maintenant (nettoyage sans risque) pendant que tu réfléchis à la décision de la Phase 2. Je prépare la migration/suppression de fichiers dès que tu valides.
+Migrer la ligne unique d'`institutions` (Lycée Professionnel Les Frères Moreau) vers `educational_institutions`, puis retirer `institutions`, `institution_emails`, `institution_codes`, `institution_staff`, `institution_programs`. `establishments` (0 ligne) peut être retirée directement.
