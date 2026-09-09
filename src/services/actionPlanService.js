@@ -83,11 +83,6 @@ export const actionPlanService = {
         { title: 'Spécialisation Data Science (Master 2 ou Bootcamp)', duration: '1-2 ans', status: 'todo', objective: 'Deep learning et déploiement modèles', actions: ['Construire un portfolio de projets ML', 'Publier sur GitHub'], competencies: ['TensorFlow', 'PyTorch', 'MLflow', 'Cloud AWS/GCP'], resources: ['DataScientest', 'CentraleSupélec', 'Jedha'] },
         { title: 'Poste Data Scientist', duration: 'continu', status: 'todo', objective: 'Impact business via modèles prédictifs', actions: ['Participer à des hackathons IA', 'Veille technologique'], competencies: ['Communication données', 'A/B testing', 'MLOps'], resources: ['Medium', 'Papers with Code'] }
       ],
-      'Développeur Web': [
-        { title: 'Auto-formation & Initiation', duration: '3 mois', status: 'completed', objective: 'Découvrir les bases de l\'algorithmique', actions: ['Suivre des cours en ligne (OpenClassrooms, Codecademy)'], competencies: ['Logique', 'HTML/CSS'], resources: ['Plateformes e-learning'] },
-        { title: 'Formation Intensive (Bootcamp)', duration: '6 mois', status: 'current', objective: 'Apprendre un framework moderne (React/Node.js)', actions: ['Réaliser 3 projets pratiques', 'Participer à des hackathons'], competencies: ['JavaScript', 'React', 'Git'], resources: ['Le Wagon', 'La Capsule', 'OClock'] },
-        { title: 'Stage ou Première Alternance', duration: '1 an', status: 'todo', objective: 'Acquérir de l\'expérience professionnelle', actions: ['Créer un portfolio GitHub', 'Passer des entretiens techniques'], competencies: ['Travail en équipe', 'Méthodes Agiles'], resources: ['Welcome to the Jungle', 'Mentoring technique'] }
-      ],
 
       // ── Santé / Social ───────────────────────────────────────────────────
       'Infirmier': [
@@ -166,7 +161,49 @@ export const actionPlanService = {
       return partialKey ? paths[partialKey] : null;
     };
 
-    const selectedPath = findPath(targetJob) || paths['Développeur Web'];
+    // Generic path used when no curated plan exists for this job — it must never
+    // silently reuse another profession's content (e.g. a web dev plan for a
+    // mathematician), so every step is phrased around the actual target job.
+    const buildGenericPath = (job) => [
+      {
+        title: 'Construire les bases',
+        duration: '2 à 3 ans',
+        status: 'completed',
+        objective: `Acquérir les fondamentaux nécessaires pour devenir ${job}`,
+        actions: [
+          `Se renseigner sur les prérequis et le quotidien du métier de ${job}`,
+          'Consolider les matières du lycée en lien avec ce domaine'
+        ],
+        competencies: ['Culture générale', 'Méthodologie de travail'],
+        resources: ['Onisep', "Centre d'Information et d'Orientation (CIO)"]
+      },
+      {
+        title: 'Suivre une formation qualifiante',
+        duration: '2 à 3 ans',
+        status: 'current',
+        objective: `Obtenir le diplôme ou la certification requis pour exercer le métier de ${job}`,
+        actions: [
+          'Identifier les formations menant à ce métier sur Parcoursup et Onisep',
+          'Réaliser un stage ou une immersion professionnelle'
+        ],
+        competencies: [`Compétences techniques liées au métier de ${job}`, 'Autonomie'],
+        resources: ['Parcoursup', 'Onisep', 'Centre de formation spécialisé']
+      },
+      {
+        title: 'Réussir son insertion professionnelle',
+        duration: '1 à 2 ans',
+        status: 'todo',
+        objective: `Décrocher un premier poste de ${job}`,
+        actions: [
+          'Construire un réseau professionnel dans ce secteur',
+          'Postuler à des stages ou une alternance en lien avec ce métier'
+        ],
+        competencies: ["Recherche d'emploi", 'Communication professionnelle'],
+        resources: ['France Travail', 'LinkedIn', 'Réseau Alumni']
+      }
+    ];
+
+    const selectedPath = findPath(targetJob) || buildGenericPath(targetJob || 'ce métier');
     
     // Adjust status based on current level (simplified logic)
     const levelIndex = {

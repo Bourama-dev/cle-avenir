@@ -140,11 +140,9 @@ export function calculateRiasecMatch(rawUserVec, rawMetierVec) {
   const specializationAlignmentBonus = Math.min((userSpecialization / 100) * (jobSpecialization / 100) * 15, 10);
   matchScore += specializationAlignmentBonus;
 
-  // Premium: Calibration for better spread (15-98 range gives us 83 points to work with)
-  // Normalize to 0-100 first, then map to 15-98
-  matchScore = Math.min(100, Math.max(0, matchScore));
-  matchScore = 15 + (matchScore * 0.83);
-  matchScore = Math.round(matchScore);
+  // Clamp to 0-100 without artificially compressing the range — preserving the
+  // real spread here is what lets different jobs end up with different scores.
+  matchScore = Math.round(Math.min(100, Math.max(0, matchScore)));
 
   return {
     matchScore,
