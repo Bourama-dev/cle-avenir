@@ -168,7 +168,6 @@ const TestPage = () => {
   const [answers, setAnswers] = useState({});
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isAdvancing, setIsAdvancing] = useState(false);
   const advanceTimeoutRef = useRef(null);
 
   // Cancel any pending auto-advance on unmount so it can never fire against a
@@ -199,16 +198,17 @@ const TestPage = () => {
   /* ── Navigation ── */
   // Cancels any pending auto-advance before a manual navigation happens, so a
   // stale timeout from a previous answer can never override a deliberate click.
+  // This never disables the answer buttons — a disabled state blocks real and
+  // synthetic click events alike (dead clicks with zero visual feedback), and
+  // isn't needed since handleSelect below always reads current state.
   const cancelPendingAdvance = () => {
     if (advanceTimeoutRef.current) {
       clearTimeout(advanceTimeoutRef.current);
       advanceTimeoutRef.current = null;
     }
-    setIsAdvancing(false);
   };
 
   const handleSelect = (value) => {
-    if (isAdvancing) return; // ignore clicks while a transition is already scheduled
     const question = optimizedQuestions[currentIdx];
     // Merge synchronously instead of reading the (stale, pre-update) `answers`
     // closure — this is what previously let the auto-advance jump to the wrong
@@ -219,17 +219,19 @@ const TestPage = () => {
     };
     setAnswers(updatedAnswers);
 
+    // Clear any previously scheduled auto-advance so re-clicking a different
+    // option (or the same one) can't leave two timers racing to set currentIdx.
+    cancelPendingAdvance();
+
     // Auto-advance to next unanswered question
     if (currentIdx < totalQuestions - 1) {
       const nextUnanswered = optimizedQuestions.findIndex(
         (q, i) => i > currentIdx && updatedAnswers[q.id] === undefined
       );
       const nextIdx = nextUnanswered !== -1 ? nextUnanswered : currentIdx + 1;
-      setIsAdvancing(true);
       advanceTimeoutRef.current = setTimeout(() => {
         setCurrentIdx(nextIdx);
         advanceTimeoutRef.current = null;
-        setIsAdvancing(false);
       }, 260);
     }
   };
@@ -434,9 +436,7 @@ const TestPage = () => {
                         <button
                           key={i}
                           onClick={() => handleSelect(opt.value)}
-                          disabled={isAdvancing}
                           className={`p-4 rounded-xl border-2 transition-all duration-200 text-lg font-medium text-left
-                            ${isAdvancing ? 'opacity-60 cursor-default' : ''}
                             ${isSelected
                               ? `border-indigo-600 ${catMeta.bgLight} ${catMeta.textColor} shadow-md`
                               : 'border-slate-200 bg-white text-slate-600 hover:border-indigo-300 hover:bg-slate-50'
