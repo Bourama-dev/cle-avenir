@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Timer, ArrowLeft, ArrowRight, CheckCircle2, AlertCircle, LayoutDashboard } from 'lucide-react';
@@ -168,6 +168,14 @@ const TestPage = () => {
   const [answers, setAnswers] = useState({});
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAdvancing, setIsAdvancing] = useState(false);
+  const advanceTimeoutRef = useRef(null);
+
+  // Cancel any pending auto-advance on unmount so it can never fire against a
+  // question the user has already navigated away from.
+  useEffect(() => () => {
+    if (advanceTimeoutRef.current) clearTimeout(advanceTimeoutRef.current);
+  }, []);
 
   // Computed profile — only set after handleSubmit
   const [computedProfile, setComputedProfile] = useState(null);
@@ -189,33 +197,55 @@ const TestPage = () => {
   const unansweredCount = totalQuestions - answeredCount;
 
   /* ── Navigation ── */
+  // Cancels any pending auto-advance before a manual navigation happens, so a
+  // stale timeout from a previous answer can never override a deliberate click.
+  const cancelPendingAdvance = () => {
+    if (advanceTimeoutRef.current) {
+      clearTimeout(advanceTimeoutRef.current);
+      advanceTimeoutRef.current = null;
+    }
+    setIsAdvancing(false);
+  };
+
   const handleSelect = (value) => {
+    if (isAdvancing) return; // ignore clicks while a transition is already scheduled
     const question = optimizedQuestions[currentIdx];
-    setAnswers(prev => ({
-      ...prev,
+    // Merge synchronously instead of reading the (stale, pre-update) `answers`
+    // closure — this is what previously let the auto-advance jump to the wrong
+    // question when clicks landed close together.
+    const updatedAnswers = {
+      ...answers,
       [question.id]: { category: question.category, value },
-    }));
+    };
+    setAnswers(updatedAnswers);
+
     // Auto-advance to next unanswered question
     if (currentIdx < totalQuestions - 1) {
-      setTimeout(() => {
-        // Find the next question that hasn't been answered yet
-        const nextUnanswered = optimizedQuestions.findIndex(
-          (q, i) => i > currentIdx && answers[q.id] === undefined
-        );
-        if (nextUnanswered !== -1) {
-          setCurrentIdx(nextUnanswered);
-        } else {
-          setCurrentIdx(prev => Math.min(prev + 1, totalQuestions - 1));
-        }
-      }, 280);
+      const nextUnanswered = optimizedQuestions.findIndex(
+        (q, i) => i > currentIdx && updatedAnswers[q.id] === undefined
+      );
+      const nextIdx = nextUnanswered !== -1 ? nextUnanswered : currentIdx + 1;
+      setIsAdvancing(true);
+      advanceTimeoutRef.current = setTimeout(() => {
+        setCurrentIdx(nextIdx);
+        advanceTimeoutRef.current = null;
+        setIsAdvancing(false);
+      }, 260);
     }
   };
 
-  const handlePrevious = () => { if (currentIdx > 0) setCurrentIdx(p => p - 1); };
-  const handleNext = () => { if (currentIdx < totalQuestions - 1) setCurrentIdx(p => p + 1); };
+  const handlePrevious = () => {
+    cancelPendingAdvance();
+    if (currentIdx > 0) setCurrentIdx(p => p - 1);
+  };
+  const handleNext = () => {
+    cancelPendingAdvance();
+    if (currentIdx < totalQuestions - 1) setCurrentIdx(p => p + 1);
+  };
 
   /* ── Jump to first unanswered (for "Répondre" prompt) ── */
   const jumpToFirstUnanswered = () => {
+    cancelPendingAdvance();
     const idx = optimizedQuestions.findIndex(q => answers[q.id] === undefined);
     if (idx !== -1) setCurrentIdx(idx);
   };
@@ -370,7 +400,7 @@ const TestPage = () => {
             total={totalQuestions}
             current={currentIdx}
             answers={answers}
-            onJump={setCurrentIdx}
+            onJump={(idx) => { cancelPendingAdvance(); setCurrentIdx(idx); }}
           />
 
           {/* ── Question card ── */}
@@ -404,7 +434,9 @@ const TestPage = () => {
                         <button
                           key={i}
                           onClick={() => handleSelect(opt.value)}
+                          disabled={isAdvancing}
                           className={`p-4 rounded-xl border-2 transition-all duration-200 text-lg font-medium text-left
+                            ${isAdvancing ? 'opacity-60 cursor-default' : ''}
                             ${isSelected
                               ? `border-indigo-600 ${catMeta.bgLight} ${catMeta.textColor} shadow-md`
                               : 'border-slate-200 bg-white text-slate-600 hover:border-indigo-300 hover:bg-slate-50'

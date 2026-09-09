@@ -162,8 +162,9 @@ const ResultsPage = () => {
           // Log before clamping to debug
           const scoreBeforeClamping = matchScore;
 
-          // Clamp final score and round to integer
-          matchScore = Math.round(Math.min(98, Math.max(15, matchScore)));
+          // Clamp final score and round to integer (wide range so real
+          // differences between jobs survive instead of collapsing at the ceiling)
+          matchScore = Math.round(Math.min(100, Math.max(5, matchScore)));
 
           if (idx < 5) {
             console.log(`[ResultsPage] ${job.libelle} - Before clamp: ${scoreBeforeClamping.toFixed(2)}%, After clamp: ${matchScore}%`);
@@ -186,7 +187,7 @@ const ResultsPage = () => {
             matchKeywords: enrichedData?.matchKeywords || [],
             riasec: jobRiasecProfile,
             matchScore,
-            reason: reason.length > 0 ? reason[0] : "Profil compatible"
+            reason: reason.length > 0 ? reason[0] : "Compatibilité partielle avec votre profil"
           };
         }).sort((a, b) => b.matchScore - a.matchScore);
 
