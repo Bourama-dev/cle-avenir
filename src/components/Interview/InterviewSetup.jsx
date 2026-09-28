@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { interviewService } from '@/services/interviewService';
-import { Clock, HelpCircle, Target, User, CheckCircle2 } from 'lucide-react';
+import { LEVELS } from '@/services/aiInterviewService';
+import { Clock, HelpCircle, Target, User, CheckCircle2, FileText, Sparkles, Mic, BarChart3 } from 'lucide-react';
 import './InterviewSetup.css';
 
 const icons = {
@@ -10,14 +11,117 @@ const icons = {
   motivation: <CheckCircle2 size={28} />
 };
 
-const InterviewSetup = ({ onStart }) => {
+const QUESTION_COUNTS = [3, 5, 6];
+
+const InterviewSetup = ({ onStart, defaultJobTitle = '' }) => {
+  const [jobTitle, setJobTitle] = useState(defaultJobTitle);
+  const [company, setCompany] = useState('');
+  const [level, setLevel] = useState('junior');
+  const [jobOffer, setJobOffer] = useState('');
+  const [focus, setFocus] = useState('complete');
+  const [questionCount, setQuestionCount] = useState(5);
+
+  const canStart = jobTitle.trim().length > 1 || jobOffer.trim().length > 30;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!canStart) return;
+    onStart({
+      jobTitle: jobTitle.trim(),
+      company: company.trim(),
+      level,
+      jobOffer: jobOffer.trim(),
+      focus,
+      questionCount,
+    });
+  };
+
   return (
     <div className="interview-setup-container">
       <div className="setup-header">
         <h1>Simulateur d'Entretien IA</h1>
-        <p>Prépare-toi à réussir avec nos simulations réalistes</p>
+        <p>Colle l'offre, parle avec l'IA, reçois ton rapport détaillé.</p>
       </div>
 
+      <div className="steps-row">
+        <div className="step-pill"><FileText size={18} /> 1. Décris ton poste</div>
+        <div className="step-pill"><Mic size={18} /> 2. Parle avec l'IA</div>
+        <div className="step-pill"><BarChart3 size={18} /> 3. Reçois ton rapport</div>
+      </div>
+
+      <form className="custom-interview-form" onSubmit={handleSubmit}>
+        <div className="form-grid">
+          <label className="form-field">
+            <span>Poste visé *</span>
+            <input
+              type="text"
+              value={jobTitle}
+              onChange={(e) => setJobTitle(e.target.value)}
+              placeholder="Ex : Assistant marketing en alternance"
+              maxLength={120}
+            />
+          </label>
+          <label className="form-field">
+            <span>Entreprise (optionnel)</span>
+            <input
+              type="text"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+              placeholder="Ex : Decathlon"
+              maxLength={80}
+            />
+          </label>
+          <label className="form-field">
+            <span>Ton niveau</span>
+            <select value={level} onChange={(e) => setLevel(e.target.value)}>
+              {Object.entries(LEVELS).map(([key, label]) => (
+                <option key={key} value={key}>{label}</option>
+              ))}
+            </select>
+          </label>
+          <label className="form-field">
+            <span>Type d'entretien</span>
+            <select value={focus} onChange={(e) => setFocus(e.target.value)}>
+              <option value="complete">Entretien complet</option>
+              {Object.entries(interviewService.types).map(([key, type]) => (
+                <option key={key} value={key}>{type.name}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        <label className="form-field">
+          <span>Offre d'emploi (recommandé)</span>
+          <textarea
+            value={jobOffer}
+            onChange={(e) => setJobOffer(e.target.value)}
+            placeholder="Colle ici le texte de l'offre : l'IA adaptera ses questions aux missions et compétences demandées."
+            rows={5}
+            maxLength={6000}
+          />
+        </label>
+
+        <div className="form-footer">
+          <div className="question-count">
+            <span>Questions :</span>
+            {QUESTION_COUNTS.map((n) => (
+              <button
+                key={n}
+                type="button"
+                className={`count-chip ${questionCount === n ? 'active' : ''}`}
+                onClick={() => setQuestionCount(n)}
+              >
+                {n}
+              </button>
+            ))}
+          </div>
+          <button type="submit" className="start-button start-button-lg" disabled={!canStart}>
+            <Sparkles size={18} /> Démarrer mon entretien
+          </button>
+        </div>
+      </form>
+
+      <h2 className="quick-title">Ou lance un entraînement rapide</h2>
       <div className="cards-grid">
         {Object.entries(interviewService.types).map(([key, type]) => (
           <div key={key} className="interview-card">
@@ -26,15 +130,22 @@ const InterviewSetup = ({ onStart }) => {
             </div>
             <h3 className="card-title">{type.name}</h3>
             <p className="card-description">{type.description}</p>
-            
+
             <div className="card-meta">
               <span className="flex items-center gap-1"><Clock size={14}/> {type.duration}</span>
               <span>{type.questionCount} Questions</span>
             </div>
 
-            <button 
+            <button
               className="start-button"
-              onClick={() => onStart(key)}
+              onClick={() => onStart({
+                jobTitle: jobTitle.trim() || defaultJobTitle,
+                company: '',
+                level,
+                jobOffer: '',
+                focus: key,
+                questionCount: type.questionCount,
+              })}
             >
               Commencer
             </button>

@@ -51,7 +51,7 @@ export const interviewService = {
     }
   },
 
-  async createInterviewSession(userId, type) {
+  async createInterviewSession(userId, type, questionsCount) {
     try {
       const interviewType = this.types[type];
       if (!interviewType) throw new Error('Invalid interview type');
@@ -62,7 +62,7 @@ export const interviewService = {
           user_id: userId,
           type: type,
           status: 'created',
-          questions_count: interviewType.questionCount,
+          questions_count: questionsCount || interviewType.questionCount,
           current_question_index: 0
         })
         .select()

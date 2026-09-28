@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Mic, Square, ArrowRight, Save, Clock } from 'lucide-react';
+import React from 'react';
+import { Mic, Square, Save, Clock, Loader2 } from 'lucide-react';
 import './LiveInterview.css';
 
 const LiveInterview = ({ 
@@ -8,6 +8,7 @@ const LiveInterview = ({
   totalQuestions, 
   isSpeaking, 
   isListening, 
+  isThinking = false,
   transcript,
   interimTranscript,
   onStartListening, 
@@ -42,6 +43,11 @@ const LiveInterview = ({
             🤖
           </div>
           {isSpeaking && <p className="text-violet-600 mt-4 font-medium animate-pulse">Cléo parle...</p>}
+          {isThinking && (
+            <p className="text-violet-600 mt-4 font-medium flex items-center gap-2">
+              <Loader2 size={16} className="animate-spin" /> Cléo réfléchit à ta réponse...
+            </p>
+          )}
         </div>
 
         {/* Question Card */}
@@ -68,7 +74,7 @@ const LiveInterview = ({
 
         {/* Controls */}
         <div className="controls-section">
-          {!isListening && !transcript ? (
+          {isThinking ? null : !isListening && !transcript ? (
             <button 
               className="btn-control btn-primary"
               onClick={onStartListening}
