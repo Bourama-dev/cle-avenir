@@ -8,11 +8,18 @@ const CHAT_MODES = ['career_advisor', 'learning_coach', 'interview_coach'];
 
 // Reply-length preference from Cléo's settings. The client picks a key; the
 // wording stays server side (clients can't inject their own instructions).
-const RESPONSE_STYLES: Record<string, string> = {
-  concise: 'Sois très concise, max 80 mots.',
-  normal: 'Sois concise, max 150 mots.',
-  detailed: 'Sois détaillée et donne des exemples, max 300 mots.',
+// It is the only length rule in the prompt, so it can't be contradicted.
+const RESPONSE_STYLES: Record<string, { words: number; tone: string }> = {
+  concise: { words: 80, tone: 'Va droit au but : 2 ou 3 points essentiels, pas d\'introduction.' },
+  normal: { words: 150, tone: 'Sois concise.' },
+  detailed: { words: 300, tone: 'Sois détaillée et donne des exemples concrets.' },
 };
+
+const lengthRule = ({ words, tone }: { words: number; tone: string }) =>
+  `LONGUEUR (règle impérative, prioritaire sur tout le reste): ${words} mots MAXIMUM au total, listes comprises. ${tone} ` +
+  'Si le sujet est large, traite l\'essentiel et propose de continuer plutôt que de tout dire.';
+
+const INTERVIEW_LINK = "[Lancer le simulateur d'entretien](/interview)";
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -280,11 +287,11 @@ TON: Tutoie TOUJOURS ${firstName} (tu/toi/ton). Chaleureuse, directe, jamais cor
 CE QUE TU FAIS:
 - Aider à préparer un entretien pour ${jobTitle || 'le poste visé'} : questions probables, méthode STAR, pitch, questions pièges, questions à poser au recruteur, négociation salariale.
 - Si ${firstName} partage une réponse, donne un retour précis (ce qui marche, ce qui manque) et une version améliorée.
-- Pour un entraînement complet à l'oral avec rapport détaillé, propose le simulateur d'entretien de CléAvenir : [Lancer le simulateur d'entretien](/interview). Ce lien exact (/interview) est une exception autorisée à la règle LIENS ci-dessus.
+- Pour un entraînement complet à l'oral avec rapport détaillé, termine TOUJOURS ta réponse par ce lien, recopié tel quel : ${INTERVIEW_LINK}. Ce lien exact (/interview) est une exception autorisée à la règle LIENS ci-dessus.
 
 STYLE DE RÉPONSE:
-- Concis (max 150 mots), **gras** pour les points clés, listes à puces si utile
-- Termine par une action concrète ou une question pour s'entraîner`;
+- **gras** pour les points clés, listes à puces si utile
+- Termine par une question pour s'entraîner, puis le lien vers le simulateur`;
   }
 
   if (mode === 'learning_coach') {
@@ -293,7 +300,7 @@ ${userContext}
 RÔLE: Tu es Cléo, tutrice pédagogique bienveillante et experte en orientation.
 LANGUE: FRANÇAIS UNIQUEMENT.
 TON: Tutoie TOUJOURS ${firstName} (tu/toi/ton), jamais de vouvoiement. Parle comme une amie proche et complice qui s'y connaît, pas comme un service client. Chaleureuse, enthousiaste, naturelle — évite les formules toutes faites du type "Je vous remercie de votre question".
-STYLE: Encourageant, pédagogique, concret. Maximum 150 mots. Markdown autorisé.
+STYLE: Encourageant, pédagogique, concret. Markdown autorisé.
 Aide ${firstName} à comprendre les formations, les métiers, les diplômes et les débouchés.
 Propose des activités d'apprentissage concrètes issues de la plateforme CléAvenir.`;
   }
@@ -313,7 +320,6 @@ CAPACITÉS (utilise-les selon le besoin):
 - Répondre aux questions sur les offres d'emploi et formations en France
 
 STYLE DE RÉPONSE:
-- Concis (max 150 mots)
 - Utilise **gras** pour les termes clés, listes à puces pour énumérer
 - Personnalise avec le prénom et le contexte du profil
 - Propose toujours une action concrète à la fin
@@ -583,9 +589,8 @@ Deno.serve(async (req) => {
     // ── Build messages for AI ──────────────────────────────────────────────
     // The system prompt is always built here: a client-supplied one would turn
     // this endpoint into a free general-purpose LLM proxy.
-    const style = RESPONSE_STYLES[context.responseStyle as string];
-    const systemPrompt = buildSystemPrompt(chatMode, enrichedContext)
-      + (style ? `\n\nLONGUEUR (préférence de l'utilisateur, prioritaire): ${style}` : '');
+    const style = RESPONSE_STYLES[context.responseStyle as string] ?? RESPONSE_STYLES.normal;
+    const systemPrompt = `${buildSystemPrompt(chatMode, enrichedContext)}\n\n${lengthRule(style)}`;
 
     const historyMessages = (history as { role: string; content: string }[])
       .slice(-12)
@@ -613,6 +618,11 @@ Deno.serve(async (req) => {
       reply = `Salut ! Je suis Cléo, ton coach de carrière. Pour activer toutes mes capacités, l'administrateur doit configurer la clé OPENAI_API_KEY dans les variables d'environnement Supabase. En attendant, explore le catalogue de métiers et passe ton test d'orientation ! 🚀`;
     } else {
       reply = await callOpenAI(anthropicKey, systemPrompt, allMessages, sb);
+      // The interview coach always points to the simulator, whether or not
+      // the model remembered to add the link.
+      if (chatMode === 'interview_coach' && !reply.includes('](/interview)')) {
+        reply = `${reply.trim()}\n\n👉 ${INTERVIEW_LINK}`;
+      }
     }
 
     // ── Extract profile updates from conversation ──────────────────────────
