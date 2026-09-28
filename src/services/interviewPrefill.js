@@ -20,13 +20,14 @@ const toPlainText = (value) => String(value || '')
   .trim();
 
 export const interviewPrefill = {
-  save({ title, company, description, level, contractType } = {}) {
+  save({ title, company, description, level, contractType, focus } = {}) {
     try {
       sessionStorage.setItem(KEY, JSON.stringify({
         jobTitle: (title || '').trim().slice(0, 120),
         company: (company || '').trim().slice(0, 80),
         jobOffer: toPlainText(description).slice(0, MAX_OFFER_CHARS),
         level: level || guessLevel(contractType),
+        focus: focus || null,
       }));
     } catch {
       // sessionStorage unavailable — the user just fills the form manually

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
 import { FEATURES } from '@/constants/subscriptionTiers';
@@ -14,10 +15,10 @@ import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { useToast } from '@/components/ui/use-toast';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import LoadingFallback from '@/components/LoadingFallback';
+import { interviewPrefill } from '@/services/interviewPrefill';
 
 // Lazy Load Heavy Components
 const ChatInterface = lazy(() => import('@/components/cleo/ChatInterface'));
-const InterviewSimulation = lazy(() => import('@/components/cleo/InterviewSimulation'));
 const CleoProfileBuilder = lazy(() => import('@/components/cleo/CleoProfileBuilder'));
 
 const CleoPage = () => {
@@ -30,8 +31,8 @@ const CleoPage = () => {
   const [contextPanelOpen, setContextPanelOpen] = useState(true);
   // Read default mode from saved preferences (falls back to 'career_advisor')
   const [currentMode, setCurrentMode] = useState(() => loadPreferences().defaultMode || 'career_advisor');
-  const [isSimulating, setIsSimulating] = useState(false); 
   const [activeTab, setActiveTab] = useState('chat');
+  const navigate = useNavigate();
   
   // New State for Intelligent System
   const [cleoState, setCleoState] = useState('neutral');
@@ -155,13 +156,18 @@ const CleoPage = () => {
   };
 
   const handleStartActivity = (activity) => {
-    if (activity.type === 'simulation') {
-      setIsSimulating(true);
-      setCurrentMode('interview_coach');
-    } else {
-      setActiveTab('chat');
-      handleSendMessage(`Je veux commencer l'activité : ${activity.title}`);
+    // Job-interview practice lives in the AI interview simulator (/interview);
+    // other role plays (meeting, sales, salary talk…) happen in the chat.
+    if (activity.type === 'simulation' && /entretien|présenter/i.test(activity.title || '')) {
+      interviewPrefill.save({
+        title: userProfile?.main_goal || userProfile?.job_title || '',
+        focus: /présenter/i.test(activity.title) ? 'pitch' : 'complete',
+      });
+      navigate('/interview');
+      return;
     }
+    setActiveTab('chat');
+    handleSendMessage(`Je veux commencer l'activité : ${activity.title}`);
   };
 
   const canAccessCleo = hasAccess(FEATURES.AI_COACH);
@@ -182,24 +188,21 @@ const CleoPage = () => {
     <div className="flex h-screen bg-slate-50 dark:bg-slate-900 overflow-hidden font-sans">
       <Helmet><title>Cléo - Intelligence Carrière - CléAvenir</title></Helmet>
 
-      {!isSimulating && (
-        <CleoSidebar
-          userId={userProfile?.id}
-          activeSessionId={activeSessionId}
-          onSelectSession={handleSelectSession}
-          onNewSession={() => { setActiveSessionId(null); setMessages([]); setActiveTab('chat'); }}
-          onSessionDeleted={(deletedId) => {
-            // If the deleted session was active, clear the chat
-            if (deletedId === activeSessionId) {
-              setActiveSessionId(null);
-              setMessages([]);
-            }
-          }}
-        />
-      )}
+      <CleoSidebar
+        userId={userProfile?.id}
+        activeSessionId={activeSessionId}
+        onSelectSession={handleSelectSession}
+        onNewSession={() => { setActiveSessionId(null); setMessages([]); setActiveTab('chat'); }}
+        onSessionDeleted={(deletedId) => {
+          // If the deleted session was active, clear the chat
+          if (deletedId === activeSessionId) {
+            setActiveSessionId(null);
+            setMessages([]);
+          }
+        }}
+      />
 
       <main className="flex-1 flex flex-col h-full relative min-w-0">
-        {!isSimulating && (
            <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 px-4 pt-2">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                  <TabsList className="bg-transparent p-0 gap-6">
@@ -208,16 +211,13 @@ const CleoPage = () => {
                  </TabsList>
               </Tabs>
            </div>
-        )}
 
         <div className="flex-1 flex overflow-hidden relative">
-          <div className={`flex-1 flex flex-col min-w-0 bg-white dark:bg-slate-900 ${isSimulating ? 'm-0' : 'bg-slate-50 dark:bg-slate-950'} overflow-hidden transition-all duration-300`}>
+          <div className={`flex-1 flex flex-col min-w-0 bg-white dark:bg-slate-900 bg-slate-50 dark:bg-slate-950 overflow-hidden transition-all duration-300`}>
             
             <Suspense fallback={<LoadingFallback />}>
               {showProfileBuilder ? (
                 <CleoProfileBuilder onComplete={() => setShowProfileBuilder(false)} userProfile={userProfile} onUpdate={refreshSubscription} />
-              ) : isSimulating ? (
-                <InterviewSimulation onEnd={() => setIsSimulating(false)} onSendMessage={handleSendMessage} isLoading={isLoading} />
               ) : activeTab === 'activities' ? (
                 <CleoActivitySystem onStartActivity={handleStartActivity} />
               ) : (
@@ -239,7 +239,7 @@ const CleoPage = () => {
             </Suspense>
           </div>
 
-          {contextPanelOpen && !isSimulating && activeTab === 'chat' && (
+          {contextPanelOpen && activeTab === 'chat' && (
             <div className="w-80 hidden 2xl:block border-l border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 z-10">
               <ContextPanel userProfile={userProfile} isOpen={contextPanelOpen} />
             </div>

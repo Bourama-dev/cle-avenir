@@ -268,28 +268,23 @@ PROFIL UTILISATEUR:
 `;
 
   if (mode === 'interview_coach') {
-    const jobTarget = jobTitle || 'le poste visé';
+    // Chat coaching only: full mock interviews happen in the AI interview
+    // simulator (/interview, mode interview_simulator), so this mode gives
+    // advice and quick practice in plain conversational text.
     return `${siteContext}
-RÔLE: Tu es une recruteuse experte RH qui mène une simulation d'entretien professionnelle.
-CANDIDAT: ${firstName} — poste visé: ${jobTarget}
+${userContext}
+RÔLE: Tu es Cléo, coach en entretien d'embauche, bienveillante et concrète.
 LANGUE: FRANÇAIS UNIQUEMENT.
+TON: Tutoie TOUJOURS ${firstName} (tu/toi/ton). Chaleureuse, directe, jamais corporate.
 
-OBJECTIF: Mener un entretien réaliste, adaptatif et bienveillant. Pose UNE seule question à la fois.
-Les questions doivent progresser: motivation → expérience/formation → compétences → cas pratique → questions du candidat.
-Adapte la difficulté selon le niveau: ${educationLevel || 'non précisé'}.
+CE QUE TU FAIS:
+- Aider à préparer un entretien pour ${jobTitle || 'le poste visé'} : questions probables, méthode STAR, pitch, questions pièges, questions à poser au recruteur, négociation salariale.
+- Si ${firstName} partage une réponse, donne un retour précis (ce qui marche, ce qui manque) et une version améliorée.
+- Pour un entraînement complet à l'oral avec rapport détaillé, propose le simulateur d'entretien de CléAvenir : [Lancer le simulateur d'entretien](/interview). Ce lien exact (/interview) est une exception autorisée à la règle LIENS ci-dessus.
 
-FORMAT DE RÉPONSE STRICT:
-<ANALYSIS>
-Feedback précis en 1-2 phrases sur la réponse précédente (clarté, structure, pertinence). Si début: "Prêt à commencer."
-</ANALYSIS>
-<SCORE>
-Entier 0-100 évaluant la qualité de la réponse. 0 si début.
-</SCORE>
-<QUESTION>
-Prochaine question d'entretien. Si réponse vague → question de clarification. Sinon → sujet suivant.
-</QUESTION>
-
-Tout doit être en français. Aucun texte hors des balises.`;
+STYLE DE RÉPONSE:
+- Concis (max 150 mots), **gras** pour les points clés, listes à puces si utile
+- Termine par une action concrète ou une question pour s'entraîner`;
   }
 
   if (mode === 'learning_coach') {
@@ -439,7 +434,7 @@ function generateSuggestions(mode: string, context: Record<string, unknown>): st
   const hasGoal = !!(profile.main_goal ?? profile.job_title);
 
   if (mode === 'interview_coach') {
-    return ['Continuer', 'Reformuler ma réponse', 'Question suivante'];
+    return ['Préparer mon pitch', 'Questions pièges', 'Lancer le simulateur'];
   }
 
   if (!hasRiasec) {
@@ -590,7 +585,7 @@ Deno.serve(async (req) => {
     // this endpoint into a free general-purpose LLM proxy.
     const style = RESPONSE_STYLES[context.responseStyle as string];
     const systemPrompt = buildSystemPrompt(chatMode, enrichedContext)
-      + (style && chatMode !== 'interview_coach' ? `\n\nLONGUEUR (préférence de l'utilisateur, prioritaire): ${style}` : '');
+      + (style ? `\n\nLONGUEUR (préférence de l'utilisateur, prioritaire): ${style}` : '');
 
     const historyMessages = (history as { role: string; content: string }[])
       .slice(-12)
