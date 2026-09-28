@@ -1,11 +1,19 @@
 import React from 'react';
 import { CV_TEMPLATES_CONFIG } from '@/data/cvTemplateConfig';
-import { Check } from 'lucide-react';
+import { Check, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const CVTemplateGallery = ({ selectedTemplate, onSelect }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4">
+    <div className="p-4 space-y-4">
+    <p className="flex items-start gap-2 text-sm text-slate-600 bg-emerald-50 border border-emerald-100 rounded-lg px-3 py-2">
+      <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+      <span>
+        Les modèles <strong className="text-emerald-700">Compatible ATS</strong> (une colonne, titres classiques) sont
+        les mieux lus par les logiciels de tri des recruteurs. Tous les modèles exportent un PDF avec du vrai texte.
+      </span>
+    </p>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
       {CV_TEMPLATES_CONFIG.map((template) => (
         <div 
           key={template.id}
@@ -25,6 +33,12 @@ const CVTemplateGallery = ({ selectedTemplate, onSelect }) => {
                 </div>
              </div>
              
+             {template.ats && (
+               <span className="absolute top-2 left-2 z-10 inline-flex items-center gap-1 rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-semibold text-white shadow-sm">
+                 <ShieldCheck className="h-3 w-3" /> Compatible ATS
+               </span>
+             )}
+
              {selectedTemplate === template.id && (
                <div className="absolute inset-0 bg-purple-600/10 flex items-center justify-center backdrop-blur-[1px]">
                  <div className="bg-white rounded-full p-2 shadow-md animate-in zoom-in">
@@ -46,6 +60,7 @@ const CVTemplateGallery = ({ selectedTemplate, onSelect }) => {
           </div>
         </div>
       ))}
+    </div>
     </div>
   );
 };

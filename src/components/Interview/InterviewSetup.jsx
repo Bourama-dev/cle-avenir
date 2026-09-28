@@ -18,7 +18,7 @@ const InterviewSetup = ({ onStart, defaultJobTitle = '', prefill = null, quota =
   const [company, setCompany] = useState(prefill?.company || '');
   const [level, setLevel] = useState(LEVELS[prefill?.level] ? prefill.level : 'junior');
   const [jobOffer, setJobOffer] = useState(prefill?.jobOffer || '');
-  const [focus, setFocus] = useState('complete');
+  const [focus, setFocus] = useState(interviewService.types[prefill?.focus] ? prefill.focus : 'complete');
   const [questionCount, setQuestionCount] = useState(5);
 
   const quotaReached = quota?.remaining === 0;
@@ -54,7 +54,10 @@ const InterviewSetup = ({ onStart, defaultJobTitle = '', prefill = null, quota =
         {prefill?.jobTitle && (
           <p className="prefill-notice">
             <CheckCircle2 size={18} className="shrink-0" />
-            <span>Offre importée : <strong>{prefill.jobTitle}</strong>{prefill.company ? ` · ${prefill.company}` : ''}. Vérifie les infos puis lance l'entretien.</span>
+            <span>
+              {prefill.jobOffer ? 'Offre importée' : 'Poste repris de ton profil'} : <strong>{prefill.jobTitle}</strong>
+              {prefill.company ? ` · ${prefill.company}` : ''}. Vérifie les infos puis lance l'entretien.
+            </span>
           </p>
         )}
         <div className="form-grid">

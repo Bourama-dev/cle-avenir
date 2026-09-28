@@ -176,7 +176,7 @@ const CleoPreferencesModal = ({ isOpen, onClose }) => {
                     onChange={v => update('defaultMode', v)}
                     icon="💼"
                     label="Coach Entretien"
-                    description="Simulations d'entretien avec feedback réaliste"
+                    description="Conseils pour préparer tes entretiens (la simulation vocale se fait dans le simulateur d'entretien)"
                   />
                 </div>
               </div>
