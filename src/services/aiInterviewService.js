@@ -25,18 +25,18 @@ export const LEVELS = {
 
 const MAX_OFFER_CHARS = 4000;
 
-const clampScore = (value, fallback = 50) => {
+export const clampScore = (value, fallback = 50) => {
   const n = parseInt(value, 10);
   if (Number.isNaN(n)) return fallback;
   return Math.max(0, Math.min(100, n));
 };
 
-const extractTag = (text, tag) => {
+export const extractTag = (text, tag) => {
   const match = text?.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`, 'i'));
   return match ? match[1].trim() : null;
 };
 
-async function callAdvisor({ message, history = [], systemInstruction, userId }) {
+export async function callAdvisor({ message, history = [], systemInstruction, userId }) {
   const { data, error } = await supabase.functions.invoke('chat-advisor', {
     body: {
       message,
