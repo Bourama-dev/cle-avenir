@@ -12,7 +12,7 @@ const JobDetailApplication = ({ job, onApply }) => {
       <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20 translate-y-1/2 -translate-x-1/2" />
       
       <CardContent className="p-6 relative z-10">
-        <h3 className="text-lg font-bold mb-4">Prêt à postuler ?</h3>
+        <h3 className="text-lg font-bold mb-4 text-white">Prêt à postuler ?</h3>
         
         <div className="space-y-4 mb-6">
           <div className="flex items-start gap-3 text-slate-300 text-sm">
