@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { interviewService } from '@/services/interviewService';
-import { LEVELS } from '@/services/aiInterviewService';
+import { LEVELS, PERIOD_LABELS, quotaMessage } from '@/services/aiInterviewService';
 import { Clock, HelpCircle, Target, User, CheckCircle2, FileText, Sparkles, Mic, BarChart3 } from 'lucide-react';
 import './InterviewSetup.css';
 
@@ -13,7 +13,7 @@ const icons = {
 
 const QUESTION_COUNTS = [3, 5, 6];
 
-const InterviewSetup = ({ onStart, defaultJobTitle = '', prefill = null }) => {
+const InterviewSetup = ({ onStart, defaultJobTitle = '', prefill = null, quota = null }) => {
   const [jobTitle, setJobTitle] = useState(prefill?.jobTitle || defaultJobTitle);
   const [company, setCompany] = useState(prefill?.company || '');
   const [level, setLevel] = useState(LEVELS[prefill?.level] ? prefill.level : 'junior');
@@ -21,7 +21,8 @@ const InterviewSetup = ({ onStart, defaultJobTitle = '', prefill = null }) => {
   const [focus, setFocus] = useState('complete');
   const [questionCount, setQuestionCount] = useState(5);
 
-  const canStart = jobTitle.trim().length > 1 || jobOffer.trim().length > 30;
+  const quotaReached = quota?.remaining === 0;
+  const canStart = !quotaReached && (jobTitle.trim().length > 1 || jobOffer.trim().length > 30);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -107,6 +108,14 @@ const InterviewSetup = ({ onStart, defaultJobTitle = '', prefill = null }) => {
           />
         </label>
 
+        {quota && (
+          <p className={`quota-line ${quotaReached ? 'quota-line-reached' : ''}`}>
+            {quotaReached
+              ? quotaMessage(quota)
+              : `Entretiens IA restants ${PERIOD_LABELS[quota.period] ?? ''} : ${quota.remaining}/${quota.limit}`.replace(/\s+:/, ' :')}
+          </p>
+        )}
+
         <div className="form-footer">
           <div className="question-count">
             <span>Questions :</span>
@@ -144,6 +153,7 @@ const InterviewSetup = ({ onStart, defaultJobTitle = '', prefill = null }) => {
 
             <button
               className="start-button"
+              disabled={quotaReached}
               onClick={() => onStart({
                 jobTitle: jobTitle.trim() || defaultJobTitle,
                 company: '',

@@ -1,4 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import {
+  buildInterviewRequest, createCredit, getQuota, sanitizeConfig, sanitizeTurns, useCredit,
+} from './interview.ts';
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -178,8 +181,9 @@ async function callOpenAI(
           model: 'gpt-4o-mini',
           max_tokens: 1024,
           messages: conversation,
-          tools: TOOLS,
-          tool_choice: 'auto',
+          // Site-data tools need the DB client; callers that pass none
+          // (the interview simulator) get a plain completion.
+          ...(sb ? { tools: TOOLS, tool_choice: 'auto' } : {}),
         }),
         signal: controller.signal,
       });
@@ -438,6 +442,67 @@ function generateSuggestions(mode: string, context: Record<string, unknown>): st
   return ['Voir mes recommandations métiers', 'Trouver une formation', 'Préparer un entretien'];
 }
 
+// ── Interview simulator (quota-limited) ──────────────────────────────────────
+// Actions: status → quota only; start → consumes one interview credit;
+// turn / report → must present that credit. Errors come back as HTTP 200
+// with an `error` code, like the rest of this function.
+// deno-lint-ignore no-explicit-any
+async function handleInterview(body: any, userId: string | null, sb: any, apiKey: string | undefined) {
+  if (!userId || !sb) {
+    return json({ error: 'auth_required', message: 'Connecte-toi pour utiliser le simulateur.' });
+  }
+  const action = body.action;
+  if (!['status', 'start', 'turn', 'report'].includes(action)) {
+    return json({ error: 'invalid_action' }, 400);
+  }
+
+  let quota;
+  try {
+    quota = await getQuota(sb, userId);
+  } catch (err) {
+    console.error('[chat-advisor] interview quota unavailable:', err);
+    return json({ error: 'quota_unavailable' });
+  }
+  if (action === 'status') return json({ quota });
+
+  let creditId = body.creditId;
+  if (action === 'start') {
+    if (quota.remaining <= 0) {
+      return json({ error: 'quota_exceeded', message: "Tu as atteint ta limite d'entretiens IA.", quota });
+    }
+  } else if (!(await useCredit(sb, userId, creditId))) {
+    return json({ error: 'invalid_credit', message: 'Session d\'entretien expirée. Relance un entretien.' });
+  }
+
+  if (!apiKey) return json({ error: 'ai_unavailable' });
+
+  const config = sanitizeConfig(body.config);
+  const turns = sanitizeTurns(body.turns, config);
+  if (action !== 'start' && !turns.length) return json({ error: 'invalid_turns' }, 400);
+
+  const { systemPrompt, messages } = buildInterviewRequest(action, config, turns);
+  let reply: string;
+  try {
+    reply = await callOpenAI(apiKey, systemPrompt, messages, null);
+  } catch (err) {
+    console.error('[chat-advisor] interview AI error:', err);
+    return json({ error: 'ai_unavailable' });
+  }
+
+  // Only charge the credit once the first question was actually produced.
+  if (action === 'start') {
+    try {
+      creditId = await createCredit(sb, userId);
+    } catch (err) {
+      console.error('[chat-advisor] credit insert failed:', err);
+      return json({ error: 'quota_unavailable' });
+    }
+    quota = { ...quota, used: quota.used + 1, remaining: quota.remaining - 1 };
+    return json({ reply, creditId, quota });
+  }
+  return json({ reply });
+}
+
 // ── Main handler ──────────────────────────────────────────────────────────────
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
@@ -448,9 +513,7 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 
     const body = await req.json();
-    const { message, history = [], userId, context = {}, mode = 'career_advisor' } = body;
-
-    if (!message) return json({ error: 'Missing message' }, 400);
+    const { message, history = [], context = {}, mode = 'career_advisor' } = body;
 
     // ── Enrich context with user data from DB ──────────────────────────────
     let enrichedContext = { ...context };
@@ -459,6 +522,22 @@ Deno.serve(async (req) => {
     // enrichment (below, when logged in) and for the search_* tool calls
     // (always, so anonymous visitors can still ask about site content).
     const sb = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supabaseKey) : null;
+
+    // ── Identify the caller from their session token ───────────────────────
+    // Never trust a userId sent in the body: it would let anyone pull another
+    // user's profile into the prompt. Anonymous visitors (anon key) → null.
+    let userId: string | null = null;
+    const jwt = (req.headers.get('Authorization') ?? '').replace(/^Bearer\s+/i, '');
+    if (jwt && sb) {
+      const { data: authData } = await sb.auth.getUser(jwt);
+      userId = authData?.user?.id ?? null;
+    }
+
+    if (mode === 'interview_simulator') {
+      return await handleInterview(body, userId, sb, anthropicKey);
+    }
+
+    if (!message) return json({ error: 'Missing message' }, 400);
 
     if (userId && sb) {
       try {

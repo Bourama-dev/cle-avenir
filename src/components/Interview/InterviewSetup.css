@@ -273,3 +273,13 @@
   color: #065f46;
   font-size: 0.9rem;
 }
+
+.quota-line {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.quota-line-reached {
+  color: #b45309;
+  font-weight: 600;
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { interviewService } from '@/services/interviewService';
-import { aiInterviewService } from '@/services/aiInterviewService';
+import { aiInterviewService, InterviewQuotaError, quotaMessage } from '@/services/aiInterviewService';
 import { interviewPrefill } from '@/services/interviewPrefill';
 import { speechRecognitionService } from '@/services/speechRecognitionService';
 import { textToSpeechService } from '@/services/textToSpeechService';
@@ -14,6 +14,7 @@ import InterviewResults from '@/components/Interview/InterviewResults';
 import LoadingFallback from '@/components/LoadingFallback';
 
 const QUESTION_TIME = 120; // seconds per question
+
 
 const InterviewPage = () => {
   const { user, userProfile } = useAuth();
@@ -35,6 +36,12 @@ const InterviewPage = () => {
   const [turns, setTurns] = useState([]);
   const [report, setReport] = useState(null);
   const aiPoweredRef = useRef(true);
+  const creditIdRef = useRef(null);
+  const [quota, setQuota] = useState(null);
+
+  useEffect(() => {
+    aiInterviewService.getQuota().then(setQuota);
+  }, []);
 
   // Live Interaction State
   const [isListening, setIsListening] = useState(false);
@@ -75,6 +82,11 @@ const InterviewPage = () => {
       setTurns([]);
       setReport(null);
 
+      const started = await aiInterviewService.startInterview(cfg);
+      aiPoweredRef.current = started.aiPowered;
+      creditIdRef.current = started.creditId;
+      if (started.quota) setQuota(started.quota);
+
       // Persisting the session is best effort: the interview still runs if it fails.
       const typeKey = interviewService.types[cfg.focus] ? cfg.focus : 'recruiter';
       try {
@@ -84,13 +96,17 @@ const InterviewPage = () => {
         setSession(null);
       }
 
-      const { question, aiPowered } = await aiInterviewService.startInterview(cfg, user.id);
-      aiPoweredRef.current = aiPowered;
+      const question = started.question;
       setStage('live');
       setTimeout(() => speakQuestion(question), 300);
     } catch (error) {
-      toast({ title: "Erreur", description: "Impossible de démarrer l'entretien.", variant: "destructive" });
-      console.error(error);
+      if (error instanceof InterviewQuotaError) {
+        if (error.quota) setQuota(error.quota);
+        toast({ title: "Limite atteinte", description: quotaMessage(error.quota), variant: "destructive" });
+      } else {
+        toast({ title: "Erreur", description: "Impossible de démarrer l'entretien.", variant: "destructive" });
+        console.error(error);
+      }
     } finally {
       setLoading(false);
     }
@@ -162,7 +178,7 @@ const InterviewPage = () => {
     }
 
     try {
-      const next = await aiInterviewService.nextTurn(config, answeredTurns, user.id, aiPoweredRef.current);
+      const next = await aiInterviewService.nextTurn(config, answeredTurns, creditIdRef.current, aiPoweredRef.current);
       aiPoweredRef.current = next.aiPowered;
       const scoredTurns = answeredTurns.map((t, i) => (
         i === questionIndex ? { ...t, analysis: next.analysis, score: next.score } : t
@@ -187,7 +203,7 @@ const InterviewPage = () => {
 
   const completeInterview = async (finalTurns) => {
     setStage('report');
-    const fullReport = await aiInterviewService.generateReport(config, finalTurns, user.id);
+    const fullReport = await aiInterviewService.generateReport(config, finalTurns, creditIdRef.current);
     setReport(fullReport);
     setStage('results');
 
@@ -218,6 +234,7 @@ const InterviewPage = () => {
           onStart={handleStartInterview}
           defaultJobTitle={userProfile?.main_goal || userProfile?.job_title || ''}
           prefill={prefill}
+          quota={quota}
         />
       )}
 
