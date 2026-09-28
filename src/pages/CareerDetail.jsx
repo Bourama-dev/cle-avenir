@@ -137,7 +137,7 @@ const CareerDetail = () => {
 
             <Card className="bg-slate-900 text-white border-none">
               <CardContent className="p-6 text-center">
-                <h3 className="text-lg font-bold mb-2">Intéressé par ce métier ?</h3>
+                <h3 className="text-lg font-bold mb-2 text-white">Intéressé par ce métier ?</h3>
                 <p className="text-slate-300 mb-6 text-sm">Trouvez la formation idéale pour y accéder.</p>
                 <Button 
                   onClick={() => navigate('/formations', { state: { searchQuery: career.title } })}

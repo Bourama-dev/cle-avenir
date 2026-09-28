@@ -19,7 +19,7 @@ const FAQHero = () => {
             <span>Centre d'aide CléAvenir</span>
           </div>
 
-          <h1 className="faq-hero-title">
+          <h1 className="faq-hero-title text-white">
             Comment pouvons-nous <br className="md:hidden" />
             <span className="text-yellow-300">vous aider ?</span>
           </h1>

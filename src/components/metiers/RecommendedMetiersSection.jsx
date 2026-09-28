@@ -144,7 +144,7 @@ const RecommendedMetiersSection = ({
                 <Sparkles className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-1">Débloquez {normalizedMetiers.length - 3} autres recommandations</h3>
+                <h3 className="text-xl font-bold mb-1 text-white">Débloquez {normalizedMetiers.length - 3} autres recommandations</h3>
                 <p className="text-violet-100 text-sm">Passez à la version Premium pour accéder à l'intégralité de vos correspondances sur-mesure.</p>
               </div>
             </div>

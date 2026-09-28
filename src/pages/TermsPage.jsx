@@ -52,7 +52,7 @@ const TermsPage = () => {
             </div>
           </AnimatedItem>
           <AnimatedItem>
-            <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
+            <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight text-white">
               <span className="bg-gradient-to-r from-rose-300 via-pink-200 to-white bg-clip-text text-transparent">Conditions</span>
               <br /><span className="text-white">Generales d Utilisation</span>
             </h1>

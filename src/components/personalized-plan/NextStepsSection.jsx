@@ -19,7 +19,7 @@ const NextStepsSection = ({ plan }) => {
          <ArrowRight className="w-64 h-64" />
       </div>
       <CardContent className="p-8 relative z-10">
-        <h2 className="text-2xl font-bold mb-8">Votre Progression</h2>
+        <h2 className="text-2xl font-bold mb-8 text-white">Votre Progression</h2>
         <div className="flex flex-col md:flex-row gap-6 md:gap-4 justify-between relative">
            
            <div className="hidden md:block absolute top-6 left-10 right-10 h-0.5 bg-indigo-800/50 z-0"></div>

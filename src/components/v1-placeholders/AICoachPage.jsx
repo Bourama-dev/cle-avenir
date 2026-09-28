@@ -28,7 +28,7 @@ const AICoachPage = () => {
         {/* Left Sidebar: Context & Tips */}
         <div className="hidden lg:block space-y-6">
           <div className="bg-violet-900 text-white rounded-xl p-6 shadow-lg">
-            <h2 className="font-semibold text-lg mb-2 flex items-center gap-2">
+            <h2 className="font-semibold text-lg mb-2 flex items-center gap-2 text-white">
               <BrainCircuit className="h-5 w-5 text-violet-300" />
               Comment ça marche ?
             </h2>

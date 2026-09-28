@@ -1,20 +1,9 @@
-import html2pdf from 'html2pdf.js';
+import { exportA4Pdf } from '@/utils/a4PdfExport';
 
 export const coverLetterPdfService = {
-  generatePDF: (elementId, filename = 'lettre-motivation.pdf') => {
-    const element = document.getElementById(elementId);
-    if (!element) return;
-
-    const opt = {
-      margin: 10,
-      filename: filename,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    return html2pdf().set(opt).from(element).save();
-  },
+  generatePDF: (elementId, filename = 'lettre-motivation.pdf') => (
+    exportA4Pdf(document.getElementById(elementId), filename)
+  ),
 
   formatDate: (dateString) => {
     if (!dateString) return '';

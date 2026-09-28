@@ -89,10 +89,7 @@ const CleoPage = () => {
       
       // Read current preferences for this message
       const prefs = loadPreferences();
-      const styleHint =
-        prefs.responseStyle === 'concise'  ? ' Sois très concise, max 80 mots.' :
-        prefs.responseStyle === 'detailed' ? ' Sois détaillée et donne des exemples, max 300 mots.' :
-        ' Sois concise, max 150 mots.';
+      const responseStyle = ['concise', 'detailed'].includes(prefs.responseStyle) ? prefs.responseStyle : 'normal';
 
       // Send to backend
       const response = await cleoService.sendMessage(
@@ -100,7 +97,7 @@ const CleoPage = () => {
         sessionId,
         content,
         messages,
-        { profile: userProfile, risks, styleHint },
+        { profile: userProfile, risks, responseStyle },
         currentMode
       );
 

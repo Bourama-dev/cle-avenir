@@ -87,7 +87,7 @@ const ComparisonSection = () => {
           >
             <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-br from-rose-500/10 to-violet-500/10 z-0 pointer-events-none" />
             <div className="relative z-10 h-full flex flex-col">
-              <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+              <h3 className="text-2xl font-bold mb-8 flex items-center gap-3 text-white">
                 <span className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shrink-0 shadow-lg shadow-green-500/10">
                   <CheckCircle2 className="w-5 h-5" />
                 </span>

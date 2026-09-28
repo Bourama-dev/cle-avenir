@@ -225,7 +225,7 @@ const BlogPost = ({ onNavigate }) => {
                   {post.category}
                 </Badge>
 
-                <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6 drop-shadow-lg">
+                <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6 drop-shadow-lg text-white">
                   {post.title}
                 </h1>
 

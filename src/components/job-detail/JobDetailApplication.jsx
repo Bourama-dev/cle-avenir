@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Clock, Info } from 'lucide-react';
+import PrepareInterviewButton from '@/components/Interview/PrepareInterviewButton';
 
 const JobDetailApplication = ({ job, onApply }) => {
   return (
@@ -11,7 +12,7 @@ const JobDetailApplication = ({ job, onApply }) => {
       <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20 translate-y-1/2 -translate-x-1/2" />
       
       <CardContent className="p-6 relative z-10">
-        <h3 className="text-lg font-bold mb-4">Prêt à postuler ?</h3>
+        <h3 className="text-lg font-bold mb-4 text-white">Prêt à postuler ?</h3>
         
         <div className="space-y-4 mb-6">
           <div className="flex items-start gap-3 text-slate-300 text-sm">
@@ -30,6 +31,14 @@ const JobDetailApplication = ({ job, onApply }) => {
         >
           Postuler maintenant <ExternalLink className="ml-2 w-4 h-4" />
         </Button>
+
+        <PrepareInterviewButton
+          offer={{ title: job.title, company: job.company, description: job.description, contractType: job.contract_type }}
+          label="Préparer l'entretien avec Cléo"
+          variant="outline"
+          className="mt-3 w-full h-11 bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white font-semibold"
+        />
+        <p className="mt-2 text-xs text-slate-400 text-center">Simulation vocale adaptée à cette offre, avec rapport détaillé.</p>
       </CardContent>
     </Card>
   );

@@ -53,7 +53,7 @@ export default function AudienceSection() {
               {SEGMENTS.map((s) => (
                 <TabsContent key={s.id} value={s.id} className="mt-0">
                   <h3
-                    className="mb-4 text-2xl font-bold leading-snug md:text-3xl"
+                    className="mb-4 text-2xl font-bold leading-snug md:text-3xl text-white"
                     style={{ textWrap: 'balance', fontFamily: 'Palatino, "Palatino Linotype", Georgia, serif' }}
                   >
                     {s.title}

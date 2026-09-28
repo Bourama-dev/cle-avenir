@@ -75,7 +75,7 @@ const NextSteps = () => {
 
         <div className="mt-16 p-8 bg-gradient-to-r from-slate-900 to-indigo-900 rounded-3xl text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-left">
-            <h3 className="text-2xl font-bold mb-2">Besoin d'aller plus loin ?</h3>
+            <h3 className="text-2xl font-bold mb-2 text-white">Besoin d'aller plus loin ?</h3>
             <p className="text-slate-300">Créez votre CV, préparez vos entretiens et décrochez votre futur emploi.</p>
           </div>
           <Button size="lg" className="bg-white text-indigo-900 hover:bg-slate-100 font-bold px-8 rounded-xl shrink-0" onClick={() => navigate('/dashboard')}>

@@ -266,7 +266,7 @@ const FormationDetailsPanel = ({ formationId, formationData, onClose }) => {
           <Badge className="bg-white/20 hover:bg-white/30 text-white border-none mb-2">
             {level || 'Formation'}
           </Badge>
-          <h2>{title}</h2>
+          <h2 className="text-white">{title}</h2>
           <div className="flex flex-wrap items-center gap-4 text-sm opacity-90 mt-1">
             {(formationData.etablissements?.[0]?.ville || formationData.ville) && (
               <span className="flex items-center gap-1"><MapPin size={14} /> {formationData.etablissements?.[0]?.ville || formationData.ville}</span>

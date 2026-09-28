@@ -157,7 +157,85 @@
   color: white;
 }
 
+/* ── AI report ─────────────────────────────────────────────── */
+.report-summary {
+  margin-top: 1rem;
+  max-width: 600px;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.report-section {
+  padding: 2rem 2rem 0 2rem;
+}
+
+.report-section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1.25rem;
+}
+
+.competency-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.insight-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.insight-card h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.insight-card ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  color: #334155;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.insight-strengths h4 { color: #047857; }
+.insight-improvements h4 { color: #b45309; }
+
+.better-answer {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #eef2ff;
+  border-radius: 0.5rem;
+  color: #3730a3;
+  font-size: 0.9rem;
+}
+
 @media (max-width: 640px) {
+  .results-container { padding: 1rem; }
+  .report-section, .answers-review { padding: 1.25rem 1.25rem 0 1.25rem; }
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
   .actions-footer {
     flex-direction: column;
   }

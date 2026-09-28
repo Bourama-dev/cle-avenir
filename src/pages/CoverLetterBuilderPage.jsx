@@ -148,8 +148,16 @@ const CoverLetterBuilderPage = () => {
     }
   };
 
-  const handleDownload = () => {
-     exportCoverLetterPDF('letter-preview', `Lettre_${saveTitle.replace(/\s+/g, '_')}.pdf`);
+  const handleDownload = async () => {
+     try {
+        await exportCoverLetterPDF('letter-preview', `Lettre_${saveTitle.replace(/\s+/g, '_')}.pdf`, {
+           title: saveTitle,
+           author: formData.senderName,
+        });
+     } catch (error) {
+        console.error('PDF export failed:', error);
+        toast({ variant: "destructive", title: "Erreur", description: "Le PDF n'a pas pu être généré. Réessayez." });
+     }
   };
 
   if (loading) return <div className="h-screen flex items-center justify-center bg-slate-50"><Loader2 className="animate-spin text-purple-600 h-8 w-8" /></div>;

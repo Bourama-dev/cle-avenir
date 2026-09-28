@@ -305,7 +305,7 @@ const Cleo = () => {
                   )}
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm">Cléo Assistant</h3>
+                  <h3 className="font-bold text-sm text-white">Cléo Assistant</h3>
                   {user ? (
                     <div className="flex items-center gap-2 text-xs text-indigo-100">
                       <span className="flex items-center gap-1">

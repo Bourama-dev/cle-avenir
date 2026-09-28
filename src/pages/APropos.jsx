@@ -112,7 +112,7 @@ const AboutPage = () => {
                   <div className="founder-avatar">
                     👨‍💼
                   </div>
-                  <h3 className="text-xl font-bold">Bourama Diarra</h3>
+                  <h3 className="text-xl font-bold text-white">Bourama Diarra</h3>
                   <p className="text-indigo-200 mt-2">Fondateur & CEO</p>
                 </div>
 
@@ -211,7 +211,7 @@ const AboutPage = () => {
             ].map((stat, index) => (
               <AnimatedItem key={index}>
                 <div className="stat-item">
-                  <h3>{stat.value}</h3>
+                  <h3 className="text-white">{stat.value}</h3>
                   <p>{stat.label}</p>
                 </div>
               </AnimatedItem>

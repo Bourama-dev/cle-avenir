@@ -77,7 +77,7 @@ const AboutPage = ({ onNavigate }) => {
             <span className="inline-block bg-primary/20 text-primary border border-primary/30 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
               Notre Histoire
             </span>
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight text-white">
               Réinventer l'orientation <span className="text-primary">pour tous.</span>
             </h1>
             <p className="text-xl text-slate-300 mb-8 leading-relaxed max-w-3xl mx-auto">
@@ -265,7 +265,7 @@ const AboutPage = ({ onNavigate }) => {
       <section className="py-20 bg-slate-900 text-white text-center">
         <div className="container mx-auto px-4">
           <Zap className="w-12 h-12 text-primary mx-auto mb-4" />
-          <h2 className="text-3xl font-bold mb-4">Prêt à découvrir votre voie ?</h2>
+          <h2 className="text-3xl font-bold mb-4 text-white">Prêt à découvrir votre voie ?</h2>
           <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
             Rejoignez des centaines d'utilisateurs qui ont transformé leur rapport à leur carrière grâce à CléAvenir.
           </p>

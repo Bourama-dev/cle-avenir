@@ -658,7 +658,7 @@ const ActivityPlayer = ({ activity, onComplete, onClose }) => {
           <div className="flex items-start justify-between">
             <div>
               <Badge className="bg-white/20 text-white border-0 mb-2 text-xs">{activity.type}</Badge>
-              <h2 className="text-xl font-bold">{activity.title}</h2>
+              <h2 className="text-xl font-bold text-white">{activity.title}</h2>
             </div>
             <button
               onClick={() => {

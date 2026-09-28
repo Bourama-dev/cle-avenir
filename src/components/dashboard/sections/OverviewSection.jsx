@@ -76,7 +76,7 @@ const OverviewSection = ({ userProfile, onNavigate }) => {
            {/* Promo Box */}
            <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg">
                <div className="relative z-10">
-                   <h4 className="font-bold mb-2">Passez Premium</h4>
+                   <h4 className="font-bold mb-2 text-white">Passez Premium</h4>
                    <p className="text-slate-300 text-sm mb-4">Obtenez des analyses IA illimitées et contactez des mentors.</p>
                    <Button size="sm" className="bg-white text-slate-900 hover:bg-slate-100 border-none w-full" onClick={() => onNavigate('/plans')}>
                        Voir les offres

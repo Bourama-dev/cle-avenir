@@ -8,7 +8,7 @@ export const CoverLetterTemplate3 = ({ content }) => {
   return (
     <div className={`w-[210mm] h-[297mm] bg-white text-slate-800 ${config.fontClass} flex relative overflow-hidden`} id="letter-preview">
       <div className="w-1/3 bg-gradient-to-b from-purple-600 to-pink-500 text-white p-10 flex flex-col shrink-0">
-        <h1 className="text-4xl font-extrabold tracking-tight leading-none mb-10">{content.senderName || 'Votre Nom'}</h1>
+        <h1 className="text-4xl font-extrabold tracking-tight leading-none mb-10 text-white">{content.senderName || 'Votre Nom'}</h1>
         <div className="space-y-4 text-sm font-medium opacity-90 mb-auto">
           <p className="border-b border-white/20 pb-2">Contact</p>
           <p>{content.senderEmail}</p>

@@ -12,7 +12,7 @@ export const CVTemplate2 = ({ cvData, data }) => {
     <div className={`w-[210mm] h-[297mm] bg-white flex text-slate-800 ${normalizedData.fontClass || config.fontClass} relative overflow-hidden`} id="cv-preview-content">
       {/* Sidebar */}
       <div className="w-[70mm] text-white p-8 flex flex-col" style={{ backgroundColor: '#1f2937' }}>
-        <h1 className="text-3xl font-bold mb-2">{normalizedData.fullName || 'Votre Nom'}</h1>
+        <h1 className="text-3xl font-bold mb-2 text-white">{normalizedData.fullName || 'Votre Nom'}</h1>
         <p className="text-lg mb-8" style={{ color: config.color }}>{normalizedData.jobTitle || 'Titre du poste'}</p>
         
         <div className="mb-8 space-y-3 text-sm text-slate-300">

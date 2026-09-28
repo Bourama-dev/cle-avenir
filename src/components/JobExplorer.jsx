@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import JobCard from '@/components/job-explorer/JobCard';
+import PrepareInterviewButton from '@/components/Interview/PrepareInterviewButton';
 import JobCardSkeleton from '@/components/job-explorer/JobCardSkeleton';
 import CompanyCard from '@/components/job-explorer/CompanyCard';
 import CompanySectorFilter, { SECTORS } from '@/components/job-explorer/CompanySectorFilter';
@@ -595,8 +596,14 @@ const AlternanceJobCard = ({ job }) => (
         )}
       </div>
     </div>
-    {job.url && (
-      <div className="mt-3 flex justify-end">
+    <div className="mt-3 flex flex-wrap justify-end gap-2">
+      <PrepareInterviewButton
+        offer={{ title: job.title, company: job.company?.name, description: job.description, level: 'stage' }}
+        size="sm"
+        variant="outline"
+        className="text-xs h-7 px-3 border-violet-200 text-violet-700 hover:bg-violet-50 hover:text-violet-800"
+      />
+      {job.url && (
         <Button
           size="sm"
           variant="outline"
@@ -605,8 +612,8 @@ const AlternanceJobCard = ({ job }) => (
         >
           Voir l'offre <ExternalLink className="w-3 h-3" />
         </Button>
-      </div>
-    )}
+      )}
+    </div>
   </div>
 );
 

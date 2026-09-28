@@ -166,7 +166,7 @@ const TrackingPage = () => {
                     <Sparkles className="h-6 w-6 text-yellow-300" />
                  </div>
                  <div>
-                    <h3 className="font-bold text-lg">Besoin d'analyser vos résultats ?</h3>
+                    <h3 className="font-bold text-lg text-white">Besoin d'analyser vos résultats ?</h3>
                     <p className="text-violet-100">Votre Coach IA peut vous expliquer ce rapport et définir votre prochaine action.</p>
                  </div>
               </div>

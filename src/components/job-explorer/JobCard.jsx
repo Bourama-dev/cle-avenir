@@ -9,6 +9,7 @@ import { ContractBadge, ExperienceBadge } from './JobBadges';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { isValidUUID } from '@/lib/utils';
+import PrepareInterviewButton from '@/components/Interview/PrepareInterviewButton';
 
 const JobCard = ({ job, isSaved, onToggleSave, onClick, onViewOffer }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -179,6 +180,14 @@ const JobCard = ({ job, isSaved, onToggleSave, onClick, onViewOffer }) => {
                 <>Détails <ChevronDown className="w-3 h-3 ml-1" /></>
               )}
             </Button>
+
+            <PrepareInterviewButton
+              offer={{ title: job.title, company: job.company, description: job.description, contractType: job.contract_type }}
+              label="Préparer l'entretien"
+              size="sm"
+              variant="outline"
+              className="h-8 text-xs font-medium border-violet-200 text-violet-700 hover:bg-violet-50 hover:text-violet-800"
+            />
 
             <Button
               size="sm"

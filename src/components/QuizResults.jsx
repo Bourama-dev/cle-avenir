@@ -157,7 +157,7 @@ const QuizResults = () => {
         <Card className="bg-slate-900 text-white border-none overflow-hidden relative">
            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -mr-16 -mt-16" />
            <CardContent className="p-8 md:p-12 text-center relative z-10">
-              <h3 className="text-2xl font-bold mb-4">Ces résultats ne sont qu'un début</h3>
+              <h3 className="text-2xl font-bold mb-4 text-white">Ces résultats ne sont qu'un début</h3>
               <p className="text-slate-300 mb-8 max-w-xl mx-auto">
                  Explorez ces métiers en détail, découvrez les formations pour y accéder et consultez les offres d'emploi disponibles près de chez vous.
               </p>

@@ -173,7 +173,7 @@ const CleoActivitySystem = ({ onStartActivity }) => {
                         <p className="text-xs text-slate-500">Jours consécutifs d'apprentissage</p>
                      </div>
                      <div className="bg-gradient-to-br from-violet-600 to-indigo-700 p-5 rounded-2xl shadow-lg shadow-violet-200 text-white">
-                        <h3 className="font-bold mb-2">Conseil du jour</h3>
+                        <h3 className="font-bold mb-2 text-white">Conseil du jour</h3>
                         <p className="text-sm opacity-90 leading-relaxed">
                            "La régularité bat l'intensité. Mieux vaut 15 minutes par jour que 2 heures le dimanche."
                         </p>

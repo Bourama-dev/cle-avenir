@@ -174,7 +174,7 @@ const TestPlanPage = () => {
       <Card className="bg-gradient-to-br from-indigo-900 to-slate-900 text-white border-none shadow-xl">
         <CardContent className="p-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="space-y-2">
-            <h3 className="text-2xl font-bold flex items-center gap-2 justify-center sm:justify-start">
+            <h3 className="text-2xl font-bold flex items-center gap-2 justify-center sm:justify-start text-white">
               <Lock className="w-5 h-5 text-amber-400" /> Accompagnement Premium
             </h3>
             <p className="text-indigo-200">Bénéficiez d'un suivi personnalisé avec nos coachs et IA pour sécuriser votre parcours.</p>
