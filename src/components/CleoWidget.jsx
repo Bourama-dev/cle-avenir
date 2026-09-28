@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Sparkles, Lock, ExternalLink, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
 import { FEATURES, TIERS } from '@/constants/subscriptionTiers';
 import { supabase } from '@/lib/customSupabaseClient';
@@ -112,6 +112,10 @@ const CleoWidget = () => {
 
   const { user, userProfile } = useAuth();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  // The CV / cover letter builders have a fixed Save + PDF bar at the bottom
+  // on mobile: sit above it instead of covering the PDF button.
+  const aboveActionBar = pathname.startsWith('/cv-builder') || pathname.startsWith('/cover-letter-builder');
   const { hasAccess, loading: subLoading } = useSubscriptionAccess();
   const scrollRef = useRef(null);
   const inputRef = useRef(null);
@@ -190,7 +194,7 @@ const CleoWidget = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div className={`fixed ${aboveActionBar ? 'bottom-28 md:bottom-6' : 'bottom-6'} right-6 z-50 flex flex-col items-end gap-3`}>
 
       {/* ── Fenêtre chat ─────────────────────────────────────────────────── */}
       <AnimatePresence>

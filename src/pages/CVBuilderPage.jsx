@@ -170,8 +170,16 @@ const CVBuilderPage = () => {
       setFormData(prev => ({ ...prev, qualities: newQual }));
   };
 
-  const handleExportPDF = () => {
-      exportCVPDF('cv-preview-content', `CV_${formData.fullName || 'Resume'}.pdf`);
+  const handleExportPDF = async () => {
+      try {
+          await exportCVPDF('cv-preview-content', `CV_${formData.fullName || 'Resume'}.pdf`, {
+              title: [formData.fullName, formData.jobTitle].filter(Boolean).join(' - ') || 'CV',
+              author: formData.fullName,
+          });
+      } catch (error) {
+          console.error('PDF export failed:', error);
+          toast({ variant: "destructive", title: "Erreur", description: "Le PDF n'a pas pu être généré. Réessayez." });
+      }
   };
 
   const handleSaveClick = () => {
