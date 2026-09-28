@@ -133,7 +133,6 @@ const EstablishmentsTable = ({
               if (!item || !item.id) return null;
               
               const code = item.establishment_code || item.uai || item.code;
-              const hasPassword = !!item.activation_password;
               
               return (
                 <TableRow key={item.id} className="hover:bg-slate-50 transition-colors group">
@@ -161,15 +160,6 @@ const EstablishmentsTable = ({
                         )}
                         
                         <div className="flex items-center gap-1 mt-1">
-                            {hasPassword ? (
-                                <span className="text-[10px] text-green-600 flex items-center gap-0.5 bg-green-50 px-1.5 py-0.5 rounded-full border border-green-100" title="Mot de passe défini">
-                                    <Lock size={10} /> MDP Défini
-                                </span>
-                            ) : (
-                                <span className="text-[10px] text-red-500 flex items-center gap-0.5 bg-red-50 px-1.5 py-0.5 rounded-full border border-red-100" title="Mot de passe non défini">
-                                    <Key size={10} /> MDP Manquant
-                                </span>
-                            )}
                         </div>
                     </div>
                   </TableCell>

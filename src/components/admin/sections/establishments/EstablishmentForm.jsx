@@ -10,10 +10,8 @@ import { Loader2, AlertCircle, Save } from 'lucide-react';
 import { useToast } from "@/components/ui/use-toast";
 import EstablishmentEmailsManager from './EstablishmentEmailsManager';
 import EstablishmentCodeManager from './EstablishmentCodeManager';
-import EstablishmentPasswordManager from './EstablishmentPasswordManager';
 import { EstablishmentCodeGenerator } from '@/utils/EstablishmentCodeGenerator';
 import { cn } from '@/lib/utils';
-import bcrypt from 'bcryptjs';
 
 const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
   const { toast } = useToast();
@@ -33,7 +31,6 @@ const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
     status: 'active',
     sector: 'public',
     establishment_code: '',
-    activation_password: '', // This will hold either the hash (from DB) or the new plain text
     emails: [],
     ...initialData
   });
@@ -42,9 +39,6 @@ const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState(null);
-  
-  // Track if password has been modified (so we know if we need to hash it)
-  const [isPasswordModified, setIsPasswordModified] = useState(false);
 
   // Debug logging for initial data load
   useEffect(() => {
@@ -98,11 +92,6 @@ const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
     setFormData(prev => ({ ...prev, emails: newEmails }));
   };
 
-  const handlePasswordRegenerate = (newPass) => {
-    setFormData(prev => ({ ...prev, activation_password: newPass }));
-    setIsPasswordModified(true);
-  };
-
   const handleCodeRegenerate = (newCode) => {
     setFormData(prev => ({ ...prev, establishment_code: newCode }));
   };
@@ -126,22 +115,9 @@ const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
     setIsSubmitting(true);
     
     try {
-      // Process password: Hash if modified
-      let finalPassword = formData.activation_password;
-      
-      if (isPasswordModified && finalPassword) {
-        // Hash the new temporary password
-        const salt = await bcrypt.genSalt(10);
-        finalPassword = await bcrypt.hash(finalPassword, salt);
-      } else if (!finalPassword && !initialData) {
-         // Should not happen if we enforce generation, but safe default
-         // Optionally force generation here if missing
-      }
-
       // Prepare payload
       const payload = {
         ...formData,
-        activation_password: finalPassword,
         phone: formData.phone?.trim() || null,
         email: formData.email?.trim() || null,
         website: formData.website?.trim() || null,
@@ -155,7 +131,7 @@ const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
       // Remove temporary UI fields if they exist
       delete payload.establishment_code;
 
-      console.log("Submitting establishment payload:", { ...payload, activation_password: '***' });
+      console.log("Submitting establishment payload:", payload);
 
       await onSubmit(payload);
       
@@ -345,13 +321,6 @@ const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
                   onRegenerate={handleCodeRegenerate}
                   disabled={isSubmitting}
                 />
-                
-                <EstablishmentPasswordManager
-                  password={formData.activation_password}
-                  canRegenerate={isPasswordModified || !initialData} 
-                  onRegenerate={handlePasswordRegenerate}
-                  disabled={isSubmitting}
-                />
              </div>
 
              <div className="pt-2">
@@ -367,8 +336,8 @@ const EstablishmentForm = ({ initialData, onSubmit, onCancel }) => {
                 <AlertCircle className="w-5 h-5 shrink-0 text-amber-600" />
                 <div>
                    <p className="font-semibold mb-1 text-amber-800">Note de sécurité</p>
-                   Les identifiants générés (Code UAI et Mot de passe) sont nécessaires pour l'activation initiale du compte établissement.
-                   Veuillez les transmettre de manière sécurisée au responsable.
+                   Les emails ajoutés ici peuvent se connecter à l'espace établissement (/establishment/login, bouton « Créer mon accès »).
+                   Le code établissement est à transmettre aux élèves pour qu'ils se rattachent.
                 </div>
              </div>
           </TabsContent>

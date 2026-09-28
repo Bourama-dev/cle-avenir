@@ -23,28 +23,13 @@ export const verifyEstablishmentCode = async (code) => {
   }
 
   try {
-    // 2. Check in 'institutions' table (matches profiles.institution_id FK)
-    const { data: institutions, error } = await supabase
-      .from('institutions')
-      .select('id, name, city, uai, code')
-      .or(`uai.eq.${cleanCode},code.eq.${cleanCode}`)
-      .limit(1);
-
-    if (error) throw error;
-
-    if (institutions && institutions.length > 0) {
-      return { 
-        isValid: true, 
-        institution: institutions[0], 
-        message: "Établissement trouvé !" 
-      };
-    }
-
-    // Optional: Fallback check in 'educational_institutions' if distinct
+    // 2. Look the code up (same rule as the database trigger that links the profile)
     const { data: eduInstitutions, error: eduError } = await supabase
       .from('educational_institutions')
       .select('id, name, city, uai, code')
       .or(`uai.eq.${cleanCode},code.eq.${cleanCode}`)
+      .is('deleted_at', null)
+      .is('paused_at', null)
       .limit(1);
 
     if (eduError) throw eduError;

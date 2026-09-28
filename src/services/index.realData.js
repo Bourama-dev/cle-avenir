@@ -21,7 +21,6 @@ export { realBlogDataService } from './realBlogDataService';
 export { realJobDataService } from './realJobDataService';
 
 // Updated Services with Real Data
-export { establishmentDashboardService } from './establishmentDashboardService';
 
 /**
  * REPLACED MOCK DATA:

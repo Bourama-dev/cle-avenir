@@ -151,16 +151,10 @@ const CookiesPreferencesPage = lazy(() => import('@/pages/user/CookiesPreference
 const EstablishmentLoginPage = lazy(() => import('@/pages/EstablishmentLoginPage'));
 const EstablishmentForgotPasswordPage = lazy(() => import('@/pages/EstablishmentForgotPasswordPage'));
 const EstablishmentDashboard = lazy(() => import('@/pages/EstablishmentDashboard'));
-const InstitutionStaffLogin = lazy(() => import('@/pages/InstitutionStaffLogin'));
-const InstitutionDashboard = lazy(() => import('@/components/InstitutionDashboard'));
-const UserManagement = lazy(() => import('@/components/establishment/UserManagement'));
 
 // Admin Pages
 const AdminPage = lazy(() => import('@/pages/AdminPage'));
 const AdminDashboardPage = lazy(() => import('@/pages/AdminDashboardPage')); 
-const AdminInstitutionsPage = lazy(() => import('@/pages/AdminInstitutionsPage'));
-const AdminInstitutionCodesPage = lazy(() => import('@/pages/AdminInstitutionCodesPage'));
-const AdminInstitutionStaffPage = lazy(() => import('@/pages/AdminInstitutionStaffPage'));
 const AdminAnalyticsDashboard = lazy(() => import('@/pages/AdminAnalyticsDashboard'));
 const AdminWeightAuditPage = lazy(() => import('@/pages/AdminWeightAuditPage'));
 const EstablishmentDashboardPage = lazy(() => import('@/pages/EstablishmentDashboardPage'));
@@ -268,7 +262,7 @@ const PageContent = () => {
     navigate(path, { state: data });
   };
 
-  const isAuthPage = ['/auth', '/login', '/signup', '/forgot-password', '/reset-password', '/email-confirmation-pending', '/auth/callback', '/institution/staff/login', '/oauth/consent', '/parental-consent'].some(p => location.pathname.startsWith(p));
+  const isAuthPage = ['/auth', '/login', '/signup', '/forgot-password', '/reset-password', '/email-confirmation-pending', '/auth/callback', '/oauth/consent', '/parental-consent'].some(p => location.pathname.startsWith(p));
   const isCVBuilder = location.pathname.startsWith('/cv-builder') || location.pathname.startsWith('/cover-letter-builder');
   const isAdminPage = location.pathname.startsWith('/admin');
   const isDashboard = ['/dashboard', '/settings', '/profil', '/profile', '/account', '/recommendations', '/offers-formations', '/my-documents', '/user/rgpd', '/user/cookies-preferences', '/personalized-plan', '/notifications', '/results', '/action-plan', '/apprentissage'].some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
@@ -426,10 +420,8 @@ const PageContent = () => {
                   <Route path="/admin" element={<Navigate to="/admin/content" replace />} />
                   <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboardPage onNavigate={handleNavigate} /></AdminRoute>} />
                   <Route path="/admin/metiers" element={<AdminRoute><AdminMetiers /></AdminRoute>} />
-                  <Route path="/admin/institutions" element={<AdminRoute><AdminInstitutionsPage /></AdminRoute>} />
+                  <Route path="/admin/institutions" element={<Navigate to="/admin/establishments" replace />} />
                   <Route path="/admin/establishment/:id/dashboard" element={<AdminRoute><EstablishmentDashboardPage /></AdminRoute>} />
-                  <Route path="/admin/institution/:id/codes" element={<AdminRoute><AdminInstitutionCodesPage /></AdminRoute>} />
-                  <Route path="/admin/institution/:id/staff" element={<AdminRoute><AdminInstitutionStaffPage /></AdminRoute>} />
                   <Route path="/admin/analytics" element={<AdminRoute><AdminAnalyticsDashboard /></AdminRoute>} />
                   <Route path="/admin/weight-audit" element={<AdminRoute><AdminWeightAuditPage /></AdminRoute>} />
                   <Route path="/admin/rgpd-compliance" element={<AdminRoute><RgpdCompliancePage /></AdminRoute>} />
@@ -443,9 +435,8 @@ const PageContent = () => {
                   <Route path="/establishment/login" element={<EstablishmentLoginPage />} />
                   <Route path="/establishment/forgot-password" element={<EstablishmentForgotPasswordPage />} />
                   <Route path="/establishment/dashboard/*" element={<ProtectedEstablishmentRoute><EstablishmentDashboard /></ProtectedEstablishmentRoute>} />
-                  <Route path="/institution/staff/login" element={<InstitutionStaffLogin />} />
-                  <Route path="/institution/:id/dashboard" element={<ProtectedEstablishmentRoute><InstitutionDashboard /></ProtectedEstablishmentRoute>} />
-                  <Route path="/institution/:id/users" element={<ProtectedEstablishmentRoute><UserManagement /></ProtectedEstablishmentRoute>} /> 
+                  <Route path="/establishment" element={<Navigate to="/establishment/dashboard" replace />} />
+                  <Route path="/institution/*" element={<Navigate to="/establishment/login" replace />} />
                   
                   {/* Redirects */}
                   <Route path="/profil" element={<Navigate to="/profile" replace />} />

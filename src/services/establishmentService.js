@@ -2,7 +2,50 @@ import { supabase } from '@/lib/customSupabaseClient';
 import { EventLogger } from '@/services/eventLoggerService';
 import { EVENT_TYPES } from '@/constants/eventTypes';
 
-export const ESTABLISHMENT_COLUMNS = 'id, name, type, address, website, email, phone, code, status, email_count, student_count, created_at, updated_at, last_access, uai, city, postal_code, region, sector, description, logo_url, contact_email, activation_password';
+export const ESTABLISHMENT_COLUMNS = 'id, name, type, address, website, email, phone, code, status, email_count, student_count, created_at, updated_at, last_access, uai, city, postal_code, region, sector, description, logo_url, contact_email';
+
+const EDITABLE_FIELDS = ['name', 'type', 'address', 'website', 'email', 'phone', 'code', 'status', 'email_count', 'uai', 'city', 'postal_code', 'region', 'sector', 'description', 'contact_email', 'code_updated_at', 'paused_at'];
+
+const pickEditable = (values) => Object.fromEntries(
+  Object.entries(values).filter(([key]) => EDITABLE_FIELDS.includes(key))
+);
+
+// Emails come from the form as strings or { email } objects.
+const normalizeEmails = (emails = []) => [...new Set(
+  emails
+    .map((entry) => (typeof entry === 'string' ? entry : entry?.email))
+    .filter(Boolean)
+    .map((email) => email.trim().toLowerCase())
+)];
+
+// Staff emails allowed to sign in to the establishment space.
+async function syncAuthorizedEmails(establishmentId, emails) {
+  const wanted = normalizeEmails(emails);
+  const { data: current, error } = await supabase
+    .from('authorized_emails')
+    .select('id, email')
+    .eq('establishment_id', establishmentId);
+  if (error) throw error;
+
+  const toRemove = (current || []).filter((row) => !wanted.includes(row.email.toLowerCase()));
+  const existing = new Set((current || []).map((row) => row.email.toLowerCase()));
+  const toAdd = wanted.filter((email) => !existing.has(email));
+
+  if (toRemove.length) {
+    const { error: deleteError } = await supabase.from('authorized_emails').delete().in('id', toRemove.map((row) => row.id));
+    if (deleteError) throw deleteError;
+  }
+  if (toAdd.length) {
+    const { error: insertError } = await supabase
+      .from('authorized_emails')
+      .insert(toAdd.map((email) => ({ establishment_id: establishmentId, email, status: 'active' })));
+    if (insertError) {
+      throw insertError.code === '23505'
+        ? new Error('Un des emails a déjà accès à un autre établissement.')
+        : insertError;
+    }
+  }
+}
 
 const EstablishmentService = {
   async getEstablishments({ page = 1, limit = 10, filters = {}, sort = { column: 'created_at', direction: 'desc' } } = {}) {
@@ -49,8 +92,8 @@ const EstablishmentService = {
       if (!data) return null;
 
       const [emails, students, programs, logs] = await Promise.all([
-        supabase.from('institution_emails').select('email').eq('institution_id', id),
-        supabase.from('institution_members').select('count', { count: 'exact', head: true }).eq('institution_id', id).eq('role', 'student'),
+        supabase.from('authorized_emails').select('email').eq('establishment_id', id),
+        supabase.from('profiles').select('id', { count: 'exact', head: true }).eq('establishment_id', id),
         supabase.from('institution_programs').select('count', { count: 'exact', head: true }).eq('institution_id', id),
         supabase.from('establishment_activity_logs').select('*').eq('establishment_id', id).order('created_at', { ascending: false }).limit(10)
       ]);
@@ -70,13 +113,10 @@ const EstablishmentService = {
   async createEstablishment(establishmentData) {
     try {
       const { emails, ...mainData } = establishmentData;
-      const { data, error } = await supabase.from('educational_institutions').insert([mainData]).select(ESTABLISHMENT_COLUMNS).single();
+      const { data, error } = await supabase.from('educational_institutions').insert([pickEditable(mainData)]).select(ESTABLISHMENT_COLUMNS).single();
       if (error) throw error;
 
-      if (emails && emails.length > 0) {
-        const emailInserts = emails.map(email => ({ institution_id: data.id, email: email }));
-        await supabase.from('institution_emails').insert(emailInserts);
-      }
+      if (emails?.length) await syncAuthorizedEmails(data.id, emails);
 
       await EventLogger.logSchoolEvent(EVENT_TYPES.SCHOOL_CREATED, data.id, data.name);
       return data;
@@ -89,20 +129,12 @@ const EstablishmentService = {
   async updateEstablishment(id, updates) {
     try {
       const { emails, ...mainData } = updates;
-      const allowedFields = ['name', 'type', 'address', 'website', 'email', 'phone', 'code', 'status', 'email_count', 'uai', 'city', 'postal_code', 'region', 'description', 'contact_email', 'code_updated_at', 'paused_at'];
-      const cleanUpdates = {};
-      Object.keys(mainData).forEach(key => { if (allowedFields.includes(key)) cleanUpdates[key] = mainData[key]; });
+      const cleanUpdates = pickEditable(mainData);
 
       const { data, error } = await supabase.from('educational_institutions').update(cleanUpdates).eq('id', id).select(ESTABLISHMENT_COLUMNS).maybeSingle();
       if (error) throw error;
 
-      if (emails) {
-         await supabase.from('institution_emails').delete().eq('institution_id', id);
-         if (emails.length > 0) {
-            const emailInserts = emails.map(email => ({ institution_id: id, email: email }));
-            await supabase.from('institution_emails').insert(emailInserts);
-         }
-      }
+      if (emails) await syncAuthorizedEmails(id, emails);
       return data;
     } catch (error) {
       console.error('Error updating establishment:', error);
