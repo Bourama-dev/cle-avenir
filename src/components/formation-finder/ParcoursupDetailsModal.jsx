@@ -35,7 +35,7 @@ export default function ParcoursupDetailsModal({ formation, onClose }) {
             <div className="flex items-center gap-2 mb-2">
                <span className="bg-white/20 text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">Parcoursup</span>
             </div>
-            <h2 className="text-2xl font-bold leading-tight">{formation.libelle_formation}</h2>
+            <h2 className="text-2xl font-bold leading-tight text-white">{formation.libelle_formation}</h2>
             <p className="text-violet-100 text-sm mt-1 flex items-center gap-2 opacity-90">
               {formation.type_formation} {formation.niveau && `• ${formation.niveau}`}
             </p>

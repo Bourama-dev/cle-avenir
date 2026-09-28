@@ -138,7 +138,7 @@ const CleoPreferencesModal = ({ isOpen, onClose }) => {
                   <Sliders className="h-5 w-5" />
                 </div>
                 <div>
-                  <h2 className="font-bold text-base">Préférences IA</h2>
+                  <h2 className="font-bold text-base text-white">Préférences IA</h2>
                   <p className="text-xs text-indigo-200">Personnalise le comportement de Cléo</p>
                 </div>
               </div>

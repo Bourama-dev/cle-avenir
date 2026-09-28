@@ -32,7 +32,7 @@ const IdealJobSection = ({ match, userProfile }) => {
                    <Badge key={tag} variant="outline" className="text-slate-300 border-slate-600 capitalize">{tag}</Badge>
                 ))}
              </div>
-             <h1 className="text-4xl font-extrabold mb-4">{match.title}</h1>
+             <h1 className="text-4xl font-extrabold mb-4 text-white">{match.title}</h1>
              <p className="text-lg text-slate-300 max-w-3xl leading-relaxed">{match.description}</p>
           </div>
        </div>

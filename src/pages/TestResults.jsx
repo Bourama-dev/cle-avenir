@@ -119,7 +119,7 @@ const TestResults = () => {
          <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-purple-500/20 blur-3xl"></div>
          
          <div className="max-w-4xl mx-auto text-center relative z-10">
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white">
               Votre Profil Professionnel
             </h1>
             <div className="flex items-center justify-center gap-2 text-indigo-200 bg-slate-800/50 w-fit mx-auto px-4 py-2 rounded-full backdrop-blur-sm border border-slate-700">

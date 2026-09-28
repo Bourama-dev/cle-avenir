@@ -94,7 +94,7 @@ const CleoProfileBuilder = ({ userProfile, isOpen, onClose, onUpdate }) => {
           <div className="relative z-10 flex gap-4">
              <CleoAvatar size="lg" className="border-4 border-white/20" />
              <div>
-               <h2 className="text-2xl font-bold">Profil Intelligent</h2>
+               <h2 className="text-2xl font-bold text-white">Profil Intelligent</h2>
                <p className="text-violet-100 text-sm opacity-90">Je complète votre dossier pour vous.</p>
              </div>
           </div>

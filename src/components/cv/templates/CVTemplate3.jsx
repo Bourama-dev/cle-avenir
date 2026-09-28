@@ -13,7 +13,7 @@ export const CVTemplate3 = ({ cvData, data }) => {
       {/* Header asymmetric */}
       <div className="bg-gradient-to-r from-purple-600 to-pink-500 p-8 rounded-3xl text-white mb-8 shadow-lg transform -skew-y-2">
         <div className="transform skew-y-2">
-          <h1 className="text-5xl font-extrabold tracking-tight mb-2">{normalizedData.fullName || 'Votre Nom'}</h1>
+          <h1 className="text-5xl font-extrabold tracking-tight mb-2 text-white">{normalizedData.fullName || 'Votre Nom'}</h1>
           <p className="text-2xl font-medium text-pink-100">{normalizedData.jobTitle || 'Titre du poste'}</p>
         </div>
       </div>

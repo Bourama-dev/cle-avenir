@@ -10,7 +10,7 @@ const AdminAccessCard = () => {
     <div className="admin-quick-access">
       <div className="quick-access-card">
         <div className="card-header">
-          <h3>
+          <h3 className="text-white">
             <ShieldCheck size={28} />
             Espace Admin
           </h3>

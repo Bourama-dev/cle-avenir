@@ -32,7 +32,7 @@ const ProgressionSection = ({ planData, hasTestData, userProfile }) => {
         <ArrowRight className="w-64 h-64" />
       </div>
       <CardContent className="p-8 md:p-10 relative z-10">
-        <h2 className="text-2xl md:text-3xl font-extrabold mb-1 tracking-tight">Votre Parcours</h2>
+        <h2 className="text-2xl md:text-3xl font-extrabold mb-1 tracking-tight text-white">Votre Parcours</h2>
         <p className="text-indigo-200 mb-10 text-sm">
           {userStatus === 'lyceen'       && 'Ton plan d\'orientation post-bac, étape par étape.'}
           {userStatus === 'etudiant'     && 'Ton plan pour décrocher ton premier emploi.'}

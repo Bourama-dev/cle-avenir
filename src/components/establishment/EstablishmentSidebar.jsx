@@ -60,7 +60,7 @@ const EstablishmentSidebar = () => {
                 {loading ? "..." : establishment?.name?.charAt(0) || "E"}
              </div>
              <div className="flex-1 overflow-hidden">
-                <h2 className="font-bold text-lg truncate leading-tight">
+                <h2 className="font-bold text-lg truncate leading-tight text-white">
                   {loading ? "Chargement..." : establishment?.name || "Establishment"}
                 </h2>
                 <p className="text-xs text-slate-400 truncate">Portail Administrateur</p>

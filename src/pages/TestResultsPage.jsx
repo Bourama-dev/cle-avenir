@@ -265,7 +265,7 @@ const TestResultsPage = () => {
             transition={{ duration: 0.6 }}
             className="max-w-4xl mx-auto text-center relative z-10"
           >
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight text-white">
               Vos Résultats d'Orientation
             </h1>
             <p className="text-slate-300 max-w-2xl mx-auto text-lg mb-6">
@@ -407,7 +407,7 @@ const TestResultsPage = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 mb-6">
               <LayoutDashboard className="w-8 h-8" />
             </div>
-            <h3 className="text-2xl font-extrabold mb-4">
+            <h3 className="text-2xl font-extrabold mb-4 text-white">
               Retour à votre Dashboard
             </h3>
             <p className="text-white/90 mb-8 text-lg max-w-2xl mx-auto">

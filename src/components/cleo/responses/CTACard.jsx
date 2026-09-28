@@ -16,7 +16,7 @@ const CTACard = ({ data, onAction }) => {
       
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="font-bold text-lg leading-tight">{data.title}</h3>
+          <h3 className="font-bold text-lg leading-tight text-white">{data.title}</h3>
           {data.xp && (
             <span className="bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
               <Sparkles size={10} className="text-yellow-300" /> +{data.xp} XP

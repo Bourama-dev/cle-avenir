@@ -377,7 +377,7 @@ const BlogArticlePage = () => {
                 {/* Newsletter Box */}
                 <div className="bg-gradient-to-br from-indigo-600 to-violet-700 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden">
                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                   <h3 className="font-bold text-xl mb-2 relative z-10">Restez informé 🚀</h3>
+                   <h3 className="font-bold text-xl mb-2 relative z-10 text-white">Restez informé 🚀</h3>
                    <p className="text-indigo-100 text-sm mb-6 relative z-10 leading-relaxed">
                      Recevez nos meilleurs conseils carrière et les tendances de l'emploi directement dans votre boîte mail.
                    </p>

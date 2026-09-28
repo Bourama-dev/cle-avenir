@@ -39,7 +39,7 @@ const InterviewSetup = ({ onStart, defaultJobTitle = '', prefill = null }) => {
   return (
     <div className="interview-setup-container">
       <div className="setup-header">
-        <h1>Simulateur d'Entretien IA</h1>
+        <h1 className="text-white">Simulateur d'Entretien IA</h1>
         <p>Colle l'offre, parle avec l'IA, reçois ton rapport détaillé.</p>
       </div>
 
@@ -127,14 +127,14 @@ const InterviewSetup = ({ onStart, defaultJobTitle = '', prefill = null }) => {
         </div>
       </form>
 
-      <h2 className="quick-title">Ou lance un entraînement rapide</h2>
+      <h2 className="quick-title text-white">Ou lance un entraînement rapide</h2>
       <div className="cards-grid">
         {Object.entries(interviewService.types).map(([key, type]) => (
           <div key={key} className="interview-card">
             <div className="card-icon">
               {icons[key]}
             </div>
-            <h3 className="card-title">{type.name}</h3>
+            <h3 className="card-title text-white">{type.name}</h3>
             <p className="card-description">{type.description}</p>
 
             <div className="card-meta">

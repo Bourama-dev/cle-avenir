@@ -89,7 +89,7 @@ const DocumentationPage = () => {
                   <div className="p-3 bg-white/10 rounded-xl backdrop-blur-sm flex-shrink-0">
                     <BookOpen className="h-10 w-10 text-white" aria-hidden="true" />
                   </div>
-                  <h1 className="text-3xl md:text-5xl font-bold leading-tight">CléAvenir - Moteur de Recommandation Hybride Auto-Apprenant</h1>
+                  <h1 className="text-3xl md:text-5xl font-bold leading-tight text-white">CléAvenir - Moteur de Recommandation Hybride Auto-Apprenant</h1>
                 </div>
               </AnimatedItem>
               <AnimatedItem>

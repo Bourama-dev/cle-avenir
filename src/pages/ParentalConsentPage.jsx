@@ -131,7 +131,7 @@ const ParentalConsentPage = () => {
             <Shield className="w-5 h-5 opacity-80" />
             <span className="text-sm opacity-80">Autorisation parentale — RGPD Art. 8</span>
           </div>
-          <h1 className="text-2xl font-bold">Demande d'autorisation</h1>
+          <h1 className="text-2xl font-bold text-white">Demande d'autorisation</h1>
           <p className="text-indigo-200 text-sm mt-1">CléAvenir — Orientation professionnelle</p>
         </div>
 

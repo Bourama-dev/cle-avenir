@@ -250,7 +250,7 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
             <Compass className="w-32 h-32" />
           </div>
           <CardContent className="p-6 relative z-10">
-            <h3 className="text-xl font-bold mb-1">
+            <h3 className="text-xl font-bold mb-1 text-white">
               {testStats.count > 0 ? 'Repasser le test' : 'Passer mon premier test'}
             </h3>
             <p className="text-indigo-100 text-sm mb-4">
