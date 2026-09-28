@@ -12,7 +12,10 @@ export const SignupDataManager = {
             first_name: formData.firstName,
             last_name: formData.lastName,
             full_name: `${formData.firstName} ${formData.lastName}`.trim(),
-            role: 'user'
+            role: 'user',
+            // Read by the profile trigger when the profile row is created, so
+            // the link survives signups that wait for email confirmation.
+            establishment_code: formData.establishmentId ? formData.establishmentCode : null
           }
         }
       });
@@ -36,11 +39,9 @@ export const SignupDataManager = {
         skills: formData.skills,
         goals: formData.careerGoals,
         
-        // Link establishment if found
-        institution_id: formData.establishmentId || null,
-        // Also save code for reference if needed
-        institution_code: formData.establishmentCode || null,
-        institution_name: formData.establishmentName || null,
+        // The database links the establishment from its code
+        // (profiles.establishment_id can't be set directly).
+        institution_code: formData.establishmentId ? formData.establishmentCode : null,
 
         // Preferences in JSONB
         preferences: {
@@ -65,19 +66,6 @@ export const SignupDataManager = {
 
       if (profileError) {
         console.error("Profile update warning:", profileError);
-      }
-
-      // 4. Create User Institution Link (if code used)
-      if (formData.establishmentId) {
-        const { error: linkError } = await supabase
-          .from('user_institution_links')
-          .insert({
-            user_id: authData.user.id,
-            institution_id: formData.establishmentId,
-            code_used: formData.establishmentCode || 'MANUAL'
-          });
-        
-        if (linkError) console.error("Link creation warning:", linkError);
       }
 
       return { success: true, user: authData.user };

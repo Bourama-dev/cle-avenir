@@ -14,6 +14,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { useNavigation } from '@/hooks/useNavigation';
 import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 import { motion } from 'framer-motion';
+import EstablishmentLinkCard from '@/components/account/EstablishmentLinkCard';
 
 const AccountPage = () => {
   const { user, userProfile } = useAuth();
@@ -188,6 +189,11 @@ const AccountPage = () => {
               </div>
             </CardContent>
           </Card>
+        </AnimatedItem>
+
+        {/* Establishment */}
+        <AnimatedItem>
+          <EstablishmentLinkCard userId={user?.id} />
         </AnimatedItem>
 
         {/* Preferences */}

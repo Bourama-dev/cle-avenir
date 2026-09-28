@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { ArrowLeft, CheckCircle2, Building, Loader2 } from 'lucide-react';
 import { validateEmail } from '@/utils/establishmentValidation';
 import { motion } from 'framer-motion';
+import { supabase } from '@/lib/customSupabaseClient';
 
 const EstablishmentForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
@@ -18,18 +19,23 @@ const EstablishmentForgotPasswordPage = () => {
     e.preventDefault();
     setError('');
     
-    if (!validateEmail(email)) {
-      setError("Veuillez entrer une adresse email valide du domaine ac-versailles.fr");
+    if (!validateEmail(email.trim())) {
+      setError("Veuillez entrer une adresse email valide.");
       return;
     }
 
     setLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (resetError) throw resetError;
       setSuccess(true);
-    }, 1500);
+    } catch (err) {
+      setError(err.message || "Impossible d'envoyer l'email. Réessayez dans un instant.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -65,17 +71,17 @@ const EstablishmentForgotPasswordPage = () => {
                  </div>
                 <h1 className="text-xl font-bold text-slate-900">Réinitialisation mot de passe</h1>
                 <p className="text-sm text-slate-500">
-                  Entrez votre email académique pour recevoir un lien de réinitialisation.
+                  Entrez votre email professionnel pour recevoir un lien de réinitialisation.
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email académique</Label>
+                  <Label htmlFor="email">Email professionnel</Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="admin@ac-versailles.fr"
+                    placeholder="contact@etablissement.fr"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className={error ? "border-red-500" : ""}

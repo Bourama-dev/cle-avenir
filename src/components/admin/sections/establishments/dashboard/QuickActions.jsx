@@ -70,7 +70,6 @@ const QuickActions = ({ establishmentId, establishmentData, onRefresh }) => {
       // Update with code and code_updated_at explicitly
       await establishmentService.updateEstablishment(establishmentId, {
         code: newCode,
-        activation_password: newCode, // Maintain legacy support if needed
         code_updated_at: new Date().toISOString()
       });
 

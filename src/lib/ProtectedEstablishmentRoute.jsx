@@ -1,11 +1,15 @@
-import React from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useEstablishmentAuth } from '@/contexts/EstablishmentAuthContext';
 import { Loader2 } from 'lucide-react';
 
-const ProtectedEstablishmentRoute = () => {
-  const { isAuthenticated, loading } = useEstablishmentAuth();
+const ProtectedEstablishmentRoute = ({ children }) => {
+  const { isAuthenticated, loading, ensureAccess } = useEstablishmentAuth();
   const location = useLocation();
+
+  useEffect(() => {
+    ensureAccess();
+  }, [ensureAccess]);
 
   if (loading) {
     return (
@@ -19,11 +23,10 @@ const ProtectedEstablishmentRoute = () => {
   }
 
   if (!isAuthenticated) {
-    // Redirect to login but save the attempted location
     return <Navigate to="/establishment/login" state={{ from: location }} replace />;
   }
 
-  return <Outlet />;
+  return children;
 };
 
 export default ProtectedEstablishmentRoute;
