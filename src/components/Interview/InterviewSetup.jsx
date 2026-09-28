@@ -13,11 +13,11 @@ const icons = {
 
 const QUESTION_COUNTS = [3, 5, 6];
 
-const InterviewSetup = ({ onStart, defaultJobTitle = '' }) => {
-  const [jobTitle, setJobTitle] = useState(defaultJobTitle);
-  const [company, setCompany] = useState('');
-  const [level, setLevel] = useState('junior');
-  const [jobOffer, setJobOffer] = useState('');
+const InterviewSetup = ({ onStart, defaultJobTitle = '', prefill = null }) => {
+  const [jobTitle, setJobTitle] = useState(prefill?.jobTitle || defaultJobTitle);
+  const [company, setCompany] = useState(prefill?.company || '');
+  const [level, setLevel] = useState(LEVELS[prefill?.level] ? prefill.level : 'junior');
+  const [jobOffer, setJobOffer] = useState(prefill?.jobOffer || '');
   const [focus, setFocus] = useState('complete');
   const [questionCount, setQuestionCount] = useState(5);
 
@@ -50,6 +50,12 @@ const InterviewSetup = ({ onStart, defaultJobTitle = '' }) => {
       </div>
 
       <form className="custom-interview-form" onSubmit={handleSubmit}>
+        {prefill?.jobTitle && (
+          <p className="prefill-notice">
+            <CheckCircle2 size={18} className="shrink-0" />
+            <span>Offre importée : <strong>{prefill.jobTitle}</strong>{prefill.company ? ` · ${prefill.company}` : ''}. Vérifie les infos puis lance l'entretien.</span>
+          </p>
+        )}
         <div className="form-grid">
           <label className="form-field">
             <span>Poste visé *</span>

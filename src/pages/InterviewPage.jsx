@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { interviewService } from '@/services/interviewService';
 import { aiInterviewService } from '@/services/aiInterviewService';
+import { interviewPrefill } from '@/services/interviewPrefill';
 import { speechRecognitionService } from '@/services/speechRecognitionService';
 import { textToSpeechService } from '@/services/textToSpeechService';
 import { useToast } from '@/components/ui/use-toast';
@@ -20,6 +21,10 @@ const InterviewPage = () => {
 
   // Stages: 'setup', 'live', 'report', 'results'
   const [stage, setStage] = useState('setup');
+  // Offer handed over by a "Préparer l'entretien" button, if any. Read once,
+  // then cleared so a later visit to /interview starts from a blank form.
+  const [prefill] = useState(() => interviewPrefill.peek());
+  useEffect(() => { interviewPrefill.clear(); }, []);
   const [loading, setLoading] = useState(false);
   const [thinking, setThinking] = useState(false);
 
@@ -212,6 +217,7 @@ const InterviewPage = () => {
         <InterviewSetup
           onStart={handleStartInterview}
           defaultJobTitle={userProfile?.main_goal || userProfile?.job_title || ''}
+          prefill={prefill}
         />
       )}
 
