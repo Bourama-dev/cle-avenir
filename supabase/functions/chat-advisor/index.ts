@@ -2,6 +2,17 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import {
   buildInterviewRequest, createCredit, getQuota, sanitizeConfig, sanitizeTurns, useCredit,
 } from './interview.ts';
+import { anonymousKey, CHAT_LIMIT_REPLY, consumeChatMessage } from './limits.ts';
+
+const CHAT_MODES = ['career_advisor', 'learning_coach', 'interview_coach'];
+
+// Reply-length preference from Cléo's settings. The client picks a key; the
+// wording stays server side (clients can't inject their own instructions).
+const RESPONSE_STYLES: Record<string, string> = {
+  concise: 'Sois très concise, max 80 mots.',
+  normal: 'Sois concise, max 150 mots.',
+  detailed: 'Sois détaillée et donne des exemples, max 300 mots.',
+};
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -538,6 +549,13 @@ Deno.serve(async (req) => {
     }
 
     if (!message) return json({ error: 'Missing message' }, 400);
+    const chatMode = CHAT_MODES.includes(mode) ? mode : 'career_advisor';
+
+    // ── Anti-abuse limit on Cléo messages ──────────────────────────────────
+    const allowed = await consumeChatMessage(sb, userId, userId ? null : await anonymousKey(req));
+    if (!allowed) {
+      return json({ reply: CHAT_LIMIT_REPLY, suggestions: ['Explorer les métiers', 'Trouver une formation'], limited: true });
+    }
 
     if (userId && sb) {
       try {
@@ -568,7 +586,11 @@ Deno.serve(async (req) => {
     }
 
     // ── Build messages for AI ──────────────────────────────────────────────
-    const systemPrompt = context.systemInstruction ?? buildSystemPrompt(mode, enrichedContext);
+    // The system prompt is always built here: a client-supplied one would turn
+    // this endpoint into a free general-purpose LLM proxy.
+    const style = RESPONSE_STYLES[context.responseStyle as string];
+    const systemPrompt = buildSystemPrompt(chatMode, enrichedContext)
+      + (style && chatMode !== 'interview_coach' ? `\n\nLONGUEUR (préférence de l'utilisateur, prioritaire): ${style}` : '');
 
     const historyMessages = (history as { role: string; content: string }[])
       .slice(-12)
@@ -602,7 +624,7 @@ Deno.serve(async (req) => {
     const profileUpdates = extractProfileUpdates(message, reply);
 
     // ── Smart suggestions ──────────────────────────────────────────────────
-    const suggestions = generateSuggestions(mode, enrichedContext);
+    const suggestions = generateSuggestions(chatMode, enrichedContext);
 
     return json({ reply, suggestions, profileUpdates });
 

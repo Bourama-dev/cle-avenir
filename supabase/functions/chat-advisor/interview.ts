@@ -3,20 +3,10 @@
 // The prompts live here, server side, so the endpoint can't be used as a
 // free general-purpose LLM proxy: the client only sends the job context and
 // the candidate's answers. Every interview consumes one credit row in
-// ai_interview_credits, which is what the usage quota counts.
+// ai_interview_credits, which is what the usage quota counts (limits in
+// limits.ts).
 
-const DAY_MS = 24 * 60 * 60 * 1000;
-
-// Anti-abuse limit applied to everyone while CléAvenir is fully free.
-const ANTI_ABUSE = { limit: 10, windowMs: DAY_MS, period: 'day' } as const;
-
-// Per-plan limits, only enforced when the INTERVIEW_TIER_LIMITS secret is
-// "on" (i.e. once paid plans actually unlock access).
-const TIER_LIMITS: Record<string, { limit: number; windowMs: number | null; period: string }> = {
-  free: { limit: 1, windowMs: null, period: 'total' },
-  premium: { limit: 3, windowMs: 30 * DAY_MS, period: 'month' },
-  premium_plus: ANTI_ABUSE,
-};
+import { interviewRule } from './limits.ts';
 
 // One interview = 1 start + up to MAX_QUESTIONS turns + 1 report.
 const MAX_QUESTIONS = 8;
@@ -176,17 +166,8 @@ export interface QuotaStatus {
 }
 
 // deno-lint-ignore no-explicit-any
-async function resolveRule(sb: any, userId: string) {
-  if (Deno.env.get('INTERVIEW_TIER_LIMITS') !== 'on') return { tier: 'all', ...ANTI_ABUSE };
-  const { data } = await sb.from('profiles').select('subscription_tier').eq('id', userId).maybeSingle();
-  const raw = String(data?.subscription_tier || 'free').toLowerCase();
-  const tier = TIER_LIMITS[raw] ? raw : 'free'; // 'decouverte' and unknown values = free
-  return { tier, ...TIER_LIMITS[tier] };
-}
-
-// deno-lint-ignore no-explicit-any
 export async function getQuota(sb: any, userId: string): Promise<QuotaStatus> {
-  const rule = await resolveRule(sb, userId);
+  const rule = await interviewRule(sb, userId);
   let query = sb.from('ai_interview_credits').select('created_at').eq('user_id', userId)
     .order('created_at', { ascending: true });
   if (rule.windowMs) query = query.gte('created_at', new Date(Date.now() - rule.windowMs).toISOString());

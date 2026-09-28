@@ -1,4 +1,4 @@
--- AI interview simulator: usage credits + subscription_tier lock.
+-- AI usage limits (Cléo chat + interview simulator) and subscription_tier lock.
 
 -- ── 1. One row per AI interview started ────────────────────────────────────
 -- Written only by the chat-advisor edge function (service role); counted to
@@ -23,7 +23,28 @@ create policy "Users can read their own interview credits"
   to authenticated
   using ((select auth.uid()) = user_id);
 
--- ── 2. Users can't grant themselves a paid plan ────────────────────────────
+-- ── 2. One row per Cléo chat message ───────────────────────────────────────
+-- Written only by chat-advisor; counted for the daily anti-abuse limit.
+-- Anonymous visitors are keyed by a salted hash of their IP (client_key),
+-- never by the raw address.
+create table if not exists public.ai_usage_events (
+  id bigint generated always as identity primary key,
+  kind text not null,
+  user_id uuid references auth.users(id) on delete cascade,
+  client_key text,
+  created_at timestamptz not null default now(),
+  constraint ai_usage_events_owner check (user_id is not null or client_key is not null)
+);
+
+create index if not exists ai_usage_events_user_idx
+  on public.ai_usage_events (kind, user_id, created_at desc) where user_id is not null;
+create index if not exists ai_usage_events_client_idx
+  on public.ai_usage_events (kind, client_key, created_at desc) where client_key is not null;
+
+-- Service role only: RLS on, no policy.
+alter table public.ai_usage_events enable row level security;
+
+-- ── 3. Users can't grant themselves a paid plan ────────────────────────────
 -- profiles_update lets a user update any column of their own row, including
 -- subscription_tier. Quotas (and any future paid feature) read that column,
 -- so only admins and the service role (Stripe webhooks, edge functions) may
