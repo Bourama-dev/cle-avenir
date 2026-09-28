@@ -106,7 +106,6 @@ const AccountPage = lazy(() => import('@/pages/AccountPage'));
 const SettingsPage = lazy(() => import('@/pages/SettingsPage'));
 const TestHistoryPage = lazy(() => import('@/pages/TestHistoryPage'));
 const InterviewPage = lazy(() => import('@/pages/InterviewPage'));
-const InterviewTrainingPage = lazy(() => import('@/pages/InterviewTrainingPage'));
 const CleoPage = lazy(() => import('@/pages/CleoPage'));
 const CVBuilderPage = lazy(() => import('@/pages/CVBuilderPage'));
 const CoverLetterBuilderPage = lazy(() => import('@/pages/CoverLetterBuilderPage'));
@@ -411,7 +410,6 @@ const PageContent = () => {
                   <Route path="/plan-personnalise" element={<Navigate to="/personalized-plan" replace />} />
                   <Route path="/apprentissage" element={<ProtectedRoute><LearningPathPage /></ProtectedRoute>} />
                   <Route path="/interview" element={<ProtectedRoute><InterviewPage /></ProtectedRoute>} />
-                  <Route path="/interview/entrainement" element={<ProtectedRoute><InterviewTrainingPage /></ProtectedRoute>} />
                   <Route path="/cleo" element={<ProtectedRoute><CleoPage /></ProtectedRoute>} />
                   <Route path="/cv-builder" element={<ProtectedRoute><CVBuilderPage /></ProtectedRoute>} />
                   <Route path="/cv-builder/:id" element={<ProtectedRoute><CVBuilderPage /></ProtectedRoute>} />

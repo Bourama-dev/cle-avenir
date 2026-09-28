@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { interviewService } from '@/services/interviewService';
 import { LEVELS } from '@/services/aiInterviewService';
-import { Clock, HelpCircle, Target, User, CheckCircle2, FileText, Sparkles, Mic, BarChart3, Flame, ArrowRight } from 'lucide-react';
+import { Clock, HelpCircle, Target, User, CheckCircle2, FileText, Sparkles, Mic, BarChart3 } from 'lucide-react';
 import './InterviewSetup.css';
 
 const icons = {
@@ -49,15 +48,6 @@ const InterviewSetup = ({ onStart, defaultJobTitle = '' }) => {
         <div className="step-pill"><Mic size={18} /> 2. Parle avec l'IA</div>
         <div className="step-pill"><BarChart3 size={18} /> 3. Reçois ton rapport</div>
       </div>
-
-      <Link to="/interview/entrainement" className="daily-practice-banner">
-        <Flame size={28} className="shrink-0" />
-        <span>
-          <strong>Entraînement quotidien</strong>
-          <small>Question du jour, 6 catégories, niveaux de maîtrise — 5 min par jour.</small>
-        </span>
-        <ArrowRight size={20} className="shrink-0 ml-auto" />
-      </Link>
 
       <form className="custom-interview-form" onSubmit={handleSubmit}>
         <div className="form-grid">

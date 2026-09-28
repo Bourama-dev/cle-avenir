@@ -262,32 +262,3 @@
   .custom-interview-form { padding: 1.25rem; }
   .start-button-lg { width: 100%; justify-content: center; }
 }
-
-/* ── Daily practice entry point ──────────────────────────────── */
-.daily-practice-banner {
-  max-width: 900px;
-  margin: 0 auto 1.5rem auto;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  transition: background 0.2s;
-}
-
-.daily-practice-banner:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.daily-practice-banner span {
-  display: flex;
-  flex-direction: column;
-}
-
-.daily-practice-banner small {
-  opacity: 0.85;
-  font-size: 0.85rem;
-}
