@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Footer from '@/components/Footer';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import MagneticButton from '@/components/ui/MagneticButton';
 import PageHelmet from '@/components/SEO/PageHelmet';
 import { categoryPageSEO } from '@/components/SEO/seoPresets';
@@ -13,7 +13,7 @@ import {
   Search, MapPin, Building, ChevronLeft, ChevronRight, AlertCircle,
   Clock, BookOpen, Award, Star, Globe,
   CheckCircle2, FileText, MonitorPlay, Lock, Briefcase, ArrowRight,
-  School, GraduationCap
+  School, GraduationCap, ChevronDown
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { extractFormationKeywords } from '@/utils/formationKeywords';
@@ -29,6 +29,76 @@ import { normalizeStr } from '@/utils/stringUtils';
 // Constants
 const API_BATCH_SIZE = 100;
 const UI_PAGE_SIZE = 20;
+
+// Compact details (stats, certification, key skills): expandable on mobile, always visible on md+
+const FormationExtras = ({ details, reduce }) => {
+  const [open, setOpen] = useState(false);
+  const stats = [
+    { label: 'Durée', icon: Clock, color: 'text-violet-500', value: details.duration },
+    { label: 'Modules', icon: BookOpen, color: 'text-blue-500', value: `${details.modules_count} leçons` },
+    { label: 'Langue', icon: Globe, color: 'text-emerald-500', value: details.language },
+    { label: 'Difficulté', icon: MonitorPlay, color: 'text-orange-500', value: details.difficulty },
+  ];
+  const content = (
+    <div className="pt-3 space-y-3">
+      <div className="grid grid-cols-2 gap-3 text-sm bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-700/50">
+        {stats.map(({ label, icon: Icon, color, value }) => (
+          <div key={label} className="flex flex-col min-w-0">
+            <span className="text-[11px] uppercase font-medium text-slate-500 dark:text-slate-400">{label}</span>
+            <span className="flex items-center gap-1.5 font-semibold text-slate-700 dark:text-slate-200 truncate">
+              <Icon className={`h-4 w-4 shrink-0 ${color}`} />{value}
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className="text-sm">
+        <h4 className="flex items-center gap-1.5 font-semibold text-slate-900 dark:text-white">
+          <Award className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />Certification
+        </h4>
+        <p className="text-slate-600 dark:text-slate-400 ml-5">{details.certificate}</p>
+      </div>
+      {details.outcomes?.length > 0 && (
+        <div className="text-sm">
+          <h4 className="flex items-center gap-1.5 font-semibold text-slate-900 dark:text-white">
+            <CheckCircle2 className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />Compétences clés
+          </h4>
+          <ul className="text-slate-600 dark:text-slate-400 ml-5 pl-5 list-disc space-y-0.5">
+            {details.outcomes.slice(0, 2).map((o, i) => <li key={i}>{o}</li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+  return (
+    <>
+      <div className="hidden md:block">{content}</div>
+      <div className="md:hidden">
+        <button
+          type="button"
+          onClick={() => setOpen(o => !o)}
+          aria-expanded={open}
+          className="mt-1 min-h-[44px] w-full flex items-center justify-between text-sm font-medium text-indigo-700 dark:text-indigo-300 rounded-xl px-1"
+        >
+          Détails
+          <ChevronDown className={`h-4 w-4 transition-transform ${open ? 'rotate-180' : ''}`} />
+        </button>
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              initial={reduce ? false : { height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
+              transition={{ duration: reduce ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              {content}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </>
+  );
+};
 
 const FormationsPage = ({ setAllFormations }) => {
   // --- State: Data ---
@@ -542,6 +612,8 @@ const FormationsPage = ({ setAllFormations }) => {
                     <span className="flex items-center gap-1.5"><Award className="h-4 w-4 text-violet-500" />{ui_details.format}</span>
                     <span className="hidden sm:flex items-center gap-1.5"><MonitorPlay className="h-4 w-4 text-orange-500" />{ui_details.difficulty}</span>
                   </div>
+
+                  <FormationExtras details={ui_details} reduce={reduce} />
 
                   <div className="mt-4 flex items-center gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
                     <Button
