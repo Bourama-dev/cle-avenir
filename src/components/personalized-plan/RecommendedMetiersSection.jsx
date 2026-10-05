@@ -41,7 +41,7 @@ const getEducationGap = (metier, userProfile) => {
   };
 };
 
-const RecommendedMetiersSection = ({ metiers, onAddMetier, isLoading, userProfile }) => {
+const RecommendedMetiersSection = ({ metiers, onAddMetier, isLoading, userProfile, plan }) => {
   const navigate = useNavigate();
 
   /* ── Loading ────────────────────────────────────────────────────────── */
@@ -98,19 +98,37 @@ const RecommendedMetiersSection = ({ metiers, onAddMetier, isLoading, userProfil
   }
 
   /* ── Metier cards ───────────────────────────────────────────────────── */
+  const riasecProfile = plan?.riasec_profile || null;
+  const riasecTop = riasecProfile
+    ? Object.entries(riasecProfile)
+        .filter(([k]) => ['R','I','A','S','E','C'].includes(k))
+        .sort(([, a], [, b]) => b - a)[0]?.[0]
+    : null;
+
+  const RIASEC_LABEL = { R:'manuel', I:'analytique', A:'créatif', S:'social', E:'entrepreneurial', C:'rigoureux' };
+  const profileHint = riasecTop ? ` adaptés à ton profil ${RIASEC_LABEL[riasecTop] || ''}` : '';
+
   return (
     <div className="mb-10 animate-fade-in">
-      <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-        <Briefcase className="w-6 h-6 text-indigo-600" />
-        Top {Math.min(metiers.length, 3)} Métiers Recommandés
-      </h2>
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+          <Briefcase className="w-6 h-6 text-indigo-600" />
+          Top {Math.min(metiers.length, 3)} Métiers Recommandés
+        </h2>
+        {profileHint && (
+          <p className="text-sm text-slate-500 mt-1">
+            Métiers{profileHint}
+            {userProfile?.education_level ? `, accessibles avec ton niveau (${userProfile.education_level})` : ''}
+          </p>
+        )}
+      </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
         {metiers.slice(0, 3).map((metier, idx) => {
           const educationGap = getEducationGap(metier, userProfile);
 
           return (
-            <Card key={metier.code || idx} className="flex flex-col h-full hover-lift border-slate-200 bg-white">
+            <Card key={metier.code || idx} className="flex flex-col h-full hover-lift border-slate-200 bg-white overflow-visible">
               <CardContent className="p-6 flex flex-col flex-1 relative">
                 {idx === 0 && (
                   <div className="absolute -top-3 -right-3 bg-gradient-to-r from-amber-400 to-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">

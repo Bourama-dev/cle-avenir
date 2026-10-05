@@ -27,6 +27,13 @@ export const AuthProvider = ({ children }) => {
         .maybeSingle();
 
       if (error) throw error;
+
+      // Soft-deleted users are blocked from the app
+      if (data?.is_deleted) {
+        await supabase.auth.signOut();
+        return null;
+      }
+
       // CléAvenir is fully free — force full access regardless of stored tier.
       return data ? { ...data, subscription_tier: PLAN_TYPES.PREMIUM_PLUS } : data;
     } catch (error) {

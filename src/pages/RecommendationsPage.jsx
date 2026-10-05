@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getMetierSalary } from '@/utils/salaryUtils';
 import { Button } from '@/components/ui/button';
@@ -25,13 +25,18 @@ const RecommendationsPage = () => {
   const [error, setError] = useState(null);
   const [careers, setCareers] = useState([]);
   
-  const fetchRecommendations = async () => {
+  const fetchRecommendations = useCallback(async () => {
     if (!user) return;
     setLoading(true);
     setError(null);
     try {
-      const recommendations = await metierRecommendationService.getRecommendationsForUser(user.id);
-      setCareers(recommendations || []);
+      const raw = await metierRecommendationService.getRecommendationsForUser(user.id);
+      // Normalize score field so all consumers use matchScore
+      const recommendations = (raw || []).map(c => ({
+        ...c,
+        matchScore: c.matchScore ?? c.match_score ?? 0,
+      }));
+      setCareers(recommendations);
     } catch (err) {
       console.error('Error fetching recommendations:', err);
       setError(err.message || 'Impossible de charger les recommandations.');
@@ -43,18 +48,12 @@ const RecommendationsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchRecommendations();
-  }, [user]);
+  }, [fetchRecommendations]);
 
-  const toggleFavorite = (career) => {
-    toast({
-      title: "Action non disponible",
-      description: `La sauvegarde de ${career.libelle || 'ce métier'} n'est pas encore implémentée sur cette page.`,
-    });
-  };
 
   return (
     <div className="container mx-auto py-8 px-4 max-w-7xl space-y-6">
@@ -99,13 +98,13 @@ const RecommendationsPage = () => {
             },
             {
               label: 'Match moyen',
-              value: `${Math.round(careers.reduce((sum, c) => sum + (c.matchScore || c.match_score || 0), 0) / careers.length)}%`,
+              value: `${Math.round(careers.reduce((sum, c) => sum + (c.matchScore || 0), 0) / careers.length)}%`,
               trend: 'neutral',
               subtitle: 'avec vos compétences'
             },
             {
               label: 'Meilleur match',
-              value: `${Math.max(...careers.map(c => c.matchScore || c.match_score || 0))}%`,
+              value: `${Math.max(...careers.map(c => c.matchScore || 0))}%`,
               trend: 'up',
               subtitle: careers[0]?.libelle?.split(' ').slice(0, 2).join(' ') || 'Top recommandation'
             },
@@ -170,10 +169,10 @@ const RecommendationsPage = () => {
                   <CardHeader>
                     <div className="flex justify-between items-start">
                        <Badge className={index < 3 ? "bg-purple-100 text-purple-700 hover:bg-purple-100" : "bg-slate-100 text-slate-700 hover:bg-slate-100"}>
-                          {career.matchScore || career.match_score || 85}% Match
+                          {career.matchScore || 85}% Match
                        </Badge>
-                       <Button variant="ghost" size="icon" onClick={() => toggleFavorite(career)}>
-                          <Heart className="h-5 w-5 text-slate-400 hover:text-red-500 hover:fill-red-500" />
+                       <Button variant="ghost" size="icon" disabled title="Fonctionnalité à venir">
+                          <Heart className="h-5 w-5 text-slate-300" />
                        </Button>
                     </div>
                     <CardTitle className="mt-2 text-xl line-clamp-2">{career.libelle || "Métier Inconnu"}</CardTitle>

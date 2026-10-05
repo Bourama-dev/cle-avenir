@@ -29,8 +29,13 @@ export const EDUCATION_LABELS = {
  * Returns the numeric level for a user profile's education_level string.
  * Defaults to bac (2) if unknown.
  */
-export const getUserEducationLevel = (profile) =>
-  EDUCATION_ORDER[profile?.education_level] ?? 2;
+export const getUserEducationLevel = (profile) => {
+  const raw = profile?.education_level;
+  if (!raw) return 2; // default: bac
+  // Normalize: lowercase + remove spaces to handle 'Bac+3', 'BAC + 3', etc.
+  const key = String(raw).toLowerCase().replace(/\s/g, '');
+  return EDUCATION_ORDER[key] ?? EDUCATION_ORDER[raw] ?? 2;
+};
 
 /**
  * Returns the numeric level stored inside a formation or metier object.

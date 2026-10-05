@@ -24,9 +24,16 @@ const AdminWiki = () => {
 
   const fetchPages = async () => {
     setLoading(true);
-    const { data } = await supabase.from('wiki_pages').select('*').order('title');
-    if (data) setPages(data);
-    setLoading(false);
+    try {
+      const { data, error } = await supabase.from('wiki_pages').select('*').order('title');
+      if (error) throw error;
+      if (data) setPages(data);
+    } catch (e) {
+      console.error(e);
+      toast({ variant: 'destructive', title: 'Erreur de chargement', description: 'Impossible de charger les données.' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSave = async () => {
@@ -51,11 +58,17 @@ const AdminWiki = () => {
   };
 
   const handleDelete = async (id) => {
-    await supabase.from('wiki_pages').delete().eq('id', id);
-    fetchPages();
-    if (selectedPage?.id === id) {
-        setSelectedPage(null);
-        setIsEditing(false);
+    try {
+      const { error } = await supabase.from('wiki_pages').delete().eq('id', id);
+      if (error) throw error;
+      fetchPages();
+      if (selectedPage?.id === id) {
+          setSelectedPage(null);
+          setIsEditing(false);
+      }
+    } catch (e) {
+      console.error(e);
+      toast({ variant: 'destructive', title: 'Erreur', description: 'Impossible de supprimer la page.' });
     }
   };
 

@@ -146,7 +146,6 @@ const Dashboard = () => {
             userProfile={userProfile || {}}
             user={user}
             onOpenProfile={() => navigate('/profile/edit')}
-            subscriptionTier={subscriptionTier}
           />
         </aside>
       </div>

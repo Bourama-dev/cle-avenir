@@ -40,18 +40,23 @@ const AdminQA = () => {
   };
 
   const createIssue = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
       const { error } = await supabase.from('bug_reports').insert({
-          title: newIssue.title,
-          description: newIssue.description,
-          severity: newIssue.severity,
-          status: 'open',
-          user_id: (await supabase.auth.getUser()).data.user?.id
+        title: newIssue.title,
+        description: newIssue.description,
+        severity: newIssue.severity,
+        status: 'open',
+        user_id: user?.id ?? null,
       });
-      if (!error) {
-          toast({ title: 'Bug rapporté' });
-          setNewIssue({ title: '', severity: 'Medium', description: '' });
-          fetchQAData();
-      }
+      if (error) throw error;
+      toast({ title: 'Bug rapporté', description: 'Le rapport a été enregistré.' });
+      setNewIssue({ title: '', severity: 'Medium', description: '' });
+      fetchQAData();
+    } catch (e) {
+      console.error(e);
+      toast({ variant: 'destructive', title: 'Erreur', description: 'Impossible d\'enregistrer le rapport.' });
+    }
   };
 
   if (loading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;

@@ -6,15 +6,22 @@ import { fr } from 'date-fns/locale';
  */
 export const formatSalary = (salary) => {
   if (!salary) return 'Salaire non spécifié';
-  // If it's a string that already looks formatted
+  // JSON object {min, max} from rome_metiers.salary_range
+  if (typeof salary === 'object' && salary !== null) {
+    const { min, max } = salary;
+    if (min && max) return `${min.toLocaleString('fr-FR')} – ${max.toLocaleString('fr-FR')} €`;
+    if (min) return `À partir de ${min.toLocaleString('fr-FR')} €`;
+    if (max) return `Jusqu'à ${max.toLocaleString('fr-FR')} €`;
+    return 'Salaire non spécifié';
+  }
+  // Already formatted string
   if (typeof salary === 'string' && (salary.includes('€') || salary.toLowerCase().includes('eur'))) {
     return salary;
   }
-  // If it's a number
+  // Number
   if (typeof salary === 'number') {
     return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(salary);
   }
-  // Return as is if unknown format
   return salary;
 };
 

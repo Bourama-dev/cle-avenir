@@ -3,12 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/lib/customSupabaseClient';
 import { Loader2, Activity, Server, AlertOctagon, Clock } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { useToast } from '@/components/ui/use-toast';
 
 const AdminMonitoring = () => {
   const [metrics, setMetrics] = useState([]);
   const [logs, setLogs] = useState([]);
   const [stats, setStats] = useState({ errorRate: 0, avgResponse: 0, uptime: 99.9 });
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     fetchMonitoringData();
@@ -39,6 +41,7 @@ const AdminMonitoring = () => {
       setLoading(false);
     } catch (e) {
       console.error(e);
+      toast({ variant: 'destructive', title: 'Erreur de chargement', description: 'Impossible de charger les données.' });
     }
   };
 

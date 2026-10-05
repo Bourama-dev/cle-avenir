@@ -63,7 +63,6 @@ const OAuthConsentPage = lazy(() => import('@/pages/OAuthConsentPage'));
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
 const SignupPage = lazy(() => import('@/pages/SignupPage'));
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
-const ResultsPage = lazy(() => import('@/pages/ResultsPage'));
 const ActionPlanPage = lazy(() => import('@/pages/ActionPlanPage'));
 const TestPage = lazy(() => import('@/pages/TestPage'));
 
@@ -79,7 +78,6 @@ const AuthCallback = lazy(() => import('@/pages/AuthCallback'));
 const UpdatePasswordPage = lazy(() => import('@/pages/UpdatePasswordPage'));
 
 // Core Test Flow Components & Pages
-const TestResults = lazy(() => import('@/pages/TestResults'));
 const EnhancedTestPage = lazy(() => import('@/pages/AdaptiveTestPage'));
 const TestGatePage = lazy(() => import('@/pages/TestGatePage'));
 const TestResultsPage = lazy(() => import('@/pages/TestResultsPage')); 
@@ -94,9 +92,7 @@ const FormationsPage = lazy(() => import('@/pages/FormationsPage'));
 const FormationDetailPage = lazy(() => import('@/pages/FormationDetailPage'));
 const LyceesPage = lazy(() => import('@/pages/LyceesPage'));
 const LyceeDetailPage = lazy(() => import('@/pages/LyceeDetailPage'));
-const JobOffersPage = lazy(() => import('@/pages/JobOffersPage')); 
 const JobDetailPage = lazy(() => import('@/pages/JobDetailPage'));
-const OfferDetailPage = lazy(() => import('@/pages/OfferDetailPage'));
 const JobExplorer = lazy(() => import('@/components/JobExplorer'));
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'));
 const ProfileResultsPage = lazy(() => import('@/pages/ProfileResultsPage'));
@@ -117,8 +113,6 @@ const HowItWorksPage = lazy(() => import('@/pages/HowItWorksPage'));
 const FAQPage = lazy(() => import('@/pages/FAQPage'));
 const AboutPage = lazy(() => import('@/components/AboutPage'));
 const ContactPage = lazy(() => import('@/pages/ContactPage'));
-const BlogPage = lazy(() => import('@/pages/BlogPage'));
-const BlogArticlePage = lazy(() => import('@/pages/BlogArticlePage'));
 const ActualitesPage = lazy(() => import('@/pages/ActualitesPage'));
 const ActualitesDetailPage = lazy(() => import('@/pages/ActualitesDetailPage'));
 const DocumentationPage = lazy(() => import('@/pages/DocumentationPage'));
@@ -153,7 +147,7 @@ const EstablishmentForgotPasswordPage = lazy(() => import('@/pages/Establishment
 const EstablishmentDashboard = lazy(() => import('@/pages/EstablishmentDashboard'));
 
 // Admin Pages
-const AdminPage = lazy(() => import('@/pages/AdminPage'));
+
 const AdminDashboardPage = lazy(() => import('@/pages/AdminDashboardPage')); 
 const AdminAnalyticsDashboard = lazy(() => import('@/pages/AdminAnalyticsDashboard'));
 const AdminWeightAuditPage = lazy(() => import('@/pages/AdminWeightAuditPage'));
@@ -265,7 +259,7 @@ const PageContent = () => {
   const isAuthPage = ['/auth', '/login', '/signup', '/forgot-password', '/reset-password', '/email-confirmation-pending', '/auth/callback', '/oauth/consent', '/parental-consent'].some(p => location.pathname.startsWith(p));
   const isCVBuilder = location.pathname.startsWith('/cv-builder') || location.pathname.startsWith('/cover-letter-builder');
   const isAdminPage = location.pathname.startsWith('/admin');
-  const isDashboard = ['/dashboard', '/settings', '/profil', '/profile', '/account', '/recommendations', '/offers-formations', '/my-documents', '/user/rgpd', '/user/cookies-preferences', '/personalized-plan', '/notifications', '/results', '/action-plan', '/apprentissage'].some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
+  const isDashboard = ['/dashboard', '/settings', '/profil', '/profile', '/account', '/recommendations', '/offers-formations', '/my-documents', '/user/rgpd', '/user/cookies-preferences', '/personalized-plan', '/notifications', '/action-plan', '/apprentissage'].some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
   const isEstablishmentPortal = location.pathname.startsWith('/establishment') || location.pathname.startsWith('/institution/');
   const isTestPage = ['/test', '/test-orientation', '/interview', '/test-gate'].some(p => location.pathname.startsWith(p));
   const isErrorPage = location.pathname === '/404';
@@ -342,7 +336,6 @@ const PageContent = () => {
                   
                   {/* Protected Flow Pages */}
                   <Route path="/profile" element={<ProtectedRoute><PageTransition><ProfileResultsPage /></PageTransition></ProtectedRoute>} />
-                  <Route path="/results" element={<PageTransition><ResultsPage /></PageTransition>} />
                   <Route path="/action-plan" element={<ProtectedRoute><PageTransition><ActionPlanPage /></PageTransition></ProtectedRoute>} />
                   
                   {/* OAuth Consent */}

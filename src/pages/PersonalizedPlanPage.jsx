@@ -8,6 +8,7 @@ import { getTestDataFromSource } from '@/utils/testDataExtractor';
 import { getUserEducationLevel, EDUCATION_ORDER } from '@/utils/educationUtils';
 import { fetchFormations } from '@/services/parcoursup';
 
+import { Helmet } from 'react-helmet-async';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { LayoutDashboard, Target } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -23,7 +24,7 @@ import RecommendedActionsSection from '@/components/personalized-plan/Recommende
 
 import MetierLoadingSpinner from '@/components/MetierLoadingSpinner';
 import MetierErrorState from '@/components/MetierErrorState';
-import { useMetierDataFetcher } from '@/utils/metierDataFetcher';
+import { metierService } from '@/services/metierService';
 
 const PersonalizedPlanPage = () => {
   const { user, loading: authLoading } = useAuth();
@@ -46,7 +47,6 @@ const PersonalizedPlanPage = () => {
   const [error, setError] = useState(null);
   const [retryCount, setRetryCount] = useState(0);
 
-  const { fetchMetierWithErrorHandling } = useMetierDataFetcher();
   const isMounted = useRef(true);
 
   useEffect(() => {
@@ -74,16 +74,31 @@ const PersonalizedPlanPage = () => {
           selected_metiers:    testData.selectedMetiers || [],
         });
         toast({ title: 'Plan initialisé', description: 'Votre espace a été configuré avec vos résultats.' });
-      } else if (plan && testData.selectedMetiers?.length > 0) {
-        const existingSelected = plan.selected_metiers || [];
-        const newSelections = testData.selectedMetiers.filter(
-          newM => !existingSelected.some(exM => exM.code === newM.code || exM.metierCode === newM.code)
-        );
-        if (newSelections.length > 0) {
-          plan = await planService.updatePlan(user.id, {
-            selected_metiers: [...existingSelected, ...newSelections],
-          });
-          toast({ title: 'Métier ajouté', description: 'Vos cibles ont été mises à jour.' });
+      } else if (plan && testData.hasValidData) {
+        const updatePayload = {};
+
+        // Toujours rafraîchir recommended_metiers avec les nouveaux résultats de test
+        if (testData.recommendedMetiers?.length > 0) {
+          updatePayload.recommended_metiers = testData.recommendedMetiers.slice(0, 5);
+          updatePayload.riasec_profile = testData.profile;
+        }
+
+        // Fusionner les nouveaux selected_metiers sans doublon
+        if (testData.selectedMetiers?.length > 0) {
+          const existingSelected = plan.selected_metiers || [];
+          const newSelections = testData.selectedMetiers.filter(
+            newM => !existingSelected.some(exM => exM.code === newM.code || exM.metierCode === newM.code)
+          );
+          if (newSelections.length > 0) {
+            updatePayload.selected_metiers = [...existingSelected, ...newSelections];
+          }
+        }
+
+        if (Object.keys(updatePayload).length > 0) {
+          plan = await planService.updatePlan(user.id, updatePayload);
+          if (updatePayload.recommended_metiers) {
+            toast({ title: 'Plan mis à jour', description: 'Vos résultats de test ont été synchronisés.' });
+          }
         }
       }
 
@@ -134,14 +149,14 @@ const PersonalizedPlanPage = () => {
       const enrichedPromises = metiersToFetch.map(async (baseMetier) => {
         const code = baseMetier.code || baseMetier.metierCode;
         try {
-          const details = await fetchMetierWithErrorHandling(code);
+          const details = await metierService.getMetierByRomeCode(code);
           return {
             ...baseMetier,
             ...details,
             description: details?.description || details?.definition || baseMetier.description,
           };
         } catch (e) {
-          if (e.status === 429) throw e;
+          if (e?.status === 429) throw e;
           return baseMetier;
         }
       });
@@ -150,8 +165,8 @@ const PersonalizedPlanPage = () => {
 
       if (isMounted.current) {
         setEnrichedMetiers(results);
-        // Pass userProfile so formations can be filtered by education level
-        fetchFormationsForMetiers(results, userProfile);
+        // formations are fetched by the dedicated useEffect below,
+        // which fires when both enrichedMetiers and userProfile are ready
       }
     } catch (err) {
       console.error('Error enriching metiers:', err);
@@ -164,55 +179,87 @@ const PersonalizedPlanPage = () => {
     }
   };
 
-  /* ── Fetch formations — from Parcoursup API (same source as /formations) ── */
+  /* ── Normalise one Parcoursup result → FormationPathSection shape ────── */
+  const normaliseFormation = (f) => {
+    const primaryEtab = f.etablissements?.[0] || {};
+    const title = (f.libelle_formation || '').toUpperCase();
+
+    let reqLevel = 'bac';
+    if (title.includes('CAP') || title.includes('BEP'))                         reqLevel = 'cap_bep';
+    else if (title.includes('BTS') || (title.includes('BUT') && !title.includes('BUT3'))) reqLevel = 'bac+2';
+    else if (title.includes('BUT') || title.includes('LICENCE') || title.includes('BACHELOR')) reqLevel = 'bac+3';
+    else if (
+      title.includes('MASTER') || title.includes('MASTERE') || title.includes('MASTÈRE') ||
+      title.includes('INGÉNIEUR') || title.includes('INGENIEUR') ||
+      title.includes('M2') || /\bM2\b/.test(title)
+    ) reqLevel = 'bac+5';
+    else if (title.includes('DOCTORAT')) reqLevel = 'doctorat';
+
+    const durationMap = { 'cap_bep': '2 ans', 'bac': '3 ans', 'bac+2': '2 ans', 'bac+3': '3 ans', 'bac+5': '2 ans', 'doctorat': '3 ans' };
+
+    return {
+      id:                       f.id_formation || f.g_ea_lib_vx,
+      title:                    f.libelle_formation || 'Formation',
+      provider:                 primaryEtab.nom || f.etablissement || 'Établissement',
+      provider_name:            primaryEtab.nom || f.etablissement || 'Établissement',
+      required_education_level: reqLevel,
+      duration:                 durationMap[reqLevel] || 'Variable',
+      location_city:            primaryEtab.ville || f.ville || '',
+      region:                   primaryEtab.region || f.region || '',
+      description:              f.description || null,
+      _raw: f,
+    };
+  };
+
+  /* ── Fetch formations — personalised by métiers + region + status ─────── */
   const fetchFormationsForMetiers = async (metiers, profile) => {
     setFormationsLoading(true);
     try {
-      // Build a search keyword from the first recommended metier's label
-      const keyword = metiers[0]?.libelle || metiers[0]?.name || '';
+      // Build keywords from top 2 metiers
+      const keywords = metiers
+        .slice(0, 2)
+        .map(m => m.libelle || m.name || '')
+        .filter(Boolean);
 
-      const response = await fetchFormations({ q: keyword, limit: 20 });
-
-      if (!response.success || !response.results?.length) {
+      if (keywords.length === 0) {
         if (isMounted.current) setFormations([]);
         return;
       }
 
-      // Normalise Parcoursup shape → FormationPathSection shape
-      const normalised = response.results.map(f => {
-        const primaryEtab = f.etablissements?.[0] || {};
+      // Use user's city/location as location hint, avoid administrative region names
+      const ADMIN_REGIONS = new Set([
+        'île-de-france', 'bretagne', 'normandie', 'occitanie', 'nouvelle-aquitaine',
+        'auvergne-rhône-alpes', 'grand est', 'hauts-de-france', 'pays de la loire',
+        'provence-alpes-côte d\'azur', 'centre-val de loire', 'bourgogne-franche-comté',
+        'corse', 'guadeloupe', 'martinique', 'guyane', 'la réunion', 'mayotte',
+      ]);
+      const rawLocation = profile?.city || profile?.location || profile?.region || '';
+      const isAdminRegion = ADMIN_REGIONS.has(rawLocation.toLowerCase().trim());
+      const ville = rawLocation && !isAdminRegion ? rawLocation : undefined;
 
-        // Derive required_education_level from formation title (same logic as FormationsPage)
-        const title = (f.libelle_formation || '').toUpperCase();
-        let reqLevel = 'bac'; // default
-        if (title.includes('CAP') || title.includes('BEP')) reqLevel = 'cap_bep';
-        else if (title.includes('BTS') || title.includes('BUT') && !title.includes('BUT3'))
-          reqLevel = 'bac+2';
-        else if (title.includes('BUT') || title.includes('LICENCE') || title.includes('BACHELOR'))
-          reqLevel = 'bac+3';
-        else if (title.includes('MASTER') || title.includes('INGÉNIEUR') || title.includes('INGENIEUR'))
-          reqLevel = 'bac+5';
-        else if (title.includes('DOCTORAT')) reqLevel = 'doctorat';
+      // Fetch in parallel for each keyword, then merge
+      const responses = await Promise.all(
+        keywords.map(kw => fetchFormations({ q: kw, ville, limit: 20 }))
+      );
 
-        // Duration label
-        const durationMap = { 'cap_bep': '2 ans', 'bac': '3 ans', 'bac+2': '2 ans', 'bac+3': '3 ans', 'bac+5': '2 ans', 'doctorat': '3 ans' };
+      const seen = new Set();
+      const allResults = [];
+      for (const resp of responses) {
+        if (!resp.success) continue;
+        for (const f of resp.results || []) {
+          const id = f.id_formation || f.g_ea_lib_vx;
+          if (id && seen.has(id)) continue;
+          if (id) seen.add(id);
+          allResults.push(f);
+        }
+      }
 
-        return {
-          // FormationPathSection keys
-          id:                      f.id_formation || f.g_ea_lib_vx,
-          title:                   f.libelle_formation || 'Formation',
-          provider:                primaryEtab.nom || f.etablissement || 'Établissement',
-          provider_name:           primaryEtab.nom || f.etablissement || 'Établissement',
-          required_education_level: reqLevel,
-          duration:                durationMap[reqLevel] || 'Variable',
-          location_city:           primaryEtab.ville || f.ville || '',
-          region:                  primaryEtab.region || f.region || '',
-          description:             f.description || null,
-          // Keep original data for detail navigation
-          _raw: f,
-        };
-      });
+      if (allResults.length === 0) {
+        if (isMounted.current) setFormations([]);
+        return;
+      }
 
+      const normalised = allResults.map(normaliseFormation);
       const filtered = filterAndSortFormations(normalised, profile);
       if (isMounted.current) setFormations(filtered);
     } catch (err) {
@@ -224,32 +271,53 @@ const PersonalizedPlanPage = () => {
   };
 
   /**
-   * Filters formations by user education level (don't show those requiring
-   * a level the user hasn't reached yet) and sorts accessible ones first.
+   * Filters and sorts formations based on user profile:
+   *  - Education level accessibility (hard filter)
+   *  - Status-based type priority:
+   *    lycéen      → BTS / BUT / licence pro first
+   *    reconversion→ short certifications first (cap_bep, bac+2)
+   *    étudiant    → masters / licences
+   *    en_emploi   → bac+5 / masters (upskilling)
+   *    en_recherche→ accessible formations, shortest first
    */
   const filterAndSortFormations = (formations, profile) => {
     if (!profile?.education_level) return formations.slice(0, 6);
 
     const userLevel = getUserEducationLevel(profile);
+    const status = profile?.user_status || null;
+
+    // Status → preferred education levels (ordered priority)
+    const statusPriority = {
+      lyceen:       ['bac+2', 'bac+3', 'bac'],
+      etudiant:     ['bac+5', 'bac+3', 'bac+2'],
+      en_emploi:    ['bac+5', 'bac+3'],
+      en_recherche: ['bac+2', 'bac', 'bac+3'],
+      reconversion: ['bac+2', 'cap_bep', 'bac'],
+    };
+    const preferred = statusPriority[status] || [];
 
     return formations
       .map(f => {
-        // Compute the required level for this formation
         const raw = f.required_education_level || f.minimum_education || f.level || null;
         let reqLevel = 0;
         if (raw) {
           reqLevel = EDUCATION_ORDER[raw] ??
             EDUCATION_ORDER[String(raw).toLowerCase().replace(/\s/g, '')] ?? 0;
         }
-        return { ...f, _reqLevel: reqLevel, _accessible: userLevel >= reqLevel };
+        const accessible = userLevel >= reqLevel;
+        const priorityIdx = preferred.indexOf(f.required_education_level ?? '');
+        const priorityScore = priorityIdx === -1 ? 99 : priorityIdx;
+        return { ...f, _reqLevel: reqLevel, _accessible: accessible, _priorityScore: priorityScore };
       })
-      // Sort: accessible first, then by level proximity
       .sort((a, b) => {
+        // Accessible formations first
         if (a._accessible && !b._accessible) return -1;
         if (!a._accessible && b._accessible) return 1;
-        // Within accessible: prefer formations just above the user's level
-        return Math.abs(a._reqLevel - (getUserEducationLevel(profile) + 1)) -
-               Math.abs(b._reqLevel - (getUserEducationLevel(profile) + 1));
+        // Among accessible: preferred levels first
+        if (a._priorityScore !== b._priorityScore) return a._priorityScore - b._priorityScore;
+        // Then by level proximity to user's current level + 1 (next step up)
+        const target = userLevel + 1;
+        return Math.abs(a._reqLevel - target) - Math.abs(b._reqLevel - target);
       })
       .slice(0, 6);
   };
@@ -293,13 +361,13 @@ const PersonalizedPlanPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, authLoading, navigate, retryCount, location.search]);
 
-  /* ── Re-fetch formations when profile loads (initial render may be async) ── */
+  /* ── Fetch formations once both enrichedMetiers and userProfile are ready ── */
   useEffect(() => {
-    if (!profileLoading && userProfile && enrichedMetiers.length > 0) {
+    if (!profileLoading && enrichedMetiers.length > 0) {
       fetchFormationsForMetiers(enrichedMetiers, userProfile);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profileLoading, userProfile]);
+  }, [profileLoading, userProfile, enrichedMetiers]);
 
   /* ── Render states ──────────────────────────────────────────────────────── */
   if (authLoading || loading) {
@@ -318,12 +386,38 @@ const PersonalizedPlanPage = () => {
     );
   }
 
+  if (!loading && !error && !planData) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-8 text-center">
+        <div className="max-w-md">
+          <div className="w-20 h-20 bg-violet-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <Target className="w-10 h-10 text-violet-500" />
+          </div>
+          <h2 className="text-2xl font-bold text-slate-900 mb-3">Votre plan personnalisé</h2>
+          <p className="text-slate-500 mb-8 leading-relaxed">
+            Passez le test d'orientation pour que nous puissions créer votre plan de carrière sur mesure.
+          </p>
+          <button
+            onClick={() => navigate('/test-orientation')}
+            className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+          >
+            Passer le test d'orientation
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const profileData = planData?.riasec_profile || rawTestData?.profile;
   const hasTestData = !!profileData && Object.keys(profileData).length > 0;
 
   /* ── Main render ────────────────────────────────────────────────────────── */
   return (
     <div className="min-h-screen bg-slate-50/50 pb-20 font-sans">
+      <Helmet>
+        <title>Mon Plan Personnalisé — CléAvenir</title>
+        <meta name="description" content="Votre plan de carrière personnalisé basé sur vos résultats d'orientation." />
+      </Helmet>
       {/* Sticky breadcrumb */}
       <div className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
         <div className="container mx-auto px-4 max-w-7xl py-3 flex items-center justify-between gap-4">
@@ -381,7 +475,7 @@ const PersonalizedPlanPage = () => {
               <div className="flex flex-wrap gap-2 mt-5">
                 {userProfile.education_level && (
                   <span className="text-xs bg-white border border-indigo-100 text-indigo-700 font-medium px-3 py-1.5 rounded-full shadow-sm">
-                    🎓 {
+                    <span role="img" aria-label="diplôme">🎓</span> {
                       { sans_diplome: 'Sans diplôme', cap_bep: 'CAP/BEP', bac: 'Bac',
                         'bac+2': 'Bac+2', 'bac+3': 'Bac+3', 'bac+5': 'Bac+5', doctorat: 'Doctorat' }
                       [userProfile.education_level] || userProfile.education_level
@@ -390,12 +484,12 @@ const PersonalizedPlanPage = () => {
                 )}
                 {userProfile.region && (
                   <span className="text-xs bg-white border border-green-100 text-green-700 font-medium px-3 py-1.5 rounded-full shadow-sm">
-                    📍 {userProfile.region}
+                    <span role="img" aria-label="localisation">📍</span> {userProfile.region}
                   </span>
                 )}
                 {userProfile.user_status && (
                   <span className="text-xs bg-white border border-amber-100 text-amber-700 font-medium px-3 py-1.5 rounded-full shadow-sm">
-                    💼 {
+                    <span role="img" aria-label="emploi">💼</span> {
                       { lyceen: 'Lycéen·ne', etudiant: 'Étudiant·e', en_emploi: 'En emploi',
                         en_recherche: 'En recherche', reconversion: 'En reconversion' }
                       [userProfile.user_status] || userProfile.user_status
@@ -434,11 +528,12 @@ const PersonalizedPlanPage = () => {
                   onAddMetier={handleAddMetier}
                   isLoading={false}
                   userProfile={userProfile}
+                  plan={planData}
                 />
               )}
             </AnimatedItem>
 
-            <AnimatedItem>
+            <AnimatedItem transition={{ delay: 0.1 }}>
               <FormationPathSection
                 formations={formations}
                 isLoading={formationsLoading}
@@ -472,12 +567,12 @@ const PersonalizedPlanPage = () => {
 
           {/* Right column — sidebar */}
           <div className="lg:col-span-4">
-            <div className="sticky top-24 space-y-6">
+            <div className="lg:sticky lg:top-24 space-y-6">
               <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 animate-fade-in">
                 <h3 className="font-bold text-slate-900 mb-4 text-lg flex items-center gap-2">
-                  ⚡ Actions Rapides
+                  <span role="img" aria-label="éclair">⚡</span> Actions Rapides
                 </h3>
-                <RecommendedActionsSection userProfile={userProfile} />
+                <RecommendedActionsSection userProfile={userProfile} riasecProfile={profileData} />
               </div>
 
               <MagneticButton className="w-full">

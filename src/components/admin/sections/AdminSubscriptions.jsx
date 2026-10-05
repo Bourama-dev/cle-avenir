@@ -4,11 +4,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/lib/customSupabaseClient';
 import { Loader2, DollarSign, CreditCard, Users } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 const AdminSubscriptions = () => {
   const [subs, setSubs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [metrics, setMetrics] = useState({ mrr: 0, active: 0, churn: 0 });
+  const { toast } = useToast();
 
   useEffect(() => {
     fetchSubs();
@@ -16,15 +18,21 @@ const AdminSubscriptions = () => {
 
   const fetchSubs = async () => {
     setLoading(true);
-    const { data } = await supabase.from('subscriptions').select('*').order('created_at', { ascending: false });
-    
-    if (data) {
-        setSubs(data);
-        const active = data.filter(s => s.status === 'active');
-        const mrr = active.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
-        setMetrics({ mrr, active: active.length, churn: 0 }); // churn requires historical analysis
+    try {
+      const { data, error } = await supabase.from('subscriptions').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      if (data) {
+          setSubs(data);
+          const active = data.filter(s => s.status === 'active');
+          const mrr = active.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
+          setMetrics({ mrr, active: active.length, churn: 0 }); // churn requires historical analysis
+      }
+    } catch (e) {
+      console.error(e);
+      toast({ variant: 'destructive', title: 'Erreur de chargement', description: 'Impossible de charger les données.' });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   if (loading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;

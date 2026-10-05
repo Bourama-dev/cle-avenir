@@ -3,46 +3,56 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, BarChart, Bar, Legend } from 'recharts';
 import { supabase } from '@/lib/customSupabaseClient';
 import { Loader2 } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 const AdminAnalytics = () => {
     const [data, setData] = useState([]);
     const [locationData, setLocationData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { toast } = useToast();
 
     useEffect(() => {
         const fetchAnalytics = async () => {
-            const sevenDaysAgo = new Date();
-            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            try {
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-            // Fetch daily signups
-            const { data: profiles } = await supabase
-                .from('profiles')
-                .select('created_at, location')
-                .gte('created_at', sevenDaysAgo.toISOString());
+                // Fetch daily signups
+                const { data: profiles, error } = await supabase
+                    .from('profiles')
+                    .select('created_at, location')
+                    .gte('created_at', sevenDaysAgo.toISOString());
 
-            // Process Timeline Data
-            const timeline = {};
-            const locations = {};
+                if (error) throw error;
 
-            profiles?.forEach(p => {
-                const date = new Date(p.created_at).toLocaleDateString('fr-FR', { weekday: 'short' });
-                timeline[date] = (timeline[date] || 0) + 1;
+                // Process Timeline Data
+                const timeline = {};
+                const locations = {};
 
-                if (p.location) {
-                    const loc = p.location.split(',')[0].trim(); // Simple clean
-                    locations[loc] = (locations[loc] || 0) + 1;
-                }
-            });
+                profiles?.forEach(p => {
+                    const date = new Date(p.created_at).toLocaleDateString('fr-FR', { weekday: 'short' });
+                    timeline[date] = (timeline[date] || 0) + 1;
 
-            const chartData = Object.entries(timeline).map(([name, count]) => ({ name, users: count }));
-            const locData = Object.entries(locations)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 5)
-                .map(([name, count]) => ({ name, count }));
+                    if (p.location) {
+                        const loc = p.location.split(',')[0].trim(); // Simple clean
+                        locations[loc] = (locations[loc] || 0) + 1;
+                    }
+                });
 
-            setData(chartData.reverse()); // Just simplistic, real implementation would sort by date properly
-            setLocationData(locData);
-            setLoading(false);
+                const chartData = Object.entries(timeline).map(([name, count]) => ({ name, users: count }));
+                const locData = Object.entries(locations)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 5)
+                    .map(([name, count]) => ({ name, count }));
+
+                setData(chartData.reverse()); // Just simplistic, real implementation would sort by date properly
+                setLocationData(locData);
+            } catch (e) {
+                console.error(e);
+                toast({ variant: 'destructive', title: 'Erreur de chargement', description: 'Impossible de charger les données.' });
+            } finally {
+                setLoading(false);
+            }
         };
         fetchAnalytics();
     }, []);

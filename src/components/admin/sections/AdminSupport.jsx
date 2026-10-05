@@ -4,10 +4,12 @@ import { supabase } from '@/lib/customSupabaseClient';
 import { Loader2, MessageSquare, Check, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 
 const AdminSupport = () => {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     fetchTickets();
@@ -15,14 +17,28 @@ const AdminSupport = () => {
 
   const fetchTickets = async () => {
     setLoading(true);
-    const { data } = await supabase.from('support_requests').select('*').order('created_at', { ascending: false });
-    if (data) setTickets(data);
-    setLoading(false);
+    try {
+      const { data, error } = await supabase.from('support_requests').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      if (data) setTickets(data);
+    } catch (e) {
+      console.error(e);
+      toast({ variant: 'destructive', title: 'Erreur de chargement', description: 'Impossible de charger les données.' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const updateStatus = async (id, status) => {
-    await supabase.from('support_requests').update({ status }).eq('id', id);
-    fetchTickets();
+    try {
+      const { error } = await supabase.from('support_requests').update({ status }).eq('id', id);
+      if (error) throw error;
+      toast({ title: 'Statut mis à jour' });
+      fetchTickets();
+    } catch (e) {
+      console.error(e);
+      toast({ variant: 'destructive', title: 'Erreur', description: 'Impossible de mettre à jour le statut.' });
+    }
   };
 
   if (loading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;

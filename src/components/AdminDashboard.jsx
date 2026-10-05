@@ -26,6 +26,7 @@ const AdminMonitoring = lazy(() => import('@/components/admin/sections/AdminMoni
 const AdminWiki = lazy(() => import('@/components/admin/sections/AdminWiki'));
 const AdminLaunchControl = lazy(() => import('@/components/admin/sections/AdminLaunchControl'));
 const AdminQA = lazy(() => import('@/components/admin/sections/AdminQA'));
+const AdminLogs = lazy(() => import('@/components/admin/sections/AdminLogs'));
 
 const AdminDashboardLoader = () => (
   <div className="flex items-center justify-center h-full min-h-[50vh]">
@@ -72,12 +73,17 @@ const AdminDashboard = ({ onNavigate }) => {
               <Route path="subscriptions" element={<AdminSubscriptions />} />
               <Route path="support" element={<AdminSupport />} />
               
+              {/* Analytics */}
+              <Route path="analytics" element={<AdminAnalytics />} />
+
               {/* Compliance Group */}
               <Route path="gdpr" element={<AdminDataRequests />} />
+              <Route path="gdpr-ops" element={<AdminGdprOps />} />
               <Route path="compliance" element={<AdminCompliance />} />
               <Route path="security" element={<AdminSecurity />} />
               <Route path="legal-versions" element={<AdminLegalVersions />} />
               <Route path="docs" element={<AdminGdprDocs />} />
+              <Route path="logs" element={<AdminLogs />} />
               
               <Route path="settings" element={<AdminSettings />} />
               

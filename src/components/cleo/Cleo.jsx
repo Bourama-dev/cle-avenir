@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useReducedMotion } from 'framer-motion';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { usePlanLimitation } from '@/contexts/PlanLimitationContext';
 import { cleoService } from '@/services/cleoService';
 import { gamificationService } from '@/services/gamificationService';
 import { cleoResponseService } from '@/services/cleoResponseService';
-import { MessageSquare, X, Send, User, Trash2, Bot, Sparkles, Trophy, Star, Loader2, Volume2, VolumeX, CheckCircle2 } from 'lucide-react';
+import { MessageSquare, X, Send, User, Trash2, Bot, Sparkles, Trophy, Star, Loader2, Volume2, VolumeX, CheckCircle2, Lock, Zap } from 'lucide-react';
 import { textToSpeechService } from '@/services/textToSpeechService';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -25,6 +27,55 @@ const FIELD_LABELS = {
   skills: 'compétences',
   interests: 'centres d\'intérêt',
   constraints: 'contraintes salariales',
+};
+
+const renderSimpleMarkdown = (text) => {
+  const lines = String(text || '').split('\n');
+  const elements = [];
+  let listItems = [];
+
+  const flushList = (key) => {
+    if (listItems.length > 0) {
+      elements.push(
+        <ul key={`list-${key}`} className="list-disc list-inside my-1 space-y-0.5">
+          {listItems}
+        </ul>
+      );
+      listItems = [];
+    }
+  };
+
+  const parseInline = (str, keyPrefix) => {
+    const parts = [];
+    const re = /(\*\*(.+?)\*\*|\*(.+?)\*)/g;
+    let last = 0, m, i = 0;
+    while ((m = re.exec(str)) !== null) {
+      if (m.index > last) parts.push(str.slice(last, m.index));
+      if (m[2] !== undefined) parts.push(<strong key={`${keyPrefix}-b${i}`}>{m[2]}</strong>);
+      else if (m[3] !== undefined) parts.push(<em key={`${keyPrefix}-e${i}`}>{m[3]}</em>);
+      last = re.lastIndex;
+      i++;
+    }
+    if (last < str.length) parts.push(str.slice(last));
+    return parts;
+  };
+
+  lines.forEach((line, idx) => {
+    if (/^[-•]\s/.test(line)) {
+      listItems.push(
+        <li key={`li-${idx}`} className="text-inherit">{parseInline(line.replace(/^[-•]\s/, ''), `li-${idx}`)}</li>
+      );
+    } else {
+      flushList(idx);
+      if (line.trim() !== '') {
+        elements.push(
+          <p key={`p-${idx}`} className="my-0.5 last:mb-0">{parseInline(line, `p-${idx}`)}</p>
+        );
+      }
+    }
+  });
+  flushList('end');
+  return elements;
 };
 
 const InteractiveResponse = ({ components, onAction }) => (
@@ -50,8 +101,10 @@ const InteractiveResponse = ({ components, onAction }) => (
 );
 
 const Cleo = () => {
+  const shouldReduceMotion = useReducedMotion();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { isPremiumPlus, cleoCreditsRemaining, cleoFreeLimit, hasCleoCredits, consumeCleoCredit } = usePlanLimitation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -147,6 +200,8 @@ const Cleo = () => {
   };
 
   const processUserMessage = async (text) => {
+    if (!hasCleoCredits()) return; // blocked — UI shows the wall
+    consumeCleoCredit();
     const newMessage = { id: Date.now(), role: 'user', content: text };
     setMessages(prev => [...prev, newMessage]);
     setIsLoading(true);
@@ -166,11 +221,21 @@ const Cleo = () => {
           showProfileNotification(result.updatedFields);
         }
 
+        // Generate rich components based on detected intent
+        let richComponents = [];
+        try {
+          const intent = cleoService.analyzeIntent(text);
+          const richResponse = await cleoResponseService.generateResponse(intent, text, {});
+          richComponents = richResponse.components || [];
+        } catch (e) {
+          console.warn('Rich response generation failed, using empty components', e);
+        }
+
         setMessages(prev => [...prev, {
           id: Date.now() + 1,
           role: 'assistant',
           content: result.reply || 'Désolé, je n\'ai pas pu répondre.',
-          components: [],
+          components: richComponents,
           suggestions: result.suggestions || [],
         }]);
 
@@ -225,7 +290,7 @@ const Cleo = () => {
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    if (!inputMessage.trim()) return;
+    if (!inputMessage.trim() || !hasCleoCredits()) return;
     processUserMessage(inputMessage);
   };
 
@@ -288,7 +353,7 @@ const Cleo = () => {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 400, damping: 30 }}
             className="pointer-events-auto bg-white rounded-2xl shadow-2xl w-[350px] sm:w-[400px] h-[500px] sm:h-[600px] flex flex-col border border-slate-200 overflow-hidden mb-4 relative"
           >
             {/* Header */}
@@ -310,14 +375,35 @@ const Cleo = () => {
                     <div className="flex items-center gap-2 text-xs text-indigo-100">
                       <span className="flex items-center gap-1">
                         <Star size={10} className="fill-yellow-300 text-yellow-300" />
-                        {userStats.xp} XP
+                        <AnimatePresence mode="popLayout">
+                          <motion.span
+                            key={userStats.xp}
+                            initial={{ opacity: 0, y: 6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -6 }}
+                            transition={{ duration: 0.25 }}
+                          >
+                            {userStats.xp}
+                          </motion.span>
+                        </AnimatePresence>
+                        {' '}XP
                       </span>
                       {userStats.streak > 0 && (
                         <span className="flex items-center gap-1">🔥 {userStats.streak}j</span>
                       )}
                     </div>
                   ) : (
-                    <p className="text-xs text-indigo-200">Mode visiteur</p>
+                    <div className="flex items-center gap-1.5 text-xs">
+                      {cleoCreditsRemaining > 0 ? (
+                        <span className="bg-white/20 px-2 py-0.5 rounded-full text-white font-semibold">
+                          {cleoCreditsRemaining}/{cleoFreeLimit} messages gratuits
+                        </span>
+                      ) : (
+                        <span className="bg-rose-500/80 px-2 py-0.5 rounded-full text-white font-semibold flex items-center gap-1">
+                          <Lock size={9} /> Crédits épuisés
+                        </span>
+                      )}
+                    </div>
                   )}
                 </div>
               </div>
@@ -359,83 +445,121 @@ const Cleo = () => {
 
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto p-4 bg-slate-50 space-y-4">
-              {messages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={cn(
-                    'flex w-full animate-in fade-in slide-in-from-bottom-2 duration-300',
-                    msg.role === 'user' ? 'justify-end' : 'justify-start'
-                  )}
-                >
-                  <div className={cn(
-                    'flex max-w-[90%] items-end gap-2',
-                    msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'
-                  )}>
-                    <div className={cn(
-                      'w-8 h-8 rounded-full flex items-center justify-center shrink-0 border shadow-sm',
-                      msg.role === 'user' ? 'bg-indigo-100 border-indigo-200' : 'bg-white border-slate-200'
-                    )}>
-                      {msg.role === 'user'
-                        ? <User className="h-4 w-4 text-indigo-600" />
-                        : <Sparkles className="h-4 w-4 text-violet-600" />
-                      }
-                    </div>
-
-                    <div className="flex flex-col gap-1 w-full overflow-hidden">
+              <AnimatePresence initial={false}>
+                {messages.map((msg) => {
+                  const isUser = msg.role === 'user';
+                  return (
+                    <motion.div
+                      key={msg.id}
+                      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: isUser ? 40 : -40 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 25 }}
+                      className={cn(
+                        'flex w-full',
+                        isUser ? 'justify-end' : 'justify-start'
+                      )}
+                    >
                       <div className={cn(
-                        'p-3 rounded-2xl text-sm shadow-sm',
-                        msg.role === 'user'
-                          ? 'bg-indigo-600 text-white rounded-br-none'
-                          : 'bg-white text-slate-800 border border-slate-200 rounded-bl-none'
+                        'flex max-w-[90%] items-end gap-2',
+                        isUser ? 'flex-row-reverse' : 'flex-row'
                       )}>
-                        <div
-                          className="prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0 text-inherit"
-                          dangerouslySetInnerHTML={{ __html: msg.content }}
-                        />
-                      </div>
-
-                      {/* Suggestions (quick reply chips) */}
-                      {msg.role === 'assistant' && msg.suggestions?.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-1">
-                          {msg.suggestions.map((s, i) => (
-                            <button
-                              key={i}
-                              onClick={() => processUserMessage(s)}
-                              className="text-xs bg-white border border-slate-200 text-slate-600 px-2 py-1 rounded-full hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-700 transition-colors"
-                            >
-                              {s}
-                            </button>
-                          ))}
+                        <div className={cn(
+                          'w-8 h-8 rounded-full flex items-center justify-center shrink-0 border shadow-sm',
+                          isUser ? 'bg-indigo-100 border-indigo-200' : 'bg-white border-slate-200'
+                        )}>
+                          {isUser
+                            ? <User className="h-4 w-4 text-indigo-600" />
+                            : <Sparkles className="h-4 w-4 text-violet-600" />
+                          }
                         </div>
-                      )}
 
-                      {/* Interactive Components */}
-                      {msg.components && msg.components.length > 0 && (
-                        <InteractiveResponse components={msg.components} onAction={handleAction} />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
+                        <div className="flex flex-col gap-1 w-full overflow-hidden">
+                          <div className={cn(
+                            'p-3 rounded-2xl text-sm shadow-sm',
+                            isUser
+                              ? 'bg-indigo-600 text-white rounded-br-none'
+                              : 'bg-white text-slate-800 border border-slate-200 rounded-bl-none'
+                          )}>
+                            <div className="prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0 text-inherit">
+                              {renderSimpleMarkdown(msg.content)}
+                            </div>
+                          </div>
+
+                          {/* Suggestions (quick reply chips) */}
+                          {msg.role === 'assistant' && msg.suggestions?.length > 0 && (
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {msg.suggestions.map((s, i) => (
+                                <motion.button
+                                  key={i}
+                                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.8 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  transition={shouldReduceMotion ? { duration: 0 } : { delay: i * 0.05, type: "spring", stiffness: 300, damping: 20 }}
+                                  whileHover={shouldReduceMotion ? {} : { scale: 1.05, y: -1 }}
+                                  whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
+                                  onClick={() => processUserMessage(s)}
+                                  className="text-xs bg-white border border-slate-200 text-slate-600 px-2 py-1 rounded-full hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-700 transition-colors"
+                                >
+                                  {s}
+                                </motion.button>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Interactive Components */}
+                          {msg.components && msg.components.length > 0 && (
+                            <InteractiveResponse components={msg.components} onAction={handleAction} />
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
 
               {isLoading && (
-                <div className="flex w-full justify-start">
+                <motion.div
+                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 25 }}
+                  className="flex w-full justify-start"
+                >
                   <div className="flex max-w-[85%] items-end gap-2 flex-row">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 border shadow-sm bg-white border-slate-200">
-                      <Loader2 className="h-4 w-4 text-violet-600 animate-spin" />
+                      <Sparkles className="h-4 w-4 text-violet-600" />
                     </div>
                     <div className="bg-white p-3 rounded-2xl rounded-bl-none border border-slate-200 shadow-sm">
-                      <div className="flex gap-1">
-                        <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.3s]" />
-                        <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                        <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" />
+                      <div className="flex items-center gap-1 px-1 py-0.5">
+                        {[0, 1, 2].map(i => (
+                          <motion.div
+                            key={i}
+                            className="w-2 h-2 rounded-full bg-violet-400"
+                            animate={shouldReduceMotion ? {} : { y: [0, -6, 0] }}
+                            transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15, ease: "easeInOut" }}
+                          />
+                        ))}
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               )}
               <div ref={messagesEndRef} />
             </div>
+
+            {/* Credit exhaustion wall */}
+            {!hasCleoCredits() && (
+              <div className="p-4 bg-gradient-to-r from-violet-50 to-indigo-50 border-t border-indigo-100 text-center">
+                <Lock className="w-5 h-5 text-indigo-400 mx-auto mb-1.5" />
+                <p className="text-xs font-bold text-slate-700 mb-0.5">Tes {cleoFreeLimit} messages découverte sont utilisés</p>
+                <p className="text-xs text-slate-500 mb-2">Cléo est disponible en illimité avec le plan <strong>Premium+</strong>.</p>
+                <button
+                  onClick={() => { setIsOpen(false); navigate('/plans'); }}
+                  className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-xs font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-1.5 hover:opacity-90 transition"
+                >
+                  <Zap size={13} /> Découvrir Premium+
+                </button>
+              </div>
+            )}
 
             {/* Input Area */}
             <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-slate-200 z-10">
@@ -444,7 +568,8 @@ const Cleo = () => {
                   type="text"
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  placeholder="Pose ta question..."
+                  disabled={!hasCleoCredits()}
+                  placeholder={hasCleoCredits() ? "Pose ta question..." : "Crédits épuisés — passe à Premium"}
                   className="w-full pl-4 pr-12 py-3 bg-slate-100 border-none rounded-full focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all text-sm text-slate-800 placeholder:text-slate-400"
                 />
                 <Button
@@ -478,10 +603,26 @@ const Cleo = () => {
       </AnimatePresence>
 
       {/* Toggle button */}
+      <div className="relative">
+        {/* Pulse ring when closed */}
+        {!isOpen && !shouldReduceMotion && (
+          <>
+            <motion.div
+              className="absolute inset-0 rounded-full bg-violet-500 pointer-events-none"
+              animate={{ scale: [1, 1.6], opacity: [0.4, 0] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+            />
+            <motion.div
+              className="absolute inset-0 rounded-full bg-indigo-500 pointer-events-none"
+              animate={{ scale: [1, 1.4], opacity: [0.3, 0] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut", delay: 0.4 }}
+            />
+          </>
+        )}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={shouldReduceMotion ? {} : { scale: 1.1 }}
+        whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
         className="pointer-events-auto bg-gradient-to-r from-violet-600 to-indigo-600 text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition-all border-4 border-white flex items-center justify-center relative group z-50"
       >
         <span className="absolute -top-1 -right-1 flex h-3 w-3">
@@ -518,6 +659,7 @@ const Cleo = () => {
           </div>
         )}
       </motion.button>
+      </div>
     </div>
   );
 };

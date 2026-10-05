@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
 import { useNavigation } from '@/hooks/useNavigation';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { FEATURES } from '@/constants/subscriptionTiers';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -26,9 +27,11 @@ const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
   const location = useLocation();
   const { hasAccess } = useSubscriptionAccess();
   const { goBack, goHome } = useNavigation();
-  
+  const { userProfile: authProfile } = useAuth();
+
   const canAccessCleo = hasAccess(FEATURES.AI_COACH);
-  const isAdmin = userProfile?.role === 'admin';
+  // Use live auth context to prevent stale prop from showing/hiding admin link incorrectly
+  const isAdmin = (authProfile ?? userProfile)?.role === 'admin';
 
   const isActive = (path) => {
     return location.pathname === path || location.pathname.startsWith(path + '/');

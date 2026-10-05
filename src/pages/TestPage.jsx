@@ -28,7 +28,7 @@ function computeProfile(answers) {
   const profile = {};
   Object.entries(rawScores).forEach(([cat, raw]) => {
     const max = RIASEC_MAX_POSSIBLE[cat] || 1;
-    profile[cat] = Math.round((raw / max) * 100);
+    profile[cat] = Math.min(100, Math.round((raw / max) * 100));
   });
 
   return profile;
@@ -41,6 +41,22 @@ function computeProfileCode(profile) {
     .slice(0, 3)
     .map(([letter]) => letter)
     .join('');
+}
+
+/**
+ * Calcule des métadonnées sur la clarté du profil :
+ * - clarity : 'élevée' | 'modérée' | 'diffuse'
+ * - gap     : écart entre la 1re et 2e dimension (indicateur de dominance)
+ * - engagement : moyenne des 3 dimensions les plus fortes (0-100)
+ */
+function computeProfileMeta(profile) {
+  const sorted = Object.entries(profile).sort(([, a], [, b]) => b - a);
+  const gap = (sorted[0]?.[1] || 0) - (sorted[1]?.[1] || 0);
+  const clarity = gap >= 25 ? 'élevée' : gap >= 12 ? 'modérée' : 'diffuse';
+  const engagement = Math.round(
+    sorted.slice(0, 3).reduce((s, [, v]) => s + v, 0) / 3
+  );
+  return { clarity, gap, engagement };
 }
 
 /* ─── Sub-component: results shown immediately after the last question ──── */
@@ -267,6 +283,7 @@ const TestPage = () => {
     // Persist to localStorage for TestResultsPage and ProfilePage
     localStorage.setItem('test_riasec_profile',      JSON.stringify(profile));
     localStorage.setItem('test_riasec_profile_code', code);
+    localStorage.setItem('test_riasec_profile_meta', JSON.stringify(computeProfileMeta(profile)));
     localStorage.setItem('temp_test_answers',        JSON.stringify(answers));
     localStorage.setItem('temp_test_scores',         JSON.stringify(profile));
 
@@ -278,7 +295,7 @@ const TestPage = () => {
   /* ── View results (after profile preview) ── */
   const handleViewResults = async () => {
     if (!user) {
-      navigate('/login', { state: { from: '/results' } });
+      navigate('/login', { state: { from: '/test-results' } });
       return;
     }
 
@@ -298,30 +315,35 @@ const TestPage = () => {
       if (profileComplete) {
         // Save test result to DB (non-blocking)
         const profile = computedProfile || computeProfile(answers);
+        // Moyenne des 3 dimensions dominantes — métrique significative vs moyenne des 6
+        const sortedScores = Object.values(profile).sort((a, b) => b - a);
         const testScore = Math.round(
-          Object.values(profile).reduce((a, b) => a + b, 0) /
-          Math.max(Object.keys(profile).length, 1)
+          sortedScores.slice(0, 3).reduce((a, b) => a + b, 0) / 3
         );
+        const { clarity, gap, engagement } = computeProfileMeta(profile);
 
         supabase.from('test_results').insert({
           user_id: user.id,
           riasec_profile: profile,
           answers: answers,
           test_score: testScore,
+          profile_clarity: clarity,
+          profile_gap: gap,
+          profile_engagement: engagement,
         }).then(({ error }) => {
           if (error) console.warn('[TestPage] Sauvegarde test_results non critique :', error.message);
         });
 
         localStorage.removeItem('temp_test_answers');
         localStorage.removeItem('temp_test_scores');
-        navigate('/results');
+        navigate('/test-results');
       } else {
         // Profile incomplete — go fill it (test_riasec_profile stays in localStorage)
         navigate('/profile/edit');
       }
     } catch {
       // Network error — navigate anyway, localStorage has the profile
-      navigate('/results');
+      navigate('/test-results');
     }
   };
 

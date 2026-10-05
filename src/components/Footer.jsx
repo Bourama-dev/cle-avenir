@@ -1,20 +1,21 @@
 import React from 'react';
-import { 
-  Facebook, 
-  Twitter, 
-  Instagram, 
-  Linkedin, 
-  Mail, 
-  MapPin, 
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
   ShieldCheck,
   Globe,
   Activity
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { TextHoverEffect, FooterBackgroundGradient } from '@/components/ui/hover-footer';
 
 const Footer = ({ onNavigate }) => {
   return (
-    <footer className="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
+    <footer className="bg-slate-900 text-slate-300 pt-16 pb-0 border-t border-slate-800 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
         {/* Brand Column */}
         <div className="space-y-6 lg:col-span-2">
@@ -150,6 +151,13 @@ const Footer = ({ onNavigate }) => {
           <span>Version 2.5.0</span>
         </div>
       </div>
+
+      {/* Animated brand watermark — desktop only */}
+      <div className="hidden lg:flex h-48 -mb-10 relative z-10">
+        <TextHoverEffect text="CléAvenir" />
+      </div>
+
+      <FooterBackgroundGradient />
     </footer>
   );
 };

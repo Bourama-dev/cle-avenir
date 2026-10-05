@@ -24,62 +24,43 @@ const AdminOverview = () => {
         const now = new Date();
         const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
         const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-        
-        // 1. Basic Counts
-        const { count: usersCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
-        const { count: testsCount } = await supabase.from('test_results').select('*', { count: 'exact', head: true });
-        
-        // 2. Revenue
-        const { data: subs } = await supabase.from('subscriptions').select('amount').eq('status', 'active');
-        const revenue = subs?.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0) || 0;
-
-        // 3. Activity (24h)
-        const { count: newUsersCount } = await supabase
-          .from('profiles')
-          .select('*', { count: 'exact', head: true })
-          .gte('created_at', oneDayAgo);
-          
-        const { count: newSubsCount } = await supabase
-          .from('subscriptions')
-          .select('*', { count: 'exact', head: true })
-          .gte('created_at', oneDayAgo);
-
-        // 4. Online Now (Proxy: updated_at in last hour)
         const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000).toISOString();
-        const { count: activeUsers } = await supabase
-          .from('profiles')
-          .select('*', { count: 'exact', head: true })
-          .gte('updated_at', oneHourAgo);
 
-        // 5. Calculate Conversion
-        const { count: paidUsers } = await supabase
-            .from('profiles')
-            .select('*', { count: 'exact', head: true })
-            .neq('subscription_tier', 'free')
-            .not('subscription_tier', 'is', null);
-        
-        const conversion = (usersCount && usersCount > 0) ? ((paidUsers || 0) / usersCount) * 100 : 0;
+        // All count queries in parallel
+        const [
+          { count: usersCount },
+          { count: testsCount },
+          { data: subs },
+          { count: newUsersCount },
+          { count: newSubsCount },
+          { count: activeUsers },
+          { count: paidUsers },
+          { data: usersLast7Days },
+          { data: testsLast7Days },
+        ] = await Promise.all([
+          supabase.from('profiles').select('*', { count: 'exact', head: true }),
+          supabase.from('test_results').select('*', { count: 'exact', head: true }),
+          supabase.from('subscriptions').select('amount').eq('status', 'active'),
+          supabase.from('profiles').select('*', { count: 'exact', head: true }).gte('created_at', oneDayAgo),
+          supabase.from('subscriptions').select('*', { count: 'exact', head: true }).gte('created_at', oneDayAgo),
+          supabase.from('profiles').select('*', { count: 'exact', head: true }).gte('updated_at', oneHourAgo),
+          supabase.from('profiles').select('*', { count: 'exact', head: true }).neq('subscription_tier', 'free').not('subscription_tier', 'is', null),
+          supabase.from('profiles').select('created_at').gte('created_at', sevenDaysAgo.toISOString()),
+          supabase.from('test_results').select('created_at').gte('created_at', sevenDaysAgo.toISOString()),
+        ]);
+
+        const revenue = subs?.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0) || 0;
+        const conversion = usersCount > 0 ? (((paidUsers || 0) / usersCount) * 100).toFixed(1) : '0.0';
 
         setMetrics({
           totalUsers: usersCount || 0,
           totalTests: testsCount || 0,
           totalRevenue: revenue,
-          conversionRate: conversion.toFixed(1),
+          conversionRate: conversion,
           onlineNow: activeUsers || 0,
           newUsers24h: newUsersCount || 0,
-          newSubs24h: newSubsCount || 0
+          newSubs24h: newSubsCount || 0,
         });
-
-        // 6. Chart Data (Last 7 Days)
-        const { data: usersLast7Days } = await supabase
-            .from('profiles')
-            .select('created_at')
-            .gte('created_at', sevenDaysAgo.toISOString());
-
-        const { data: testsLast7Days } = await supabase
-            .from('test_results')
-            .select('created_at')
-            .gte('created_at', sevenDaysAgo.toISOString());
 
         const days = [];
         for (let i = 6; i >= 0; i--) {

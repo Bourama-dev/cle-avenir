@@ -195,6 +195,7 @@ const OffersFormationsPage = () => {
         if (payload && Array.isArray(payload.data)) return payload.data;
         if (payload && Array.isArray(payload.resultats)) return payload.resultats;
         if (payload && Array.isArray(payload.offres)) return payload.offres;
+        if (payload != null) console.warn('[OffersFormations] Unexpected payload structure:', payload);
         return [];
       };
 
@@ -205,9 +206,12 @@ const OffersFormationsPage = () => {
           )
         );
         jobFetches.forEach(result => {
-          if (result.status === 'fulfilled' && !result.value.error) {
-            const items = extractArray(result.value.data);
-            allJobs.push(...items);
+          if (result.status === 'rejected') {
+            console.warn('[OffersFormations] Edge function rejected:', result.reason);
+          } else if (result.value.error) {
+            console.warn('[OffersFormations] Edge function error:', result.value.error);
+          } else {
+            allJobs.push(...extractArray(result.value.data));
           }
         });
       }
@@ -247,7 +251,14 @@ const OffersFormationsPage = () => {
           try {
             const keyword = metierData.libelle.split('/')[0].trim().split(' ').slice(0, 2).join(' ');
             const parcoursupUrl = `https://data.enseignementsup-recherche.gouv.fr/api/explore/v2.1/catalog/datasets/fr-esr-parcoursup/records?where=libelle_formation%20like%20%22${encodeURIComponent(keyword)}%22&limit=15&select=id_formation,libelle_formation,g_ea_lib_vx,dep_lib,ville,capa_fin`;
-            const pRes = await fetch(parcoursupUrl);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            let pRes;
+            try {
+              pRes = await fetch(parcoursupUrl, { signal: controller.signal });
+            } finally {
+              clearTimeout(timeoutId);
+            }
             if (pRes.ok) {
               const pData = await pRes.json();
               allFormations = (pData.results || []).map(f => ({
@@ -295,24 +306,38 @@ const OffersFormationsPage = () => {
   const toggleSaveJob = async (job) => {
     if (!user) { toast({ title: 'Connectez-vous pour sauvegarder', variant: 'destructive' }); return; }
     const jobId = job.id;
-    if (savedJobIds.has(jobId)) {
-      await supabase.from('saved_jobs').delete().eq('user_id', user.id).eq('job_id', jobId);
-      setSavedJobIds(prev => { const s = new Set(prev); s.delete(jobId); return s; });
-    } else {
-      await supabase.from('saved_jobs').upsert({ user_id: user.id, job_id: jobId, job_data: job });
-      setSavedJobIds(prev => new Set([...(prev instanceof Set ? prev : []), jobId]));
+    try {
+      if (savedJobIds.has(jobId)) {
+        const { error } = await supabase.from('saved_jobs').delete().eq('user_id', user.id).eq('job_id', jobId);
+        if (error) throw error;
+        setSavedJobIds(prev => { const s = new Set(prev); s.delete(jobId); return s; });
+      } else {
+        const { error } = await supabase.from('saved_jobs').upsert({ user_id: user.id, job_id: jobId, job_data: job });
+        if (error) throw error;
+        setSavedJobIds(prev => new Set([...prev, jobId]));
+      }
+    } catch (err) {
+      console.error('[toggleSaveJob]', err);
+      toast({ variant: 'destructive', title: 'Erreur', description: 'Impossible de sauvegarder l\'offre.' });
     }
   };
 
   const toggleSaveFormation = async (formation) => {
     if (!user) { toast({ title: 'Connectez-vous pour sauvegarder', variant: 'destructive' }); return; }
     const fId = formation.id_formation || formation.id;
-    if (savedFormationIds.has(fId)) {
-      await supabase.from('saved_formations').delete().eq('user_id', user.id).eq('formation_id', fId);
-      setSavedFormationIds(prev => { const s = new Set(prev); s.delete(fId); return s; });
-    } else {
-      await supabase.from('saved_formations').upsert({ user_id: user.id, formation_id: fId, formation_data: formation });
-      setSavedFormationIds(prev => new Set([...(prev instanceof Set ? prev : []), fId]));
+    try {
+      if (savedFormationIds.has(fId)) {
+        const { error } = await supabase.from('saved_formations').delete().eq('user_id', user.id).eq('formation_id', fId);
+        if (error) throw error;
+        setSavedFormationIds(prev => { const s = new Set(prev); s.delete(fId); return s; });
+      } else {
+        const { error } = await supabase.from('saved_formations').upsert({ user_id: user.id, formation_id: fId, formation_data: formation });
+        if (error) throw error;
+        setSavedFormationIds(prev => new Set([...prev, fId]));
+      }
+    } catch (err) {
+      console.error('[toggleSaveFormation]', err);
+      toast({ variant: 'destructive', title: 'Erreur', description: 'Impossible de sauvegarder la formation.' });
     }
   };
 
