@@ -717,3 +717,30 @@ input, select {
 .dark tbody tr:hover {
   background-color: #1a2235;
 }
+
+/* ── Mobile-first app feel ─────────────────────────────────────────────── */
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    overscroll-behavior-y: none;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+@layer utilities {
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+  .pt-safe { padding-top: env(safe-area-inset-top); }
+  .h-dvh-screen { height: 100dvh; }
+  .snap-feed { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .snap-feed::-webkit-scrollbar { display: none; }
+  .snap-feed > * { scroll-snap-align: center; }
+}
+
+@media (pointer: coarse) {
+  button, [role="button"], a.btn { touch-action: manipulation; }
+  button:active:not(:disabled), [role="button"]:active { transform: scale(0.97); transition: transform 120ms ease; }
+}

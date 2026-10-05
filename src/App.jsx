@@ -15,6 +15,7 @@ import { useTheme } from '@/hooks/useTheme';
 // Core Components
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import MobileBottomNav from '@/components/MobileBottomNav';
 import ShoppingCart from '@/components/ShoppingCart';
 import ScrollToTop from '@/components/ScrollToTop';
 
@@ -271,6 +272,7 @@ const PageContent = () => {
 
   const showHeader = !isAuthPage && !isAdminPage && !isDashboard && !isTestPage && !isErrorPage && !isEstablishmentPortal && !isCleoPage && !isCVBuilder && !isTestResults && !isMaintenancePage && !isBienvenuePage;
   const showFooter = !isAuthPage && !isAdminPage && !isDashboard && !isTestPage && !isErrorPage && !isEstablishmentPortal && !isCleoPage && !isCVBuilder && !isMaintenancePage && !isBienvenuePage;
+  const showBottomNav = !isAuthPage && !isAdminPage && !isTestPage && !isErrorPage && !isEstablishmentPortal && !isCleoPage && !isCVBuilder && !isMaintenancePage && !isBienvenuePage;
   const showBreadcrumbs = showHeader && !isHomePage;
 
   if (authLoading) return <LoadingFallback />;
@@ -281,7 +283,7 @@ const PageContent = () => {
 
   return (
     <DynamicBackground>
-    <div className="flex flex-col min-h-screen transition-colors duration-300 bg-transparent">
+    <div className={`flex flex-col min-h-[100dvh] transition-colors duration-300 bg-transparent ${showBottomNav ? 'pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0' : ''}`}>
       <ScrollToTop />
       <ProgressBar />
       
@@ -455,10 +457,17 @@ const PageContent = () => {
           would cross into a different persona/security context (admin
           back-office, establishment/institution staff portal, pre-auth
           screens where there's no session yet). */}
-      {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isCleoPage && !isMaintenancePage && <CleoWidget />} 
-      {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isMaintenancePage && <BugReportButton />}
+      {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isCleoPage && !isMaintenancePage && (
+        <div className={showBottomNav ? 'hidden md:block' : ''}><CleoWidget /></div>
+      )}
+      {!isEstablishmentPortal && !isAuthPage && !isAdminPage && !isMaintenancePage && (
+        <div className={showBottomNav ? 'hidden md:block' : ''}><BugReportButton /></div>
+      )}
       
-      {showFooter && <Footer onNavigate={handleNavigate} />}
+      {showFooter && (
+        <div className={showBottomNav ? 'hidden md:block' : ''}><Footer onNavigate={handleNavigate} /></div>
+      )}
+      {showBottomNav && <MobileBottomNav />}
       <Analytics />
       <SpeedInsights />
     </div>
