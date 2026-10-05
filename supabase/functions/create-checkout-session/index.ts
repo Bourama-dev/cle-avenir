@@ -1,65 +1,84 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.4';
+import { createClient } from '@supabase/supabase-js';
+import { corsFor, json, getAuthedUser } from '../_shared/auth.ts';
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-};
+const TAG = '[create-checkout-session]';
+const SITE_URL = Deno.env.get('SITE_URL') || 'https://www.cleavenir.com';
+const VALID_MODES = ['payment', 'subscription'] as const;
+type Mode = typeof VALID_MODES[number];
 
-function json(body: unknown, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { ...CORS, 'Content-Type': 'application/json' },
-  });
+// Allowed prices: STRIPE_PRICE_IDS = "price_a:payment,price_b:subscription" (":mode" optional).
+// Falls back to the price ids currently shipped in src/constants/subscriptionTiers.js.
+const DEFAULT_PRICES = 'price_1SdCxGLKwUP9TofOQHRacfQa:payment,price_1SdD0DLKwUP9TofOTw3qPFXl:subscription';
+
+function allowedPrices(): Map<string, Mode | null> {
+  const map = new Map<string, Mode | null>();
+  for (const entry of (Deno.env.get('STRIPE_PRICE_IDS') || DEFAULT_PRICES).split(',')) {
+    const [id, m] = entry.trim().split(':');
+    if (!id) continue;
+    map.set(id, (VALID_MODES as readonly string[]).includes(m) ? (m as Mode) : null);
+  }
+  return map;
 }
 
-// ── Create Stripe Checkout Session ──────────────────────────────────────────
+/** Returns a safe base URL (origin + path, no query/hash) if its origin is allowed, else the site URL. */
+function safeReturnUrl(raw: unknown): string {
+  try {
+    const u = new URL(String(raw));
+    const probe = new Request('http://probe', { headers: { origin: u.origin } });
+    if ((u.protocol === 'https:' || u.protocol === 'http:') &&
+        corsFor(probe)['Access-Control-Allow-Origin'] === u.origin) {
+      return u.origin + u.pathname;
+    }
+  } catch { /* fall through */ }
+  return SITE_URL;
+}
+
 Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
-  if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
+  const cors = corsFor(req);
+  if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
+  if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405, cors);
 
   try {
+    const user = await getAuthedUser(req);
+    if (!user || !user.email) return json({ error: 'Non authentifié' }, 401, cors);
+
     const stripeSecret = Deno.env.get('STRIPE_SECRET_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-
-    if (!stripeSecret) {
-      console.error('[create-checkout-session] STRIPE_SECRET_KEY not configured');
-      return json({ error: 'Configuration manquante: STRIPE_SECRET_KEY' }, 500);
-    }
-    if (!supabaseUrl || !supabaseKey) {
-      console.error('[create-checkout-session] Supabase credentials missing');
-      return json({ error: 'Configuration manquante: Supabase' }, 500);
+    if (!stripeSecret || !supabaseUrl || !supabaseKey) {
+      console.error(`${TAG} missing server configuration`);
+      return json({ error: 'Erreur serveur interne' }, 500, cors);
     }
 
-    const body = await req.json();
-    const { price_id, mode, return_url, user_id } = body;
+    let body: Record<string, unknown> = {};
+    try { body = await req.json(); } catch { /* handled below */ }
+    const priceId = typeof body.price_id === 'string' ? body.price_id : '';
 
-    if (!price_id || !return_url || !user_id) {
-      console.warn('[create-checkout-session] Missing required fields:', { price_id, return_url, user_id });
-      return json({ error: 'Paramètres manquants: price_id, return_url, user_id' }, 400);
+    const prices = allowedPrices();
+    if (!priceId || !prices.has(priceId)) {
+      return json({ error: 'Paramètres invalides' }, 400, cors);
+    }
+    const mode = prices.get(priceId) ?? (body.mode ?? 'subscription');
+    if (!(VALID_MODES as readonly unknown[]).includes(mode)) {
+      return json({ error: 'Paramètres invalides' }, 400, cors);
     }
 
+    const base = safeReturnUrl(body.return_url);
     const sb = createClient(supabaseUrl, supabaseKey);
 
-    // Get user profile to find or create Stripe customer
     const { data: profile, error: profileError } = await sb
       .from('profiles')
-      .select('id, email, stripe_customer_id')
-      .eq('id', user_id)
-      .single();
-
-    if (profileError || !profile?.email) {
-      console.error('[create-checkout-session] Profile not found:', user_id);
-      return json({ error: 'Utilisateur non trouvé' }, 404);
+      .select('stripe_customer_id')
+      .eq('id', user.id)
+      .maybeSingle();
+    if (profileError) {
+      console.error(`${TAG} profile lookup failed:`, profileError.message);
+      return json({ error: 'Erreur serveur interne' }, 500, cors);
     }
 
-    let stripeCustomerId = profile.stripe_customer_id;
+    let stripeCustomerId: string | null = profile?.stripe_customer_id ?? null;
 
-    // If no Stripe customer, create one
     if (!stripeCustomerId) {
-      console.log(`[create-checkout-session] Creating Stripe customer for ${profile.email}`);
-
       const customerResponse = await fetch('https://api.stripe.com/v1/customers', {
         method: 'POST',
         headers: {
@@ -67,33 +86,23 @@ Deno.serve(async (req) => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
-          email: profile.email,
-          metadata: JSON.stringify({ user_id }),
+          email: user.email,
+          'metadata[user_id]': user.id,
         }).toString(),
       });
-
       if (!customerResponse.ok) {
-        const errorText = await customerResponse.text();
-        console.error('[create-checkout-session] Stripe customer creation error:', errorText);
-        return json({ error: 'Erreur lors de la création du client Stripe' }, 500);
+        console.error(`${TAG} Stripe customer creation failed:`, customerResponse.status, await customerResponse.text());
+        return json({ error: 'Erreur de paiement' }, 502, cors);
       }
+      stripeCustomerId = (await customerResponse.json()).id as string;
 
-      const customer = await customerResponse.json();
-      stripeCustomerId = customer.id;
-
-      // Save customer ID to profile
       const { error: updateError } = await sb
         .from('profiles')
         .update({ stripe_customer_id: stripeCustomerId })
-        .eq('id', user_id);
-
-      if (updateError) {
-        console.warn('[create-checkout-session] Failed to save Stripe customer ID:', updateError);
-        // Don't fail here, continue with checkout
-      }
+        .eq('id', user.id);
+      if (updateError) console.error(`${TAG} failed to save Stripe customer id:`, updateError.message);
     }
 
-    // Create checkout session
     const checkoutResponse = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST',
       headers: {
@@ -102,32 +111,25 @@ Deno.serve(async (req) => {
       },
       body: new URLSearchParams({
         customer: stripeCustomerId,
-        mode: mode || 'subscription',
-        payment_method_types: 'card',
-        line_items_data_0_price: price_id,
-        line_items_data_0_quantity: '1',
-        success_url: `${return_url}?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: return_url,
-        customer_update: JSON.stringify({
-          address: 'auto',
-          name: 'auto',
-        }),
+        mode: mode as string,
+        'payment_method_types[0]': 'card',
+        'line_items[0][price]': priceId,
+        'line_items[0][quantity]': '1',
+        success_url: `${base}?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: base,
+        'customer_update[address]': 'auto',
+        'customer_update[name]': 'auto',
       }).toString(),
     });
-
     if (!checkoutResponse.ok) {
-      const errorText = await checkoutResponse.text();
-      console.error('[create-checkout-session] Stripe checkout error:', errorText);
-      return json({ error: `Erreur Stripe: ${checkoutResponse.status}` }, 500);
+      console.error(`${TAG} Stripe checkout failed:`, checkoutResponse.status, await checkoutResponse.text());
+      return json({ error: 'Erreur de paiement' }, 502, cors);
     }
 
     const session = await checkoutResponse.json();
-
-    console.log('[create-checkout-session] Checkout session created:', session.id);
-    return json({ url: session.url, session_id: session.id });
-
+    return json({ url: session.url, session_id: session.id }, 200, cors);
   } catch (error) {
-    console.error('[create-checkout-session] Unexpected error:', error);
-    return json({ error: `Erreur serveur interne: ${error}` }, 500);
+    console.error(`${TAG} unexpected error:`, error);
+    return json({ error: 'Erreur serveur interne' }, 500, cors);
   }
 });

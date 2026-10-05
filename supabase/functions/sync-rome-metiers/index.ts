@@ -1,4 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.4';
+import { corsFor, json, getAuthedUser, isAdminUser, secretMatches } from '../_shared/auth.ts';
 
 const FRANCE_TRAVAIL_TOKEN_URL = 'https://entreprise.francetravail.fr/connexion/oauth2/access_token?realm=/partenaire';
 const ROME_METIERS_API = 'https://api.francetravail.io/partenaire/rome-metiers/v1/metiers/metier';
@@ -125,75 +126,52 @@ async function insertMetiersToSupabase(supabase: any, metiers: MetierFromAPI[]) 
 }
 
 Deno.serve(async (req) => {
-  // Handle CORS preflight requests
+  const cors = corsFor(req);
+
   if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        'Access-Control-Max-Age': '86400',
-      }
-    });
+    return new Response(null, { status: 204, headers: { ...cors, 'Access-Control-Max-Age': '86400' } });
+  }
+  if (req.method !== 'POST') {
+    return json({ error: 'Method not allowed' }, 405, cors);
   }
 
   try {
-    // Only allow POST requests
-    if (req.method !== 'POST') {
-      return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-        status: 405,
-        headers: { 'Content-Type': 'application/json' }
-      });
+    // Auth: cron secret OR authenticated admin
+    const cronOk = secretMatches(req.headers.get('x-cron-secret'), Deno.env.get('CRON_SECRET'));
+    if (!cronOk) {
+      const user = await getAuthedUser(req);
+      if (!user) return json({ error: 'Unauthorized' }, 401, cors);
+      if (!(await isAdminUser(user.id))) return json({ error: 'Forbidden' }, 403, cors);
     }
 
-    // Get credentials from request body or environment
-    const { clientId, secret } = await req.json();
-
+    // Credentials come from env only, never from the request
+    const clientId = Deno.env.get('FRANCE_TRAVAIL_CLIENT_ID') ?? Deno.env.get('POLE_EMPLOI_CLIENT_ID');
+    const secret = Deno.env.get('FRANCE_TRAVAIL_SECRET') ?? Deno.env.get('POLE_EMPLOI_CLIENT_SECRET');
     if (!clientId || !secret) {
-      return new Response(
-        JSON.stringify({ error: 'Missing clientId or secret' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
+      console.error('Missing France Travail credentials in env');
+      return json({ error: 'Service not configured' }, 500, cors);
     }
 
     console.log('Starting ROME métiers synchronization...');
-
-    // Get access token
-    console.log('Getting access token from France Travail...');
     const accessToken = await getAccessToken(clientId, secret);
-    console.log('Access token obtained');
-
-    // Fetch all metiers from API
-    console.log('Fetching all métiers from API...');
     const metiers = await fetchAllMetiers(accessToken);
 
-    // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-
     if (!supabaseUrl || !supabaseServiceKey) {
       throw new Error('Missing Supabase credentials');
     }
-
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Insert metiers to Supabase
     await insertMetiersToSupabase(supabase, metiers);
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        message: `Successfully synced ${metiers.length} métiers from France Travail API`,
-        count: metiers.length
-      }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
+    return json({
+      success: true,
+      message: `Successfully synced ${metiers.length} métiers from France Travail API`,
+      count: metiers.length,
+    }, 200, cors);
   } catch (error) {
     console.error('Error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    return json({ error: 'internal_error' }, 500, cors);
   }
 });

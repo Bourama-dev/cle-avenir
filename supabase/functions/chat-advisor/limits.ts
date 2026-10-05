@@ -78,8 +78,9 @@ export async function consumeChatMessage(sb: any, userId: string | null, anonKey
     if (insertError) throw insertError;
     return true;
   } catch (err) {
-    console.warn('[chat-advisor] chat limiter unavailable, allowing message:', err);
-    return true;
+    // Fail closed for anonymous callers; authenticated users keep fail-open.
+    console.warn('[chat-advisor] chat limiter unavailable:', err);
+    return !!userId;
   }
 }
 

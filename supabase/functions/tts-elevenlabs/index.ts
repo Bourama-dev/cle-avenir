@@ -1,15 +1,23 @@
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': '*',
-};
+import { corsFor, getAuthedUser } from '../_shared/auth.ts';
+
+const MAX_TEXT = 1000;
 
 // High-quality French female voice (ElevenLabs built-in)
 const DEFAULT_VOICE_ID = 'ThT5KcBeYPX3keUQqHPh'; // Sarah — natural French-compatible voice
+const ALLOWED_VOICES = new Set([DEFAULT_VOICE_ID]); // frontend sends no voice_id
 const ELEVENLABS_API = 'https://api.elevenlabs.io/v1/text-to-speech';
 
 Deno.serve(async (req) => {
+  const CORS = corsFor(req);
   if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
+
+  const user = await getAuthedUser(req);
+  if (!user) {
+    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+    });
+  }
 
   const apiKey = Deno.env.get('ELEVENLABS_API_KEY');
   if (!apiKey) {
@@ -21,8 +29,15 @@ Deno.serve(async (req) => {
 
   try {
     const { text, voice_id = DEFAULT_VOICE_ID } = await req.json();
-    if (!text?.trim()) {
-      return new Response(JSON.stringify({ error: 'Missing text' }), {
+    if (typeof text !== 'string' || !text.trim() || text.length > MAX_TEXT) {
+      return new Response(JSON.stringify({ error: 'Invalid text' }), {
+        status: 400,
+        headers: { ...CORS, 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (typeof voice_id !== 'string' || !ALLOWED_VOICES.has(voice_id)) {
+      return new Response(JSON.stringify({ error: 'Invalid voice' }), {
         status: 400,
         headers: { ...CORS, 'Content-Type': 'application/json' },
       });
@@ -55,7 +70,7 @@ Deno.serve(async (req) => {
       const err = await res.text();
       console.error('[tts-elevenlabs] API error:', res.status, err);
       return new Response(JSON.stringify({ error: 'ElevenLabs API error' }), {
-        status: res.status,
+        status: 502,
         headers: { ...CORS, 'Content-Type': 'application/json' },
       });
     }
@@ -66,7 +81,7 @@ Deno.serve(async (req) => {
       headers: {
         ...CORS,
         'Content-Type': 'audio/mpeg',
-        'Cache-Control': 'public, max-age=3600',
+        'Cache-Control': 'private, max-age=3600',
       },
     });
   } catch (err) {

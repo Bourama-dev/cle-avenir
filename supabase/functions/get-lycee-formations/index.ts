@@ -106,6 +106,6 @@ Deno.serve(async (req) => {
     return respond({ uai, formations, total });
   } catch (err) {
     console.error("[get-lycee-formations] error:", err);
-    return respond({ formations: [], total: 0, error: String(err) });
+    return respond({ formations: [], total: 0, error: "server_error" });
   }
 });

@@ -107,7 +107,7 @@ async function queryONISEP(params: {
   if (!res.ok) {
     const msg = `API ${res.status}: ${responseText.slice(0, 300)}`;
     console.error(`[get-onisep-lycees] FAIL ${msg}`);
-    return { lycees: [], total: 0, warning: msg };
+    return { lycees: [], total: 0, warning: "upstream_error" };
   }
 
   let data: Record<string, unknown>;
@@ -116,7 +116,7 @@ async function queryONISEP(params: {
   } catch (_e) {
     const msg = `JSON parse error: ${responseText.slice(0, 200)}`;
     console.error(`[get-onisep-lycees] ${msg}`);
-    return { lycees: [], total: 0, warning: msg };
+    return { lycees: [], total: 0, warning: "upstream_error" };
   }
 
   const records = Array.isArray(data?.results)
@@ -168,6 +168,6 @@ Deno.serve(async (req) => {
     return respond(result);
   } catch (err) {
     console.error("[get-onisep-lycees] error:", err);
-    return respond({ lycees: [], total: 0, warning: String(err) });
+    return respond({ lycees: [], total: 0, warning: "server_error" });
   }
 });

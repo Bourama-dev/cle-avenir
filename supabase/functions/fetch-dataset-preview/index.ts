@@ -168,6 +168,9 @@ Deno.serve(async (req) => {
     if (!source || !datasetId) {
       return respond({ success: false, error: "source and dataset_id are required" }, 400);
     }
+    if (!/^[A-Za-z0-9_.-]+$/.test(datasetId) || datasetId.includes("..") || datasetId.length > 200) {
+      return respond({ success: false, error: "invalid dataset_id" }, 400);
+    }
     if (!BASES[source]) {
       return respond({ success: false, error: `Unknown source: ${source}` }, 400);
     }
@@ -176,6 +179,6 @@ Deno.serve(async (req) => {
     return respond({ success: true, ...preview });
   } catch (err) {
     console.error("[preview] error:", err);
-    return respond({ success: false, error: String(err) }, 500);
+    return respond({ success: false, error: "server_error" }, 500);
   }
 });

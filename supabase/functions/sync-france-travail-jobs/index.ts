@@ -1,10 +1,8 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.4';
+import { corsFor, json as jsonResp, getAuthedUser, isAdminUser, secretMatches } from '../_shared/auth.ts';
 
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-};
+const MAX_ROME_CODES = 200;
+const ROME_CODE_RE = /^[A-Z]\d{4}$/;
 
 const JOBS_API = 'https://api.francetravail.io/partenaire/offresdemploi/v2/offres/search';
 const AUTH_URLS = [
@@ -48,13 +46,6 @@ interface FranceTravailJob {
   qualificationLibelle?: string;
   secteurActivite?: string;
   secteurActiviteLibelle?: string;
-}
-
-function json(body: unknown, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
-  });
 }
 
 async function getToken(clientId: string, secret: string): Promise<string | null> {
@@ -145,14 +136,24 @@ function transformJob(job: FranceTravailJob, romeCode: string) {
 }
 
 Deno.serve(async (req) => {
+  const cors = corsFor(req);
+  const json = (body: unknown, status = 200) => jsonResp(body, status, cors);
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: CORS_HEADERS });
+    return new Response(null, { headers: cors });
   }
   if (req.method !== 'POST') {
     return json({ error: 'Method not allowed' }, 405);
   }
 
   try {
+    // Auth: cron secret OR authenticated admin
+    const cronOk = secretMatches(req.headers.get('x-cron-secret'), Deno.env.get('CRON_SECRET'));
+    if (!cronOk) {
+      const user = await getAuthedUser(req);
+      if (!user) return json({ error: 'Unauthorized' }, 401);
+      if (!(await isAdminUser(user.id))) return json({ error: 'Forbidden' }, 403);
+    }
+
     const clientId =
       Deno.env.get('FRANCE_TRAVAIL_CLIENT_ID') ??
       Deno.env.get('POLE_EMPLOI_CLIENT_ID');
@@ -165,8 +166,19 @@ Deno.serve(async (req) => {
     }
 
     const body = await req.json().catch(() => ({}));
-    const romeCodes: string[] = body.romeCodes || DEFAULT_ROME_CODES;
-    const limitPerCode: number = Math.min(body.limitPerCode || 20, 100);
+    let romeCodes: string[] = DEFAULT_ROME_CODES;
+    if (body.romeCodes != null) {
+      if (
+        !Array.isArray(body.romeCodes) ||
+        body.romeCodes.length === 0 ||
+        body.romeCodes.length > MAX_ROME_CODES ||
+        !body.romeCodes.every((c: unknown) => typeof c === 'string' && ROME_CODE_RE.test(c))
+      ) {
+        return json({ error: 'Invalid romeCodes' }, 400);
+      }
+      romeCodes = [...new Set<string>(body.romeCodes)];
+    }
+    const limitPerCode: number = Math.min(Math.max(Number(body.limitPerCode) || 20, 1), 100);
 
     console.log(`[sync-france-travail-jobs] Starting sync for ${romeCodes.length} ROME codes`);
 
@@ -228,6 +240,6 @@ Deno.serve(async (req) => {
     });
   } catch (err) {
     console.error('[sync-france-travail-jobs] Unhandled error:', err);
-    return json({ error: String(err) }, 500);
+    return json({ error: 'internal_error' }, 500);
   }
 });

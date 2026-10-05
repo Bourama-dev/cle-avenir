@@ -19,6 +19,21 @@ const lengthRule = ({ words, tone }: { words: number; tone: string }) =>
   `LONGUEUR (règle impérative, prioritaire sur tout le reste): ${words} mots MAXIMUM au total, listes comprises. ${tone} ` +
   'Si le sujet est large, traite l\'essentiel et propose de continuer plutôt que de tout dire.';
 
+// Strip PostgREST filter metacharacters from model-supplied search terms.
+const safeQ = (v: unknown) => String(v ?? '').replace(/[,()%*\\]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 100);
+
+// Recursively truncate strings / arrays in client-supplied context.
+function capContext(v: unknown, depth = 0): unknown {
+  if (typeof v === 'string') return v.slice(0, 500);
+  if (depth > 4) return undefined;
+  if (Array.isArray(v)) return v.slice(0, 20).map((x) => capContext(x, depth + 1));
+  if (v && typeof v === 'object') {
+    return Object.fromEntries(Object.entries(v as Record<string, unknown>).slice(0, 40)
+      .map(([k, x]) => [k.slice(0, 64), capContext(x, depth + 1)]));
+  }
+  return v;
+}
+
 const INTERVIEW_LINK = "[Lancer le simulateur d'entretien](/interview)";
 
 const CORS = {
@@ -103,7 +118,7 @@ async function executeTool(sb: any, name: string, args: Record<string, unknown>)
 
   try {
     if (name === 'search_metiers') {
-      const q = String(args.query ?? '').trim();
+      const q = safeQ(args.query);
       if (!q) return { error: 'query manquant' };
       const { data, error } = await sb
         .from('rome_metiers')
@@ -128,7 +143,7 @@ async function executeTool(sb: any, name: string, args: Record<string, unknown>)
     }
 
     if (name === 'search_formations') {
-      const q = String(args.query ?? '').trim();
+      const q = safeQ(args.query);
       if (!q) return { error: 'query manquant' };
       let query = sb
         .from('formations_enriched')
@@ -136,7 +151,7 @@ async function executeTool(sb: any, name: string, args: Record<string, unknown>)
         .eq('is_active', true)
         .or(`title.ilike.%${q}%,description.ilike.%${q}%`)
         .limit(5);
-      if (args.city) query = query.ilike('location_city', `%${String(args.city)}%`);
+      if (args.city) query = query.ilike('location_city', `%${safeQ(args.city)}%`);
       const { data, error } = await query;
       if (error) return { error: error.message };
       const results = (data ?? []).map((f: Record<string, unknown>) => ({ ...f, url: `/formation/${f.id}` }));
@@ -144,7 +159,7 @@ async function executeTool(sb: any, name: string, args: Record<string, unknown>)
     }
 
     if (name === 'search_articles') {
-      const q = String(args.query ?? '').trim();
+      const q = safeQ(args.query);
       if (!q) return { error: 'query manquant' };
       const { data, error } = await sb
         .from('blog_articles')
@@ -525,7 +540,11 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 
     const body = await req.json();
-    const { message, history = [], context = {}, mode = 'career_advisor' } = body;
+    const { history: rawHistory = [], mode = 'career_advisor' } = body;
+    const message = typeof body.message === 'string' ? body.message.slice(0, 4000) : body.message;
+    const history = Array.isArray(rawHistory) ? rawHistory : [];
+    const context = (body.context && typeof body.context === 'object'
+      ? capContext(body.context) : {}) as Record<string, unknown>;
 
     // ── Enrich context with user data from DB ──────────────────────────────
     let enrichedContext = { ...context };
@@ -594,8 +613,8 @@ Deno.serve(async (req) => {
 
     const historyMessages = (history as { role: string; content: string }[])
       .slice(-12)
-      .filter(m => m.content?.trim())
-      .map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content }));
+      .filter(m => typeof m?.content === 'string' && m.content.trim())
+      .map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content.slice(0, 4000) }));
 
     const cleanHistory: { role: string; content: string }[] = [];
     for (const msg of historyMessages) {
@@ -626,7 +645,17 @@ Deno.serve(async (req) => {
     }
 
     // ── Extract profile updates from conversation ──────────────────────────
-    const profileUpdates = extractProfileUpdates(message, reply);
+    const rawUpdates = extractProfileUpdates(message, reply);
+    let profileUpdates: Record<string, unknown> | null = null;
+    if (rawUpdates) {
+      const clean: Record<string, unknown> = {};
+      for (const [k, v] of Object.entries(rawUpdates)) {
+        if (typeof v === 'string') { const t = v.replace(/[<>]/g, '').trim().slice(0, 100); if (t) clean[k] = t; }
+        else if (typeof v === 'number' || typeof v === 'boolean') clean[k] = v;
+        else if (Array.isArray(v)) clean[k] = v.filter((x) => typeof x === 'string').slice(0, 20).map((x) => x.slice(0, 60));
+      }
+      profileUpdates = Object.keys(clean).length ? clean : null;
+    }
 
     // ── Smart suggestions ──────────────────────────────────────────────────
     const suggestions = generateSuggestions(chatMode, enrichedContext);

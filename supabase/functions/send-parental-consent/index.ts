@@ -1,37 +1,58 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4";
+import { corsFor, json, getAuthedUser } from "../_shared/auth.ts";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+const EMAIL_RE = /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/;
+const escHtml = (v: unknown) =>
+  String(v ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 
 serve(async (req) => {
+  const corsHeaders = corsFor(req);
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
+  if (req.method !== 'POST') {
+    return json({ error: 'Method not allowed' }, 405, corsHeaders);
+  }
 
   try {
-    const { token, parentEmail, childFirstName } = await req.json();
+    const user = await getAuthedUser(req);
+    if (!user) return json({ error: 'Unauthorized' }, 401, corsHeaders);
 
-    if (!token || !parentEmail) {
-      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    // Email + token come from the DB row created for THIS user, never from the request body
+    const admin = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
+    const { data: request } = await admin
+      .from('parental_consent_requests')
+      .select('parent_email, token, status, expires_at')
+      .eq('user_id', user.id)
+      .eq('status', 'pending')
+      .gt('expires_at', new Date().toISOString())
+      .order('expires_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (!request?.token || !request?.parent_email || !EMAIL_RE.test(request.parent_email)) {
+      return json({ error: 'No pending consent request' }, 404, corsHeaders);
     }
+    const token = request.token;
+    const parentEmail = request.parent_email;
+
+    const { data: profile } = await admin
+      .from('profiles').select('first_name').eq('id', user.id).maybeSingle();
+    const childFirstName = profile?.first_name || (user.user_metadata as any)?.first_name;
 
     const siteUrl = Deno.env.get('SITE_URL') || 'https://www.cleavenir.com';
-    const consentUrl = `${siteUrl}/parental-consent/${token}`;
+    const consentUrl = `${siteUrl}/parental-consent/${encodeURIComponent(token)}`;
     const resendKey = Deno.env.get('RESEND_API_KEY');
 
     if (!resendKey) {
       console.warn('[send-parental-consent] RESEND_API_KEY not configured — email skipped');
-      return new Response(JSON.stringify({ sent: false, reason: 'no_api_key' }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return json({ sent: false, reason: 'no_api_key' }, 200, corsHeaders);
     }
 
-    const childName = childFirstName || 'votre enfant';
+    const childName = escHtml(childFirstName || 'votre enfant');
 
     const html = `
 <!DOCTYPE html>
@@ -110,7 +131,7 @@ serve(async (req) => {
       body: JSON.stringify({
         from: 'CléAvenir <noreply@cleavenir.com>',
         to: [parentEmail],
-        subject: `Autorisation parentale requise pour ${childName} — CléAvenir`,
+        subject: `Autorisation parentale requise pour ${String(childFirstName || 'votre enfant').replace(/[\r\n]/g, ' ').slice(0, 60)} — CléAvenir`,
         html,
       }),
     });
@@ -118,21 +139,13 @@ serve(async (req) => {
     if (!res.ok) {
       const body = await res.text();
       console.error('[send-parental-consent] Resend error:', body);
-      return new Response(JSON.stringify({ sent: false, reason: 'resend_error' }), {
-        status: 502,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return json({ sent: false, reason: 'resend_error' }, 502, corsHeaders);
     }
 
-    return new Response(JSON.stringify({ sent: true }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return json({ sent: true }, 200, corsHeaders);
 
   } catch (err) {
     console.error('[send-parental-consent] Unexpected error:', err);
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return json({ error: 'internal_error' }, 500, corsHeaders);
   }
 });

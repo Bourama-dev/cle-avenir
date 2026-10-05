@@ -1,26 +1,39 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { corsFor, json, getAuthedUser, secretMatches } from "../_shared/auth.ts";
+
+// Escape Slack mrkdwn control characters in user-supplied text
+const esc = (v: unknown) =>
+  String(v ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 Deno.serve(async (req: Request) => {
-  if (req.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 });
-  }
+  const cors = corsFor(req);
+  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
+  if (req.method !== "POST") return json({ error: "Method not allowed" }, 405, cors);
 
   const webhookUrl = Deno.env.get("SLACK_WEBHOOK_NOUVELLE_UTILISATEUR");
   if (!webhookUrl) {
     console.error("[notify-slack] SLACK_WEBHOOK_NOUVELLE_UTILISATEUR not set");
-    return new Response("Webhook not configured", { status: 500 });
+    return json({ error: "Service not configured" }, 500, cors);
   }
 
   let body: { user_id?: string };
   try {
     body = await req.json();
   } catch {
-    return new Response("Invalid JSON", { status: 400 });
+    return json({ error: "Invalid JSON" }, 400, cors);
   }
 
-  const { user_id } = body;
-  if (!user_id) return new Response("Missing user_id", { status: 400 });
+  const { user_id } = body ?? {};
+  if (!user_id || typeof user_id !== "string") return json({ error: "Missing user_id" }, 400, cors);
+
+  // Auth: trusted secret (cron/webhook) OR the user's own JWT for their own id
+  const secretOk = secretMatches(req.headers.get("x-cron-secret"), Deno.env.get("CRON_SECRET"));
+  if (!secretOk) {
+    const user = await getAuthedUser(req);
+    if (!user) return json({ error: "Unauthorized" }, 401, cors);
+    if (user.id !== user_id) return json({ error: "Forbidden" }, 403, cors);
+  }
 
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,
@@ -37,7 +50,7 @@ Deno.serve(async (req: Request) => {
 
   if (error || !profile) {
     console.error("[notify-slack] Profile fetch error:", error);
-    return new Response("Profile not found", { status: 404 });
+    return json({ error: "Not found" }, 404, cors);
   }
 
   const location =
@@ -57,13 +70,13 @@ Deno.serve(async (req: Request) => {
 
   const text =
     `*Nouvel utilisateur inscrit sur CléAvenir* :tada:\n\n` +
-    `:bust_in_silhouette: *Nom :* ${profile.first_name || "—"} ${profile.last_name || "—"}\n` +
-    `:email: *Email :* ${profile.email || "—"}\n` +
-    `:birthday: *Âge :* ${profile.age_range || "—"}\n` +
-    `:briefcase: *Statut :* ${profile.user_status || "—"}\n` +
-    `:mortar_board: *Niveau d'études :* ${profile.education_level || "—"}\n` +
-    `:round_pushpin: *Localisation :* ${location}\n` +
-    `:star: *Abonnement :* ${profile.subscription_tier || "free"}\n` +
+    `:bust_in_silhouette: *Nom :* ${esc(profile.first_name || "—")} ${esc(profile.last_name || "—")}\n` +
+    `:email: *Email :* ${esc(profile.email || "—")}\n` +
+    `:birthday: *Âge :* ${esc(profile.age_range || "—")}\n` +
+    `:briefcase: *Statut :* ${esc(profile.user_status || "—")}\n` +
+    `:mortar_board: *Niveau d'études :* ${esc(profile.education_level || "—")}\n` +
+    `:round_pushpin: *Localisation :* ${esc(location)}\n` +
+    `:star: *Abonnement :* ${esc(profile.subscription_tier || "free")}\n` +
     `:calendar: *Inscrit le :* ${date}`;
 
   const slackRes = await fetch(webhookUrl, {
@@ -75,9 +88,9 @@ Deno.serve(async (req: Request) => {
   if (!slackRes.ok) {
     const errText = await slackRes.text();
     console.error("[notify-slack] Slack error:", slackRes.status, errText);
-    return new Response(`Slack error: ${errText}`, { status: 502 });
+    return json({ error: "Notification failed" }, 502, cors);
   }
 
   console.log("[notify-slack] Notification sent for user:", user_id);
-  return new Response("OK", { status: 200 });
+  return json({ ok: true }, 200, cors);
 });

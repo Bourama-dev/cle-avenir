@@ -114,7 +114,8 @@ async function fetchParcoursup(params: { q: string; ville: string; limit: number
   const searchTerm = extraSearch ? `${extraSearch}${q ? " " + q : ""}` : q;
   if (searchTerm) sp.set("search", searchTerm);
   // Parcoursup/Socrata LIKE is case-sensitive; commune_etab is stored in uppercase.
-  if (ville) sp.set("where", `commune_etab like '%${ville.toUpperCase()}%'`);
+  const safeVille = ville.replace(/['"\\%]/g, "").slice(0, 100).toUpperCase();
+  if (safeVille) sp.set("where", `commune_etab like '%${safeVille}%'`);
 
   const url = `${PARCOURSUP_API}?${sp.toString()}`;
   console.log("[psup] GET", url);
@@ -161,7 +162,7 @@ Deno.serve(async (req) => {
     const offset = Math.max(Number(body.offset) || 0, 0);
 
     if (action !== "formations") {
-      return json({ success: false, error: `Unknown action: ${action}` }, 400);
+      return json({ success: false, error: 'unknown_action' }, 400);
     }
 
     const half = Math.ceil(limit / 2);

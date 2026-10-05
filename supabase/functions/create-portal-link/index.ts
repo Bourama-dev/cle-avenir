@@ -1,85 +1,61 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.4';
+import { createClient } from '@supabase/supabase-js';
+import { corsFor, json, getAuthedUser } from '../_shared/auth.ts';
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-};
+const TAG = '[create-portal-link]';
+const SITE_URL = Deno.env.get('SITE_URL') || 'https://www.cleavenir.com';
 
-function json(body: unknown, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { ...CORS, 'Content-Type': 'application/json' },
-  });
+/** Returns the URL (without hash) if its origin is allowed, else the site URL. */
+function safeReturnUrl(raw: unknown): string {
+  try {
+    const u = new URL(String(raw));
+    const probe = new Request('http://probe', { headers: { origin: u.origin } });
+    if ((u.protocol === 'https:' || u.protocol === 'http:') &&
+        corsFor(probe)['Access-Control-Allow-Origin'] === u.origin) {
+      return u.origin + u.pathname + u.search;
+    }
+  } catch { /* fall through */ }
+  return SITE_URL;
 }
 
-// ── Create Stripe Customer Portal Session ──────────────────────────────────
 Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
-  if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
+  const cors = corsFor(req);
+  if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
+  if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405, cors);
 
   try {
+    const user = await getAuthedUser(req);
+    if (!user) return json({ error: 'Non authentifié' }, 401, cors);
+
     const stripeSecret = Deno.env.get('STRIPE_SECRET_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-
-    if (!stripeSecret) {
-      console.error('[create-portal-link] STRIPE_SECRET_KEY not configured');
-      return json({ error: 'Configuration manquante: STRIPE_SECRET_KEY' }, 500);
-    }
-    if (!supabaseUrl || !supabaseKey) {
-      console.error('[create-portal-link] Supabase credentials missing');
-      return json({ error: 'Configuration manquante: Supabase' }, 500);
+    if (!stripeSecret || !supabaseUrl || !supabaseKey) {
+      console.error(`${TAG} missing server configuration`);
+      return json({ error: 'Erreur serveur interne' }, 500, cors);
     }
 
-    const { return_url } = await req.json();
-    if (!return_url) {
-      return json({ error: 'return_url manquante' }, 400);
-    }
-
-    // Get authenticated user from Authorization header
-    const authHeader = req.headers.get('Authorization') || '';
-    const token = authHeader.replace('Bearer ', '');
-
-    if (!token) {
-      return json({ error: 'Non authentifié' }, 401);
-    }
+    let body: Record<string, unknown> = {};
+    try { body = await req.json(); } catch { /* use fallback return url */ }
+    const returnUrl = safeReturnUrl(body.return_url);
 
     const sb = createClient(supabaseUrl, supabaseKey);
-
-    // Get user from token
-    const { data: { user }, error: userError } = await sb.auth.admin.getUserById(
-      token.substring(0, 36) // Rough extraction - actual JWT parsing recommended
-    ).catch(() => ({ data: { user: null }, error: 'Invalid token' }));
-
-    // Better approach: verify token with Supabase
-    const { data: { user: authUser }, error: authError } = await sb.auth.getUser(token);
-
-    if (authError || !authUser?.email) {
-      console.error('[create-portal-link] Auth error:', authError);
-      return json({ error: 'Utilisateur non authentifié' }, 401);
-    }
-
-    // Get or find Stripe customer ID from subscriptions table
     const { data: subscription, error: subError } = await sb
       .from('subscriptions')
       .select('stripe_customer_id')
-      .eq('user_email', authUser.email)
+      .eq('user_id', user.id)
+      .not('stripe_customer_id', 'is', null)
       .order('created_at', { ascending: false })
       .limit(1)
       .maybeSingle();
 
     if (subError) {
-      console.error('[create-portal-link] Subscription lookup error:', subError);
-      return json({ error: 'Erreur base de données' }, 500);
+      console.error(`${TAG} subscription lookup failed:`, subError.message);
+      return json({ error: 'Erreur serveur interne' }, 500, cors);
     }
-
     if (!subscription?.stripe_customer_id) {
-      console.warn('[create-portal-link] No Stripe customer found for:', authUser.email);
-      return json({ error: 'Pas d\'abonnement trouvé' }, 404);
+      return json({ error: "Pas d'abonnement trouvé" }, 404, cors);
     }
 
-    // Create Stripe customer portal session
     const stripeResponse = await fetch('https://api.stripe.com/v1/billing_portal/sessions', {
       method: 'POST',
       headers: {
@@ -88,23 +64,18 @@ Deno.serve(async (req) => {
       },
       body: new URLSearchParams({
         customer: subscription.stripe_customer_id,
-        return_url: return_url,
+        return_url: returnUrl,
       }).toString(),
     });
-
     if (!stripeResponse.ok) {
-      const errorText = await stripeResponse.text();
-      console.error('[create-portal-link] Stripe error:', stripeResponse.status, errorText);
-      return json({ error: `Erreur Stripe: ${stripeResponse.status}` }, 500);
+      console.error(`${TAG} Stripe portal failed:`, stripeResponse.status, await stripeResponse.text());
+      return json({ error: 'Erreur de paiement' }, 502, cors);
     }
 
     const portalSession = await stripeResponse.json();
-
-    console.log('[create-portal-link] Portal session created:', portalSession.id);
-    return json({ url: portalSession.url });
-
+    return json({ url: portalSession.url }, 200, cors);
   } catch (error) {
-    console.error('[create-portal-link] Unexpected error:', error);
-    return json({ error: 'Erreur serveur interne' }, 500);
+    console.error(`${TAG} unexpected error:`, error);
+    return json({ error: 'Erreur serveur interne' }, 500, cors);
   }
 });
