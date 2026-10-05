@@ -168,22 +168,34 @@ export const AuthProvider = ({ children }) => {
     // Safety valve: never stay stuck in loading forever
     const safetyTimer = setTimeout(() => {
       if (mounted) setLoading(false);
-    }, 15000);
+    }, 10000);
 
     // Single source of truth — onAuthStateChange fires INITIAL_SESSION on mount,
     // so we do NOT call getSession() separately (would cause double handleSession).
+    //
+    // The callback must NOT await any Supabase call: auth-js awaits callbacks
+    // while holding its initialisation lock (during the PKCE code exchange after
+    // Google login), and every supabase.from() query waits on that same lock →
+    // deadlock → infinite loading. Defer the work to the next tick instead.
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         if (!mounted) return;
-        clearTimeout(safetyTimer);
 
         if (event === 'SIGNED_OUT') {
+          clearTimeout(safetyTimer);
           setUser(null);
           setSession(null);
           setUserProfile(null);
           setLoading(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') {
-          await handleSession(session);
+          setTimeout(async () => {
+            if (!mounted) return;
+            try {
+              await handleSession(session);
+            } finally {
+              clearTimeout(safetyTimer);
+            }
+          }, 0);
         }
       }
     );
