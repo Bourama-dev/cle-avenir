@@ -158,7 +158,7 @@ const MetiersExplorer = ({ onNavigate }) => {
         <meta name="description" content={`Explorez ${totalMetiersCount > 0 ? totalMetiersCount.toLocaleString() : 'de nombreux'} métiers issus du répertoire officiel.`} />
       </Helmet>
 
-      <div className="sticky top-0 z-30 bg-background/90 backdrop-blur border-b border-border/40 pt-safe">
+      <div className="sticky top-14 md:top-16 lg:top-20 z-30 bg-background/90 backdrop-blur border-b border-border/40">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <div className="flex items-baseline justify-between mb-2">
             <h1 className="text-xl md:text-3xl font-bold text-foreground">

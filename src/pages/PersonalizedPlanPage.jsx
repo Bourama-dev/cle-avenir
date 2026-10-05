@@ -12,9 +12,8 @@ import { Helmet } from 'react-helmet-async';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { LayoutDashboard, Target } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 import MagneticButton from '@/components/ui/MagneticButton';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 import RiasecProfileSection from '@/components/personalized-plan/RiasecProfileSection';
 import RecommendedMetiersSection from '@/components/personalized-plan/RecommendedMetiersSection';
@@ -31,6 +30,7 @@ const PersonalizedPlanPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
+  const reduceMotion = useReducedMotion();
 
   // ── User profile ────────────────────────────────────────────────────────
   const { profile: userProfile, loading: profileLoading } = useUserProfile();
@@ -411,27 +411,33 @@ const PersonalizedPlanPage = () => {
   const profileData = planData?.riasec_profile || rawTestData?.profile;
   const hasTestData = !!profileData && Object.keys(profileData).length > 0;
 
+  const STATUS_SHORT = { lyceen: 'Lycéen·ne', etudiant: 'Étudiant·e', en_emploi: 'En emploi', en_recherche: 'En recherche', reconversion: 'En reconversion' };
+  const EDU_SHORT = { sans_diplome: 'Sans diplôme', cap_bep: 'CAP/BEP', bac: 'Bac', 'bac+2': 'Bac+2', 'bac+3': 'Bac+3', 'bac+5': 'Bac+5', doctorat: 'Doctorat' };
+
+  const fadeUp = (i = 0) => ({
+    initial: reduceMotion ? false : { opacity: 0, y: 16 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.35, delay: reduceMotion ? 0 : i * 0.06 },
+  });
+
   /* ── Main render ────────────────────────────────────────────────────────── */
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-20 font-sans">
+    <div className="min-h-screen bg-slate-50/50 pb-44 md:pb-20 font-sans">
       <Helmet>
         <title>Mon Plan Personnalisé — CléAvenir</title>
         <meta name="description" content="Votre plan de carrière personnalisé basé sur vos résultats d'orientation." />
       </Helmet>
-      {/* Sticky breadcrumb */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+
+      <div className="hidden md:block bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
         <div className="container mx-auto px-4 max-w-7xl py-3 flex items-center justify-between gap-4">
           <Breadcrumbs />
           {userProfile?.first_name && (
-            <span className="text-sm text-slate-500 hidden sm:block">
+            <span className="text-sm text-slate-500">
               Plan de <strong className="text-slate-700">{userProfile.first_name}</strong>
               {userProfile.user_status && (
                 <span className="ml-1 text-slate-400">
-                  · {
-                    { lyceen: 'lycéen·ne', etudiant: 'étudiant·e', en_emploi: 'en emploi',
-                      en_recherche: 'en recherche', reconversion: 'en reconversion' }
-                    [userProfile.user_status] || userProfile.user_status
-                  }
+                  · {{ lyceen: 'lycéen·ne', etudiant: 'étudiant·e', en_emploi: 'en emploi',
+                      en_recherche: 'en recherche', reconversion: 'en reconversion' }[userProfile.user_status] || userProfile.user_status}
                 </span>
               )}
             </span>
@@ -439,89 +445,63 @@ const PersonalizedPlanPage = () => {
         </div>
       </div>
 
-      {/* Hero */}
-      <div className="bg-gradient-to-b from-indigo-50 to-slate-50 py-12 md:py-16 border-b border-slate-200">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl"
-          >
-            <div className="inline-flex items-center justify-center p-3 bg-indigo-100 rounded-xl mb-6 shadow-sm border border-indigo-200/50">
-              <Target className="w-8 h-8 text-indigo-700" />
+      <header className="bg-gradient-to-b from-indigo-50 to-slate-50 pt-safe md:pt-0 border-b border-slate-200">
+        <div className="container mx-auto px-4 max-w-7xl py-5 md:py-14">
+          <motion.div {...fadeUp()} className="max-w-3xl">
+            <div className="flex items-center gap-3 md:block">
+              <div className="inline-flex items-center justify-center w-11 h-11 md:w-14 md:h-14 bg-indigo-100 rounded-2xl md:mb-5 border border-indigo-200/50 shrink-0">
+                <Target className="w-6 h-6 md:w-8 md:h-8 text-indigo-700" />
+              </div>
+              <h1 className="text-2xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight md:mb-4">
+                {userProfile?.first_name ? `${userProfile.first_name}, votre Plan ` : 'Votre Plan '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+                  Personnalisé
+                </span>
+              </h1>
             </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-5 tracking-tight leading-tight">
-              {userProfile?.first_name
-                ? `${userProfile.first_name}, votre Plan `
-                : 'Votre Plan '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
-                Personnalisé
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-medium">
+            <p className="hidden md:block text-xl text-slate-600 leading-relaxed font-medium">
               Votre feuille de route sur-mesure basée sur votre profil RIASEC
-              {userProfile?.education_level && (
-                <span> et votre niveau d'études</span>
-              )}
-              {userProfile?.region && (
-                <span>, adaptée à votre région</span>
-              )}
-              .
+              {userProfile?.education_level && <span> et votre niveau d'études</span>}
+              {userProfile?.region && <span>, adaptée à votre région</span>}.
             </p>
 
-            {/* Profile info chips */}
             {userProfile && (
-              <div className="flex flex-wrap gap-2 mt-5">
+              <div className="flex gap-2 mt-4 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap">
                 {userProfile.education_level && (
-                  <span className="text-xs bg-white border border-indigo-100 text-indigo-700 font-medium px-3 py-1.5 rounded-full shadow-sm">
-                    <span role="img" aria-label="diplôme">🎓</span> {
-                      { sans_diplome: 'Sans diplôme', cap_bep: 'CAP/BEP', bac: 'Bac',
-                        'bac+2': 'Bac+2', 'bac+3': 'Bac+3', 'bac+5': 'Bac+5', doctorat: 'Doctorat' }
-                      [userProfile.education_level] || userProfile.education_level
-                    }
+                  <span className="shrink-0 text-xs bg-white border border-indigo-100 text-indigo-700 font-medium px-3 py-2 rounded-full shadow-sm">
+                    <span role="img" aria-label="diplôme">🎓</span> {EDU_SHORT[userProfile.education_level] || userProfile.education_level}
                   </span>
                 )}
                 {userProfile.region && (
-                  <span className="text-xs bg-white border border-green-100 text-green-700 font-medium px-3 py-1.5 rounded-full shadow-sm">
+                  <span className="shrink-0 text-xs bg-white border border-green-100 text-green-700 font-medium px-3 py-2 rounded-full shadow-sm">
                     <span role="img" aria-label="localisation">📍</span> {userProfile.region}
                   </span>
                 )}
                 {userProfile.user_status && (
-                  <span className="text-xs bg-white border border-amber-100 text-amber-700 font-medium px-3 py-1.5 rounded-full shadow-sm">
-                    <span role="img" aria-label="emploi">💼</span> {
-                      { lyceen: 'Lycéen·ne', etudiant: 'Étudiant·e', en_emploi: 'En emploi',
-                        en_recherche: 'En recherche', reconversion: 'En reconversion' }
-                      [userProfile.user_status] || userProfile.user_status
-                    }
+                  <span className="shrink-0 text-xs bg-white border border-amber-100 text-amber-700 font-medium px-3 py-2 rounded-full shadow-sm">
+                    <span role="img" aria-label="emploi">💼</span> {STATUS_SHORT[userProfile.user_status] || userProfile.user_status}
                   </span>
                 )}
               </div>
             )}
           </motion.div>
         </div>
-      </div>
+      </header>
 
-      {/* Main content */}
-      <main className="container mx-auto px-4 max-w-7xl py-12">
-        <div className="grid lg:grid-cols-12 gap-10">
+      <main className="container mx-auto px-4 max-w-7xl py-5 md:py-10">
+        <div className="grid lg:grid-cols-12 gap-5 lg:gap-10">
+          <div className="lg:col-span-8 space-y-5 md:space-y-8 min-w-0">
+            <motion.div {...fadeUp(0)}>
+              <ProgressionSection planData={planData} hasTestData={hasTestData} userProfile={userProfile} />
+            </motion.div>
 
-          {/* Left column — main sections */}
-          <AnimatedSection className="lg:col-span-8 space-y-2">
-            <AnimatedItem>
-              <ProgressionSection
-                planData={planData}
-                hasTestData={hasTestData}
-                userProfile={userProfile}
-              />
-            </AnimatedItem>
-            <AnimatedItem>
+            <motion.div {...fadeUp(1)}>
               <RiasecProfileSection riasecProfile={profileData} />
-            </AnimatedItem>
+            </motion.div>
 
-            <AnimatedItem>
+            <motion.div {...fadeUp(2)}>
               {metiersLoading ? (
-                <div className="mb-10"><MetierLoadingSpinner /></div>
+                <MetierLoadingSpinner />
               ) : (
                 <RecommendedMetiersSection
                   metiers={enrichedMetiers}
@@ -531,63 +511,47 @@ const PersonalizedPlanPage = () => {
                   plan={planData}
                 />
               )}
-            </AnimatedItem>
+            </motion.div>
 
-            <AnimatedItem transition={{ delay: 0.1 }}>
-              <FormationPathSection
-                formations={formations}
-                isLoading={formationsLoading}
-                userProfile={userProfile}
-              />
-            </AnimatedItem>
+            <motion.div {...fadeUp(3)}>
+              <FormationPathSection formations={formations} isLoading={formationsLoading} userProfile={userProfile} />
+            </motion.div>
+          </div>
 
-            {/* Dashboard CTA — bottom of page */}
-            <AnimatedItem>
-              <div className="mt-10 pt-8 border-t border-slate-200">
-                <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl border border-indigo-100 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div>
-                    <h3 className="font-bold text-slate-900 text-lg">Votre plan est prêt !</h3>
-                    <p className="text-slate-500 text-sm mt-1">
-                      Retrouvez vos résultats, votre historique et vos métiers sauvegardés dans votre tableau de bord.
-                    </p>
-                  </div>
-                  <MagneticButton>
-                    <button
-                      onClick={() => navigate('/dashboard')}
-                      className="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors whitespace-nowrap shadow-sm"
-                    >
-                      <LayoutDashboard className="w-5 h-5" />
-                      Aller au tableau de bord
-                    </button>
-                  </MagneticButton>
-                </div>
-              </div>
-            </AnimatedItem>
-          </AnimatedSection>
-
-          {/* Right column — sidebar */}
-          <div className="lg:col-span-4">
-            <div className="lg:sticky lg:top-24 space-y-6">
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 animate-fade-in">
-                <h3 className="font-bold text-slate-900 mb-4 text-lg flex items-center gap-2">
-                  <span role="img" aria-label="éclair">⚡</span> Actions Rapides
+          <aside className="lg:col-span-4 space-y-5">
+            <div className="lg:sticky lg:top-24 space-y-5">
+              <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-5">
+                <h3 className="font-bold text-slate-900 mb-3 text-lg flex items-center gap-2">
+                  <span role="img" aria-label="éclair">⚡</span> Actions rapides
                 </h3>
                 <RecommendedActionsSection userProfile={userProfile} riasecProfile={profileData} />
               </div>
 
-              <MagneticButton className="w-full">
-                <button
-                  onClick={() => navigate('/dashboard')}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors shadow-sm"
-                >
-                  <LayoutDashboard className="w-4 h-4" />
-                  Mon tableau de bord
-                </button>
-              </MagneticButton>
+              <div className="hidden md:block">
+                <MagneticButton className="w-full">
+                  <button
+                    onClick={() => navigate('/dashboard')}
+                    className="w-full min-h-[48px] flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-2xl transition-colors shadow-sm"
+                  >
+                    <LayoutDashboard className="w-4 h-4" />
+                    Mon tableau de bord
+                  </button>
+                </MagneticButton>
+              </div>
             </div>
-          </div>
+          </aside>
         </div>
       </main>
+
+      <div className="md:hidden fixed inset-x-0 z-30 px-4 bottom-[calc(4rem+env(safe-area-inset-bottom))] pb-3 pt-6 bg-gradient-to-t from-slate-50 via-slate-50/90 to-transparent pointer-events-none">
+        <button
+          onClick={() => navigate('/dashboard')}
+          className="pointer-events-auto w-full min-h-[52px] flex items-center justify-center gap-2 bg-indigo-600 active:bg-indigo-700 text-white font-semibold rounded-2xl shadow-lg shadow-indigo-600/30"
+        >
+          <LayoutDashboard className="w-5 h-5" />
+          Aller au tableau de bord
+        </button>
+      </div>
     </div>
   );
 };

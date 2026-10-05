@@ -391,7 +391,7 @@ const FormationsPage = ({ setAllFormations }) => {
       />
 
       {/* Sticky search + chips */}
-      <div className="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-700 pt-safe">
+      <div className="sticky top-14 md:top-16 lg:top-20 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-700">
         <div className="mx-auto max-w-7xl px-4 pt-3 pb-2">
           <div className="flex items-center gap-2">
             <div className="relative flex-1 group">

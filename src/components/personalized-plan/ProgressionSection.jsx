@@ -1,17 +1,26 @@
-import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle2, ArrowRight, CircleDot } from 'lucide-react';
+import React, { useState } from 'react';
+import { CheckCircle2, CircleDot, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { getStatusContext } from '@/utils/educationUtils';
 
+const SUBTITLES = {
+  lyceen: 'Ton plan d\'orientation post-bac, étape par étape.',
+  etudiant: 'Ton plan pour décrocher ton premier emploi.',
+  en_emploi: 'Votre plan de montée en compétences et d\'évolution.',
+  en_recherche: 'Votre plan pour décrocher votre prochain poste.',
+  reconversion: 'Votre plan de reconversion professionnelle.',
+};
+
 const ProgressionSection = ({ planData, hasTestData, userProfile }) => {
+  const reduce = useReducedMotion();
+  const [open, setOpen] = useState(false);
   const userStatus = userProfile?.user_status || null;
   const ctx = getStatusContext(userStatus);
 
-  // Determine progress from real data
   const isTestCompleted = hasTestData;
   const hasMetiers    = (planData?.selected_metiers?.length    ?? 0) > 0;
   const hasFormations = (planData?.selected_formations?.length ?? 0) > 0;
-  const hasJob        = false; // last step — never auto-completed here
+  const hasJob        = false;
 
   const steps = ctx.stepLabels.map((label, idx) => {
     let completed = false;
@@ -27,62 +36,94 @@ const ProgressionSection = ({ planData, hasTestData, userProfile }) => {
   const progressPercentage = steps.length > 0
     ? Math.round((completedSteps / steps.length) * 100)
     : 0;
+  const currentStep = steps.find(s => s.current) || steps.find(s => !s.completed);
+
+  const R = 26;
+  const C = 2 * Math.PI * R;
 
   return (
-    <Card className="border-0 shadow-lg bg-gradient-to-br from-indigo-900 via-slate-800 to-slate-900 text-white mb-10 overflow-hidden relative animate-fade-in">
-      <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
-        <ArrowRight className="w-64 h-64" />
-      </div>
-      <CardContent className="p-8 md:p-10 relative z-10">
-        <h2 className="text-2xl md:text-3xl font-extrabold mb-1 tracking-tight text-white">Votre Parcours</h2>
-        <p className="text-indigo-200 mb-10 text-sm">
-          {userStatus === 'lyceen'       && 'Ton plan d\'orientation post-bac, étape par étape.'}
-          {userStatus === 'etudiant'     && 'Ton plan pour décrocher ton premier emploi.'}
-          {userStatus === 'en_emploi'    && 'Votre plan de montée en compétences et d\'évolution.'}
-          {userStatus === 'en_recherche' && 'Votre plan pour décrocher votre prochain poste.'}
-          {userStatus === 'reconversion' && 'Votre plan de reconversion professionnelle.'}
-          {!userStatus                   && 'Suivez les étapes pour concrétiser votre projet professionnel.'}
-        </p>
-
-        <div className="relative">
-          {/* Connecting line */}
-          <div className="timeline-line" />
-          <div className="timeline-line-progress" style={{ width: `${progressPercentage}%` }} />
-
-          <div className="flex flex-col md:flex-row gap-8 md:gap-4 justify-between relative z-10">
-            {steps.map((step) => (
-              <div key={step.id} className="flex flex-row md:flex-col items-center md:text-center gap-4 group">
-                <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shrink-0 border-4 transition-all duration-300 shadow-lg
-                  ${step.completed
-                    ? 'bg-emerald-500 border-emerald-400 text-white scale-110'
-                    : step.current
-                    ? 'bg-indigo-600 border-indigo-400 text-white ring-4 ring-indigo-500/30'
-                    : 'bg-slate-800 border-slate-600 text-slate-400'
-                  }`}
-                >
-                  {step.completed
-                    ? <CheckCircle2 className="w-6 h-6 md:w-7 md:h-7" />
-                    : step.current
-                    ? <CircleDot className="w-6 h-6 md:w-7 md:h-7 animate-pulse-subtle" />
-                    : <span className="font-bold text-lg">{step.id}</span>
-                  }
-                </div>
-                <div>
-                  <h3 className={`font-bold text-sm md:text-base mb-1 transition-colors
-                    ${step.completed ? 'text-emerald-400' : step.current ? 'text-white' : 'text-slate-400'}`}
-                  >
-                    {step.title}
-                  </h3>
-                  <p className={`text-xs md:text-sm ${step.current ? 'text-indigo-200 font-medium' : 'text-slate-500'}`}>
-                    {step.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+    <section className="rounded-3xl bg-gradient-to-br from-indigo-700 via-indigo-800 to-slate-900 text-white shadow-lg overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        className="w-full min-h-[44px] flex items-center gap-4 p-5 md:p-6 text-left"
+      >
+        <div className="relative w-16 h-16 shrink-0">
+          <svg viewBox="0 0 64 64" className="w-16 h-16 -rotate-90">
+            <circle cx="32" cy="32" r={R} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="6" />
+            <motion.circle
+              cx="32" cy="32" r={R} fill="none" stroke="#34d399" strokeWidth="6" strokeLinecap="round"
+              strokeDasharray={C}
+              initial={{ strokeDashoffset: reduce ? C * (1 - progressPercentage / 100) : C }}
+              animate={{ strokeDashoffset: C * (1 - progressPercentage / 100) }}
+              transition={{ duration: reduce ? 0 : 0.8, ease: 'easeOut' }}
+            />
+          </svg>
+          <span className="absolute inset-0 flex items-center justify-center text-sm font-bold">
+            {progressPercentage}%
+          </span>
         </div>
-      </CardContent>
-    </Card>
+        <div className="flex-1 min-w-0">
+          <p className="text-xs uppercase tracking-wider text-indigo-200 font-semibold">Votre parcours</p>
+          <h2 className="text-lg md:text-xl font-bold leading-tight truncate">
+            {currentStep ? currentStep.title : 'Parcours terminé'}
+          </h2>
+          <p className="text-xs text-indigo-200 mt-0.5">{completedSteps}/{steps.length} étapes</p>
+        </div>
+        <ChevronDown className={`w-5 h-5 shrink-0 text-indigo-200 transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+
+      <div className="px-5 md:px-6 pb-4 flex gap-1.5" aria-hidden="true">
+        {steps.map(s => (
+          <span
+            key={s.id}
+            className={`h-1.5 flex-1 rounded-full ${s.completed ? 'bg-emerald-400' : s.current ? 'bg-indigo-300' : 'bg-white/15'}`}
+          />
+        ))}
+      </div>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={reduce ? false : { height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
+            transition={{ duration: reduce ? 0 : 0.25 }}
+            className="overflow-hidden"
+          >
+            <div className="px-5 md:px-6 pb-5 space-y-3">
+              <p className="text-sm text-indigo-200">
+                {SUBTITLES[userStatus] || 'Suivez les étapes pour concrétiser votre projet professionnel.'}
+              </p>
+              <ol className="space-y-2">
+                {steps.map(step => (
+                  <li key={step.id} className="flex items-center gap-3 rounded-2xl bg-white/10 p-3">
+                    <span
+                      className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${
+                        step.completed ? 'bg-emerald-500' : step.current ? 'bg-indigo-500 ring-2 ring-indigo-300/50' : 'bg-white/10 text-slate-300'
+                      }`}
+                    >
+                      {step.completed
+                        ? <CheckCircle2 className="w-5 h-5" />
+                        : step.current
+                        ? <CircleDot className="w-5 h-5" />
+                        : <span className="text-sm font-bold">{step.id}</span>}
+                    </span>
+                    <div className="min-w-0">
+                      <h3 className={`text-sm font-semibold ${step.completed ? 'text-emerald-300' : step.current ? 'text-white' : 'text-slate-300'}`}>
+                        {step.title}
+                      </h3>
+                      <p className="text-xs text-indigo-200/80">{step.desc}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
   );
 };
 

@@ -153,10 +153,10 @@ const RecommendedActionsSection = ({ userProfile, riasecProfile }) => {
     : 'Tes prochaines étapes';
 
   return (
-    <div className="space-y-3 mb-10">
+    <div className="space-y-3">
       <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-1">{headerHint}</p>
 
-      <div className="grid grid-cols-1 gap-3">
+      <div className="grid grid-cols-1 gap-2.5">
         {primaryActions.map((id) => {
           const def = ACTION_BASE[id];
           if (!def) return null;
@@ -166,12 +166,12 @@ const RecommendedActionsSection = ({ userProfile, riasecProfile }) => {
             <Button
               key={id}
               onClick={() => navigate(route)}
-              className={`h-auto py-4 flex items-center justify-start gap-3 border shadow-sm w-full ${bg}`}
+              className={`h-auto min-h-[56px] py-3 flex items-center justify-start gap-3 border shadow-sm w-full rounded-2xl active:scale-[0.98] transition-transform ${bg}`}
             >
               <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${iconBg}`}>
                 <Icon className="w-5 h-5" />
               </div>
-              <div className="text-left">
+              <div className="text-left whitespace-normal min-w-0">
                 <div className="font-bold">{label}</div>
                 {sublabel && <div className="text-xs opacity-70 font-normal">{sublabel}</div>}
               </div>
@@ -180,14 +180,14 @@ const RecommendedActionsSection = ({ userProfile, riasecProfile }) => {
         })}
       </div>
 
-      <div className="grid grid-cols-2 gap-3 pt-1">
+      <div className="grid grid-cols-2 gap-2.5 pt-1">
         <Button
           variant="outline"
           onClick={() => {
             toast({ title: 'Impression en cours…', description: 'Utilisez « Enregistrer en PDF » dans la boîte d\'impression.' });
             setTimeout(() => window.print(), 300);
           }}
-          className="w-full text-slate-600 border-slate-200 hover:bg-slate-50"
+          className="w-full h-11 rounded-xl text-slate-600 border-slate-200 hover:bg-slate-50"
         >
           <Download className="w-4 h-4 mr-2" /> PDF
         </Button>
@@ -209,7 +209,7 @@ const RecommendedActionsSection = ({ userProfile, riasecProfile }) => {
             await navigator.clipboard.writeText(url);
             toast({ title: 'Lien copié !', description: 'Partagez ce lien pour accéder à votre plan.' });
           }}
-          className="w-full text-slate-600 border-slate-200 hover:bg-slate-50"
+          className="w-full h-11 rounded-xl text-slate-600 border-slate-200 hover:bg-slate-50"
         >
           <Share2 className="w-4 h-4 mr-2" /> Partager
         </Button>
