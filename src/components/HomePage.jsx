@@ -17,21 +17,21 @@ const FEATURES = [
     icon: Search,
     title: "Exploration Métiers",
     desc: "Des milliers de fiches métiers : salaires, débouchés, évolutions.",
-    gradient: 'from-indigo-500 to-violet-600',
+    gradient: 'from-rose-500 to-rose-600',
     link: "/metiers",
   },
   {
     icon: GraduationCap,
     title: "Formations Adaptées",
     desc: "La formation idéale selon ton niveau, ta région et tes objectifs.",
-    gradient: 'from-sky-500 to-indigo-600',
+    gradient: 'from-cyan-500 to-teal-600',
     link: "/formations",
   },
   {
     icon: Zap,
     title: "Coaching IA · Cléo",
     desc: "Un assistant disponible 24/7 qui t'accompagne pas à pas.",
-    gradient: 'from-violet-500 to-fuchsia-600',
+    gradient: 'from-rose-400 to-rose-600',
     link: "/cleo",
   },
 ];
@@ -49,7 +49,7 @@ const STEPS = [
     icon: Target,
     title: 'Passe le test gratuit',
     desc: "Quelques questions sur tes intérêts et tes valeurs. Aucune inscription requise.",
-    gradient: 'from-indigo-500 to-violet-600',
+    gradient: 'from-rose-500 to-rose-600',
     link: '/test-orientation',
   },
   {
@@ -57,7 +57,7 @@ const STEPS = [
     icon: Zap,
     title: 'Cléo analyse ton profil',
     desc: "Notre IA analyse tes compétences et tes affinités métier en quelques secondes.",
-    gradient: 'from-violet-500 to-fuchsia-600',
+    gradient: 'from-rose-400 to-rose-600',
     link: '/cleo',
   },
   {
@@ -65,7 +65,7 @@ const STEPS = [
     icon: GraduationCap,
     title: 'Explore ta voie',
     desc: "Métiers, formations et offres personnalisés, avec des données officielles à jour.",
-    gradient: 'from-sky-500 to-indigo-600',
+    gradient: 'from-cyan-500 to-teal-600',
     link: '/metiers',
   },
 ];
@@ -140,7 +140,7 @@ function Reveal({ children, className = '', delay = 0 }) {
 function SectionHead({ eyebrow, children }) {
   return (
     <Reveal className="px-5 md:px-0 mb-5 md:mb-8">
-      <p className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 mb-1.5">{eyebrow}</p>
+      <p className="text-xs font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400 mb-1.5">{eyebrow}</p>
       <h2 className="text-2xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">{children}</h2>
     </Reveal>
   );
@@ -148,7 +148,7 @@ function SectionHead({ eyebrow, children }) {
 
 // Horizontal snap row on mobile, grid from md
 const CAROUSEL = 'snap-feed flex gap-3 overflow-x-auto px-5 pb-2 md:px-0 md:overflow-visible md:grid md:gap-6';
-const GRAD_TEXT = 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-500 dark:from-indigo-400 dark:to-violet-300';
+const GRAD_TEXT = 'text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-cyan-500 dark:from-rose-400 dark:to-cyan-300';
 
 // ── Utility functions ────────────────────────────────────────────────────────
 function generateRandomRiasecProfile() {
@@ -214,7 +214,7 @@ const HomePage = ({ onNavigate }) => {
       />
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section className="relative isolate overflow-hidden bg-gradient-to-br from-indigo-700 via-violet-700 to-indigo-950 text-white min-h-[calc(100dvh-4rem)] md:min-h-[78dvh] flex items-center">
+      <section className="relative isolate overflow-hidden bg-gradient-to-br from-rose-600 via-rose-500 to-cyan-600 text-white min-h-[calc(100dvh-4rem)] md:min-h-[78dvh] flex items-center">
         <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-fuchsia-500/30 blur-3xl -z-10" aria-hidden />
         <div className="absolute -bottom-32 -left-24 w-96 h-96 rounded-full bg-sky-400/20 blur-3xl -z-10" aria-hidden />
 
@@ -236,14 +236,14 @@ const HomePage = ({ onNavigate }) => {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-200 via-white to-fuchsia-200">CléAvenir</span>
             </motion.h1>
 
-            <motion.p {...heroIn(0.3)} className="text-lg md:text-xl text-indigo-100/90 leading-relaxed max-w-md">
+            <motion.p {...heroIn(0.3)} className="text-lg md:text-xl text-rose-100/90 leading-relaxed max-w-md">
               Test d'orientation, analyse IA, métiers et formations. 100&nbsp;% gratuit.
             </motion.p>
 
             <motion.div {...heroIn(0.45)} className="flex flex-col sm:flex-row gap-3 pt-1">
               <button
                 onClick={() => onNavigate('/test-orientation')}
-                className="min-h-[56px] px-8 rounded-2xl bg-white text-indigo-700 font-bold text-base shadow-xl shadow-indigo-950/30 flex items-center justify-center gap-2 active:scale-[0.98] transition"
+                className="min-h-[56px] px-8 rounded-2xl bg-white text-rose-700 font-bold text-base shadow-xl shadow-rose-950/30 flex items-center justify-center gap-2 active:scale-[0.98] transition"
               >
                 Faire le test gratuit <ArrowRight className="w-5 h-5" />
               </button>
@@ -257,7 +257,7 @@ const HomePage = ({ onNavigate }) => {
 
             <motion.div {...heroIn(0.6)} className="flex flex-wrap gap-x-5 gap-y-2">
               {['Sans inscription', 'Résultat immédiat', '100 % Gratuit'].map((label) => (
-                <span key={label} className="flex items-center gap-1.5 text-sm font-medium text-indigo-100/80">
+                <span key={label} className="flex items-center gap-1.5 text-sm font-medium text-rose-100/80">
                   <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
                   {label}
                 </span>
@@ -295,7 +295,7 @@ const HomePage = ({ onNavigate }) => {
                     </div>
                     <div>
                       <p className="font-bold">{s.title}</p>
-                      <p className="text-sm text-indigo-100/80 line-clamp-1">{s.desc}</p>
+                      <p className="text-sm text-rose-100/80 line-clamp-1">{s.desc}</p>
                     </div>
                   </div>
                 );
@@ -312,8 +312,8 @@ const HomePage = ({ onNavigate }) => {
             const Icon = stat.icon;
             return (
               <Reveal key={stat.label} delay={i * 0.06}>
-                <div className="h-full rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-lg shadow-indigo-900/5 p-4 md:p-6 flex flex-col gap-1">
-                  <Icon className="w-5 h-5 text-indigo-500 mb-1" />
+                <div className="h-full rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-lg shadow-rose-900/5 p-4 md:p-6 flex flex-col gap-1">
+                  <Icon className="w-5 h-5 text-rose-500 mb-1" />
                   <div className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tabular-nums">
                     <CountUp value={stat.value} suffix={stat.suffix} />
                   </div>
@@ -338,7 +338,7 @@ const HomePage = ({ onNavigate }) => {
                 <button
                   key={f.title}
                   onClick={() => onNavigate(f.link)}
-                  className={`group relative shrink-0 w-[78%] sm:w-[60%] md:w-auto text-left rounded-3xl bg-gradient-to-br ${f.gradient} text-white p-6 min-h-[220px] flex flex-col justify-between overflow-hidden shadow-xl shadow-indigo-900/10 active:scale-[0.98] md:hover:-translate-y-1 transition`}
+                  className={`group relative shrink-0 w-[78%] sm:w-[60%] md:w-auto text-left rounded-3xl bg-gradient-to-br ${f.gradient} text-white p-6 min-h-[220px] flex flex-col justify-between overflow-hidden shadow-xl shadow-rose-900/10 active:scale-[0.98] md:hover:-translate-y-1 transition`}
                 >
                   <Icon className="absolute -right-4 -bottom-4 w-32 h-32 text-white/10" aria-hidden />
                   <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center">
@@ -373,11 +373,11 @@ const HomePage = ({ onNavigate }) => {
                     to={step.link}
                     className="h-full flex md:flex-col items-start gap-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 md:p-7 shadow-sm active:scale-[0.99] md:hover:shadow-xl transition"
                   >
-                    <div className={`w-14 h-14 shrink-0 rounded-2xl bg-gradient-to-br ${step.gradient} flex items-center justify-center shadow-lg shadow-indigo-500/20`}>
+                    <div className={`w-14 h-14 shrink-0 rounded-2xl bg-gradient-to-br ${step.gradient} flex items-center justify-center shadow-lg shadow-rose-500/20`}>
                       <Icon className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-black text-indigo-500 mb-0.5">{step.number}</p>
+                      <p className="text-xs font-black text-rose-500 mb-0.5">{step.number}</p>
                       <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-tight mb-1">{step.title}</h3>
                       <p className="text-sm text-slate-500 dark:text-slate-400 leading-snug">{step.desc}</p>
                     </div>
@@ -390,7 +390,7 @@ const HomePage = ({ onNavigate }) => {
           <Reveal className="mt-6 md:mt-10 flex justify-center">
             <button
               onClick={() => onNavigate('/test-orientation')}
-              className="w-full md:w-auto min-h-[56px] px-8 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold text-base shadow-lg shadow-indigo-500/30 flex items-center justify-center gap-2 active:scale-[0.98] transition"
+              className="w-full md:w-auto min-h-[56px] px-8 rounded-2xl bg-gradient-to-r from-rose-600 to-cyan-500 text-white font-bold text-base shadow-lg shadow-rose-500/30 flex items-center justify-center gap-2 active:scale-[0.98] transition"
             >
               Commencer maintenant · C'est gratuit <ArrowRight className="w-5 h-5" />
             </button>
@@ -475,7 +475,7 @@ const HomePage = ({ onNavigate }) => {
               </button>
             </div>
 
-            <div className="relative shrink-0 w-[88%] sm:w-[70%] md:w-auto rounded-3xl bg-gradient-to-br from-indigo-600 to-violet-700 text-white p-6 flex flex-col overflow-hidden">
+            <div className="relative shrink-0 w-[88%] sm:w-[70%] md:w-auto rounded-3xl bg-gradient-to-br from-rose-600 to-cyan-500 text-white p-6 flex flex-col overflow-hidden">
               <span className="absolute top-4 right-4 bg-amber-400 text-slate-900 text-xs font-extrabold px-3 py-1 rounded-full">POPULAIRE</span>
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-11 h-11 rounded-2xl bg-white/20 flex items-center justify-center">
@@ -483,7 +483,7 @@ const HomePage = ({ onNavigate }) => {
                 </div>
                 <div>
                   <p className="font-bold text-lg">Plan Premium</p>
-                  <p className="text-sm font-semibold text-indigo-200">Tout débloquer · Sans limite</p>
+                  <p className="text-sm font-semibold text-rose-200">Tout débloquer · Sans limite</p>
                 </div>
               </div>
               <ul className="space-y-3 flex-1">
@@ -496,7 +496,7 @@ const HomePage = ({ onNavigate }) => {
               </ul>
               <button
                 onClick={() => onNavigate('/plans')}
-                className="mt-6 w-full min-h-[52px] rounded-2xl bg-white text-indigo-700 font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition"
+                className="mt-6 w-full min-h-[52px] rounded-2xl bg-white text-rose-700 font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition"
               >
                 <Zap className="w-4 h-4" /> Passer à Premium
               </button>
@@ -508,7 +508,7 @@ const HomePage = ({ onNavigate }) => {
       {/* ══ FINAL CTA ═══════════════════════════════════════════════════════ */}
       <section className="px-5 py-14 md:py-24">
         <Reveal className="max-w-5xl mx-auto">
-          <div className="relative overflow-hidden rounded-3xl md:rounded-[2.5rem] bg-gradient-to-br from-indigo-700 via-violet-700 to-indigo-950 text-white text-center px-6 py-12 md:p-20">
+          <div className="relative overflow-hidden rounded-3xl md:rounded-[2.5rem] bg-gradient-to-br from-rose-600 via-rose-500 to-cyan-600 text-white text-center px-6 py-12 md:p-20">
             <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-fuchsia-500/25 blur-3xl" aria-hidden />
             <div className="absolute -bottom-24 -right-16 w-72 h-72 rounded-full bg-sky-400/20 blur-3xl" aria-hidden />
             <div className="relative">
@@ -519,17 +519,17 @@ const HomePage = ({ onNavigate }) => {
               <h2 className="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">
                 Prêt à dessiner ton avenir&nbsp;?
               </h2>
-              <p className="text-indigo-100/90 text-lg mb-8 max-w-xl mx-auto">
+              <p className="text-rose-100/90 text-lg mb-8 max-w-xl mx-auto">
                 Passe le test d'orientation IA en 5 minutes et découvre les métiers qui te correspondent vraiment.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <button
                   onClick={() => onNavigate('/test-orientation')}
-                  className="w-full sm:w-auto min-h-[56px] px-10 rounded-2xl bg-white text-indigo-700 font-bold text-lg shadow-xl active:scale-[0.98] transition"
+                  className="w-full sm:w-auto min-h-[56px] px-10 rounded-2xl bg-white text-rose-700 font-bold text-lg shadow-xl active:scale-[0.98] transition"
                 >
                   Commencer maintenant
                 </button>
-                <span className="text-indigo-100/80 text-sm flex items-center gap-1.5">
+                <span className="text-rose-100/80 text-sm flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-300" />
                   Sans inscription · 100&nbsp;% gratuit
                 </span>
