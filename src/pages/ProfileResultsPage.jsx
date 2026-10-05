@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 import MagneticButton from '@/components/ui/MagneticButton';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   Loader2, MapPin, Mail, GraduationCap, Edit, RefreshCw,
   Trophy, Briefcase, User, AlertCircle, Clock, TrendingUp,
@@ -95,6 +95,7 @@ const ProfileResultsPage = () => {
   const { testResult, loading: testLoading, error: testError, refetch: refetchTest } = useTestResults();
   const [allTests, setAllTests] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(true);
+  const reduce = useReducedMotion();
 
   const fetchHistory = useCallback(async () => {
     if (!user?.id) { setHistoryLoading(false); return; }
@@ -151,18 +152,66 @@ const ProfileResultsPage = () => {
   const careers = testResult?.top_3_careers || testResult?.results?.matches || [];
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-6xl space-y-6">
+    <div className="container mx-auto py-4 md:py-8 px-4 max-w-6xl space-y-4 md:space-y-6">
 
-      {/* Page header */}
+      {/* Mobile story header */}
+      <motion.section
+        initial={reduce ? false : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="md:hidden rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white p-4 shadow-lg shadow-indigo-500/20"
+      >
+        <div className="flex items-center gap-3">
+          <div className="shrink-0 rounded-full p-[3px] bg-gradient-to-tr from-amber-300 via-pink-400 to-fuchsia-500">
+            <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-indigo-100 text-xl font-bold text-indigo-700">
+              {profile?.avatar_url ? (
+                <img src={profile.avatar_url} alt="" className="h-full w-full object-cover" />
+              ) : (
+                <>{profile?.first_name?.[0] ?? ''}{profile?.last_name?.[0] ?? ''}</>
+              )}
+            </div>
+          </div>
+          <div className="min-w-0 flex-1">
+            <h1 className="truncate text-lg font-bold leading-tight">
+              {profile?.first_name || profile?.last_name ? `${profile.first_name ?? ''} ${profile.last_name ?? ''}`.trim() : 'Mon profil'}
+            </h1>
+            <p className="truncate text-xs text-indigo-100">{user?.email}</p>
+          </div>
+        </div>
+        <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+          <div className="rounded-xl bg-white/15 py-2">
+            <p className="text-lg font-bold">{historyLoading ? '…' : allTests.length}</p>
+            <p className="text-[10px] uppercase tracking-wide text-indigo-100">Tests</p>
+          </div>
+          <div className="rounded-xl bg-white/15 py-2">
+            <p className="text-lg font-bold">{completion.pct}%</p>
+            <p className="text-[10px] uppercase tracking-wide text-indigo-100">Complet</p>
+          </div>
+          <div className="rounded-xl bg-white/15 py-2">
+            <p className="text-lg font-bold">{profileCode || '–'}</p>
+            <p className="text-[10px] uppercase tracking-wide text-indigo-100">RIASEC</p>
+          </div>
+        </div>
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          <Button onClick={() => navigate('/profile/edit')} className="h-11 rounded-xl bg-white text-indigo-700 hover:bg-indigo-50">
+            <Edit className="mr-2 h-4 w-4" /> Modifier
+          </Button>
+          <Button onClick={() => navigate('/test-orientation')} variant="ghost" className="h-11 rounded-xl bg-white/15 text-white hover:bg-white/25 hover:text-white">
+            <RefreshCw className="mr-2 h-4 w-4" /> Repasser
+          </Button>
+        </div>
+      </motion.section>
+
+      {/* Page header (desktop) */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="flex flex-col md:flex-row md:items-center justify-between gap-4"
+        className="hidden md:flex flex-row items-center justify-between gap-4"
       >
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <User className="w-6 h-6 text-indigo-500" />
             Mon Profil &amp; Résultats
           </h1>
@@ -181,11 +230,11 @@ const ProfileResultsPage = () => {
       </motion.div>
 
       {/* Top row: Profile card + RIASEC */}
-      <AnimatedSection className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+      <AnimatedSection className="grid grid-cols-1 lg:grid-cols-5 gap-4 md:gap-6">
 
         {/* Profile card */}
         <AnimatedItem className="lg:col-span-2">
-        <Card className="border-slate-200 shadow-sm h-full">
+        <Card className="border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm h-full">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-800">
               <User className="h-4 w-4 text-indigo-500" /> Profil Candidat
@@ -193,7 +242,7 @@ const ProfileResultsPage = () => {
           </CardHeader>
           <CardContent className="space-y-5">
             {/* Avatar + Name */}
-            <div className="flex flex-col items-center text-center p-4 bg-slate-50 rounded-xl">
+            <div className="hidden md:flex flex-col items-center text-center p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
               <div className="w-20 h-20 rounded-full bg-indigo-100 flex items-center justify-center mb-3 overflow-hidden border-2 border-white shadow">
                 {profile?.avatar_url ? (
                   <img src={profile.avatar_url} alt="Photo" className="w-full h-full object-cover" />
@@ -261,7 +310,7 @@ const ProfileResultsPage = () => {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="w-full mt-2 text-xs border-amber-200 text-amber-700 hover:bg-amber-50"
+                  className="w-full mt-2 text-xs h-11 md:h-9 rounded-xl border-amber-200 text-amber-700 hover:bg-amber-50"
                   onClick={() => navigate('/profile/edit')}
                 >
                   <Edit className="w-3 h-3 mr-1.5" /> Compléter mon profil
@@ -274,7 +323,7 @@ const ProfileResultsPage = () => {
 
         {/* RIASEC Analysis */}
         <AnimatedItem className="lg:col-span-3">
-        <Card className="border-slate-200 shadow-sm h-full">
+        <Card className="border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm h-full">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-800">
               <BarChart2 className="h-4 w-4 text-indigo-500" /> Analyse RIASEC
@@ -315,7 +364,7 @@ const ProfileResultsPage = () => {
               <div className="flex flex-col items-center justify-center py-12 text-center">
                 <Brain className="w-12 h-12 text-slate-200 mb-3" />
                 <p className="text-slate-500 text-sm mb-4">Vous n'avez pas encore passé le test d'orientation.</p>
-                <Button size="sm" onClick={() => navigate('/test-orientation')} className="bg-indigo-600 hover:bg-indigo-700">
+                <Button size="sm" onClick={() => navigate('/test-orientation')} className="bg-indigo-600 hover:bg-indigo-700 h-11 md:h-9 rounded-xl">
                   Commencer le test <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>
@@ -328,7 +377,7 @@ const ProfileResultsPage = () => {
       {/* Test history */}
       <AnimatedSection>
       <AnimatedItem>
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm">
         <CardHeader className="pb-3 flex flex-row items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-800">
             <Clock className="h-4 w-4 text-indigo-500" /> Historique des tests
@@ -343,7 +392,29 @@ const ProfileResultsPage = () => {
           ) : allTests.length === 0 ? (
             <div className="text-center py-10 text-slate-400 text-sm">Aucun test effectué pour l'instant.</div>
           ) : (
-            <div className="overflow-x-auto">
+            <>
+            <div className="md:hidden snap-feed flex gap-3 overflow-x-auto px-4 pb-4">
+              {allTests.map((test, idx) => {
+                const entries = test.riasec_profile ? Object.entries(test.riasec_profile).sort(([, a], [, b]) => b - a) : [];
+                const code = entries.slice(0, 3).map(([k]) => k).join('') || '—';
+                return (
+                  <div key={test.id} className={`shrink-0 w-[70%] min-w-[220px] rounded-2xl border p-4 ${idx === 0 ? 'border-indigo-200 bg-indigo-50/50 dark:bg-indigo-950/20 dark:border-indigo-900' : 'border-slate-200 dark:border-slate-700'}`}>
+                    <div className="flex items-center justify-between">
+                      <span className="rounded-md bg-indigo-50 px-2 py-0.5 text-sm font-bold text-indigo-700">{code}</span>
+                      {idx === 0 && <span className="text-[10px] font-semibold text-indigo-500">Dernier</span>}
+                    </div>
+                    <p className="mt-2 text-sm font-medium text-slate-700 dark:text-slate-200">
+                      {new Date(test.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </p>
+                    <div className="mt-1 flex items-center justify-between text-xs">
+                      <span className="text-slate-500">{test.test_score != null && test.test_score > 0 ? `${test.test_score} pts` : '—'}</span>
+                      <span className="flex items-center gap-1 font-semibold text-emerald-600"><Activity className="w-3 h-3" /> Terminé</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-sm">
                 <thead className="bg-slate-50 border-y border-slate-100">
                   <tr>
@@ -409,6 +480,7 @@ const ProfileResultsPage = () => {
                 </tbody>
               </table>
             </div>
+            </>
           )}
         </CardContent>
       </Card>
@@ -419,12 +491,12 @@ const ProfileResultsPage = () => {
       {testResult && (
         <AnimatedSection>
         <AnimatedItem>
-        <Card className="border-slate-200 shadow-sm">
+        <Card className="border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm">
           <CardHeader className="pb-3 flex flex-row items-center justify-between">
             <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-800">
               <Star className="h-4 w-4 text-amber-500" /> Recommandations de carrière
             </CardTitle>
-            <Button variant="ghost" size="sm" className="text-xs text-indigo-600 gap-1" onClick={() => navigate('/recommendations')}>
+            <Button variant="ghost" size="sm" className="text-xs text-indigo-600 gap-1 h-11 md:h-9" onClick={() => navigate('/recommendations')}>
               Tout voir <ChevronRight className="w-3 h-3" />
             </Button>
           </CardHeader>
@@ -436,7 +508,7 @@ const ProfileResultsPage = () => {
                   return (
                     <AnimatedItem key={idx}>
                     <div
-                      className="flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors cursor-pointer group"
+                      className="flex items-center justify-between p-3 min-h-[56px] bg-slate-50 dark:bg-slate-800/50 rounded-xl hover:bg-slate-100 active:scale-[0.98] transition-all cursor-pointer group"
                       onClick={() => navigate('/metiers')}
                     >
                       <div className="flex items-center gap-3">

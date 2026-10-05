@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { useNavigation } from '@/hooks/useNavigation';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { Loader2, Menu, Home, ArrowLeft } from 'lucide-react';
+import { Loader2, Home, ArrowLeft } from 'lucide-react';
 import { debugAuth } from '@/utils/authDebug';
 
 import NotificationBell from '@/components/NotificationBell';
@@ -12,7 +12,6 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import DashboardOverview from '@/components/dashboard/DashboardOverview';
 
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 import '@/styles/adminButtons.css';
 import '@/styles/DashboardPage.css';
@@ -21,7 +20,6 @@ const Dashboard = () => {
   const { user, userProfile, isAdmin, isInstitutionManager, loading: authLoading, subscriptionTier } = useAuth();
   const { goBack, goHome } = useNavigation();
   const navigate = useNavigate();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     debugAuth('DashboardMount', { userId: user?.id });
@@ -53,7 +51,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="dashboard-page-container">
+    <div className="dashboard-page-container !h-auto md:!h-screen !bg-none bg-slate-50 dark:bg-slate-950 md:!bg-[linear-gradient(135deg,#f5f7fa_0%,#c3cfe2_100%)] !overflow-visible md:!overflow-hidden">
       {/* Desktop Header */}
       <header className="dashboard-header hidden md:flex items-center justify-between">
         <div className="dashboard-header-left flex-1">
@@ -88,45 +86,21 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* Mobile Sidebar */}
-        <div className="md:hidden">
-          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="absolute top-20 left-4 z-20 shadow-md bg-white dark:bg-slate-800"
-              >
-                <Menu className="h-4 w-4 text-slate-700 dark:text-slate-200" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="p-0 w-72">
-              <DashboardSidebar
-                userProfile={userProfile || {}}
-                onItemClick={() => setIsMobileMenuOpen(false)}
-              />
-            </SheetContent>
-          </Sheet>
-        </div>
-
+      <div className="flex flex-1 md:overflow-hidden">
         {/* Left Sidebar (Desktop) */}
         <aside className="hidden md:flex w-64 flex-col border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
           <DashboardSidebar userProfile={userProfile || {}} />
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto bg-slate-50/50 dark:bg-slate-950/50 p-4 md:p-8 relative scroll-smooth">
-          <div className="max-w-4xl mx-auto mt-12 md:mt-0 pb-10">
-            {/* Mobile header */}
-            <div className="md:hidden mb-6 flex flex-col gap-4">
-              <div className="flex items-center justify-between">
-                <h1 className="text-xl font-bold text-slate-900 dark:text-white truncate pl-12">Tableau de bord</h1>
+        <main className="flex-1 md:overflow-y-auto bg-slate-50/50 dark:bg-slate-950/50 px-4 pt-3 pb-6 md:p-8 relative scroll-smooth min-w-0">
+          <div className="max-w-4xl mx-auto md:pb-10">
+            <div className="md:hidden -mx-4 mb-4">
+              <div className="flex items-center justify-between px-4 pb-2">
+                <h1 className="text-lg font-bold text-slate-900 dark:text-white truncate">Mon espace</h1>
                 <NotificationBell />
               </div>
-              <div className="pl-2">
-                <Breadcrumbs />
-              </div>
+              <DashboardSidebar variant="chips" userProfile={userProfile || {}} />
             </div>
 
             <DashboardOverview

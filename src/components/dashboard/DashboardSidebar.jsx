@@ -23,7 +23,7 @@ import { FEATURES } from '@/constants/subscriptionTiers';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
-const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
+const DashboardSidebar = ({ userProfile, className, onItemClick, variant = 'rail' }) => {
   const location = useLocation();
   const { hasAccess } = useSubscriptionAccess();
   const { goBack, goHome } = useNavigation();
@@ -70,6 +70,50 @@ const DashboardSidebar = ({ userProfile, className, onItemClick }) => {
       )}
     </Link>
   );
+
+  if (variant === 'chips') {
+    const chips = [
+      { to: '/dashboard', icon: LayoutDashboard, label: "Vue d'ensemble" },
+      { to: '/profile', icon: Target, label: 'Profil & Résultats' },
+      { to: '/recommendations', icon: Award, label: 'Recommandations' },
+      { to: '/offers-formations', icon: Briefcase, label: 'Offres & Formations' },
+      { to: '/cleo', icon: Sparkles, label: 'Coach Cléo', locked: !canAccessCleo },
+      { to: '/apprentissage', icon: Brain, label: 'Apprentissage' },
+      { to: '/cv-builder', icon: FileText, label: 'CV' },
+      { to: '/cover-letter-builder', icon: FileText, label: 'Lettre' },
+      { to: '/account', icon: Settings, label: 'Compte' },
+      { to: '/manage-subscription', icon: CreditCard, label: 'Mon accès' },
+      ...(isAdmin ? [{ to: '/admin/content', icon: ShieldCheck, label: 'Admin', admin: true }] : []),
+    ];
+    return (
+      <nav aria-label="Mon espace" className={cn("flex gap-2 overflow-x-auto px-4 pb-1 snap-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden", className)}>
+        {chips.map(({ to, icon: Icon, label, locked, admin }) => {
+          const active = to === '/dashboard' ? location.pathname === to : isActive(to);
+          return (
+            <Link
+              key={to}
+              to={locked ? '#' : to}
+              onClick={(e) => { if (locked) e.preventDefault(); else onItemClick?.(); }}
+              aria-current={active ? 'page' : undefined}
+              className={cn(
+                "snap-start shrink-0 inline-flex items-center gap-1.5 min-h-[44px] px-4 rounded-full text-sm font-medium border transition-colors active:scale-95",
+                active
+                  ? "bg-indigo-600 border-indigo-600 text-white shadow-sm"
+                  : admin
+                    ? "bg-rose-50 border-rose-200 text-rose-600 dark:bg-rose-950/30 dark:border-rose-900"
+                    : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200",
+                locked && "opacity-70"
+              )}
+            >
+              <Icon className="h-4 w-4" />
+              {label}
+              {locked && <Lock className="h-3 w-3" />}
+            </Link>
+          );
+        })}
+      </nav>
+    );
+  }
 
   return (
     <div className={cn("bg-white dark:bg-slate-900 h-full flex flex-col", className)}>

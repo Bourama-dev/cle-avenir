@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -52,12 +52,12 @@ const RIASEC_COLORS = {
 const TestHistoryInline = ({ history, onNavigate }) => {
   if (!history.length) return null;
   return (
-    <Card className="border-slate-200 shadow-sm">
+    <Card className="border-slate-200 dark:border-slate-700 shadow-sm rounded-2xl overflow-hidden">
       <CardHeader className="pb-2 border-b border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/50 flex flex-row items-center justify-between">
         <CardTitle className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
           <History className="w-4 h-4 text-indigo-500" /> Historique des tests
         </CardTitle>
-        <button onClick={() => onNavigate('/profile')} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium flex items-center gap-0.5">
+        <button onClick={() => onNavigate('/profile')} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium flex items-center gap-0.5 min-h-[44px] px-1">
           Tout voir <ArrowRight className="w-3 h-3" />
         </button>
       </CardHeader>
@@ -117,6 +117,12 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
   const [history, setHistory] = useState([]);
 
   const completion = calcCompletion(userProfile);
+  const reduce = useReducedMotion();
+  const fullName = `${userProfile?.first_name ?? ''} ${userProfile?.last_name ?? ''}`.trim();
+  const initials = `${userProfile?.first_name?.[0] ?? ''}${userProfile?.last_name?.[0] ?? ''}`.toUpperCase() || (user?.email?.[0]?.toUpperCase() ?? '?');
+  const code = testStats.latest?.riasec_profile
+    ? Object.entries(testStats.latest.riasec_profile).sort(([, a], [, b]) => b - a).slice(0, 3).map(([k]) => k).join('')
+    : null;
 
   const fetchData = useCallback(async () => {
     if (!user?.id) { setTestStats(s => ({ ...s, loading: false })); return; }
@@ -140,19 +146,62 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
     profile ? Object.entries(profile).sort(([, a], [, b]) => b - a)[0]?.[0] : null;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 md:space-y-6">
+
+      {/* Story-like profile header (mobile) */}
+      <motion.section
+        initial={reduce ? false : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="md:hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-indigo-600 to-violet-600 text-white p-4 shadow-lg shadow-indigo-500/20"
+      >
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={onOpenProfile}
+            aria-label="Modifier mon profil"
+            className="relative shrink-0 rounded-full p-[3px] bg-gradient-to-tr from-amber-300 via-pink-400 to-fuchsia-500 active:scale-95 transition-transform"
+          >
+            <span className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-indigo-100 text-xl font-bold text-indigo-700 border-2 border-white">
+              {userProfile?.avatar_url ? <img src={userProfile.avatar_url} alt="" className="h-full w-full object-cover" /> : initials}
+            </span>
+          </button>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-lg font-bold leading-tight">{fullName || 'Bienvenue'}</p>
+            <p className="truncate text-xs text-indigo-100">{user?.email}</p>
+            <div className="mt-1.5 flex flex-wrap gap-1.5">
+              <span className="rounded-full bg-white/20 px-2 py-0.5 text-[11px] font-semibold">{getDisplayPlanName(subscriptionTier)}</span>
+              {code && <span className="rounded-full bg-white/20 px-2 py-0.5 text-[11px] font-semibold">Profil {code}</span>}
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+          <div className="rounded-xl bg-white/15 py-2">
+            <p className="text-lg font-bold">{testStats.loading ? '…' : testStats.count}</p>
+            <p className="text-[10px] uppercase tracking-wide text-indigo-100">Tests</p>
+          </div>
+          <div className="rounded-xl bg-white/15 py-2">
+            <p className="text-lg font-bold">{completion.pct}%</p>
+            <p className="text-[10px] uppercase tracking-wide text-indigo-100">Profil</p>
+          </div>
+          <div className="rounded-xl bg-white/15 py-2">
+            <p className="text-lg font-bold">{code || '–'}</p>
+            <p className="text-[10px] uppercase tracking-wide text-indigo-100">RIASEC</p>
+          </div>
+        </div>
+      </motion.section>
 
       {/* Profile completion banner */}
       {completion.pct < 100 && (
-        <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-          <Card className="border-amber-200 bg-amber-50/60">
+        <motion.div initial={reduce ? false : { opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+          <Card className="border-amber-200 bg-amber-50/60 dark:bg-amber-950/20 dark:border-amber-900 rounded-2xl">
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-semibold text-amber-800 flex items-center gap-2">
                   <User className="w-4 h-4 text-amber-600" />
                   Profil complété à {completion.pct}%
                 </span>
-                <Button size="sm" variant="outline" className="border-amber-300 text-amber-700 hover:bg-amber-100 text-xs h-7" onClick={onOpenProfile}>
+                <Button size="sm" variant="outline" className="border-amber-300 text-amber-700 hover:bg-amber-100 text-xs h-11 md:h-7 px-4 md:px-3 rounded-xl" onClick={onOpenProfile}>
                   Compléter
                 </Button>
               </div>
@@ -169,8 +218,8 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
       )}
 
       {/* Stats row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm">
+      <div className="snap-feed flex gap-3 overflow-x-auto -mx-4 px-4 pb-1 md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-4 md:gap-4 md:overflow-visible">
+        <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm rounded-2xl shrink-0 w-[42%] min-w-[140px] md:w-auto">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center">
             <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mb-2">
               <BarChart2 className="w-5 h-5" />
@@ -189,7 +238,7 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
         ].map(({ icon: Icon, label, sub, path, color, border }) => (
           <Card
             key={path}
-            className={`bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer ${border} hover:shadow-md transition-all group`}
+            className={`bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer rounded-2xl shrink-0 w-[42%] min-w-[140px] md:w-auto active:scale-95 ${border} hover:shadow-md transition-all group`}
             onClick={() => onNavigate(path)}
           >
             <CardContent className="p-4 flex flex-col items-center justify-center text-center">
@@ -205,12 +254,12 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
 
       {/* Latest RIASEC result */}
       {!testStats.loading && testStats.latest && (
-        <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm">
+        <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm rounded-2xl">
           <CardHeader className="pb-3 flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-indigo-500" /> Dernier résultat RIASEC
             </CardTitle>
-            <Button size="sm" variant="ghost" className="text-indigo-600 text-xs gap-1" onClick={() => onNavigate('/profile')}>
+            <Button size="sm" variant="ghost" className="text-indigo-600 text-xs gap-1 h-11 md:h-9" onClick={() => onNavigate('/profile')}>
               Voir analyse <ArrowRight className="w-3 h-3" />
             </Button>
           </CardHeader>
@@ -244,8 +293,8 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
       )}
 
       {/* Test CTA + History/Tools */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="border-0 shadow-sm bg-gradient-to-br from-indigo-500 to-purple-600 text-white overflow-hidden relative">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <Card className="border-0 shadow-sm rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white overflow-hidden relative">
           <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
             <Compass className="w-32 h-32" />
           </div>
@@ -258,7 +307,7 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
                 ? 'Affinez votre profil RIASEC avec un nouveau passage.'
                 : 'Découvrez votre profil d\'orientation en 27 questions.'}
             </p>
-            <Button onClick={() => onNavigate('/test-orientation')} className="bg-white text-indigo-600 hover:bg-slate-50 font-semibold">
+            <Button onClick={() => onNavigate('/test-orientation')} className="bg-white text-indigo-600 hover:bg-slate-50 font-semibold h-11 rounded-xl px-5">
               {testStats.count > 0 ? 'Refaire le test' : 'Commencer'}
               <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
@@ -270,7 +319,7 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
             <TestHistoryInline history={history} onNavigate={onNavigate} />
           </WidgetErrorBoundary>
         ) : (
-          <Card className="border-slate-200 dark:border-slate-700 shadow-sm dark:bg-slate-800">
+          <Card className="border-slate-200 dark:border-slate-700 shadow-sm dark:bg-slate-800 rounded-2xl">
             <CardContent className="p-5 flex flex-col gap-2">
               <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100 mb-1">Outils disponibles</h3>
               {[
@@ -278,7 +327,7 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
                 { icon: FileText,  label: 'Créer mon CV',             path: '/cv-builder',    color: 'bg-blue-100 text-blue-600' },
                 { icon: Briefcase, label: "Offres d'emploi",          path: '/offres-emploi', color: 'bg-emerald-100 text-emerald-600' },
               ].map(({ icon: Icon, label, path, color }) => (
-                <button key={path} onClick={() => onNavigate(path)} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors text-left w-full group">
+                <button key={path} onClick={() => onNavigate(path)} className="flex items-center gap-3 p-2.5 min-h-[44px] rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors text-left w-full group">
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${color}`}>
                     <Icon className="w-4 h-4" />
                   </div>
@@ -292,17 +341,17 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
       </div>
 
       {/* Profile summary */}
-      <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm">
+      <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm rounded-2xl">
         <CardHeader className="pb-3 flex flex-row items-center justify-between">
           <CardTitle className="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
             <User className="w-4 h-4 text-slate-500 dark:text-slate-400" /> Mon Profil
           </CardTitle>
-          <Button size="sm" variant="ghost" className="text-slate-500 text-xs hover:text-indigo-600 gap-1" onClick={onOpenProfile}>
+          <Button size="sm" variant="ghost" className="text-slate-500 text-xs hover:text-indigo-600 gap-1 h-11 md:h-9" onClick={onOpenProfile}>
             <Settings className="w-3.5 h-3.5" /> Modifier
           </Button>
         </CardHeader>
         <CardContent className="pt-0">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div className="snap-feed flex gap-2.5 overflow-x-auto -mx-6 px-6 pb-1 md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-3 md:gap-3 md:overflow-visible">
             {[
               { icon: User,          label: 'Nom',       value: `${userProfile?.first_name ?? ''} ${userProfile?.last_name ?? ''}`.trim() || null },
               { icon: Mail,          label: 'Email',     value: user?.email },
@@ -311,11 +360,11 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
               { icon: Briefcase,     label: 'Situation', value: userProfile?.user_status },
               { icon: Target,        label: 'Plan',      value: getDisplayPlanName(subscriptionTier) },
             ].map(({ icon: Icon, label, value }) => (
-              <div key={label} className="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50">
+              <div key={label} className="flex items-start gap-2 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 shrink-0 w-[60%] min-w-[180px] md:w-auto">
                 <Icon className="w-3.5 h-3.5 text-slate-400 mt-0.5 shrink-0" />
                 <div className="min-w-0">
                   <p className="text-[11px] text-slate-400 font-medium">{label}</p>
-                  <p className="text-xs font-semibold text-slate-700 truncate">
+                  <p className="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate">
                     {value || <span className="text-slate-300 font-normal italic">Non renseigné</span>}
                   </p>
                 </div>
@@ -328,17 +377,17 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
       {/* Admin block */}
       {isAdmin && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <Card className="border-purple-200 bg-purple-50">
+          <Card className="border-purple-200 bg-purple-50 dark:bg-purple-950/20 dark:border-purple-900 rounded-2xl">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-semibold text-purple-900 flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4" /> Espace Administrateur
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-2">
-              <Button onClick={() => onNavigate('/admin/content')} className="bg-purple-600 hover:bg-purple-700 text-white gap-1.5">
+              <Button onClick={() => onNavigate('/admin/content')} className="bg-purple-600 hover:bg-purple-700 text-white gap-1.5 h-11 rounded-xl">
                 <Settings className="w-4 h-4" /> Gestion de contenu <ArrowRight className="w-4 h-4" />
               </Button>
-              <Button onClick={() => onNavigate('/admin/dashboard')} variant="outline" className="border-purple-200 text-purple-700 hover:bg-purple-100 gap-1.5">
+              <Button onClick={() => onNavigate('/admin/dashboard')} variant="outline" className="border-purple-200 text-purple-700 hover:bg-purple-100 gap-1.5 h-11 rounded-xl">
                 <BarChart2 className="w-4 h-4" /> Analytics
               </Button>
             </CardContent>
