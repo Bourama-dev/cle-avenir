@@ -221,27 +221,26 @@ const EnhancedFormationFilters = ({
         </div>
       </div>
 
-      {/* Mobile Trigger */}
-      <div className="lg:hidden w-full mb-4">
+      {/* Mobile trigger: floating pill + bottom sheet */}
+      <div className="lg:hidden fixed right-4 z-30 bottom-[calc(4rem+env(safe-area-inset-bottom)+0.75rem)]">
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="outline" className="w-full justify-between bg-white border-slate-200 shadow-sm h-12">
-              <span className="flex items-center gap-2 font-medium text-slate-700">
-                <Filter className="w-4 h-4" /> Filtres
-              </span>
+            <Button className="h-12 rounded-full px-5 gap-2 bg-slate-900 hover:bg-slate-800 text-white shadow-xl dark:bg-white dark:text-slate-900">
+              <Filter className="w-4 h-4" /> Filtres
               {activeFiltersCount > 0 && (
-                <Badge variant="secondary" className="bg-violet-100 text-violet-700 ml-2">
+                <span className="min-w-5 h-5 px-1.5 rounded-full bg-violet-500 text-white text-[11px] font-bold flex items-center justify-center">
                   {activeFiltersCount}
-                </Badge>
+                </span>
               )}
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-            <SheetHeader>
-              <SheetTitle className="text-xl font-bold text-slate-900">Filtres de recherche</SheetTitle>
+          <SheetContent side="bottom" className="rounded-t-3xl max-h-[88dvh] p-0 flex flex-col">
+            <div className="mx-auto mt-3 h-1.5 w-10 rounded-full bg-slate-300 shrink-0" />
+            <SheetHeader className="px-5 pt-3 text-left">
+              <SheetTitle className="text-xl font-bold text-slate-900">Filtres</SheetTitle>
             </SheetHeader>
-            <ScrollArea className="h-[calc(100vh-80px)] pr-4 mt-6">
-              <FilterPanel {...panelProps} />
+            <ScrollArea className="flex-1 min-h-0 px-5 pt-4 pb-safe">
+              <div className="pb-6"><FilterPanel {...panelProps} /></div>
             </ScrollArea>
           </SheetContent>
         </Sheet>

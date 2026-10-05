@@ -86,38 +86,38 @@ const JobExplorer = ({ onNavigate }) => {
   const isGeoActive = filters.location && filters.radius !== null;
 
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-20">
+    <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950 pb-24 md:pb-20">
 
-      {/* ── Sticky header: search bar + tabs ── */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
-        <div className="container mx-auto px-4 py-4 md:py-5 max-w-7xl">
-          {/* Search row */}
-          <div className="flex flex-col md:flex-row gap-3 items-center">
-            <div className="relative flex-1 w-full group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-rose-500 transition-colors" />
+      {/* Sticky header: search + tabs */}
+      <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30 pt-safe">
+        <div className="mx-auto px-4 pt-3 pb-2 max-w-7xl">
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1 group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-rose-500 transition-colors" />
               <Input
-                placeholder="Rechercher un métier, une compétence..."
-                className="pl-10 h-11 bg-slate-50 border-slate-200 focus:bg-white focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all shadow-sm"
+                placeholder="Métier, compétence"
+                className="pl-11 h-12 rounded-2xl text-base bg-slate-100 dark:bg-slate-800 border-0 focus-visible:ring-2 focus-visible:ring-rose-500/30 dark:text-white"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && fetchJobs()}
               />
             </div>
             <Button
-              size="lg"
-              className="h-11 w-full md:w-auto px-6 bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-md shadow-rose-200 transition-all"
+              className="h-12 w-12 md:w-auto md:px-6 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-bold"
               onClick={() => fetchJobs()}
+              aria-label="Rechercher"
             >
-              Rechercher
+              <Search className="h-5 w-5 md:hidden" />
+              <span className="hidden md:inline">Rechercher</span>
             </Button>
           </div>
 
-          {/* Tabs */}
-          <div className="flex gap-0 mt-3 -mb-px">
+          <div className="snap-feed flex gap-2 overflow-x-auto -mx-4 px-4 mt-3">
             <TabButton
               active={activeTab === 'offers'}
               onClick={() => setActiveTab('offers')}
               icon={<Briefcase className="w-4 h-4" />}
-              label="Offres publiées"
+              label="Offres"
               count={activeTab === 'offers' && totalCount > 0 ? totalCount : null}
               countColor="rose"
             />
@@ -125,7 +125,7 @@ const JobExplorer = ({ onNavigate }) => {
               active={activeTab === 'companies'}
               onClick={() => setActiveTab('companies')}
               icon={<Building2 className="w-4 h-4" />}
-              label="Candidatures spontanées"
+              label="Spontanées"
               count={activeTab === 'companies' && companiesTotal > 0 ? companiesTotal : null}
               countColor="indigo"
             />
@@ -141,7 +141,7 @@ const JobExplorer = ({ onNavigate }) => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <div className="mx-auto px-4 py-4 md:py-8 max-w-7xl">
         <div className="flex flex-col lg:flex-row gap-8">
 
           {/* ── Sidebar: shared location/radius filters ── */}
@@ -167,7 +167,7 @@ const JobExplorer = ({ onNavigate }) => {
                   />
                 )}
                 {loading && jobs.length === 0 ? (
-                  <div className="grid grid-cols-1 gap-4">
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-4">
                     {[1, 2, 3, 4].map((i) => <JobCardSkeleton key={i} />)}
                   </div>
                 ) : error === 'credentials_missing' ? (
@@ -187,7 +187,7 @@ const JobExplorer = ({ onNavigate }) => {
                   </WarningCard>
                 ) : jobs.length > 0 ? (
                   <div className="space-y-6">
-                    <div className="grid grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-4">
                       {jobs.map((job) => (
                         <JobCard
                           key={job.id} job={job}
@@ -255,19 +255,25 @@ const JobExplorer = ({ onNavigate }) => {
 };
 
 // ── Tab button ────────────────────────────────────────────────────────────────
+const TAB_ACTIVE = {
+  rose: 'bg-rose-600 text-white border-rose-600',
+  indigo: 'bg-indigo-600 text-white border-indigo-600',
+  violet: 'bg-violet-600 text-white border-violet-600',
+};
+
 const TabButton = ({ active, onClick, icon, label, count, countColor }) => (
   <button
     onClick={onClick}
-    className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+    className={`shrink-0 flex items-center gap-2 h-11 px-4 rounded-full text-sm font-semibold border transition-colors whitespace-nowrap ${
       active
-        ? `border-${countColor}-500 text-${countColor}-600`
-        : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+        ? TAB_ACTIVE[countColor]
+        : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200'
     }`}
   >
     {icon}
     {label}
     {count != null && (
-      <span className={`text-[11px] font-semibold px-1.5 py-0.5 rounded-full bg-${countColor}-100 text-${countColor}-700`}>
+      <span className="text-[11px] font-bold px-1.5 py-0.5 rounded-full bg-white/25">
         {count.toLocaleString('fr-FR')}
       </span>
     )}
@@ -315,18 +321,18 @@ const CompaniesTab = ({
   sectorId, onSectorChange, lbbContract, onContractChange,
 }) => {
   const FiltersBar = () => (
-    <div className="flex flex-col sm:flex-row gap-3 mb-5 bg-white rounded-xl border border-slate-200 p-4">
+    <div className="flex flex-col sm:flex-row gap-3 mb-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4">
       <div className="flex-1">
         <CompanySectorFilter selectedSector={sectorId} onChange={onSectorChange} />
       </div>
       <div className="flex flex-col justify-end gap-1 shrink-0">
         <span className="text-sm font-medium text-slate-700 mb-1">Type de contrat</span>
-        <div className="flex gap-2 flex-wrap">
+        <div className="snap-feed flex gap-2 overflow-x-auto">
           {LBB_CONTRACT_OPTIONS.map((opt) => (
             <button
               key={opt.value}
               onClick={() => onContractChange(opt.value)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+              className={`h-11 px-4 rounded-full text-sm font-medium border transition-colors ${
                 lbbContract === opt.value
                   ? 'bg-indigo-600 text-white border-indigo-600'
                   : 'bg-white text-slate-600 border-slate-200 hover:border-indigo-300 hover:text-indigo-600'
@@ -396,9 +402,9 @@ const CompaniesTab = ({
     return (
       <>
         <FiltersBar />
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-4">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="bg-white rounded-xl border border-slate-200 p-4 animate-pulse">
+            <div key={i} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 animate-pulse">
               <div className="flex gap-4">
                 <div className="w-12 h-12 bg-slate-100 rounded-xl shrink-0" />
                 <div className="flex-1 space-y-2 pt-1">
@@ -442,7 +448,7 @@ const CompaniesTab = ({
         </span>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 mb-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-4 mb-6">
         {companies.map((company) => (
           <CompanyCard key={`${company.siret}-${company.name}`} company={company} />
         ))}
@@ -503,12 +509,12 @@ const AlternanceTab = ({
   return (
     <>
       {/* Sector filter */}
-      <div className="bg-white rounded-xl border border-slate-200 p-4 mb-5">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 mb-5">
         <CompanySectorFilter selectedSector={sectorId} onChange={onSectorChange} />
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-4">
           {[1, 2, 3, 4].map((i) => <JobCardSkeleton key={i} />)}
         </div>
       ) : jobs.length === 0 && recruiters.length === 0 ? (
@@ -532,7 +538,7 @@ const AlternanceTab = ({
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 gap-4 mb-6">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-4 mb-6">
                 {jobs.map((job) => (
                   <AlternanceJobCard key={job.id} job={job} />
                 ))}
@@ -551,7 +557,7 @@ const AlternanceTab = ({
                 <Building2 className="w-4 h-4 text-slate-400" />
                 Entreprises qui recrutent en alternance ({recruiters.length})
               </h3>
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-4">
                 {recruiters.map((rec) => (
                   <CompanyCard key={rec.id} company={rec} />
                 ))}
@@ -566,7 +572,7 @@ const AlternanceTab = ({
 
 // ── Single alternance job card ─────────────────────────────────────────────────
 const AlternanceJobCard = ({ job }) => (
-  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-md hover:border-slate-300 transition-all duration-200">
+  <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 hover:shadow-md hover:border-slate-300 transition-all duration-200">
     <div className="flex items-start gap-3">
       <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center shrink-0">
         <GraduationCap className="w-5 h-5 text-violet-400" />
@@ -601,13 +607,13 @@ const AlternanceJobCard = ({ job }) => (
         offer={{ title: job.title, company: job.company?.name, description: job.description, level: 'stage' }}
         size="sm"
         variant="outline"
-        className="text-xs h-7 px-3 border-violet-200 text-violet-700 hover:bg-violet-50 hover:text-violet-800"
+        className="text-xs h-11 px-4 border-violet-200 text-violet-700 hover:bg-violet-50 hover:text-violet-800"
       />
       {job.url && (
         <Button
           size="sm"
           variant="outline"
-          className="text-xs h-7 px-3 border-slate-200 hover:bg-violet-50 hover:border-violet-200 hover:text-violet-700 gap-1.5 transition-colors"
+          className="text-xs h-11 px-4 border-slate-200 hover:bg-violet-50 hover:border-violet-200 hover:text-violet-700 gap-1.5 transition-colors"
           onClick={() => window.open(job.url, '_blank', 'noopener,noreferrer')}
         >
           Voir l'offre <ExternalLink className="w-3 h-3" />

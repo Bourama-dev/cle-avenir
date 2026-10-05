@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Footer from '@/components/Footer';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import MagneticButton from '@/components/ui/MagneticButton';
 import PageHelmet from '@/components/SEO/PageHelmet';
 import { categoryPageSEO } from '@/components/SEO/seoPresets';
@@ -72,6 +72,7 @@ const FormationsPage = ({ setAllFormations }) => {
   const isFetchingRef = useRef(false);
 
   const navigate = useNavigate();
+  const reduce = useReducedMotion();
   const { hasAccess } = useSubscriptionAccess();
   const hasPremiumAccess = hasAccess(FEATURES.FORMATION_DETAILS);
 
@@ -365,6 +366,20 @@ const FormationsPage = ({ setAllFormations }) => {
     categoryPath: "/formations"
   });
 
+  const typeChips = [
+    { value: 'all', label: 'Tout' },
+    { value: 'Parcoursup', label: 'Parcoursup' },
+    { value: 'Alternance', label: 'Alternance' },
+    { value: 'Initial', label: 'Initial' },
+  ];
+  const levelChips = [{ value: 'all', label: 'Tous niveaux' }, ...['CAP/BEP', 'BAC', 'BAC+2', 'BAC+3', 'BAC+5'].map(v => ({ value: v, label: v }))];
+  const chipCls = (active) =>
+    `shrink-0 h-11 px-4 rounded-full text-sm font-semibold border transition-colors ${
+      active
+        ? 'bg-violet-600 text-white border-violet-600'
+        : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
+    }`;
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans flex flex-col">
       <PageHelmet {...formationsSEO} />
@@ -375,60 +390,15 @@ const FormationsPage = ({ setAllFormations }) => {
         defaultTier="premium"
       />
 
-      {/* ── Niveau selector ──────────────────────────────────────────────── */}
-      <div className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white">
-        <div className="container mx-auto px-4 py-5 max-w-7xl">
-          <p className="text-xs font-semibold uppercase tracking-widest text-violet-200 mb-3">
-            Quel est ton niveau&nbsp;?
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3">
-            {/* Lycées — collégiens */}
-            <button
-              onClick={() => navigate('/lycees')}
-              className="flex items-center gap-3 flex-1 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl px-5 py-3.5 text-left transition-colors group"
-            >
-              <div className="w-10 h-10 bg-indigo-500/40 rounded-lg flex items-center justify-center shrink-0">
-                <School className="w-5 h-5" />
-              </div>
-              <div className="min-w-0">
-                <p className="font-semibold text-sm leading-tight">Collégien → Lycée</p>
-                <p className="text-xs text-violet-200 leading-tight mt-0.5 truncate">
-                  Bac général, techno, pro, CAP — seconde à terminale
-                </p>
-              </div>
-              <ArrowRight className="w-4 h-4 text-violet-200 ml-auto shrink-0 group-hover:translate-x-1 transition-transform" />
-            </button>
-
-            {/* Post-bac — current page, highlighted as active */}
-            <div className="flex items-center gap-3 flex-1 bg-white/20 border-2 border-white/40 rounded-xl px-5 py-3.5 cursor-default">
-              <div className="w-10 h-10 bg-white/30 rounded-lg flex items-center justify-center shrink-0">
-                <GraduationCap className="w-5 h-5" />
-              </div>
-              <div className="min-w-0">
-                <p className="font-semibold text-sm leading-tight flex items-center gap-1.5">
-                  Lycéen → Formations supérieures
-                  <span className="text-[10px] font-bold bg-white text-violet-700 px-1.5 py-0.5 rounded-full">
-                    Actif
-                  </span>
-                </p>
-                <p className="text-xs text-violet-200 leading-tight mt-0.5 truncate">
-                  BTS, BUT, Licence, Master, Ingénieur, Alternance…
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Header & Search */}
-      <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30 shadow-sm transition-all duration-200">
-        <div className="container mx-auto px-4 py-4 md:py-6 max-w-7xl">
-          <div className="flex flex-col md:flex-row gap-4 items-center">
-            <div className="relative flex-1 w-full group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-violet-500 transition-colors" />
+      {/* Sticky search + chips */}
+      <div className="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-700 pt-safe">
+        <div className="mx-auto max-w-7xl px-4 pt-3 pb-2">
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1 group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-violet-500 transition-colors" />
               <Input
-                placeholder="Rechercher un métier, une formation..."
-                className="pl-10 h-12 text-lg bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all shadow-sm dark:text-white dark:placeholder:text-slate-400"
+                placeholder="Formation, métier, école"
+                className="pl-11 h-12 rounded-2xl text-base bg-slate-100 dark:bg-slate-800 border-0 focus-visible:ring-2 focus-visible:ring-violet-500/40 dark:text-white dark:placeholder:text-slate-400"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearchSubmit()}
@@ -436,20 +406,47 @@ const FormationsPage = ({ setAllFormations }) => {
             </div>
             <MagneticButton>
               <Button
-                size="lg"
-                className="h-12 w-full md:w-auto px-8 bg-violet-600 hover:bg-violet-700 text-white font-bold shadow-md shadow-violet-200 hover:shadow-lg transition-all"
+                className="h-12 w-12 md:w-auto md:px-8 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-bold"
                 onClick={handleSearchSubmit}
+                aria-label="Rechercher"
               >
-                Rechercher
+                <Search className="h-5 w-5 md:hidden" />
+                <span className="hidden md:inline">Rechercher</span>
               </Button>
             </MagneticButton>
+          </div>
+
+          <div className="snap-feed flex gap-2 overflow-x-auto -mx-4 px-4 mt-3">
+            {typeChips.map(c => (
+              <button key={c.value} className={chipCls(formationTypeFilter === c.value)} onClick={() => setFormationTypeFilter(c.value)}>
+                {c.label}
+              </button>
+            ))}
+            <span className="shrink-0 w-px bg-slate-200 dark:bg-slate-700 my-2" />
+            {levelChips.map(c => (
+              <button key={c.value} className={chipCls(levelFilter === c.value)} onClick={() => setLevelFilter(c.value)}>
+                {c.label}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
-      <main className="container mx-auto px-4 py-8 max-w-7xl flex-grow">
+      <main className="mx-auto w-full max-w-7xl px-4 py-4 md:py-8 flex-grow pb-24 md:pb-8">
+        {/* Niveau selector */}
+        <div className="flex gap-2 mb-4 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 p-1.5 text-white">
+          <button
+            onClick={() => navigate('/lycees')}
+            className="flex-1 min-h-[48px] flex items-center justify-center gap-2 rounded-xl px-3 text-sm font-semibold hover:bg-white/10 transition-colors"
+          >
+            <School className="w-4 h-4 shrink-0" /> Collégien <ArrowRight className="w-3.5 h-3.5 hidden sm:block" /> <span className="hidden sm:inline">Lycée</span>
+          </button>
+          <div className="flex-1 min-h-[48px] flex items-center justify-center gap-2 rounded-xl bg-white text-violet-700 px-3 text-sm font-bold cursor-default">
+            <GraduationCap className="w-4 h-4 shrink-0" /> Post-bac
+          </div>
+        </div>
+
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters Sidebar */}
           <EnhancedFormationFilters
             searchTerm={searchTerm}
             cityInputValue={cityInputValue}
@@ -470,10 +467,8 @@ const FormationsPage = ({ setAllFormations }) => {
             onReset={handleResetFilters}
           />
 
-          {/* Results Area */}
           <div className="flex-1 min-w-0">
 
-        {/* --- Details Panel (Conditionally Rendered) --- */}
         {selectedFormation && (
           <FormationDetailsPanel
             formationId={selectedFormation.id_formation || selectedFormation.g_ea_lib_vx}
@@ -482,23 +477,19 @@ const FormationsPage = ({ setAllFormations }) => {
           />
         )}
 
-        {/* --- Results List --- */}
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-5">
           {initialLoading ? (
-            Array(3).fill(0).map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardHeader className="h-24 bg-slate-100 dark:bg-slate-800 rounded-t-xl" />
-                <CardContent className="h-40 bg-slate-50 dark:bg-slate-800/50" />
-              </Card>
+            Array(4).fill(0).map((_, i) => (
+              <div key={i} className="h-44 rounded-2xl bg-slate-200/70 dark:bg-slate-800 animate-pulse" />
             ))
           ) : error ? (
-            <div className="text-center py-12 bg-red-50 dark:bg-red-950/30 rounded-xl border border-red-100">
+            <div className="xl:col-span-2 text-center py-12 bg-red-50 dark:bg-red-950/30 rounded-2xl border border-red-100">
               <AlertCircle className="h-10 w-10 text-red-500 mx-auto mb-3" />
-              <p className="text-red-700 font-medium">{error}</p>
-              <Button onClick={() => fetchBatch(0, true)} variant="outline" className="mt-4 border-red-200 text-red-700">Réessayer</Button>
+              <p className="text-red-700 font-medium px-4">{error}</p>
+              <Button onClick={() => fetchBatch(0, true)} variant="outline" className="mt-4 h-11 border-red-200 text-red-700">Réessayer</Button>
             </div>
           ) : displayedFormations.length === 0 ? (
-            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-xl border border-dashed border-slate-300 dark:border-slate-700">
+            <div className="xl:col-span-2 text-center py-16 bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
               <Search className="h-12 w-12 text-slate-300 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-slate-900 dark:text-white">Aucune formation trouvée</h3>
               <p className="text-slate-500 dark:text-slate-400">Essayez de modifier vos critères de recherche.</p>
@@ -508,170 +499,93 @@ const FormationsPage = ({ setAllFormations }) => {
               const { ui_details } = formation;
               const primaryEtab = formation.etablissements?.[0] || {};
               const isSelected = selectedFormation && (formation.id_formation === selectedFormation.id_formation);
+              const { metierKeyword, offresKeyword } = extractFormationKeywords(formation.libelle_formation || '');
 
               return (
                 <motion.div
                   key={`${formation.id_formation}-${idx}`}
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={reduce ? false : { opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  className={`group flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-4 md:p-5 md:hover:shadow-lg transition-shadow ${isSelected ? 'ring-2 ring-violet-500 border-violet-500' : ''}`}
                 >
-                <Card
-                  className={`group overflow-hidden hover:shadow-lg transition-all border-slate-200 dark:border-slate-700 hover:border-violet-200 dark:bg-slate-900 ${isSelected ? 'ring-2 ring-violet-500 border-violet-500' : ''}`}
-                >
-                  <div className="flex flex-col md:flex-row">
-                    <div className="flex-1 p-6 flex flex-col justify-between">
-                      <div>
-                        <div className="flex flex-wrap items-center gap-2 mb-3">
-                          {formation.source === 'parcoursup' && (
-                            <Badge className="bg-blue-50 text-blue-700 border border-blue-200 font-semibold">Parcoursup</Badge>
-                          )}
-                          {formation.source === 'apprentissage' && (
-                            <Badge className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">Alternance</Badge>
-                          )}
-                          <Badge variant="secondary" className="bg-violet-100 text-violet-700">
-                            {ui_details.level_label}
-                          </Badge>
-                          <Badge variant="outline" className="text-slate-600 border-slate-200">
-                            {ui_details.format}
-                          </Badge>
-                          {ui_details.rating && (
-                            <div className="flex items-center gap-1 text-sm font-medium text-amber-500 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">
-                              <Star className="h-3 w-3 fill-amber-500" />
-                              <span>{ui_details.rating}</span>
-                              <span className="text-slate-400 font-normal text-xs">({ui_details.reviews_count})</span>
-                            </div>
-                          )}
-                        </div>
-
-                        <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-violet-700 transition-colors leading-tight">
-                          {formation.libelle_formation}
-                        </h2>
-
-                        <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 mb-4 text-sm font-medium">
-                          <Building className="h-4 w-4 text-slate-400" />
-                          <span>{ui_details.instructor}</span>
-                          <span className="text-slate-300">•</span>
-                          <MapPin className="h-4 w-4 text-slate-400" />
-                          <span>{primaryEtab.ville || formation.ville}</span>
-                        </div>
-
-                        <p className="text-slate-600 dark:text-slate-400 text-sm mb-6 line-clamp-2">
-                          {formation.description || "Formation complète pour acquérir les compétences clés."}
-                        </p>
-
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg border border-slate-100 dark:border-slate-700/50">
-                          <div className="flex flex-col">
-                            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase mb-1">Durée</span>
-                            <div className="flex items-center gap-1.5 font-semibold">
-                              <Clock className="h-4 w-4 text-violet-500" />
-                              {ui_details.duration}
-                            </div>
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase mb-1">Modules</span>
-                            <div className="flex items-center gap-1.5 font-semibold">
-                              <BookOpen className="h-4 w-4 text-blue-500" />
-                              {ui_details.modules_count} leçons
-                            </div>
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase mb-1">Langue</span>
-                            <div className="flex items-center gap-1.5 font-semibold">
-                              <Globe className="h-4 w-4 text-emerald-500" />
-                              {ui_details.language}
-                            </div>
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase mb-1">Difficulté</span>
-                            <div className="flex items-center gap-1.5 font-semibold">
-                              <MonitorPlay className="h-4 w-4 text-orange-500" />
-                              {ui_details.difficulty}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="w-full md:w-80 bg-slate-50/50 dark:bg-slate-800/50 p-6 border-t md:border-t-0 md:border-l border-slate-100 dark:border-slate-700/50 flex flex-col justify-between">
-                      <div className="space-y-4 mb-6">
-                        <div className="space-y-3">
-                          <h4 className="font-semibold text-slate-900 dark:text-white text-sm flex items-center gap-2">
-                            <Award className="h-4 w-4 text-violet-600" />
-                            Certification
-                          </h4>
-                          <p className="text-sm text-slate-600 dark:text-slate-400 pl-6">{ui_details.certificate}</p>
-                        </div>
-                        <div className="space-y-3">
-                          <h4 className="font-semibold text-slate-900 dark:text-white text-sm flex items-center gap-2">
-                            <CheckCircle2 className="h-4 w-4 text-violet-600" />
-                            Compétences clés
-                          </h4>
-                          <ul className="text-sm text-slate-600 dark:text-slate-400 pl-6 list-disc space-y-1">
-                            {ui_details.outcomes.slice(0, 2).map((outcome, i) => (
-                              <li key={i}>{outcome}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div className="space-y-2 mt-auto">
-                        <Button
-                          className={`w-full ${hasPremiumAccess ? 'bg-violet-600 hover:bg-violet-700' : 'bg-slate-800 hover:bg-slate-700'} text-white shadow-sm`}
-                          onClick={() => handleFormationClick(formation)}
-                        >
-                          {hasPremiumAccess ? "Accéder à la formation" : (
-                            <>
-                              <Lock size={14} className="mr-2" /> Voir le détail complet
-                            </>
-                          )}
-                        </Button>
-                        {/* Cross-links row — keywords derived from full title */}
-                        {(() => {
-                          const { metierKeyword, offresKeyword } = extractFormationKeywords(formation.libelle_formation || '');
-                          return (
-                            <div className="flex gap-2">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="flex-1 text-xs border-indigo-200 text-indigo-700 hover:bg-indigo-50"
-                                onClick={() => navigate(`/metiers?q=${encodeURIComponent(metierKeyword)}`)}
-                                title={`Rechercher : ${metierKeyword}`}
-                              >
-                                <Briefcase className="w-3 h-3 mr-1" /> Métiers
-                              </Button>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="flex-1 text-xs border-rose-200 text-rose-700 hover:bg-rose-50"
-                                onClick={() => navigate(`/offres-emploi?q=${encodeURIComponent(offresKeyword)}`)}
-                                title={`Rechercher : ${offresKeyword}`}
-                              >
-                                <ArrowRight className="w-3 h-3 mr-1" /> Offres
-                              </Button>
-                            </div>
-                          );
-                        })()}
-                      </div>
-                    </div>
+                  <div className="flex flex-wrap items-center gap-1.5 mb-2">
+                    {formation.source === 'parcoursup' && (
+                      <Badge className="bg-blue-50 text-blue-700 border border-blue-200 font-semibold">Parcoursup</Badge>
+                    )}
+                    {formation.source === 'apprentissage' && (
+                      <Badge className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">Alternance</Badge>
+                    )}
+                    <Badge variant="secondary" className="bg-violet-100 text-violet-700">{ui_details.level_label}</Badge>
+                    {ui_details.rating && (
+                      <span className="ml-auto flex items-center gap-1 text-xs font-semibold text-amber-600">
+                        <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
+                        {ui_details.rating}
+                      </span>
+                    )}
                   </div>
-                </Card>
+
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white leading-snug line-clamp-3 group-hover:text-violet-700 dark:group-hover:text-violet-300 transition-colors">
+                    {formation.libelle_formation}
+                  </h2>
+
+                  <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 mt-1.5 text-sm min-w-0">
+                    <Building className="h-4 w-4 text-slate-400 shrink-0" />
+                    <span className="truncate">{ui_details.instructor}</span>
+                    <MapPin className="h-4 w-4 text-slate-400 shrink-0 ml-1" />
+                    <span className="truncate shrink-0 max-w-[40%]">{primaryEtab.ville || formation.ville}</span>
+                  </div>
+
+                  <div className="flex items-center gap-4 mt-3 text-xs font-medium text-slate-600 dark:text-slate-300">
+                    <span className="flex items-center gap-1.5"><Clock className="h-4 w-4 text-violet-500" />{ui_details.duration}</span>
+                    <span className="flex items-center gap-1.5"><Award className="h-4 w-4 text-violet-500" />{ui_details.format}</span>
+                    <span className="hidden sm:flex items-center gap-1.5"><MonitorPlay className="h-4 w-4 text-orange-500" />{ui_details.difficulty}</span>
+                  </div>
+
+                  <div className="mt-4 flex items-center gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+                    <Button
+                      className={`flex-1 h-11 rounded-xl ${hasPremiumAccess ? 'bg-violet-600 hover:bg-violet-700' : 'bg-slate-800 hover:bg-slate-700'} text-white`}
+                      onClick={() => handleFormationClick(formation)}
+                    >
+                      {hasPremiumAccess ? "Voir la formation" : (
+                        <><Lock size={14} className="mr-2" /> Détail complet</>
+                      )}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="h-11 w-11 p-0 rounded-xl border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+                      onClick={() => navigate(`/metiers?q=${encodeURIComponent(metierKeyword)}`)}
+                      title={`Métiers : ${metierKeyword}`}
+                      aria-label="Voir les métiers liés"
+                    >
+                      <Briefcase className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="h-11 w-11 p-0 rounded-xl border-rose-200 text-rose-700 hover:bg-rose-50"
+                      onClick={() => navigate(`/offres-emploi?q=${encodeURIComponent(offresKeyword)}`)}
+                      title={`Offres : ${offresKeyword}`}
+                      aria-label="Voir les offres liées"
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </motion.div>
               );
             })
           )}
         </div>
 
-        <div className="mt-12 flex justify-center items-center gap-6">
+        <div className="mt-8 flex justify-center items-center gap-5">
           <Button
             variant="outline"
             size="icon"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="rounded-full"
+            className="rounded-full h-11 w-11"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-5 w-5" />
           </Button>
           <span className="text-sm font-medium text-slate-600 dark:text-slate-400">
             Page {currentPage} sur {Math.max(totalPagesInFetched, 1)}
@@ -681,9 +595,9 @@ const FormationsPage = ({ setAllFormations }) => {
             size="icon"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPagesInFetched && allFetchedFormations.length >= serverTotalCount}
-            className="rounded-full"
+            className="rounded-full h-11 w-11"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-5 w-5" />
           </Button>
         </div>
 

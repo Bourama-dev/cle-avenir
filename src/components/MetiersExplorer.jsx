@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -17,64 +17,44 @@ import { getMetierSalary } from '@/utils/salaryUtils';
 import { normalizedIncludes } from '@/utils/stringUtils';
 import { metierToSlug } from '@/utils/slugUtils';
 
-const MetierCard = ({ metier, onSelect, index }) => {
+const MetierCard = ({ metier, onSelect, index, reduce }) => {
   const salary = getMetierSalary(metier);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
+    <motion.button
+      type="button"
+      initial={reduce ? false : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.4) }}
+      transition={{ duration: 0.25, delay: reduce ? 0 : Math.min(index * 0.03, 0.3) }}
+      whileTap={reduce ? undefined : { scale: 0.98 }}
       onClick={() => onSelect(metier)}
-      className="bg-card rounded-2xl p-6 card-hover flex flex-col justify-between shadow-md border border-border/20 cursor-pointer h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group relative overflow-hidden"
+      className="w-full text-left bg-card rounded-2xl p-4 min-h-[88px] flex items-center gap-4 border border-border/40 shadow-sm md:flex-col md:items-start md:gap-3 md:p-5 md:hover:shadow-lg md:hover:-translate-y-0.5 transition-all group"
     >
-      <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-        <Briefcase className="w-24 h-24 rotate-12" />
+      <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 text-white flex items-center justify-center shrink-0 shadow-sm">
+        <Briefcase className="h-5 w-5" />
       </div>
-
-      <div className="relative z-10 flex flex-col h-full">
-        {/* Header */}
-        <div className="flex items-start mb-3 gap-3">
-          <div className="p-2.5 bg-primary/10 rounded-xl shrink-0 group-hover:bg-primary/20 transition-colors shadow-sm">
-            <Briefcase className="h-5 w-5 text-primary" />
-          </div>
-          <div className="min-w-0">
-            <Badge variant="outline" className="mb-1.5 text-[10px] tracking-wider font-mono text-muted-foreground bg-muted/50 border-border/50">
-              ROME {metier.code}
-            </Badge>
-            <h3 className="text-base font-bold text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-2">
-              {metier.libelle}
-            </h3>
-          </div>
-        </div>
-
-        {/* Description */}
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-3 flex-1">
-          {metier.description || "Découvrez les compétences, les conditions de travail et les opportunités liées à ce métier."}
-        </p>
-
-        {/* Salary + level chips */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-full">
+      <div className="min-w-0 flex-1 md:w-full">
+        <h3 className="text-base font-bold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+          {metier.libelle}
+        </h3>
+        <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+          <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full">
             <Euro className="w-3 h-3" />
             {salary}
           </span>
           {metier.niveau_etudes && (
-            <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600 bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-full">
+            <span className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
               <GraduationCap className="w-3 h-3" />
               {metier.niveau_etudes}
             </span>
           )}
         </div>
-
-        {/* Footer CTA */}
-        <div className="pt-3 border-t border-border/10 flex justify-between items-center">
-          <span className="text-xs font-semibold text-primary flex items-center gap-1 group-hover:underline group-hover:underline-offset-4 decoration-primary/30 transition-all">
-            Voir la fiche <ChevronRight className="h-3 w-3" />
-          </span>
-        </div>
+        <p className="hidden md:block text-sm text-muted-foreground line-clamp-2 mt-2">
+          {metier.description || "Découvrez les compétences, les conditions de travail et les opportunités liées à ce métier."}
+        </p>
       </div>
-    </motion.div>
+      <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0 md:hidden" />
+    </motion.button>
   );
 };
 
@@ -119,6 +99,7 @@ const MetiersExplorer = ({ onNavigate }) => {
   const itemsPerPage = 12;
   const resultsRef = useRef(null);
   const { toast } = useToast();
+  const reduce = useReducedMotion();
 
   const loadMetiers = async () => {
     setIsLoading(true);
@@ -166,7 +147,7 @@ const MetiersExplorer = ({ onNavigate }) => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
     if (resultsRef.current) {
-      window.scrollTo({ top: resultsRef.current.offsetTop - 100, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -177,93 +158,82 @@ const MetiersExplorer = ({ onNavigate }) => {
         <meta name="description" content={`Explorez ${totalMetiersCount > 0 ? totalMetiersCount.toLocaleString() : 'de nombreux'} métiers issus du répertoire officiel.`} />
       </Helmet>
 
-      <main className="container mx-auto px-4 py-8" ref={resultsRef}>
-        <div className="text-center mb-10">
-          <Badge variant="secondary" className="mb-4 px-3 py-1">Répertoire Opérationnel des Métiers et des Emplois (ROME)</Badge>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Explorez le <span className="gradient-text">Catalogue Métiers</span>
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {totalMetiersCount > 0
-              ? `${totalMetiersCount.toLocaleString('fr-FR')} métiers du répertoire officiel ROME`
-              : "Accédez à l’intégralité des fiches métiers officielles."}
-          </p>
-        </div>
-
-        <div className="bg-background p-4 rounded-2xl shadow-lg border border-border/40 mb-8 max-w-3xl mx-auto sticky top-24 z-30">
-          <div className="relative flex-grow">
+      <div className="sticky top-0 z-30 bg-background/90 backdrop-blur border-b border-border/40 pt-safe">
+        <div className="mx-auto max-w-7xl px-4 py-3">
+          <div className="flex items-baseline justify-between mb-2">
+            <h1 className="text-xl md:text-3xl font-bold text-foreground">
+              Explorer les <span className="gradient-text">métiers</span>
+            </h1>
+            {!isLoading && (
+              <button onClick={loadMetiers} aria-label="Actualiser la liste" className="h-11 w-11 -mr-2 flex items-center justify-center rounded-full text-muted-foreground hover:text-primary hover:bg-muted">
+                <RefreshCcw className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+          <div className="relative max-w-3xl">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5 pointer-events-none" />
             <Input
-              placeholder="Rechercher un métier (ex: Boulanger, Data Analyst...)"
+              placeholder="Rechercher un métier"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-12 pr-10 py-6 text-lg border-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
+              className="pl-11 pr-11 h-12 rounded-2xl text-base bg-muted border-0 focus-visible:ring-2 focus-visible:ring-primary/40"
             />
             {searchTerm && (
-              <button onClick={() => setSearchTerm('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-1 hover:bg-muted rounded-full">
+              <button onClick={() => setSearchTerm('')} aria-label="Effacer" className="absolute right-1 top-1/2 -translate-y-1/2 h-11 w-11 flex items-center justify-center text-muted-foreground hover:text-foreground rounded-full">
                 <X className="h-5 w-5" />
               </button>
             )}
           </div>
-        </div>
-
-        <div className="max-w-6xl mx-auto mb-6 px-2 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="text-sm text-muted-foreground font-medium">
-            {!isLoading && (
-              <>{displayedMetiers.length.toLocaleString('fr-FR')} métier(s) trouvé(s) sur {totalMetiersCount.toLocaleString('fr-FR')}</>
-            )}
-          </div>
           {!isLoading && (
-            <Button variant="ghost" size="sm" onClick={loadMetiers} className="text-muted-foreground hover:text-primary gap-2">
-              <RefreshCcw className="h-3.5 w-3.5" /> Actualiser la liste
-            </Button>
+            <p className="mt-2 text-xs text-muted-foreground font-medium">
+              {displayedMetiers.length.toLocaleString('fr-FR')} métier(s) sur {totalMetiersCount.toLocaleString('fr-FR')}
+            </p>
           )}
         </div>
+      </div>
 
+      <main className="mx-auto max-w-7xl px-4 py-4 md:py-8" ref={resultsRef}>
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-5">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="flex flex-col space-y-3">
-                <Skeleton className="h-[220px] w-full rounded-2xl" />
-              </div>
+              <Skeleton key={i} className="h-[88px] md:h-[180px] w-full rounded-2xl" />
             ))}
           </div>
         ) : error ? (
-          <div className="text-center py-20 bg-destructive/5 rounded-2xl border border-destructive/20 max-w-2xl mx-auto">
+          <div className="text-center py-16 bg-destructive/5 rounded-2xl border border-destructive/20 max-w-2xl mx-auto">
             <h3 className="text-xl font-bold text-foreground mb-2">Erreur de chargement</h3>
-            <p className="text-muted-foreground mb-6">{error}</p>
-            <Button onClick={loadMetiers}>Réessayer</Button>
+            <p className="text-muted-foreground mb-6 px-4">{error}</p>
+            <Button className="h-11" onClick={loadMetiers}>Réessayer</Button>
           </div>
         ) : displayedMetiers.length === 0 ? (
-          <div className="text-center py-20 bg-card rounded-2xl max-w-2xl mx-auto">
+          <div className="text-center py-16 bg-card rounded-2xl max-w-2xl mx-auto">
             <h3 className="text-xl font-medium text-foreground mb-2">Aucun métier trouvé</h3>
-            <Button variant="outline" className="mt-6" onClick={() => setSearchTerm('')}>Effacer la recherche</Button>
+            <Button variant="outline" className="mt-4 h-11" onClick={() => setSearchTerm('')}>Effacer la recherche</Button>
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8 max-w-7xl mx-auto">
-              <AnimatePresence mode="wait">
-                {currentItems.map((metier, index) => (
-                  <MetierCard
-                    key={metier.code}
-                    metier={metier}
-                    onSelect={() => onNavigate(`/metier/${metierToSlug(metier)}`)}
-                    index={index}
-                  />
-                ))}
-              </AnimatePresence>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-5">
+              {currentItems.map((metier, index) => (
+                <MetierCard
+                  key={metier.code}
+                  metier={metier}
+                  reduce={reduce}
+                  onSelect={() => onNavigate(`/metier/${metierToSlug(metier)}`)}
+                  index={index}
+                />
+              ))}
             </div>
             {totalPages > 1 && (
-              <div className="flex justify-center items-center gap-2 mt-12 pb-12">
-                <Button variant="outline" size="icon" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-                  <ChevronLeft className="h-4 w-4" />
+              <div className="flex justify-center items-center gap-3 mt-8 pb-6">
+                <Button variant="outline" size="icon" className="h-11 w-11 rounded-full" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                  <ChevronLeft className="h-5 w-5" />
                 </Button>
                 <div className="flex items-center gap-1 mx-2">
                   <span className="font-medium text-sm text-foreground">Page {currentPage}</span>
                   <span className="text-muted-foreground text-sm">/ {totalPages}</span>
                 </div>
-                <Button variant="outline" size="icon" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
-                  <ChevronRight className="h-4 w-4" />
+                <Button variant="outline" size="icon" className="h-11 w-11 rounded-full" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                  <ChevronRight className="h-5 w-5" />
                 </Button>
               </div>
             )}
