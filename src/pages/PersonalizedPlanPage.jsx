@@ -488,7 +488,7 @@ const PersonalizedPlanPage = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 max-w-7xl py-5 md:py-10">
+      <main className="container mx-auto px-4 max-w-7xl pt-5 pb-44 md:py-10">
         <div className="grid lg:grid-cols-12 gap-5 lg:gap-10">
           <div className="lg:col-span-8 space-y-5 md:space-y-8 min-w-0">
             <motion.div {...fadeUp(0)}>

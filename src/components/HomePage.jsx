@@ -8,7 +8,6 @@ import {
 import { motion, useReducedMotion, useInView } from 'framer-motion';
 import PageHelmet from '@/components/SEO/PageHelmet';
 import { AuthService } from '@/services/authService';
-import VideoSection from '@/components/VideoSection';
 
 const NewsPreview = lazy(() => import('@/components/NewsPreview'));
 
@@ -219,7 +218,7 @@ const HomePage = ({ onNavigate }) => {
         <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-fuchsia-500/30 blur-3xl -z-10" aria-hidden />
         <div className="absolute -bottom-32 -left-24 w-96 h-96 rounded-full bg-sky-400/20 blur-3xl -z-10" aria-hidden />
 
-        <div className="w-full max-w-6xl mx-auto px-5 pt-safe py-10 md:py-20 grid lg:grid-cols-2 gap-10 items-center">
+        <div className="w-full max-w-6xl mx-auto px-5 py-10 md:py-20 grid lg:grid-cols-2 gap-10 items-center">
           <div className="flex flex-col gap-6">
             <motion.span
               {...heroIn(0.05)}
@@ -412,8 +411,6 @@ const HomePage = ({ onNavigate }) => {
       </section>
 
       {/* ══ VIDEOS ══════════════════════════════════════════════════════════ */}
-      <VideoSection />
-
       <section className="pt-14 md:pt-24">
         <div className="max-w-6xl mx-auto">
           <SectionHead eyebrow="En vidéo">
