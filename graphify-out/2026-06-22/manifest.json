@@ -4768,5 +4768,10 @@
     "mtime": 1780647208.4865713,
     "ast_hash": "b2d2d4a13aa9c698b84c820778281bdc",
     "semantic_hash": "b2d2d4a13aa9c698b84c820778281bdc"
+  },
+  "src/components/ui/hover-footer.jsx": {
+    "mtime": 1791233442.2887146,
+    "ast_hash": "bc691d85a700f6ca289293f57557a19d",
+    "semantic_hash": "bc691d85a700f6ca289293f57557a19d"
   }
 }
