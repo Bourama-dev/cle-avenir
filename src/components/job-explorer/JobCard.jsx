@@ -48,7 +48,7 @@ const JobCard = ({ job, isSaved, onToggleSave, onClick, onViewOffer }) => {
       className="h-full"
     >
       <Card 
-        className="h-full bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-xl overflow-hidden cursor-pointer group flex flex-col"
+        className="h-full bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-xl overflow-hidden cursor-pointer group flex flex-col min-w-0 w-full"
         onClick={onClick}
       >
         <CardContent className="p-5 flex-grow">
@@ -70,13 +70,13 @@ const JobCard = ({ job, isSaved, onToggleSave, onClick, onViewOffer }) => {
 
             {/* Content Section */}
             <div className="flex-1 min-w-0">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-rose-600 transition-colors line-clamp-2 leading-tight mb-1">
+              <div className="flex justify-between items-start min-w-0">
+                <div className="min-w-0 w-full">
+                  <h3 className="text-base sm:text-lg font-bold break-words text-slate-900 group-hover:text-rose-600 transition-colors line-clamp-2 leading-tight mb-1">
                     {job.title}
                   </h3>
-                  <div className="flex items-center text-sm text-slate-500 font-medium">
-                    <Building className="w-3.5 h-3.5 mr-1.5" />
+                  <div className="flex items-center min-w-0 text-sm text-slate-500 font-medium">
+                    <Building className="w-3.5 h-3.5 mr-1.5 shrink-0" />
                     <span className="truncate">{job.company}</span>
                   </div>
                 </div>
@@ -86,7 +86,7 @@ const JobCard = ({ job, isSaved, onToggleSave, onClick, onViewOffer }) => {
               <div className="flex flex-wrap gap-2 mt-4">
                 {/* Location Badge */}
                 {job.location && (
-                  <Badge variant="secondary" className="bg-slate-100 text-slate-600 border border-slate-200 font-normal px-2.5 py-1">
+                  <Badge variant="secondary" className="bg-slate-100 text-slate-600 border border-slate-200 font-normal px-2.5 py-1 max-w-full whitespace-normal text-left">
                     <MapPin className="w-3.5 h-3.5 mr-1.5 text-slate-400" />
                     {job.location}
                   </Badge>
@@ -102,7 +102,7 @@ const JobCard = ({ job, isSaved, onToggleSave, onClick, onViewOffer }) => {
 
                 {/* Contract Type & Duration */}
                 {(job.contract_type || job.contract_duration) && (
-                  <Badge variant="secondary" className="bg-slate-100 text-slate-600 border border-slate-200 font-normal px-2.5 py-1">
+                  <Badge variant="secondary" className="bg-slate-100 text-slate-600 border border-slate-200 font-normal px-2.5 py-1 max-w-full whitespace-normal text-left">
                     <Briefcase className="w-3.5 h-3.5 mr-1.5 text-slate-400" />
                     {job.contract_type} {job.contract_duration ? `- ${job.contract_duration}` : ''}
                   </Badge>
@@ -110,7 +110,7 @@ const JobCard = ({ job, isSaved, onToggleSave, onClick, onViewOffer }) => {
 
                 {/* Experience Level */}
                 {job.experience_level && (
-                   <Badge variant="secondary" className="bg-slate-100 text-slate-600 border border-slate-200 font-normal px-2.5 py-1">
+                   <Badge variant="secondary" className="bg-slate-100 text-slate-600 border border-slate-200 font-normal px-2.5 py-1 max-w-full whitespace-normal text-left">
                      <Calendar className="w-3.5 h-3.5 mr-1.5 text-slate-400" />
                      {job.experience_level}
                    </Badge>
@@ -167,11 +167,11 @@ const JobCard = ({ job, isSaved, onToggleSave, onClick, onViewOffer }) => {
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <Button
               variant="ghost"
               size="sm"
-              className="h-8 text-xs font-medium text-slate-600 hover:text-slate-900"
+              className="h-10 sm:h-8 shrink-0 text-xs font-medium text-slate-600 hover:text-slate-900"
               onClick={handleToggleExpand}
             >
               {isExpanded ? (
@@ -183,15 +183,15 @@ const JobCard = ({ job, isSaved, onToggleSave, onClick, onViewOffer }) => {
 
             <PrepareInterviewButton
               offer={{ title: job.title, company: job.company, description: job.description, contractType: job.contract_type }}
-              label="Préparer l'entretien"
+              label="Préparer"
               size="sm"
               variant="outline"
-              className="h-8 text-xs font-medium border-violet-200 text-violet-700 hover:bg-violet-50 hover:text-violet-800"
+              className="h-10 sm:h-8 flex-1 sm:flex-none whitespace-nowrap px-2 text-xs font-medium border-violet-200 text-violet-700 hover:bg-violet-50 hover:text-violet-800"
             />
 
             <Button
               size="sm"
-              className="h-8 text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-sm shadow-rose-200 gap-1.5"
+              className="h-10 sm:h-8 flex-1 sm:flex-none whitespace-nowrap text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-sm shadow-rose-200 gap-1.5"
               onClick={handleViewClick}
             >
               Voir l'offre <ExternalLink className="w-3 h-3 opacity-90" />

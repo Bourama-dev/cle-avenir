@@ -14,7 +14,7 @@ const PROFILE_PATHS = ['/dashboard', '/profile', '/settings', '/account', '/noti
 const EXPLORE_MENU = [
   { label: 'Métiers', to: '/metiers', icon: Search },
   { label: "Offres d'emploi", to: '/offres-emploi', icon: Briefcase },
-  { label: 'Catalogue formations', to: '/formations', icon: GraduationCap },
+  { label: 'Formations', to: '/formations', icon: GraduationCap },
 ];
 
 const MobileBottomNav = () => {
@@ -28,7 +28,7 @@ const MobileBottomNav = () => {
 
   useEffect(() => {
     if (!exploreOpen) return undefined;
-    const onPointer = (e) => { if (exploreRef.current && !exploreRef.current.contains(e.target)) setExploreOpen(false); };
+    const onPointer = (e) => { if (exploreRef.current && !exploreRef.current.contains(e.target) && !e.target.closest('[data-explore-btn]')) setExploreOpen(false); };
     const onKey = (e) => { if (e.key === 'Escape') setExploreOpen(false); };
     document.addEventListener('pointerdown', onPointer);
     document.addEventListener('keydown', onKey);
@@ -55,6 +55,31 @@ const MobileBottomNav = () => {
       aria-label="Navigation principale"
       className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-slate-200/70 dark:border-slate-700/60 bg-white/85 dark:bg-slate-900/85 backdrop-blur-xl pb-[env(safe-area-inset-bottom)]"
     >
+      <AnimatePresence>
+        {exploreOpen && (
+          <motion.div
+            ref={exploreRef}
+            role="menu"
+            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute bottom-full inset-x-3 mb-3 grid grid-cols-3 gap-1.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-1.5 shadow-2xl"
+          >
+            {EXPLORE_MENU.map(({ label: l, to: t, icon: I }) => (
+              <Link
+                key={t}
+                to={t}
+                role="menuitem"
+                className="flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-xl px-1 text-center text-[11px] font-semibold leading-tight text-slate-800 dark:text-slate-100 active:bg-indigo-50 dark:active:bg-slate-800"
+              >
+                <I className="h-5 w-5 text-indigo-600 dark:text-indigo-400" aria-hidden="true" />
+                {l}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
       <ul className="grid grid-cols-5 h-16 max-w-md mx-auto">
         {tabs.map(({ key, label, to, icon: Icon, active, highlight, menu }) => {
           const tabClass = cn(
@@ -84,36 +109,10 @@ const MobileBottomNav = () => {
 
           if (menu) {
             return (
-              <li key={key} className="relative" ref={exploreRef}>
-                <AnimatePresence>
-                  {exploreOpen && (
-                    <motion.div
-                      role="menu"
-                      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={reduce ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.97 }}
-                      transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                      className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 origin-bottom rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-1.5 shadow-2xl"
-                    >
-                      {EXPLORE_MENU.map(({ label: l, to: t, icon: I }) => (
-                        <Link
-                          key={t}
-                          to={t}
-                          role="menuitem"
-                          className="flex min-h-[48px] items-center gap-3 rounded-xl px-3 text-sm font-semibold text-slate-800 dark:text-slate-100 active:bg-indigo-50 dark:active:bg-slate-800"
-                        >
-                          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400">
-                            <I className="h-5 w-5" aria-hidden="true" />
-                          </span>
-                          {l}
-                        </Link>
-                      ))}
-                      <span aria-hidden="true" className="absolute left-1/2 -bottom-1.5 h-3 w-3 -translate-x-1/2 rotate-45 border-b border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              <li key={key} className="relative">
                 <button
                   type="button"
+                  data-explore-btn
                   aria-haspopup="menu"
                   aria-expanded={exploreOpen}
                   aria-current={active ? 'page' : undefined}
