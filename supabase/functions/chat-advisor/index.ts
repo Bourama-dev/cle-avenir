@@ -653,6 +653,10 @@ Deno.serve(async (req) => {
         if (typeof v === 'string') { const t = v.replace(/[<>]/g, '').trim().slice(0, 100); if (t) clean[k] = t; }
         else if (typeof v === 'number' || typeof v === 'boolean') clean[k] = v;
         else if (Array.isArray(v)) clean[k] = v.filter((x) => typeof x === 'string').slice(0, 20).map((x) => x.slice(0, 60));
+        else if (v && typeof v === 'object') {
+          const nums = Object.entries(v as Record<string, unknown>).filter(([, n]) => typeof n === 'number');
+          if (nums.length) clean[k] = Object.fromEntries(nums);
+        }
       }
       profileUpdates = Object.keys(clean).length ? clean : null;
     }

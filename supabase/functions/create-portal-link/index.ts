@@ -24,7 +24,7 @@ Deno.serve(async (req) => {
 
   try {
     const user = await getAuthedUser(req);
-    if (!user) return json({ error: 'Non authentifié' }, 401, cors);
+    if (!user || !user.email) return json({ error: 'Non authentifié' }, 401, cors);
 
     const stripeSecret = Deno.env.get('STRIPE_SECRET_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
@@ -42,7 +42,7 @@ Deno.serve(async (req) => {
     const { data: subscription, error: subError } = await sb
       .from('subscriptions')
       .select('stripe_customer_id')
-      .eq('user_id', user.id)
+      .eq('user_email', user.email)
       .not('stripe_customer_id', 'is', null)
       .order('created_at', { ascending: false })
       .limit(1)

@@ -32,11 +32,11 @@ export async function getAuthedUser(req: Request) {
   return data.user;
 }
 
-/** True when the caller is an admin (profiles.role = 'admin'). */
+/** True when the caller is an admin (user_roles.role = 'admin', same source as public.is_admin()). */
 export async function isAdminUser(userId: string) {
   const admin = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
-  const { data } = await admin.from('profiles').select('role').eq('id', userId).maybeSingle();
-  return data?.role === 'admin';
+  const { data } = await admin.from('user_roles').select('role').eq('user_id', userId).eq('role', 'admin').maybeSingle();
+  return !!data;
 }
 
 /** Constant-time compare for shared secrets (cron / webhook callers). */
