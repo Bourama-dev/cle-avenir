@@ -331,11 +331,8 @@ const FormationDetailPage = () => {
                         <div className="mx-auto bg-indigo-50 p-3 rounded-full w-fit mb-4">
                           <Briefcase className="w-8 h-8 text-indigo-600" />
                         </div>
-                        <h3 className="text-xl font-bold text-slate-900 mb-3">Données Premium</h3>
-                        <p className="text-slate-600 mb-6">Passez à un compte Premium pour visualiser les statistiques de salaire et d'insertion détaillées.</p>
-                        <Button onClick={() => navigate('/tarifs')} className="w-full bg-indigo-600 hover:bg-indigo-700 rounded-xl">
-                          Découvrir Premium
-                        </Button>
+                        <h3 className="text-xl font-bold text-slate-900 mb-3">Données bientôt disponibles</h3>
+                        <p className="text-slate-600 mb-6">Les statistiques de salaire et d'insertion détaillées ne sont pas encore disponibles pour cette formation.</p>
                      </div>
                    </div>
                  </div>

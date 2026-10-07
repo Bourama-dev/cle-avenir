@@ -22,7 +22,7 @@ const faqData = [
   // General
   { id: 1, category: 'general', question: "Qu'est-ce que CléAvenir ?", answer: "CléAvenir est une plateforme d'orientation professionnelle nouvelle génération. Nous utilisons l'intelligence artificielle et les données du marché du travail en temps réel pour vous aider à trouver les métiers et formations qui vous correspondent vraiment." },
   { id: 2, category: 'general', question: "À qui s'adresse CléAvenir ?", answer: "CléAvenir s'adresse à tous : lycéens cherchant leur voie, étudiants en réorientation, professionnels en reconversion, ou demandeurs d'emploi souhaitant rebondir vers des secteurs porteurs." },
-  { id: 3, category: 'general', question: "Est-ce que le service est gratuit ?", answer: "Oui, la première analyse et la découverte de vos 5 métiers principaux sont entièrement gratuites. Nous proposons également des offres Premium pour un accompagnement plus poussé." },
+  { id: 3, category: 'general', question: "Est-ce que le service est gratuit ?", answer: "Oui, CléAvenir est entièrement gratuit : test d'orientation, résultats complets, plan d'action, Cléo et simulateur d'entretien, sans abonnement ni carte bancaire." },
   { id: 4, category: 'general', question: "Comment fonctionne l'algorithme ?", answer: "Notre algorithme croise votre profil psychométrique (intérêts, personnalité) avec une base de données de 11 000 métiers et les réalités économiques actuelles (offres d'emploi, salaires)." },
   { id: 5, category: 'general', question: "Puis-je utiliser CléAvenir sur mobile ?", answer: "Absolument. Notre plateforme est entièrement responsive et optimisée pour une utilisation sur smartphone, tablette et ordinateur." },
   { id: 6, category: 'general', question: "Avez-vous une application mobile ?", answer: "Pas pour le moment, mais notre site web fonctionne comme une application sur votre navigateur mobile. Vous pouvez l'ajouter à votre écran d'accueil." },
@@ -57,11 +57,11 @@ const faqData = [
   { id: 29, category: 'account', question: "Comment changer mon adresse email ?", answer: "Cette fonctionnalité est disponible dans les paramètres de votre compte. Une validation sera envoyée à votre nouvelle adresse." },
 
   // Pricing
-  { id: 30, category: 'pricing', question: "Quels sont les moyens de paiement acceptés ?", answer: "Nous acceptons les cartes bancaires (Visa, Mastercard) via notre partenaire sécurisé Stripe." },
-  { id: 31, category: 'pricing', question: "L'abonnement est-il avec engagement ?", answer: "Nos offres sont sans engagement de durée. Vous pouvez résilier votre abonnement mensuel à tout moment depuis votre compte." },
-  { id: 32, category: 'pricing', question: "Comment obtenir une facture ?", answer: "Vos factures sont disponibles et téléchargeables dans la rubrique 'Abonnement' de votre espace personnel." },
-  { id: 33, category: 'pricing', question: "Proposez-vous un remboursement ?", answer: "Nous offrons une garantie 'satisfait ou remboursé' de 14 jours pour toute première souscription à une offre Premium." },
-  { id: 34, category: 'pricing', question: "Y a-t-il des tarifs étudiants ?", answer: "Notre offre de base est gratuite et couvre 80% des besoins. L'offre Premium est déjà calculée au plus juste pour rester accessible." },
+  { id: 30, category: 'pricing', question: "Quels sont les moyens de paiement acceptés ?", answer: "Aucun paiement n'est demandé : tout est gratuit, aucune carte bancaire n'est nécessaire." },
+  { id: 31, category: 'pricing', question: "L'abonnement est-il avec engagement ?", answer: "Il n'y a pas d'abonnement : tout est gratuit et sans engagement." },
+  { id: 32, category: 'pricing', question: "Comment obtenir une facture ?", answer: "CléAvenir étant gratuit, aucune facture n'est émise." },
+  { id: 33, category: 'pricing', question: "Proposez-vous un remboursement ?", answer: "Aucun paiement n'étant demandé, il n'y a rien à rembourser." },
+  { id: 34, category: 'pricing', question: "Y a-t-il des tarifs étudiants ?", answer: "Pas besoin : CléAvenir est gratuit pour tout le monde, étudiants comme actifs." },
 
   // Security
   { id: 35, category: 'security', question: "Mes données sont-elles sécurisées ?", answer: "Oui, nous utilisons le chiffrement SSL/TLS pour toutes les communications. Vos données sont stockées sur des serveurs sécurisés en Europe." },
@@ -183,8 +183,8 @@ const FAQPage = () => {
                   <Phone className="w-8 h-8" />
                 </div>
                 <h3 className="faq-contact-title">Téléphone</h3>
-                <p className="faq-contact-desc">Disponible pour les abonnés Premium du lundi au vendredi.</p>
-                <Button variant="outline" className="w-full" disabled>Réservé Premium</Button>
+                <p className="faq-contact-desc">Téléphone indisponible pour le moment : écris-nous via le formulaire de contact.</p>
+                <Button variant="outline" className="w-full" disabled>Indisponible</Button>
               </div>
             </AnimatedItem>
           </div>

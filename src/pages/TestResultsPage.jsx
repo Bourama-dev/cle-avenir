@@ -12,14 +12,13 @@ import { usePlanLimitation } from '@/contexts/PlanLimitationContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { BarChart3, Search, LayoutDashboard, Lock } from 'lucide-react';
+import { BarChart3, Search, LayoutDashboard } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { MATCHING_CONFIG } from '@/config/matchingAlgorithmConfig';
 import { motion } from 'framer-motion';
 import MagneticButton from '@/components/ui/MagneticButton';
 
 import MetierCard from '@/components/test-results/MetierCard';
-import UpgradePromptSection from '@/components/test-results/UpgradePromptSection';
 import PlanAccessMessage from '@/components/test-results/PlanAccessMessage';
 import MetierLoadingSpinner from '@/components/MetierLoadingSpinner';
 import MetierErrorState from '@/components/MetierErrorState';
@@ -451,53 +450,7 @@ const TestResultsPage = () => {
             ))}
           </motion.div>
 
-          {/* ── Mur Premium — si résultats verrouillés ───────────────────── */}
-          {!canViewAllResults() && filteredMatches.length > visibleCount && (
-            <>
-              {/* Séparateur visuel avec compteur */}
-              <div className="relative my-8">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t-2 border-dashed border-slate-200" />
-                </div>
-                <div className="relative flex justify-center">
-                  <span className="bg-slate-50 px-5 py-2 rounded-full border border-slate-200 text-sm font-bold text-slate-500 flex items-center gap-2">
-                    <Lock className="w-4 h-4" />
-                    {filteredMatches.length - visibleCount} autres métiers compatibles verrouillés
-                  </span>
-                </div>
-              </div>
-
-              {/* Aperçu flouté des cartes suivantes */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pointer-events-none select-none">
-                {filteredMatches.slice(visibleCount, visibleCount + 3).map((match, index) => (
-                  <div key={match.metierCode} className="h-full relative">
-                    <div className="h-full blur-[6px] opacity-50">
-                      <MetierCard
-                        metier={match}
-                        isBlurred={true}
-                        isTopThree={false}
-                        userProfile={profile}
-                        onNavigate={() => {}}
-                        onCreatePlan={() => {}}
-                      />
-                    </div>
-                    {index === 1 && (
-                      <div className="absolute inset-0 flex items-center justify-center z-10">
-                        <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-xl border border-amber-200 text-center max-w-[200px]">
-                          <Lock className="w-7 h-7 text-amber-500 mx-auto mb-2" />
-                          <p className="text-xs font-bold text-slate-800 leading-tight">Premium pour voir tous tes résultats</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              <UpgradePromptSection />
-            </>
-          )}
-
-          {/* ── Résultats complets (Premium) ─────────────────────────────── */}
+          {/* ── Résultats complets ─────────────────────────────── */}
           {canViewAllResults() && filteredMatches.length > visibleCount && (
             <motion.div
               variants={containerVariants}
