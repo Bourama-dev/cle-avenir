@@ -744,3 +744,7 @@ input, select {
   button, [role="button"], a.btn { touch-action: manipulation; }
   button:active:not(:disabled), [role="button"]:active { transform: scale(0.97); transition: transform 120ms ease; }
 }
+
+@media (hover: hover) and (pointer: fine) {
+  .snap-feed, .snap-x, [data-drag-scroll] { cursor: grab; }
+}

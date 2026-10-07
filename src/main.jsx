@@ -7,6 +7,9 @@ import App from '@/App';
 import { RootProviders } from '@/lib/providerConfig';
 import { consentManager } from '@/services/consentManager';
 import '@/index.css';
+import { installDragScroll } from '@/lib/dragScroll';
+
+installDragScroll();
 
 // Load analytics trackers only if the user has already consented (returning visitors)
 consentManager.initFromStorage();
