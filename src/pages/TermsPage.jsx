@@ -9,7 +9,7 @@ import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 const sections = [
   { id: 'objet', icon: FileText, label: 'Objet' },
   { id: 'acces', icon: Users, label: 'Acces' },
-  { id: 'abonnements', icon: CreditCard, label: 'Abonnements' },
+  { id: 'abonnements', icon: CreditCard, label: 'Gratuite' },
   { id: 'responsabilites', icon: AlertTriangle, label: 'Responsabilites' },
   { id: 'propriete', icon: Scale, label: 'Propriete intellectuelle' },
   { id: 'modifications', icon: RefreshCw, label: 'Modifications' },
@@ -32,8 +32,8 @@ const TermsPage = () => {
     <DynamicLegalContent dbContent={dbContent} loading={dbLoading}>
     <PageHelmet
       title="Conditions Générales d'Utilisation - CléAvenir"
-      description="Lisez les conditions générales d'utilisation de CléAvenir : droits, obligations, abonnements et règles d'utilisation de la plateforme."
-      keywords="CGU, conditions utilisation, mentions légales, abonnement, CléAvenir"
+      description="Lisez les conditions générales d'utilisation de CléAvenir : droits, obligations, gratuité du service et règles d'utilisation de la plateforme."
+      keywords="CGU, conditions utilisation, mentions légales, gratuit, CléAvenir"
       breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'CGU', url: '/terms' }]}
     />
     <div className="min-h-screen bg-[#070710] text-white">
@@ -64,7 +64,7 @@ const TermsPage = () => {
           </AnimatedItem>
           <AnimatedItem>
             <div className="flex flex-wrap justify-center gap-4 mt-10">
-              {['📍 Droit francais applicable','🔒 Donnees RGPD','💳 Paiements Stripe'].map(t => (
+              {['📍 Droit francais applicable','🔒 Donnees RGPD','🆓 Service gratuit'].map(t => (
                 <div key={t} className="text-sm text-slate-400 bg-white/5 border border-white/10 rounded-full px-4 py-2">{t}</div>
               ))}
             </div>
@@ -132,14 +132,12 @@ const TermsPage = () => {
         <AnimatedSection>
           <section id="abonnements" className="scroll-mt-20">
             <AnimatedItem>
-              <SH icon={CreditCard} title="Abonnements et tarification" gradient="from-fuchsia-500 to-purple-500" number="03" />
+              <SH icon={CreditCard} title="Gratuite du service" gradient="from-fuchsia-500 to-purple-500" number="03" />
             </AnimatedItem>
             <div className="mt-8">
-              <div className="grid md:grid-cols-3 gap-4 mb-8">
+              <div className="grid gap-4 mb-8 max-w-md">
                 {[
-                  {name:'Gratuit',price:'0 EUR/mois',color:'border-slate-700',features:['Test orientation (1x)','Resultats basiques','Explorer les metiers','Blog et ressources']},
-                  {name:'Premium',price:'9,99 EUR/mois',color:'border-violet-500',badge:'Populaire',features:['Tests illimites','Resultats detailles','Plan personnalise','CV et lettres de motivation']},
-                  {name:'Premium+',price:'19,99 EUR/mois',color:'border-amber-500',badge:'Complet',features:['Tout Premium','Cleo IA illimite','Simulation entretien','Coach personnalise']},
+                  {name:'CleAvenir',price:'0 EUR',color:'border-violet-500',badge:'100% gratuit',features:['Test d orientation et resultats complets','Plan d action personnalise','Cleo IA et simulation entretien','CV et lettres de motivation','Metiers, formations et offres']},
                 ].map(plan => (
                   <AnimatedItem key={plan.name}>
                     <div className={`relative p-6 bg-white/[0.03] border rounded-2xl ${plan.color}`}>
@@ -157,9 +155,8 @@ const TermsPage = () => {
               </div>
               <div className="space-y-3">
                 {[
-                  {q:'Comment fonctionne la facturation ?',a:'Facturation mensuelle via Stripe. Facture par email a chaque renouvellement.'},
-                  {q:'Puis-je annuler a tout moment ?',a:'Oui. L annulation prend effet a la fin de la periode en cours. Aucun remboursement au prorata.'},
-                  {q:'Y a-t-il une periode d essai ?',a:'Premium : 7 jours gratuits sans CB. Premium+ : 3 jours avec CB non debite si annulation avant.'},
+                  {q:'Y a-t-il des frais ?',a:'Non. CleAvenir est entierement gratuit : aucun abonnement, aucune carte bancaire demandee.'},
+                  {q:'Le service restera-t-il gratuit ?',a:'Si des offres payantes etaient proposees un jour, vous en seriez informe avant toute souscription et ces conditions seraient mises a jour.'},
                 ].map((item,i) => (
                   <AnimatedItem key={i}>
                     <div className="border border-white/[0.06] rounded-xl overflow-hidden">

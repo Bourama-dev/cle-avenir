@@ -21,7 +21,7 @@ const ConditionsGeneralesPage = () => {
       <div className="legal-section">
         <h2>2. Accès au service</h2>
         <p>
-          La plateforme CléAvenir est accessible gratuitement à tout utilisateur disposant d'un accès à Internet. Certaines fonctionnalités avancées sont réservées aux utilisateurs disposant d'un abonnement payant.
+          La plateforme CléAvenir est accessible gratuitement à tout utilisateur disposant d'un accès à Internet. Toutes les fonctionnalités sont actuellement gratuites.
         </p>
         <p>
           CléAvenir se réserve le droit de modifier, suspendre ou interrompre l'accès au service à tout moment, notamment pour des raisons de maintenance, sans obligation de préavis.
@@ -87,9 +87,9 @@ const ConditionsGeneralesPage = () => {
       </div>
 
       <div className="legal-section">
-        <h2>8. Abonnements et paiements</h2>
+        <h2>8. Gratuité du service</h2>
         <p>
-          Les offres payantes de CléAvenir sont disponibles à la page <a href="/plans" className="text-blue-600 hover:underline">/plans</a>. Les paiements sont sécurisés via Stripe. L'utilisateur bénéficie d'un droit de rétractation de 14 jours pour tout abonnement souscrit en ligne, sauf si les services ont été intégralement consommés dans ce délai.
+          CléAvenir est actuellement entièrement gratuit : aucun abonnement ni paiement n'est demandé à l'utilisateur. Si des offres payantes devaient être proposées ultérieurement, leurs conditions (prix, modalités de paiement, droit de rétractation) seraient communiquées avant toute souscription et les présentes CGU seraient mises à jour.
         </p>
       </div>
 

@@ -68,7 +68,7 @@ const PolitiqueConfidentialitePage = () => {
         <ul>
           <li><strong>Supabase :</strong> Hébergement de la base de données (serveurs en Europe).</li>
           <li><strong>Vercel :</strong> Hébergement de l'application web.</li>
-          <li><strong>Stripe :</strong> Traitement sécurisé des paiements.</li>
+          <li><strong>Stripe :</strong> Traitement sécurisé des paiements (aucun paiement n'est demandé actuellement ; concerne uniquement d'éventuels paiements passés).</li>
           <li><strong>France Travail (Pôle Emploi) :</strong> API offres d'emploi (données non personnelles).</li>
           <li><strong>Autorités légales :</strong> Si requis par la loi ou une décision judiciaire.</li>
         </ul>

@@ -49,7 +49,6 @@ const CookiePolicyPage = () => {
 
         <h3>Cookies tiers (soumis à consentement)</h3>
         <ul>
-          <li><strong>Stripe :</strong> Paiement sécurisé (uniquement sur les pages d'abonnement).</li>
           <li><strong>Sentry :</strong> Rapport d'erreurs techniques anonymisés.</li>
         </ul>
       </div>
