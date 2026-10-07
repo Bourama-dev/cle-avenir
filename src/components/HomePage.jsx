@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import {
   ArrowRight, CheckCircle2, Sparkles, Target, Zap, Search,
   GraduationCap, Users, BookOpen, Clock, ChevronRight, Briefcase, Wand2,
-  Lock, Star,
 } from 'lucide-react';
 import { motion, useReducedMotion, useInView } from 'framer-motion';
 import PageHelmet from '@/components/SEO/PageHelmet';
@@ -70,21 +69,13 @@ const STEPS = [
   },
 ];
 
-const FREE_PERKS = [
-  { text: 'Top 3 métiers compatibles avec ton profil', ok: true },
-  { text: '5 messages découverte avec Cléo', ok: true },
-  { text: 'Recherche de formations et d\'offres', ok: true },
-  { text: 'Résultats complets (4 à 15 métiers)', ok: false },
-  { text: 'Plans d\'action illimités', ok: false },
-  { text: 'Cléo illimitée (plan Premium+)', ok: false },
-];
-
-const PREMIUM_PERKS = [
-  'Tous les résultats compatibles (4 à 15 métiers)',
-  'Plans d\'action personnalisés sans limite',
-  'Suivi de progression et alertes métiers',
-  'Cléo illimitée incluse dans Premium+',
-  'Accès prioritaire aux nouvelles fonctionnalités',
+const ALL_PERKS = [
+  'Test d\'orientation et résultats complets (4 à 15 métiers)',
+  'Plan d\'action personnalisé, sans limite',
+  'Cléo, ton coach IA, disponible 24h/24',
+  'Simulateur d\'entretien avec rapport détaillé',
+  'Créateur de CV et de lettre de motivation',
+  'Recherche de formations et d\'offres d\'emploi',
 ];
 
 const VIDEOS = [
@@ -437,70 +428,39 @@ const HomePage = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* ══ PLANS ═══════════════════════════════════════════════════════════ */}
+      {/* ══ GRATUIT ═════════════════════════════════════════════════════════ */}
       <section className="pt-14 md:pt-24">
-        <div className="max-w-5xl mx-auto">
-          <SectionHead eyebrow="Essaie gratuitement, évolue à ton rythme">
-            Commence sans carte bancaire
+        <div className="max-w-3xl mx-auto">
+          <SectionHead eyebrow="100 % gratuit">
+            Tout est inclus, sans abonnement
           </SectionHead>
           <p className="px-5 md:px-0 -mt-3 mb-5 md:mb-8 text-slate-500 dark:text-slate-400">
-            Découvre tes 3 meilleurs métiers et teste Cléo, puis débloque tout avec Premium.
+            Pas de carte bancaire, pas de plan payant : toutes les fonctionnalités de CléAvenir sont accessibles gratuitement.
           </p>
-          <div className={`${CAROUSEL} md:grid-cols-2`}>
-            <div className="shrink-0 w-[88%] sm:w-[70%] md:w-auto rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 flex flex-col">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                  <Star className="w-5 h-5 text-slate-500" />
-                </div>
-                <div>
-                  <p className="font-bold text-lg text-slate-900 dark:text-white">Plan Découverte</p>
-                  <p className="text-sm font-semibold text-slate-400">Gratuit · Sans engagement</p>
-                </div>
+          <div className="mx-5 md:mx-0 relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-600 to-cyan-500 text-white p-6 md:p-8 flex flex-col">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-11 h-11 rounded-2xl bg-white/20 flex items-center justify-center">
+                <Sparkles className="w-5 h-5" />
               </div>
-              <ul className="space-y-3 flex-1">
-                {FREE_PERKS.map(({ text, ok }) => (
-                  <li key={text} className={`flex items-start gap-3 text-sm ${ok ? 'text-slate-700 dark:text-slate-200' : 'text-slate-400'}`}>
-                    {ok
-                      ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      : <Lock className="w-4 h-4 text-slate-300 shrink-0 mt-0.5" />}
-                    {text}
-                  </li>
-                ))}
-              </ul>
-              <button
-                onClick={() => onNavigate('/test-orientation')}
-                className="mt-6 w-full min-h-[52px] rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-sm active:scale-[0.98] transition"
-              >
-                Commencer gratuitement →
-              </button>
-            </div>
-
-            <div className="relative shrink-0 w-[88%] sm:w-[70%] md:w-auto rounded-3xl bg-gradient-to-br from-rose-600 to-cyan-500 text-white p-6 flex flex-col overflow-hidden">
-              <span className="absolute top-4 right-4 bg-amber-400 text-slate-900 text-xs font-extrabold px-3 py-1 rounded-full">POPULAIRE</span>
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-11 h-11 rounded-2xl bg-white/20 flex items-center justify-center">
-                  <Sparkles className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="font-bold text-lg">Plan Premium</p>
-                  <p className="text-sm font-semibold text-rose-200">Tout débloquer · Sans limite</p>
-                </div>
+              <div>
+                <p className="font-bold text-lg text-white">CléAvenir</p>
+                <p className="text-sm font-semibold text-rose-100">Gratuit · Sans engagement</p>
               </div>
-              <ul className="space-y-3 flex-1">
-                {PREMIUM_PERKS.map((text) => (
-                  <li key={text} className="flex items-start gap-3 text-sm">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0 mt-0.5" />
-                    {text}
-                  </li>
-                ))}
-              </ul>
-              <button
-                onClick={() => onNavigate('/plans')}
-                className="mt-6 w-full min-h-[52px] rounded-2xl bg-white text-rose-700 font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition"
-              >
-                <Zap className="w-4 h-4" /> Passer à Premium
-              </button>
             </div>
+            <ul className="space-y-3 md:grid md:grid-cols-2 md:gap-x-6 md:space-y-0 md:gap-y-3">
+              {ALL_PERKS.map((text) => (
+                <li key={text} className="flex items-start gap-3 text-sm">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0 mt-0.5" />
+                  {text}
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={() => onNavigate('/test-orientation')}
+              className="mt-6 w-full md:w-auto md:self-start md:px-10 min-h-[52px] rounded-2xl bg-white text-rose-700 font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition"
+            >
+              <Zap className="w-4 h-4" /> Commencer gratuitement
+            </button>
           </div>
         </div>
       </section>
