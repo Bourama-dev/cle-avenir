@@ -6,7 +6,7 @@ const FAQ = () => {
   const faqs = [
     {
       q: "Est-ce que le test est vraiment gratuit ?",
-      a: "Oui, la première analyse et la découverte de vos 5 métiers principaux sont entièrement gratuites. Une version Premium existe pour ceux qui souhaitent aller plus loin (plan d'action détaillé, coach illimité), mais l'essentiel est accessible à tous."
+      a: "Oui, CléAvenir est 100% gratuit : test, analyse détaillée, plan d'action et coach IA Cléo sont accessibles à tous, sans abonnement ni carte bancaire."
     },
     {
       q: "Combien de temps dure le test ?",

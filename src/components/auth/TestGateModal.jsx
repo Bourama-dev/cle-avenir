@@ -59,7 +59,7 @@ const TestGateModal = ({ isOpen, onClose, onSuccessRedirect = '/test-results' })
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-center">Débloquez vos résultats</DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-center">Découvre tes résultats</DialogTitle>
           <DialogDescription className="text-center">
             Connectez-vous ou créez un compte pour voir vos recommandations personnalisées.
           </DialogDescription>

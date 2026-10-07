@@ -26,7 +26,7 @@ import '@/styles/landingHero.css';
 
 const NAV_LINKS = [
   { label: 'Accueil', to: '/' },
-  { label: 'Tarifs', to: '/plans' },
+  { label: 'Gratuit', to: '/plans' },
   { label: 'À propos', to: '/about' },
   { label: 'Contact', to: '/contact' },
 ];

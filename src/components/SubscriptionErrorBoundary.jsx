@@ -23,9 +23,9 @@ class SubscriptionErrorBoundary extends React.Component {
         <Card className="m-6 border-red-200 bg-red-50">
           <CardContent className="flex flex-col items-center justify-center p-8 text-center">
             <AlertTriangle className="h-12 w-12 text-red-500 mb-4" />
-            <h2 className="text-xl font-bold text-red-900 mb-2">Erreur d'affichage de l'abonnement</h2>
+            <h2 className="text-xl font-bold text-red-900 mb-2">Erreur d'affichage du compte</h2>
             <p className="text-red-700 mb-6">
-              Nous n'avons pas pu charger les détails de votre abonnement. 
+              Nous n'avons pas pu charger les informations de votre compte. 
               {this.state.error?.message && <span className="block mt-2 text-sm opacity-80">{this.state.error.message}</span>}
             </p>
             <Button 

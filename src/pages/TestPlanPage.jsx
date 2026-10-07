@@ -18,13 +18,11 @@ import {
   Zap, 
   Users 
 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 
 const TestPlanPage = () => {
   const [searchParams] = useSearchParams();
   const careerCode = searchParams.get('career');
   const navigate = useNavigate();
-  const { toast } = useToast();
   
   const [loading, setLoading] = useState(true);
   const [careerInfo, setCareerInfo] = useState(null);
@@ -51,12 +49,7 @@ const TestPlanPage = () => {
     fetchCareer();
   }, [careerCode]);
 
-  const handlePremiumClick = () => {
-    toast({
-        title: "Plan Premium",
-        description: "🚧 Cette fonctionnalité de coaching premium sera bientôt disponible ! 🚀",
-    });
-  };
+  const handleCoachClick = () => navigate('/cleo');
 
   if (loading) {
     return (
@@ -175,12 +168,12 @@ const TestPlanPage = () => {
         <CardContent className="p-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="space-y-2">
             <h3 className="text-2xl font-bold flex items-center gap-2 justify-center sm:justify-start text-white">
-              <Lock className="w-5 h-5 text-amber-400" /> Accompagnement Premium
+              <Lock className="w-5 h-5 text-amber-400" /> Accompagnement avec Cléo
             </h3>
-            <p className="text-indigo-200">Bénéficiez d'un suivi personnalisé avec nos coachs et IA pour sécuriser votre parcours.</p>
+            <p className="text-indigo-200">Profite gratuitement d'un suivi personnalisé avec Cléo, notre coach IA, pour sécuriser ton parcours.</p>
           </div>
-          <Button size="lg" className="bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold whitespace-nowrap" onClick={handlePremiumClick}>
-            Débloquer le plan Premium
+          <Button size="lg" className="bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold whitespace-nowrap" onClick={handleCoachClick}>
+            Discuter avec Cléo
           </Button>
         </CardContent>
       </Card>

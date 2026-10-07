@@ -8,7 +8,6 @@ import { useNavigation } from '@/hooks/useNavigation';
 import { useTheme } from '@/hooks/useTheme';
 import { useLocation, Link, NavLink, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { getDisplayPlanName, PLAN_TYPES } from '@/lib/subscriptionUtils';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -85,32 +84,8 @@ const Header = ({ onNavigate }) => {
     return 'U';
   };
 
-  const getSubscriptionBadge = () => {
-    if (!user) return null;
-    
-    const displayName = getDisplayPlanName(subscriptionTier);
-
-    switch (subscriptionTier) {
-      case PLAN_TYPES.PREMIUM_PLUS:
-        return (
-          <Badge className="bg-gradient-to-r from-yellow-500 to-amber-600 text-white border-none flex gap-1 items-center px-2 py-0.5 text-[10px] h-5">
-            <Crown className="w-3 h-3" /> {displayName}
-          </Badge>
-        );
-      case PLAN_TYPES.PREMIUM:
-        return (
-          <Badge className="bg-gradient-to-r from-violet-500 to-indigo-600 text-white border-none flex gap-1 items-center px-2 py-0.5 text-[10px] h-5">
-            <Star className="w-3 h-3" /> {displayName}
-          </Badge>
-        );
-      default:
-        return (
-          <Badge variant="outline" className="text-[var(--text-secondary)] border-[var(--border-color)] text-[10px] h-5 px-2">
-            {displayName}
-          </Badge>
-        );
-    }
-  };
+  // Everything is free: no plan badge is displayed.
+  const getSubscriptionBadge = () => null;
 
   const MobileNavLink = ({ icon: Icon, label, path, className, onClick }) => (
     <NavLink
@@ -350,7 +325,7 @@ const Header = ({ onNavigate }) => {
                     <FolderOpen className="mr-2 h-4 w-4" aria-hidden="true" /> Mes documents
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => safeNavigate('/manage-subscription')} className="cursor-pointer hover:bg-[var(--bg-secondary)] min-h-[40px]">
-                    <Crown className="mr-2 h-4 w-4 text-amber-500" aria-hidden="true" /> Abonnement
+                    <Crown className="mr-2 h-4 w-4 text-amber-500" aria-hidden="true" /> Mon compte
                   </DropdownMenuItem>
                   
                   {isAdmin && (
@@ -472,7 +447,7 @@ const Header = ({ onNavigate }) => {
                               </button>
                            )}
                            <MobileNavLink icon={Edit} label="Mon Profil" path="/profile/edit" />
-                           <MobileNavLink icon={Crown} label="Mon Abonnement" path="/manage-subscription" />
+                           <MobileNavLink icon={Crown} label="Mon compte" path="/manage-subscription" />
                         </>
                     )}
 

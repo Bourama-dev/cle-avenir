@@ -73,7 +73,7 @@ const Footer = ({ onNavigate }) => {
             </li>
              <li>
               <Link to="/tarifs" className="hover:text-indigo-400 transition-colors">
-                Tarifs & Plans
+                100% gratuit
               </Link>
             </li>
           </ul>

@@ -49,7 +49,7 @@ const TestGatePage = () => {
               className="w-full bg-indigo-600 hover:bg-indigo-700 h-12 text-lg" 
               onClick={() => setIsModalOpen(true)}
             >
-              Débloquer mes résultats
+              Voir mes résultats
             </Button>
             
             <p className="text-center text-xs text-slate-400 mt-4">

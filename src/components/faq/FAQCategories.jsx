@@ -17,7 +17,7 @@ const categories = [
   { id: 'test', label: 'Le test', icon: BrainCircuit },
   { id: 'results', label: 'Les résultats', icon: FileText },
   { id: 'account', label: 'Mon compte', icon: User },
-  { id: 'pricing', label: 'Tarifs', icon: CreditCard },
+  { id: 'pricing', label: 'Gratuité', icon: CreditCard },
   { id: 'security', label: 'Sécurité', icon: ShieldCheck },
 ];
 
