@@ -230,7 +230,7 @@ const HomePage = ({ onNavigate }) => {
 
             <motion.h1
               {...heroIn(0.15)}
-              className="text-5xl sm:text-6xl xl:text-7xl font-black leading-[1.05] tracking-tight"
+              className="text-5xl sm:text-6xl xl:text-7xl font-black text-white leading-[1.05] tracking-tight"
             >
               Trouve ta voie avec{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-200 via-white to-fuchsia-200">CléAvenir</span>
@@ -345,7 +345,7 @@ const HomePage = ({ onNavigate }) => {
                     <Icon className="w-6 h-6" />
                   </div>
                   <div className="relative">
-                    <h3 className="text-xl font-bold leading-tight mb-1.5">{f.title}</h3>
+                    <h3 className="text-xl font-bold text-white leading-tight mb-1.5">{f.title}</h3>
                     <p className="text-sm text-white/85 leading-snug mb-3">{f.desc}</p>
                     <span className="inline-flex items-center gap-1 text-sm font-bold">
                       Découvrir <ArrowRight className="w-4 h-4" />
@@ -516,7 +516,7 @@ const HomePage = ({ onNavigate }) => {
                 <Sparkles size={14} />
                 Rejoins plus de 200 utilisateurs orientés
               </span>
-              <h2 className="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">
+              <h2 className="text-4xl md:text-6xl font-black text-white leading-tight tracking-tight mb-4">
                 Prêt à dessiner ton avenir&nbsp;?
               </h2>
               <p className="text-rose-100/90 text-lg mb-8 max-w-xl mx-auto">
