@@ -18,7 +18,7 @@ const CleoUpgradePrompt = ({ title, description }) => {
           <Sparkles className="h-8 w-8 text-violet-600 animate-pulse" />
         </div>
         <CardTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-indigo-600 mb-2">
-          {title || "Cléo est réservée aux membres Premium+"}
+          {title || "Cléo, ton coach IA gratuit"}
         </CardTitle>
         <CardDescription className="text-base text-slate-600">
           {description || "Profitez d'un coaching personnalisé par IA disponible 24/7 pour accélérer votre réussite professionnelle."}
@@ -44,11 +44,11 @@ const CleoUpgradePrompt = ({ title, description }) => {
 
       <CardFooter className="relative z-10 pt-2">
         <Button 
-          onClick={() => navigate('/tarifs')} 
+          onClick={() => navigate('/test')} 
           className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white shadow-lg shadow-violet-200"
           size="lg"
         >
-          Débloquer Cléo avec Premium+ <ArrowRight className="ml-2 h-4 w-4" />
+          Commencer le test d'orientation <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </CardFooter>
     </Card>

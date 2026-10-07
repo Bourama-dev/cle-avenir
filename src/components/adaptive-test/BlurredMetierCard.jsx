@@ -27,16 +27,16 @@ const BlurredMetierCard = ({ metier }) => {
         <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center mb-3 text-violet-600 shadow-sm">
           <Lock className="w-6 h-6" />
         </div>
-        <h4 className="font-bold text-slate-900 mb-1">Match Premium</h4>
+        <h4 className="font-bold text-slate-900 mb-1">Match à découvrir</h4>
         <p className="text-xs text-slate-600 mb-4 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          See full details with Premium
+          Voir tous les détails
         </p>
         <Button 
-          onClick={() => navigate('/tarifs')}
+          onClick={() => navigate('/test')}
           className="bg-violet-600 hover:bg-violet-700 text-white shadow-md rounded-xl"
           size="sm"
         >
-          Upgrade to Premium
+          Voir le détail
         </Button>
       </div>
     </div>

@@ -250,13 +250,13 @@ const MetierCard = ({ metier, isBlurred, isTopThree, userProfile, onNavigate, on
   if (!isBlurred) return cardContent;
 
   return (
-    <div className="relative h-full select-none" aria-label="Résultat verrouillé">
+    <div className="relative h-full select-none" aria-label="Résultat masqué">
       <div className="h-full blur-[6px] opacity-60 pointer-events-none">{cardContent}</div>
       <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 text-center rounded-xl bg-white/10 backdrop-blur-[1px]">
         <div className="bg-slate-900/80 text-white p-4 rounded-full mb-3 shadow-xl">
           <Lock className="w-8 h-8" />
         </div>
-        <p className="font-bold text-slate-900 text-lg drop-shadow-md">Déverrouillé avec Premium</p>
+        <p className="font-bold text-slate-900 text-lg drop-shadow-md">Résultat en cours de chargement</p>
       </div>
     </div>
   );

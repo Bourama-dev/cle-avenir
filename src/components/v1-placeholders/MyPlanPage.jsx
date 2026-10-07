@@ -12,7 +12,7 @@ const MyPlanPage = ({ onNavigate }) => (
       </div>
       <h1 className="text-3xl font-bold mb-4">Mon Plan d'Action</h1>
       <p className="text-slate-600 max-w-md mb-8">Votre feuille de route étape par étape vers votre nouveau métier.</p>
-      <Button onClick={() => onNavigate('/premium')}>Voir mon plan</Button>
+      <Button onClick={() => onNavigate('/personalized-plan')}>Voir mon plan</Button>
     </div>
   </div>
 );

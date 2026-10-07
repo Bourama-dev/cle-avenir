@@ -97,11 +97,11 @@ const SubscriptionStatus = () => {
             </div>
             <div>
               <p className={`font-semibold ${config.textColor}`}>Plan {config.label}</p>
-              <p className="text-sm text-slate-500">Passez au Premium pour plus de fonctionnalités.</p>
+              <p className="text-sm text-slate-500">Tout est gratuit : toutes les fonctionnalités sont incluses.</p>
             </div>
           </div>
-          <Button size="sm" onClick={() => navigate('/forfaits')} variant="outline" className="border-violet-200 text-violet-700 hover:bg-violet-50">
-            Voir les offres
+          <Button size="sm" onClick={() => navigate('/test')} variant="outline" className="border-violet-200 text-violet-700 hover:bg-violet-50">
+            Faire le test
           </Button>
         </CardContent>
       </Card>

@@ -8,7 +8,7 @@ const UnlockCTA = ({ onUnlock }) => {
     "Analyse complète des 5 métiers",
     "Parcours de formation détaillé",
     "Conseils personnalisés",
-    "Suivi de votre progression"
+    "Suivi de ta progression"
   ];
 
   return (
@@ -22,10 +22,10 @@ const UnlockCTA = ({ onUnlock }) => {
       
       <div className="text-center mb-6">
         <h3 className="text-2xl font-bold text-slate-900 mb-2">
-          🎯 Débloquez votre profil complet
+          🎯 Découvre ton profil complet
         </h3>
         <p className="text-slate-600">
-          Accédez à tous vos résultats et prenez les meilleures décisions pour votre avenir.
+          Accède à tous tes résultats, gratuitement, et prends les meilleures décisions pour votre avenir.
         </p>
       </div>
 
@@ -45,11 +45,11 @@ const UnlockCTA = ({ onUnlock }) => {
         className="w-full h-12 text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg shadow-purple-200 hover:shadow-xl transition-all rounded-xl group"
       >
         <Rocket className="w-5 h-5 mr-2 group-hover:animate-pulse" />
-        Passer au plan premium
+        Voir mon profil complet
       </Button>
       
       <p className="mt-4 text-xs text-slate-400">
-        Satisfait ou remboursé sous 14 jours • Paiement sécurisé
+        100 % gratuit • Accès complet inclus
       </p>
     </motion.div>
   );

@@ -31,7 +31,7 @@ const ContextPanel = ({ userProfile, context, isOpen, onClose, onRefresh }) => {
                 <div className="font-bold text-slate-900 truncate">{userProfile?.first_name} {userProfile?.last_name}</div>
                 <div className="text-xs text-slate-500 truncate">{userProfile?.email}</div>
                 <Badge variant="secondary" className="mt-1 text-[10px] h-5 px-1.5 bg-slate-100 text-slate-600 border-slate-200">
-                   {userProfile?.role === 'admin' ? 'Admin' : 'Membre Premium'}
+                   {userProfile?.role === 'admin' ? 'Admin' : 'Membre'}
                 </Badge>
              </div>
            </div>

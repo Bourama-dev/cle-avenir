@@ -550,13 +550,13 @@ const Cleo = () => {
             {!hasCleoCredits() && (
               <div className="p-4 bg-gradient-to-r from-violet-50 to-indigo-50 border-t border-indigo-100 text-center">
                 <Lock className="w-5 h-5 text-indigo-400 mx-auto mb-1.5" />
-                <p className="text-xs font-bold text-slate-700 mb-0.5">Tes {cleoFreeLimit} messages découverte sont utilisés</p>
-                <p className="text-xs text-slate-500 mb-2">Cléo est disponible en illimité avec le plan <strong>Premium+</strong>.</p>
+                <p className="text-xs font-bold text-slate-700 mb-0.5">Tu as atteint la limite de messages pour le moment</p>
+                <p className="text-xs text-slate-500 mb-2">Cléo est gratuite : réessaie un peu plus tard.</p>
                 <button
-                  onClick={() => { setIsOpen(false); navigate('/plans'); }}
+                  onClick={() => { setIsOpen(false); navigate('/test'); }}
                   className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-xs font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-1.5 hover:opacity-90 transition"
                 >
-                  <Zap size={13} /> Découvrir Premium+
+                  <Zap size={13} /> Faire le test d'orientation
                 </button>
               </div>
             )}
@@ -569,7 +569,7 @@ const Cleo = () => {
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   disabled={!hasCleoCredits()}
-                  placeholder={hasCleoCredits() ? "Pose ta question..." : "Crédits épuisés — passe à Premium"}
+                  placeholder={hasCleoCredits() ? "Pose ta question..." : "Limite atteinte — réessaie plus tard"}
                   className="w-full pl-4 pr-12 py-3 bg-slate-100 border-none rounded-full focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all text-sm text-slate-800 placeholder:text-slate-400"
                 />
                 <Button

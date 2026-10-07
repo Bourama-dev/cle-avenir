@@ -20,16 +20,16 @@ const MetierMatchCard = ({ metier, isLocked, onClick }) => {
           <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center mb-3 text-violet-600 shadow-sm">
             <Lock className="w-6 h-6" />
           </div>
-          <h4 className="font-bold text-slate-900 mb-1">Match Premium</h4>
+          <h4 className="font-bold text-slate-900 mb-1">Match compatible</h4>
           <p className="text-sm text-slate-600 mb-4 font-medium">
-            Débloquez pour voir ce métier compatible
+            Voir ce métier compatible
           </p>
           <Button 
             onClick={(e) => { e.stopPropagation(); onClick('upgrade'); }}
             className="bg-violet-600 hover:bg-violet-700 text-white shadow-md rounded-xl"
             size="sm"
           >
-            Débloquer Premium
+            Voir le métier
           </Button>
         </div>
       </Card>
@@ -121,29 +121,28 @@ const ProfileMetierMatcher = ({ metiers = [], userPlan = 'discovery', loading = 
 
   const handleCardClick = (action) => {
     if (action === 'upgrade') {
-      navigate('/tarifs');
+      navigate('/metiers');
     } else {
       navigate(`/metier/${action}`);
     }
   };
 
-  const limit = userPlan === 'premium' ? metiers.length : 3;
-  const displayMetiers = metiers.slice(0, limit + 3); // Show 3 blurred ones if free
+  const displayMetiers = metiers; // Tout est gratuit : tous les métiers sont visibles
 
   return (
     <div className="space-y-8">
-      {userPlan === 'discovery' && metiers.length > 3 && (
+      {false && (
         <div className="bg-violet-50 border border-violet-200 p-4 rounded-xl flex flex-col sm:flex-row justify-between items-center gap-4">
-          <span className="text-violet-800 font-medium">Débloquez Premium pour voir toutes vos correspondances ({(metiers.length - 3)} métiers cachés)</span>
-          <Button onClick={() => navigate('/tarifs')} className="bg-violet-600 hover:bg-violet-700 text-white shrink-0">
-            Débloquer Premium
+          <span className="text-violet-800 font-medium">Toutes vos correspondances sont visibles ({(metiers.length - 3)} métiers cachés)</span>
+          <Button onClick={() => navigate('/metiers')} className="bg-violet-600 hover:bg-violet-700 text-white shrink-0">
+            Voir le catalogue
           </Button>
         </div>
       )}
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {displayMetiers.map((metier, index) => {
-          const isLocked = userPlan === 'discovery' && index >= 3;
+          const isLocked = false;
           return (
             <MetierMatchCard 
               key={`${metier.code}-${index}`} 

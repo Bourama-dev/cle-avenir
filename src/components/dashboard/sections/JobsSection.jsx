@@ -15,7 +15,7 @@ const JobsSection = ({ userProfile, match }) => {
   ];
 
   const plan = userProfile?.subscription_tier || 'free';
-  const isPremium = plan !== 'free';
+  const isPremium = true; // Tout est gratuit : accès complet pour tous
 
   return (
     <div className="space-y-6">

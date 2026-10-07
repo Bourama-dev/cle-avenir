@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Brain, Target, Briefcase, ArrowRight, Lock } from 'lucide-react';
 import FeatureGate from '@/components/FeatureGate';
-import { FEATURES, TIERS } from '@/constants/subscriptionTiers';
-import UpgradeModal from '@/components/UpgradeModal';
+import { FEATURES } from '@/constants/subscriptionTiers';
 
 const ProfileResults = ({ userProfile, onNavigate }) => {
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
-
   if (!userProfile) return <div>Chargement...</div>;
 
   return (
@@ -112,10 +109,10 @@ const ProfileResults = ({ userProfile, onNavigate }) => {
                     </div>
                   </div>
                   
-                  {/* Button triggers modal for Freemium */}
+                  {/* Accès complet pour tous */}
                   <Button 
                     variant="outline" 
-                    onClick={() => setShowUpgradeModal(true)}
+                    onClick={() => onNavigate && onNavigate('/metiers')}
                   >
                     Voir détails <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -163,7 +160,7 @@ const ProfileResults = ({ userProfile, onNavigate }) => {
                <FeatureGate 
                  feature={FEATURES.FULL_ACTION_PLAN}
                  title="Plan d'action complet"
-                 description="Débloquez votre guide étape par étape pour réussir votre transition."
+                 description="Suivez votre guide étape par étape pour réussir votre transition."
                >
                  <div className="space-y-6">
                     <div className="flex gap-4">
@@ -194,11 +191,6 @@ const ProfileResults = ({ userProfile, onNavigate }) => {
         </TabsContent>
       </Tabs>
 
-      <UpgradeModal 
-        isOpen={showUpgradeModal} 
-        onClose={() => setShowUpgradeModal(false)} 
-        targetTier={TIERS.PREMIUM}
-      />
     </div>
   );
 };

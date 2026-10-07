@@ -34,7 +34,7 @@ const RecommendedMetiersSection = ({
   };
 
   const handleUpgrade = () => {
-    navigate('/tarifs');
+    navigate('/metiers');
   };
 
   if (loading) {
@@ -82,8 +82,8 @@ const RecommendedMetiersSection = ({
   }));
 
   // Define limits based on plan
-  const visibleCount = userPlan === 'premium' || userPlan === 'premium_plus' ? normalizedMetiers.length : 3;
-  const blurredCount = userPlan === 'premium' || userPlan === 'premium_plus' ? 0 : Math.min(3, normalizedMetiers.length - visibleCount);
+  const visibleCount = normalizedMetiers.length; // Tout est gratuit : toutes les recommandations sont visibles
+  const blurredCount = 0;
   
   const visibleMetiers = normalizedMetiers.slice(0, visibleCount);
   const blurredMetiers = normalizedMetiers.slice(visibleCount, visibleCount + blurredCount);
@@ -136,20 +136,20 @@ const RecommendedMetiersSection = ({
           ))}
         </div>
 
-        {/* Upgrade CTA Banner at the bottom if Free Plan */}
-        {(userPlan === 'discovery' || userPlan === 'free') && normalizedMetiers.length > 3 && (
+        {/* Bannière désactivée (tout est gratuit) */}
+        {false && (
           <div className="mt-12 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl p-8 text-white shadow-xl shadow-indigo-500/20 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center shrink-0">
                 <Sparkles className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-1 text-white">Débloquez {normalizedMetiers.length - 3} autres recommandations</h3>
-                <p className="text-violet-100 text-sm">Passez à la version Premium pour accéder à l'intégralité de vos correspondances sur-mesure.</p>
+                <h3 className="text-xl font-bold mb-1 text-white">Toutes tes recommandations</h3>
+                <p className="text-violet-100 text-sm">Tout est gratuit.</p>
               </div>
             </div>
             <Button size="lg" className="bg-white text-violet-700 hover:bg-slate-50 shrink-0 w-full md:w-auto" onClick={handleUpgrade}>
-              Passer Premium <ArrowRight className="w-4 h-4 ml-2" />
+              Voir le catalogue <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>
         )}

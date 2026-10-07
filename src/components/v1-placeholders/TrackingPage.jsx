@@ -17,10 +17,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell 
 } from 'recharts';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
-import { getUserProfile } from '@/services/userProfile';
 import { TrackingService } from '@/services/trackingService';
 import { useToast } from '@/components/ui/use-toast';
-import { TIERS } from '@/constants/subscriptionTiers';
 import AICoachWidget from '@/components/dashboard/AICoachWidget';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -38,18 +36,6 @@ const TrackingPage = () => {
   useEffect(() => {
     const init = async () => {
       if (!user) return;
-
-      const profile = getUserProfile();
-      // Simple client-side tier check
-      if (profile && profile.subscription_tier !== TIERS.PREMIUM_PLUS && profile.role !== 'admin') {
-         toast({
-           title: "Accès restreint",
-           description: "Cette page est réservée aux membres Premium+.",
-           variant: "destructive"
-         });
-         navigate('/dashboard');
-         return;
-      }
 
       setLoading(true);
       try {
@@ -128,7 +114,7 @@ const TrackingPage = () => {
             </Button>
             <div className="flex items-center gap-2">
               <Badge variant="outline" className="hidden sm:flex border-violet-200 text-violet-700 bg-violet-50">
-                <Star className="h-3 w-3 mr-1 fill-violet-700" /> Premium+
+                <Star className="h-3 w-3 mr-1 fill-violet-700" /> Inclus
               </Badge>
               <Button variant="outline" size="sm" className="gap-2">
                 <Download className="h-4 w-4" /> <span className="hidden sm:inline">Exporter PDF</span>

@@ -56,7 +56,7 @@ const getJobFamily = (title) => {
 const TrainingsSection = ({ userProfile, match }) => {
   const navigate = useNavigate();
   const plan = userProfile?.subscription_tier || 'free';
-  const isPremium = plan !== 'free';
+  const isPremium = true; // Tout est gratuit : accès complet pour tous
   
   // Determine search parameters
   const exactTitle = match?.title || userProfile?.main_goal || "";

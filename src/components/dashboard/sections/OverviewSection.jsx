@@ -76,10 +76,10 @@ const OverviewSection = ({ userProfile, onNavigate }) => {
            {/* Promo Box */}
            <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg">
                <div className="relative z-10">
-                   <h4 className="font-bold mb-2 text-white">Passez Premium</h4>
-                   <p className="text-slate-300 text-sm mb-4">Obtenez des analyses IA illimitées et contactez des mentors.</p>
-                   <Button size="sm" className="bg-white text-slate-900 hover:bg-slate-100 border-none w-full" onClick={() => onNavigate('/plans')}>
-                       Voir les offres
+                   <h4 className="font-bold mb-2 text-white">Tout est gratuit</h4>
+                   <p className="text-slate-300 text-sm mb-4">Profite d'analyses IA et de l'accompagnement de Cléo, sans limite.</p>
+                   <Button size="sm" className="bg-white text-slate-900 hover:bg-slate-100 border-none w-full" onClick={() => onNavigate('/test')}>
+                       Faire le test
                    </Button>
                </div>
                <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500 rounded-full blur-3xl opacity-20 -mr-10 -mt-10 pointer-events-none"></div>

@@ -11,8 +11,8 @@ const BlurredMetierCard = ({ metier, onUpgrade }) => {
   const navigate = useNavigate();
   
   // Use generic or real data that is blurred
-  const title = metier?.libelle || metier?.title || "Métier Compatible (Premium)";
-  const description = metier?.description || "Ce métier correspond très fortement à vos compétences et à vos aspirations professionnelles. Découvrez-en plus avec Premium.";
+  const title = metier?.libelle || metier?.title || "Métier compatible";
+  const description = metier?.description || "Ce métier correspond très fortement à vos compétences et à vos aspirations professionnelles. Découvre-en plus.";
   const romeCode = debugMetierNavigation('BlurredMetierCard', metier);
 
   const handleDetailClick = () => {
@@ -62,12 +62,12 @@ const BlurredMetierCard = ({ metier, onUpgrade }) => {
         </div>
         
         <Badge variant="outline" className="mb-3 bg-violet-50 text-violet-700 border-violet-200 px-3 py-1 font-bold">
-          <Sparkles className="w-3 h-3 mr-1.5" /> Match Premium
+          <Sparkles className="w-3 h-3 mr-1.5" /> Match compatible
         </Badge>
         
         <h4 className="font-bold text-slate-900 text-lg mb-2">Découvrez ce métier</h4>
         <p className="text-sm text-slate-600 mb-6 max-w-[250px]">
-          Ce métier a un fort taux de compatibilité avec votre profil. Débloquez-le pour voir les détails.
+          Ce métier a un fort taux de compatibilité avec votre profil. Consulte la fiche pour voir les détails.
         </p>
         
         <div className="flex flex-col gap-2 w-full max-w-[220px]">
@@ -75,7 +75,7 @@ const BlurredMetierCard = ({ metier, onUpgrade }) => {
             onClick={onUpgrade}
             className="bg-violet-600 hover:bg-violet-700 text-white shadow-lg shadow-violet-500/25 rounded-xl w-full"
           >
-            Débloquer Premium
+            Voir le détail
           </Button>
           
           <Button 

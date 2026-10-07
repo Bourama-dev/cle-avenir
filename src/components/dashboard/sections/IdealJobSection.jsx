@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const IdealJobSection = ({ match, userProfile }) => {
   const navigate = useNavigate();
   const plan = userProfile?.subscription_tier || 'free';
-  const isPremium = plan !== 'free';
+  const isPremium = true; // Tout est gratuit : accès complet pour tous
 
   if (!match) return (
      <div className="text-center py-20 bg-slate-50 rounded-xl border border-dashed border-slate-200">
@@ -114,10 +114,10 @@ const IdealJobSection = ({ match, userProfile }) => {
                       <div className="bg-white p-4 rounded-full shadow-lg mb-4">
                         <Lock className="w-8 h-8 text-slate-900" />
                       </div>
-                      <h3 className="text-xl font-bold text-slate-900 mb-2">Information réservée aux membres Premium</h3>
-                      <p className="text-slate-500 mb-6 max-w-md">Débloquez les grilles de salaires détaillées, l'évolution de carrière et les primes.</p>
-                      <Button onClick={() => navigate('/premium')} className="bg-gradient-to-r from-purple-600 to-pink-600 border-none text-white font-bold shadow-lg px-8">
-                         Débloquer l'accès
+                      <h3 className="text-xl font-bold text-slate-900 mb-2">Information complète incluse</h3>
+                      <p className="text-slate-500 mb-6 max-w-md">Consulte les grilles de salaires détaillées, l'évolution de carrière et les primes.</p>
+                      <Button onClick={() => navigate('/test')} className="bg-gradient-to-r from-purple-600 to-pink-600 border-none text-white font-bold shadow-lg px-8">
+                         Faire le test
                       </Button>
                    </div>
                 )}

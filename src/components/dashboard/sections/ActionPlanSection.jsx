@@ -46,7 +46,7 @@ const ActionPlanSection = ({ userProfile, match }) => {
         </CardContent>
       </Card>
 
-      {/* Premium+ Detailed Plan */}
+      {/* Plan détaillé */}
       <FeatureGate 
         feature={FEATURES.FULL_ACTION_PLAN} 
         requiredTier={TIERS.PREMIUM_PLUS}
@@ -82,7 +82,7 @@ const ActionPlanSection = ({ userProfile, match }) => {
         </Card>
       </FeatureGate>
 
-      {/* Premium+ Monthly Adjustments */}
+      {/* Ajustements mensuels */}
       <FeatureGate 
         feature={FEATURES.MONTHLY_FOLLOWUP} 
         requiredTier={TIERS.PREMIUM_PLUS}
@@ -92,7 +92,7 @@ const ActionPlanSection = ({ userProfile, match }) => {
       >
          <Card className="border-yellow-100 bg-yellow-50/30">
             <CardHeader>
-               <CardTitle className="text-yellow-800">Suivi Personnalisé Premium+</CardTitle>
+               <CardTitle className="text-yellow-800">Suivi Personnalisé</CardTitle>
             </CardHeader>
             <CardContent>
                <p className="text-slate-700 mb-4">
