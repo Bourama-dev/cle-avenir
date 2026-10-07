@@ -6,3 +6,6 @@ node_modules
 dist/
 __pycache__/
 *.pyc
+
+# graphify transient cache
+graphify-out/cache/last_query_stamp
