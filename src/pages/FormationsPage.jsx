@@ -12,15 +12,12 @@ import CityAutocomplete from '@/components/ui/CityAutocomplete';
 import {
   Search, MapPin, Building, ChevronLeft, ChevronRight, AlertCircle,
   Clock, BookOpen, Award, Star, Globe,
-  CheckCircle2, FileText, MonitorPlay, Lock, Briefcase, ArrowRight,
+  CheckCircle2, FileText, MonitorPlay, Briefcase, ArrowRight,
   School, GraduationCap, ChevronDown
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { extractFormationKeywords } from '@/utils/formationKeywords';
-import { useSubscriptionAccess } from '@/hooks/useSubscriptionAccess';
-import { FEATURES } from '@/constants/subscriptionTiers';
 import { fetchFormations } from '@/services/parcoursup';
-import UpgradeModal from '@/components/UpgradeModal';
 import FormationDetailsPanel from '@/components/FormationDetailsPanel';
 import { calculateDistance } from '@/services/LocationFilterService';
 import EnhancedFormationFilters from '@/components/formation-explorer/EnhancedFormationFilters';
@@ -110,7 +107,6 @@ const FormationsPage = ({ setAllFormations }) => {
   const [isFetchingBatch, setIsFetchingBatch] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   // --- State: Selection ---
   const [selectedFormation, setSelectedFormation] = useState(null);
@@ -143,8 +139,6 @@ const FormationsPage = ({ setAllFormations }) => {
 
   const navigate = useNavigate();
   const reduce = useReducedMotion();
-  const { hasAccess } = useSubscriptionAccess();
-  const hasPremiumAccess = hasAccess(FEATURES.FORMATION_DETAILS);
 
   // --- Helpers for Enrichment ---
   const getPseudoRandom = (seed) => {
@@ -390,16 +384,11 @@ const FormationsPage = ({ setAllFormations }) => {
   };
 
   const handleFormationClick = (formation) => {
-    if (hasPremiumAccess) {
-      // Instead of navigating, set the selected formation to show the panel
-      setSelectedFormation(formation);
-      // Scroll to the panel
-      setTimeout(() => {
-        document.getElementById('details-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-    } else {
-      setShowUpgradeModal(true);
-    }
+    // Show the details panel instead of navigating
+    setSelectedFormation(formation);
+    setTimeout(() => {
+      document.getElementById('details-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   };
 
   const handleClosePanel = () => {
@@ -453,12 +442,6 @@ const FormationsPage = ({ setAllFormations }) => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans flex flex-col">
       <PageHelmet {...formationsSEO} />
-
-      <UpgradeModal
-        isOpen={showUpgradeModal}
-        onClose={() => setShowUpgradeModal(false)}
-        defaultTier="premium"
-      />
 
       {/* Sticky search + chips */}
       <div className="sticky top-14 md:top-16 lg:top-20 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-700">
@@ -617,12 +600,10 @@ const FormationsPage = ({ setAllFormations }) => {
 
                   <div className="mt-4 flex items-center gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
                     <Button
-                      className={`flex-1 h-11 rounded-xl ${hasPremiumAccess ? 'bg-violet-600 hover:bg-violet-700' : 'bg-slate-800 hover:bg-slate-700'} text-white`}
+                      className="flex-1 h-11 rounded-xl bg-violet-600 hover:bg-violet-700 text-white"
                       onClick={() => handleFormationClick(formation)}
                     >
-                      {hasPremiumAccess ? "Voir la formation" : (
-                        <><Lock size={14} className="mr-2" /> Détail complet</>
-                      )}
+                      Voir la formation
                     </Button>
                     <Button
                       variant="outline"

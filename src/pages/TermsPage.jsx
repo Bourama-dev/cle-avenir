@@ -239,7 +239,7 @@ const TermsPage = () => {
             <AnimatedItem>
               <div className="p-6 bg-white/[0.03] border border-white/[0.06] rounded-2xl mt-4">
                 <h3 className="font-semibold text-white mb-4">Historique versions</h3>
-                {[{v:'v3.1',d:'Avril 2026',c:'Mise a jour cookies, abonnements Premium+'},{v:'v3.0',d:'Janvier 2026',c:'Refonte — Ajout Cleo IA, simulation entretien'},{v:'v2.5',d:'Juillet 2025',c:'RGPD renforce, portabilite donnees'}].map((v,i) => (
+                {[{v:'v3.1',d:'Avril 2026',c:'Mise a jour cookies, service entierement gratuit'},{v:'v3.0',d:'Janvier 2026',c:'Refonte — Ajout Cleo IA, simulation entretien'},{v:'v2.5',d:'Juillet 2025',c:'RGPD renforce, portabilite donnees'}].map((v,i) => (
                   <div key={i} className="flex items-center gap-4 py-3 border-b border-white/[0.04] last:border-0">
                     <span className="text-xs font-mono text-slate-500 bg-white/5 px-2 py-1 rounded w-12 text-center">{v.v}</span>
                     <span className="text-xs text-slate-500 w-24">{v.d}</span>
