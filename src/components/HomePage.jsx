@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, CheckCircle2, Sparkles, Target, Zap, Search,
-  GraduationCap, BookOpen, Clock, ChevronRight, Briefcase, Wand2, Gift,
+  GraduationCap, BookOpen, Clock, ChevronRight, Briefcase, Wand2, Gift, PlayCircle,
 } from 'lucide-react';
 import { motion, useReducedMotion, useInView } from 'framer-motion';
 import PageHelmet from '@/components/SEO/PageHelmet';
@@ -35,6 +35,13 @@ const FEATURES = [
   },
 ];
 
+const STAT_TINTS = [
+  'bg-pink-50 text-pink-500',
+  'bg-violet-50 text-violet-500',
+  'bg-sky-50 text-sky-500',
+  'bg-teal-50 text-teal-500',
+];
+
 const STATS = [
   { value: 5,     suffix: ' min',  label: 'Pour passer le test',       icon: Clock },
   { value: 1500,  suffix: '+',     label: 'Fiches métiers (ROME)',     icon: Briefcase },
@@ -48,7 +55,7 @@ const STEPS = [
     icon: Target,
     title: 'Passe le test gratuit',
     desc: "Quelques questions sur tes intérêts et tes valeurs. Aucune inscription requise.",
-    gradient: 'from-rose-500 to-rose-600',
+    gradient: 'from-pink-500 to-rose-500',
     link: '/test-orientation',
   },
   {
@@ -56,7 +63,7 @@ const STEPS = [
     icon: Zap,
     title: 'Cléo analyse ton profil',
     desc: "Notre IA analyse tes compétences et tes affinités métier en quelques secondes.",
-    gradient: 'from-rose-400 to-rose-600',
+    gradient: 'from-violet-500 to-indigo-500',
     link: '/cleo',
   },
   {
@@ -64,7 +71,7 @@ const STEPS = [
     icon: GraduationCap,
     title: 'Explore ta voie',
     desc: "Métiers, formations et offres personnalisés, avec des données officielles à jour.",
-    gradient: 'from-cyan-500 to-teal-600',
+    gradient: 'from-teal-400 to-emerald-500',
     link: '/metiers',
   },
 ];
@@ -205,15 +212,17 @@ const HomePage = ({ onNavigate }) => {
       />
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section className="relative isolate overflow-hidden bg-gradient-to-br from-white via-white to-white dark:from-slate-950 dark:via-slate-950 dark:to-slate-950 text-slate-900 dark:text-white min-h-[calc(100dvh-4rem)] md:min-h-[78dvh] flex items-center">
-        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-rose-400/25 blur-3xl -z-10" aria-hidden />
-        <div className="absolute -bottom-32 -left-24 w-[28rem] h-[28rem] rounded-full bg-cyan-400/25 blur-3xl -z-10" aria-hidden />
+      <section className="relative isolate overflow-hidden bg-gradient-to-br from-violet-50 via-pink-50 to-sky-100 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 text-slate-900 dark:text-white min-h-[calc(100dvh-4rem)] md:min-h-[78dvh] flex items-center">
+        <div className="absolute -top-32 -right-24 w-[34rem] h-[34rem] rounded-full bg-pink-300/50 dark:bg-pink-500/20 blur-3xl -z-10" aria-hidden />
+        <div className="absolute top-1/3 right-1/4 w-[26rem] h-[26rem] rounded-full bg-violet-300/40 dark:bg-violet-500/15 blur-3xl -z-10" aria-hidden />
+        <div className="absolute -bottom-40 -right-10 w-[32rem] h-[32rem] rounded-full bg-sky-300/50 dark:bg-sky-500/15 blur-3xl -z-10" aria-hidden />
+        <div className="absolute -bottom-32 -left-24 w-[24rem] h-[24rem] rounded-full bg-indigo-200/50 dark:bg-indigo-500/10 blur-3xl -z-10" aria-hidden />
 
-        <div className="w-full max-w-6xl mx-auto px-5 py-10 md:py-20 grid lg:grid-cols-2 gap-10 items-center">
+        <div className="w-full max-w-6xl mx-auto px-5 py-10 md:py-20 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           <div className="flex flex-col gap-6">
             <motion.span
               {...heroIn(0.05)}
-              className="self-start inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-rose-50 to-cyan-50 dark:from-rose-500/15 dark:to-cyan-500/15 border border-rose-200/70 dark:border-white/15 text-rose-700 dark:text-rose-200 text-sm font-semibold"
+              className="self-start inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-white/10 backdrop-blur border border-violet-200 dark:border-white/15 text-violet-700 dark:text-violet-200 text-sm font-semibold"
             >
               <Sparkles size={14} className="shrink-0" />
               L'IA au service de ton avenir
@@ -221,27 +230,28 @@ const HomePage = ({ onNavigate }) => {
 
             <motion.h1
               {...heroIn(0.15)}
-              className="text-5xl sm:text-6xl xl:text-7xl font-black text-slate-900 dark:text-white leading-[1.05] tracking-tight"
+              className="text-5xl sm:text-6xl xl:text-7xl font-black text-[#0f1a3d] dark:text-white leading-[1.05] tracking-tight"
             >
               Trouve ta voie avec{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-cyan-500">CléAvenir</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-600 to-pink-500">CléAvenir</span>
             </motion.h1>
 
-            <motion.p {...heroIn(0.3)} className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-md">
+            <motion.p {...heroIn(0.3)} className="text-lg md:text-xl text-slate-500 dark:text-slate-300 leading-relaxed max-w-md">
               Test d'orientation, analyse IA, métiers et formations. 100&nbsp;% gratuit.
             </motion.p>
 
             <motion.div {...heroIn(0.45)} className="flex flex-col sm:flex-row gap-3 pt-1">
               <button
                 onClick={() => onNavigate('/test-orientation')}
-                className="min-h-[56px] px-8 rounded-2xl bg-gradient-to-r from-rose-600 to-cyan-500 text-white font-bold text-base shadow-lg shadow-rose-500/30 flex items-center justify-center gap-2 active:scale-[0.98] transition"
+                className="min-h-[56px] px-8 rounded-2xl bg-gradient-to-r from-indigo-600 via-violet-600 to-pink-500 text-white font-bold text-base shadow-lg shadow-violet-500/30 flex items-center justify-center gap-2 active:scale-[0.98] transition hover:brightness-110"
               >
                 Faire le test gratuit <ArrowRight className="w-5 h-5" />
               </button>
               <button
                 onClick={() => onNavigate('/how-it-works')}
-                className="min-h-[56px] px-8 rounded-2xl bg-white/70 dark:bg-white/10 border border-rose-300 dark:border-white/25 text-rose-600 dark:text-white font-semibold text-base flex items-center justify-center active:scale-[0.98] transition hover:bg-rose-50 dark:hover:bg-white/20"
+                className="min-h-[56px] px-7 rounded-2xl bg-white/80 dark:bg-white/10 border border-slate-200 dark:border-white/25 backdrop-blur text-indigo-700 dark:text-white font-semibold text-base flex items-center justify-center gap-2 active:scale-[0.98] transition hover:bg-white"
               >
+                <PlayCircle className="w-5 h-5" />
                 Comment ça marche&nbsp;?
               </button>
             </motion.div>
@@ -249,7 +259,7 @@ const HomePage = ({ onNavigate }) => {
             <motion.div {...heroIn(0.6)} className="flex flex-wrap gap-x-5 gap-y-2">
               {['Sans inscription', 'Résultat immédiat', '100 % Gratuit'].map((label) => (
                 <span key={label} className="flex items-center gap-1.5 text-sm font-medium text-slate-500 dark:text-slate-400">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-violet-500 shrink-0" />
                   {label}
                 </span>
               ))}
@@ -269,26 +279,31 @@ const HomePage = ({ onNavigate }) => {
             )}
           </div>
 
-          {/* Desktop-only preview card */}
+          {/* Desktop-only: the 3 steps as shortcuts */}
           <motion.div
             initial={reduce ? false : { opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="hidden lg:block"
           >
-            <div className="rounded-3xl bg-white/80 dark:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/20 p-6 shadow-xl shadow-rose-900/10 space-y-4">
-              {STEPS.map((s) => {
-                const Icon = s.icon;
+            <div className="rounded-[2rem] bg-white/60 dark:bg-white/10 backdrop-blur-md border border-white/80 dark:border-white/15 p-6 shadow-xl shadow-violet-900/10 space-y-4">
+              {STEPS.map((st) => {
+                const Icon = st.icon;
                 return (
-                  <div key={s.number} className="flex items-center gap-4 rounded-2xl bg-slate-50 dark:bg-white/10 p-4">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${s.gradient} flex items-center justify-center shrink-0`}>
+                  <button
+                    key={st.number}
+                    onClick={() => onNavigate(st.link)}
+                    className="w-full text-left flex items-center gap-4 rounded-2xl bg-white/90 dark:bg-white/10 p-4 shadow-sm hover:shadow-md active:scale-[0.99] transition"
+                  >
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${st.gradient} flex items-center justify-center shrink-0 shadow-md`}>
                       <Icon className="w-6 h-6 text-white" />
                     </div>
-                    <div>
-                      <p className="font-bold text-slate-900 dark:text-white">{s.title}</p>
-                      <p className="text-sm text-slate-500 dark:text-slate-300 line-clamp-1">{s.desc}</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-bold text-slate-900 dark:text-white">{st.title}</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-300 line-clamp-2">{st.desc}</p>
                     </div>
-                  </div>
+                    <ChevronRight className="w-5 h-5 text-slate-400 shrink-0" />
+                  </button>
                 );
               })}
             </div>
@@ -297,23 +312,27 @@ const HomePage = ({ onNavigate }) => {
       </section>
 
       {/* ══ STATS ═══════════════════════════════════════════════════════════ */}
-      <section className="relative z-10 -mt-6 px-5">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
-          {STATS.map((stat, i) => {
-            const Icon = stat.icon;
-            return (
-              <Reveal key={stat.label} delay={i * 0.06}>
-                <div className="h-full rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-lg shadow-rose-900/5 p-4 md:p-6 flex flex-col gap-1">
-                  <Icon className="w-5 h-5 text-rose-500 mb-1" />
-                  <div className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tabular-nums">
-                    <CountUp value={stat.value} suffix={stat.suffix} />
+      <section className="relative z-10 -mt-10 px-4 md:px-5">
+        <Reveal>
+          <div className="max-w-6xl mx-auto rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xl shadow-violet-900/10 grid grid-cols-2 lg:grid-cols-4 lg:divide-x divide-slate-100 dark:divide-slate-800">
+            {STATS.map((stat, i) => {
+              const Icon = stat.icon;
+              return (
+                <div key={stat.label} className="flex items-center gap-4 p-5 md:p-6">
+                  <div className={`w-14 h-14 rounded-full flex items-center justify-center shrink-0 ${STAT_TINTS[i % STAT_TINTS.length]}`}>
+                    <Icon className="w-6 h-6" />
                   </div>
-                  <div className="text-xs md:text-sm font-medium text-slate-500 dark:text-slate-400 leading-tight">{stat.label}</div>
+                  <div className="min-w-0">
+                    <div className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums leading-none">
+                      <CountUp value={stat.value} suffix={stat.suffix} />
+                    </div>
+                    <div className="text-xs md:text-sm font-medium text-slate-500 dark:text-slate-400 leading-tight mt-1">{stat.label}</div>
+                  </div>
                 </div>
-              </Reveal>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        </Reveal>
       </section>
 
       {/* ══ TOOLS ═══════════════════════════════════════════════════════════ */}
