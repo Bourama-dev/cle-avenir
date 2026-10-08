@@ -15,7 +15,7 @@ const EmployerInfo = ({ siret, className = '' }) => {
     getEmployer(siret).then((e) => {
       if (!alive || !e) return;
       setEmployer(e);
-      if (e.has_logo && e.id_rce) {
+      if (e.id_rce) {
         getEmployerLogo(e.id_rce, e.logo_type).then((url) => alive && setLogo(url));
       }
     });

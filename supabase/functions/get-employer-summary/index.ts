@@ -140,6 +140,10 @@ Deno.serve(async (req) => {
       }
       const mime = res.headers.get("content-type")?.split(";")[0] ?? "image/webp";
       const bytes = new Uint8Array(await res.arrayBuffer());
+      if (bytes.length < 100) {
+        cache.set(ck, { at: Date.now(), value: null });
+        return json({ dataUrl: null });
+      }
       let bin = "";
       for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
       const dataUrl = `data:${mime};base64,${btoa(bin)}`;
