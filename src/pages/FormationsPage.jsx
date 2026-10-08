@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import CityAutocomplete from '@/components/ui/CityAutocomplete';
 import {
   Search, MapPin, Building, ChevronLeft, ChevronRight, AlertCircle,
-  Clock, BookOpen, Award, Star, Globe,
+  Users, Award,
   CheckCircle2, FileText, MonitorPlay, Briefcase, ArrowRight,
   School, GraduationCap, ChevronDown
 } from 'lucide-react';
@@ -26,76 +26,6 @@ import { normalizeStr } from '@/utils/stringUtils';
 // Constants
 const API_BATCH_SIZE = 100;
 const UI_PAGE_SIZE = 20;
-
-// Compact details (stats, certification, key skills): expandable on mobile, always visible on md+
-const FormationExtras = ({ details, reduce }) => {
-  const [open, setOpen] = useState(false);
-  const stats = [
-    { label: 'Durée', icon: Clock, color: 'text-violet-500', value: details.duration },
-    { label: 'Modules', icon: BookOpen, color: 'text-blue-500', value: `${details.modules_count} leçons` },
-    { label: 'Langue', icon: Globe, color: 'text-emerald-500', value: details.language },
-    { label: 'Difficulté', icon: MonitorPlay, color: 'text-orange-500', value: details.difficulty },
-  ];
-  const content = (
-    <div className="pt-3 space-y-3">
-      <div className="grid grid-cols-2 gap-3 text-sm bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-700/50">
-        {stats.map(({ label, icon: Icon, color, value }) => (
-          <div key={label} className="flex flex-col min-w-0">
-            <span className="text-[11px] uppercase font-medium text-slate-500 dark:text-slate-400">{label}</span>
-            <span className="flex items-center gap-1.5 font-semibold text-slate-700 dark:text-slate-200 truncate">
-              <Icon className={`h-4 w-4 shrink-0 ${color}`} />{value}
-            </span>
-          </div>
-        ))}
-      </div>
-      <div className="text-sm">
-        <h4 className="flex items-center gap-1.5 font-semibold text-slate-900 dark:text-white">
-          <Award className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />Certification
-        </h4>
-        <p className="text-slate-600 dark:text-slate-400 ml-5">{details.certificate}</p>
-      </div>
-      {details.outcomes?.length > 0 && (
-        <div className="text-sm">
-          <h4 className="flex items-center gap-1.5 font-semibold text-slate-900 dark:text-white">
-            <CheckCircle2 className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />Compétences clés
-          </h4>
-          <ul className="text-slate-600 dark:text-slate-400 ml-5 pl-5 list-disc space-y-0.5">
-            {details.outcomes.slice(0, 2).map((o, i) => <li key={i}>{o}</li>)}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-  return (
-    <>
-      <div className="hidden md:block">{content}</div>
-      <div className="md:hidden">
-        <button
-          type="button"
-          onClick={() => setOpen(o => !o)}
-          aria-expanded={open}
-          className="mt-1 min-h-[44px] w-full flex items-center justify-between text-sm font-medium text-indigo-700 dark:text-indigo-300 rounded-xl px-1"
-        >
-          Détails
-          <ChevronDown className={`h-4 w-4 transition-transform ${open ? 'rotate-180' : ''}`} />
-        </button>
-        <AnimatePresence initial={false}>
-          {open && (
-            <motion.div
-              initial={reduce ? false : { height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
-              transition={{ duration: reduce ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden"
-            >
-              {content}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </>
-  );
-};
 
 const FormationsPage = ({ setAllFormations }) => {
   // --- State: Data ---
@@ -141,16 +71,6 @@ const FormationsPage = ({ setAllFormations }) => {
   const reduce = useReducedMotion();
 
   // --- Helpers for Enrichment ---
-  const getPseudoRandom = (seed) => {
-    let hash = 0;
-    const str = String(seed);
-    for (let i = 0; i < str.length; i++) {
-      hash = ((hash << 5) - hash) + str.charCodeAt(i);
-      hash |= 0;
-    }
-    return Math.abs(hash);
-  };
-
   const getFormationLevel = (formation) => {
     const text = (formation.libelle_formation || '').toUpperCase();
     if (text.includes('BTS')) return 'BAC+2';
@@ -163,29 +83,9 @@ const FormationsPage = ({ setAllFormations }) => {
     return 'Non spécifié';
   };
 
-  const getDifficultyLevel = (level) => {
-    if (['CAP', 'BAC'].includes(level)) return 'Débutant';
-    if (['BAC+2', 'BAC+3'].includes(level)) return 'Intermédiaire';
-    if (['BAC+5'].includes(level)) return 'Avancé';
-    return 'Tous niveaux';
-  };
-
   const enrichFormationData = (f) => {
-    const seed = f.id_formation || f.libelle_formation || "default";
-    const rand = getPseudoRandom(seed);
     // Use niveau from API when available, fall back to title-based detection
     const level = f.niveau || getFormationLevel(f);
-
-    const rating = (4 + (rand % 10) / 10).toFixed(1);
-    const reviews = 20 + (rand % 150);
-    const modules = 5 + (rand % 10);
-    const hours = 400 + (rand % 1000);
-
-    let duration = "Variable";
-    if (level === 'BAC+2') duration = "2 ans";
-    if (level === 'BAC+3') duration = "3 ans";
-    if (level === 'BAC+5') duration = "5 ans";
-    if (['CAP', 'CAP/BEP'].includes(level)) duration = "2 ans";
 
     // Detect alternance from source field or tags (reliable for Catalogue Apprentissage data)
     const isAlternance =
@@ -197,25 +97,8 @@ const FormationsPage = ({ setAllFormations }) => {
     return {
       ...f,
       ui_details: {
-        duration,
         level_label: level,
-        difficulty: getDifficultyLevel(level),
-        modules_count: modules,
-        certificate: "Diplôme d'État / RNCP",
-        prerequisites: level === 'BAC' ? "Brevet des collèges" : "Baccalauréat ou équivalent",
-        instructor: f.etablissements?.[0]?.nom || "Équipe pédagogique qualifiée",
-        rating,
-        reviews_count: reviews,
-        access_duration: "Accès illimité ressources",
-        outcomes: [
-          "Compétences techniques métier",
-          "Gestion de projet",
-          "Communication professionnelle"
-        ],
-        format: isAlternance ? "Alternance" : "Présentiel / Hybride",
-        language: "Français",
-        total_hours: `${hours}h`,
-        cost: "Gratuit (Financé)"
+        format: isAlternance ? 'Alternance' : null,
       }
     };
   };
@@ -571,11 +454,8 @@ const FormationsPage = ({ setAllFormations }) => {
                       <Badge className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">Alternance</Badge>
                     )}
                     <Badge variant="secondary" className="bg-violet-100 text-violet-700">{ui_details.level_label}</Badge>
-                    {ui_details.rating && (
-                      <span className="ml-auto flex items-center gap-1 text-xs font-semibold text-amber-600">
-                        <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
-                        {ui_details.rating}
-                      </span>
+                    {formation.parcoursup?.selectivite && (
+                      <span className="ml-auto text-xs font-medium text-slate-500">{formation.parcoursup.selectivite}</span>
                     )}
                   </div>
 
@@ -585,18 +465,24 @@ const FormationsPage = ({ setAllFormations }) => {
 
                   <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 mt-1.5 text-sm min-w-0">
                     <Building className="h-4 w-4 text-slate-400 shrink-0" />
-                    <span className="truncate">{ui_details.instructor}</span>
+                    <span className="truncate">{primaryEtab.nom}</span>
                     <MapPin className="h-4 w-4 text-slate-400 shrink-0 ml-1" />
                     <span className="truncate shrink-0 max-w-[40%]">{primaryEtab.ville || formation.ville}</span>
                   </div>
 
-                  <div className="flex items-center gap-4 mt-3 text-xs font-medium text-slate-600 dark:text-slate-300">
-                    <span className="flex items-center gap-1.5"><Clock className="h-4 w-4 text-violet-500" />{ui_details.duration}</span>
-                    <span className="flex items-center gap-1.5"><Award className="h-4 w-4 text-violet-500" />{ui_details.format}</span>
-                    <span className="hidden sm:flex items-center gap-1.5"><MonitorPlay className="h-4 w-4 text-orange-500" />{ui_details.difficulty}</span>
-                  </div>
-
-                  <FormationExtras details={ui_details} reduce={reduce} />
+                  {(formation.parcoursup || ui_details.format) && (
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 text-xs font-medium text-slate-600 dark:text-slate-300">
+                      {formation.parcoursup?.capacite != null && (
+                        <span className="flex items-center gap-1.5"><Users className="h-4 w-4 text-violet-500" />{formation.parcoursup.capacite} places</span>
+                      )}
+                      {formation.parcoursup?.taux_acces != null && (
+                        <span className="flex items-center gap-1.5"><Award className="h-4 w-4 text-violet-500" />{Math.round(formation.parcoursup.taux_acces)} % d'accès</span>
+                      )}
+                      {ui_details.format && (
+                        <span className="flex items-center gap-1.5"><GraduationCap className="h-4 w-4 text-emerald-500" />{ui_details.format}</span>
+                      )}
+                    </div>
+                  )}
 
                   <div className="mt-4 flex items-center gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
                     <Button
