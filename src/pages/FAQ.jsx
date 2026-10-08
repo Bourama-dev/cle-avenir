@@ -94,7 +94,7 @@ export default function FAQ() {
       items: [
         {
           question: "Est-ce que CléAvenir est gratuit ?",
-          answer: "L'inscription, la passation du test initial et la consultation des résultats de base sont 100% gratuits. Nous proposons des formules Premium pour accéder à des analyses détaillées, au coach IA illimité et à des plans d'action personnalisés."
+          answer: "L'inscription, la passation du test initial et la consultation des résultats de base sont 100% gratuits. Les analyses détaillées, le coach IA Cléo et les plans d'action personnalisés sont également accessibles gratuitement."
         },
         {
           question: "Comment supprimer mon compte ?",

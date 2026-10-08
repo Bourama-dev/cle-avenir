@@ -2,6 +2,7 @@ import React from 'react';
 import { MapPin, Users, ExternalLink, Star, Building2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import EmployerInfo from './EmployerInfo';
 
 // Maps star score (0–5) to label + colour
 function hiringLabel(stars) {
@@ -75,6 +76,8 @@ const CompanyCard = ({ company }) => {
           </div>
         </div>
       </div>
+
+      <EmployerInfo siret={company.siret} className="mt-3" />
 
       {/* CTA */}
       <div className="mt-3 flex justify-end">

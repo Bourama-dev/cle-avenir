@@ -15,7 +15,7 @@ const features = [
   {
     icon: Target,
     title: "Précision Marché",
-    description: "Nous croisons votre profil avec les données réelles de 200+ métiers et les tendances actuelles de l'emploi.",
+    description: "Nous croisons votre profil avec les données réelles de plus de 1 500 métiers et les tendances actuelles de l'emploi.",
     color: "from-violet-500 to-purple-500",
     bg: "bg-violet-50 text-violet-600"
   },

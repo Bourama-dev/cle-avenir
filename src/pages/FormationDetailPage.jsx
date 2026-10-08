@@ -37,7 +37,7 @@ const FormationDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, subscriptionTier, loading: authLoading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
 
   const [formation, setFormation] = useState(null);
@@ -49,8 +49,6 @@ const FormationDetailPage = () => {
   const [error, setError] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-
-  const isPremium = subscriptionTier === 'premium' || subscriptionTier === 'premium_plus';
 
   const fetchAllData = async () => {
     setLoading(true);
@@ -317,11 +315,11 @@ const FormationDetailPage = () => {
             </section>
             </AnimatedItem>
 
-            {/* Statistiques (Premium Feature Mock) */}
+            {/* Statistiques */}
             <AnimatedItem>
             <section id="statistiques" className="relative">
                <h2 className="formation-section-title">Statistiques d'insertion</h2>
-               {!isPremium ? (
+               {!stats ? (
                  <div className="relative">
                    <div className="blur-sm pointer-events-none opacity-50">
                      <SectionSkeleton />

@@ -1,4 +1,4 @@
-// v1.3 — replace broken Catalogue Apprentissage with Parcoursup alternance search
+// v1.4 — real Parcoursup admission stats + working city filter (ville_etab)
 import { corsHeaders } from "./cors.ts";
 
 const PARCOURSUP_API =
@@ -15,6 +15,7 @@ interface Formation {
   lien?: string;
   niveau?: string;
   tags?: string[];
+  parcoursup?: Record<string, unknown>;
 }
 
 function str(v: unknown): string {
@@ -56,7 +57,7 @@ function normalizeParcoursup(r: Record<string, unknown>): Formation {
   ) || pick(r, "g_ea_lib_vx") || "Formation";
 
   const etab = pick(r, "g_ea_lib_vx", "etablissement", "nom_etablissement");
-  const ville = pick(r, "commune_etab", "commune", "ville", "libelle_commune");
+  const ville = pick(r, "ville_etab", "commune_etab", "commune", "ville", "libelle_commune");
   const uai = str(r["cod_uai"]);
   const fili = pick(r, "fili", "filiere", "type_formation");
   const lien = pick(r, "lien_form_psup", "url", "lien");
@@ -69,7 +70,46 @@ function normalizeParcoursup(r: Record<string, unknown>): Formation {
   const source: Formation["source"] = isAlt ? "apprentissage" : "parcoursup";
   const tags = isAlt ? ["Alternance", "Apprentissage", "Parcoursup"] : ["Parcoursup"];
 
+  const num = (k: string): number | null => {
+    const v = r[k];
+    if (v === null || v === undefined || v === "") return null;
+    const n = Number(v);
+    return Number.isFinite(n) ? n : null;
+  };
+  const geo = r["g_olocalisation_des_formations"] as { lat?: number; lon?: number } | null | undefined;
+
+  // Real figures from the Parcoursup open dataset (fr-esr-parcoursup; session = admission campaign year)
+  const parcoursup = {
+    session: str(r["session"]) || null,
+    statut: pick(r, "contrat_etab") || null,
+    selectivite: pick(r, "select_form") || null,
+    filiere: fili || null,
+    detail: pick(r, "detail_forma", "detail_forma2") || null,
+    departement: pick(r, "dep_lib") || null,
+    region: pick(r, "region_etab_aff", "reg_lib_affect") || null,
+    academie: pick(r, "acad_mies") || null,
+    capacite: num("capa_fin"),
+    voeux: num("voe_tot"),
+    propositions: num("prop_tot"),
+    admis: num("acc_tot"),
+    taux_acces: num("taux_acces_ens"),
+    pct_femmes: num("pct_f"),
+    pct_boursiers: num("pct_bours"),
+    pct_neobacheliers: num("pct_neobac"),
+    pct_bac_general: num("pct_bg"),
+    pct_bac_techno: num("pct_bt"),
+    pct_bac_pro: num("pct_bp"),
+    pct_sans_mention: num("pct_sansmention"),
+    pct_mention_ab: num("pct_ab"),
+    pct_mention_b: num("pct_b"),
+    pct_mention_tb: num("pct_tb"),
+    pct_meme_academie: num("pct_aca_orig"),
+    lat: geo?.lat ?? null,
+    lon: geo?.lon ?? null,
+  };
+
   return {
+    parcoursup,
     id_formation: uai ? `psup_${uai}_${fili || "x"}` : slugId("psup", title),
     g_ea_lib_vx: etab,
     libelle_formation: title,
@@ -113,9 +153,9 @@ async function fetchParcoursup(params: { q: string; ville: string; limit: number
 
   const searchTerm = extraSearch ? `${extraSearch}${q ? " " + q : ""}` : q;
   if (searchTerm) sp.set("search", searchTerm);
-  // Parcoursup/Socrata LIKE is case-sensitive; commune_etab is stored in uppercase.
-  const safeVille = ville.replace(/['"\\%]/g, "").slice(0, 100).toUpperCase();
-  if (safeVille) sp.set("where", `commune_etab like '%${safeVille}%'`);
+  // The dataset's city field is ville_etab (e.g. "Paris 20e  Arrondissement"); search() is case-insensitive.
+  const safeVille = ville.replace(/['"\\%]/g, "").slice(0, 100);
+  if (safeVille) sp.set("where", `search(ville_etab, '${safeVille}')`);
 
   const url = `${PARCOURSUP_API}?${sp.toString()}`;
   console.log("[psup] GET", url);

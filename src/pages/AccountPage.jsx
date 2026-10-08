@@ -125,7 +125,7 @@ const AccountPage = () => {
       >
         <div>
           <h1 className="text-3xl font-bold text-slate-900">Mon Compte</h1>
-          <p className="text-slate-500">Gérez vos paramètres personnels et votre abonnement.</p>
+          <p className="text-slate-500">Gérez vos paramètres personnels.</p>
         </div>
         <Button variant="outline" onClick={() => navigate('/profile/edit')}>
           <Edit className="mr-2 h-4 w-4" /> Modifier Profil

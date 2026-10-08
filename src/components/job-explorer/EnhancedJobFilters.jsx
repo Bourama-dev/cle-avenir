@@ -127,11 +127,11 @@ const EnhancedJobFilters = ({ filters, onFilterChange, resetFilters, onSearch, c
         </div>
       </div>
 
-      {/* Mobile trigger: floating pill + bottom sheet */}
-      <div className="lg:hidden fixed right-4 z-30 bottom-[calc(4rem+env(safe-area-inset-bottom)+0.75rem)]">
+      {/* Mobile trigger: inline button + bottom sheet (a floating pill was hidden behind the bottom nav) */}
+      <div className="lg:hidden">
         <Sheet>
           <SheetTrigger asChild>
-            <Button className="h-12 rounded-full px-5 gap-2 bg-slate-900 hover:bg-slate-800 text-white shadow-xl dark:bg-white dark:text-slate-900">
+            <Button className="h-12 w-full rounded-xl px-5 gap-2 bg-white hover:bg-rose-50 text-slate-900 border border-slate-200 shadow-sm dark:bg-slate-900 dark:text-white dark:border-slate-700">
               <Filter className="w-4 h-4" /> Filtres
               {activeFiltersCount > 0 && (
                 <span className="min-w-5 h-5 px-1.5 rounded-full bg-rose-500 text-white text-[11px] font-bold flex items-center justify-center">

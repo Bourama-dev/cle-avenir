@@ -204,10 +204,10 @@ const AboutPage = () => {
         <AnimatedSection>
           <div className="stats-grid">
             {[
-              { value: '200+', label: 'Utilisateurs Guidés' },
-              { value: '200+', label: 'Fiches Métiers' },
-              { value: '95%', label: 'Satisfaction Client' },
-              { value: '24/7', label: 'Support Disponible' },
+              { value: '1 500+', label: 'Fiches Métiers' },
+              { value: '3', label: 'Sources Officielles' },
+              { value: '100%', label: 'Gratuit' },
+              { value: '24/7', label: 'Coach IA Cléo' },
             ].map((stat, index) => (
               <AnimatedItem key={index}>
                 <div className="stat-item">
