@@ -84,6 +84,13 @@ function normalise(r: any) {
     url_path: ((p.urls ?? []) as any[]).find((u) => u?.actif)?.urlPath ?? null,
     city: str(etab?.adresse?.libelleDistributionPostale),
     zipcode: str(etab?.adresse?.codePostal),
+    // visible establishments (hidden ones are masked on the employer page)
+    // deno-lint-ignore no-explicit-any
+    locations: ((employeur?.etablissements ?? []) as any[])
+      .filter((e) => e?.content?.visibilite !== false)
+      .map((e) => ({ city: str(e?.adresse?.libelleDistributionPostale), zipcode: str(e?.adresse?.codePostal) }))
+      .filter((l) => l.city)
+      .slice(0, 100),
   };
 }
 
