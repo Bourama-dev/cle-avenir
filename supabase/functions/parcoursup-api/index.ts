@@ -1,4 +1,4 @@
-// v1.3 — replace broken Catalogue Apprentissage with Parcoursup alternance search
+// v1.4 — real Parcoursup admission stats + working city filter (ville_etab)
 import { corsHeaders } from "./cors.ts";
 
 const PARCOURSUP_API =

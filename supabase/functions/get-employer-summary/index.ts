@@ -126,7 +126,7 @@ Deno.serve(async (req) => {
     if (body.logo) {
       const idRCE = str(body.logo.idRCE);
       const type = body.logo.type === "LOGO_ETABLISSEMENT" ? "LOGO_ETABLISSEMENT" : "LOGO_ENTREPRISE";
-      if (!idRCE || !/^[\w-]+$/.test(idRCE)) return json({ dataUrl: null, warning: "invalid_id" }, 400);
+      if (!idRCE || !/^[\w#-]{1,200}$/.test(idRCE)) return json({ dataUrl: null, warning: "invalid_id" }, 400);
       const ck = `logo:${type}:${idRCE}`;
       const hit = cache.get(ck);
       if (hit && Date.now() - hit.at < TTL_MS * 6) return json({ dataUrl: hit.value });
