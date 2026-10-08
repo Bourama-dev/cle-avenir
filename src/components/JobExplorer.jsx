@@ -12,6 +12,8 @@ import CompanySectorFilter, { SECTORS } from '@/components/job-explorer/CompanyS
 import EnhancedJobFilters from '@/components/job-explorer/EnhancedJobFilters';
 import ResultsSummary from '@/components/job-explorer/ResultsSummary';
 import Pagination from '@/components/job-explorer/Pagination';
+import EmployerInfo from '@/components/job-explorer/EmployerInfo';
+import FeaturedEmployers from '@/components/job-explorer/FeaturedEmployers';
 import useJobFilters from '@/hooks/useJobFilters';
 import useCompanySearch from '@/hooks/useCompanySearch';
 import useAlternanceSearch from '@/hooks/useAlternanceSearch';
@@ -159,6 +161,7 @@ const JobExplorer = ({ onNavigate }) => {
             {/* ─── OFFERS TAB ─── */}
             {activeTab === 'offers' && (
               <>
+                <FeaturedEmployers location={filters.location} />
                 {!loading && totalCount > 0 && (
                   <ResultsSummary
                     totalResults={totalCount}
@@ -603,6 +606,7 @@ const AlternanceJobCard = ({ job }) => (
         )}
       </div>
     </div>
+    <EmployerInfo siret={job.company?.siret} className="mt-3" />
     <div className="mt-3 flex flex-wrap justify-end gap-2">
       <PrepareInterviewButton
         offer={{ title: job.title, company: job.company?.name, description: job.description, level: 'stage' }}
