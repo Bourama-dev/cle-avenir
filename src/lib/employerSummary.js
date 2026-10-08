@@ -71,3 +71,7 @@ export async function getFeaturedEmployers({ where, codesNaf, limit = 6 } = {}) 
     return [];
   }
 }
+
+// Public France Travail employer page, tab listing the employer's open offers.
+export const employerOffersUrl = (urlPath) =>
+  urlPath ? `https://recrute.francetravail.fr/page-employeur/${encodeURIComponent(urlPath)}/offres-emploi` : null;

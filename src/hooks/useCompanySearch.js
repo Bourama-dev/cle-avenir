@@ -3,7 +3,7 @@ import { supabase } from '@/lib/customSupabaseClient';
 
 const PAGE_SIZE = 20;
 
-const useCompanySearch = ({ location, romeCodes, contract, distance }) => {
+const useCompanySearch = ({ location, romeCodes, contract, distance, keywords }) => {
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);   // null | 'credentials_missing' | 'auth_failed' | 'not_subscribed' | string
@@ -41,6 +41,7 @@ const useCompanySearch = ({ location, romeCodes, contract, distance }) => {
         page_size: PAGE_SIZE,
       };
       if (romeCodes) payload.rome_codes = romeCodes;
+      if (keywords && keywords.trim().length > 1) payload.job = keywords.trim();
       if (contract && contract !== 'all') payload.contract = contract;
 
       const { data, error: fnError } = await supabase.functions.invoke('get-companies', {
@@ -71,7 +72,7 @@ const useCompanySearch = ({ location, romeCodes, contract, distance }) => {
     } finally {
       setLoading(false);
     }
-  }, [location?.lat, location?.lon, romeCodes, contract, distance]);
+  }, [location?.lat, location?.lon, romeCodes, contract, distance, keywords]);
 
   // Auto-fetch when params change, reset to page 1
   useEffect(() => {
