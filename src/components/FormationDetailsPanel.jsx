@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
-  X, ChevronDown, Info, BookOpen, Briefcase, Building, BarChart2,
-  CheckCircle, Users, FileText, Star, GitCompare, ArrowRight,
+  X, ChevronDown, Info, BookOpen, Briefcase, 
+  CheckCircle, Users, FileText, ArrowRight,
   Clock, TrendingUp, MapPin, Award, DollarSign, Globe, ExternalLink,
   GraduationCap, Download, Play, Calendar
 } from 'lucide-react';
@@ -31,7 +31,6 @@ const SECTORS = {
     ],
     skills: ['Programmation (Python, Java, PHP)', 'HTML/CSS/JavaScript', 'SQL & NoSQL', 'Git & versioning', 'Méthodes Agile/Scrum', 'Cybersécurité de base', 'Cloud computing'],
     partners: ['Capgemini', 'Sopra Steria', 'Orange Business Services', 'Atos', 'Thales', 'IBM France'],
-    startingSalary: 28000, salary3y: 36000, salary5y: 45000, successRate: 83, employmentRate: 89, satisfaction: 4.2,
   },
   commerce: {
     keywords: ['commerce', 'vente', 'marketing', 'management', 'gestion', 'entreprise', 'mco', 'ndrc', 'commercial', 'banque', 'finance', 'comptabilité', 'assurance'],
@@ -50,7 +49,6 @@ const SECTORS = {
     ],
     skills: ['Techniques de vente', 'CRM (Salesforce, HubSpot)', 'Marketing digital', 'Excel & Pack Office', 'Gestion de projet', 'Communication professionnelle'],
     partners: ['BNP Paribas', 'Leroy Merlin', 'LVMH', 'Carrefour', 'Société Générale', 'Decathlon'],
-    startingSalary: 24000, salary3y: 32000, salary5y: 42000, successRate: 80, employmentRate: 85, satisfaction: 4.0,
   },
   sante: {
     keywords: ['infirmier', 'santé', 'médical', 'aide-soignant', 'paramédical', 'pharmacie', 'kiné', 'ergothérapie', 'psychologie'],
@@ -69,7 +67,6 @@ const SECTORS = {
     ],
     skills: ['Soins techniques', 'Pharmacologie', 'Écoute & empathie', 'Gestion du stress', 'Travail en équipe pluridisciplinaire', 'Informatique médicale'],
     partners: ['CHU de France', 'Korian', 'Orpea', 'Croix-Rouge Française', 'APHP', 'Ramsay Santé'],
-    startingSalary: 25000, salary3y: 30000, salary5y: 36000, successRate: 78, employmentRate: 94, satisfaction: 4.3,
   },
   btp: {
     keywords: ['bâtiment', 'travaux', 'construction', 'génie civil', 'btp', 'architecture', 'électricité', 'plomberie', 'maçonnerie', 'topographie'],
@@ -88,7 +85,6 @@ const SECTORS = {
     ],
     skills: ['AutoCAD / Revit', 'Lecture de plans', 'Gestion de chantier', 'Métrés & devis', 'Réglementation thermique (RE2020)', 'Travail en équipe'],
     partners: ['Bouygues Construction', 'Vinci', 'Eiffage', 'Spie Batignolles', 'Nexity', 'Colas'],
-    startingSalary: 26000, salary3y: 34000, salary5y: 44000, successRate: 81, employmentRate: 87, satisfaction: 4.1,
   },
   tourisme: {
     keywords: ['tourisme', 'hôtellerie', 'restauration', 'cuisine', 'hotellerie', 'accueil', 'hébergement', 'voyage', 'événementiel'],
@@ -107,7 +103,6 @@ const SECTORS = {
     ],
     skills: ['Service en salle', 'Anglais professionnel', 'PMS hôteliers (Opera)', 'Cuisine & HACCP', 'Vente & conseil', 'Gestion de l\'expérience client'],
     partners: ['AccorHotels', 'Marriott', 'Club Med', 'TUI France', 'Sodexo', 'Elior'],
-    startingSalary: 21000, salary3y: 27000, salary5y: 34000, successRate: 79, employmentRate: 86, satisfaction: 4.1,
   },
   default: {
     keywords: [],
@@ -126,7 +121,6 @@ const SECTORS = {
     ],
     skills: ['Gestion de projet', 'Pack Office / Google Workspace', 'Communication professionnelle', 'Travail en équipe', 'Analyse et synthèse', 'Anglais professionnel'],
     partners: ['Decathlon', 'L\'Oréal', 'Total Energies', 'Danone', 'Michelin', 'Schneider Electric'],
-    startingSalary: 24000, salary3y: 31000, salary5y: 40000, successRate: 80, employmentRate: 83, satisfaction: 4.0,
   },
 };
 
@@ -163,32 +157,6 @@ const Section = ({ id, expanded, onToggle, title, icon, children, badge }) => (
   </div>
 );
 
-const StatCard = ({ label, value, icon, sub }) => (
-  <div className="stat-card">
-    <div className="stat-icon">{icon}</div>
-    <div className="stat-value">{value}</div>
-    <div className="text-sm text-slate-500 font-medium mt-1">{label}</div>
-    {sub && <div className="text-xs text-slate-400 mt-0.5">{sub}</div>}
-  </div>
-);
-
-const SalaryCard = ({ label, value, highlighted }) => (
-  <div className={`p-4 rounded-lg border ${highlighted ? 'bg-indigo-50 border-indigo-200' : 'bg-white border-slate-200'}`}>
-    <div className="text-sm text-slate-500 mb-1">{label}</div>
-    <div className={`text-xl font-bold ${highlighted ? 'text-indigo-700' : 'text-slate-800'}`}>
-      {typeof value === 'number' ? `${value.toLocaleString('fr-FR')} €` : value}
-    </div>
-  </div>
-);
-
-const StarRow = ({ count }) => (
-  <div className="flex text-amber-500">
-    {[1,2,3,4,5].map(i => (
-      <Star key={i} size={14} fill={i <= count ? 'currentColor' : 'none'} />
-    ))}
-  </div>
-);
-
 /* ─────────────────────────────────────────────────────────────────────────────
    Main panel
    ───────────────────────────────────────────────────────────────────────────── */
@@ -198,11 +166,9 @@ const FormationDetailsPanel = ({ formationId, formationData, onClose }) => {
     general: true,
     curriculum: false,
     careers: false,
-    stats: false,
     prerequisites: false,
     partners: false,
     resources: false,
-    comparison: false,
   });
 
   const toggleSection = (s) =>
@@ -219,19 +185,6 @@ const FormationDetailsPanel = ({ formationId, formationData, onClose }) => {
   // Seeded-deterministic slice so each formation shows consistent (but different) data
   const partnerOffset = seedRandom(seed, 0, 2);
   const selectedPartners = [...sector.partners.slice(partnerOffset), ...sector.partners.slice(0, partnerOffset)].slice(0, 4);
-
-  // Adjust stats by level
-  const levelMultiplier = { 'BAC+5': 1.25, 'BAC+3': 1.05, 'BAC+2': 1.0, 'CAP': 0.88, 'BAC': 0.92 };
-  const mult = levelMultiplier[level] || 1;
-  const stats = {
-    successRate:     Math.round(sector.successRate * mult),
-    employmentRate:  Math.min(99, Math.round(sector.employmentRate * mult)),
-    satisfaction:    (Math.min(5, sector.satisfaction * (mult > 1 ? 1.05 : 1))).toFixed(1),
-    totalStudents:   seedRandom(seed, 200, 1800),
-    startingSalary:  Math.round(sector.startingSalary * mult),
-    salary3y:        Math.round(sector.salary3y * mult),
-    salary5y:        Math.round(sector.salary5y * mult),
-  };
 
   // Contextual description
   const description = formationData.description
@@ -373,28 +326,6 @@ const FormationDetailsPanel = ({ formationId, formationData, onClose }) => {
           </div>
         </Section>
 
-        {/* ── 4. Statistiques & Salaire ── */}
-        <Section id="stats" expanded={expandedSections.stats} onToggle={() => toggleSection('stats')}
-          title="Statistiques & Salaire" icon={<BarChart2 size={20} />}>
-          <div className="stats-grid">
-            <StatCard label="Étudiants / an" value={stats.totalStudents.toLocaleString('fr-FR')} icon={<Users size={24} />} sub="en France" />
-            <StatCard label="Taux de réussite" value={`${stats.successRate}%`} icon={<Award size={24} />} sub="à l'examen final" />
-            <StatCard label="Insertion pro." value={`${stats.employmentRate}%`} icon={<Briefcase size={24} />} sub="à 6 mois" />
-            <StatCard label="Satisfaction" value={`${stats.satisfaction}/5`} icon={<Star size={24} />} sub="avis étudiants" />
-          </div>
-
-          <h4 className="font-semibold text-slate-800 mt-8 mb-4">Évolution salariale moyenne</h4>
-          <div className="salary-breakdown">
-            <SalaryCard label="Salaire débutant" value={stats.startingSalary} />
-            <SalaryCard label="Après 3 ans d'expérience" value={stats.salary3y} />
-            <SalaryCard label="Après 5 ans d'expérience" value={stats.salary5y} highlighted />
-          </div>
-
-          <div className="mt-6 p-4 bg-amber-50 rounded-lg border border-amber-100 text-sm text-amber-800">
-            <strong>📊 Source :</strong> Données estimées basées sur les enquêtes d'insertion professionnelle du SIES (Ministère de l'Enseignement Supérieur) et des observatoires de branche.
-          </div>
-        </Section>
-
         {/* ── 5. Prérequis & Admission ── */}
         <Section id="prerequisites" expanded={expandedSections.prerequisites} onToggle={() => toggleSection('prerequisites')}
           title="Prérequis & Admission" icon={<CheckCircle size={20} />}>
@@ -503,41 +434,6 @@ const FormationDetailsPanel = ({ formationId, formationData, onClose }) => {
                 </div>
               );
             })}
-          </div>
-        </Section>
-
-        {/* ── 9. Comparateur ── */}
-        <Section id="comparison" expanded={expandedSections.comparison} onToggle={() => toggleSection('comparison')}
-          title="Comparateur" icon={<GitCompare size={20} />}>
-          <div className="comparison-table-wrapper">
-            <table className="comparison-table">
-              <thead>
-                <tr>
-                  <th>Critère</th>
-                  <th>Cette formation</th>
-                  <th>Moyenne nationale</th>
-                  <th>Meilleure performance</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { label: 'Durée', mine: ui_details?.duration || '2 ans', avg: '2 ans', best: '2 ans' },
-                  { label: 'Financement', mine: 'Gratuit / CPF', avg: 'CPF + aide', best: 'Intégralement financé' },
-                  { label: 'Taux de réussite', mine: `${stats.successRate}%`, avg: '75%', best: '93%' },
-                  { label: 'Taux d\'insertion', mine: `${stats.employmentRate}%`, avg: '80%', best: '97%' },
-                  { label: 'Salaire débutant', mine: `${stats.startingSalary.toLocaleString('fr-FR')} €`, avg: '24 000 €', best: `${Math.round(stats.startingSalary * 1.1).toLocaleString('fr-FR')} €` },
-                  { label: 'Satisfaction', mine: `${stats.satisfaction}/5`, avg: '3.9/5', best: '4.8/5' },
-                  { label: 'Durée totale cours', mine: ui_details?.total_hours || '600–900h', avg: '700h', best: '1 000h+' },
-                ].map((row, i) => (
-                  <tr key={i} className={i % 2 === 0 ? 'current-formation' : ''}>
-                    <td className="font-medium text-slate-700">{row.label}</td>
-                    <td className="font-semibold text-indigo-700">{row.mine}</td>
-                    <td className="text-slate-500">{row.avg}</td>
-                    <td className="text-emerald-600 font-medium">{row.best}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
         </Section>
 
