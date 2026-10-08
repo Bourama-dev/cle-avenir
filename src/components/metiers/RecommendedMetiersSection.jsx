@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Sparkles, ArrowRight, Compass } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import EnhancedMetierCard from './EnhancedMetierCard';
-import BlurredMetierCard from './BlurredMetierCard';
 import MetierCardSkeleton from './MetierCardSkeleton';
 import { extractRomeCode } from '@/utils/metierHelper';
 
@@ -31,10 +30,6 @@ const RecommendedMetiersSection = ({
 
     console.log(`[RecommendedMetiersSection] Navigation vers: /metier/${romeCode}`);
     navigate(`/metier/${romeCode}`);
-  };
-
-  const handleUpgrade = () => {
-    navigate('/metiers');
   };
 
   if (loading) {
@@ -83,10 +78,8 @@ const RecommendedMetiersSection = ({
 
   // Define limits based on plan
   const visibleCount = normalizedMetiers.length; // Tout est gratuit : toutes les recommandations sont visibles
-  const blurredCount = 0;
   
   const visibleMetiers = normalizedMetiers.slice(0, visibleCount);
-  const blurredMetiers = normalizedMetiers.slice(visibleCount, visibleCount + blurredCount);
 
   return (
     <section className="py-16 relative overflow-hidden bg-slate-50/50">
@@ -125,34 +118,7 @@ const RecommendedMetiersSection = ({
               onClick={() => handleDetailClick(metier)}
             />
           ))}
-
-          {/* Render Blurred Cards for Freemium */}
-          {blurredMetiers.map((metier, index) => (
-            <BlurredMetierCard 
-              key={`blurred-${metier.code || index}`} 
-              metier={metier} 
-              onUpgrade={handleUpgrade}
-            />
-          ))}
         </div>
-
-        {/* Bannière désactivée (tout est gratuit) */}
-        {false && (
-          <div className="mt-12 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl p-8 text-white shadow-xl shadow-indigo-500/20 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center shrink-0">
-                <Sparkles className="w-7 h-7 text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold mb-1 text-white">Toutes tes recommandations</h3>
-                <p className="text-violet-100 text-sm">Tout est gratuit.</p>
-              </div>
-            </div>
-            <Button size="lg" className="bg-white text-violet-700 hover:bg-slate-50 shrink-0 w-full md:w-auto" onClick={handleUpgrade}>
-              Voir le catalogue <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </div>
-        )}
       </div>
     </section>
   );
