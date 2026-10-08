@@ -65,6 +65,7 @@ const JobExplorer = ({ onNavigate }) => {
     location: activeTab === 'alternance' ? filters.location : null,
     romeCodes: selectedAltSector.romes,
     distance: filters.radius ?? 30,
+    keywords: activeTab === 'alternance' ? debouncedSearch : '',
   });
 
   useEffect(() => {
