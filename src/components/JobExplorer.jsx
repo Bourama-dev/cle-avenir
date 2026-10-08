@@ -20,6 +20,9 @@ import useCompanySearch from '@/hooks/useCompanySearch';
 import useAlternanceSearch from '@/hooks/useAlternanceSearch';
 import { useDebounce } from '@/hooks/useDebounce';
 
+// La Bonne Boîte v2 requires a job/ROME criterion: "all sectors" sends every sector's ROME codes
+const ALL_SECTOR_ROMES = SECTORS.map((s) => s.romes).filter(Boolean).join(',');
+
 const LBB_CONTRACT_OPTIONS = [
   { value: 'all',        label: 'Tous types' },
   { value: 'dpae',       label: 'CDI / CDD' },
@@ -54,9 +57,11 @@ const JobExplorer = ({ onNavigate }) => {
     total: companiesTotal, page: companiesPage, totalPages: companiesTotalPages, goToPage,
   } = useCompanySearch({
     location: activeTab === 'companies' ? filters.location : null,
-    romeCodes: selectedSector.romes,
+    // La Bonne Boîte v2 requires a job/ROME criterion: with "all sectors" we send every sector's ROME codes
+    romeCodes: selectedSector.romes ?? ALL_SECTOR_ROMES,
     contract: lbbContract,
     distance: filters.radius ?? 30,
+    keywords: activeTab === 'companies' ? debouncedSearch : '',
   });
 
   // Alternance search — La Bonne Alternance (only active when alternance tab is open)
