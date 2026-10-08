@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, CheckCircle2, Sparkles, Target, Zap, Search,
-  GraduationCap, Users, BookOpen, Clock, ChevronRight, Briefcase, Wand2,
+  GraduationCap, BookOpen, Clock, ChevronRight, Briefcase, Wand2, Gift,
 } from 'lucide-react';
 import { motion, useReducedMotion, useInView } from 'framer-motion';
 import PageHelmet from '@/components/SEO/PageHelmet';
@@ -37,9 +37,9 @@ const FEATURES = [
 
 const STATS = [
   { value: 5,     suffix: ' min',  label: 'Pour passer le test',       icon: Clock },
-  { value: 1000,  suffix: '+',     label: 'Fiches métiers',            icon: Briefcase },
-  { value: 10000, suffix: '+',     label: 'Formations référencées',    icon: BookOpen },
-  { value: 200,   suffix: '+',     label: 'Utilisateurs orientés',     icon: Users },
+  { value: 1500,  suffix: '+',     label: 'Fiches métiers (ROME)',     icon: Briefcase },
+  { value: 3,     suffix: '',      label: 'Sources officielles',       icon: BookOpen },
+  { value: 100,   suffix: ' %',    label: 'Gratuit, sans carte bancaire', icon: Gift },
 ];
 
 const STEPS = [
@@ -474,7 +474,7 @@ const HomePage = ({ onNavigate }) => {
             <div className="relative">
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 border border-white/20 text-sm font-semibold mb-6">
                 <Sparkles size={14} />
-                Rejoins plus de 200 utilisateurs orientés
+                Rejoins CléAvenir, c'est gratuit
               </span>
               <h2 className="text-4xl md:text-6xl font-black text-white leading-tight tracking-tight mb-4">
                 Prêt à dessiner ton avenir&nbsp;?

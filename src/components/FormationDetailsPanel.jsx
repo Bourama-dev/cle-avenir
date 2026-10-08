@@ -130,14 +130,6 @@ const SECTORS = {
   },
 };
 
-const REVIEWS = [
-  { name: 'Sarah M.', time: 'Il y a 3 semaines', stars: 5, text: 'Formation vraiment complète. Les enseignants sont disponibles et les cours très bien structurés. J\'ai trouvé un emploi deux semaines après ma sortie !' },
-  { name: 'Lucas B.', time: 'Il y a 2 mois', stars: 5, text: 'Très bonne ambiance de classe. Les projets pratiques m\'ont permis de construire un vrai portfolio. Je recommande vivement !' },
-  { name: 'Amina K.', time: 'Il y a 4 mois', stars: 4, text: 'Formation solide avec un bon équilibre théorie/pratique. Le stage de fin d\'année est bien encadré. Seul bémol : les emplois du temps parfois chargés.' },
-  { name: 'Thomas R.', time: 'Il y a 5 mois', stars: 5, text: 'Les intervenants professionnels apportent un regard concret du monde du travail. Ça change vraiment de la théorie pure !' },
-  { name: 'Julie F.', time: 'Il y a 6 mois', stars: 4, text: 'Excellente formation. J\'ai appris énormément et les ressources pédagogiques sont de qualité. Je me sens vraiment prête pour le marché du travail.' },
-];
-
 const getSector = (title = '', level = '') => {
   const lower = (title + ' ' + level).toLowerCase();
   for (const [key, sector] of Object.entries(SECTORS)) {
@@ -210,7 +202,6 @@ const FormationDetailsPanel = ({ formationId, formationData, onClose }) => {
     prerequisites: false,
     partners: false,
     resources: false,
-    reviews: false,
     comparison: false,
   });
 
@@ -226,9 +217,7 @@ const FormationDetailsPanel = ({ formationId, formationData, onClose }) => {
   const sector  = getSector(title, level);
 
   // Seeded-deterministic slice so each formation shows consistent (but different) data
-  const reviewOffset  = seedRandom(seed, 0, 2);
   const partnerOffset = seedRandom(seed, 0, 2);
-  const selectedReviews  = [...REVIEWS.slice(reviewOffset), ...REVIEWS.slice(0, reviewOffset)].slice(0, 3);
   const selectedPartners = [...sector.partners.slice(partnerOffset), ...sector.partners.slice(0, partnerOffset)].slice(0, 4);
 
   // Adjust stats by level
@@ -514,49 +503,6 @@ const FormationDetailsPanel = ({ formationId, formationData, onClose }) => {
                 </div>
               );
             })}
-          </div>
-        </Section>
-
-        {/* ── 8. Avis & Témoignages ── */}
-        <Section id="reviews" expanded={expandedSections.reviews} onToggle={() => toggleSection('reviews')}
-          title="Avis & Témoignages" icon={<Star size={20} />} badge={`${stats.satisfaction}/5 ★`}>
-          <div className="flex items-center gap-6 mb-6 p-4 bg-amber-50 rounded-xl border border-amber-100">
-            <div className="text-center">
-              <div className="text-4xl font-black text-amber-500">{stats.satisfaction}</div>
-              <StarRow count={Math.round(parseFloat(stats.satisfaction))} />
-              <div className="text-xs text-slate-500 mt-1">Note globale</div>
-            </div>
-            <div className="flex-1">
-              {[5, 4, 3].map(stars => {
-                const pct = stars === 5 ? 62 : stars === 4 ? 28 : 7;
-                return (
-                  <div key={stars} className="flex items-center gap-2 mb-1">
-                    <span className="text-xs text-slate-500 w-3">{stars}</span>
-                    <Star size={10} fill="currentColor" className="text-amber-400" />
-                    <div className="flex-1 bg-slate-100 rounded-full h-2">
-                      <div className="bg-amber-400 h-2 rounded-full" style={{ width: `${pct}%` }} />
-                    </div>
-                    <span className="text-xs text-slate-400 w-8">{pct}%</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="reviews-list">
-            {selectedReviews.map((review, i) => (
-              <div key={i} className="review-card">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <span className="font-bold text-slate-800">{review.name}</span>
-                    <span className="text-slate-400 text-xs ml-2">— Diplômé(e)</span>
-                  </div>
-                  <span className="text-slate-400 text-xs">{review.time}</span>
-                </div>
-                <StarRow count={review.stars} />
-                <p className="text-slate-600 text-sm mt-2 leading-relaxed">{review.text}</p>
-              </div>
-            ))}
           </div>
         </Section>
 

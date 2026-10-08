@@ -73,7 +73,7 @@ const AllCareersPage = () => {
             <div className="text-center mb-12">
               <h1 className="text-4xl font-bold text-slate-900 mb-4">Annuaire des Métiers ROME</h1>
               <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                Explorez plus de 10 000 fiches métiers issues du référentiel officiel.
+                Explorez plus de 1 500 fiches métiers issues du référentiel officiel.
               </p>
             </div>
           </AnimatedItem>
