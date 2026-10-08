@@ -387,7 +387,7 @@ const Header = ({ onNavigate }) => {
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[85vw] sm:w-[350px] max-w-sm p-0 flex flex-col h-full bg-[var(--bg-primary)] border-l border-[var(--border-color)] z-[60]">
+              <SheetContent side="right" hideClose className="w-[85vw] sm:w-[350px] max-w-sm p-0 flex flex-col h-full bg-[var(--bg-primary)] border-l border-[var(--border-color)] z-[60]">
                  <div className="p-4 border-b border-[var(--border-color)] flex items-center justify-between h-14 md:h-16 shrink-0">
                     <div className="flex items-center gap-2">
                       <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '28px', height: '28px' }} aria-hidden="true">

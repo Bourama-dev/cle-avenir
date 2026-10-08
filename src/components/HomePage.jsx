@@ -205,15 +205,15 @@ const HomePage = ({ onNavigate }) => {
       />
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section className="relative isolate overflow-hidden bg-gradient-to-br from-rose-600 via-rose-500 to-cyan-600 text-white min-h-[calc(100dvh-4rem)] md:min-h-[78dvh] flex items-center">
-        <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-fuchsia-500/30 blur-3xl -z-10" aria-hidden />
-        <div className="absolute -bottom-32 -left-24 w-96 h-96 rounded-full bg-sky-400/20 blur-3xl -z-10" aria-hidden />
+      <section className="relative isolate overflow-hidden bg-gradient-to-br from-white via-white to-white dark:from-slate-950 dark:via-slate-950 dark:to-slate-950 text-slate-900 dark:text-white min-h-[calc(100dvh-4rem)] md:min-h-[78dvh] flex items-center">
+        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-rose-400/25 blur-3xl -z-10" aria-hidden />
+        <div className="absolute -bottom-32 -left-24 w-[28rem] h-[28rem] rounded-full bg-cyan-400/25 blur-3xl -z-10" aria-hidden />
 
         <div className="w-full max-w-6xl mx-auto px-5 py-10 md:py-20 grid lg:grid-cols-2 gap-10 items-center">
           <div className="flex flex-col gap-6">
             <motion.span
               {...heroIn(0.05)}
-              className="self-start inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur border border-white/20 text-sm font-semibold"
+              className="self-start inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-rose-50 to-cyan-50 dark:from-rose-500/15 dark:to-cyan-500/15 border border-rose-200/70 dark:border-white/15 text-rose-700 dark:text-rose-200 text-sm font-semibold"
             >
               <Sparkles size={14} className="shrink-0" />
               L'IA au service de ton avenir
@@ -221,26 +221,26 @@ const HomePage = ({ onNavigate }) => {
 
             <motion.h1
               {...heroIn(0.15)}
-              className="text-5xl sm:text-6xl xl:text-7xl font-black text-white leading-[1.05] tracking-tight"
+              className="text-5xl sm:text-6xl xl:text-7xl font-black text-slate-900 dark:text-white leading-[1.05] tracking-tight"
             >
               Trouve ta voie avec{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-200 via-white to-fuchsia-200">CléAvenir</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-cyan-500">CléAvenir</span>
             </motion.h1>
 
-            <motion.p {...heroIn(0.3)} className="text-lg md:text-xl text-rose-100/90 leading-relaxed max-w-md">
+            <motion.p {...heroIn(0.3)} className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-md">
               Test d'orientation, analyse IA, métiers et formations. 100&nbsp;% gratuit.
             </motion.p>
 
             <motion.div {...heroIn(0.45)} className="flex flex-col sm:flex-row gap-3 pt-1">
               <button
                 onClick={() => onNavigate('/test-orientation')}
-                className="min-h-[56px] px-8 rounded-2xl bg-white text-rose-700 font-bold text-base shadow-xl shadow-rose-950/30 flex items-center justify-center gap-2 active:scale-[0.98] transition"
+                className="min-h-[56px] px-8 rounded-2xl bg-gradient-to-r from-rose-600 to-cyan-500 text-white font-bold text-base shadow-lg shadow-rose-500/30 flex items-center justify-center gap-2 active:scale-[0.98] transition"
               >
                 Faire le test gratuit <ArrowRight className="w-5 h-5" />
               </button>
               <button
                 onClick={() => onNavigate('/how-it-works')}
-                className="min-h-[56px] px-8 rounded-2xl bg-white/10 border border-white/25 backdrop-blur text-white font-semibold text-base flex items-center justify-center active:scale-[0.98] transition hover:bg-white/20"
+                className="min-h-[56px] px-8 rounded-2xl bg-white/70 dark:bg-white/10 border border-rose-300 dark:border-white/25 text-rose-600 dark:text-white font-semibold text-base flex items-center justify-center active:scale-[0.98] transition hover:bg-rose-50 dark:hover:bg-white/20"
               >
                 Comment ça marche&nbsp;?
               </button>
@@ -248,8 +248,8 @@ const HomePage = ({ onNavigate }) => {
 
             <motion.div {...heroIn(0.6)} className="flex flex-wrap gap-x-5 gap-y-2">
               {['Sans inscription', 'Résultat immédiat', '100 % Gratuit'].map((label) => (
-                <span key={label} className="flex items-center gap-1.5 text-sm font-medium text-rose-100/80">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
+                <span key={label} className="flex items-center gap-1.5 text-sm font-medium text-slate-500 dark:text-slate-400">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
                   {label}
                 </span>
               ))}
@@ -276,17 +276,17 @@ const HomePage = ({ onNavigate }) => {
             transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="hidden lg:block"
           >
-            <div className="rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 p-6 shadow-2xl space-y-4">
+            <div className="rounded-3xl bg-white/80 dark:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/20 p-6 shadow-xl shadow-rose-900/10 space-y-4">
               {STEPS.map((s) => {
                 const Icon = s.icon;
                 return (
-                  <div key={s.number} className="flex items-center gap-4 rounded-2xl bg-white/10 p-4">
+                  <div key={s.number} className="flex items-center gap-4 rounded-2xl bg-slate-50 dark:bg-white/10 p-4">
                     <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${s.gradient} flex items-center justify-center shrink-0`}>
                       <Icon className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <p className="font-bold">{s.title}</p>
-                      <p className="text-sm text-rose-100/80 line-clamp-1">{s.desc}</p>
+                      <p className="font-bold text-slate-900 dark:text-white">{s.title}</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-300 line-clamp-1">{s.desc}</p>
                     </div>
                   </div>
                 );
