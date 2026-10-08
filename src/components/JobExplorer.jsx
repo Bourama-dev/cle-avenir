@@ -13,6 +13,7 @@ import EnhancedJobFilters from '@/components/job-explorer/EnhancedJobFilters';
 import ResultsSummary from '@/components/job-explorer/ResultsSummary';
 import Pagination from '@/components/job-explorer/Pagination';
 import EmployerInfo from '@/components/job-explorer/EmployerInfo';
+import EmployerLogo from '@/components/job-explorer/EmployerLogo';
 import FeaturedEmployers from '@/components/job-explorer/FeaturedEmployers';
 import useJobFilters from '@/hooks/useJobFilters';
 import useCompanySearch from '@/hooks/useCompanySearch';
@@ -578,8 +579,12 @@ const AlternanceTab = ({
 const AlternanceJobCard = ({ job }) => (
   <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 hover:shadow-md hover:border-slate-300 transition-all duration-200">
     <div className="flex items-start gap-3">
-      <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center shrink-0">
-        <GraduationCap className="w-5 h-5 text-violet-400" />
+      <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center shrink-0 overflow-hidden">
+        <EmployerLogo
+          siret={job.company?.siret}
+          name={job.company?.name}
+          fallback={<GraduationCap className="w-5 h-5 text-violet-400" />}
+        />
       </div>
       <div className="flex-1 min-w-0">
         <h3 className="font-semibold text-slate-900 text-sm leading-tight">{job.title}</h3>

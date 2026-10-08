@@ -14,11 +14,11 @@ const EmployerTile = ({ employer }) => {
   const [logo, setLogo] = useState(null);
   useEffect(() => {
     let alive = true;
-    if (employer.has_logo && employer.id_rce) {
+    if (employer.id_rce) {
       getEmployerLogo(employer.id_rce, employer.logo_type).then((u) => alive && setLogo(u));
     }
     return () => { alive = false; };
-  }, [employer.id_rce, employer.has_logo, employer.logo_type]);
+  }, [employer.id_rce, employer.logo_type]);
 
   return (
     <div className="snap-start shrink-0 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 flex gap-3">

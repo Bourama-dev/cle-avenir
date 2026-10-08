@@ -55,7 +55,7 @@ export function getEmployerLogo(idRCE, type) {
   if (!logos.has(key)) {
     logos.set(key, supabase.functions
       .invoke('get-employer-summary', { body: { logo: { idRCE, type } } })
-      .then(({ data }) => data?.dataUrl ?? null)
+      .then(({ data }) => (data?.dataUrl && data.dataUrl.length > 100 ? data.dataUrl : null))
       .catch(() => null));
   }
   return logos.get(key);

@@ -3,6 +3,7 @@ import { MapPin, Users, ExternalLink, Star, Building2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import EmployerInfo from './EmployerInfo';
+import EmployerLogo from './EmployerLogo';
 
 // Maps star score (0–5) to label + colour
 function hiringLabel(stars) {
@@ -20,8 +21,12 @@ const CompanyCard = ({ company }) => {
     <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-md hover:border-slate-300 transition-all duration-200 group">
       <div className="flex items-start gap-4">
         {/* Icon placeholder */}
-        <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 group-hover:bg-indigo-50 transition-colors">
-          <Building2 className="w-6 h-6 text-slate-400 group-hover:text-indigo-400 transition-colors" />
+        <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 overflow-hidden group-hover:bg-indigo-50 transition-colors">
+          <EmployerLogo
+            siret={company.siret}
+            name={company.name}
+            fallback={<Building2 className="w-6 h-6 text-slate-400 group-hover:text-indigo-400 transition-colors" />}
+          />
         </div>
 
         <div className="flex-1 min-w-0">
