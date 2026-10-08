@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Building2, Briefcase } from 'lucide-react';
-import { getEmployer, getEmployerLogo, employerOffersUrl } from '@/lib/employerSummary';
+import { getEmployer, getEmployerLogo } from '@/lib/employerSummary';
+import EmployerDialog from './EmployerDialog';
 
 // Small employer strip shown under a card when the company has a France Travail
 // employer page (logo, tagline, number of open offers). Renders nothing otherwise.
 const EmployerInfo = ({ siret, className = '' }) => {
   const [employer, setEmployer] = useState(null);
   const [logo, setLogo] = useState(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     let alive = true;
@@ -41,16 +43,14 @@ const EmployerInfo = ({ siret, className = '' }) => {
             ? `${employer.offers_count} offre${employer.offers_count > 1 ? 's' : ''} en cours · Page employeur France Travail`
             : 'Page employeur France Travail'}
         </p>
-        {employerOffersUrl(employer.url_path) && (
-          <a
-            href={employerOffersUrl(employer.url_path)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[11px] font-semibold text-rose-600 hover:text-rose-700 mt-0.5 inline-block"
-          >
-            Voir les offres de cet employeur →
-          </a>
-        )}
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="text-[11px] font-semibold text-rose-600 hover:text-rose-700 mt-0.5 inline-block"
+        >
+          Voir la fiche de cet employeur →
+        </button>
+        <EmployerDialog employer={employer} logo={logo} open={open} onOpenChange={setOpen} />
       </div>
     </div>
   );

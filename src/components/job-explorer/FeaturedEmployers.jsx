@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Building2, Briefcase, ExternalLink } from 'lucide-react';
-import { getFeaturedEmployers, getEmployerLogo, employerOffersUrl } from '@/lib/employerSummary';
+import { Building2, Briefcase, ChevronRight } from 'lucide-react';
+import { getFeaturedEmployers, getEmployerLogo } from '@/lib/employerSummary';
+import EmployerDialog from './EmployerDialog';
 
 const departmentOf = (zipcode) => {
   const z = String(zipcode ?? '');
@@ -20,16 +21,15 @@ const EmployerTile = ({ employer }) => {
     return () => { alive = false; };
   }, [employer.id_rce, employer.logo_type]);
 
-  const href = employerOffersUrl(employer.url_path);
-  const Wrapper = href ? 'a' : 'div';
-  const wrapperProps = href
-    ? { href, target: '_blank', rel: 'noopener noreferrer', 'aria-label': `Voir les offres de ${employer.name}` }
-    : {};
+  const [open, setOpen] = useState(false);
 
   return (
-    <Wrapper
-      {...wrapperProps}
-      className={`snap-start shrink-0 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 flex gap-3 ${href ? 'hover:border-rose-300 hover:shadow-md transition cursor-pointer' : ''}`}
+    <>
+    <button
+      type="button"
+      onClick={() => setOpen(true)}
+      aria-label={`Voir la fiche de ${employer.name}`}
+      className="snap-start shrink-0 w-64 text-left rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 flex gap-3 hover:border-rose-300 hover:shadow-md transition cursor-pointer"
     >
       <div className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden shrink-0">
         {logo ? <img src={logo} alt="" className="w-full h-full object-contain" /> : <Building2 className="w-5 h-5 text-slate-300" />}
@@ -41,13 +41,13 @@ const EmployerTile = ({ employer }) => {
           <Briefcase className="w-3 h-3" />
           {employer.offers_count} offre{employer.offers_count > 1 ? 's' : ''} en cours
         </p>
-        {href && (
-          <p className="text-[11px] text-slate-500 flex items-center gap-1 mt-1">
-            Voir les offres <ExternalLink className="w-3 h-3" />
-          </p>
-        )}
+        <p className="text-[11px] text-slate-500 flex items-center gap-1 mt-1">
+          Voir la fiche <ChevronRight className="w-3 h-3" />
+        </p>
       </div>
-    </Wrapper>
+    </button>
+    <EmployerDialog employer={employer} logo={logo} open={open} onOpenChange={setOpen} />
+    </>
   );
 };
 
