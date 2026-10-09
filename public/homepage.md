@@ -6,7 +6,7 @@
 
 Fais le test d'orientation IA en 5 minutes et découvre les métiers qui te correspondent vraiment.
 
-- Sans inscription
+- Test sans inscription
 - Résultat immédiat
 - 100 % gratuit
 
@@ -35,7 +35,7 @@ Un assistant personnel disponible 24/7 qui analyse ton profil et t'accompagne pa
 
 ## Comment ça marche — 3 étapes
 
-1. **Passe le test gratuit** — Réponds à quelques questions sur tes centres d'intérêt, tes valeurs et ton parcours. Aucune inscription requise.
+1. **Passe le test gratuit** — Réponds à quelques questions sur tes centres d'intérêt, tes valeurs et ton parcours. Crée ton compte gratuit à la fin pour voir et garder tes résultats.
 2. **Cléo analyse ton profil** — Notre IA génère une analyse complète de tes compétences, aspirations et affinités métier en quelques secondes.
 3. **Explore ta voie** — Accède aux métiers, formations et offres d'emploi personnalisés pour toi, avec des données officielles à jour.
 
@@ -46,6 +46,6 @@ Statistiques officielles, réformes et données du marché du travail — mises 
 ## Appel à l'action
 
 Prêt à dessiner ton avenir ? Passe le test d'orientation IA en 5 minutes et découvre les métiers qui te correspondent vraiment.
-Sans inscription · 100 % gratuit.
+Compte gratuit · Sans carte bancaire.
 
 [Commencer maintenant](https://www.cleavenir.com/test)

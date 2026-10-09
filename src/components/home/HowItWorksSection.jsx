@@ -7,7 +7,7 @@ const WAYPOINTS = [
     number: '01',
     icon: Target,
     title: 'Passe le test gratuit',
-    desc: "Réponds à quelques questions sur tes centres d'intérêt, tes valeurs et ton parcours. Aucune inscription requise.",
+    desc: "Réponds à quelques questions sur tes centres d'intérêt, tes valeurs et ton parcours. Crée ton compte gratuit à la fin pour voir tes résultats.",
   },
   {
     number: '02',

@@ -6,7 +6,7 @@ CléAvenir aide les lycéens, étudiants et personnes en reconversion à répond
 
 ## Ce que fait le site
 
-- Test d'orientation RIASEC gratuit (5 minutes, sans inscription) qui identifie un profil de personnalité professionnelle
+- Test d'orientation RIASEC gratuit (5 minutes, test sans inscription ; un compte gratuit est demandé pour voir les résultats) qui identifie un profil de personnalité professionnelle
 - Analyse IA du profil par l'assistant Cléo, avec recommandations personnalisées de métiers et formations
 - Plus de 1000 fiches métiers détaillées (missions, salaires, débouchés, évolution de carrière)
 - Plus de 10 000 formations référencées (Parcoursup, alternance, apprentissage, reconversion)
@@ -16,7 +16,7 @@ CléAvenir aide les lycéens, étudiants et personnes en reconversion à répond
 ## Pages principales
 
 - [Accueil](https://www.cleavenir.com/): présentation du service et accès au test d'orientation
-- [Test d'orientation](https://www.cleavenir.com/test): test RIASEC gratuit, sans inscription
+- [Test d'orientation](https://www.cleavenir.com/test): test RIASEC gratuit (compte gratuit requis pour voir les résultats)
 - [Comment ça marche](https://www.cleavenir.com/how-it-works): explication du fonctionnement en 3 étapes
 - [Explorer les métiers](https://www.cleavenir.com/metiers): fiches métiers détaillées
 - [Formations](https://www.cleavenir.com/formations): recherche de formations en France

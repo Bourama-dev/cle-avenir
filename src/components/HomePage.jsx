@@ -47,7 +47,7 @@ const STEPS = [
     number: '01',
     icon: Target,
     title: 'Passe le test gratuit',
-    desc: "Quelques questions sur tes intérêts et tes valeurs. Aucune inscription requise.",
+    desc: "Quelques questions sur tes intérêts et tes valeurs. Crée ton compte gratuit à la fin pour voir et garder tes résultats.",
     gradient: 'from-rose-500 to-rose-600',
     link: '/test-orientation',
   },
@@ -247,7 +247,7 @@ const HomePage = ({ onNavigate }) => {
             </motion.div>
 
             <motion.div {...heroIn(0.6)} className="flex flex-wrap gap-x-5 gap-y-2">
-              {['Sans inscription', 'Résultat immédiat', '100 % Gratuit'].map((label) => (
+              {['Test sans inscription', 'Résultat immédiat', '100 % Gratuit'].map((label) => (
                 <span key={label} className="flex items-center gap-1.5 text-sm font-medium text-rose-100/80">
                   <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
                   {label}
@@ -491,7 +491,7 @@ const HomePage = ({ onNavigate }) => {
                 </button>
                 <span className="text-rose-100/80 text-sm flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-300" />
-                  Sans inscription · 100&nbsp;% gratuit
+                  Compte gratuit · Sans carte bancaire
                 </span>
               </div>
             </div>
