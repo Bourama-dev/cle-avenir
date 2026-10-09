@@ -52,14 +52,13 @@ const LegalPage = () => {
       <AnimatedSection className="max-w-4xl mx-auto px-6 pb-20 space-y-6">
         <AnimatedItem>
           <LCard icon={Building2} title="Editeur de la plateforme" color="slate" items={[
-            {label:'Raison sociale',value:'CleAvenir SAS'},
-            {label:'Forme juridique',value:'Societe par Actions Simplifiee (SAS)'},
-            {label:'Capital social',value:'10 000 EUR'},
-            {label:'Siege social',value:'123 Rue de l Innovation, 75001 Paris, France'},
-            {label:'SIRET',value:'12345678901234'},
-            {label:'RCS',value:'Paris B 123 456 789'},
-            {label:'TVA intracommunautaire',value:'FR 12 123456789'},
-            {label:'Directeur publication',value:'Bourama Diarra, President'},
+            {label:'Editeur',value:'Bourama Diarra, entrepreneur individuel (EI)'},
+            {label:'Nom commercial',value:'CleAvenir'},
+            {label:'Siege',value:'30 rue du Faubourg Saint-Vincent, 45000 Orleans, France'},
+            {label:'SIREN',value:'932 419 013'},
+            {label:'SIRET (siege)',value:'932 419 013 00028'},
+            {label:'Immatriculation',value:'Registre national des entreprises (INPI)'},
+            {label:'Directeur de la publication',value:'Bourama Diarra'},
           ]} />
         </AnimatedItem>
 
@@ -75,22 +74,20 @@ const LegalPage = () => {
 
         <AnimatedItem>
           <LCard icon={Server} title="Hebergement" color="emerald" items={[
-            {label:'Hebergeur principal',value:'Hostinger International Ltd'},
-            {label:'Adresse',value:'61 Lordou Vironos Street, 6023 Larnaca, Chypre'},
-            {label:'Base de donnees',value:'Supabase (PostgreSQL) — Frankfurt, UE'},
-            {label:'CDN',value:'Cloudflare Inc. — San Francisco, USA'},
-            {label:'Paiements',value:'Stripe Inc. — San Francisco, USA'},
+            {label:'Hebergeur du site',value:'Vercel Inc.'},
+            {label:'Adresse',value:'440 N Barranca Ave #4133, Covina, CA 91723, Etats-Unis'},
+            {label:'Base de donnees',value:'Supabase (PostgreSQL) — Francfort, UE'},
           ]} />
         </AnimatedItem>
 
         <AnimatedItem>
           <LCard icon={Shield} title="Propriete intellectuelle" color="violet"
-            content="L ensemble des elements du site cleavenir.com (textes, images, logo, base de donnees) sont la propriete exclusive de CleAvenir SAS et proteges par les lois francaises et internationales relatives a la propriete intellectuelle. Toute reproduction non autorisee est considere comme contrefacon conformement aux articles L.335-2 du Code de Propriete Intellectuelle." />
+            content="L ensemble des elements du site cleavenir.com (textes, images, logo, base de donnees) sont la propriete exclusive de Bourama Diarra (CleAvenir) et proteges par les lois francaises et internationales relatives a la propriete intellectuelle. Toute reproduction non autorisee est considere comme contrefacon conformement aux articles L.335-2 du Code de Propriete Intellectuelle." />
         </AnimatedItem>
 
         <AnimatedItem>
           <LCard icon={Shield} title="Donnees personnelles et RGPD" color="rose"
-            content="CleAvenir traite vos donnees conformement au RGPD (UE) 2016/679 et a la loi Informatique et Libertes. Responsable : CleAvenir SAS, 75001 Paris. DPO : dpo@cleavenir.com. Vous disposez de droits d acces, rectification, effacement, portabilite et opposition. Pour exercer ces droits : Parametres → Confidentialite ou contactez le DPO. Reclamations non resolues : CNIL (www.cnil.fr)."
+            content="CleAvenir traite vos donnees conformement au RGPD (UE) 2016/679 et a la loi Informatique et Libertes. Responsable : Bourama Diarra, entrepreneur individuel (CleAvenir), 30 rue du Faubourg Saint-Vincent, 45000 Orleans. DPO : dpo@cleavenir.com. Vous disposez de droits d acces, rectification, effacement, portabilite et opposition. Pour exercer ces droits : Parametres → Confidentialite ou contactez le DPO. Reclamations non resolues : CNIL (www.cnil.fr)."
             links={[
               {label:'Politique de confidentialite',to:'/privacy'},
               {label:'Gestion cookies',to:'/gestion-cookies'},
@@ -126,7 +123,7 @@ const LegalPage = () => {
 
       <div className="border-t border-white/[0.05] py-8 px-6">
         <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-4">
-          <p className="text-slate-600 text-sm">CleAvenir SAS — Tous droits reserves — 2026</p>
+          <p className="text-slate-600 text-sm">CleAvenir — Bourama Diarra, EI — Tous droits reserves — 2026</p>
           <div className="flex gap-6 text-sm">
             {[{l:'Confidentialite',t:'/privacy'},{l:'CGU',t:'/terms'},{l:'Cookies',t:'/gestion-cookies'}].map(link => (
               <button key={link.t} onClick={() => navigate(link.t)} className="text-slate-500 hover:text-slate-300 transition-colors">{link.l}</button>

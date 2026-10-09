@@ -256,7 +256,7 @@ const PrivacyPage = () => {
                 <h3 className="font-bold text-lg text-white mb-2">Delegue a la Protection des Donnees</h3>
                 <p className="text-slate-400 text-sm mb-6">Notre DPO repond a toutes vos questions relatives a la protection de vos donnees.</p>
                 <div className="space-y-3 mb-6">
-                  {[{label:'Email',value:'dpo@cleavenir.com'},{label:'Adresse',value:'CleAvenir SAS — 75001 Paris, France'},{label:'Delai',value:'72 heures maximum'}].map(c => (
+                  {[{label:'Email',value:'dpo@cleavenir.com'},{label:'Adresse',value:'CleAvenir — 30 rue du Faubourg Saint-Vincent, 45000 Orleans, France'},{label:'Delai',value:'72 heures maximum'}].map(c => (
                     <div key={c.label}>
                       <span className="text-xs text-slate-500 uppercase tracking-wider">{c.label}</span>
                       <p className="text-sm text-white font-medium">{c.value}</p>

@@ -131,7 +131,7 @@ Les cookies ont une durée de vie maximale de 13 mois conformément aux recomman
 **Dernière mise à jour :** ${new Date().toLocaleDateString('fr-FR')}
 
 ## Responsable du traitement
-CléAvenir SAS — contact@cleavenir.com
+CléAvenir (Bourama Diarra, entrepreneur individuel, SIREN 932 419 013) — contact@cleavenir.com
 
 ## Données collectées
 - Données d'identification (nom, email)
@@ -162,7 +162,9 @@ Aucun transfert hors UE sans garanties appropriées.`,
 **Dernière mise à jour :** ${new Date().toLocaleDateString('fr-FR')}
 
 ## Éditeur
-CléAvenir SAS
+CléAvenir — Bourama Diarra, entrepreneur individuel (EI)
+30 rue du Faubourg Saint-Vincent, 45000 Orléans
+SIREN 932 419 013
 Adresse : [À compléter]
 Email : contact@cleavenir.com
 N° SIRET : [À compléter]
