@@ -12,7 +12,7 @@ const PolitiqueConfidentialitePage = () => {
       <div className="legal-section">
         <h2>1. Introduction</h2>
         <p>
-          CléAvenir SAS, en tant que responsable du traitement, s'engage à protéger vos données personnelles conformément au Règlement Général sur la Protection des Données (RGPD — Règlement UE 2016/679) et à la loi Informatique et Libertés.
+          CléAvenir (Bourama Diarra, entrepreneur individuel, 30 rue du Faubourg Saint-Vincent, 45000 Orléans, SIREN 932 419 013), en tant que responsable du traitement, s'engage à protéger vos données personnelles conformément au Règlement Général sur la Protection des Données (RGPD — Règlement UE 2016/679) et à la loi Informatique et Libertés.
         </p>
         <p>
           Cette politique décrit quelles données nous collectons, pourquoi, comment nous les utilisons et vos droits à leur égard.

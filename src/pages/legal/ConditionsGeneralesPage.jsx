@@ -11,7 +11,7 @@ const ConditionsGeneralesPage = () => {
       <div className="legal-section">
         <h2>1. Objet</h2>
         <p>
-          Les présentes Conditions Générales d'Utilisation (CGU) définissent les modalités d'accès et d'utilisation de la plateforme <strong>CléAvenir</strong>, éditée par la société CléAvenir SAS.
+          Les présentes Conditions Générales d'Utilisation (CGU) définissent les modalités d'accès et d'utilisation de la plateforme <strong>CléAvenir</strong>, éditée par Bourama Diarra, entrepreneur individuel (EI), SIREN 932 419 013, dont le siège est situé 30 rue du Faubourg Saint-Vincent, 45000 Orléans.
         </p>
         <p>
           Tout accès ou utilisation du site implique l'acceptation pleine et entière des présentes CGU. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser la plateforme.
@@ -69,7 +69,7 @@ const ConditionsGeneralesPage = () => {
       <div className="legal-section">
         <h2>6. Propriété intellectuelle</h2>
         <p>
-          L'ensemble des éléments de la plateforme (algorithmes, interfaces, contenus éditoriaux, marques, logos) est la propriété exclusive de CléAvenir SAS et est protégé par le droit de la propriété intellectuelle.
+          L'ensemble des éléments de la plateforme (algorithmes, interfaces, contenus éditoriaux, marques, logos) est la propriété exclusive de Bourama Diarra (CléAvenir) et est protégé par le droit de la propriété intellectuelle.
         </p>
         <p>
           Toute reproduction, représentation ou utilisation non autorisée est strictement interdite et susceptible de poursuites.

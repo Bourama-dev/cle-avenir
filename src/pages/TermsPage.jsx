@@ -94,7 +94,7 @@ const TermsPage = () => {
             </AnimatedItem>
             <AnimatedItem>
               <div className="mt-8 p-6 bg-white/[0.03] border border-white/[0.06] rounded-2xl">
-                <p className="text-slate-400 mb-5">CleAvenir est une plateforme d orientation professionnelle par IA, editee par CleAvenir SAS.</p>
+                <p className="text-slate-400 mb-5">CleAvenir est une plateforme d orientation professionnelle par IA, editee par Bourama Diarra, entrepreneur individuel (EI), SIREN 932 419 013, 30 rue du Faubourg Saint-Vincent, 45000 Orleans.</p>
                 <h3 className="font-semibold text-white mb-4">La plateforme permet de :</h3>
                 <div className="grid md:grid-cols-2 gap-3">
                   {['Passer des tests orientation RIASEC','Obtenir des recommandations metiers','Decouvrir des formations adaptees','Interagir avec Cleo, coach IA','Creer CV et lettres de motivation','Simuler des entretiens embauche'].map((item,i) => (
