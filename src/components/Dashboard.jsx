@@ -93,7 +93,7 @@ const Dashboard = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 md:overflow-y-auto bg-slate-50/50 dark:bg-slate-950/50 px-4 pt-3 pb-6 md:p-8 relative scroll-smooth min-w-0">
+        <div id="dashboard-content" className="flex-1 md:overflow-y-auto bg-slate-50/50 dark:bg-slate-950/50 px-4 pt-3 pb-6 md:p-8 relative scroll-smooth min-w-0">
           <div className="max-w-4xl mx-auto md:pb-10">
             <div className="md:hidden -mx-4 mb-4">
               <div className="flex items-center justify-between px-4 pb-2">
@@ -112,7 +112,7 @@ const Dashboard = () => {
               onOpenProfile={() => navigate('/profile/edit')}
             />
           </div>
-        </main>
+        </div>
 
         {/* Right Sidebar (Desktop) */}
         <aside className="hidden xl:block w-80 border-l border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 overflow-y-auto">

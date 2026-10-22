@@ -11,7 +11,6 @@ import {
   Activity,
 } from 'lucide-react';
 import { supabase } from '@/lib/customSupabaseClient';
-import { getDisplayPlanName } from '@/lib/subscriptionUtils';
 import WidgetErrorBoundary from './WidgetErrorBoundary';
 
 // ── Profile completion ──────────────────────────────────────────────────────
@@ -112,6 +111,9 @@ const TestHistoryInline = ({ history, onNavigate }) => {
 };
 
 // ── Main ────────────────────────────────────────────────────────────────────
+const onActivate = (fn) => (e) => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); }
+};
 const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNavigate, onOpenProfile }) => {
   const [testStats, setTestStats] = useState({ count: 0, latest: null, loading: true });
   const [history, setHistory] = useState([]);
@@ -127,13 +129,19 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
   const fetchData = useCallback(async () => {
     if (!user?.id) { setTestStats(s => ({ ...s, loading: false })); return; }
     try {
-      const { data: tests } = await supabase
-        .from('test_results')
-        .select('id, created_at, riasec_profile, test_score')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(5);
-      setTestStats({ count: tests?.length ?? 0, latest: tests?.[0] ?? null, loading: false });
+      const [{ data: tests }, { count: totalTests }] = await Promise.all([
+        supabase
+          .from('test_results')
+          .select('id, created_at, riasec_profile, test_score')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(4),
+        supabase
+          .from('test_results')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', user.id),
+      ]);
+      setTestStats({ count: totalTests ?? tests?.length ?? 0, latest: tests?.[0] ?? null, loading: false });
       setHistory(tests ?? []);
     } catch {
       setTestStats(s => ({ ...s, loading: false }));
@@ -170,7 +178,7 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
             <p className="truncate text-lg font-bold leading-tight">{fullName || 'Bienvenue'}</p>
             <p className="truncate text-xs text-indigo-100">{user?.email}</p>
             <div className="mt-1.5 flex flex-wrap gap-1.5">
-              <span className="rounded-full bg-white/20 px-2 py-0.5 text-[11px] font-semibold">{getDisplayPlanName(subscriptionTier)}</span>
+              <span className="rounded-full bg-white/20 px-2 py-0.5 text-[11px] font-semibold">Accès complet · gratuit</span>
               {code && <span className="rounded-full bg-white/20 px-2 py-0.5 text-[11px] font-semibold">Profil {code}</span>}
             </div>
           </div>
@@ -239,7 +247,11 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
           <Card
             key={path}
             className={`bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer rounded-2xl shrink-0 w-[42%] min-w-[140px] md:w-auto active:scale-95 ${border} hover:shadow-md transition-all group`}
+            role="link"
+            tabIndex={0}
+            aria-label={`${label} ${sub}`}
             onClick={() => onNavigate(path)}
+            onKeyDown={onActivate(() => onNavigate(path))}
           >
             <CardContent className="p-4 flex flex-col items-center justify-center text-center">
               <div className={`w-10 h-10 rounded-full ${color} flex items-center justify-center mb-2 group-hover:scale-110 transition-transform`}>
@@ -358,7 +370,7 @@ const DashboardOverview = ({ user, userProfile, subscriptionTier, isAdmin, onNav
               { icon: MapPin,        label: 'Région',    value: userProfile?.region },
               { icon: GraduationCap, label: 'Niveau',    value: userProfile?.education_level },
               { icon: Briefcase,     label: 'Situation', value: userProfile?.user_status },
-              { icon: Target,        label: 'Plan',      value: getDisplayPlanName(subscriptionTier) },
+              { icon: Target,        label: 'Accès',     value: 'Complet · gratuit' },
             ].map(({ icon: Icon, label, value }) => (
               <div key={label} className="flex items-start gap-2 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 shrink-0 w-[60%] min-w-[180px] md:w-auto">
                 <Icon className="w-3.5 h-3.5 text-slate-400 mt-0.5 shrink-0" />

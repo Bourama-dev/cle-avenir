@@ -140,10 +140,10 @@ const DashboardSidebar = ({ userProfile, className, onItemClick, variant = 'rail
       </div>
 
       <div className="p-6 pt-2">
-        <h2 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">
+        <h2 className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-4">
           Mon Espace
         </h2>
-        <nav className="space-y-1">
+        <nav aria-label="Espace personnel" className="space-y-1">
           <NavItem to="/dashboard" icon={LayoutDashboard} label="Vue d'ensemble" />
           <NavItem to="/profile" icon={Target} label="Mon Profil & Résultats" />
           <NavItem to="/recommendations" icon={Award} label="Recommandations" />
@@ -152,10 +152,10 @@ const DashboardSidebar = ({ userProfile, className, onItemClick, variant = 'rail
       </div>
 
       <div className="px-6 py-2">
-        <h2 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">
+        <h2 className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-4">
           Outils
         </h2>
-        <nav className="space-y-1">
+        <nav aria-label="Outils" className="space-y-1">
           <NavItem 
             to="/cleo" 
             icon={Sparkles} 
@@ -176,10 +176,10 @@ const DashboardSidebar = ({ userProfile, className, onItemClick, variant = 'rail
       </div>
 
       <div className="px-6 py-2 mt-auto mb-6">
-        <h2 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">
+        <h2 className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-4">
           Paramètres
         </h2>
-        <nav className="space-y-1">
+        <nav aria-label="Compte" className="space-y-1">
           <NavItem to="/account" icon={Settings} label="Mon Compte" />
           <NavItem to="/manage-subscription" icon={CreditCard} label="Mon accès" />
 

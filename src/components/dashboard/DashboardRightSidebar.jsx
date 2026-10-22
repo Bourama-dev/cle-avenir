@@ -135,7 +135,10 @@ const DashboardRightSidebar = ({ userProfile, user, onOpenProfile }) => {
         <div className="grid grid-cols-2 gap-3">
           <Card
             className="bg-white dark:bg-slate-800 hover:border-indigo-200 hover:shadow-sm transition-all cursor-pointer"
+            role="link"
+            tabIndex={0}
             onClick={() => navigate('/profile')}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate('/profile'); } }}
           >
             <CardContent className="p-4 flex flex-col items-center justify-center text-center">
               <BarChart2 className="w-5 h-5 text-indigo-400 mb-1" />
@@ -147,12 +150,15 @@ const DashboardRightSidebar = ({ userProfile, user, onOpenProfile }) => {
           </Card>
           <Card
             className="bg-white dark:bg-slate-800 hover:border-emerald-200 hover:shadow-sm transition-all cursor-pointer"
+            role="link"
+            tabIndex={0}
             onClick={() => navigate('/offres-emploi')}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate('/offres-emploi'); } }}
           >
             <CardContent className="p-4 flex flex-col items-center justify-center text-center">
               <Briefcase className="w-5 h-5 text-emerald-400 mb-1" />
               <span className="text-2xl font-bold text-slate-900 dark:text-white">
-                <span className="text-slate-300 dark:text-slate-500 text-base font-normal">Voir</span>
+                <span className="text-emerald-700 dark:text-emerald-400 text-base font-semibold">Voir</span>
               </span>
               <span className="text-xs text-slate-500 dark:text-slate-400 mt-1">Offres</span>
             </CardContent>
