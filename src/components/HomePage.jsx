@@ -202,7 +202,7 @@ const HomePage = ({ onNavigate }) => {
   });
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 overflow-x-clip">
       <PageHelmet
         title="CléAvenir - Test de Carrière Intelligent & Orientation IA"
         description="Découvrez votre avenir professionnel avec CléAvenir. Test d'orientation gratuit, analyse IA des compétences, fiches métiers, formations et offres d'emploi."
