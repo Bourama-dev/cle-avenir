@@ -64,7 +64,7 @@ export const PerformanceMonitor = {
         list.getEntries().forEach((entry) => {
           // Log significantly slow API calls (> 2s)
           if (entry.initiatorType === 'fetch' || entry.initiatorType === 'xmlhttprequest') {
-             if (entry.duration > 2000) {
+             if (entry.duration > 2000 && !entry.name.includes('/performance_metrics')) {
                  MonitoringService.logPerformanceMetric(`Slow_API_${new URL(entry.name).pathname}`, entry.duration, 'poor');
              }
           }

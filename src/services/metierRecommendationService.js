@@ -15,7 +15,41 @@ const METIER_FIELDS = [
   'growth_rate', 'job_market_demand', 'salary_range',
 ].join(', ');
 
+// Whole-catalogue ranking needs no long text: descriptions are fetched for the winners only.
+const LIGHT_FIELDS = [
+  'code', 'libelle', 'salaire', 'debouches', 'niveau_etudes',
+  'riasecMajeur:riasecmajeur', 'riasecMineur:riasecmineur', 'riasec_profile',
+  'growth_rate', 'job_market_demand', 'salary_range',
+].join(', ');
+
+const TOP_N = 15;
+const MIN_AFFINITY = 20;
+const DIM_LABELS = {
+  R: 'Réaliste', I: 'Investigateur', A: 'Artiste', S: 'Social', E: 'Entreprenant', C: 'Conventionnel',
+};
+
+// growth_rate = 0 and job_market_demand = 50 are database defaults on ~98 % of the catalogue.
+const hasRealMarketData = (m) =>
+  (m.growth_rate != null && Number(m.growth_rate) !== 0) ||
+  (m.job_market_demand != null && Number(m.job_market_demand) !== 50) ||
+  !!m.debouches;
+
+let cataloguePromise = null;
+const loadCatalogue = () => {
+  if (!cataloguePromise) {
+    cataloguePromise = withRetry(() => supabase.from('rome_metiers').select(LIGHT_FIELDS).limit(5000))
+      .then(({ data }) => data || [])
+      .catch((err) => { cataloguePromise = null; throw err; });
+  }
+  return cataloguePromise;
+};
+
 export const metierRecommendationService = {
+  /** Starts loading the catalogue early so it overlaps with the user-specific requests. */
+  prefetchCatalogue() {
+    loadCatalogue().catch(() => {});
+  },
+
   /**
    * Fetches full details for a metier by its ROME code
    */
@@ -85,8 +119,9 @@ export const metierRecommendationService = {
       description: metier.description,
       riasec: riasecVector || generateRiasecWeights(majeur, mineur),
       hybridProfile,
-      growthTrend: metier.growth_rate || this._debouchesToGrowthTrend(metier.debouches),
-      demandLevel: metier.job_market_demand || this._debouchesToDemandLevel(metier.debouches),
+      growthTrend: this._growthRateToTrend(metier.growth_rate) || this._debouchesToGrowthTrend(metier.debouches),
+      demandLevel: this._demandScoreToLevel(metier.job_market_demand) || this._debouchesToDemandLevel(metier.debouches),
+      marketDataKnown: hasRealMarketData(metier),
       salaryRange: metier.salary_range || metier.salaire,
       educationLevel: metier.niveau_etudes,
       // Keep original fields for display and profile criteria matching
@@ -97,6 +132,36 @@ export const metierRecommendationService = {
       riasecMineur: mineur,
       rawMetier: metier,
     };
+  },
+
+  _growthRateToTrend(rate) {
+    const r = Number(rate);
+    if (!Number.isFinite(r) || r === 0) return null;
+    return r > 0 ? 'croissant' : 'décroissant';
+  },
+
+  _demandScoreToLevel(score) {
+    const n = Number(score);
+    if (!Number.isFinite(n) || n === 50) return null;
+    if (n >= 90) return 'très_élevée';
+    if (n >= 70) return 'élevée';
+    if (n <= 35) return 'faible';
+    return 'moyenne';
+  },
+
+  _matchReason(riasecProfile, metier) {
+    const vector = metier.riasec_profile || {};
+    const common = Object.entries(riasecProfile || {})
+      .filter(([, v]) => typeof v === 'number')
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 3)
+      .map(([k]) => k)
+      .filter((k) => Number(vector[k]) >= MIN_AFFINITY)
+      .map((k) => DIM_LABELS[k])
+      .filter(Boolean);
+    return common.length > 0
+      ? `Affinités communes avec ton profil : ${common.join(', ')}`
+      : 'Profil assez éloigné de tes affinités dominantes';
   },
 
   _debouchesToGrowthTrend(debouches) {
@@ -136,7 +201,7 @@ export const metierRecommendationService = {
         const rawScore = matchResult?.finalScore ?? 65;
         const matchScore = Math.max(10, Math.min(99, Math.round(rawScore * criteriaMultiplier)));
 
-        return { ...metier, matchScore, matchDetails: matchResult };
+        return { ...metier, matchScore, matchDetails: matchResult, matchReason: this._matchReason(riasecProfile, metier) };
       })
       .sort((a, b) => b.matchScore - a.matchScore);
   },
@@ -157,21 +222,22 @@ export const metierRecommendationService = {
     if (!userId) throw new Error("ID Utilisateur requis");
 
     try {
-      // 1. Latest test result
-      const { data: testResult } = await withRetry(() =>
-        supabase
-          .from('test_results')
-          .select('*')
-          .eq('user_id', userId)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .maybeSingle()
-      );
+      // Independent requests run together: catalogue (shared, cached), latest test, profile criteria.
+      this.prefetchCatalogue();
+      const [{ data: testResult }, userCriteria] = await Promise.all([
+        withRetry(() =>
+          supabase
+            .from('test_results')
+            .select('*')
+            .eq('user_id', userId)
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .maybeSingle()
+        ),
+        userProfileService.getUserRecommendationCriteria().catch(() => ({ found: false })),
+      ]);
 
       if (!testResult) return [];
-
-      // 2. User profile criteria (education, salary, status) — non-blocking
-      const userCriteria = await userProfileService.getUserRecommendationCriteria().catch(() => ({ found: false }));
 
       const riasecProfile = testResult.riasec_profile;
       const hasRiasec =
@@ -219,23 +285,16 @@ export const metierRecommendationService = {
         }
       }
 
-      // Path C — RIASEC letter matching with advanced scoring
+      // Path C — rank the WHOLE catalogue by profile fit, keep the best TOP_N
       if (hasRiasec) {
-        const topLetters = Object.entries(riasecProfile)
-          .filter(([, v]) => typeof v === 'number')
-          .sort(([, a], [, b]) => b - a)
-          .slice(0, 3)
-          .map(([letter]) => letter);
-
-        if (topLetters.length > 0) {
-          const { data: metiers } = await withRetry(() =>
-            supabase
-              .from('rome_metiers')
-              .select(METIER_FIELDS)
-              .in('riasecmajeur', topLetters)
-              .limit(15)
+        const catalogue = await loadCatalogue();
+        if (catalogue.length > 0) {
+          const top = this._scoreMetiers(catalogue, riasecProfile, userCriteria).slice(0, TOP_N);
+          const { data: texts } = await withRetry(() =>
+            supabase.from('rome_metiers').select('code, description').in('code', top.map((m) => m.code))
           );
-          if (metiers?.length > 0) return this._scoreMetiers(metiers, riasecProfile, userCriteria);
+          const byCode = new Map((texts || []).map((t) => [t.code, t.description]));
+          return top.map((m) => ({ ...m, description: byCode.get(m.code) ?? null, analyzedCount: catalogue.length }));
         }
       }
 

@@ -319,13 +319,18 @@ export const calculateAdvancedMatching = (userProfile, metier, userCriteria = nu
     const hybridW  = 0.70 - riasecW; // complément pour que riasec + hybrid = 70 %
     const marketW  = 0.10;           // stabilité, croissance, demande = 30 %
 
-    const baseScore = Math.round(
-      (riasecScore  * riasecW) +
-      (hybridScore  * hybridW) +
-      (stabilityScore * marketW) +
-      (growthScore    * marketW) +
-      (demandScore    * marketW)
-    );
+    // When the market fields are only database placeholders, they are constant for
+    // every métier and would just flatten the ranking: score on profile fit alone.
+    const marketKnown = metier.marketDataKnown !== false;
+    const baseScore = marketKnown
+      ? Math.round(
+          (riasecScore  * riasecW) +
+          (hybridScore  * hybridW) +
+          (stabilityScore * marketW) +
+          (growthScore    * marketW) +
+          (demandScore    * marketW)
+        )
+      : Math.round(((riasecScore * riasecW) + (hybridScore * hybridW)) / 0.70);
 
     // Appliquer le multiplicateur profil utilisateur (éducation, salaire, statut)
     const { multiplier, notes: criteriaNotes } = applyCriteriaMultiplier(metier, userCriteria);

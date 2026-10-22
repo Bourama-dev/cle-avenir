@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getMetierSalary } from '@/utils/salaryUtils';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Heart, TrendingUp, DollarSign, ArrowRight, Home, ArrowLeft, AlertCircle } from 'lucide-react';
+import { Loader2, TrendingUp, DollarSign, ArrowRight, Home, ArrowLeft, AlertCircle, Sparkles } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { useNavigation } from '@/hooks/useNavigation';
@@ -14,6 +14,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { StatsGrid } from '@/components/cleo/charts/CleoChartLibrary';
 import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
 import TiltCard from '@/components/ui/TiltCard';
+
+const DEMAND_LABELS = {
+  très_élevée: 'Très forte',
+  élevée: 'Forte',
+  moyenne: 'Moyenne',
+  faible: 'Faible',
+};
 
 const RecommendationsPage = () => {
   const { user } = useAuth();
@@ -106,13 +113,13 @@ const RecommendationsPage = () => {
               label: 'Meilleur match',
               value: `${Math.max(...careers.map(c => c.matchScore || 0))}%`,
               trend: 'up',
-              subtitle: careers[0]?.libelle?.split(' ').slice(0, 2).join(' ') || 'Top recommandation'
+              subtitle: (careers[0]?.libelle && (careers[0].libelle.length > 38 ? `${careers[0].libelle.slice(0, 36).trim()}…` : careers[0].libelle)) || 'Top recommandation'
             },
             {
-              label: 'Forte demande',
-              value: careers.filter(c => c.debouches === 'forte' || c.debouches === 'Forte').length,
-              trend: 'up',
-              subtitle: `métiers en croissance`
+              label: 'Métiers analysés',
+              value: (careers[0]?.analyzedCount ?? careers.length).toLocaleString('fr-FR'),
+              trend: 'neutral',
+              subtitle: 'classés selon ton profil'
             }
           ]}
         />
@@ -171,14 +178,17 @@ const RecommendationsPage = () => {
                        <Badge className={index < 3 ? "bg-purple-100 text-purple-700 hover:bg-purple-100" : "bg-slate-100 text-slate-700 hover:bg-slate-100"}>
                           {career.matchScore || 85}% Match
                        </Badge>
-                       <Button variant="ghost" size="icon" disabled title="Fonctionnalité à venir">
-                          <Heart className="h-5 w-5 text-slate-300" />
-                       </Button>
                     </div>
                     <CardTitle className="mt-2 text-xl line-clamp-2">{career.libelle || "Métier Inconnu"}</CardTitle>
                     <CardDescription className="flex items-center gap-2 font-mono text-xs mt-1">
                        ROME {career.code}
                     </CardDescription>
+                    {career.matchReason && (
+                      <p className="mt-2 flex items-start gap-1.5 text-xs text-purple-700">
+                        <Sparkles className="w-3.5 h-3.5 mt-0.5 shrink-0" aria-hidden="true" />
+                        {career.matchReason}
+                      </p>
+                    )}
                   </CardHeader>
                   <CardContent className="flex-grow space-y-4">
                      <div className="grid grid-cols-2 gap-4 text-sm bg-slate-50 p-3 rounded-lg">
@@ -189,7 +199,7 @@ const RecommendationsPage = () => {
                         <div className="space-y-1">
                            <span className="text-slate-400 flex items-center gap-1 text-xs"><TrendingUp className="w-3 h-3" /> Demande</span>
                            <span className="font-medium text-slate-700 capitalize line-clamp-1" title={career.debouches}>
-                              {career.debouches || "Stable"}
+                              {career.debouches || DEMAND_LABELS[career.matchDetails?.details?.demandLevel] || "Non renseignée"}
                            </span>
                         </div>
                      </div>
@@ -201,8 +211,10 @@ const RecommendationsPage = () => {
                      )}
                   </CardContent>
                   <CardFooter className="pt-2">
-                     <Button className="w-full bg-white text-purple-600 border border-purple-200 hover:bg-purple-50 hover:text-purple-700" onClick={() => navigate(`/metier/${career.code}`)}>
-                        Voir la fiche <ArrowRight className="ml-2 h-4 w-4" />
+                     <Button asChild className="w-full bg-white text-purple-600 border border-purple-200 hover:bg-purple-50 hover:text-purple-700">
+                        <Link to={`/metier/${career.code}`}>
+                           Voir la fiche <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
                      </Button>
                   </CardFooter>
                 </Card>

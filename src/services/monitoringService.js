@@ -85,23 +85,39 @@ export const MonitoringService = {
     }
   },
 
-  async logPerformanceMetric(name, value, rating) {
-    try {
-      const { error } = await supabase
-        .from('performance_metrics')
-        .insert([{
-          metric_name: name,
-          value,
-          rating,
-          url: window.location.href,
-          user_agent: navigator.userAgent
-        }]);
+  // Metrics are queued and sent in one insert so they never compete with page data requests.
+  _perfQueue: [],
+  _perfTimer: null,
 
-      if (error && import.meta.env.DEV) {
-        console.warn('Failed to log performance metric:', error);
-      }
+  async _flushPerformanceMetrics() {
+    const batch = this._perfQueue.splice(0, this._perfQueue.length);
+    clearTimeout(this._perfTimer);
+    this._perfTimer = null;
+    if (batch.length === 0) return;
+    try {
+      const { error } = await supabase.from('performance_metrics').insert(batch);
+      if (error && import.meta.env.DEV) console.warn('Failed to log performance metrics:', error);
     } catch (e) {
-      console.warn('Exception logging performance metric:', e);
+      console.warn('Exception logging performance metrics:', e);
+    }
+  },
+
+  async logPerformanceMetric(name, value, rating) {
+    if (this._perfQueue.length >= 50) return;
+    this._perfQueue.push({
+      metric_name: name,
+      value,
+      rating,
+      url: window.location.href,
+      user_agent: navigator.userAgent
+    });
+    if (!this._perfTimer) {
+      this._perfTimer = setTimeout(() => this._flushPerformanceMetrics(), 10000);
+      if (typeof document !== 'undefined') {
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'hidden') this._flushPerformanceMetrics();
+        }, { once: true });
+      }
     }
   }
 };

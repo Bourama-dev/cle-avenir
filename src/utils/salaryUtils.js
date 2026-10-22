@@ -76,8 +76,11 @@ const EDU_MULT = [
 export const getMetierSalary = (metier) => {
   if (!metier) return 'Non renseigné';
 
-  // 1. Use real value if available
-  const real = formatSalary(metier.salaire || metier.salary_range);
+  // 1. Use real value if available (the 23 000 – 45 000 € range is the database default, not data)
+  const range = metier.salary_range;
+  const isPlaceholderRange = range && typeof range === 'object'
+    && Number(range.min) === 23000 && Number(range.max) === 45000;
+  const real = formatSalary(metier.salaire || (isPlaceholderRange ? null : range));
   if (real) return real;
 
   // 2. Estimate from ROME domain code
@@ -94,5 +97,5 @@ export const getMetierSalary = (metier) => {
   const min = Math.round(domain.min * mult);
   const max = Math.round(domain.max * mult);
 
-  return `${min}\u202f000\u202f– ${max}\u202f000\u202f€\u202f/ an`;
+  return `≈ ${min}\u202f000\u202f– ${max}\u202f000\u202f€\u202f/ an`;
 };
