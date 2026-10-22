@@ -7,13 +7,15 @@ import { User, Calendar, Mail, Briefcase } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import DebugResponsesSection from './DebugResponsesSection';
+import { getTestView, DIM_LABELS } from './testView';
 
 const AdminTestsDetailModal = ({ test, isOpen, onClose }) => {
   if (!test) return null;
 
   const user = test.profiles;
-  const score = test.results?.baseResults?.confidence || 0;
-  const matches = test.results?.baseResults?.matchedCareers || [];
+  const view = getTestView(test);
+  const score = view.score ?? 0;
+  const matches = view.matches;
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -34,7 +36,7 @@ const AdminTestsDetailModal = ({ test, isOpen, onClose }) => {
                 </DialogDescription>
               </div>
               <div className="text-right">
-                <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">Score Confiance</div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">Score RIASEC</div>
                 <Badge className={`text-lg px-3 py-1 ${score > 70 ? 'bg-green-100 text-green-700' : score > 50 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'}`}>
                   {score}%
                 </Badge>
@@ -69,18 +71,37 @@ const AdminTestsDetailModal = ({ test, isOpen, onClose }) => {
                              #{index + 1}
                            </div>
                            <div>
-                             <div className="font-medium text-slate-900">{match.career.name}</div>
+                             <div className="font-medium text-slate-900">{match.name}</div>
                              <div className="text-xs text-slate-500 line-clamp-1">{match.reason || "Forte correspondance avec vos intérêts"}</div>
                            </div>
                         </div>
                         <Badge variant="secondary" className="bg-purple-50 text-purple-700 hover:bg-purple-100">
-                          {match.percentage}% Match
+                          {match.percentage != null ? `${match.percentage}% Match` : 'Match'}
                         </Badge>
                       </div>
                     ))}
-                    {matches.length === 0 && <p className="text-slate-400 italic text-sm">Aucun résultat disponible.</p>}
+                    {matches.length === 0 && <p className="text-slate-400 italic text-sm">Aucun métier enregistré pour ce test.</p>}
                   </div>
                 </div>
+
+                {view.ranked.length > 0 && (
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-3">
+                      Profil RIASEC {view.code && <span className="ml-2 font-mono text-indigo-600">{view.code}</span>}
+                    </h3>
+                    <div className="space-y-2">
+                      {view.ranked.map(([dim, value]) => (
+                        <div key={dim} className="flex items-center gap-3 text-sm">
+                          <span className="w-28 text-slate-600">{DIM_LABELS[dim] || dim}</span>
+                          <div className="flex-1 h-2 rounded-full bg-slate-100 overflow-hidden">
+                            <div className="h-full rounded-full bg-indigo-500" style={{ width: `${Math.min(100, Math.max(0, value))}%` }} />
+                          </div>
+                          <span className="w-8 text-right font-medium text-slate-700">{Math.round(value)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {test.results?.profileData?.primaryProfile && (
                    <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
@@ -104,7 +125,7 @@ const AdminTestsDetailModal = ({ test, isOpen, onClose }) => {
                         Réponse sélectionnée :
                       </div>
                       <div className="mt-2 text-sm text-slate-600 bg-slate-50 p-2 rounded">
-                         {Array.isArray(answer) ? answer.join(', ') : answer.toString()}
+                         {Array.isArray(answer) ? answer.join(', ') : (answer !== null && typeof answer === 'object') ? JSON.stringify(answer) : String(answer)}
                       </div>
                     </div>
                   ))}
@@ -117,7 +138,7 @@ const AdminTestsDetailModal = ({ test, isOpen, onClose }) => {
               <TabsContent value="debug" className="mt-0">
                 <div className="space-y-4">
                   <DebugResponsesSection data={test} title="Objet Test Complet" />
-                  <DebugResponsesSection data={test.results} title="Détails Résultats" />
+                  <DebugResponsesSection data={test.results ?? test.riasec_profile} title="Détails Résultats" />
                 </div>
               </TabsContent>
             </ScrollArea>

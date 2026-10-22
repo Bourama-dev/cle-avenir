@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from '@/components/ui/use-toast';
 import { format } from 'date-fns';
+import { getTestView } from './testView';
 
 const AdminTestsExport = ({ data }) => {
   const { toast } = useToast();
@@ -23,23 +24,25 @@ const AdminTestsExport = ({ data }) => {
         throw new Error("Aucune donnée à exporter");
       }
 
-      const headers = ["ID", "Utilisateur", "Email", "Date", "Score", "Métier Top 1", "Statut"];
+      const headers = ["ID", "Utilisateur", "Email", "Date", "Score", "Profil RIASEC", "Métier Top 1", "Statut"];
       const csvContent = [
         headers.join(","),
         ...data.map(item => {
-          const score = item.results?.baseResults?.confidence || 0;
-          const topMatch = item.results?.baseResults?.matchedCareers?.[0]?.career?.name || "N/A";
+          const view = getTestView(item);
+          const score = view.score ?? "";
+          const topMatch = (view.topCareer || "N/A").replace(/"/g, '""');
           const user = item.profiles ? `${item.profiles.first_name || ''} ${item.profiles.last_name || ''}`.trim() : "Utilisateur supprimé";
           const email = item.profiles?.email || "N/A";
           
           return [
             item.id,
-            `"${user}"`,
+            `"${user.replace(/"/g, '""')}"`,
             email,
             format(new Date(item.created_at), 'yyyy-MM-dd HH:mm'),
             score,
+            view.code || "",
             `"${topMatch}"`,
-            "Complété"
+            view.completed ? "Complété" : "En cours"
           ].join(",");
         })
       ].join("\n");

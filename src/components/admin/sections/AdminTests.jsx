@@ -11,6 +11,7 @@ import AdminTestsFilters from './tests/AdminTestsFilters';
 import AdminTestsTable from './tests/AdminTestsTable';
 import AdminTestsDetailModal from './tests/AdminTestsDetailModal';
 import AdminTestsExport from './tests/AdminTestsExport';
+import { getTestView } from './tests/testView';
 
 const AdminTests = () => {
   const { toast } = useToast();
@@ -85,12 +86,12 @@ const AdminTests = () => {
       }
 
       // Score Filter
-      const score = item.results?.baseResults?.confidence || 0;
+      const score = getTestView(item).score ?? 0;
       if (score < filters.minScore) return false;
 
       // Status Filter
       if (filters.status !== 'all') {
-         const isCompleted = !!item.results; 
+         const isCompleted = getTestView(item).completed;
          if (filters.status === 'completed' && !isCompleted) return false;
          if (filters.status === 'in_progress' && isCompleted) return false;
       }

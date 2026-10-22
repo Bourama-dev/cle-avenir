@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Users, Target, Trophy, Activity } from 'lucide-react';
+import { getTestView, DIM_LABELS } from './testView';
 
 const SummaryCard = ({ title, value, subtext, icon: Icon, color }) => (
   <Card className="border-none shadow-sm bg-gradient-to-br from-white to-slate-50 hover:shadow-md transition-all duration-200">
@@ -22,50 +23,50 @@ const SummaryCard = ({ title, value, subtext, icon: Icon, color }) => (
 const AdminTestsSummaryCards = ({ data }) => {
   if (!data) return null;
 
+  const views = data.map(getTestView);
   const totalTests = data.length;
-  
-  // Calculate Avg Score
-  const scores = data.map(d => d.results?.baseResults?.confidence || 0);
-  const avgScore = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
-  
-  // Highest Score
-  const maxScore = scores.length ? Math.max(...scores) : 0;
+  const completed = views.filter((v) => v.completed).length;
 
-  // Most Common Career
-  const careerCounts = {};
-  data.forEach(d => {
-    const career = d.results?.baseResults?.matchedCareers?.[0]?.career?.name;
-    if (career) careerCounts[career] = (careerCounts[career] || 0) + 1;
-  });
-  const topCareer = Object.entries(careerCounts).sort((a, b) => b[1] - a[1])[0];
+  // Only tests that actually have a score count in the statistics.
+  const scores = views.map((v) => v.score).filter((n) => n != null);
+  const avgScore = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+  const maxScore = scores.length ? Math.max(...scores) : null;
+
+  const tally = (values) => {
+    const counts = {};
+    values.filter(Boolean).forEach((v) => { counts[v] = (counts[v] || 0) + 1; });
+    return Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+  };
+  const topCareer = tally(views.map((v) => v.topCareer));
+  const topProfile = tally(views.map((v) => v.dominant));
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
       <SummaryCard 
         title="Total Tests" 
         value={totalTests} 
-        subtext="+12% vs mois dernier"
+        subtext={`${completed} terminé${completed > 1 ? 's' : ''}`}
         icon={Users}
         color={{ bg: 'bg-blue-100', text: 'text-blue-600' }}
       />
       <SummaryCard 
         title="Score Moyen" 
-        value={`${avgScore}%`} 
-        subtext="Indice de confiance"
+        value={avgScore != null ? `${avgScore}%` : '—'} 
+        subtext={scores.length ? `Moyenne des scores RIASEC (${scores.length} tests)` : 'Aucun score enregistré'}
         icon={Activity}
         color={{ bg: 'bg-indigo-100', text: 'text-indigo-600' }}
       />
       <SummaryCard 
         title="Meilleur Score" 
-        value={`${maxScore}%`} 
-        subtext="Confiance maximale"
+        value={maxScore != null ? `${maxScore}%` : '—'} 
+        subtext="Score RIASEC le plus élevé"
         icon={Trophy}
         color={{ bg: 'bg-yellow-100', text: 'text-yellow-600' }}
       />
       <SummaryCard 
-        title="Top Métier" 
-        value={topCareer ? topCareer[0] : 'N/A'} 
-        subtext={topCareer ? `${topCareer[1]} occurrences` : 'Aucune donnée'}
+        title={topCareer ? 'Top Métier' : 'Profil dominant'}
+        value={topCareer ? topCareer[0] : topProfile ? DIM_LABELS[topProfile[0]] || topProfile[0] : 'N/A'}
+        subtext={topCareer ? `${topCareer[1]} occurrences` : topProfile ? `${topProfile[1]} tests (dimension la plus forte)` : 'Aucune donnée'}
         icon={Target}
         color={{ bg: 'bg-green-100', text: 'text-green-600' }}
       />

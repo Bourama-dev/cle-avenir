@@ -14,6 +14,7 @@ import { fr } from 'date-fns/locale';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import TestCompletionIndicator from './TestCompletionIndicator';
+import { getTestView, DIM_LABELS } from './testView';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -52,8 +53,9 @@ const AdminTestsTable = ({ data, onView }) => {
             ) : (
               paginatedData.map((test) => {
                 const user = test.profiles;
-                const score = test.results?.baseResults?.confidence;
-                const topCareer = test.results?.baseResults?.matchedCareers?.[0]?.career?.name;
+                const view = getTestView(test);
+                const score = view.score;
+                const topCareer = view.topCareer;
                 
                 return (
                   <TableRow key={test.id} className="hover:bg-slate-50 transition-colors">
@@ -80,20 +82,23 @@ const AdminTestsTable = ({ data, onView }) => {
                        <div className="text-xs text-slate-400">{format(new Date(test.created_at), 'HH:mm')}</div>
                     </TableCell>
                     <TableCell>
-                       {score ? (
+                       {score != null ? (
                          <Badge variant="outline" className={`${score > 70 ? 'bg-green-50 text-green-700 border-green-200' : score > 50 ? 'bg-yellow-50 text-yellow-700 border-yellow-200' : 'bg-red-50 text-red-700 border-red-200'}`}>
                            {score}%
                          </Badge>
                        ) : <span className="text-slate-400">-</span>}
                     </TableCell>
                     <TableCell>
-                      <div className="font-medium text-sm text-slate-800 max-w-[200px] truncate" title={topCareer}>
-                        {topCareer || <span className="text-slate-400 italic">Non analysé</span>}
+                      <div className="font-medium text-sm text-slate-800 max-w-[200px] truncate" title={topCareer || (view.dominant ? DIM_LABELS[view.dominant] : undefined)}>
+                        {topCareer
+                          || (view.code
+                            ? <span>Profil <span className="font-mono">{view.code}</span> <span className="text-slate-400 font-normal">· {DIM_LABELS[view.dominant]}</span></span>
+                            : <span className="text-slate-400 italic">Non analysé</span>)}
                       </div>
                     </TableCell>
                     <TableCell className="text-center">
                        <div className="flex justify-center">
-                         <TestCompletionIndicator status={test.results ? 'completed' : 'in_progress'} score={score} />
+                         <TestCompletionIndicator status={view.completed ? 'completed' : 'in_progress'} score={score} />
                        </div>
                     </TableCell>
                     <TableCell className="text-right">

@@ -5,6 +5,7 @@ import {
   LineChart, Line, PieChart, Pie, Cell, Legend
 } from 'recharts';
 import { Loader2 } from 'lucide-react';
+import { getTestView, DIM_LABELS } from './testView';
 
 const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#0088fe'];
 
@@ -38,19 +39,26 @@ const AdminTestsVisualization = ({ data, loading }) => {
   // 3. Trends (Tests per day)
   const trendsMap = {};
 
-  data.forEach(test => {
-    // Score
-    const score = test.results?.baseResults?.confidence || 0;
-    if (score <= 20) scoreBuckets[0].count++;
-    else if (score <= 40) scoreBuckets[1].count++;
-    else if (score <= 60) scoreBuckets[2].count++;
-    else if (score <= 80) scoreBuckets[3].count++;
-    else scoreBuckets[4].count++;
+  const profileCount = {};
 
-    // Career
-    const topCareer = test.results?.baseResults?.matchedCareers?.[0]?.career?.name;
-    if (topCareer) {
-      careersCount[topCareer] = (careersCount[topCareer] || 0) + 1;
+  data.forEach(test => {
+    const view = getTestView(test);
+
+    // Score: only tests that have one (a missing score is not a 0 score)
+    const score = view.score;
+    if (score != null) {
+      if (score <= 20) scoreBuckets[0].count++;
+      else if (score <= 40) scoreBuckets[1].count++;
+      else if (score <= 60) scoreBuckets[2].count++;
+      else if (score <= 80) scoreBuckets[3].count++;
+      else scoreBuckets[4].count++;
+    }
+
+    // Career, or dominant RIASEC dimension when no career was stored
+    if (view.topCareer) careersCount[view.topCareer] = (careersCount[view.topCareer] || 0) + 1;
+    if (view.dominant) {
+      const label = DIM_LABELS[view.dominant] || view.dominant;
+      profileCount[label] = (profileCount[label] || 0) + 1;
     }
 
     // Trend
@@ -58,7 +66,10 @@ const AdminTestsVisualization = ({ data, loading }) => {
     trendsMap[date] = (trendsMap[date] || 0) + 1;
   });
 
-  const topCareersData = Object.entries(careersCount)
+  const showCareers = Object.keys(careersCount).length >= 3;
+  const pieSource = showCareers ? careersCount : profileCount;
+
+  const topCareersData = Object.entries(pieSource)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 5)
     .map(([name, value]) => ({ name, value }));
@@ -73,7 +84,7 @@ const AdminTestsVisualization = ({ data, loading }) => {
       <Card className="shadow-md hover:shadow-lg transition-shadow duration-200">
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium">Distribution des Scores</CardTitle>
-          <CardDescription>Répartition par tranches de confiance</CardDescription>
+          <CardDescription>Score RIASEC moyen par test, en tranches</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-[200px] w-full">
@@ -96,8 +107,8 @@ const AdminTestsVisualization = ({ data, loading }) => {
       {/* Career Matches */}
       <Card className="shadow-md hover:shadow-lg transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-medium">Top Métiers Identifiés</CardTitle>
-          <CardDescription>Métiers les plus fréquemment suggérés</CardDescription>
+          <CardTitle className="text-sm font-medium">{showCareers ? 'Top Métiers Identifiés' : 'Profils dominants (RIASEC)'}</CardTitle>
+          <CardDescription>{showCareers ? 'Métiers les plus fréquemment suggérés' : 'Dimension la plus forte de chaque test'}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-[200px] w-full">
