@@ -52,41 +52,34 @@ export const rgpdService = {
     }
   },
 
-  async downloadUserData(userId) {
-    try {
-      const exportData = {};
+  /**
+   * Asks the server for the complete export of the signed-in user's data and saves it
+   * as a JSON file. The server identifies the user from the session, never from the request.
+   */
+  async exportMyData() {
+    const { data, error } = await supabase.functions.invoke('export-user-data', { body: {} });
+    if (error) throw new Error("Le serveur n'a pas pu préparer l'export. Réessayez dans un instant.");
 
-      const { data: profile } = await supabase.from('profiles').select('*').eq('id', userId).single();
-      exportData.profile = profile;
-
-      const { data: testResults } = await supabase.from('test_results').select('*').eq('user_id', userId);
-      exportData.testResults = testResults;
-
-      const { data: preferences } = await supabase.from('user_cookie_preferences').select('*').eq('user_id', userId).single();
-      exportData.cookiePreferences = preferences;
-
-      const { data: events } = await supabase.from('user_events').select('*').eq('user_id', userId);
-      exportData.activityHistory = events;
-
-      const dataStr = JSON.stringify(exportData, null, 2);
-      const dataSize = new Blob([dataStr]).size;
-      
-      await this.logDataDownload(userId, dataSize);
-
-      const blob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `mes-donnees-${userId}-${new Date().toISOString()}.json`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-      
-      return true;
-    } catch (error) {
-      console.error('Error downloading user data:', error);
-      throw error;
+    const payload = typeof data === 'string' ? JSON.parse(data) : data;
+    if (!payload || typeof payload !== 'object' || payload.error) {
+      throw new Error(payload?.error || "Réponse d'export invalide.");
     }
+
+    const text = JSON.stringify(payload, null, 2);
+    const blob = new Blob([text], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `cleavenir-mes-donnees-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    // Revoking immediately can cancel the download on Safari / iOS.
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+
+    return {
+      sizeKb: Math.max(1, Math.round(blob.size / 1024)),
+      tables: Object.keys(payload.data || {}).length,
+    };
   }
 };

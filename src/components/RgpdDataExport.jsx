@@ -28,18 +28,18 @@ const RgpdDataExport = () => {
     
     try {
       setIsDownloading(true);
-      await rgpdService.downloadUserData(user.id);
+      const { sizeKb, tables } = await rgpdService.exportMyData();
       
       toast({
         title: "Exportation réussie",
-        description: "Vos données ont été téléchargées au format JSON.",
+        description: `Fichier JSON téléchargé (${sizeKb} Ko, ${tables} catégories de données).`,
         className: "bg-green-50 border-green-200 text-green-900"
       });
     } catch (error) {
       toast({
         variant: "destructive",
         title: "Erreur d'exportation",
-        description: "Un problème est survenu lors du téléchargement de vos données."
+        description: error?.message || "Un problème est survenu lors du téléchargement de vos données."
       });
     } finally {
       setIsDownloading(false);

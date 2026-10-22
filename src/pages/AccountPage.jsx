@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
-import { supabase } from '@/lib/customSupabaseClient';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -10,6 +9,7 @@ import { User, Mail, Phone, Calendar, Shield, CreditCard, Download, Trash2, Edit
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
 import { notificationService } from '@/services/notificationService';
+import { rgpdService } from '@/services/rgpdService';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { useNavigation } from '@/hooks/useNavigation';
 import { AnimatedSection, AnimatedItem } from '@/components/ui/AnimatedSection';
@@ -57,37 +57,16 @@ const AccountPage = () => {
     }
     setDownloadLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke('export-user-data', {
-        body: { user_id: user.id }
+      const { sizeKb, tables } = await rgpdService.exportMyData();
+      toast({
+        title: 'Données téléchargées',
+        description: `Fichier JSON enregistré (${sizeKb} Ko, ${tables} catégories de données).`,
       });
-
-      if (error) throw error;
-
-      // If the function returns a download URL, open it
-      if (data?.url) {
-        window.open(data.url, '_blank');
-        toast({ title: "Téléchargement prêt", description: "Vos données ont été exportées." });
-      } else if (data?.data) {
-        // Inline JSON export fallback
-        const blob = new Blob([JSON.stringify(data.data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `cleavenir-mes-donnees-${new Date().toISOString().split('T')[0]}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        toast({ title: "Données téléchargées", description: "Votre fichier JSON RGPD a été généré." });
-      } else {
-        toast({
-          title: "Demande enregistrée",
-          description: "Vous recevrez vos données par email sous 72h (délai RGPD)."
-        });
-      }
     } catch (err) {
       toast({
-        variant: "destructive",
-        title: "Erreur export",
-        description: err.message || "Impossible d'exporter vos données."
+        variant: 'destructive',
+        title: "Export impossible",
+        description: err.message || "Impossible d'exporter vos données.",
       });
     } finally {
       setDownloadLoading(false);
