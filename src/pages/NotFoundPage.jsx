@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { Search, Home, ArrowLeft, HelpCircle } from 'lucide-react';
+import { Home, ArrowLeft, HelpCircle } from 'lucide-react';
 import PageHelmet from '@/components/SEO/PageHelmet';
 import { categoryPageSEO } from '@/components/SEO/seoPresets';
+import CleoMascot from '@/components/cleo/CleoMascot';
 
 const NotFoundPage = () => {
   const navigate = useNavigate();
@@ -21,12 +22,12 @@ const NotFoundPage = () => {
       <PageHelmet {...notFoundSEO} />
       
       {/* Hero Section with Glassmorphism */}
-      <div className="relative p-12 rounded-3xl backdrop-blur-md bg-white/40 border border-white/60 shadow-xl shadow-purple-100 max-w-2xl w-full">
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white p-6 rounded-full shadow-lg shadow-purple-900/5 ring-4 ring-white">
-          <Search className="h-12 w-12 text-purple-600" />
+      <div className="relative mt-32 md:mt-24 p-12 rounded-3xl backdrop-blur-md bg-white/40 border border-white/60 shadow-xl shadow-purple-100 max-w-2xl w-full">
+        <div className="absolute -top-28 inset-x-0 flex justify-center">
+          <CleoMascot pose="reflexion" eager className="w-28 md:w-32" />
         </div>
 
-        <h1 className="mt-8 text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600 mb-4 tracking-tighter">404</h1>
+        <h1 className="mt-14 text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600 mb-4 tracking-tighter">404</h1>
         
         <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4">
           Oups ! Cette page s'est perdue.
