@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { HelpCircle, Sparkles } from 'lucide-react';
 import './FAQHero.css';
+import CleoMascot from '@/components/cleo/CleoMascot';
 
 const FAQHero = () => {
   return (
@@ -28,6 +29,10 @@ const FAQHero = () => {
             Trouvez rapidement des réponses à vos questions sur l'orientation, notre méthode, ou votre compte.
           </p>
         </motion.div>
+
+        {/* CLÉO prend des notes */}
+        <CleoMascot pose="carnet-idee" eager className="hidden lg:block absolute right-6 xl:right-16 bottom-0 w-40 xl:w-48 z-10" delay={0.4} />
+        <CleoMascot pose="carnet-idee" eager className="lg:hidden relative z-10 w-28 mx-auto mt-6" delay={0.4} />
 
         {/* Decorative elements */}
         <div className="faq-circle faq-circle-1" />

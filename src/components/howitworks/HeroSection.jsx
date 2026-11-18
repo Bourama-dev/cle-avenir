@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import CleoMascot from '@/components/cleo/CleoMascot';
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -87,6 +88,9 @@ const HeroSection = () => {
         </div>
       </div>
       
+      {/* CLÉO présente la méthode */}
+      <CleoMascot pose="montre-haut" eager className="hidden lg:block absolute bottom-10 right-[4%] xl:right-[8%] w-44 xl:w-52 z-20" delay={0.6} />
+
       {/* Decorative gradient blur at bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent z-10 pointer-events-none" />
     </section>

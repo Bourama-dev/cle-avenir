@@ -7,6 +7,7 @@ import {
 import { motion, useReducedMotion, useInView } from 'framer-motion';
 import PageHelmet from '@/components/SEO/PageHelmet';
 import { AuthService } from '@/services/authService';
+import CleoMascot from '@/components/cleo/CleoMascot';
 
 const NewsPreview = lazy(() => import('@/components/NewsPreview'));
 
@@ -32,6 +33,7 @@ const FEATURES = [
     desc: "Un assistant disponible 24/7 qui t'accompagne pas à pas.",
     gradient: 'from-rose-400 to-rose-600',
     link: "/cleo",
+    mascot: 'ordinateur',
   },
 ];
 
@@ -135,11 +137,14 @@ function Reveal({ children, className = '', delay = 0 }) {
   );
 }
 
-function SectionHead({ eyebrow, children }) {
+function SectionHead({ eyebrow, children, mascot }) {
   return (
-    <Reveal className="px-5 md:px-0 mb-5 md:mb-8">
-      <p className="text-xs font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400 mb-1.5">{eyebrow}</p>
-      <h2 className="text-2xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">{children}</h2>
+    <Reveal className="px-5 md:px-0 mb-5 md:mb-8 flex items-end justify-between gap-6">
+      <div>
+        <p className="text-xs font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400 mb-1.5">{eyebrow}</p>
+        <h2 className="text-2xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">{children}</h2>
+      </div>
+      {mascot && <CleoMascot pose={mascot} decorative className="hidden md:block w-28 lg:w-32 shrink-0 -mb-4" />}
     </Reveal>
   );
 }
@@ -265,6 +270,8 @@ const HomePage = ({ onNavigate }) => {
               ))}
             </motion.div>
 
+            <CleoMascot pose="coucou" eager className="lg:hidden w-36 self-center -mb-6" delay={0.5} />
+
             {isAdmin && (
               <motion.div {...heroIn(0.7)}>
                 <button
@@ -284,9 +291,10 @@ const HomePage = ({ onNavigate }) => {
             initial={reduce ? false : { opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="hidden lg:block"
+            className="hidden lg:block relative pt-[11.25rem] xl:pt-[12.5rem]"
           >
-            <div className="rounded-[2rem] bg-white/60 dark:bg-white/10 backdrop-blur-md border border-white/80 dark:border-white/15 p-6 shadow-xl shadow-violet-900/10 space-y-4">
+            <CleoMascot pose="coucou" eager className="absolute top-0 right-10 w-32 xl:w-36 z-10" delay={0.4} />
+            <div className="relative rounded-[2rem] bg-white/60 dark:bg-white/10 backdrop-blur-md border border-white/80 dark:border-white/15 p-6 shadow-xl shadow-violet-900/10 space-y-4">
               {STEPS.map((st) => {
                 const Icon = st.icon;
                 return (
@@ -350,11 +358,15 @@ const HomePage = ({ onNavigate }) => {
                   onClick={() => onNavigate(f.link)}
                   className={`group relative shrink-0 w-[78%] sm:w-[60%] md:w-auto text-left rounded-3xl bg-gradient-to-br ${f.gradient} text-white p-6 min-h-[220px] flex flex-col justify-between overflow-hidden shadow-xl shadow-rose-900/10 active:scale-[0.98] md:hover:-translate-y-1 transition`}
                 >
-                  <Icon className="absolute -right-4 -bottom-4 w-32 h-32 text-white/10" aria-hidden />
+                  {f.mascot ? (
+                    <CleoMascot pose={f.mascot} decorative float={false} className="absolute -right-3 -bottom-3 w-32 md:w-36" />
+                  ) : (
+                    <Icon className="absolute -right-4 -bottom-4 w-32 h-32 text-white/10" aria-hidden />
+                  )}
                   <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <div className="relative">
+                  <div className={`relative ${f.mascot ? 'pr-24 md:pr-28' : ''}`}>
                     <h3 className="text-xl font-bold text-white leading-tight mb-1.5">{f.title}</h3>
                     <p className="text-sm text-white/85 leading-snug mb-3">{f.desc}</p>
                     <span className="inline-flex items-center gap-1 text-sm font-bold">
@@ -371,7 +383,7 @@ const HomePage = ({ onNavigate }) => {
       {/* ══ STEPS ═══════════════════════════════════════════════════════════ */}
       <section className="pt-14 md:pt-24 px-5">
         <div className="max-w-6xl mx-auto">
-          <SectionHead eyebrow="Comment ça marche">
+          <SectionHead eyebrow="Comment ça marche" mascot="presente">
             Ton avenir en <span className={GRAD_TEXT}>3 étapes</span>
           </SectionHead>
           <div className="grid md:grid-cols-3 gap-3 md:gap-6">
@@ -411,7 +423,7 @@ const HomePage = ({ onNavigate }) => {
       {/* ══ ACTUALITÉS ══════════════════════════════════════════════════════ */}
       <section className="pt-14 md:pt-24">
         <div className="max-w-6xl mx-auto">
-          <SectionHead eyebrow="Actualités">
+          <SectionHead eyebrow="Actualités" mascot="carnet-idee">
             L'emploi & la formation <span className={GRAD_TEXT}>en direct</span>
           </SectionHead>
         </div>
@@ -490,7 +502,10 @@ const HomePage = ({ onNavigate }) => {
           <div className="relative overflow-hidden rounded-3xl md:rounded-[2.5rem] bg-gradient-to-br from-rose-600 via-rose-500 to-cyan-600 text-white text-center px-6 py-12 md:p-20">
             <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-fuchsia-500/25 blur-3xl" aria-hidden />
             <div className="absolute -bottom-24 -right-16 w-72 h-72 rounded-full bg-sky-400/20 blur-3xl" aria-hidden />
+            <CleoMascot pose="celebre" decorative className="hidden lg:block absolute bottom-0 left-4 xl:left-8 w-32 xl:w-40" />
+            <CleoMascot pose="bienvenue" decorative className="hidden xl:block absolute bottom-0 right-4 w-40" delay={0.15} />
             <div className="relative">
+              <CleoMascot pose="celebre" className="lg:hidden w-28 mx-auto -mt-4 mb-4" />
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 border border-white/20 text-sm font-semibold mb-6">
                 <Sparkles size={14} />
                 Rejoins CléAvenir, c'est gratuit
